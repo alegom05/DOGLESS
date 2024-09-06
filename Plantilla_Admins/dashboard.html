@@ -48,7 +48,7 @@
         <div class="sidebar-logo">
           <!-- Logo Header -->
           <div class="logo-header" data-background-color="dark">
-            <a href="index.html" class="logo">
+            <a href="paginaprincipal.html" class="logo">
               <img
                 src="assets/img/kaiadmin/logo_light.svg"
                 alt="navbar brand"
@@ -73,27 +73,24 @@
         <div class="sidebar-wrapper scrollbar scrollbar-inner">
           <div class="sidebar-content">
             <ul class="nav nav-secondary">
-				<li class="nav-item">
+				      <li class="nav-item">
                 <a href="paginaprincipal.html">
                   <i class="fas fa-home"></i>
                   <p>Pagina Principal</p>
                 </a>
-              </li>
-              
+              </li>             
               <li class="nav-item">
                 <a href="tables/datatables.html">
                   <i class="fas fa-user-plus"></i>
                   <p>Solicitudes</p>
                 </a>
               </li>
-
               <li class="nav-item">
                 <a href="dashboard.html">
                   <i class="far fa-chart-bar"></i>
                   <p>Dashboard</p>
                 </a>
-              </li>
-    
+              </li>   
               <li class="nav-item">
                 <a data-bs-toggle="collapse" href="#tables1">
                   <i class="fas fa-users"></i>
@@ -120,7 +117,6 @@
                   </ul>
                 </div>
               </li>
-
               <li class="nav-item">
                 <a data-bs-toggle="collapse" href="#tables2">
                   <i class="far fa-handshake"></i>
@@ -147,7 +143,6 @@
                   </ul>
                 </div>
               </li>
-
               <li class="nav-item">
                 <a data-bs-toggle="collapse" href="#tables3">
                   <i class="fas fa-boxes"></i>
@@ -763,8 +758,8 @@
                       />
                     </div>
                     <span class="profile-username">
-                      <span class="op-7">Hi,</span>
-                      <span class="fw-bold">Hizrian</span>
+                      <span class="op-7">Hola,</span>
+                      <span class="fw-bold">Manuel Yarleque</span>
                     </span>
                   </a>
                   <ul class="dropdown-menu dropdown-user animated fadeIn">
@@ -779,25 +774,25 @@
                             />
                           </div>
                           <div class="u-text">
-                            <h4>Hizrian</h4>
-                            <p class="text-muted">hello@example.com</p>
+                            <h4>Manuel</h4>
+                            <p class="text-muted">myarleque@gmail.com</p>
                             <a
                               href="profile.html"
                               class="btn btn-xs btn-secondary btn-sm"
-                              >View Profile</a
+                              >Ver perfil</a
                             >
                           </div>
                         </div>
                       </li>
                       <li>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">My Profile</a>
+                        <a class="dropdown-item" href="#">Mi perfil</a>
                         <a class="dropdown-item" href="#">My Balance</a>
                         <a class="dropdown-item" href="#">Inbox</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Account Setting</a>
+                        <a class="dropdown-item" href="#">Ajustes</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Logout</a>
+                        <a class="dropdown-item" href="#">Cerrar Sesion</a>
                       </li>
                     </div>
                   </ul>
@@ -810,18 +805,18 @@
 
         <div class="container">
           <div class="page-inner">
-            <div
-              class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4"
-            >
+            <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
               <div>
                 <h3 class="fw-bold mb-3">Dashboard</h3>
-                <h6 class="op-7 mb-2">Free Bootstrap 5 Admin Dashboard</h6>
+                <h6 class="op-7 mb-2">Aquí verás la cifra de agentes, baneados, y comparar usuarios,
+                   proveedores, órdenes para evaluar la participación y retención.</h6>
               </div>
               <div class="ms-md-auto py-2 py-md-0">
                 <a href="#" class="btn btn-label-info btn-round me-2">Manage</a>
                 <a href="#" class="btn btn-primary btn-round">Add Customer</a>
               </div>
             </div>
+
             <div class="row">
               <div class="col-sm-6 col-md-3">
                 <div class="card card-stats card-round">
@@ -908,6 +903,37 @@
                 </div>
               </div>
             </div>
+            <!--Dashboards solicitados-->
+            <div class="row">
+              <div class="col-6">
+                <div class="card">
+                  <div class="card-header">
+                    <div class="card-title">Bar Chart</div>
+                  </div>
+                  <div class="card-body">
+                    <div class="chart-container">
+                      <canvas id="barChart1"></canvas>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="card">
+                  <div class="card-header">
+                    <div class="card-title">Bar Chart</div>
+                  </div>
+                  <div class="card-body">
+                    <div class="chart-container">
+                      <canvas id="barChart"></canvas>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+
+
+
             <div class="row">
               <div class="col-md-8">
                 <div class="card card-round">
@@ -1664,6 +1690,7 @@
 
     <!-- Chart JS -->
     <script src="assets/js/plugin/chart.js/chart.min.js"></script>
+    
 
     <!-- jQuery Sparkline -->
     <script src="assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js"></script>
@@ -1690,33 +1717,332 @@
     <!-- Kaiadmin DEMO methods, don't include it in your project! -->
     <script src="assets/js/setting-demo.js"></script>
     <script src="assets/js/demo.js"></script>
+
     <script>
-      $("#lineChart").sparkline([102, 109, 120, 99, 110, 105, 115], {
-        type: "line",
-        height: "70",
-        width: "100%",
-        lineWidth: "2",
-        lineColor: "#177dff",
-        fillColor: "rgba(23, 125, 255, 0.14)",
+      //BARCHART VERTICAL:
+
+      // Obtener el contexto del canvas donde se dibujará el gráfico
+      var ctx = document.getElementById('barChart').getContext('2d');
+
+      // Datos del gráfico
+      var chartData = {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'], // Etiquetas de los meses
+        datasets: [{
+          label: 'Sales', // Leyenda
+          data: [3, 2, 9, 5, 4, 6, 3, 6, 7, 6, 5, 3], // Datos del gráfico
+          backgroundColor: 'rgba(54, 162, 235, 0.5)', // Color de las barras
+          borderColor: 'rgba(54, 162, 235, 1)', // Color del borde
+          borderWidth: 1
+        }]
+      };
+
+      // Opciones de configuración del gráfico
+      var chartOptions = {
+        scales: {
+          y: {
+            beginAtZero: true // El eje Y empieza desde 0
+          }
+        },
+        plugins: {
+          legend: {
+            display: true, // Mostrar leyenda
+            position: 'top' // Posición de la leyenda
+          },
+          tooltip: {
+            enabled: true, // Habilitar los tooltips
+            callbacks: {
+              // Modificar el contenido del tooltip
+              label: function(context) {
+                let label = context.dataset.label || ''; // Obtener la leyenda (Sales)
+                let xLabel = context.label; // Etiqueta del mes (eje X)
+                let yValue = context.raw; // Valor del eje Y (cantidad)
+                return `${xLabel}: ${yValue}`; // Mostrar "Mes: Cantidad"
+              }
+            }
+          }
+        }
+      };
+
+      // Crear el gráfico de barras
+      new Chart(ctx, {
+        type: 'bar',
+        data: chartData,
+        options: chartOptions
       });
 
-      $("#lineChart2").sparkline([99, 125, 122, 105, 110, 124, 115], {
-        type: "line",
-        height: "70",
-        width: "100%",
-        lineWidth: "2",
-        lineColor: "#f3545d",
-        fillColor: "rgba(243, 84, 93, .14)",
+      // Gráfico de Barras Vertical
+      var ctxVertical = document.getElementById('barChart').getContext('2d');
+      var chartDataVertical = {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+        datasets: [{
+          label: 'Sales',
+          data: [3, 2, 9, 5, 4, 6, 3, 6, 7, 6, 5, 3],
+          backgroundColor: 'rgba(54, 162, 235, 0.5)',
+          borderColor: 'rgba(54, 162, 235, 1)',
+          borderWidth: 1
+        }]
+      };
+
+      var chartOptionsVertical = {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        },
+        plugins: {
+          legend: {
+            display: true,
+            position: 'top'
+          },
+          tooltip: {
+            enabled: true,
+            callbacks: {
+              label: function(context) {
+                let xLabel = context.label;
+                let yValue = context.raw;
+                return `${xLabel}: ${yValue}`;
+              }
+            }
+          }
+        }
+      };
+
+      // Crear el gráfico de barras vertical
+      new Chart(ctxVertical, {
+        type: 'bar',
+        data: chartDataVertical,
+        options: chartOptionsVertical
       });
 
-      $("#lineChart3").sparkline([105, 103, 123, 100, 95, 105, 115], {
-        type: "line",
-        height: "70",
-        width: "100%",
-        lineWidth: "2",
-        lineColor: "#ffa534",
-        fillColor: "rgba(255, 165, 52, .14)",
+      // Gráfico de Barras Horizontal
+      var ctxHorizontal = document.getElementById('barChart1').getContext('2d');
+      var chartDataHorizontal = {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+        datasets: [{
+          label: 'Sales',
+          data: [3, 2, 9, 5, 4, 6, 3, 6, 7, 6, 5, 3],
+          backgroundColor: 'rgba(75, 192, 192, 0.5)',
+          borderColor: 'rgba(75, 192, 192, 1)',
+          borderWidth: 1
+        }]
+      };
+
+      var chartOptionsHorizontal = {
+        indexAxis: 'y', // Hace que el gráfico sea horizontal
+        scales: {
+          x: {
+            beginAtZero: true
+          }
+        },
+        plugins: {
+          legend: {
+            display: true,
+            position: 'top'
+          },
+          tooltip: {
+            enabled: true,
+            callbacks: {
+              label: function(context) {
+                let xLabel = context.label;
+                let yValue = context.raw;
+                return `${xLabel}: ${yValue}`;
+              }
+            }
+          }
+        }
+      };
+
+      // Crear el gráfico de barras horizontal
+      new Chart(ctxHorizontal, {
+        type: 'bar',
+        data: chartDataHorizontal,
+        options: chartOptionsHorizontal
       });
+
+
+      
+
+      
+
+      
+
+      // Chart with HTML Legends
+
+      var gradientStroke = htmlLegendsChart.createLinearGradient(
+        500,
+        0,
+        100,
+        0
+      );
+      gradientStroke.addColorStop(0, "#177dff");
+      gradientStroke.addColorStop(1, "#80b6f4");
+
+      var gradientFill = htmlLegendsChart.createLinearGradient(500, 0, 100, 0);
+      gradientFill.addColorStop(0, "rgba(23, 125, 255, 0.7)");
+      gradientFill.addColorStop(1, "rgba(128, 182, 244, 0.3)");
+
+      var gradientStroke2 = htmlLegendsChart.createLinearGradient(
+        500,
+        0,
+        100,
+        0
+      );
+      gradientStroke2.addColorStop(0, "#f3545d");
+      gradientStroke2.addColorStop(1, "#ff8990");
+
+      var gradientFill2 = htmlLegendsChart.createLinearGradient(500, 0, 100, 0);
+      gradientFill2.addColorStop(0, "rgba(243, 84, 93, 0.7)");
+      gradientFill2.addColorStop(1, "rgba(255, 137, 144, 0.3)");
+
+      var gradientStroke3 = htmlLegendsChart.createLinearGradient(
+        500,
+        0,
+        100,
+        0
+      );
+      gradientStroke3.addColorStop(0, "#fdaf4b");
+      gradientStroke3.addColorStop(1, "#ffc478");
+
+      var gradientFill3 = htmlLegendsChart.createLinearGradient(500, 0, 100, 0);
+      gradientFill3.addColorStop(0, "rgba(253, 175, 75, 0.7)");
+      gradientFill3.addColorStop(1, "rgba(255, 196, 120, 0.3)");
+
+      var myHtmlLegendsChart = new Chart(htmlLegendsChart, {
+        type: "line",
+        data: {
+          labels: [
+            "Jan",
+            "Feb",
+            "Mar",
+            "Apr",
+            "May",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct",
+            "Nov",
+            "Dec",
+          ],
+          datasets: [
+            {
+              label: "Subscribers",
+              borderColor: gradientStroke2,
+              pointBackgroundColor: gradientStroke2,
+              pointRadius: 0,
+              backgroundColor: gradientFill2,
+              legendColor: "#f3545d",
+              fill: true,
+              borderWidth: 1,
+              data: [
+                154, 184, 175, 203, 210, 231, 240, 278, 252, 312, 320, 374,
+              ],
+            },
+            {
+              label: "New Visitors",
+              borderColor: gradientStroke3,
+              pointBackgroundColor: gradientStroke3,
+              pointRadius: 0,
+              backgroundColor: gradientFill3,
+              legendColor: "#fdaf4b",
+              fill: true,
+              borderWidth: 1,
+              data: [
+                256, 230, 245, 287, 240, 250, 230, 295, 331, 431, 456, 521,
+              ],
+            },
+            {
+              label: "Active Users",
+              borderColor: gradientStroke,
+              pointBackgroundColor: gradientStroke,
+              pointRadius: 0,
+              backgroundColor: gradientFill,
+              legendColor: "#177dff",
+              fill: true,
+              borderWidth: 1,
+              data: [
+                542, 480, 430, 550, 530, 453, 380, 434, 568, 610, 700, 900,
+              ],
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          legend: {
+            display: false,
+          },
+          tooltips: {
+            bodySpacing: 4,
+            mode: "nearest",
+            intersect: 0,
+            position: "nearest",
+            xPadding: 10,
+            yPadding: 10,
+            caretPadding: 10,
+          },
+          layout: {
+            padding: { left: 15, right: 15, top: 15, bottom: 15 },
+          },
+          scales: {
+            yAxes: [
+              {
+                ticks: {
+                  fontColor: "rgba(0,0,0,0.5)",
+                  fontStyle: "500",
+                  beginAtZero: false,
+                  maxTicksLimit: 5,
+                  padding: 20,
+                },
+                gridLines: {
+                  drawTicks: false,
+                  display: false,
+                },
+              },
+            ],
+            xAxes: [
+              {
+                gridLines: {
+                  zeroLineColor: "transparent",
+                },
+                ticks: {
+                  padding: 20,
+                  fontColor: "rgba(0,0,0,0.5)",
+                  fontStyle: "500",
+                },
+              },
+            ],
+          },
+          legendCallback: function (chart) {
+            var text = [];
+            text.push('<ul class="' + chart.id + '-legend html-legend">');
+            for (var i = 0; i < chart.data.datasets.length; i++) {
+              text.push(
+                '<li><span style="background-color:' +
+                  chart.data.datasets[i].legendColor +
+                  '"></span>'
+              );
+              if (chart.data.datasets[i].label) {
+                text.push(chart.data.datasets[i].label);
+              }
+              text.push("</li>");
+            }
+            text.push("</ul>");
+            return text.join("");
+          },
+        },
+      });
+
+      var myLegendContainer = document.getElementById("myChartLegend");
+
+      // generate HTML legend
+      myLegendContainer.innerHTML = myHtmlLegendsChart.generateLegend();
+
+      // bind onClick event to all LI-tags of the legend
+      var legendItems = myLegendContainer.getElementsByTagName("li");
+      for (var i = 0; i < legendItems.length; i += 1) {
+        legendItems[i].addEventListener("click", legendClickCallback, false);
+      }
     </script>
   </body>
 </html>
