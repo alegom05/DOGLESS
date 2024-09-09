@@ -576,8 +576,7 @@
                   <div class="card-body">
                     <button
                             class="btn btn-primary btn-round ms-auto"
-                            data-bs-toggle="modal"
-                            data-bs-target="#addRowModal"
+                            onclick="window.location.href='NuevoProveedor.html';"
                     >
                       <i class="fa fa-plus"></i>
                       Agregar Proveedor
@@ -695,11 +694,11 @@
 
                         // Funciones para manejar la lógica de los botones
                         function verRegistro(dni) {
-                          window.location.href = `/verRegistro/${dni}`; // Redirigir a la vista de ver
+                          window.location.href = `VerProveedor.html`; // Redirigir a la vista de ver
                         }
 
                         function editarRegistro(dni) {
-                          window.location.href = `/editarRegistro/${dni}`; // Redirigir a la vista de editar
+                          window.location.href = `EditarProveedor.html`; // Redirigir a la vista de editar
                         }
 
                         function confirmarBorrado(dni) {
