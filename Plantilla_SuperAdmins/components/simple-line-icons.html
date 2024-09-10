@@ -1,20 +1,20 @@
 <!DOCTYPE html>
-<html lang="es"> 
+<html lang="en">
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Datatables - Kaiadmin Bootstrap 5 Admin Dashboard</title>
+    <title>Simple Line Icons - Kaiadmin Bootstrap 5 Admin Dashboard</title>
     <meta
       content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
       name="viewport"
     />
     <link
       rel="icon"
-      href="assets/img/kaiadmin/favicon.ico"
+      href="../assets/img/kaiadmin/favicon.ico"
       type="image/x-icon"
     />
 
     <!-- Fonts and icons -->
-    <script src="assets/js/plugin/webfont/webfont.min.js"></script>
+    <script src="../assets/js/plugin/webfont/webfont.min.js"></script>
     <script>
       WebFont.load({
         google: { families: ["Public Sans:300,400,500,600,700"] },
@@ -25,7 +25,7 @@
             "Font Awesome 5 Brands",
             "simple-line-icons",
           ],
-          urls: ["assets/css/fonts.min.css"],
+          urls: ["../assets/css/fonts.min.css"],
         },
         active: function () {
           sessionStorage.fonts = true;
@@ -34,12 +34,12 @@
     </script>
 
     <!-- CSS Files -->
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="assets/css/plugins.min.css" />
-    <link rel="stylesheet" href="assets/css/kaiadmin.min.css" />
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../assets/css/plugins.min.css" />
+    <link rel="stylesheet" href="../assets/css/kaiadmin.min.css" />
 
     <!-- CSS Just for demo purpose, don't include it in your project -->
-    <link rel="stylesheet" href="assets/css/demo.css" />
+    <link rel="stylesheet" href="../assets/css/demo.css" />
   </head>
   <body>
     <div class="wrapper">
@@ -48,9 +48,9 @@
         <div class="sidebar-logo">
           <!-- Logo Header -->
           <div class="logo-header" data-background-color="dark">
-            <a href="paginaprincipal.html" class="logo">
+            <a href="../index.html" class="logo">
               <img
-                src="assets/img/kaiadmin/logo_light.svg"
+                src="../assets/img/kaiadmin/logo_light.svg"
                 alt="navbar brand"
                 class="navbar-brand"
                 height="20"
@@ -73,100 +73,254 @@
         <div class="sidebar-wrapper scrollbar scrollbar-inner">
           <div class="sidebar-content">
             <ul class="nav nav-secondary">
-              <!-- Barra de navegacion -->
-            
               <li class="nav-item">
-                <a href="paginaprincipal.html">
+                <a
+                  data-bs-toggle="collapse"
+                  href="#dashboard"
+                  class="collapsed"
+                  aria-expanded="false"
+                >
                   <i class="fas fa-home"></i>
-                  <p>Pagina Principal</p>
-                </a>
-              </li>              
-              <li class="nav-item">
-                <a href="tables/datatables.html">
-                  <i class="fas fa-user-plus"></i>
-                  <p>Solicitudes</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="dashboard.html">
-                  <i class="far fa-chart-bar"></i>
                   <p>Dashboard</p>
-                </a>
-              </li>   
-              <li class="nav-item">
-                <a data-bs-toggle="collapse" href="#tables1">
-                  <i class="fas fa-users"></i>
-                  <p>Lista de Usuarios</p>
                   <span class="caret"></span>
                 </a>
-                <div class="collapse" id="tables1">
+                <div class="collapse" id="dashboard">
                   <ul class="nav nav-collapse">
                     <li>
-                      <a href="tables/adminzonales.html">
-                        <span class="sub-item">Administradores zonales</span>
+                      <a href="../../demo1/index.html">
+                        <span class="sub-item">Dashboard 1</span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+              <li class="nav-section">
+                <span class="sidebar-mini-icon">
+                  <i class="fa fa-ellipsis-h"></i>
+                </span>
+                <h4 class="text-section">Components</h4>
+              </li>
+              <li class="nav-item active submenu">
+                <a data-bs-toggle="collapse" href="#base">
+                  <i class="fas fa-layer-group"></i>
+                  <p>Base</p>
+                  <span class="caret"></span>
+                </a>
+                <div class="collapse show" id="base">
+                  <ul class="nav nav-collapse">
+                    <li>
+                      <a href="../components/avatars.html">
+                        <span class="sub-item">Avatars</span>
                       </a>
                     </li>
                     <li>
-                      <a href="tables/agentes.html">
-                        <span class="sub-item">Agentes zonales</span>
+                      <a href="../components/buttons.html">
+                        <span class="sub-item">Buttons</span>
                       </a>
                     </li>
                     <li>
-                      <a href="tables/usuarios.html">
-                        <span class="sub-item">Usuarios finales</span>
+                      <a href="../components/gridsystem.html">
+                        <span class="sub-item">Grid System</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="../components/panels.html">
+                        <span class="sub-item">Panels</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="../components/notifications.html">
+                        <span class="sub-item">Notifications</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="../components/sweetalert.html">
+                        <span class="sub-item">Sweet Alert</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="../components/font-awesome-icons.html">
+                        <span class="sub-item">Font Awesome Icons</span>
+                      </a>
+                    </li>
+                    <li class="active">
+                      <a href="../components/simple-line-icons.html">
+                        <span class="sub-item">Simple Line Icons</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="../components/typography.html">
+                        <span class="sub-item">Typography</span>
                       </a>
                     </li>
                   </ul>
                 </div>
               </li>
               <li class="nav-item">
-                <a data-bs-toggle="collapse" href="#tables2">
-                  <i class="far fa-handshake"></i>
-                  <p>Lista de Personal</p>
+                <a data-bs-toggle="collapse" href="#sidebarLayouts">
+                  <i class="fas fa-th-list"></i>
+                  <p>Sidebar Layouts</p>
                   <span class="caret"></span>
                 </a>
-                <div class="collapse" id="tables2">
+                <div class="collapse" id="sidebarLayouts">
                   <ul class="nav nav-collapse">
                     <li>
-                      <a href="vendedores.html">
-                        <span class="sub-item">Vendedores</span>
+                      <a href="../sidebar-style-2.html">
+                        <span class="sub-item">Sidebar Style 2</span>
                       </a>
                     </li>
                     <li>
-                      <a href="proveedores.html">
-                        <span class="sub-item">Proveedores</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="productos.html">
-                        <span class="sub-item">Productos</span>
+                      <a href="../icon-menu.html">
+                        <span class="sub-item">Icon Menu</span>
                       </a>
                     </li>
                   </ul>
                 </div>
               </li>
               <li class="nav-item">
-                <a data-bs-toggle="collapse" href="#tables3">
-                  <i class="fas fa-boxes"></i>
-                  <p>Ordenes de reposición</p>
+                <a data-bs-toggle="collapse" href="#forms">
+                  <i class="fas fa-pen-square"></i>
+                  <p>Forms</p>
                   <span class="caret"></span>
                 </a>
-                <div class="collapse" id="tables3">
+                <div class="collapse" id="forms">
                   <ul class="nav nav-collapse">
                     <li>
-                      <a href="tables/tables.html">
-                        <span class="sub-item">Productos pendientes</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="tables/datatables.html">
-                        <span class="sub-item">Productos aprobados</span>
+                      <a href="../forms/forms.html">
+                        <span class="sub-item">Basic Form</span>
                       </a>
                     </li>
                   </ul>
                 </div>
               </li>
-
+              <li class="nav-item">
+                <a data-bs-toggle="collapse" href="#tables">
+                  <i class="fas fa-table"></i>
+                  <p>Tables</p>
+                  <span class="caret"></span>
+                </a>
+                <div class="collapse" id="tables">
+                  <ul class="nav nav-collapse">
+                    <li>
+                      <a href="../tables/tables.html">
+                        <span class="sub-item">Basic Table</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="../tables/datatables.html">
+                        <span class="sub-item">Datatables</span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+              <li class="nav-item">
+                <a data-bs-toggle="collapse" href="#maps">
+                  <i class="fas fa-map-marker-alt"></i>
+                  <p>Maps</p>
+                  <span class="caret"></span>
+                </a>
+                <div class="collapse" id="maps">
+                  <ul class="nav nav-collapse">
+                    <li>
+                      <a href="../maps/googlemaps.html">
+                        <span class="sub-item">Google Maps</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="../maps/jsvectormap.html">
+                        <span class="sub-item">Jsvectormap</span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+              <li class="nav-item">
+                <a data-bs-toggle="collapse" href="#charts">
+                  <i class="far fa-chart-bar"></i>
+                  <p>Charts</p>
+                  <span class="caret"></span>
+                </a>
+                <div class="collapse" id="charts">
+                  <ul class="nav nav-collapse">
+                    <li>
+                      <a href="../charts/charts.html">
+                        <span class="sub-item">Chart Js</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="../charts/sparkline.html">
+                        <span class="sub-item">Sparkline</span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+              <li class="nav-item">
+                <a href="../widgets.html">
+                  <i class="fas fa-desktop"></i>
+                  <p>Widgets</p>
+                  <span class="badge badge-success">4</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="../../../documentation/index.html">
+                  <i class="fas fa-file"></i>
+                  <p>Documentation</p>
+                  <span class="badge badge-secondary">1</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a data-bs-toggle="collapse" href="#submenu">
+                  <i class="fas fa-bars"></i>
+                  <p>Menu Levels</p>
+                  <span class="caret"></span>
+                </a>
+                <div class="collapse" id="submenu">
+                  <ul class="nav nav-collapse">
+                    <li>
+                      <a data-bs-toggle="collapse" href="#subnav1">
+                        <span class="sub-item">Level 1</span>
+                        <span class="caret"></span>
+                      </a>
+                      <div class="collapse" id="subnav1">
+                        <ul class="nav nav-collapse subnav">
+                          <li>
+                            <a href="#">
+                              <span class="sub-item">Level 2</span>
+                            </a>
+                          </li>
+                          <li>
+                            <a href="#">
+                              <span class="sub-item">Level 2</span>
+                            </a>
+                          </li>
+                        </ul>
+                      </div>
+                    </li>
+                    <li>
+                      <a data-bs-toggle="collapse" href="#subnav2">
+                        <span class="sub-item">Level 1</span>
+                        <span class="caret"></span>
+                      </a>
+                      <div class="collapse" id="subnav2">
+                        <ul class="nav nav-collapse subnav">
+                          <li>
+                            <a href="#">
+                              <span class="sub-item">Level 2</span>
+                            </a>
+                          </li>
+                        </ul>
+                      </div>
+                    </li>
+                    <li>
+                      <a href="#">
+                        <span class="sub-item">Level 1</span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </li>
             </ul>
           </div>
         </div>
@@ -178,7 +332,7 @@
           <div class="main-header-logo">
             <!-- Logo Header -->
             <div class="logo-header" data-background-color="dark">
-              <a href="paginaprincipal.html" class="logo">
+              <a href="../index.html" class="logo">
                 <img
                   src="../assets/img/kaiadmin/logo_light.svg"
                   alt="navbar brand"
@@ -495,6 +649,7 @@
                     </div>
                   </div>
                 </li>
+
                 <li class="nav-item topbar-user dropdown hidden-caret">
                   <a
                     class="dropdown-toggle profile-pic"
@@ -504,14 +659,14 @@
                   >
                     <div class="avatar-sm">
                       <img
-                        src="assets/img/profile.jpg"
+                        src="../assets/img/profile.jpg"
                         alt="..."
                         class="avatar-img rounded-circle"
-                      />              
+                      />
                     </div>
                     <span class="profile-username">
-                      <span class="op-7">Hola,</span>
-                      <span class="fw-bold">Manuel Yarleque</span>
+                      <span class="op-7">Hi,</span>
+                      <span class="fw-bold">Hizrian</span>
                     </span>
                   </a>
                   <ul class="dropdown-menu dropdown-user animated fadeIn">
@@ -520,31 +675,31 @@
                         <div class="user-box">
                           <div class="avatar-lg">
                             <img
-                              src="assets/img/profile.jpg"
+                              src="../assets/img/profile.jpg"
                               alt="image profile"
                               class="avatar-img rounded"
                             />
                           </div>
                           <div class="u-text">
-                            <h4>Manuel</h4>
-                            <p class="text-muted">myarleque@gmail.com</p>
+                            <h4>Hizrian</h4>
+                            <p class="text-muted">hello@example.com</p>
                             <a
                               href="profile.html"
                               class="btn btn-xs btn-secondary btn-sm"
-                              >Ver perfil</a
+                              >View Profile</a
                             >
                           </div>
                         </div>
                       </li>
                       <li>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Mi perfil</a>
+                        <a class="dropdown-item" href="#">My Profile</a>
                         <a class="dropdown-item" href="#">My Balance</a>
                         <a class="dropdown-item" href="#">Inbox</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Ajustes</a>
+                        <a class="dropdown-item" href="#">Account Setting</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Cerrar Sesion</a>
+                        <a class="dropdown-item" href="#">Logout</a>
                       </li>
                     </div>
                   </ul>
@@ -557,393 +712,50 @@
 
         <div class="container">
           <div class="page-inner">
-            <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
-              <div>
-                <h3 class="fw-bold mb-3">¡Bienvenido a DOGLESS, Superadmin Manuel Yarlequé!</h3>
-                <h6 class="op-7 mb-2">En las tablas encontrarás los registros más recientes de cada rol. Navega entre las páginas para explorar más información de los usuarios.</h6>
-              </div>
+            <div class="page-header">
+              <h3 class="fw-bold mb-3">Icons</h3>
+              <ul class="breadcrumbs mb-3">
+                <li class="nav-home">
+                  <a href="#">
+                    <i class="icon-home"></i>
+                  </a>
+                </li>
+                <li class="separator">
+                  <i class="icon-arrow-right"></i>
+                </li>
+                <li class="nav-item">
+                  <a href="#">Base</a>
+                </li>
+                <li class="separator">
+                  <i class="icon-arrow-right"></i>
+                </li>
+                <li class="nav-item">
+                  <a href="#">Line Awesome</a>
+                </li>
+              </ul>
             </div>
             <div class="row">
-              <!-- Tabla de Administradores Zonales -->
               <div class="col-md-12">
-                  <div class="card">
-                      <div class="card-header">
-                          <h4 class="card-title">Administradores Zonales</h4>
-                      </div>
-                      <div class="card-body">
-                          <div class="table-responsive">
-                              <table id="tabla-admins" class="display table table-striped table-hover">
-                                  <thead>
-                                      <tr>
-                                          <th>Nombres</th>
-                                          <th>Apellidos</th>
-                                          <th>DNI</th>
-                                          <th>Correo</th>
-                                          <th>Distrito</th>
-                                      </tr>
-                                  </thead>
-                                  <tbody>
-                                      <tr>
-                                          <td>Fernando</td>
-                                          <td>Salas</td>
-                                          <td>76543210</td>
-                                          <td>fernando.salas@gmail.com</td>
-                                          <td>San Luis</td>
-                                      </tr>
-                                      <tr>
-                                        <td>Gabriela</td>
-                                        <td>Gutiérrez</td>
-                                        <td>65432109</td>
-                                        <td>gabriela.gutierrez@gmail.com</td>
-                                        <td>Breña</td>
-                                      </tr>
-                                      <tr>
-                                        <td>Leonardo</td>
-                                        <td>Abanto</td>
-                                        <td>36544411</td>
-                                        <td>leo.abanto@gmail.com</td>
-                                        <td>Pachacamac</td>
-                                      </tr>
-                                    
-                                      
-                                      <!-- Más filas... -->
-                                      <tr>
-                                        <td>Jorge</td>
-                                        <td>Coronado</td>
-                                        <td>75432109</td>
-                                        <td>jorge.coronado@gmail.com</td>
-                                        <td>Los Olivos</td>
-                                      </tr>
-                                      <tr>
-                                        <td>Renato</td>
-                                        <td>Paredes</td>
-                                        <td>54321098</td>
-                                        <td>renato.paredes@gmail.com</td>
-                                        <td>San Juan de Lurigancho</td>
-                                      </tr>
-                                      <tr>
-                                        <td>Marta</td>
-                                        <td>López</td>
-                                        <td>43210987</td>
-                                        <td>marta.lopez@gmail.com</td>
-                                        <td>Santa Anita</td>
-                                      </tr>
-                                     
-                                        <td>Carolina</td>
-                                        <td>Alvarez</td>
-                                        <td>98765430</td>
-                                        <td>carolina.alvarez@gmail.com</td>
-                                        <td>Cercado de Lima</td>
-                                      </tr>
-                                      <tr>
-                                        <td>Mario</td>
-                                        <td>Chavez</td>
-                                        <td>87654309</td>
-                                        <td>mario.chavez@gmail.com</td>
-                                        <td>San Martín de Porres</td>
-                                      </tr>
-                                      <tr>
-                                        <td>Luisa</td>
-                                        <td>Meza</td>
-                                        <td>76543208</td>
-                                        <td>luisa.meza@gmail.com</td>
-                                        <td>Barranco</td>
-                                      </tr>
-                                  </tbody>
-                              </table>
-                          </div>
-                      </div>
+                <div class="card">
+                  <div class="card-header">
+                    <div class="card-title">Simple Line Icons</div>
+                    <div class="card-category">
+                      Simple and Minimal Line Icons from
+                      <a
+                        class="link"
+                        href="https://github.com/thesabbir/simple-line-icons"
+                        >Simple Line Icons</a
+                      >
+                    </div>
                   </div>
-              </div>
-              <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h4 class="card-title">Agentes</h4>
-                    </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table id="tabla-admins2" class="display table table-striped table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>Nombres</th>
-                                        <th>Apellidos</th>
-                                        <th>DNI</th>
-                                        <th>Correo</th>
-                                        <th>Distrito</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                  <tr>
-                                    <td>José</td>
-                                    <td>González</td>
-                                    <td>12345678</td>
-                                    <td>jose.gonzalez@gmail.com</td>
-                                    <td>Miraflores</td>
-                                  </tr>
-                                  <tr>
-                                    <td>María</td>
-                                    <td>Rojas</td>
-                                    <td>23456789</td>
-                                    <td>maria.rojas@gmail.com</td>
-                                    <td>San Isidro</td>
-                                  </tr>
-                                  <tr>
-                                    <td>Carlos</td>
-                                    <td>Fernández</td>
-                                    <td>34567890</td>
-                                    <td>carlos.fernandez@gmail.com</td>
-                                    <td>Surco</td>
-                                  </tr>
-                                  <tr>
-                                    <td>Lucía</td>
-                                    <td>Ramírez</td>
-                                    <td>45678901</td>
-                                    <td>lucia.ramirez@gmail.com</td>
-                                    <td>La Molina</td>
-                                  </tr>
-                                  <tr>
-                                    <td>Jorge</td>
-                                    <td>Vargas</td>
-                                    <td>56789012</td>
-                                    <td>jorge.vargas@gmail.com</td>
-                                    <td>San Borja</td>
-                                  </tr>
-                                  <tr>
-                                    <td>Ana</td>
-                                    <td>Medina</td>
-                                    <td>67890123</td>
-                                    <td>ana.medina@gmail.com</td>
-                                    <td>San Miguel</td>
-                                  </tr>
-                                  <tr>
-                                    <td>Ricardo</td>
-                                    <td>Sánchez</td>
-                                    <td>78901234</td>
-                                    <td>ricardo.sanchez@gmail.com</td>
-                                    <td>Pueblo Libre</td>
-                                  </tr>
-                                  <tr>
-                                    <td>Elena</td>
-                                    <td>Torres</td>
-                                    <td>89012345</td>
-                                    <td>elena.torres@gmail.com</td>
-                                    <td>Lince</td>
-                                  </tr>
-                                  <tr>
-                                    <td>Fernando</td>
-                                    <td>Pérez</td>
-                                    <td>90123456</td>
-                                    <td>fernando.perez@gmail.com</td>
-                                    <td>Chorrillos</td>
-                                  </tr>
-                                  <tr>
-                                    <td>Sofía</td>
-                                    <td>Castro</td>
-                                    <td>01234567</td>
-                                    <td>sofia.castro@gmail.com</td>
-                                    <td>Jesús María</td>
-                                  </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-              </div>
-              <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h4 class="card-title">Usuarios Finales</h4>
-                    </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table id="tabla-admins3" class="display table table-striped table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>Nombres</th>
-                                        <th>Apellidos</th>
-                                        <th>DNI</th>
-                                        <th>Correo</th>
-                                        <th>Distrito</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                  <tr>
-                                    <td>David</td>
-                                    <td>Navarro</td>
-                                    <td>32109876</td>
-                                    <td>david.navarro@gmail.com</td>
-                                    <td>Ate</td>
-                                  </tr>
-                                  <tr>
-                                    <td>Luciana</td>
-                                    <td>Bravo</td>
-                                    <td>21098765</td>
-                                    <td>luciana.bravo@gmail.com</td>
-                                    <td>Lince</td>
-                                  </tr>
-                                  <tr>
-                                    <td>Álvaro</td>
-                                    <td>Mendoza</td>
-                                    <td>10987654</td>
-                                    <td>alvaro.mendoza@gmail.com</td>
-                                    <td>Chorrillos</td>
-                                  </tr>
-                                  <tr>
-                                    <td>Elena</td>
-                                    <td>Espinoza</td>
-                                    <td>98765432</td>
-                                    <td>elena.espinoza@gmail.com</td>
-                                    <td>Magdalena del Mar</td>
-                                  </tr>
-                                  <tr>
-                                    <td>Felipe</td>
-                                    <td>Camacho</td>
-                                    <td>87654322</td>
-                                    <td>felipe.camacho@gmail.com</td>
-                                    <td>Rímac</td>
-                                  </tr>
-                                  <tr>
-                                    <td>Valeria</td>
-                                    <td>Santos</td>
-                                    <td>76543212</td>
-                                    <td>valeria.santos@gmail.com</td>
-                                    <td>San Miguel</td>
-                                  </tr>
-                                  <tr>
-                                    <td>Rodrigo</td>
-                                    <td>Vega</td>
-                                    <td>65432123</td>
-                                    <td>rodrigo.vega@gmail.com</td>
-                                    <td>San Borja</td>
-                                  </tr>
-                                  <tr>
-                                    <td>Paola</td>
-                                    <td>Chávez</td>
-                                    <td>54321034</td>
-                                    <td>paola.chavez@gmail.com</td>
-                                    <td>Pueblo Libre</td>
-                                  </tr>
-                                  <tr>
-                                    <td>Andrés</td>
-                                    <td>Acuña</td>
-                                    <td>43210945</td>
-                                    <td>andres.acuna@gmail.com</td>
-                                    <td>Comas</td>
-                                  </tr>
-                                  <tr>
-                                    <td>Cecilia</td>
-                                    <td>Ramírez</td>
-                                    <td>32109856</td>
-                                    <td>cecilia.ramirez@gmail.com</td>
-                                    <td>El Agustino</td>
-                                  </tr>
-                                  <tr>
-                                    <td>Victor</td>
-                                    <td>Pérez</td>
-                                    <td>21098767</td>
-                                    <td>victor.perez@gmail.com</td>
-                                    <td>La Victoria</td>
-                                  </tr>
-                                  <tr>
-                                    <td>Marisol</td>
-                                    <td>Figueroa</td>
-                                    <td>10987678</td>
-                                    <td>marisol.figueroa@gmail.com</td>
-                                    <td>Jesús María</td>
-                                  </tr>
-                                  <tr>
-                                    <td>Carlos</td>
-                                    <td>Castro</td>
-                                    <td>98765421</td>
-                                    <td>carlos.castro@gmail.com</td>
-                                    <td>San Isidro</td>
-                                  </tr>
-                                  <tr>
-                                    <td>Rosa</td>
-                                    <td>Valverde</td>
-                                    <td>87654310</td>
-                                    <td>rosa.valverde@gmail.com</td>
-                                    <td>Miraflores</td>
-                                  </tr>
-                                  <tr>
-                                    <td>Manuel</td>
-                                    <td>Benavides</td>
-                                    <td>76543209</td>
-                                    <td>manuel.benavides@gmail.com</td>
-                                    <td>Villa El Salvador</td>
-                                  </tr>
-                                  <tr>
-                                    <td>Claudia</td>
-                                    <td>Sifuentes</td>
-                                    <td>65432198</td>
-                                    <td>claudia.sifuentes@gmail.com</td>
-                                    <td>Villa María del Triunfo</td>
-                                  </tr>
-                                  <tr>
-                                    <td>Jorge</td>
-                                    <td>Huerta</td>
-                                    <td>54321087</td>
-                                    <td>jorge.huerta@gmail.com</td>
-                                    <td>Los Olivos</td>
-                                  </tr>
-                                  <tr>
-                                    <td>Marina</td>
-                                    <td>Suárez</td>
-                                    <td>43210976</td>
-                                    <td>marina.suarez@gmail.com</td>
-                                    <td>Surco</td>
-                                  </tr>
-                                  <tr>
-                                    <td>Raúl</td>
-                                    <td>Ortega</td>
-                                    <td>32109865</td>
-                                    <td>raul.ortega@gmail.com</td>
-                                    <td>Independencia</td>
-                                  </tr>
-                                  <tr>
-                                    <td>Patricia</td>
-                                    <td>Luna</td>
-                                    <td>21098754</td>
-                                    <td>patricia.luna@gmail.com</td>
-                                    <td>Carabayllo</td>
-                                  </tr>
-                                  <tr>
-                                    <td>Alfredo</td>
-                                    <td>Delgado</td>
-                                    <td>10987643</td>
-                                    <td>alfredo.delgado@gmail.com</td>
-                                    <td>San Juan de Miraflores</td>
-                                  </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+                  <div class="card-body">
+                    <div id="row-demo-icon" class="row"></div>
+                  </div>
                 </div>
               </div>
             </div>
-      
-
-
-            
-            
-            <!-- Agrega JavaScript para DataTables -->
-            <script>
-              $(document).ready(function () {
-                $('#tabla-admins, #tabla-agentes').DataTable({
-                  paging: true, // Habilita la paginación
-                  searching: false, // Deshabilita el filtro de búsqueda
-                  info: false, // Deshabilita la información de la tabla
-                  lengthChange: false, // Deshabilita la opción de cambiar la longitud de la tabla
-                  language: {
-                    paginate: {
-                      next: 'Siguiente',
-                      previous: 'Anterior'
-                    }
-                  }
-                });
-              });
-            </script>
-            
+          </div>
+        </div>
 
         <footer class="footer">
           <div class="container-fluid d-flex justify-content-between">
@@ -1170,97 +982,212 @@
       <!-- End Custom template -->
     </div>
     <!--   Core JS Files   -->
-    <script src="assets/js/core/jquery-3.7.1.min.js"></script>
-    <script src="assets/js/core/popper.min.js"></script>
-    <script src="assets/js/core/bootstrap.min.js"></script>
+    <script src="../assets/js/core/jquery-3.7.1.min.js"></script>
+    <script src="../assets/js/core/popper.min.js"></script>
+    <script src="../assets/js/core/bootstrap.min.js"></script>
 
     <!-- jQuery Scrollbar -->
-    <script src="assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
-    <!-- Datatables -->
-    <script src="assets/js/plugin/datatables/datatables.min.js"></script>
+    <script src="../assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
     <!-- Kaiadmin JS -->
-    <script src="assets/js/kaiadmin.min.js"></script>
+    <script src="../assets/js/kaiadmin.min.js"></script>
     <!-- Kaiadmin DEMO methods, don't include it in your project! -->
-    <script src="assets/js/setting-demo2.js"></script>
+    <script src="../assets/js/setting-demo2.js"></script>
     <script>
-      $(document).ready(function () {
-        $("#basic-datatables").DataTable({});
-
-        $("#multi-filter-select").DataTable({
-          pageLength: 5,
-          initComplete: function () {
-            this.api()
-              .columns()
-              .every(function () {
-                var column = this;
-                var select = $(
-                  '<select class="form-select"><option value=""></option></select>'
-                )
-                  .appendTo($(column.footer()).empty())
-                  .on("change", function () {
-                    var val = $.fn.dataTable.util.escapeRegex($(this).val());
-
-                    column
-                      .search(val ? "^" + val + "$" : "", true, false)
-                      .draw();
-                  });
-
-                column
-                  .data()
-                  .unique()
-                  .sort()
-                  .each(function (d, j) {
-                    select.append(
-                      '<option value="' + d + '">' + d + "</option>"
-                    );
-                  });
-              });
-          },
-        });
-
-                // Add Row
-                $("#add-row").DataTable({
-          pageLength: 5,
-        });
-
-        var action =
-          '<td> <div class="form-button-action"> <button type="button" data-bs-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task"> <i class="fa fa-edit"></i> </button> <button type="button" data-bs-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove"> <i class="fa fa-times"></i> </button> </div> </td>';
-
-        $("#addRowButton").click(function () {
-          $("#add-row")
-            .dataTable()
-            .fnAddData([
-              $("#addName").val(),
-              $("#addPosition").val(),
-              $("#addOffice").val(),
-              action,
-            ]);
-          $("#addRowModal").modal("hide");
-        });
-
-        $('#tabla-admins').DataTable({
-                "pageLength": 5, // Mostrar 5 registros por página
-                "lengthChange": false,  // Eliminar el menú de selección de cantidad de registros
-                "language": {
-                    "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json"  // Traducción al español
-                }
-            });
-        $('#tabla-admins2').DataTable({
-                "pageLength": 5, // Mostrar 5 registros por página
-                "lengthChange": false,  // Eliminar el menú de selección de cantidad de registros
-                "language": {
-                    "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json"  // Traducción al español
-                }
-            });
-            $('#tabla-admins3').DataTable({
-                "pageLength": 5, // Mostrar 5 registros por página
-                "lengthChange": false,  // Eliminar el menú de selección de cantidad de registros
-                "language": {
-                    "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json"  // Traducción al español
-                }
-            });
-      });
+      var iconClass = [
+        "icon-user",
+        "icon-people",
+        "icon-user-female",
+        "icon-user-follow",
+        "icon-user-following",
+        "icon-user-unfollow",
+        "icon-login",
+        "icon-logout",
+        "icon-emotsmile",
+        "icon-phone",
+        "icon-call-end",
+        "icon-call-in",
+        "icon-call-out",
+        "icon-map",
+        "icon-location-pin",
+        "icon-direction",
+        "icon-directions",
+        "icon-compass",
+        "icon-layers",
+        "icon-menu",
+        "icon-list",
+        "icon-options-vertical",
+        "icon-options",
+        "icon-arrow-down",
+        "icon-arrow-left",
+        "icon-arrow-right",
+        "icon-arrow-up",
+        "icon-arrow-up-circle",
+        "icon-arrow-left-circle",
+        "icon-arrow-right-circle",
+        "icon-arrow-down-circle",
+        "icon-check",
+        "icon-clock",
+        "icon-plus",
+        "icon-close",
+        "icon-trophy",
+        "icon-screen-smartphone",
+        "icon-screen-desktop",
+        "icon-plane",
+        "icon-notebook",
+        "icon-mustache",
+        "icon-mouse",
+        "icon-magnet",
+        "icon-energy",
+        "icon-disc",
+        "icon-cursor",
+        "icon-cursor-move",
+        "icon-crop",
+        "icon-chemistry",
+        "icon-speedometer",
+        "icon-shield",
+        "icon-screen-tablet",
+        "icon-magic-wand",
+        "icon-hourglass",
+        "icon-graduation",
+        "icon-ghost",
+        "icon-game-controller",
+        "icon-fire",
+        "icon-eyeglass",
+        "icon-envelope-open",
+        "icon-envelope-letter",
+        "icon-bell",
+        "icon-badge",
+        "icon-anchor",
+        "icon-wallet",
+        "icon-vector",
+        "icon-speech",
+        "icon-puzzle",
+        "icon-printer",
+        "icon-present",
+        "icon-playlist",
+        "icon-pin",
+        "icon-picture",
+        "icon-handbag",
+        "icon-globe-alt",
+        "icon-globe",
+        "icon-folder-alt",
+        "icon-folder",
+        "icon-film",
+        "icon-feed",
+        "icon-drop",
+        "icon-drawer",
+        "icon-docs",
+        "icon-doc",
+        "icon-diamond",
+        "icon-cup",
+        "icon-calculator",
+        "icon-bubbles",
+        "icon-briefcase",
+        "icon-book-open",
+        "icon-basket-loaded",
+        "icon-basket",
+        "icon-bag",
+        "icon-action-undo",
+        "icon-action-redo",
+        "icon-wrench",
+        "icon-umbrella",
+        "icon-trash",
+        "icon-tag",
+        "icon-support",
+        "icon-frame",
+        "icon-size-fullscreen",
+        "icon-size-actual",
+        "icon-shuffle",
+        "icon-share-alt",
+        "icon-share",
+        "icon-rocket",
+        "icon-question",
+        "icon-pie-chart",
+        "icon-pencil",
+        "icon-note",
+        "icon-loop",
+        "icon-home",
+        "icon-grid",
+        "icon-graph",
+        "icon-microphone",
+        "icon-music-tone-alt",
+        "icon-music-tone",
+        "icon-earphones-alt",
+        "icon-earphones",
+        "icon-equalizer",
+        "icon-like",
+        "icon-dislike",
+        "icon-control-start",
+        "icon-control-rewind",
+        "icon-control-play",
+        "icon-control-pause",
+        "icon-control-forward",
+        "icon-control-end",
+        "icon-volume-1",
+        "icon-volume-2",
+        "icon-volume-off",
+        "icon-calendar",
+        "icon-bulb",
+        "icon-chart",
+        "icon-ban",
+        "icon-bubble",
+        "icon-camrecorder",
+        "icon-camera",
+        "icon-cloud-download",
+        "icon-cloud-upload",
+        "icon-envelope",
+        "icon-eye",
+        "icon-flag",
+        "icon-heart",
+        "icon-information",
+        "icon-key",
+        "icon-link",
+        "icon-lock",
+        "icon-lock-open",
+        "icon-magnifier",
+        "icon-magnifier-add",
+        "icon-magnifier-remove",
+        "icon-paper-clip",
+        "icon-paper-plane",
+        "icon-power",
+        "icon-refresh",
+        "icon-reload",
+        "icon-settings",
+        "icon-star",
+        "icon-symbol-female",
+        "icon-symbol-male",
+        "icon-target",
+        "icon-credit-card",
+        "icon-paypal",
+        "icon-social-tumblr",
+        "icon-social-twitter",
+        "icon-social-facebook",
+        "icon-social-instagram",
+        "icon-social-linkedin",
+        "icon-social-pinterest",
+        "icon-social-github",
+        "icon-social-gplus",
+        "icon-social-reddit",
+        "icon-social-skype",
+        "icon-social-dribbble",
+        "icon-social-behance",
+        "icon-social-foursqare",
+        "icon-social-soundcloud",
+        "icon-social-spotify",
+        "icon-social-stumbleupon",
+        "icon-social-youtube",
+        "icon-social-dropbox",
+      ];
+      var rowDemoIcon = "#row-demo-icon";
+      for (i = 0; i < iconClass.length; i++) {
+        $(rowDemoIcon).append(
+          '<div class="col-md-3"> <div class="demo-icon"> <div class="icon-preview"><i class="' +
+            iconClass[i] +
+            '"></i></div> <div class="icon-class">' +
+            iconClass[i] +
+            "</div> </div> </div>"
+        );
+      }
     </script>
   </body>
 </html>
-            
