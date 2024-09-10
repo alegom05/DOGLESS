@@ -75,100 +75,59 @@
         <div class="sidebar-wrapper scrollbar scrollbar-inner">
           <div class="sidebar-content">
             <ul class="nav nav-secondary">
-				      <li class="nav-item">
+              <!-- Barra de navegacion -->
+            
+              <li class="nav-item">
                 <a href="paginaprincipal.html">
                   <i class="fas fa-home"></i>
                   <p>Pagina Principal</p>
                 </a>
-              </li>             
-              <li class="nav-item">
-                <a href="tables/solicitudes.html">
-                  <i class="fas fa-user-plus"></i>
-                  <p>Solicitudes</p>
-                </a>
               </li>
               <li class="nav-item">
                 <a href="dashboard.html">
-                  <i class="far fa-chart-bar"></i>
+                  <i class="fas fa-home"></i>
                   <p>Dashboard</p>
+                </a>
+              </li>              
+              <li class="nav-item">
+                <a href="tables/agentes.html">
+                  <i class="fas fa-user-plus"></i>
+                  <p>Agentes</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="tables/importaciones.html">
+                  <i class="fas fa-home"></i>
+                  <p>Importaciones</p>
+                </a>
+              </li> 
+              <li class="nav-item">
+                <a href="tables/reposiciones.html">
+                  <i class="far fa-chart-bar"></i>
+                  <p>Reposiciones</p>
                 </a>
               </li>   
               <li class="nav-item">
                 <a data-bs-toggle="collapse" href="#tables1">
                   <i class="fas fa-users"></i>
-                  <p>Lista de Usuarios</p>
+                  <p>Notificaciones</p>
                   <span class="caret"></span>
                 </a>
                 <div class="collapse" id="tables1">
                   <ul class="nav nav-collapse">
                     <li>
-                      <a href="tables/tables.html">
-                        <span class="sub-item">Administradores zonales</span>
+                      <a href="tables/recibidas.html">
+                        <span class="sub-item">Recibidas</span>
                       </a>
                     </li>
                     <li>
-                      <a href="tables/datatables.html">
-                        <span class="sub-item">Agentes zonales</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="tables/datatables.html">
-                        <span class="sub-item">Usuarios finales</span>
+                      <a href="tables/archivadas.html">
+                        <span class="sub-item">Archivadas</span>
                       </a>
                     </li>
                   </ul>
                 </div>
               </li>
-              <li class="nav-item">
-                <a data-bs-toggle="collapse" href="#tables2">
-                  <i class="far fa-handshake"></i>
-                  <p>Lista de Personal</p>
-                  <span class="caret"></span>
-                </a>
-                <div class="collapse" id="tables2">
-                  <ul class="nav nav-collapse">
-                    <li>
-                      <a href="tables/tables.html">
-                        <span class="sub-item">Administradores zonales</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="tables/datatables.html">
-                        <span class="sub-item">Agentes zonales</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="tables/datatables.html">
-                        <span class="sub-item">Usuarios finales</span>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </li>
-              <li class="nav-item">
-                <a data-bs-toggle="collapse" href="#tables3">
-                  <i class="fas fa-boxes"></i>
-                  <p>Ordenes de reposición</p>
-                  <span class="caret"></span>
-                </a>
-                <div class="collapse" id="tables3">
-                  <ul class="nav nav-collapse">
-                    <li>
-                      <a href="tables/tables.html">
-                        <span class="sub-item">Productos pendientes</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="tables/datatables.html">
-                        <span class="sub-item">Productos aprobados</span>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </li>
-
-              
-          
             </ul>
           </div>
         </div>
@@ -509,7 +468,7 @@
                     </div>
                     <span class="profile-username">
                       <span class="op-7">Hola,</span>
-                      <span class="fw-bold">Manuel Yarleque</span>
+                      <span class="fw-bold">Alonso Guevara</span>
                     </span>
                   </a>
                   <ul class="dropdown-menu dropdown-user animated fadeIn">
@@ -525,7 +484,7 @@
                           </div>
                           <div class="u-text">
                             <h4>Manuel</h4>
-                            <p class="text-muted">myarleque@gmail.com</p>
+                            <p class="text-muted">alonso.guevara@gmail.com</p>
                             <a
                               href="profile.html"
                               class="btn btn-xs btn-secondary btn-sm"
@@ -558,8 +517,8 @@
             <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
               <div>
                 <h3 class="fw-bold mb-3">Dashboard</h3>
-                <h6 class="op-7 mb-2">Aquí verás la cifra de agentes, baneados, y comparar usuarios,
-                   proveedores, órdenes para evaluar la participación y retención.</h6>
+                <h6 class="op-7 mb-2">Aquí verás las cifras y comparar usuarios,
+                   productos, proveedores para evaluar la participación y retención.</h6>
               </div>
 
             </div>
@@ -631,11 +590,11 @@
               <div class="col-6">
                 <div class="card">
                   <div class="card-header">
-                    <div class="card-title">Top 10 productos mas importados</div>
+                    <div class="card-title">Top 10 productos más importados en su zona</div>
                   </div>
                   <div class="card-body">
                     <div class="chart-container">
-                      <canvas id="productosMasImportados"></canvas>
+                      <canvas id="productosMasImportadosZona"></canvas>
                     </div>
                   </div>
                 </div>
@@ -643,7 +602,7 @@
               <div class="col-6">
                 <div class="card">
                   <div class="card-header">
-                    <div class="card-title">Distribucion de usuarios registrados</div>
+                    <div class="card-title">Distribucion de usuarios registrados en su zona</div>
                   </div>
                   <div class="card-body">
                     <div class="chart-container">
@@ -658,11 +617,11 @@
               <div class="col-6">
                 <div class="card">
                   <div class="card-header">
-                    <div class="card-title">Top 5 proveedores mas solicitados</div>
+                    <div class="card-title">Top 10 usuarios con más importaciones</div>
                   </div>
                   <div class="card-body">
                     <div class="chart-container">
-                      <canvas id="graficaTopSolicitados"></canvas>
+                      <canvas id="graficaTopImportaciones"></canvas>
                     </div>
                   </div>
                 </div>
@@ -670,11 +629,11 @@
               <div class="col-6">
                 <div class="card">
                   <div class="card-header">
-                    <div class="card-title">Top 5 proveedores mas criticados</div>
+                    <div class="card-title">Cantidad de usuarios por agente</div>
                   </div>
                   <div class="card-body">
                     <div class="chart-container">
-                      <canvas id="graficaTopCriticados"></canvas>
+                      <canvas id="graficaCantUserPerAgent"></canvas>
                     </div>
                   </div>
                 </div>
@@ -685,11 +644,11 @@
               <div class="col-6">
                 <div class="card">
                   <div class="card-header">
-                    <div class="card-title">Distribución de órdenes del semestre</div>
+                    <div class="card-title">Productos con poco stock para reposición</div>
                   </div>
                   <div class="card-body">
                     <div class="chart-container">
-                      <canvas id="ordenesPorSemestre"></canvas>
+                      <canvas id="productosPocoStock"></canvas>
                     </div>
                   </div>
                 </div>
@@ -697,351 +656,51 @@
 
               <div class="col-6">
                 <div class="card">
-                  <div class="card-header">
-                    <div class="card-title">Distribución de órdenes por zona</div>
-                  </div>
-                  <div class="card-body">
-                    <div class="chart-container">
-                      <canvas id="ordenesPorZona"></canvas>
+                    <div class="card-header">
+                        <div class="card-title">Distribución de agentes a cargo</div>
                     </div>
-                  </div>
+                    <div class="card-body">
+                        <!-- Tabla con los datos de agentes -->
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Zona</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Talha</td>
+                                    <td>Sur</td>
+                                </tr>
+                                <tr>
+                                    <td>Chad</td>
+                                    <td>Este</td>
+                                </tr>
+                                <tr>
+                                    <td>Hizrian</td>
+                                    <td>Oeste</td>
+                                </tr>
+                                <tr>
+                                    <td>Jaime</td>
+                                    <td>Este</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-              </div>
             </div>
+            </div>
+
+
+
+          
             
-            <div class="row">
-              <div class="col-md-4">
-                <div class="card card-round">
-                  <div class="card-body">
-                    <div class="card-head-row card-tools-still-right">
-                      <div class="card-title">New Customers</div>
-                      <div class="card-tools">
-                        <div class="dropdown">
-                          <button
-                            class="btn btn-icon btn-clean me-0"
-                            type="button"
-                            id="dropdownMenuButton"
-                            data-bs-toggle="dropdown"
-                            aria-haspopup="true"
-                            aria-expanded="false"
-                          >
-                            <i class="fas fa-ellipsis-h"></i>
-                          </button>
-                          <div
-                            class="dropdown-menu"
-                            aria-labelledby="dropdownMenuButton"
-                          >
-                            <a class="dropdown-item" href="#">Action</a>
-                            <a class="dropdown-item" href="#">Another action</a>
-                            <a class="dropdown-item" href="#"
-                              >Something else here</a
-                            >
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="card-list py-4">
-                      <div class="item-list">
-                        <div class="avatar">
-                          <img
-                            src="assets/img/jm_denis.jpg"
-                            alt="..."
-                            class="avatar-img rounded-circle"
-                          />
-                        </div>
-                        <div class="info-user ms-3">
-                          <div class="username">Jimmy Denis</div>
-                          <div class="status">Graphic Designer</div>
-                        </div>
-                        <button class="btn btn-icon btn-link op-8 me-1">
-                          <i class="far fa-envelope"></i>
-                        </button>
-                        <button class="btn btn-icon btn-link btn-danger op-8">
-                          <i class="fas fa-ban"></i>
-                        </button>
-                      </div>
-                      <div class="item-list">
-                        <div class="avatar">
-                          <span
-                            class="avatar-title rounded-circle border border-white"
-                            >CF</span
-                          >
-                        </div>
-                        <div class="info-user ms-3">
-                          <div class="username">Chandra Felix</div>
-                          <div class="status">Sales Promotion</div>
-                        </div>
-                        <button class="btn btn-icon btn-link op-8 me-1">
-                          <i class="far fa-envelope"></i>
-                        </button>
-                        <button class="btn btn-icon btn-link btn-danger op-8">
-                          <i class="fas fa-ban"></i>
-                        </button>
-                      </div>
-                      <div class="item-list">
-                        <div class="avatar">
-                          <img
-                            src="assets/img/talha.jpg"
-                            alt="..."
-                            class="avatar-img rounded-circle"
-                          />
-                        </div>
-                        <div class="info-user ms-3">
-                          <div class="username">Talha</div>
-                          <div class="status">Front End Designer</div>
-                        </div>
-                        <button class="btn btn-icon btn-link op-8 me-1">
-                          <i class="far fa-envelope"></i>
-                        </button>
-                        <button class="btn btn-icon btn-link btn-danger op-8">
-                          <i class="fas fa-ban"></i>
-                        </button>
-                      </div>
-                      <div class="item-list">
-                        <div class="avatar">
-                          <img
-                            src="assets/img/chadengle.jpg"
-                            alt="..."
-                            class="avatar-img rounded-circle"
-                          />
-                        </div>
-                        <div class="info-user ms-3">
-                          <div class="username">Chad</div>
-                          <div class="status">CEO Zeleaf</div>
-                        </div>
-                        <button class="btn btn-icon btn-link op-8 me-1">
-                          <i class="far fa-envelope"></i>
-                        </button>
-                        <button class="btn btn-icon btn-link btn-danger op-8">
-                          <i class="fas fa-ban"></i>
-                        </button>
-                      </div>
-                      <div class="item-list">
-                        <div class="avatar">
-                          <span
-                            class="avatar-title rounded-circle border border-white bg-primary"
-                            >H</span
-                          >
-                        </div>
-                        <div class="info-user ms-3">
-                          <div class="username">Hizrian</div>
-                          <div class="status">Web Designer</div>
-                        </div>
-                        <button class="btn btn-icon btn-link op-8 me-1">
-                          <i class="far fa-envelope"></i>
-                        </button>
-                        <button class="btn btn-icon btn-link btn-danger op-8">
-                          <i class="fas fa-ban"></i>
-                        </button>
-                      </div>
-                      <div class="item-list">
-                        <div class="avatar">
-                          <span
-                            class="avatar-title rounded-circle border border-white bg-secondary"
-                            >F</span
-                          >
-                        </div>
-                        <div class="info-user ms-3">
-                          <div class="username">Farrah</div>
-                          <div class="status">Marketing</div>
-                        </div>
-                        <button class="btn btn-icon btn-link op-8 me-1">
-                          <i class="far fa-envelope"></i>
-                        </button>
-                        <button class="btn btn-icon btn-link btn-danger op-8">
-                          <i class="fas fa-ban"></i>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-8">
-                <div class="card card-round">
-                  <div class="card-header">
-                    <div class="card-head-row card-tools-still-right">
-                      <div class="card-title">Transaction History</div>
-                      <div class="card-tools">
-                        <div class="dropdown">
-                          <button
-                            class="btn btn-icon btn-clean me-0"
-                            type="button"
-                            id="dropdownMenuButton"
-                            data-bs-toggle="dropdown"
-                            aria-haspopup="true"
-                            aria-expanded="false"
-                          >
-                            <i class="fas fa-ellipsis-h"></i>
-                          </button>
-                          <div
-                            class="dropdown-menu"
-                            aria-labelledby="dropdownMenuButton"
-                          >
-                            <a class="dropdown-item" href="#">Action</a>
-                            <a class="dropdown-item" href="#">Another action</a>
-                            <a class="dropdown-item" href="#"
-                              >Something else here</a
-                            >
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="card-body p-0">
-                    <div class="table-responsive">
-                      <!-- Projects table -->
-                      <table class="table align-items-center mb-0">
-                        <thead class="thead-light">
-                          <tr>
-                            <th scope="col">Payment Number</th>
-                            <th scope="col" class="text-end">Date & Time</th>
-                            <th scope="col" class="text-end">Amount</th>
-                            <th scope="col" class="text-end">Status</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <th scope="row">
-                              <button
-                                class="btn btn-icon btn-round btn-success btn-sm me-2"
-                              >
-                                <i class="fa fa-check"></i>
-                              </button>
-                              Payment from #10231
-                            </th>
-                            <td class="text-end">Mar 19, 2020, 2.45pm</td>
-                            <td class="text-end">$250.00</td>
-                            <td class="text-end">
-                              <span class="badge badge-success">Completed</span>
-                            </td>
-                          </tr>
-                          <tr>
-                            <th scope="row">
-                              <button
-                                class="btn btn-icon btn-round btn-success btn-sm me-2"
-                              >
-                                <i class="fa fa-check"></i>
-                              </button>
-                              Payment from #10231
-                            </th>
-                            <td class="text-end">Mar 19, 2020, 2.45pm</td>
-                            <td class="text-end">$250.00</td>
-                            <td class="text-end">
-                              <span class="badge badge-success">Completed</span>
-                            </td>
-                          </tr>
-                          <tr>
-                            <th scope="row">
-                              <button
-                                class="btn btn-icon btn-round btn-success btn-sm me-2"
-                              >
-                                <i class="fa fa-check"></i>
-                              </button>
-                              Payment from #10231
-                            </th>
-                            <td class="text-end">Mar 19, 2020, 2.45pm</td>
-                            <td class="text-end">$250.00</td>
-                            <td class="text-end">
-                              <span class="badge badge-success">Completed</span>
-                            </td>
-                          </tr>
-                          <tr>
-                            <th scope="row">
-                              <button
-                                class="btn btn-icon btn-round btn-success btn-sm me-2"
-                              >
-                                <i class="fa fa-check"></i>
-                              </button>
-                              Payment from #10231
-                            </th>
-                            <td class="text-end">Mar 19, 2020, 2.45pm</td>
-                            <td class="text-end">$250.00</td>
-                            <td class="text-end">
-                              <span class="badge badge-success">Completed</span>
-                            </td>
-                          </tr>
-                          <tr>
-                            <th scope="row">
-                              <button
-                                class="btn btn-icon btn-round btn-success btn-sm me-2"
-                              >
-                                <i class="fa fa-check"></i>
-                              </button>
-                              Payment from #10231
-                            </th>
-                            <td class="text-end">Mar 19, 2020, 2.45pm</td>
-                            <td class="text-end">$250.00</td>
-                            <td class="text-end">
-                              <span class="badge badge-success">Completed</span>
-                            </td>
-                          </tr>
-                          <tr>
-                            <th scope="row">
-                              <button
-                                class="btn btn-icon btn-round btn-success btn-sm me-2"
-                              >
-                                <i class="fa fa-check"></i>
-                              </button>
-                              Payment from #10231
-                            </th>
-                            <td class="text-end">Mar 19, 2020, 2.45pm</td>
-                            <td class="text-end">$250.00</td>
-                            <td class="text-end">
-                              <span class="badge badge-success">Completed</span>
-                            </td>
-                          </tr>
-                          <tr>
-                            <th scope="row">
-                              <button
-                                class="btn btn-icon btn-round btn-success btn-sm me-2"
-                              >
-                                <i class="fa fa-check"></i>
-                              </button>
-                              Payment from #10231
-                            </th>
-                            <td class="text-end">Mar 19, 2020, 2.45pm</td>
-                            <td class="text-end">$250.00</td>
-                            <td class="text-end">
-                              <span class="badge badge-success">Completed</span>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+
           </div>
         </div>
 
-        <footer class="footer">
-          <div class="container-fluid d-flex justify-content-between">
-            <nav class="pull-left">
-              <ul class="nav">
-                <li class="nav-item">
-                  <a class="nav-link" href="http://www.themekita.com">
-                    ThemeKita
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#"> Help </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#"> Licenses </a>
-                </li>
-              </ul>
-            </nav>
-            <div class="copyright">
-              2024, made with <i class="fa fa-heart heart text-danger"></i> by
-              <a href="http://www.themekita.com">ThemeKita</a>
-            </div>
-            <div>
-              Distributed by
-              <a target="_blank" href="https://themewagon.com/">ThemeWagon</a>.
-            </div>
-          </div>
-        </footer>
+ 
       </div>
 
       <!-- Custom template | don't include it in your project! -->
@@ -1096,13 +755,13 @@
         6.Distribucion de ordenes por zona*/
 
       //Top 10 producto mas importados:
-      var ctx1 = document.getElementById('productosMasImportados').getContext('2d');
+      var ctx1 = document.getElementById('productosMasImportadosZona').getContext('2d');
       
       var datosProductosImportados = {
         labels: ['Hogar','Tecnologia', 'Joyeria', 'Juguetes', 'Mascotas'],
         datasets: [{
           label: 'Productos vendidos por categoria',
-          data: [83, 178, 98, 58, 64],
+          data: [34, 41, 31, 34, 36],
           backgroundColor: 'rgba(30, 197, 255, 0.8)',
           borderColor: 'rgba(30, 140, 255, 0.8)',
           borderWidth: 1
@@ -1129,7 +788,7 @@
         data: {
           datasets: [
             {
-              data: [50, 35],
+              data: [55, 45],
               backgroundColor: ["#1d7af3", "#f3545d", "#fdaf4b"],
               borderWidth: 0,
             },
@@ -1167,12 +826,12 @@
 
 
       //GRAFICA 3:
-      var ctxOtraGrafica = document.getElementById('graficaTopSolicitados').getContext('2d');
+      var ctxOtraGrafica = document.getElementById('graficaTopImportaciones').getContext('2d');
       var otraChartData = {
-        labels: ['Carlos', 'Daniel', 'Laura', 'Fernanda', 'Jorge'],
+        labels: ['Robert', 'Aaron', 'Wilder', 'Elias', 'Jorge'],
         datasets: [{
-          label: 'Numero de solicitudes',
-          data: [20, 35, 40, 60, 75],
+          label: 'Numero de importaciones',
+          data: [16, 25, 33, 24, 15],
           backgroundColor: 'rgba(75, 192, 192, 0.5)',
           borderColor: 'rgba(75, 192, 192, 1)',
           borderWidth: 1
@@ -1196,12 +855,12 @@
       });
 
       // GRAFICA 4
-      var ctxOtraGrafica2 = document.getElementById('graficaTopCriticados').getContext('2d');
+      var ctxOtraGrafica2 = document.getElementById('graficaCantUserPerAgent').getContext('2d');
       var otraChartData2 = {
-        labels: ['Domingo', 'Carlos', 'Vladimir', 'Sigrid', 'Pedro'],
+        labels: ['Paolo', 'Daniel', 'Elio', 'Ricardo', 'Pedro', 'Gerardo'],
         datasets: [{
-          label: 'Numero de peores comentarios',
-          data: [50, 75, 60, 90, 110],
+          label: 'Número de usuarios por agentes',
+          data: [50, 75, 60, 70, 30 , 54],
           backgroundColor: 'rgba(240, 11, 14, 0.8)',
           borderColor: 'rgba(255, 99, 132, 1)',
           borderWidth: 1
@@ -1223,13 +882,13 @@
       });
 
       //Ordenes por semestre:
-      var ctx5 = document.getElementById('ordenesPorSemestre').getContext('2d');
+      var ctx5 = document.getElementById('productosPocoStock').getContext('2d');
       
       var datosProductosImportados = {
-        labels: ['Enero','Febrero', 'Marzo', 'Abril', 'Mayo','Junio'],
+        labels: ['Samsung Galaxy S24','LG Oled TV', 'Sony PS4', 'Nintendo Wii U', 'Zephyrus G16'],
         datasets: [{
-          label: 'Año 2024-1',
-          data: [83, 728, 98, 58, 64],
+          label: 'Productos con menos stock',
+          data: [12, 9, 17, 15, 14],
           backgroundColor: 'rgba(255, 154, 30, 0.8) ',
           borderColor: 'rgba(255, 125, 30, 0.8)',
           borderWidth: 1
