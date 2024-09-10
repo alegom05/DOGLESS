@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+    </head>
+    <body>
+        <h3>Nombre del usuario: <span th:text="${nombre}">Pedro</span></h3>
+        <h3 th:text="${'Nombre de usuario: ' + apellido}">Nombre de usuario: Pedro</h3>
+        <h3 th:text="|Nombre de usuario: ${dni}|">AAAAA</h3>
+        <p>Nombre de la persona del objeto <span th:text="${persona.nombre}"></span></p>
+    </body>
+</html>
