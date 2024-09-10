@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    body {
+        font-family: 'Calibri', sans-serif;
+    }
+</style>
+<body>
+
+<h1>Hooome</h1>
+
+<h3>Persona 1</h3>
+<p>Nombre: <span th:text="${persona.nombre}"></span></p>
+<p th:text="|Apellido: ${persona.apellido}|"></p>
+<p th:text="'Dni: ' + ${persona.dni}"></p>
+<p>Edad: <span th:text="${persona.edad}"></span></p>
+
+<form th:object="${persona}">
+    <div>
+        <label>Nombre</label>
+        <input type="text" th:field="*{nombre}">
+    </div>
+    <div>
+        <label>Apellido</label>
+        <input type="text" th:field="*{apellido}">
+    </div>
+    <div>
+        <label>Dni</label>
+        <input type="text" th:field="*{dni}">
+    </div>
+    <div>
+        <label>Edad</label>
+        <input type="text" th:field="*{edad}">
+    </div>
+</form>
+
+</body>
+</html>
