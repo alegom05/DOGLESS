@@ -81,97 +81,51 @@
                   <p>Pagina Principal</p>
                 </a>
               </li>
-              
-              <li class="nav-item">
-                <a href="solicitudes.html">
-                  <i class="fas fa-user-plus"></i>
-                  <p>Solicitudes</p>
-                </a>
-              </li>
-
               <li class="nav-item">
                 <a href="../dashboard.html">
-                  <i class="far fa-chart-bar"></i>
+                  <i class="fas fa-home"></i>
                   <p>Dashboard</p>
                 </a>
+              </li>              
+              <li class="nav-item">
+                <a href="tables/agentes.html">
+                  <i class="fas fa-user-plus"></i>
+                  <p>Agentes</p>
+                </a>
               </li>
-    
-               <li class="nav-item">
+              <li class="nav-item">
+                <a href="tables/importaciones.html">
+                  <i class="fas fa-home"></i>
+                  <p>Importaciones</p>
+                </a>
+              </li> 
+              <li class="nav-item">
+                <a href="tables/reposiciones.html">
+                  <i class="far fa-chart-bar"></i>
+                  <p>Reposiciones</p>
+                </a>
+              </li>   
+              <li class="nav-item">
                 <a data-bs-toggle="collapse" href="#tables1">
                   <i class="fas fa-users"></i>
-                  <p>Lista de Usuarios</p>
+                  <p>Notificaciones</p>
                   <span class="caret"></span>
                 </a>
                 <div class="collapse" id="tables1">
                   <ul class="nav nav-collapse">
                     <li>
-                      <a href="adminzonales.html">
-                        <span class="sub-item">Administradores zonales</span>
+                      <a href="tables/recibidas.html">
+                        <span class="sub-item">Recibidas</span>
                       </a>
                     </li>
                     <li>
-                      <a href="agentes.html">
-                        <span class="sub-item">Agentes zonales</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="usuarios.html">
-                        <span class="sub-item">Usuarios finales</span>
+                      <a href="tables/archivadas.html">
+                        <span class="sub-item">Archivadas</span>
                       </a>
                     </li>
                   </ul>
                 </div>
               </li>
-
-              <li class="nav-item">
-                <a data-bs-toggle="collapse" href="#tables2">
-                  <i class="far fa-handshake"></i>
-                  <p>Lista de Personal</p>
-                  <span class="caret"></span>
-                </a>
-                <div class="collapse" id="tables2">
-                  <ul class="nav nav-collapse">
-                    <li>
-                      <a href="vendedores.html">
-                        <span class="sub-item">Vendedores</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="proveedores.html">
-                        <span class="sub-item">Proveedores</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="productos.html">
-                        <span class="sub-item">Productos</span>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </li>
-
-              <li class="nav-item">
-                <a data-bs-toggle="collapse" href="#tables3">
-                  <i class="fas fa-boxes"></i>
-                  <p>Ordenes de reposición</p>
-                  <span class="caret"></span>
-                </a>
-                <div class="collapse" id="tables3">
-                  <ul class="nav nav-collapse">
-                    <li>
-                      <a href="tables/tables.html">
-                        <span class="sub-item">Productos pendientes</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="tables/datatables.html">
-                        <span class="sub-item">Productos aprobados</span>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </li>
-
             </ul>
           </div>
         </div>
@@ -516,8 +470,8 @@
                       />
                     </div>
                     <span class="profile-username">
-                      <span class="op-7">Hi,</span>
-                      <span class="fw-bold">Hizrian</span>
+                      <span class="op-7">Hola,</span>
+                      <span class="fw-bold">Alonso</span>
                     </span>
                   </a>
                   <ul class="dropdown-menu dropdown-user animated fadeIn">
@@ -533,7 +487,7 @@
                           </div>
                           <div class="u-text">
                             <h4>Hizrian</h4>
-                            <p class="text-muted">hello@gmail.com</p>
+                            <p class="text-muted">alonso.correa@gmail.com</p>
                             <a
                               href="profile.html"
                               class="btn btn-xs btn-secondary btn-sm"
@@ -544,13 +498,13 @@
                       </li>
                       <li>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">My Profile</a>
+                        <a class="dropdown-item" href="#">Mi perfil</a>
                         <a class="dropdown-item" href="#">My Balance</a>
                         <a class="dropdown-item" href="#">Inbox</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="#">Account Setting</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Logout</a>
+                        <a class="dropdown-item" href="#">Cerrar Sesion</a>
                       </li>
                     </div>
                   </ul>
@@ -590,83 +544,82 @@
                           <tr>
                             <th>Nombre</th>
                             <th>Apellido</th>
-                            <th>DNI</th>
+                            <th>RUC</th>
                             <th>Correo Electrónico</th>
-                            <th>Distrito</th>
+                            <th>Código de Aduanas</th>
                             <th>Acciones</th>
-                            <th>Espiar</th>
                           </tr>
                         </thead>
                         <tbody>
                           <tr>
                             <td>José</td>
                             <td>González</td>
-                            <td>12345678</td>
+                            <td>412345678</td>
                             <td>jose.gonzalez@gmail.com</td>
-                            <td>Miraflores</td>
+                            <td>1001</td>
                           </tr>
                           <tr>
                             <td>María</td>
                             <td>Rojas</td>
                             <td>23456789</td>
                             <td>maria.rojas@gmail.com</td>
-                            <td>San Isidro</td>
+                            <td>1002</td>
                           </tr>
                           <tr>
                             <td>Carlos</td>
                             <td>Fernández</td>
-                            <td>34567890</td>
+                            <td>834567890</td>
                             <td>carlos.fernandez@gmail.com</td>
-                            <td>Surco</td>
+                            <td>1003</td>
                           </tr>
                           <tr>
                             <td>Lucía</td>
                             <td>Ramírez</td>
-                            <td>45678901</td>
+                            <td>745678901</td>
                             <td>lucia.ramirez@gmail.com</td>
-                            <td>La Molina</td>
+                            <td>1004</td>
                           </tr>
                           <tr>
                             <td>Jorge</td>
                             <td>Vargas</td>
-                            <td>56789012</td>
+                            <td>456789012</td>
                             <td>jorge.vargas@gmail.com</td>
-                            <td>San Borja</td>
+                            <td>1005</td>
                           </tr>
                           <tr>
                             <td>Ana</td>
                             <td>Medina</td>
-                            <td>67890123</td>
+                            <td>867890123</td>
                             <td>ana.medina@gmail.com</td>
-                            <td>San Miguel</td>
+                            <td>1006</td>
                           </tr>
                           <tr>
                             <td>Ricardo</td>
                             <td>Sánchez</td>
-                            <td>78901234</td>
+                            <td>378901234</td>
                             <td>ricardo.sanchez@gmail.com</td>
-                            <td>Pueblo Libre</td>
+                            <td>1007</td>
                           </tr>
                           <tr>
                             <td>Elena</td>
                             <td>Torres</td>
-                            <td>89012345</td>
+                            <td>589012345</td>
                             <td>elena.torres@gmail.com</td>
-                            <td>Lince</td>
+                            <td>1008</td>
                           </tr>
                           <tr>
                             <td>Fernando</td>
                             <td>Pérez</td>
-                            <td>90123456</td>
+                            <td>490123456</td>
                             <td>fernando.perez@gmail.com</td>
-                            <td>Chorrillos</td>
+                            <td>1009</td>
                           </tr>
                           <tr>
                             <td>Sofía</td>
                             <td>Castro</td>
-                            <td>01234567</td>
+                            <td>301234567</td>
                             <td>sofia.castro@gmail.com</td>
-                            <td>Jesús María</td>
+                            <td>1010</td>
                           </tr>
                         </tbody>
                       </table>
@@ -692,61 +645,21 @@
                         </div>
                       </div>
                       
-                      <!-- Popup para confirmar espiar -->
-                      <div id="confirmarEspiarPopup" class="modal" tabindex="-1" role="dialog">
-                        <div class="modal-dialog" role="document">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <h5 class="modal-title">Confirmar Espiar</h5>
-                              <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="cerrarPopup('confirmarEspiarPopup')">
-                                <span aria-hidden="true">&times;</span>
-                              </button>
-                            </div>
-                            <div class="modal-body">
-                              <p>¿Estás seguro de que deseas espiar esta cuenta?</p>
-                            </div>
-                            <div class="modal-footer">
-                              <button type="button" class="btn btn-primary" onclick="espiarCuenta()">Sí, espiar</button>
-                              <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="cerrarPopup('confirmarEspiarPopup')">Cancelar</button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      
+
                       <script>
                         // Función para cerrar popups
                         function cerrarPopup(id) {
                           document.getElementById(id).style.display = 'none';
                         }
-                      
                         // Funciones para manejar la lógica de los botones
                         function verRegistro(dni) {
-                          window.location.href = `/verRegistro/${dni}`; // Redirigir a la vista de ver
+                          window.location.href = 'verRegistroAgente.html'
+                        }
+                        function crearRegistro(dni) {
+                          window.location.href = `NuevoRegistroAgente.html`; 
                         }
                       
-                        function editarRegistro(dni) {
-                          window.location.href = `/editarRegistro/${dni}`; // Redirigir a la vista de editar
-                        }
-                      
-                        function confirmarBorrado(dni) {
-                          document.getElementById('confirmarBorradoPopup').style.display = 'block';
-                          // Guardar el DNI del usuario a eliminar en algún lugar si es necesario
-                        }
-                      
-                        function eliminarRegistro() {
-                          alert('Registro eliminado.'); // Aquí se colocaría la lógica para eliminar el registro
-                          cerrarPopup('confirmarBorradoPopup');
-                        }
-                      
-                        function confirmarEspiar(dni) {
-                          document.getElementById('confirmarEspiarPopup').style.display = 'block';
-                          // Guardar el DNI del usuario a espiar si es necesario
-                        }
-                      
-                        function espiarCuenta() {
-                          window.location.href = '/espiarCuenta'; // Redirigir a la vista de espiar
-                          cerrarPopup('confirmarEspiarPopup');
-                        }
+
                       
                         // Generar dinámicamente los botones de "Acciones" y "Espiar" con JavaScript
                         document.addEventListener('DOMContentLoaded', function() {
@@ -756,14 +669,10 @@
                             accionesTd.className = 'acciones-container'; // Aplicar la clase de estilos
                             accionesTd.innerHTML = `
                               <button class="btn btn-info btn-sm" onclick="verRegistro('${dni}')">Ver</button>
-                              <button class="btn btn-warning btn-sm" onclick="editarRegistro('${dni}')">Editar</button>
-                              <button class="btn btn-danger btn-sm" onclick="confirmarBorrado('${dni}')">Borrar</button>
+                              <button class="btn btn-warning btn-sm" onclick="crearRegistro('${dni}')">Crear</button>
                             `;
                             tr.appendChild(accionesTd); // Añadir la celda de "Acciones" a la fila
                       
-                            const espiarTd = document.createElement('td'); // Crear la celda para "Espiar"
-                            espiarTd.innerHTML = `<button class="btn btn-secondary btn-sm" onclick="confirmarEspiar('${dni}')">Espiar</button>`;
-                            tr.appendChild(espiarTd); // Añadir la celda de "Espiar" a la fila
                           });
                         });
                       </script>
