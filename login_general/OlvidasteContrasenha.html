@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="style_index.css">
+    <title>Recuperar Contraseña</title>
+</head>
+<body>
+ <div class="wrapper">
+    <!-- Contenedor del logo -->
+    <div class="logo-container">
+        <img src="images_index/slogan_white_v3.png" alt="Icono Empresa" class="logo-icon">
+    </div>
+
+    <!----------------------------- Formulario para recuperar contraseña ----------------------------------->
+    <div class="form-box">
+        <div class="login-container" id="forgot-password">
+            <div class="top">
+                <span>Introduce tu correo electrónico para recuperar tu contraseña.</span>
+                <header>Recuperar Contraseña</header>
+            </div>
+            <div class="input-box">
+                <input type="email" class="input-field" placeholder="Correo electrónico" id="email">
+                <i class="bx bx-envelope"></i>
+            </div>
+            <div class="input-box">
+                <input type="submit" class="submit" value="Enviar" id="send-button">
+            </div>
+            <div class="two-col">
+                <div class="one">
+                    <label><a href="index.html">Volver a Iniciar Sesión</a></label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>   
+
+<!-- Validación básica de correo -->
+<script>
+    document.getElementById('send-button').addEventListener('click', function(event) {
+        event.preventDefault(); // Prevenir que se recargue la página
+
+        var emailField = document.getElementById('email');
+        var email = emailField.value;
+
+        if (!email || !validarCorreo(email)) {
+            alert("Por favor, ingrese un correo electrónico válido.");
+            return;
+        }
+
+        alert("Se ha enviado un enlace de recuperación a su correo electrónico.");
+        // Aquí podrías agregar la lógica para enviar el correo
+    });
+
+    function validarCorreo(email) {
+        var expReg = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
+        return expReg.test(email);
+    }
+</script>
+
+</body>
+</html>
