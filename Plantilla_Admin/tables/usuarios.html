@@ -44,17 +44,18 @@
   <body>
     <div class="wrapper">
       <!-- Sidebar -->
-      <div class="sidebar" data-background-color="dark">
+      <div class="sidebar" data-background-color="light-blue2">
         <div class="sidebar-logo">
           <!-- Logo Header -->
-          <div class="logo-header" data-background-color="dark">
-            <a href="../index.html" class="logo">
+          <div class="logo-header d-flex align-items-center justify-content-between" data-background-color="light-blue2">
+            <a href="paginaprincipal.html" class="logo d-flex align-items-center">
               <img
-                src="../assets/img/kaiadmin/logo_light.svg"
+                src="../assets/img/kaiadmin/logo_dogless.png"
                 alt="navbar brand"
                 class="navbar-brand"
-                height="20"
+                height="50"
               />
+              <span class="ms-2 text-white fw-bold text-truncate">DOGLESS</span> <!-- Texto blanco y limitado -->
             </a>
             <div class="nav-toggle">
               <button class="btn btn-toggle toggle-sidebar">
@@ -83,14 +84,14 @@
               </li>
               
               <li class="nav-item">
-                <a href="tables/datatables.html">
+                <a href="solicitudes.html">
                   <i class="fas fa-user-plus"></i>
                   <p>Solicitudes</p>
                 </a>
               </li>
 
               <li class="nav-item">
-                <a href="../index.html">
+                <a href="../dashboard.html">
                   <i class="far fa-chart-bar"></i>
                   <p>Dashboard</p>
                 </a>
@@ -159,12 +160,12 @@
                 <div class="collapse" id="tables3">
                   <ul class="nav nav-collapse">
                     <li>
-                      <a href="tables/tables.html">
+                      <a href="productospendientes.html">
                         <span class="sub-item">Productos pendientes</span>
                       </a>
                     </li>
                     <li>
-                      <a href="tables/datatables.html">
+                      <a href="productosaprobados.html">
                         <span class="sub-item">Productos aprobados</span>
                       </a>
                     </li>
@@ -461,13 +462,9 @@
             <!-- End Logo Header -->
           </div>
           <!-- Navbar Header -->
-          <nav
-            class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom"
-          >
+          <nav class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom" data-background-color="light-blue2">
             <div class="container-fluid">
-              <nav
-                class="navbar navbar-header-left navbar-expand-lg navbar-form nav-search p-0 d-none d-lg-flex"
-              >
+              <nav class="navbar navbar-header-left navbar-expand-lg navbar-form nav-search p-0 d-none d-lg-flex">
                 <div class="input-group">
                   <div class="input-group-prepend">
                     <button type="submit" class="btn btn-search pe-1">
@@ -476,7 +473,7 @@
                   </div>
                   <input
                     type="text"
-                    placeholder="Search ..."
+                    placeholder="Buscar ..."
                     class="form-control"
                   />
                 </div>
