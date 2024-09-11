@@ -160,12 +160,12 @@
                 <div class="collapse" id="tables3">
                   <ul class="nav nav-collapse">
                     <li>
-                      <a href="tables/tables.html">
+                      <a href="productosaprobados.html">
                         <span class="sub-item">Productos pendientes</span>
                       </a>
                     </li>
                     <li>
-                      <a href="tables/datatables.html">
+                      <a href="productospendientes.html">
                         <span class="sub-item">Productos aprobados</span>
                       </a>
                     </li>
@@ -471,6 +471,7 @@
           <!-- End Navbar -->
         </div>
 
+        
         <div class="container">
           <div class="page-inner">
             <div class="page-header">
@@ -487,227 +488,54 @@
                 <li class="nav-item">
                   <a href="solicitudes.html">Solicitudes</a>
                 </li>
+                <li class="separator">
+                    <i class="icon-arrow-right"></i>
+                  </li>
+                <li class="nav-item">
+                    <a href="solicitudes_comentarios.html">Comentarios Usuario-Agente</a>
+                  </li>
               </ul>
             </div>
             <div class="row">
-              
-
-              <div class="col-md-12">
-                <div class="card">
-                  
-                  <div class="card-body">
-                    <div class="table-responsive">
-                        <div class="col-md-3 " >
-                            <input class="form-control mb-3" id="tableSearch" type="text" placeholder="Buscar">
-                        </div>
-                      <table class="display table table-striped table-hover">
-                        <thead>
-                          <tr>
-                            <th>Nombre del usuario</th>
-                            <th>Codigo despachador</th>
-                            <th>Estado</th>
-                            <th>Codigo juridico</th>
-                            <th>Opciones</th>
-                          </tr>
-                        </thead>
-                        <tbody id="tableBody">
-                            <tr>
-                                <td>Manuel Merino</td>
-                                <td>1243</td>
-                                <td>Habilitado</td>
-                                <td>992</td>
-                                <td>
-                                    <!-- Dropdown con ícono -->
-                                    <div class="dropdown">
-                                      <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="fas fa-ellipsis-v"></i>
-                                      </button>
-                                      <!-- Dropdown oscuro -->
-                                      <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
-                                        <li><a class="dropdown-item" href="solicitudes_comentarios.html">Comentar</a></li>
-                                        <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#aceptarModal">Aceptar</a></li>
-                                        <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#denegarModal">Denegar</a></li>
-                                      </ul>
+                <div class="col-xl">
+                    <div class="card mb-4">
+                      <div class="card-header d-flex justify-content-between align-items-center">
+                        <p class="mb-0">Esta opción permite enviar un comentario al usuario que deseas aprobarlo o denegarlo de ser un agente. Para que pueda ser aprobado , debes indicar que su código de despachador aduanero está totalmente HABILITADO</p>
+                      </div>
+                      <div class="card-body">
+                        <form id="myForm">
+                          <div class="mb-3">
+                            <label class="form-label" for="basic-default-message">Redacte su comentario para notificarlo al Usuario:
+                            </label>
+                            <textarea id="basic-default-message" class="form-control" placeholder="Hola, hemos visto tu solicitud"></textarea>
+                          </div>
+                          <button type="button" class="btn btn-outline-secondary" onclick="window.location.href='solicitudes.html'">Volver</button>
+                          <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#acceptModal">Aceptar</button>
+                        </form>
+                        <!-- Modal para Aceptar -->
+                        <div class="modal fade" id="acceptModal" tabindex="-1" role="dialog" aria-labelledby="acceptModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                    <h5 class="modal-title" id="acceptModalLabel">Advertencia</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
-                                </td>
-                            
-                            </tr>
-                            <tr>
-                                <td>Haley Kennedy</td>
-                                <td>5392</td>
-                                <td>Multado</td>
-                                <td>992</td>
-                                <td>
-                                  <!-- Dropdown con ícono -->
-                                  <div class="dropdown">
-                                    <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="fas fa-ellipsis-v"></i>
-                                    </button>
-                                    <!-- Dropdown oscuro -->
-                                    <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
-                                      <li><a class="dropdown-item" href="solicitudes_comentarios.html">Comentar</a></li>
-                                      <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#aceptarModal">Aceptar</a></li>
-                                      <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#denegarModal">Denegar</a></li>
-                                    </ul>
-                                  </div>
-                                </td>
-                                
-                              </tr>
-                              <tr>
-                                <td>Tatyana Fitzpatrick</td>
-                                <td>9421</td>
-                                <td>Sancionado</td>
-                                <td>992</td>
-                                <td>
-                                  <!-- Dropdown con ícono -->
-                                  <div class="dropdown">
-                                    <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="fas fa-ellipsis-v"></i>
-                                    </button>
-                                    <!-- Dropdown oscuro -->
-                                    <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
-                                      <li><a class="dropdown-item" href="solicitudes_comentarios.html">Comentar</a></li>
-                                      <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#aceptarModal">Aceptar</a></li>
-                                      <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#denegarModal">Denegar</a></li>
-                                    </ul>
-                                  </div>
-                                </td>
-                
-                              </tr>
-                              <tr>
-                                <td>Michael Silva</td>
-                                <td>3924</td>
-                                <td>Habilitado</td>
-                                <td>992</td>
-                                <td>
-                                  <!-- Dropdown con ícono -->
-                                  <div class="dropdown">
-                                    <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="fas fa-ellipsis-v"></i>
-                                    </button>
-                                    <!-- Dropdown oscuro -->
-                                    <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
-                                      <li><a class="dropdown-item" href="solicitudes_comentarios.html">Comentar</a></li>
-                                      <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#aceptarModal">Aceptar</a></li>
-                                      <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#denegarModal">Denegar</a></li>
-                                    </ul>
-                                  </div>
-                                </td>
-    
-                                
-                              </tr>
-                              <tr>
-                                <td>Paul Byrd</td>
-                                <td>1999</td>
-                                <td>Cancelado</td>
-                                <td>974</td>
-                                <td>
-                                  <!-- Dropdown con ícono -->
-                                  <div class="dropdown" >
-                                    <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="fas fa-ellipsis-v"></i>
-                                    </button>
-                                    <!-- Dropdown oscuro -->
-                                    <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
-                                      <li><a class="dropdown-item" href="solicitudes_comentarios.html">Comentar</a></li>
-                                      <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#aceptarModal">Aceptar</a></li>
-                                      <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#denegarModal">Denegar</a></li>
-                                    </ul>
-                                  </div>
-                                </td>
-    
-                                
-                              </tr>
-                              <tr>
-                                <td>Gloria Little</td>
-                                <td>2024</td>
-                                <td>Habilitado</td>
-                                <td>974</td>
-                                <td>
-                                  <!-- Dropdown con ícono -->
-                                  <div class="dropdown">
-                                    <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="fas fa-ellipsis-v"></i>
-                                    </button>
-                                    <!-- Dropdown oscuro -->
-                                    <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
-                                      <li><a class="dropdown-item" href="solicitudes_comentarios.html">Comentar</a></li>
-                                      <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#aceptarModal">Aceptar</a></li>
-                                      <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#denegarModal">Denegar</a></li>
-                                    </ul>
-                                  </div>
-                                </td>
-                              </tr>
-                          
-                        </tbody>
-                      </table>
-                      <!-- Modal para Aceptar -->
-                      <div class="modal fade" id="aceptarModal" tabindex="-1" role="dialog" aria-labelledby="acceptModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <h5 class="modal-title" id="acceptModalLabel">Advertencia</h5>
-                              <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                              </button>
+                                    <div class="modal-body">
+                                        ¿Estas seguro de notificarle este comentario al usuario?
+                                    </div>
+                                    <div class="modal-footer">
+                                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                    <!-- Este botón enviará el formulario -->
+                                    <button type="button" class="btn btn-dark" onclick="document.getElementById('myForm').submit();">Confirmar y enviar</button>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="modal-body">
-                              <p>¿Estas seguro de realizar la aprobación del usuario a ser agente ?</p>
-                            </div>
-                            <div class="modal-footer">
-                              <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
-                              <button type="button" class="btn btn-dark"  onclick="window.location.href='solicitudes.html'">Aceptar</button>
-                            </div>
-                          </div>
                         </div>
                       </div>
-                      <!-- Modal para Denegar -->
-                      <div class="modal fade" id="denegarModal" tabindex="-1" role="dialog" aria-labelledby="acceptModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <h5 class="modal-title" id="acceptModalLabel">Advertencia</h5>
-                              <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                              </button>
-                            </div>
-                            <div class="modal-body">
-                              <p>¿Estas seguro de realizar la denegación del usuario a ser agente ?</p>
-                            </div>
-                            <div class="modal-footer">
-                              <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
-                              <button type="button" class="btn btn-dark"  onclick="window.location.href='solicitudes.html'">Aceptar</button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      
                     </div>
-                    <div class="modal" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <p>Modal body text goes here.</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary">Save changes</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
-                  </div>
                 </div>
-              </div>
-
             </div>
+            
           </div>
         </div>
 
