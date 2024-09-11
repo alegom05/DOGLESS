@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es"> 
+<html lang="en">
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>Datatables - Kaiadmin Bootstrap 5 Admin Dashboard</title>
@@ -9,12 +9,12 @@
     />
     <link
       rel="icon"
-      href="assets/img/kaiadmin/favicon.ico"
+      href="../assets/img/kaiadmin/favicon.ico"
       type="image/x-icon"
     />
 
     <!-- Fonts and icons -->
-    <script src="assets/js/plugin/webfont/webfont.min.js"></script>
+    <script src="../assets/js/plugin/webfont/webfont.min.js"></script>
     <script>
       WebFont.load({
         google: { families: ["Public Sans:300,400,500,600,700"] },
@@ -25,7 +25,7 @@
             "Font Awesome 5 Brands",
             "simple-line-icons",
           ],
-          urls: ["assets/css/fonts.min.css"],
+          urls: ["../assets/css/fonts.min.css"],
         },
         active: function () {
           sessionStorage.fonts = true;
@@ -34,27 +34,28 @@
     </script>
 
     <!-- CSS Files -->
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="assets/css/plugins.min.css" />
-    <link rel="stylesheet" href="assets/css/kaiadmin.min.css" />
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../assets/css/plugins.min.css" />
+    <link rel="stylesheet" href="../assets/css/kaiadmin.min.css" />
 
     <!-- CSS Just for demo purpose, don't include it in your project -->
-    <link rel="stylesheet" href="assets/css/demo.css" />
+    <link rel="stylesheet" href="../assets/css/demo.css" />
   </head>
   <body>
     <div class="wrapper">
       <!-- Sidebar -->
-      <div class="sidebar" data-background-color="dark">
+      <div class="sidebar" data-background-color="light-blue2">
         <div class="sidebar-logo">
           <!-- Logo Header -->
-          <div class="logo-header" data-background-color="dark">
-            <a href="paginaprincipal.html" class="logo">
+          <div class="logo-header d-flex align-items-center justify-content-between" data-background-color="light-blue2">
+            <a href="paginaprincipal.html" class="logo d-flex align-items-center">
               <img
-                src="assets/img/kaiadmin/logo_light.svg"
+                src="../assets/img/kaiadmin/logo_dogless.png"
                 alt="navbar brand"
                 class="navbar-brand"
-                height="20"
+                height="50"
               />
+              <span class="ms-2 text-white fw-bold text-truncate">DOGLESS</span> <!-- Texto blanco y limitado -->
             </a>
             <div class="nav-toggle">
               <button class="btn btn-toggle toggle-sidebar">
@@ -76,92 +77,56 @@
               <!-- Barra de navegacion -->
             
               <li class="nav-item">
-                <a href="paginaprincipal.html">
+                <a href="../paginaprincipal.html">
                   <i class="fas fa-home"></i>
                   <p>Pagina Principal</p>
                 </a>
+              </li>
+              <li class="nav-item">
+                <a href="../dashboard.html">
+                  <i class="fas fa-home"></i>
+                  <p>Dashboard</p>
+                </a>
               </li>              
               <li class="nav-item">
-                <a href="tables/solicitudes.html">
+                <a href="agentes.html">
                   <i class="fas fa-user-plus"></i>
-                  <p>Solicitudes</p>
+                  <p>Agentes</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="dashboard.html">
+                <a href="importaciones.html">
+                  <i class="fas fa-home"></i>
+                  <p>Importaciones</p>
+                </a>
+              </li> 
+              <li class="nav-item">
+                <a href="reposiciones.html">
                   <i class="far fa-chart-bar"></i>
-                  <p>Dashboard</p>
+                  <p>Reposiciones</p>
                 </a>
               </li>   
               <li class="nav-item">
                 <a data-bs-toggle="collapse" href="#tables1">
                   <i class="fas fa-users"></i>
-                  <p>Lista de Usuarios</p>
+                  <p>Notificaciones</p>
                   <span class="caret"></span>
                 </a>
                 <div class="collapse" id="tables1">
                   <ul class="nav nav-collapse">
                     <li>
-                      <a href="tables/adminzonales.html">
-                        <span class="sub-item">Administradores zonales</span>
+                      <a href="tables/recibidas.html">
+                        <span class="sub-item">Recibidas</span>
                       </a>
                     </li>
                     <li>
-                      <a href="tables/agentes.html">
-                        <span class="sub-item">Agentes zonales</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="tables/usuarios.html">
-                        <span class="sub-item">Usuarios finales</span>
+                      <a href="tables/archivadas.html">
+                        <span class="sub-item">Archivadas</span>
                       </a>
                     </li>
                   </ul>
                 </div>
               </li>
-			  <li class="nav-item">
-                <a data-bs-toggle="collapse" href="#tables2">
-                  <i class="far fa-handshake"></i>
-                  <p>Lista de Personal</p>
-                  <span class="caret"></span>
-                </a>
-                <div class="collapse" id="tables2">
-                  <ul class="nav nav-collapse">
-                    <li>
-                      <a href="tables/proveedores.html">
-                        <span class="sub-item">Proveedores</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="tables/productos.html">
-                        <span class="sub-item">Productos</span>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </li>
-              <li class="nav-item">
-                <a data-bs-toggle="collapse" href="#tables3">
-                  <i class="fas fa-boxes"></i>
-                  <p>Ordenes de reposición</p>
-                  <span class="caret"></span>
-                </a>
-                <div class="collapse" id="tables3">
-                  <ul class="nav nav-collapse">
-                    <li>
-                      <a href="tables/tables.html">
-                        <span class="sub-item">Productos pendientes</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="tables/datatables.html">
-                        <span class="sub-item">Productos aprobados</span>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </li>
-
             </ul>
           </div>
         </div>
@@ -173,7 +138,7 @@
           <div class="main-header-logo">
             <!-- Logo Header -->
             <div class="logo-header" data-background-color="dark">
-              <a href="paginaprincipal.html" class="logo">
+              <a href="../index.html" class="logo">
                 <img
                   src="../assets/img/kaiadmin/logo_light.svg"
                   alt="navbar brand"
@@ -196,13 +161,9 @@
             <!-- End Logo Header -->
           </div>
           <!-- Navbar Header -->
-          <nav
-            class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom"
-          >
+          <nav class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom" data-background-color="light-blue2">
             <div class="container-fluid">
-              <nav
-                class="navbar navbar-header-left navbar-expand-lg navbar-form nav-search p-0 d-none d-lg-flex"
-              >
+              <nav class="navbar navbar-header-left navbar-expand-lg navbar-form nav-search p-0 d-none d-lg-flex">
                 <div class="input-group">
                   <div class="input-group-prepend">
                     <button type="submit" class="btn btn-search pe-1">
@@ -211,7 +172,7 @@
                   </div>
                   <input
                     type="text"
-                    placeholder="Search ..."
+                    placeholder="Buscar ..."
                     class="form-control"
                   />
                 </div>
@@ -490,6 +451,7 @@
                     </div>
                   </div>
                 </li>
+
                 <li class="nav-item topbar-user dropdown hidden-caret">
                   <a
                     class="dropdown-toggle profile-pic"
@@ -499,14 +461,14 @@
                   >
                     <div class="avatar-sm">
                       <img
-                        src="assets/img/profile.jpg"
+                        src="../assets/img/profile.jpg"
                         alt="..."
                         class="avatar-img rounded-circle"
-                      />              
+                      />
                     </div>
                     <span class="profile-username">
                       <span class="op-7">Hola,</span>
-                      <span class="fw-bold">Manuel Yarleque</span>
+                      <span class="fw-bold">Alonso</span>
                     </span>
                   </a>
                   <ul class="dropdown-menu dropdown-user animated fadeIn">
@@ -515,18 +477,18 @@
                         <div class="user-box">
                           <div class="avatar-lg">
                             <img
-                              src="assets/img/profile.jpg"
+                              src="../assets/img/profile.jpg"
                               alt="image profile"
                               class="avatar-img rounded"
                             />
                           </div>
                           <div class="u-text">
-                            <h4>Manuel</h4>
-                            <p class="text-muted">myarleque@gmail.com</p>
+                            <h4>Hizrian</h4>
+                            <p class="text-muted">alonso.correa@gmail.com</p>
                             <a
                               href="profile.html"
                               class="btn btn-xs btn-secondary btn-sm"
-                              >Ver perfil</a
+                              >View Profile</a
                             >
                           </div>
                         </div>
@@ -537,7 +499,7 @@
                         <a class="dropdown-item" href="#">My Balance</a>
                         <a class="dropdown-item" href="#">Inbox</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Ajustes</a>
+                        <a class="dropdown-item" href="#">Account Setting</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="#">Cerrar Sesion</a>
                       </li>
@@ -553,392 +515,176 @@
         <div class="container">
           <div class="page-inner">
             <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
-              <div>
-                <h3 class="fw-bold mb-3">¡Bienvenido a DOGLESS, Superadmin Manuel Yarlequé!</h3>
-                <h6 class="op-7 mb-2">En las tablas encontrarás los registros más recientes de cada rol. Navega entre las páginas para explorar más información de los usuarios.</h6>
-              </div>
+             <div>
+              <h3 class="fw-bold mb-3">Lista de Agentes</h3>
+              <h6 class="op-7 mb-2">En las tablas encontrarás las identidades de los Agentes. Navega entre las páginas para explorar más información de cada uno.</h6>
+             </div>
             </div>
             <div class="row">
-              <!-- Tabla de Administradores Zonales -->
               <div class="col-md-12">
-                  <div class="card">
-                      <div class="card-header">
-                          <h4 class="card-title">Administradores Zonales</h4>
-                      </div>
-                      <div class="card-body">
-                          <div class="table-responsive">
-                              <table id="tabla-admins" class="display table table-striped table-hover">
-                                  <thead>
-                                      <tr>
-                                          <th>Nombres</th>
-                                          <th>Apellidos</th>
-                                          <th>DNI</th>
-                                          <th>Correo</th>
-                                          <th>Distrito</th>
-                                      </tr>
-                                  </thead>
-                                  <tbody>
-                                      <tr>
-                                          <td>Fernando</td>
-                                          <td>Salas</td>
-                                          <td>76543210</td>
-                                          <td>fernando.salas@gmail.com</td>
-                                          <td>San Luis</td>
-                                      </tr>
-                                      <tr>
-                                        <td>Gabriela</td>
-                                        <td>Gutiérrez</td>
-                                        <td>65432109</td>
-                                        <td>gabriela.gutierrez@gmail.com</td>
-                                        <td>Breña</td>
-                                      </tr>
-                                      <tr>
-                                        <td>Leonardo</td>
-                                        <td>Abanto</td>
-                                        <td>36544411</td>
-                                        <td>leo.abanto@gmail.com</td>
-                                        <td>Pachacamac</td>
-                                      </tr>
-                                    
-                                      
-                                      <!-- Más filas... -->
-                                      <tr>
-                                        <td>Jorge</td>
-                                        <td>Coronado</td>
-                                        <td>75432109</td>
-                                        <td>jorge.coronado@gmail.com</td>
-                                        <td>Los Olivos</td>
-                                      </tr>
-                                      <tr>
-                                        <td>Renato</td>
-                                        <td>Paredes</td>
-                                        <td>54321098</td>
-                                        <td>renato.paredes@gmail.com</td>
-                                        <td>San Juan de Lurigancho</td>
-                                      </tr>
-                                      <tr>
-                                        <td>Marta</td>
-                                        <td>López</td>
-                                        <td>43210987</td>
-                                        <td>marta.lopez@gmail.com</td>
-                                        <td>Santa Anita</td>
-                                      </tr>
-                                     
-                                        <td>Carolina</td>
-                                        <td>Alvarez</td>
-                                        <td>98765430</td>
-                                        <td>carolina.alvarez@gmail.com</td>
-                                        <td>Cercado de Lima</td>
-                                      </tr>
-                                      <tr>
-                                        <td>Mario</td>
-                                        <td>Chavez</td>
-                                        <td>87654309</td>
-                                        <td>mario.chavez@gmail.com</td>
-                                        <td>San Martín de Porres</td>
-                                      </tr>
-                                      <tr>
-                                        <td>Luisa</td>
-                                        <td>Meza</td>
-                                        <td>76543208</td>
-                                        <td>luisa.meza@gmail.com</td>
-                                        <td>Barranco</td>
-                                      </tr>
-                                  </tbody>
-                              </table>
+                <div class="card">
+
+                  <div class="card-body">
+                    <div class="table-responsive">
+                      <style>
+                        /* Estilo para alinear los botones horizontalmente */
+                        .acciones-container {
+                          display: flex;
+                          flex-direction: row; /* Alinea los botones en una fila horizontal */
+                          gap: 8px; /* Espacio entre los botones */
+                        }
+
+                      </style>
+                      
+                      <table id="basic-datatables" class="display table table-striped table-hover">
+                        <thead>
+                          <tr>
+                            <th>Nombre</th>
+                            <th>Apellido</th>
+                            <th>RUC</th>
+                            <th>Correo Electrónico</th>
+                            <th>Código de Aduanas</th>
+                            <th>Acciones</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>José</td>
+                            <td>González</td>
+                            <td>412345678</td>
+                            <td>jose.gonzalez@gmail.com</td>
+                            <td>1001</td>
+                          </tr>
+                          <tr>
+                            <td>María</td>
+                            <td>Rojas</td>
+                            <td>23456789</td>
+                            <td>maria.rojas@gmail.com</td>
+                            <td>1002</td>
+                          </tr>
+                          <tr>
+                            <td>Carlos</td>
+                            <td>Fernández</td>
+                            <td>834567890</td>
+                            <td>carlos.fernandez@gmail.com</td>
+                            <td>1003</td>
+                          </tr>
+                          <tr>
+                            <td>Lucía</td>
+                            <td>Ramírez</td>
+                            <td>745678901</td>
+                            <td>lucia.ramirez@gmail.com</td>
+                            <td>1004</td>
+                          </tr>
+                          <tr>
+                            <td>Jorge</td>
+                            <td>Vargas</td>
+                            <td>456789012</td>
+                            <td>jorge.vargas@gmail.com</td>
+                            <td>1005</td>
+                          </tr>
+                          <tr>
+                            <td>Ana</td>
+                            <td>Medina</td>
+                            <td>867890123</td>
+                            <td>ana.medina@gmail.com</td>
+                            <td>1006</td>
+                          </tr>
+                          <tr>
+                            <td>Ricardo</td>
+                            <td>Sánchez</td>
+                            <td>378901234</td>
+                            <td>ricardo.sanchez@gmail.com</td>
+                            <td>1007</td>
+                          </tr>
+                          <tr>
+                            <td>Elena</td>
+                            <td>Torres</td>
+                            <td>589012345</td>
+                            <td>elena.torres@gmail.com</td>
+                            <td>1008</td>
+                          </tr>
+                          <tr>
+                            <td>Fernando</td>
+                            <td>Pérez</td>
+                            <td>490123456</td>
+                            <td>fernando.perez@gmail.com</td>
+                            <td>1009</td>
+                          </tr>
+                          <tr>
+                            <td>Sofía</td>
+                            <td>Castro</td>
+                            <td>301234567</td>
+                            <td>sofia.castro@gmail.com</td>
+                            <td>1010</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      
+                      <!-- Popup para confirmar eliminación -->
+                      <div id="confirmarBorradoPopup" class="modal" tabindex="-1" role="dialog">
+                        <div class="modal-dialog" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title">Confirmar Eliminación</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="cerrarPopup('confirmarBorradoPopup')">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                              <p>¿Estás seguro de que deseas eliminar este registro?</p>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-primary" onclick="eliminarRegistro()">Sí, eliminar</button>
+                              <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="cerrarPopup('confirmarBorradoPopup')">Cancelar</button>
+                            </div>
                           </div>
+                        </div>
                       </div>
+                      
+
+                      <script>
+                        // Función para cerrar popups
+                        function cerrarPopup(id) {
+                          document.getElementById(id).style.display = 'none';
+                        }
+                        // Funciones para manejar la lógica de los botones
+                        function verRegistro(dni) {
+                          window.location.href = 'verRegistroAgente.html'
+                        }
+                        function crearRegistro(dni) {
+                          window.location.href = `NuevoRegistroAgente.html`; 
+                        }
+                      
+
+                      
+                        // Generar dinámicamente los botones de "Acciones" y "Espiar" con JavaScript
+                        document.addEventListener('DOMContentLoaded', function() {
+                          document.querySelectorAll('#basic-datatables tbody tr').forEach(tr => {
+                            const dni = tr.cells[2].textContent; // Obtener el DNI del usuario desde la tercera celda
+                            const accionesTd = document.createElement('td'); // Crear la celda para "Acciones"
+                            accionesTd.className = 'acciones-container'; // Aplicar la clase de estilos
+                            accionesTd.innerHTML = `
+                              <button class="btn btn-info btn-sm" onclick="verRegistro('${dni}')">Ver</button>
+                              <button class="btn btn-warning btn-sm" onclick="crearRegistro('${dni}')">Crear</button>
+                            `;
+                            tr.appendChild(accionesTd); // Añadir la celda de "Acciones" a la fila
+                      
+                          });
+                        });
+                      </script>
+                      
+                      
+                      
+                    </div>
+         
                   </div>
-              </div>
-              <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h4 class="card-title">Agentes</h4>
-                    </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table id="tabla-admins2" class="display table table-striped table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>Nombres</th>
-                                        <th>Apellidos</th>
-                                        <th>DNI</th>
-                                        <th>Correo</th>
-                                        <th>Distrito</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                  <tr>
-                                    <td>José</td>
-                                    <td>González</td>
-                                    <td>12345678</td>
-                                    <td>jose.gonzalez@gmail.com</td>
-                                    <td>Miraflores</td>
-                                  </tr>
-                                  <tr>
-                                    <td>María</td>
-                                    <td>Rojas</td>
-                                    <td>23456789</td>
-                                    <td>maria.rojas@gmail.com</td>
-                                    <td>San Isidro</td>
-                                  </tr>
-                                  <tr>
-                                    <td>Carlos</td>
-                                    <td>Fernández</td>
-                                    <td>34567890</td>
-                                    <td>carlos.fernandez@gmail.com</td>
-                                    <td>Surco</td>
-                                  </tr>
-                                  <tr>
-                                    <td>Lucía</td>
-                                    <td>Ramírez</td>
-                                    <td>45678901</td>
-                                    <td>lucia.ramirez@gmail.com</td>
-                                    <td>La Molina</td>
-                                  </tr>
-                                  <tr>
-                                    <td>Jorge</td>
-                                    <td>Vargas</td>
-                                    <td>56789012</td>
-                                    <td>jorge.vargas@gmail.com</td>
-                                    <td>San Borja</td>
-                                  </tr>
-                                  <tr>
-                                    <td>Ana</td>
-                                    <td>Medina</td>
-                                    <td>67890123</td>
-                                    <td>ana.medina@gmail.com</td>
-                                    <td>San Miguel</td>
-                                  </tr>
-                                  <tr>
-                                    <td>Ricardo</td>
-                                    <td>Sánchez</td>
-                                    <td>78901234</td>
-                                    <td>ricardo.sanchez@gmail.com</td>
-                                    <td>Pueblo Libre</td>
-                                  </tr>
-                                  <tr>
-                                    <td>Elena</td>
-                                    <td>Torres</td>
-                                    <td>89012345</td>
-                                    <td>elena.torres@gmail.com</td>
-                                    <td>Lince</td>
-                                  </tr>
-                                  <tr>
-                                    <td>Fernando</td>
-                                    <td>Pérez</td>
-                                    <td>90123456</td>
-                                    <td>fernando.perez@gmail.com</td>
-                                    <td>Chorrillos</td>
-                                  </tr>
-                                  <tr>
-                                    <td>Sofía</td>
-                                    <td>Castro</td>
-                                    <td>01234567</td>
-                                    <td>sofia.castro@gmail.com</td>
-                                    <td>Jesús María</td>
-                                  </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
                 </div>
               </div>
-              <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h4 class="card-title">Usuarios Finales</h4>
-                    </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table id="tabla-admins3" class="display table table-striped table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>Nombres</th>
-                                        <th>Apellidos</th>
-                                        <th>DNI</th>
-                                        <th>Correo</th>
-                                        <th>Distrito</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                  <tr>
-                                    <td>David</td>
-                                    <td>Navarro</td>
-                                    <td>32109876</td>
-                                    <td>david.navarro@gmail.com</td>
-                                    <td>Ate</td>
-                                  </tr>
-                                  <tr>
-                                    <td>Luciana</td>
-                                    <td>Bravo</td>
-                                    <td>21098765</td>
-                                    <td>luciana.bravo@gmail.com</td>
-                                    <td>Lince</td>
-                                  </tr>
-                                  <tr>
-                                    <td>Álvaro</td>
-                                    <td>Mendoza</td>
-                                    <td>10987654</td>
-                                    <td>alvaro.mendoza@gmail.com</td>
-                                    <td>Chorrillos</td>
-                                  </tr>
-                                  <tr>
-                                    <td>Elena</td>
-                                    <td>Espinoza</td>
-                                    <td>98765432</td>
-                                    <td>elena.espinoza@gmail.com</td>
-                                    <td>Magdalena del Mar</td>
-                                  </tr>
-                                  <tr>
-                                    <td>Felipe</td>
-                                    <td>Camacho</td>
-                                    <td>87654322</td>
-                                    <td>felipe.camacho@gmail.com</td>
-                                    <td>Rímac</td>
-                                  </tr>
-                                  <tr>
-                                    <td>Valeria</td>
-                                    <td>Santos</td>
-                                    <td>76543212</td>
-                                    <td>valeria.santos@gmail.com</td>
-                                    <td>San Miguel</td>
-                                  </tr>
-                                  <tr>
-                                    <td>Rodrigo</td>
-                                    <td>Vega</td>
-                                    <td>65432123</td>
-                                    <td>rodrigo.vega@gmail.com</td>
-                                    <td>San Borja</td>
-                                  </tr>
-                                  <tr>
-                                    <td>Paola</td>
-                                    <td>Chávez</td>
-                                    <td>54321034</td>
-                                    <td>paola.chavez@gmail.com</td>
-                                    <td>Pueblo Libre</td>
-                                  </tr>
-                                  <tr>
-                                    <td>Andrés</td>
-                                    <td>Acuña</td>
-                                    <td>43210945</td>
-                                    <td>andres.acuna@gmail.com</td>
-                                    <td>Comas</td>
-                                  </tr>
-                                  <tr>
-                                    <td>Cecilia</td>
-                                    <td>Ramírez</td>
-                                    <td>32109856</td>
-                                    <td>cecilia.ramirez@gmail.com</td>
-                                    <td>El Agustino</td>
-                                  </tr>
-                                  <tr>
-                                    <td>Victor</td>
-                                    <td>Pérez</td>
-                                    <td>21098767</td>
-                                    <td>victor.perez@gmail.com</td>
-                                    <td>La Victoria</td>
-                                  </tr>
-                                  <tr>
-                                    <td>Marisol</td>
-                                    <td>Figueroa</td>
-                                    <td>10987678</td>
-                                    <td>marisol.figueroa@gmail.com</td>
-                                    <td>Jesús María</td>
-                                  </tr>
-                                  <tr>
-                                    <td>Carlos</td>
-                                    <td>Castro</td>
-                                    <td>98765421</td>
-                                    <td>carlos.castro@gmail.com</td>
-                                    <td>San Isidro</td>
-                                  </tr>
-                                  <tr>
-                                    <td>Rosa</td>
-                                    <td>Valverde</td>
-                                    <td>87654310</td>
-                                    <td>rosa.valverde@gmail.com</td>
-                                    <td>Miraflores</td>
-                                  </tr>
-                                  <tr>
-                                    <td>Manuel</td>
-                                    <td>Benavides</td>
-                                    <td>76543209</td>
-                                    <td>manuel.benavides@gmail.com</td>
-                                    <td>Villa El Salvador</td>
-                                  </tr>
-                                  <tr>
-                                    <td>Claudia</td>
-                                    <td>Sifuentes</td>
-                                    <td>65432198</td>
-                                    <td>claudia.sifuentes@gmail.com</td>
-                                    <td>Villa María del Triunfo</td>
-                                  </tr>
-                                  <tr>
-                                    <td>Jorge</td>
-                                    <td>Huerta</td>
-                                    <td>54321087</td>
-                                    <td>jorge.huerta@gmail.com</td>
-                                    <td>Los Olivos</td>
-                                  </tr>
-                                  <tr>
-                                    <td>Marina</td>
-                                    <td>Suárez</td>
-                                    <td>43210976</td>
-                                    <td>marina.suarez@gmail.com</td>
-                                    <td>Surco</td>
-                                  </tr>
-                                  <tr>
-                                    <td>Raúl</td>
-                                    <td>Ortega</td>
-                                    <td>32109865</td>
-                                    <td>raul.ortega@gmail.com</td>
-                                    <td>Independencia</td>
-                                  </tr>
-                                  <tr>
-                                    <td>Patricia</td>
-                                    <td>Luna</td>
-                                    <td>21098754</td>
-                                    <td>patricia.luna@gmail.com</td>
-                                    <td>Carabayllo</td>
-                                  </tr>
-                                  <tr>
-                                    <td>Alfredo</td>
-                                    <td>Delgado</td>
-                                    <td>10987643</td>
-                                    <td>alfredo.delgado@gmail.com</td>
-                                    <td>San Juan de Miraflores</td>
-                                  </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-              </div>
+
             </div>
-      
-
-
-            
-            
-            <!-- Agrega JavaScript para DataTables -->
-            <script>
-              $(document).ready(function () {
-                $('#tabla-admins, #tabla-agentes').DataTable({
-                  paging: true, // Habilita la paginación
-                  searching: false, // Deshabilita el filtro de búsqueda
-                  info: false, // Deshabilita la información de la tabla
-                  lengthChange: false, // Deshabilita la opción de cambiar la longitud de la tabla
-                  language: {
-                    paginate: {
-                      next: 'Siguiente',
-                      previous: 'Anterior'
-                    }
-                  }
-                });
-              });
-            </script>
-            
+          </div>
+        </div>
 
         <footer class="footer">
           <div class="container-fluid d-flex justify-content-between">
@@ -1165,18 +911,18 @@
       <!-- End Custom template -->
     </div>
     <!--   Core JS Files   -->
-    <script src="assets/js/core/jquery-3.7.1.min.js"></script>
-    <script src="assets/js/core/popper.min.js"></script>
-    <script src="assets/js/core/bootstrap.min.js"></script>
+    <script src="../assets/js/core/jquery-3.7.1.min.js"></script>
+    <script src="../assets/js/core/popper.min.js"></script>
+    <script src="../assets/js/core/bootstrap.min.js"></script>
 
     <!-- jQuery Scrollbar -->
-    <script src="assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+    <script src="../assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
     <!-- Datatables -->
-    <script src="assets/js/plugin/datatables/datatables.min.js"></script>
+    <script src="../assets/js/plugin/datatables/datatables.min.js"></script>
     <!-- Kaiadmin JS -->
-    <script src="assets/js/kaiadmin.min.js"></script>
+    <script src="../assets/js/kaiadmin.min.js"></script>
     <!-- Kaiadmin DEMO methods, don't include it in your project! -->
-    <script src="assets/js/setting-demo2.js"></script>
+    <script src="../assets/js/setting-demo2.js"></script>
     <script>
       $(document).ready(function () {
         $("#basic-datatables").DataTable({});
@@ -1213,8 +959,8 @@
           },
         });
 
-                // Add Row
-                $("#add-row").DataTable({
+        // Add Row
+        $("#add-row").DataTable({
           pageLength: 5,
         });
 
@@ -1232,30 +978,7 @@
             ]);
           $("#addRowModal").modal("hide");
         });
-
-        $('#tabla-admins').DataTable({
-                "pageLength": 5, // Mostrar 5 registros por página
-                "lengthChange": false,  // Eliminar el menú de selección de cantidad de registros
-                "language": {
-                    "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json"  // Traducción al español
-                }
-            });
-        $('#tabla-admins2').DataTable({
-                "pageLength": 5, // Mostrar 5 registros por página
-                "lengthChange": false,  // Eliminar el menú de selección de cantidad de registros
-                "language": {
-                    "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json"  // Traducción al español
-                }
-            });
-            $('#tabla-admins3').DataTable({
-                "pageLength": 5, // Mostrar 5 registros por página
-                "lengthChange": false,  // Eliminar el menú de selección de cantidad de registros
-                "language": {
-                    "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json"  // Traducción al español
-                }
-            });
       });
     </script>
   </body>
 </html>
-            
