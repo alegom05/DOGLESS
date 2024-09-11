@@ -539,140 +539,231 @@
                       <table id="basic-datatables" class="display table table-striped table-hover">
                         <thead>
                           <tr>
-                            <th>Nombre</th>
-                            <th>Apellido</th>
-                            <th>RUC</th>
-                            <th>Correo Electrónico</th>
-                            <th>Código de Aduanas</th>
-                            <th>Acciones</th>
+                              <th>Importaciones</th>
+                              <th>Fechas de arribo</th>
+                              <th>Código de Aduanas</th>
+                              <th>RUC</th>
+                              <th>Acciones</th>
+
                           </tr>
-                        </thead>
-                        <tbody>
+                      </thead>
+                      <tbody>
                           <tr>
-                            <td>José</td>
-                            <td>González</td>
-                            <td>412345678</td>
-                            <td>jose.gonzalez@gmail.com</td>
-                            <td>1001</td>
-                          </tr>
-                          <tr>
-                            <td>María</td>
-                            <td>Rojas</td>
-                            <td>23456789</td>
-                            <td>maria.rojas@gmail.com</td>
-                            <td>1002</td>
-                          </tr>
-                          <tr>
-                            <td>Carlos</td>
-                            <td>Fernández</td>
-                            <td>834567890</td>
-                            <td>carlos.fernandez@gmail.com</td>
-                            <td>1003</td>
+                              <td>Televisores Sony Bravia</td>
+                              <td>15/08/2024</td>
+                              <td>4567</td>
+                              <td>20512345678</td>
+                              <td>                                    <!-- Dropdown con ícono -->
+                                <div class="dropdown">
+                                  <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                  </button>
+                                  <!-- Dropdown oscuro -->
+                                  <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
+                                    <li><a class="dropdown-item" href="agregar_importaciones">Agregar</a></li>
+                                    <li><a class="dropdown-item" href="ver_importaciones.html">Ver</a></li>
+                                    <li><a class="dropdown-item" href="editar_importaciones.html">Editar</a></li>
+                                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#borrarModal">Borrar</a></li>
+                                  </ul>
+                                </div></td>
                           </tr>
                           <tr>
-                            <td>Lucía</td>
-                            <td>Ramírez</td>
-                            <td>745678901</td>
-                            <td>lucia.ramirez@gmail.com</td>
-                            <td>1004</td>
+                              <td>Huawei P40</td>
+                              <td>22/08/2024</td>
+                              <td>4678</td>
+                              <td>20623456789</td>
+                              <td>                                    <!-- Dropdown con ícono -->
+                                <div class="dropdown">
+                                  <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                  </button>
+                                  <!-- Dropdown oscuro -->
+                                  <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
+                                    <li><a class="dropdown-item" href="agregar_importaciones">Agregar</a></li>
+                                    <li><a class="dropdown-item" href="ver_importaciones.html">Ver</a></li>
+                                    <li><a class="dropdown-item" href="editar_importaciones.html">Editar</a></li>
+                                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#borrarModal">Borrar</a></li>
+                                  </ul>
+                                </div></td>
                           </tr>
                           <tr>
-                            <td>Jorge</td>
-                            <td>Vargas</td>
-                            <td>456789012</td>
-                            <td>jorge.vargas@gmail.com</td>
-                            <td>1005</td>
+                              <td>Uniqlo Airism</td>
+                              <td>28/08/2024</td>
+                              <td>6789</td>
+                              <td>20734567890</td>
+                              <td>                                    <!-- Dropdown con ícono -->
+                                <div class="dropdown">
+                                  <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                  </button>
+                                  <!-- Dropdown oscuro -->
+                                  <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
+                                    <li><a class="dropdown-item" href="agregar_importaciones">Agregar</a></li>
+                                    <li><a class="dropdown-item" href="ver_importaciones.html">Ver</a></li>
+                                    <li><a class="dropdown-item" href="editar_importaciones.html">Editar</a></li>
+                                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#borrarModal">Borrar</a></li>
+                                  </ul>
+                                </div></td>
                           </tr>
                           <tr>
-                            <td>Ana</td>
-                            <td>Medina</td>
-                            <td>867890123</td>
-                            <td>ana.medina@gmail.com</td>
-                            <td>1006</td>
+                              <td>Cámara Canon EOS R5</td>
+                              <td>05/09/2024</td>
+                              <td>7890</td>
+                              <td>20845678901</td>
+                              <td>                                    <!-- Dropdown con ícono -->
+                                <div class="dropdown">
+                                  <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                  </button>
+                                  <!-- Dropdown oscuro -->
+                                  <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
+                                    <li><a class="dropdown-item" href="agregar_importaciones">Agregar</a></li>
+                                    <li><a class="dropdown-item" href="ver_importaciones.html">Ver</a></li>
+                                    <li><a class="dropdown-item" href="editar_importaciones.html">Editar</a></li>
+                                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#borrarModal">Borrar</a></li>
+                                  </ul>
+                                </div></td>
                           </tr>
                           <tr>
-                            <td>Ricardo</td>
-                            <td>Sánchez</td>
-                            <td>378901234</td>
-                            <td>ricardo.sanchez@gmail.com</td>
-                            <td>1007</td>
+                              <td>Laptop Asus ZenBook</td>
+                              <td>10/09/2024</td>
+                              <td>8901</td>
+                              <td>20956789012</td>
+                              <td>                                    <!-- Dropdown con ícono -->
+                                <div class="dropdown">
+                                  <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                  </button>
+                                  <!-- Dropdown oscuro -->
+                                  <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
+                                    <li><a class="dropdown-item" href="agregar_importaciones">Agregar</a></li>
+                                    <li><a class="dropdown-item" href="ver_importaciones.html">Ver</a></li>
+                                    <li><a class="dropdown-item" href="editar_importaciones.html">Editar</a></li>
+                                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#borrarModal">Borrar</a></li>
+                                  </ul>
+                                </div></td>
                           </tr>
                           <tr>
-                            <td>Elena</td>
-                            <td>Torres</td>
-                            <td>589012345</td>
-                            <td>elena.torres@gmail.com</td>
-                            <td>1008</td>
+                              <td>Xiaomi Mi Smart Air Fryer</td>
+                              <td>15/09/2024</td>
+                              <td>9012</td>
+                              <td>21067890123</td>
+                              <td>                                    <!-- Dropdown con ícono -->
+                                <div class="dropdown">
+                                  <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                  </button>
+                                  <!-- Dropdown oscuro -->
+                                  <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
+                                    <li><a class="dropdown-item" href="agregar_importaciones">Agregar</a></li>
+                                    <li><a class="dropdown-item" href="ver_importaciones.html">Ver</a></li>
+                                    <li><a class="dropdown-item" href="editar_importaciones.html">Editar</a></li>
+                                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#borrarModal">Borrar</a></li>
+                                  </ul>
+                                </div></td>
                           </tr>
                           <tr>
-                            <td>Fernando</td>
-                            <td>Pérez</td>
-                            <td>490123456</td>
-                            <td>fernando.perez@gmail.com</td>
-                            <td>1009</td>
+                              <td>Muji Minimalista</td>
+                              <td>20/09/2024</td>
+                              <td>9123</td>
+                              <td>21178901234</td>
+                              <td>                                    <!-- Dropdown con ícono -->
+                                <div class="dropdown">
+                                  <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                  </button>
+                                  <!-- Dropdown oscuro -->
+                                  <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
+                                    <li><a class="dropdown-item" href="agregar_importaciones">Agregar</a></li>
+                                    <li><a class="dropdown-item" href="ver_importaciones.html">Ver</a></li>
+                                    <li><a class="dropdown-item" href="editar_importaciones.html">Editar</a></li>
+                                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#borrarModal">Borrar</a></li>
+                                  </ul>
+                                </div></td>
                           </tr>
                           <tr>
-                            <td>Sofía</td>
-                            <td>Castro</td>
-                            <td>301234567</td>
-                            <td>sofia.castro@gmail.com</td>
-                            <td>1010</td>
+                              <td> Giant TCR Advanced</td>
+                              <td>25/09/2024</td>
+                              <td>1234</td>
+                              <td>21289012345</td>
+                              <td>                                    <!-- Dropdown con ícono -->
+                                <div class="dropdown">
+                                  <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                  </button>
+                                  <!-- Dropdown oscuro -->
+                                  <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
+                                    <li><a class="dropdown-item" href="agregar_importaciones">Agregar</a></li>
+                                    <li><a class="dropdown-item" href="ver_importaciones.html">Ver</a></li>
+                                    <li><a class="dropdown-item" href="editar_importaciones.html">Editar</a></li>
+                                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#borrarModal">Borrar</a></li>
+                                  </ul>
+                                </div></td>
                           </tr>
-                        </tbody>
+                          <tr>
+                              <td>Bandai Gundam</td>
+                              <td>30/09/2024</td>
+                              <td>2345</td>
+                              <td>21390123456</td>
+                              <td>                                    <!-- Dropdown con ícono -->
+                                <div class="dropdown">
+                                  <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                  </button>
+                                  <!-- Dropdown oscuro -->
+                                  <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
+                                    <li><a class="dropdown-item" href="agregar_importaciones">Agregar</a></li>
+                                    <li><a class="dropdown-item" href="ver_importaciones.html">Ver</a></li>
+                                    <li><a class="dropdown-item" href="editar_importaciones.html">Editar</a></li>
+                                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#borrarModal">Borrar</a></li>
+                                  </ul>
+                                </div></td>
+                          </tr>
+                          <tr>
+                              <td>Seiko Prospex</td>
+                              <td>05/10/2024</td>
+                              <td>3456</td>
+                              <td>21401234567</td>
+                              <td>                                    <!-- Dropdown con ícono -->
+                                <div class="dropdown">
+                                  <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                  </button>
+                                  <!-- Dropdown oscuro -->
+                                  <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
+                                    <li><a class="dropdown-item" href="agregar_importaciones.html">Agregar</a></li>
+                                    <li><a class="dropdown-item" href="ver_importaciones.html">Ver</a></li>
+                                    <li><a class="dropdown-item" href="editar_importaciones.html">Editar</a></li>
+                                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#borrarModal">Borrar</a></li>
+                                  </ul>
+                                </div></td>
+                          </tr>
+                      </tbody>
                       </table>
                       
-                      <!-- Popup para confirmar eliminación -->
-                      <div id="confirmarBorradoPopup" class="modal" tabindex="-1" role="dialog">
-                        <div class="modal-dialog" role="document">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <h5 class="modal-title">Confirmar Eliminación</h5>
-                              <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="cerrarPopup('confirmarBorradoPopup')">
-                                <span aria-hidden="true">&times;</span>
-                              </button>
-                            </div>
-                            <div class="modal-body">
-                              <p>¿Estás seguro de que deseas eliminar este registro?</p>
-                            </div>
-                            <div class="modal-footer">
-                              <button type="button" class="btn btn-primary" onclick="eliminarRegistro()">Sí, eliminar</button>
-                              <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="cerrarPopup('confirmarBorradoPopup')">Cancelar</button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+                                            <!-- Modal para Denegar -->
+                                            <div class="modal fade" id="borrarModal" tabindex="-1" role="dialog" aria-labelledby="acceptModalLabel" aria-hidden="true">
+                                              <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                  <div class="modal-header">
+                                                    <h5 class="modal-title" id="acceptModalLabel">Advertencia</h5>
+                                                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                                      <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                  </div>
+                                                  <div class="modal-body">
+                                                    <p>¿Estas seguro de realizar la eliminación de la importación ?</p>
+                                                  </div>
+                                                  <div class="modal-footer">
+                                                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                                    <button type="button" class="btn btn-dark" onclick="window.location.href= 'importaciones.html'" >Aceptar</button>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
                       
 
-                      <script>
-                        // Función para cerrar popups
-                        function cerrarPopup(id) {
-                          document.getElementById(id).style.display = 'none';
-                        }
-                        // Funciones para manejar la lógica de los botones
-                        function verRegistro(dni) {
-                          window.location.href = 'verRegistroAgente.html'
-                        }
-                        function crearRegistro(dni) {
-                          window.location.href = `NuevoRegistroAgente.html`; 
-                        }
-                      
 
-                      
-                        // Generar dinámicamente los botones de "Acciones" y "Espiar" con JavaScript
-                        document.addEventListener('DOMContentLoaded', function() {
-                          document.querySelectorAll('#basic-datatables tbody tr').forEach(tr => {
-                            const dni = tr.cells[2].textContent; // Obtener el DNI del usuario desde la tercera celda
-                            const accionesTd = document.createElement('td'); // Crear la celda para "Acciones"
-                            accionesTd.className = 'acciones-container'; // Aplicar la clase de estilos
-                            accionesTd.innerHTML = `
-                              <button class="btn btn-info btn-sm" onclick="verRegistro('${dni}')">Ver</button>
-                              <button class="btn btn-warning btn-sm" onclick="crearRegistro('${dni}')">Crear</button>
-                            `;
-                            tr.appendChild(accionesTd); // Añadir la celda de "Acciones" a la fila
-                      
-                          });
-                        });
-                      </script>
                       
                       
                       
