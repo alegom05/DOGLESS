@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Importaciones</title>
+    <title>Ver Administrador Zonal</title>
     <meta
       content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
       name="viewport"
@@ -33,6 +33,35 @@
         },
       });
     </script>
+        <script>
+                         // JavaScript para actualizar los distritos según la zona seleccionada
+                         function actualizarDistritos() {
+                             const zona = document.getElementById("zona").value;
+                             const distritoSelect = document.getElementById("distrito");
+                 
+                             const distritosPorZona = {
+                                 "Norte": ["Ancon", "Santa Rosa", "Carabayllo", "Puente Piedra", "Comas", "Los Olivos", "San Martin de Porres", "Independencia"],
+                                 "Sur": ["San Juan de Miraflores", "Villa Maria del Triunfo", "Villa el Salvador", "Pachacamac", "Lurin", "Punta Hermosa", "Punta Negra", "San Bartolo", "Santa Maria del Mar", "Pucusana"],
+                                 "Este": ["San Juan de Lurigancho", "Lurigancho/Chosica", "Ate", "El Agustino", "Santa Anita", "La Molina", "Cieneguilla"],
+                                 "Oeste": ["Rimac", "Cercado de Lima", "Breña", "Pueblo Libre", "Magdalena", "Jesus Maria", "La Victoria", "Lince", "San Isidro", "San Miguel", "Surquillo", "San Borja", "Santiago de Surco", "Barranco", "Chorrillos", "San Luis", "Miraflores"]
+                             };
+                 
+                             // Limpiar las opciones anteriores
+                             distritoSelect.innerHTML = "";
+                 
+                             // Añadir los distritos correspondientes a la zona seleccionada
+                             distritosPorZona[zona].forEach(function(distrito) {
+                                 const option = document.createElement("option");
+                                 option.value = distrito;
+                                 option.text = distrito;
+                                 distritoSelect.appendChild(option);
+                             });
+                 
+                             // Habilitar el campo de selección de distritos
+                             distritoSelect.disabled = false;
+                         }
+                     </script>
+                 
 
     <!-- CSS Files -->
     <link rel="stylesheet" href="../assets/css/bootstrap.min.css" />
@@ -132,11 +161,6 @@
                 </a>
                 <div class="collapse" id="tables2">
                   <ul class="nav nav-collapse">
-                    <li>
-                      <a href="vendedores.html">
-                        <span class="sub-item">Vendedores</span>
-                      </a>
-                    </li>
                     <li>
                       <a href="proveedores.html">
                         <span class="sub-item">Proveedores</span>
@@ -518,7 +542,7 @@
                     </div>
                     <span class="profile-username">
                       <span class="op-7">Hola,</span>
-                      <span class="fw-bold">Alonso Guevara</span>
+                      <span class="fw-bold">Manuel Yarleque</span>
                     </span>
                   </a>
                   <ul class="dropdown-menu dropdown-user animated fadeIn">
@@ -533,8 +557,8 @@
                             />
                           </div>
                           <div class="u-text">
-                            <h4>Alonso</h4>
-                            <p class="text-muted">alonso.guevara@gmail.com</p>
+                            <h4>Manuel</h4>
+                            <p class="text-muted">myarleque@gmail.com</p>
                             <a
                               href="profile.html"
                               class="btn btn-xs btn-secondary btn-sm"
@@ -566,7 +590,7 @@
           <div class="page-inner">
             <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
               <div>
-                <h3 class="fw-bold mb-3">Ver Importaciones</h3>
+                <h3 class="fw-bold mb-3">Ver Administrador Zonal</h3>
               </div>
             </div>
             <div class="row">
@@ -574,60 +598,130 @@
                 <div class="card">
 
                   <div class="card-body">
-                    <form class="needs-validation" style="width: 100%; margin-left: 0%; margin-top: 3%;" action="importaciones.html" method="POST" novalidate>
+                    <form class="needs-validation" style="width: 100%; margin-left: 0%; margin-top: 3%;" action="adminzonales.html" method="POST" novalidate>
                       <div class="container">
-                        <div class="container" style="margin-top: 3%; ">
 
-                          <div class="row">
-                            <div class="col">
-                              <div class="mb-3">
-                                <label for="nombre" class="form-label">Nombres: (*)</label>
-                                <input type="text" name="nombre" id="nombre" value="Carolina Álvarez" class="form-control" readonly>
-                                <div class="invalid-feedback">Por favor ingresar nombre(s).</div>
-                              </div>
-                            </div>
-                            <div class="col">
-                                                  <div class="mb-3">
-                                                    <label for="zona" class="form-label" >Zona: (*)</label>
-                                                    <input type="text" class="form-control" name="zona" id="zona" maxlength="8" minlength="8" placeholder="Ej: Norte" pattern="[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]" value="Norte" title="ingrese su zona" readonly>
-                                                    <div class="invalid-feedback">Por favor ingresar su zona.</div>
+                         <div class="row">
+                                                  <div class="col">
+                                                    <div class="mb-3">
+                                                                           <label for="dni" class="form-label">DNI: (*)</label>
+                                                                             <input type="text" name="dni" id="dni" class="form-control" value="77040283" pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]+(\s[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]+){0,4}"
+                                                                                    placeholder="Ej: 77040283" readonly>
+                                                                             <div class="invalid-feedback">Por favor ingresar DNI.</div>
+                                                    </div>
                                                   </div>
+                                                  <div class="col">
+                                                                        <div class="mb-3">
+                                                                           <label for="telefono" class="form-label">Teléfono: (*)</label>
+                                                                           <input type="text" name="telefono" id="telefono" class="form-control" value="948134144" pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]+(\s[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]+){0,4}"
+                                                                                  placeholder="Ej: 984134144" readonly>
+                                                                           <div class="invalid-feedback">Por favor ingresar teléfono(s).</div>
+                                                                        </div>
+                                                                      </div>
                                                 </div>
-                          </div>
-                          
-                          <div class="row">
-                            <div class="col">
-                              <div class="mb-3">
-                                <label for="dni" class="form-label" >RUC: (*)</label>
-                                <input type="tel" class="form-control" name="dni" id="ruc" maxlength="11" minlength="11" placeholder="Ej: 87654321682" pattern="[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]" value="10345789265" title="ingrese su RUC" readonly>
-                                <div class="invalid-feedback">Por favor ingresar RUC.</div>
-                              </div>
-                            </div>
-                            <div class="col">
-                                                  <div class="mb-3">
-                                                    <label for="fecha" class="form-label">Fecha: (*)</label>
-                                                    <input type="text" class="form-control" name="fecha" id="fecha" placeholder="31/12/2023" pattern="(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/[0-9]{4}" value="11/08/2024" title="Formato: dd/mm/yyyy" required>
-                                                    <div class="invalid-feedback">Por favor ingresar fecha.</div>
+                         
+                                                <div class="row">
+                                                  <div class="col">
+                                                    <div class="mb-3">
+                                                                           <label for="nombre" class="form-label">Nombre: (*)</label>
+                                                                             <input type="text" name="nombre" id="nombre" class="form-control" value="Pedro" pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]+(\s[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]+){0,4}"
+                                                                                    placeholder="Ej: Epifanio" readonly>
+                                                                             <div class="invalid-feedback">Por favor ingresar nombre(s).</div>
+                                                    </div>
                                                   </div>
+                                                  <div class="col">
+                                                                        <div class="mb-3">
+                                                                           <label for="apellido" class="form-label">Apellido: (*)</label>
+                                                                           <input type="text" name="apellido" id="apellido" class="form-control" value="Bustamante" pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]+(\s[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]+){0,4}"
+                                                                                  placeholder="Ej: Bustamante" readonly> 
+                                                                           <div class="invalid-feedback">Por favor ingresar apellido(s).</div>
+                                                                        </div>
+                                                                      </div>
                                                 </div>
-                          </div>
-                          <div class="row">
 
-                            <div class="col">
-                              <div class="mb-3">
-                                <br>
-                                <br>
-                                <h6 class="obligatory-fields">(*)Campos obligatorios</h6>
-                              </div>
-                            </div>
-                          </div>
+                                                <div class="row">
+                                                  <div class="col">
+                                                    <div class="mb-3">
+                                                                           <label for="correo" class="form-label">Correo: </label>
+                                                                           <input type="text" name="correo" id="correo" class="form-control" value="pedro.bustamante@gmail.com" pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]+(\s[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]+){0,4}"
+                                                                                  placeholder="Ej: pedro.bustamante@gmail.com" readonly>
+                                                                            <div class="invalid-feedback">Por favor ingresar modelo válido.</div>
+                                                    </div>
+                                                  </div>
+                                                  <div class="col">
+                                                                        <div class="mb-3">
+                                                                           <label for="apellido" class="form-label">Fecha de nacimiento: (*)</label>
+                                                                           <input type="text" name="fechaNacimiento" id="fechaNacimiento" class="form-control" value="11/08/2000" pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]+(\s[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]+){0,4}"
+                                                                           placeholder="Ej: 11/08/2000" readonly>
+                                                                     <div class="invalid-feedback">Por favor ingresar fecha de nacimiento</div>
+                                                                        </div>
+                                                                      </div>
+                                                </div>
+
+
+                                                <div class="row">
+                                                  <div class="col">
+                                                                           <div class="mb-3">
+                                                                                                    <label for="zona" class="form-label">Zona:</label>
+                                                                                                    <select name="zona" id="zona" class="form-control" disabled>
+                                                                                                        <option value="Norte" selected>Norte</option>
+                                                                                                        <option value="Sur">Sur</option>
+                                                                                                        <option value="Este">Este</option>
+                                                                                                        <option value="Oeste">Oeste</option>
+                                                                                                    </select>
+                                                                                                    <div class="invalid-feedback">Por favor ingresar zona.</div>
+                                                                           </div>
+                                                                                                
+                                                  </div>
+                                                  <div class="col">
+                                                                        <div class="mb-3">
+                                                                                                    <label for="distrito" class="form-label">Distrito: (*)</label>
+                                                                                                    <select name="distrito" id="distrito" class="form-control" disabled>
+                                                                                                    <option value="Los Olivos" selected>Los Olivos</option>
+                                                                                                    </select>
+                                                                                                    <div class="invalid-feedback">Por favor selecciona un distrito.</div>
+                                                                                                    </div>
+                                                                          </div>
+                                                </div>
+
+                                                <div class="row">
+                                                  <div class="col">
+                                                    <div class="mb-3">
+                                                                           <label for="contrasena" class="form-label">Contraseña: </label>
+                                                                           <input type="text" name="contrasena" id="contrasena" class="form-control" value="AaBbCc123" pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]+(\s[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]+){0,4}"
+                                                                                  placeholder="Ej: AaBbCc123" readonly>
+                                                                            <div class="invalid-feedback">Por favor ingresar contraseña.</div>
+                                                    </div>
+                                                  </div>
+                                                  <div class="col">
+                                                                           <div class="mb-3">
+                                                                                                    <br>
+                                                                                                    <br>
+                                                                                                    <h6 class="obligatory-fields">(*)Campos obligatorios</h6>
+                                                                                                  </div>
+                                                                      </div>
+                                                </div>
+
+
+    
+
+                                                
+
+
+                         </div>
+
+
+
+
+                       
+    
+                        </div>
+
+                        <div class="btn-container" style="text-align: center; margin-top: 20px;">
+                          <button type="submit" class="btn btn-primary" style="width: 280px;">Regresar</button>
                         </div>
                       </div>
-                      <div class="btn-container">
-                        <button type="submit" class="btn btn-primary" style="width: 200px;">Regresar</button>
-                      </div>
                     </form>
-
                   </div>
                 </div>
               </div>
@@ -890,11 +984,28 @@
         // Validar que solo se ingresen letras en los campos de nombre y apellidos
         document.addEventListener("input", function(event) {
           if (event.target && event.target.id === "nombre") {
-            event.target.value = event.target.value.replace(/[^a-zA-ZñÑáéíóúÁÉÍÓÚ\s]/g, "");
+            event.target.value = event.target.value.replace(/[^a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ\s]/g, "");
           } else if (event.target && event.target.id === "apellidos") {
             event.target.value = event.target.value.replace(/[^a-zA-ZñÑáéíóúÁÉÍÓÚ\s]/g, "");
           }
         });
+        // Validar que solo se ingresen letras en los campos de color
+        document.addEventListener("input", function(event) {
+          if (event.target && event.target.id === "color") {
+            event.target.value = event.target.value.replace(/[^a-zA-ZñÑáéíóúÁÉÍÓÚ\s]/g, "");
+          }
+        });
+
+        //Validar que se ingresen letras y números
+        document.addEventListener("input", function(event) {
+          if (event.target && event.target.id === "modelo") {
+            // Permitir letras, números, espacios y caracteres especiales de acentuación
+            event.target.value = event.target.value.replace(/[^a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ\s]/g, "");
+          }
+        });
+
+
+
 
         // Validar que solo se ingresen números en el campo de DNI
         document.addEventListener("input", function(event) {
@@ -948,6 +1059,7 @@
             }
           }
         });
+
         document.addEventListener("input", function(event) {
           if (event.target && event.target.id === "contrasenia") {
             // Permitir letras, números y caracteres especiales específicos
@@ -956,5 +1068,19 @@
         });
       });
     </script>
+    <!-- Script para vista previa de imagen -->
+    <script>
+      function previewImage(event) {
+        var input = event.target;
+        var reader = new FileReader();
+        reader.onload = function() {
+          var preview = document.getElementById('imagePreview');
+          preview.src = reader.result;  // Reemplazar imagen por defecto con la seleccionada
+          preview.style.display = 'block';
+        }
+        reader.readAsDataURL(input.files[0]);
+      }
+    </script>
+
   </body>
 </html>
