@@ -44,10 +44,10 @@
   <body>
     <div class="wrapper">
       <!-- Sidebar -->
-      <div class="sidebar" data-background-color="light-blue2">
+      <div class="sidebar" data-background-color="dark">
         <div class="sidebar-logo">
           <!-- Logo Header -->
-          <div class="logo-header d-flex align-items-center justify-content-between" data-background-color="light-blue2">
+          <div class="logo-header d-flex align-items-center justify-content-between" data-background-color="dark">
             <a href="paginaprincipal.html" class="logo d-flex align-items-center">
               <img
                 src="../assets/img/kaiadmin/logo_dogless.png"
@@ -161,7 +161,7 @@
             <!-- End Logo Header -->
           </div>
           <!-- Navbar Header -->
-          <nav class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom" data-background-color="light-blue2">
+          <nav class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom" data-background-color="white">
             <div class="container-fluid">
               <nav class="navbar navbar-header-left navbar-expand-lg navbar-form nav-search p-0 d-none d-lg-flex">
                 <div class="input-group">
@@ -515,16 +515,22 @@
         <div class="container">
           <div class="page-inner">
             <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
-             <div>
-              <h3 class="fw-bold mb-3">Fechas de arribo de importaciones</h3>
-              <h6 class="op-7 mb-2">En las tablas encontrarás las identidades de los Agentes. Navega entre las páginas para explorar más información de cada uno.</h6>
-             </div>
+              <div>
+                <h3 class="fw-bold mb-3">Fechas de arribo de importaciones</h3>
+                <h6 class="op-7 mb-2">En las tablas encontrarás las identidades de los Agentes. Navega entre las páginas para explorar más información de cada uno.</h6>
+              </div>
             </div>
             <div class="row">
               <div class="col-md-12">
                 <div class="card">
 
                   <div class="card-body">
+                    <button
+                      class="btn btn-primary btn-round ms-auto"
+                      onclick="window.location.href='NuevoProducto.html';">
+                      <i class="fa fa-plus"></i>
+                      Crear Solicitud
+                     </button>
                     <div class="table-responsive">
                       <style>
                         /* Estilo para alinear los botones horizontalmente */
@@ -536,143 +542,253 @@
 
                       </style>
                       
-                      <table id="basic-datatables" class="display table table-striped table-hover">
+                      <table id="basic-datatables" class="display table table-striped table-hover ">
                         <thead>
                           <tr>
                             <th>Nombre</th>
-                            <th>Apellido</th>
-                            <th>RUC</th>
-                            <th>Correo Electrónico</th>
-                            <th>Código de Aduanas</th>
+                            <th>Descripcion</th>
+                            <th>Precio</th>
+                            <th>Proveedor</th>
+                            <th>Estado</th>
                             <th>Acciones</th>
                           </tr>
-                        </thead>
-                        <tbody>
+                      </thead>
+                      <tbody>
                           <tr>
-                            <td>José</td>
-                            <td>González</td>
-                            <td>412345678</td>
-                            <td>jose.gonzalez@gmail.com</td>
-                            <td>1001</td>
+                            <td>Xiaomi Mi 11 5G</td>
+                            <td>Xiamomi MI 11, 256 GB + 8 GB .....</td>
+                            <td>4567</td>
+                            <td>A</td>
+                            <td>En proceso</td>
+                            <td>                               
+                              <div class="dropdown">
+                                <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                  <i class="fas fa-ellipsis-v"></i>
+                                </button>
+            
+                                <ul class="dropdown-menu dropdown-menu-primary" aria-labelledby="dropdownMenuButton1">
+                                  <li><a class="dropdown-item" href="EditarProducto.html">Ver Solicitud</a></li>
+                                  <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#enviarModal">Enviar Solicitud</a></li>
+                                  <li><a class="dropdown-item" href="EditarProducto.html">Editar</a></li>
+                                  <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#borrarModal">Borrar</a></li>
+                                </ul>
+                              </div>
+                            </td>
                           </tr>
                           <tr>
-                            <td>María</td>
-                            <td>Rojas</td>
-                            <td>23456789</td>
-                            <td>maria.rojas@gmail.com</td>
-                            <td>1002</td>
+                            <td>Samsung Galaxy S24</td>
+                            <td>Samsung Galaxy S24, 256 GB.....</td>
+                            <td>4678</td>
+                            <td>A</td>
+                            <td>En proceso</td>
+                            <td>                               
+                              <div class="dropdown">
+                                <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                  <i class="fas fa-ellipsis-v"></i>
+                                </button>
+            
+                                <ul class="dropdown-menu dropdown-menu-primary" aria-labelledby="dropdownMenuButton1">
+                                  <li><a class="dropdown-item" href="EditarProducto.html">Ver Solicitud</a></li>
+                                  <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#enviarModal">Enviar Solicitud</a></li>
+                                  <li><a class="dropdown-item" href="EditarProducto.html">Editar</a></li>
+                                  <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#borrarModal">Borrar</a></li>
+                                </ul>
+                              </div>
+                            </td>
                           </tr>
                           <tr>
-                            <td>Carlos</td>
-                            <td>Fernández</td>
-                            <td>834567890</td>
-                            <td>carlos.fernandez@gmail.com</td>
-                            <td>1003</td>
+                              <td>Sony PS5</td>
+                              <td>Consola PlayStation 5 1TB.....</td>
+                              <td>6789</td>
+                              <td>C</td>
+                              <td>En proceso</td>
+                              <td>                               
+                                <div class="dropdown">
+                                  <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                  </button>
+              
+                                  <ul class="dropdown-menu dropdown-menu-primary" aria-labelledby="dropdownMenuButton1">
+                                    <li><a class="dropdown-item" href="EditarProducto.html">Ver Solicitud</a></li>
+                                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#enviarModal">Enviar Solicitud</a></li>
+                                    <li><a class="dropdown-item" href="EditarProducto.html">Editar</a></li>
+                                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#borrarModal">Borrar</a></li>
+                                  </ul>
+                                </div>
+                              </td>
                           </tr>
                           <tr>
-                            <td>Lucía</td>
-                            <td>Ramírez</td>
-                            <td>745678901</td>
-                            <td>lucia.ramirez@gmail.com</td>
-                            <td>1004</td>
+                              <td>DJI Mavic Air</td>
+                              <td>Drone GPS con cámara 4K UHD...</td>
+                              <td>7890</td>
+                              <td>B</td>
+                              <td>En proceso</td>
+                              <td>                               
+                                <div class="dropdown">
+                                  <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                  </button>
+              
+                                  <ul class="dropdown-menu dropdown-menu-primary" aria-labelledby="dropdownMenuButton1">
+                                    <li><a class="dropdown-item" href="EditarProducto.html">Ver Solicitud</a></li>
+                                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#enviarModal">Enviar Solicitud</a></li>
+                                    <li><a class="dropdown-item" href="EditarProducto.html">Editar</a></li>
+                                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#borrarModal">Borrar</a></li>
+                                  </ul>
+                                </div>
+                              </td>
                           </tr>
                           <tr>
-                            <td>Jorge</td>
-                            <td>Vargas</td>
-                            <td>456789012</td>
-                            <td>jorge.vargas@gmail.com</td>
-                            <td>1005</td>
+                              <td>LG OLED TV</td>
+                              <td>Smart TV, procesador OLED 4K...</td>
+                              <td>8901</td>
+                              <td>B</td>
+                              <td>En proceso</td>
+                              <td>                               
+                                <div class="dropdown">
+                                  <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                  </button>
+              
+                                  <ul class="dropdown-menu dropdown-menu-primary" aria-labelledby="dropdownMenuButton1">
+                                    <li><a class="dropdown-item" href="EditarProducto.html">Ver Solicitud</a></li>
+                                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#enviarModal">Enviar Solicitud</a></li>
+                                    <li><a class="dropdown-item" href="EditarProducto.html">Editar</a></li>
+                                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#borrarModal">Borrar</a></li>
+                                  </ul>
+                                </div>
+                              </td>
                           </tr>
                           <tr>
-                            <td>Ana</td>
-                            <td>Medina</td>
-                            <td>867890123</td>
-                            <td>ana.medina@gmail.com</td>
-                            <td>1006</td>
+                              <td>ONEPlus Nord 5G</td>
+                              <td>Tlf inteligente Android dual SIM...</td>
+                              <td>9012</td>
+                              <td>C</td>
+                              <td>En proceso</td>
+                              <td>                               
+                                <div class="dropdown">
+                                  <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                  </button>
+              
+                                  <ul class="dropdown-menu dropdown-menu-primary" aria-labelledby="dropdownMenuButton1">
+                                    <li><a class="dropdown-item" href="EditarProducto.html">Ver Solicitud</a></li>
+                                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#enviarModal">Enviar Solicitud</a></li>
+                                    <li><a class="dropdown-item" href="EditarProducto.html">Editar</a></li>
+                                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#borrarModal">Borrar</a></li>
+                                  </ul>
+                                </div>
+                              </td>
                           </tr>
                           <tr>
-                            <td>Ricardo</td>
-                            <td>Sánchez</td>
-                            <td>378901234</td>
-                            <td>ricardo.sanchez@gmail.com</td>
-                            <td>1007</td>
+                              <td>DJI Phantom 4 PRO</td>
+                              <td>Dron con cámara 4K UHD ...</td>
+                              <td>9123</td>
+                              <td>A</td>
+                              <td>En proceso</td>
+                              <td>                               
+                                <div class="dropdown">
+                                  <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                  </button>
+              
+                                  <ul class="dropdown-menu dropdown-menu-primary" aria-labelledby="dropdownMenuButton1">
+                                    <li><a class="dropdown-item" href="EditarProducto.html">Ver Solicitud</a></li>
+                                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#enviarModal">Enviar Solicitud</a></li>
+                                    <li><a class="dropdown-item" href="EditarProducto.html">Editar</a></li>
+                                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#borrarModal">Borrar</a></li>
+                                  </ul>
+                                </div>
+                              </td>
                           </tr>
                           <tr>
-                            <td>Elena</td>
-                            <td>Torres</td>
-                            <td>589012345</td>
-                            <td>elena.torres@gmail.com</td>
-                            <td>1008</td>
+                              <td>Sony PS4</td>
+                              <td>Consola PlayStation 4 Pro 1TB...</td>
+                              <td>1234</td>
+                              <td>B</td>
+                              <td>En proceso</td>
+                              <td>                               
+                                <div class="dropdown">
+                                  <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                  </button>
+              
+                                  <ul class="dropdown-menu dropdown-menu-primary" aria-labelledby="dropdownMenuButton1">
+                                    <li><a class="dropdown-item" href="EditarProducto.html">Ver Solicitud</a></li>
+                                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#enviarModal">Enviar Solicitud</a></li>
+                                    <li><a class="dropdown-item" href="EditarProducto.html">Editar</a></li>
+                                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#borrarModal">Borrar</a></li>
+                                  </ul>
+                                </div>
+                              </td>
                           </tr>
                           <tr>
-                            <td>Fernando</td>
-                            <td>Pérez</td>
-                            <td>490123456</td>
-                            <td>fernando.perez@gmail.com</td>
-                            <td>1009</td>
+                              <td>Zephyrus G16</td>
+                              <td>Laptop Oled 240hz Ultra 9.....</td>
+                              <td>2345</td>
+                              <td>C</td>
+                              <td>En proceso</td>
+                              <td>                               
+                                <div class="dropdown">
+                                  <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                  </button>
+              
+                                  <ul class="dropdown-menu dropdown-menu-primary" aria-labelledby="dropdownMenuButton1">
+                                    <li><a class="dropdown-item" href="EditarProducto.html">Ver Solicitud</a></li>
+                                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#enviarModal">Enviar Solicitud</a></li>
+                                    <li><a class="dropdown-item" href="EditarProducto.html">Editar</a></li>
+                                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#borrarModal">Borrar</a></li>
+                                  </ul>
+                                </div>
+                              </td>
                           </tr>
-                          <tr>
-                            <td>Sofía</td>
-                            <td>Castro</td>
-                            <td>301234567</td>
-                            <td>sofia.castro@gmail.com</td>
-                            <td>1010</td>
-                          </tr>
-                        </tbody>
+                          
+                      </tbody>
                       </table>
-                      
-                      <!-- Popup para confirmar eliminación -->
-                      <div id="confirmarBorradoPopup" class="modal" tabindex="-1" role="dialog">
+                      <!-- Modal para Enviar -->
+                      <div class="modal fade" id="enviarModal" tabindex="-1" role="dialog" aria-labelledby="acceptModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                           <div class="modal-content">
                             <div class="modal-header">
-                              <h5 class="modal-title">Confirmar Eliminación</h5>
-                              <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="cerrarPopup('confirmarBorradoPopup')">
+                              <h5 class="modal-title" id="acceptModalLabel">Advertencia</h5>
+                              <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                               </button>
                             </div>
                             <div class="modal-body">
-                              <p>¿Estás seguro de que deseas eliminar este registro?</p>
+                                <p>¿Estas seguro de realizar enviar la solitud de reposicion ?</p>
                             </div>
                             <div class="modal-footer">
-                              <button type="button" class="btn btn-primary" onclick="eliminarRegistro()">Sí, eliminar</button>
-                              <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="cerrarPopup('confirmarBorradoPopup')">Cancelar</button>
+                                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                <button type="button" class="btn btn-primary" onclick="window.location.href= 'reposiciones.html'" >Aceptar</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- Modal para Denegar -->
+                      <div class="modal fade" id="borrarModal" tabindex="-1" role="dialog" aria-labelledby="acceptModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="acceptModalLabel">Advertencia</h5>
+                              <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                                <p>¿Estas seguro de realizar la eliminación de la importación ?</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                <button type="button" class="btn btn-primary" onclick="window.location.href= 'importaciones.html'" >Aceptar</button>
                             </div>
                           </div>
                         </div>
                       </div>
                       
 
-                      <script>
-                        // Función para cerrar popups
-                        function cerrarPopup(id) {
-                          document.getElementById(id).style.display = 'none';
-                        }
-                        // Funciones para manejar la lógica de los botones
-                        function verRegistro(dni) {
-                          window.location.href = 'verRegistroAgente.html'
-                        }
-                        function crearRegistro(dni) {
-                          window.location.href = `NuevoRegistroAgente.html`; 
-                        }
-                      
 
-                      
-                        // Generar dinámicamente los botones de "Acciones" y "Espiar" con JavaScript
-                        document.addEventListener('DOMContentLoaded', function() {
-                          document.querySelectorAll('#basic-datatables tbody tr').forEach(tr => {
-                            const dni = tr.cells[2].textContent; // Obtener el DNI del usuario desde la tercera celda
-                            const accionesTd = document.createElement('td'); // Crear la celda para "Acciones"
-                            accionesTd.className = 'acciones-container'; // Aplicar la clase de estilos
-                            accionesTd.innerHTML = `
-                              <button class="btn btn-info btn-sm" onclick="verRegistro('${dni}')">Ver</button>
-                              <button class="btn btn-warning btn-sm" onclick="crearRegistro('${dni}')">Crear</button>
-                            `;
-                            tr.appendChild(accionesTd); // Añadir la celda de "Acciones" a la fila
-                      
-                          });
-                        });
-                      </script>
                       
                       
                       
@@ -685,6 +801,7 @@
             </div>
           </div>
         </div>
+
 
         <footer class="footer">
           <div class="container-fluid d-flex justify-content-between">
@@ -716,198 +833,7 @@
       </div>
 
       <!-- Custom template | don't include it in your project! -->
-      <div class="custom-template">
-        <div class="title">Settings</div>
-        <div class="custom-content">
-          <div class="switcher">
-            <div class="switch-block">
-              <h4>Logo Header</h4>
-              <div class="btnSwitch">
-                <button
-                  type="button"
-                  class="selected changeLogoHeaderColor"
-                  data-color="dark"
-                ></button>
-                <button
-                  type="button"
-                  class="selected changeLogoHeaderColor"
-                  data-color="blue"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="purple"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="light-blue"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="green"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="orange"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="red"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="white"
-                ></button>
-                <br />
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="dark2"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="blue2"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="purple2"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="light-blue2"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="green2"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="orange2"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="red2"
-                ></button>
-              </div>
-            </div>
-            <div class="switch-block">
-              <h4>Navbar Header</h4>
-              <div class="btnSwitch">
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="dark"
-                ></button>
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="blue"
-                ></button>
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="purple"
-                ></button>
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="light-blue"
-                ></button>
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="green"
-                ></button>
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="orange"
-                ></button>
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="red"
-                ></button>
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="white"
-                ></button>
-                <br />
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="dark2"
-                ></button>
-                <button
-                  type="button"
-                  class="selected changeTopBarColor"
-                  data-color="blue2"
-                ></button>
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="purple2"
-                ></button>
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="light-blue2"
-                ></button>
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="green2"
-                ></button>
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="orange2"
-                ></button>
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="red2"
-                ></button>
-              </div>
-            </div>
-            <div class="switch-block">
-              <h4>Sidebar</h4>
-              <div class="btnSwitch">
-                <button
-                  type="button"
-                  class="selected changeSideBarColor"
-                  data-color="white"
-                ></button>
-                <button
-                  type="button"
-                  class="changeSideBarColor"
-                  data-color="dark"
-                ></button>
-                <button
-                  type="button"
-                  class="changeSideBarColor"
-                  data-color="dark2"
-                ></button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="custom-toggle">
-          <i class="icon-settings"></i>
-        </div>
-      </div>
+    
       <!-- End Custom template -->
     </div>
     <!--   Core JS Files   -->

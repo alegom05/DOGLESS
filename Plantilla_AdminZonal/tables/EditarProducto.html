@@ -48,14 +48,15 @@
       <div class="sidebar" data-background-color="dark">
         <div class="sidebar-logo">
           <!-- Logo Header -->
-          <div class="logo-header" data-background-color="dark">
-            <a href="../index.html" class="logo">
+          <div class="logo-header d-flex align-items-center justify-content-between" data-background-color="dark">
+            <a href="paginaprincipal.html" class="logo d-flex align-items-center">
               <img
-                src="../assets/img/kaiadmin/logo_light.svg"
+                src="../assets/img/kaiadmin/logo_dogless.png"
                 alt="navbar brand"
                 class="navbar-brand"
-                height="20"
+                height="50"
               />
+              <span class="ms-2 text-white fw-bold text-truncate">DOGLESS</span> <!-- Texto blanco y limitado -->
             </a>
             <div class="nav-toggle">
               <button class="btn btn-toggle toggle-sidebar">
@@ -75,104 +76,58 @@
           <div class="sidebar-content">
             <ul class="nav nav-secondary">
               <!-- Barra de navegacion -->
-
+            
               <li class="nav-item">
-                <a href="paginaprincipal.html">
+                <a href="../paginaprincipal.html">
                   <i class="fas fa-home"></i>
                   <p>Pagina Principal</p>
                 </a>
               </li>
-
               <li class="nav-item">
-                <a href="tables/datatables.html">
-                  <i class="fas fa-user-plus"></i>
-                  <p>Solicitudes</p>
-                </a>
-              </li>
-
-              <li class="nav-item">
-                <a href="dashboard.html">
-                  <i class="far fa-chart-bar"></i>
+                <a href="../dashboard.html">
+                  <i class="fas fa-home"></i>
                   <p>Dashboard</p>
                 </a>
+              </li>              
+              <li class="nav-item">
+                <a href="agentes.html">
+                  <i class="fas fa-user-plus"></i>
+                  <p>Agentes</p>
+                </a>
               </li>
-
+			  <li class="nav-item">
+                <a href="importaciones.html">
+                  <i class="fas fa-home"></i>
+                  <p>Importaciones</p>
+                </a>
+              </li> 
+              <li class="nav-item">
+                <a href="reposiciones.html">
+                  <i class="far fa-chart-bar"></i>
+                  <p>Reposiciones</p>
+                </a>
+              </li>   
               <li class="nav-item">
                 <a data-bs-toggle="collapse" href="#tables1">
                   <i class="fas fa-users"></i>
-                  <p>Lista de Usuarios</p>
+                  <p>Notificaciones</p>
                   <span class="caret"></span>
                 </a>
                 <div class="collapse" id="tables1">
                   <ul class="nav nav-collapse">
                     <li>
-                      <a href="adminzonales.html">
-                        <span class="sub-item">Administradores zonales</span>
+                      <a href="recibidas.html">
+                        <span class="sub-item">Recibidas</span>
                       </a>
                     </li>
                     <li>
-                      <a href="agentes.html">
-                        <span class="sub-item">Agentes zonales</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="usuarios.html">
-                        <span class="sub-item">Usuarios finales</span>
+                      <a href="archivadas.html">
+                        <span class="sub-item">Archivadas</span>
                       </a>
                     </li>
                   </ul>
                 </div>
               </li>
-
-              <li class="nav-item">
-                <a data-bs-toggle="collapse" href="#tables2">
-                  <i class="far fa-handshake"></i>
-                  <p>Lista de Personal</p>
-                  <span class="caret"></span>
-                </a>
-                <div class="collapse" id="tables2">
-                  <ul class="nav nav-collapse">
-                    <li>
-                      <a href="vendedores.html">
-                        <span class="sub-item">Vendedores</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="proveedores.html">
-                        <span class="sub-item">Proveedores</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="productos.html">
-                        <span class="sub-item">Productos</span>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </li>
-
-              <li class="nav-item">
-                <a data-bs-toggle="collapse" href="#tables3">
-                  <i class="fas fa-boxes"></i>
-                  <p>Ordenes de reposición</p>
-                  <span class="caret"></span>
-                </a>
-                <div class="collapse" id="tables3">
-                  <ul class="nav nav-collapse">
-                    <li>
-                      <a href="tables/tables.html">
-                        <span class="sub-item">Productos pendientes</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="tables/datatables.html">
-                        <span class="sub-item">Productos aprobados</span>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </li>
-
             </ul>
           </div>
         </div>
@@ -611,16 +566,7 @@
                                      placeholder="Ej: iPhone 14 Pro 256GB" >
                               <div class="invalid-feedback">Por favor ingresar modelo válido.</div>
                             </div>
-                            <div class="mb-3">
-                              <label for="costo_envio" class="form-label">Costo de envío: (*)</label>
-                              <input type="number" name="costo_envio" id="costo_envio" class="form-control" value="20" placeholder="Ej: 0.50" step="0.01" required>
-                              <div class="invalid-feedback">Por favor ingresar el costo de envio.</div>
-                            </div>
-                            <div class="mb-3">
-                              <label for="color" class="form-label">Color: </label>
-                              <input type="text" name="color" id="color" class="form-control" value="Gris" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ]+(\s[a-zA-ZáéíóúÁÉÍÓÚñÑ]+)?" placeholder="Ej: Gris" >
-                              <div class="invalid-feedback">Por favor ingresar un color válido.</div>
-                            </div>
+                            
                           </div>
 
                           <!-- Columna derecha -->
@@ -644,7 +590,7 @@ Procesador: Intel Intel Core Ultra 9 Series 1 Intel Core Ultra 9 185H</textarea>
                         </div>
 
                         <div class="btn-container" style="text-align: center; margin-top: 20px;">
-                          <button type="submit" class="btn btn-primary" style="width: 280px;">Editar</button>
+                          <button type="submit" class="btn btn-primary" style="width: 280px;">Guardar cambios</button>
                         </div>
                       </div>
                     </form>
