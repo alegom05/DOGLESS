@@ -788,7 +788,36 @@
                       </div>
                       
 
+                      <script>
+                        // Función para cerrar popups
+                        function cerrarPopup(id) {
+                          document.getElementById(id).style.display = 'none';
+                        }
+                        // Funciones para manejar la lógica de los botones
+                        function verRegistro(dni) {
+                          window.location.href = 'verRegistroAgente.html'
+                        }
+                        function crearRegistro(dni) {
+                          window.location.href = `NuevoRegistroAgente.html`; 
+                        }
+                      
 
+                      
+                        // Generar dinámicamente los botones de "Acciones" y "Espiar" con JavaScript
+                        document.addEventListener('DOMContentLoaded', function() {
+                          document.querySelectorAll('#basic-datatables tbody tr').forEach(tr => {
+                            const dni = tr.cells[2].textContent; // Obtener el DNI del usuario desde la tercera celda
+                            const accionesTd = document.createElement('td'); // Crear la celda para "Acciones"
+                            accionesTd.className = 'acciones-container'; // Aplicar la clase de estilos
+                            accionesTd.innerHTML = `
+                              <button class="btn btn-info btn-sm" onclick="verRegistro('${dni}')">Ver</button>
+                              <button class="btn btn-warning btn-sm" onclick="crearRegistro('${dni}')">Crear</button>
+                            `;
+                            tr.appendChild(accionesTd); // Añadir la celda de "Acciones" a la fila
+                      
+                          });
+                        });
+                      </script>
                       
                       
                       
