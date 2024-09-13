@@ -4,6 +4,12 @@ SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
+-- -----------------------------------------------------
+-- Schema mydb
+-- -----------------------------------------------------
+-- -----------------------------------------------------
+-- Schema dogless
+-- -----------------------------------------------------
 
 -- -----------------------------------------------------
 -- Schema dogless
@@ -15,17 +21,17 @@ USE `dogless` ;
 -- Table `dogless`.`zona`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `dogless`.`zona` (
-  `idzonas` INT NOT NULL,
+  `idzona` INT NOT NULL,
   `nombre` VARCHAR(45) NULL DEFAULT NULL,
-  PRIMARY KEY (`idzonas`))
+  PRIMARY KEY (`idzona`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `dogless`.`adminzonales`
+-- Table `dogless`.`adminzonal`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `dogless`.`adminzonales` (
+CREATE TABLE IF NOT EXISTS `dogless`.`adminzonal` (
   `idadminzonales` INT NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(45) NULL DEFAULT NULL,
   `apellido` VARCHAR(45) NULL DEFAULT NULL,
@@ -38,7 +44,7 @@ CREATE TABLE IF NOT EXISTS `dogless`.`adminzonales` (
   INDEX `fk_adminzonal_zona1_idx` (`idzonas` ASC) VISIBLE,
   CONSTRAINT `fk_adminzonal_zona1`
     FOREIGN KEY (`idzonas`)
-    REFERENCES `dogless`.`zona` (`idzonas`))
+    REFERENCES `dogless`.`zona` (`idzona`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
@@ -47,14 +53,14 @@ DEFAULT CHARACTER SET = utf8;
 -- Table `dogless`.`distritos`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `dogless`.`distritos` (
-  `iddistritos` INT NOT NULL,
+  `iddistrito` INT NOT NULL,
   `nombre` VARCHAR(45) NULL DEFAULT NULL,
-  `idzonas` INT NOT NULL,
-  PRIMARY KEY (`iddistritos`),
-  INDEX `fk_distritos_zona1_idx` (`idzonas` ASC) VISIBLE,
+  `idzona` INT NOT NULL,
+  PRIMARY KEY (`iddistrito`),
+  INDEX `fk_distritos_zona1_idx` (`idzona` ASC) VISIBLE,
   CONSTRAINT `fk_distritos_zona1`
-    FOREIGN KEY (`idzonas`)
-    REFERENCES `dogless`.`zona` (`idzonas`))
+    FOREIGN KEY (`idzona`)
+    REFERENCES `dogless`.`zona` (`idzona`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
@@ -82,31 +88,32 @@ CREATE TABLE IF NOT EXISTS `dogless`.`usuarios` (
   `contraseña` VARCHAR(45) NULL DEFAULT NULL,
   `telefono` VARCHAR(45) NULL DEFAULT NULL,
   `direccion` VARCHAR(45) NULL DEFAULT NULL,
-  `idroles` INT NOT NULL,
+  `idrol` INT NOT NULL,
   `iddistritos` INT NOT NULL,
-  `idadminzonales` INT NOT NULL,
+  `idaminzonales` INT NOT NULL,
   `estado` ENUM('activo', 'inactivo', 'baneado') NULL DEFAULT NULL,
   `ruc` VARCHAR(11) NULL DEFAULT NULL,
   `codigoaduana` VARCHAR(45) NULL DEFAULT NULL,
   `razonsocial` VARCHAR(45) NULL DEFAULT NULL,
   `codigojuridiccion` VARCHAR(45) NULL DEFAULT NULL,
-  `idzonas` INT NOT NULL,
+  `idzona` INT NOT NULL,
+  `usuarioscol` VARCHAR(45) NULL,
   PRIMARY KEY (`idusuarios`),
-  INDEX `idrol_idx` (`idroles` ASC) VISIBLE,
+  INDEX `idrol_idx` (`idrol` ASC) VISIBLE,
   INDEX `iddistrito_idx` (`iddistritos` ASC) VISIBLE,
-  INDEX `adminzonalid_idx` (`idadminzonales` ASC) VISIBLE,
-  INDEX `fk_usuarios_zona1_idx` (`idzonas` ASC) VISIBLE,
+  INDEX `adminzonalid_idx` (`idaminzonales` ASC) VISIBLE,
+  INDEX `fk_usuarios_zona1_idx` (`idzona` ASC) VISIBLE,
   CONSTRAINT `adminzonalid`
-    FOREIGN KEY (`idadminzonales`)
-    REFERENCES `dogless`.`adminzonales` (`idadminzonales`),
+    FOREIGN KEY (`idaminzonales`)
+    REFERENCES `dogless`.`adminzonal` (`idadminzonales`),
   CONSTRAINT `distritoid`
     FOREIGN KEY (`iddistritos`)
-    REFERENCES `dogless`.`distritos` (`iddistritos`),
+    REFERENCES `dogless`.`distritos` (`iddistrito`),
   CONSTRAINT `fk_usuarios_zona1`
-    FOREIGN KEY (`idzonas`)
-    REFERENCES `dogless`.`zona` (`idzonas`),
+    FOREIGN KEY (`idzona`)
+    REFERENCES `dogless`.`zona` (`idzona`),
   CONSTRAINT `idrol`
-    FOREIGN KEY (`idroles`)
+    FOREIGN KEY (`idrol`)
     REFERENCES `dogless`.`roles` (`idroles`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
@@ -160,13 +167,13 @@ CREATE TABLE IF NOT EXISTS `dogless`.`productos` (
   `categoria` VARCHAR(45) NULL DEFAULT NULL,
   `precio` DECIMAL(10,2) NULL DEFAULT NULL,
   `costoenvio` DECIMAL(10,2) NULL DEFAULT NULL,
-  `idproveedores` INT NOT NULL,
+  `idproveedor` INT NOT NULL,
   `modelos` VARCHAR(100) NULL DEFAULT NULL,
   `colores` VARCHAR(100) NULL DEFAULT NULL,
   PRIMARY KEY (`idproductos`),
-  INDEX `proveedor_id_idx_productos` (`idproveedores` ASC) VISIBLE,
+  INDEX `proveedor_id_idx_productos` (`idproveedor` ASC) VISIBLE,
   CONSTRAINT `fk_proveedor_id_productos`
-    FOREIGN KEY (`idproveedores`)
+    FOREIGN KEY (`idproveedor`)
     REFERENCES `dogless`.`proveedores` (`idproveedores`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
@@ -177,19 +184,19 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `dogless`.`detallesorden` (
   `iddetallesorden` INT NOT NULL AUTO_INCREMENT,
-  `idordenes` INT NOT NULL,
-  `idproductos` INT NOT NULL,
+  `idorden` INT NOT NULL,
+  `idproducto` INT NOT NULL,
   `cantidad` INT NULL DEFAULT NULL,
   `preciounitario` DECIMAL(10,2) NULL DEFAULT NULL,
   `subtotal` DECIMAL(10,2) NULL DEFAULT NULL,
   PRIMARY KEY (`iddetallesorden`),
-  INDEX `id_orden_idx_detallesOrden` (`idordenes` ASC) VISIBLE,
-  INDEX `id_producto_idx_detallesOrden` (`idproductos` ASC) VISIBLE,
+  INDEX `id_orden_idx_detallesOrden` (`idorden` ASC) VISIBLE,
+  INDEX `id_producto_idx_detallesOrden` (`idproducto` ASC) VISIBLE,
   CONSTRAINT `fk_id_orden_detallesOrden`
-    FOREIGN KEY (`idordenes`)
+    FOREIGN KEY (`idorden`)
     REFERENCES `dogless`.`ordenes` (`idordenes`),
   CONSTRAINT `fk_id_producto_detallesOrden`
-    FOREIGN KEY (`idproductos`)
+    FOREIGN KEY (`idproducto`)
     REFERENCES `dogless`.`productos` (`idproductos`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
@@ -207,15 +214,15 @@ CREATE TABLE IF NOT EXISTS `dogless`.`resenas` (
   `atencion` INT NULL DEFAULT NULL,
   `calidad` TINYINT NULL DEFAULT NULL,
   `serecibiorapido` INT NULL DEFAULT NULL,
-  `usuarioid` INT NOT NULL,
+  `idusuarios` INT NOT NULL,
   PRIMARY KEY (`idresenas`),
   INDEX `producto_id_idx_resenas` (`idproductos` ASC) VISIBLE,
-  INDEX `usuarioid_idx` (`usuarioid` ASC) VISIBLE,
+  INDEX `usuarioid_idx` (`idusuarios` ASC) VISIBLE,
   CONSTRAINT `fk_producto_id_resenas`
     FOREIGN KEY (`idproductos`)
     REFERENCES `dogless`.`productos` (`idproductos`),
   CONSTRAINT `usuarioid`
-    FOREIGN KEY (`usuarioid`)
+    FOREIGN KEY (`idusuarios`)
     REFERENCES `dogless`.`usuarios` (`idusuarios`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
@@ -227,12 +234,12 @@ DEFAULT CHARACTER SET = utf8;
 CREATE TABLE IF NOT EXISTS `dogless`.`stockproductos` (
   `idproductos` INT NOT NULL,
   `cantidad` INT NULL DEFAULT NULL,
-  `idzonas` INT NOT NULL,
+  `idzona` INT NOT NULL,
   INDEX `productoid_idx` (`idproductos` ASC) VISIBLE,
-  INDEX `fk_stockproductos_zona1_idx` (`idzonas` ASC) VISIBLE,
+  INDEX `fk_stockproductos_zona1_idx` (`idzona` ASC) VISIBLE,
   CONSTRAINT `fk_stockproductos_zona1`
-    FOREIGN KEY (`idzonas`)
-    REFERENCES `dogless`.`zona` (`idzonas`),
+    FOREIGN KEY (`idzona`)
+    REFERENCES `dogless`.`zona` (`idzona`),
   CONSTRAINT `productoid`
     FOREIGN KEY (`idproductos`)
     REFERENCES `dogless`.`productos` (`idproductos`))
