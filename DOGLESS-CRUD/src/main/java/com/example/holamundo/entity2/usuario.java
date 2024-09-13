@@ -4,8 +4,12 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
+@Getter
+@Setter
 public class usuario {
 
     @Id
@@ -13,14 +17,19 @@ public class usuario {
     private Integer idusuarios;
     private String nombre;
     private String apellido;
-    private String correo;
     private String dni;
+    private String correo;
     private String telefono;
     private String direccion;
+
+
     private Integer idroles;
+
     private Integer iddistritos;
+
     private Integer idadminzonales;
-    private String estado;
+
+    private Integer estado;
     private String ruc;
     private String codigoaduana;
     private String razonsocial;

@@ -4,6 +4,12 @@ SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
+-- -----------------------------------------------------
+-- Schema mydb
+-- -----------------------------------------------------
+-- -----------------------------------------------------
+-- Schema dogless
+-- -----------------------------------------------------
 
 -- -----------------------------------------------------
 -- Schema dogless
@@ -32,7 +38,7 @@ CREATE TABLE IF NOT EXISTS `dogless`.`adminzonales` (
   `dni` VARCHAR(8) NULL DEFAULT NULL,
   `telefono` VARCHAR(9) NULL DEFAULT NULL,
   `email` VARCHAR(45) NULL DEFAULT NULL,
-  `contraseña` VARCHAR(45) NULL DEFAULT NULL,
+  `clave` VARCHAR(45) NULL DEFAULT NULL,
   `idzonas` INT NOT NULL,
   PRIMARY KEY (`idadminzonales`),
   INDEX `fk_adminzonal_zona1_idx` (`idzonas` ASC) VISIBLE,
@@ -79,7 +85,7 @@ CREATE TABLE IF NOT EXISTS `dogless`.`usuarios` (
   `apellido` VARCHAR(45) NULL DEFAULT NULL,
   `dni` VARCHAR(45) NULL DEFAULT NULL,
   `correo` VARCHAR(45) NULL DEFAULT NULL,
-  `contraseña` VARCHAR(45) NULL DEFAULT NULL,
+  `clave` VARCHAR(45) NULL DEFAULT NULL,
   `telefono` VARCHAR(45) NULL DEFAULT NULL,
   `direccion` VARCHAR(45) NULL DEFAULT NULL,
   `idroles` INT NOT NULL,
@@ -207,15 +213,15 @@ CREATE TABLE IF NOT EXISTS `dogless`.`resenas` (
   `atencion` INT NULL DEFAULT NULL,
   `calidad` TINYINT NULL DEFAULT NULL,
   `serecibiorapido` INT NULL DEFAULT NULL,
-  `usuarioid` INT NOT NULL,
+  `idusuarios` INT NOT NULL,
   PRIMARY KEY (`idresenas`),
   INDEX `producto_id_idx_resenas` (`idproductos` ASC) VISIBLE,
-  INDEX `usuarioid_idx` (`usuarioid` ASC) VISIBLE,
+  INDEX `usuarioid_idx` (`idusuarios` ASC) VISIBLE,
   CONSTRAINT `fk_producto_id_resenas`
     FOREIGN KEY (`idproductos`)
     REFERENCES `dogless`.`productos` (`idproductos`),
   CONSTRAINT `usuarioid`
-    FOREIGN KEY (`usuarioid`)
+    FOREIGN KEY (`idusuarios`)
     REFERENCES `dogless`.`usuarios` (`idusuarios`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
