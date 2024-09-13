@@ -1,16 +1,13 @@
 package com.example.holamundo.entity2;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 @Entity
 @Getter
 @Setter
-public class usuario {
+public class Usuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,8 +19,8 @@ public class usuario {
     private String telefono;
     private String direccion;
 
-
-    private Integer idroles;
+    @ManyToOne
+    private Rol rol;
 
     private Integer iddistritos;
 
