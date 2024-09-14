@@ -22,7 +22,9 @@ public class Usuario {
     @ManyToOne
     private Rol rol;
 
-    private Integer iddistritos;
+    @ManyToOne
+    @JoinColumn(name = "iddistritos")
+    private Distrito distrito;
 
     private Integer idadminzonales;
 

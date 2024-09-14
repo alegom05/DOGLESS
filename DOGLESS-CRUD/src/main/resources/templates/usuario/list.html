@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/navbar.html :: header( title = 'Productos')}"></head>
+<body>
+<main>
+    <div class="container px-4 pb-5">
+        <nav th:replace="~{fragments/navbar.html :: navbar( active = 'Product')}"></nav>
+        <h1 class="pb-2 border-bottom">Lista de Administradores Zonales</h1>
+        <a class="btn btn-primary mt-4 mb-4" th:href="@{'/usuario/new'}">Nuevo Producto</a>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Product Name</th>
+                <th>Categoría</th>
+                <th>Proveedor</th>
+                <th>Precio Unitario</th>
+                <th>Stock</th>
+                <th>¿Descontinuado?</th>
+                <th></th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="user, info : ${listausuarios}">
+                <td th:text="${info.index + 1}"></td>
+                <td th:text="${user.productname}"></td>
+                <td th:text="${user.category.categoryname}"></td>
+                <td th:text="${user.supplier.companyname}"></td>
+                <td th:text="${user.unitprice}"></td>
+                <td th:text="${user.unitsinstock}"></td>
+                <td th:text="${user.discontinued?'si':'no'}"></td>
+                <td><a class="btn btn-primary"
+                       th:href="@{'/usuario/edit' + '?id=' + ${usuario.id}}">Editar</a>
+                </td>
+                <td><a class="btn btn-danger"
+                       th:href="@{'/usuario/delete' + '?id=' + ${usuario.id}}">Borrar</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+<script th:replace="~{fragments/navbar.html :: footer-bootstrap}"></script>
+</body>
+</html>
