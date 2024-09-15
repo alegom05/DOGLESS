@@ -25,7 +25,7 @@ public interface ShipperRepository extends JpaRepository<Shipper, Integer> {
     List<Shipper> buscarPorNombreParcial(String companyName);
     @Transactional
     @Modifying
-    @Query (nativeQuery = true, value = "update shippers set companyname = ?1 where shipperid = ?2")
+    @Query (nativeQuery = true, value = "update shippers set CompanyName = ?1 where ShipperID = ?2")
     void actualizarNombreCompania(String companyName, int shipperId);
 
 }

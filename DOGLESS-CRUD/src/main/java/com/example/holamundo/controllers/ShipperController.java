@@ -76,7 +76,7 @@ public class ShipperController {
         //List<Shipper> listaTransportistas = shipperRepository.findByCompanyname(searchField);
         List<Shipper> listaTransportistas = shipperRepository.buscarPorNombreParcial(searchField);
         model.addAttribute("listaTransportistas", listaTransportistas);
-        return "shipper/listar";
+        return "shipper/lista";
     }
     //Agregado
     @PostMapping("/guardar")
