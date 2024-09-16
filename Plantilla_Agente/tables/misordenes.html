@@ -89,10 +89,25 @@
               </a>
             </li>              
             <li class="nav-item">
-              <a href="ordenes.html">
-                <i class="fas fa-user-plus"></i>
+              <a data-bs-toggle="collapse" href="#tables1">
+                <i class="fas fa-users"></i>
                 <p>Órdenes</p>
+                <span class="caret"></span>
               </a>
+              <div class="collapse" id="tables1">
+                <ul class="nav nav-collapse">
+                  <li>
+                    <a href="misordenes.html">
+                      <span class="sub-item">Mis órdenes</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="ordenesnoasignadas.html">
+                      <span class="sub-item">Órdenes no asignadas</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
             </li>
             <li class="nav-item">
               <a data-bs-toggle="collapse" href="#tables1">
@@ -124,7 +139,7 @@
             <li class="nav-item">
               <a href="reportes.html">
                 <i class="far fa-chart-bar"></i>
-                <p>Reposiciones</p>
+                <p>Reportes</p>
               </a>
             </li>   
             <li class="nav-item">
@@ -522,8 +537,8 @@
           <div class="page-inner">
             <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
              <div>
-              <h3 class="fw-bold mb-3">Órdenes totales</h3>
-              <h6 class="op-7 mb-2">Este reporte contiene un listado de todas las órdenes que han sido generadas por un usuario específico.</h6>
+              <h3 class="fw-bold mb-3">Lista de Órdenes</h3>
+              <h6 class="op-7 mb-2">En las tablas encontrarás las identidades de los Agentes. Navega entre las páginas para explorar más información de cada uno.</h6>
              </div>
             </div>
             <div class="row">
@@ -531,19 +546,25 @@
                 <div class="card">
 
                   <div class="card-body">
- 
+                    <button
+                    class="btn btn-primary btn-round ms-auto"
+                    onclick="window.location.href='NuevoRegistroAgente.html';"
+            >
+              <i class="fa fa-plus"></i>
+              Agregar Producto
+            </button>
                     <div class="table-responsive">
 
                       
                       <table id="basic-datatables" class="display table table-striped table-hover">
                         <thead>
                           <tr>
-                            <th>#</th>
-                            <th>Nombre del producto</th>
-                            <th>Cantidad de productos</th>
-                            <th>Usuario</th>
-                            <th>Fecha de adquisición</th>
-                            <th>Estado de orden</th>
+                            <th>Nombre</th>
+                            <th>Apellido</th>
+                            <th>RUC</th>
+                            <th>Correo Electrónico</th>
+                            <th>Código de Aduanas</th>
+                            <th>Acciones</th>
                           </tr>
                         </thead>
                         <tbody>

@@ -522,8 +522,8 @@
           <div class="page-inner">
             <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
              <div>
-              <h3 class="fw-bold mb-3">Órdenes totales</h3>
-              <h6 class="op-7 mb-2">Este reporte contiene un listado de todas las órdenes que han sido generadas por un usuario específico.</h6>
+              <h3 class="fw-bold mb-3">Reportes Guardados</h3>
+              <h6 class="op-7 mb-2">En las tablas encontrarás las identidades de los Agentes. Navega entre las páginas para explorar más información de cada uno.</h6>
              </div>
             </div>
             <div class="row">
@@ -531,19 +531,25 @@
                 <div class="card">
 
                   <div class="card-body">
- 
+                    <button
+                    class="btn btn-primary btn-round ms-auto"
+                    onclick="window.location.href='NuevoRegistroAgente.html';"
+            >
+              <i class="fa fa-plus"></i>
+              Agregar Producto
+            </button>
                     <div class="table-responsive">
 
                       
                       <table id="basic-datatables" class="display table table-striped table-hover">
                         <thead>
                           <tr>
-                            <th>#</th>
-                            <th>Nombre del producto</th>
-                            <th>Cantidad de productos</th>
-                            <th>Usuario</th>
-                            <th>Fecha de adquisición</th>
-                            <th>Estado de orden</th>
+                            <th>Id</th>
+                            <th>Tipo de reporte</th>
+                            <th>Fecha de generación</th>
+                            <th>Ver documento</th>
+                            <th>Descargar</th>
+                            <th></th>
                           </tr>
                         </thead>
                         <tbody>
