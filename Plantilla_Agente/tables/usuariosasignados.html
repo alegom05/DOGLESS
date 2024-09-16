@@ -95,12 +95,12 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a data-bs-toggle="collapse" href="#tables1">
+                <a data-bs-toggle="collapse" href="#tables2">
                   <i class="fas fa-users"></i>
                   <p>Usuarios</p>
                   <span class="caret"></span>
                 </a>
-                <div class="collapse" id="tables1">
+                <div class="collapse" id="tables2">
                   <ul class="nav nav-collapse">
                     <li>
                       <a href="usuariosasignados.html">
@@ -122,17 +122,26 @@
                 </a>
               </li> 
               <li class="nav-item">
-                <a href="reportes.html">
-                  <i class="far fa-chart-bar"></i>
-                  <p>Reposiciones</p>
+                <a data-bs-toggle="collapse" href="#tables1">
+                  <i class="fas fa-users"></i>
+                  <p>Reportes</p>
+                  <span class="caret"></span>
                 </a>
-              </li>   
-              <li class="nav-item">
-                <a href="soporte.html">
-                  <i class="far fa-chart-bar"></i>
-                  <p>Soporte</p>
-                </a>
-              </li> 
+                <div class="collapse" id="tables1">
+                  <ul class="nav nav-collapse">
+                    <li>
+                      <a href="reportesguardados.html">
+                        <span class="sub-item">Asignados</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="reportesusuarios.html">
+                        <span class="sub-item">Baneados</span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </li>  
             </ul>
           </div>
         </div>
@@ -531,13 +540,6 @@
                 <div class="card">
 
                   <div class="card-body">
-                    <button
-                    class="btn btn-primary btn-round ms-auto"
-                    onclick="window.location.href='NuevoRegistroAgente.html';"
-            >
-              <i class="fa fa-plus"></i>
-              Agregar Producto
-            </button>
                     <div class="table-responsive">
 
                       

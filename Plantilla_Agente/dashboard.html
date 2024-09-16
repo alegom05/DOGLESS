@@ -90,44 +90,59 @@
                 </a>
               </li>              
               <li class="nav-item">
-                <a href="tables/agentes.html">
+                <a href="ordenes.html">
                   <i class="fas fa-user-plus"></i>
-                  <p>Agentes</p>
+                  <p>Órdenes</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="tables/importaciones.html">
-                  <i class="fas fa-home"></i>
-                  <p>Importaciones</p>
-                </a>
-              </li> 
-              <li class="nav-item">
-                <a href="tables/reposiciones.html">
-                  <i class="far fa-chart-bar"></i>
-                  <p>Reposiciones</p>
-                </a>
-              </li>   
-              <li class="nav-item">
                 <a data-bs-toggle="collapse" href="#tables1">
                   <i class="fas fa-users"></i>
-                  <p>Notificaciones</p>
+                  <p>Usuarios</p>
                   <span class="caret"></span>
                 </a>
                 <div class="collapse" id="tables1">
                   <ul class="nav nav-collapse">
                     <li>
-                      <a href="tables/recibidas.html">
-                        <span class="sub-item">Recibidas</span>
+                      <a href="usuariosasignados.html">
+                        <span class="sub-item">Asignados</span>
                       </a>
                     </li>
                     <li>
-                      <a href="tables/archivadas.html">
-                        <span class="sub-item">Archivadas</span>
+                      <a href="usuariosbaneados.html">
+                        <span class="sub-item">Baneados</span>
                       </a>
                     </li>
                   </ul>
                 </div>
               </li>
+              <li class="nav-item">
+                <a href="chats.html">
+                  <i class="fas fa-home"></i>
+                  <p>Chats</p>
+                </a>
+              </li> 
+              <li class="nav-item">
+                <a data-bs-toggle="collapse" href="#tables2">
+                  <i class="fas fa-users"></i>
+                  <p>Reportes</p>
+                  <span class="caret"></span>
+                </a>
+                <div class="collapse" id="tables2">
+                  <ul class="nav nav-collapse">
+                    <li>
+                      <a href="tables/reportesguardados.html">
+                        <span class="sub-item">Reportes guardados</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="tables/reportesordenes.html">
+                        <span class="sub-item">Reportes de órdenes</span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </li>  
             </ul>
           </div>
         </div>
@@ -517,7 +532,7 @@
             <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
               <div>
                 <h3 class="fw-bold mb-3">Dashboard</h3>
-                <h6 class="op-7 mb-2">Aquí verás la cifras y comparar usuarios, productos proveedores, órdenes para evaluar la participación y retención.</h6>
+                <h6 class="op-7 mb-2">Aquí verás la cantidad de órdenes, estados de las órdenes tomadas, y comparar cifras, cantidad de usuarios, para poder gestionarlos correctamente.</h6>
               </div>
 
             </div>
@@ -529,7 +544,7 @@
               <div class="col-6">
                 <div class="card">
                   <div class="card-header">
-                    <div class="card-title">Top 10 productos más importados en su zona</div>
+                    <div class="card-title">Órdenes tomadas vs Órdenes sin tomar</div>
                   </div>
                   <div class="card-body">
                     <div class="chart-container">
@@ -541,7 +556,7 @@
               <div class="col-6">
                 <div class="card">
                   <div class="card-header">
-                    <div class="card-title">Distribucion de usuarios registrados en su zona</div>
+                    <div class="card-title">Estado de las órdenes tomadas</div>
                   </div>
                   <div class="card-body">
                     <div class="chart-container">
@@ -556,7 +571,7 @@
               <div class="col-6">
                 <div class="card">
                   <div class="card-header">
-                    <div class="card-title">Top 10 usuarios con más importaciones</div>
+                    <div class="card-title">Cantidad de órdenes procesadas por mes</div>
                   </div>
                   <div class="card-body">
                     <div class="chart-container">
@@ -568,7 +583,7 @@
               <div class="col-6">
                 <div class="card">
                   <div class="card-header">
-                    <div class="card-title">Cantidad de usuarios por agente</div>
+                    <div class="card-title">Tipos de órdenes y cantidad</div>
                   </div>
                   <div class="card-body">
                     <div class="chart-container">
@@ -578,63 +593,6 @@
                 </div>
               </div>
             </div>
-
-            <div class="row">
-              <div class="col-6">
-                <div class="card">
-                  <div class="card-header">
-                    <div class="card-title">Productos con poco stock para reposición</div>
-                  </div>
-                  <div class="card-body">
-                    <div class="chart-container">
-                      <canvas id="productosPocoStock"></canvas>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-6">
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-title">Distribución de agentes a cargo</div>
-                    </div>
-                    <div class="card-body">
-                        <!-- Tabla con los datos de agentes -->
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Nombre</th>
-                                    <th>Zona</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Talha</td>
-                                    <td>Sur</td>
-                                </tr>
-                                <tr>
-                                    <td>Chad</td>
-                                    <td>Este</td>
-                                </tr>
-                                <tr>
-                                    <td>Hizrian</td>
-                                    <td>Oeste</td>
-                                </tr>
-                                <tr>
-                                    <td>Jaime</td>
-                                    <td>Este</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-            </div>
-
-
-
-          
-            
 
           </div>
         </div>
