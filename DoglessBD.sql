@@ -4,9 +4,7 @@ SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
--- -----------------------------------------------------
--- Schema mydb
--- -----------------------------------------------------
+
 -- -----------------------------------------------------
 -- Schema dogless
 -- -----------------------------------------------------
@@ -249,3 +247,78 @@ DEFAULT CHARACTER SET = utf8;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+INSERT INTO `dogless`.`roles` (`idroles`, `nombre`) VALUES ('1', 'Superadmin');
+INSERT INTO `dogless`.`roles` (`idroles`, `nombre`) VALUES ('2', 'Adminzonal');
+INSERT INTO `dogless`.`roles` (`idroles`, `nombre`) VALUES ('3', 'Agente');
+INSERT INTO `dogless`.`roles` (`idroles`, `nombre`) VALUES ('4', 'Usuario');
+
+INSERT INTO `dogless`.`zona` (`idzonas`, `nombre`) VALUES
+(1, 'Norte'),
+(2, 'Sur'),
+(3, 'Este'),
+(4, 'Oeste');
+
+INSERT INTO `dogless`.`distritos` (`iddistritos`, `nombre`, `idzonas`) VALUES
+(1, 'Ancon', 1),
+(2, 'Santa Rosa', 1),
+(3, 'Carabayllo', 1),
+(4, 'Puente Piedra', 1),
+(5, 'Comas', 1),
+(6, 'Los Olivos', 1),
+(7, 'San Martin de Porres', 1),
+(8, 'Independencia', 1),
+(9, 'San Juan de Miraflores', 2),
+(10, 'Villa Maria del Triunfo', 2),
+(11, 'Villa el Salvador', 2),
+(12, 'Pachacamac', 2),
+(13, 'Lurin', 2),
+(14, 'Punta Hermosa', 2),
+(15, 'Punta Negra', 2),
+(16, 'San Bartolo', 2),
+(17, 'Santa Maria del Mar', 2),
+(18, 'Pucusana', 2),
+(19, 'San Juan de Lurigancho', 3),
+(20, 'Lurigancho/Chosica', 3),
+(21, 'Ate', 3),
+(22, 'El Agustino', 3),
+(23, 'Santa Anita', 3),
+(24, 'La Molina', 3),
+(25, 'Cieneguilla', 3),
+(26, 'Rimac', 4),
+(27, 'Cercado de Lima', 4),
+(28, 'Breña', 4),
+(29, 'Pueblo Libre', 4),
+(30, 'Magdalena', 4),
+(31, 'Jesus Maria', 4),
+(32, 'La Victoria', 4),
+(33, 'Lince', 4),
+(34, 'San Isidro', 4),
+(35, 'San Miguel', 4),
+(36, 'Surquillo', 4),
+(37, 'San Borja', 4),
+(38, 'Santiago de Surco', 4),
+(39, 'Barranco', 4),
+(40, 'Chorrillos', 4),
+(41, 'San Luis', 4),
+(42, 'Miraflores', 4);
+
+/*
+-- Inserciones actualizadas para la tabla usuarios
+INSERT INTO `dogless`.`usuarios` (`idusuarios`, `nombre`, `apellido`, `dni`, `correo`, `clave`, `telefono`, `direccion`, `idroles`, `iddistritos`, `idadminzonales`, `estado`, `ruc`, `codigoaduana`, `razonsocial`, `codigojuridiccion`, `idzonas`) VALUES
+(1, 'Alejandro', 'Gómez', '1234567', 'agomez@gmail.com', '1234', '987654321', 'Av. Arequipa 123, Lima', 4, 5, 2, 1, '45-1234567-8', '1', NULL, 3, 2),
+(2, 'María', 'López', '2345678', 'mlopez@gmail.com', '1234', '923456789', 'Jr. Cusco 456, Lima', 4, 12, 3, 1, '67-2345678-9', '1', NULL, 2, 4),
+(3, 'Carlos', 'Martínez', '3456789', 'cmartinez@gmail.com', '1234', '945678901', 'Calle Los Pinos 789, Lima', 4, 8, 1, 0, '23-3456789-1', '1', NULL, 1, 1),
+(4, 'Laura', 'Rodríguez', '4567890', 'lrodriguez@gmail.com', '1234', '978901234', 'Av. La Marina 1011, Lima', 4, 15, 4, 1, '89-4567890-2', '1', NULL, 4, 3),
+(5, 'Javier', 'Fernández', '5678901', 'jfernandez@gmail.com', '1234', '912345678', 'Jr. Huancayo 1213, Lima', 4, 3, 2, 1, '34-5678901-5', '1', NULL, 2, 2),
+(6, 'Ana', 'García', '6789012', 'agarcia@gmail.com', '1234', '956789012', 'Av. Brasil 1415, Lima', 4, 18, 1, 0, '78-6789012-3', '1', NULL, 3, 4),
+(7, 'Pedro', 'Sánchez', '7890123', 'psanchez@gmail.com', '1234', '990123456', 'Calle Los Álamos 1617, Lima', 4, 7, 3, 1, '12-7890123-7', '1', NULL, 1, 1),
+(8, 'Carmen', 'Pérez', '8901234', 'cperez@gmail.com', '1234', '934567890', 'Jr. Tacna 1819, Lima', 4, 20, 4, 1, '56-8901234-4', '1', NULL, 4, 3),
+(9, 'Miguel', 'Torres', '9012345', 'mtorres@gmail.com', '1234', '967890123', 'Av. Javier Prado 2021, Lima', 4, 2, 2, 0, '90-9012345-6', '1', NULL, 2, 2),
+(10, 'Isabel', 'Díaz', '0123456', 'idiaz@gmail.com', '1234', '901234567', 'Calle Las Palmeras 2223, Lima', 4, 14, 1, 1, '43-0123456-1', '1', NULL, 3, 4),
+(11, 'Roberto', 'Vargas', '1234560', 'rvargas@gmail.com', '1234', '945678901', 'Jr. Iquitos 2425, Lima', 4, 9, 3, 1, '21-1234560-8', '1', NULL, 1, 1),
+(12, 'Lucía', 'Mendoza', '2345601', 'lmendoza@gmail.com', '1234', '978901234', 'Av. Salaverry 2627, Lima', 4, 16, 4, 0, '87-2345601-3', '1', NULL, 4, 3),
+(13, 'Fernando', 'Ruiz', '3456012', 'fruiz@gmail.com', '1234', '912345678', 'Calle Los Cipreses 2829, Lima', 4, 1, 2, 1, '32-3456012-5', '1', NULL, 2, 2),
+(14, 'Sofía', 'Castro', '4560123', 'scastro@gmail.com', '1234', '956789012', 'Jr. Huánuco 3031, Lima', 4, 11, 1, 1, '76-4560123-7', '1', NULL, 3, 4),
+(15, 'Diego', 'Herrera', '5601234', 'dherrera@gmail.com', '1234', '990123456', 'Av. Universitaria 3233, Lima', 4, 19, 3, 0, '10-5601234-9', '1', NULL, 1, 1);
+*/
