@@ -497,7 +497,7 @@
             <div class="page-inner">
               <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
                 <div>
-                  <h3 class="fw-bold mb-3">Editar Agente Zonal</h3>
+                  <h3 class="fw-bold mb-3">Mi perfil</h3>
                 </div>
               </div>
               <div class="row">
@@ -505,7 +505,7 @@
                   <div class="card">
   
                     <div class="card-body">
-                      <form class="needs-validation" style="width: 100%; margin-left: 0%; margin-top: 3%;" action="agentes.html" method="POST" novalidate>
+                      <form class="needs-validation" style="width: 100%; margin-left: 0%; margin-top: 3%;" action="/submit" method="POST" id="userForm">
                         <div class="container">
                            <div class="row">
                                                     <div class="col-md-12">
@@ -570,13 +570,7 @@
                                                                         </div>
                                         
                                                                         <div class="row">
-                                                                          <div class="col">
-                                                                            <div class="mb-3">
-                                                                              <label for="codigoAduana" class="form-label">Código de despachador de aduana: (*)</label>
-                                                                              <input type="text" name="codigoAduana" id="codigoAduana" class="form-control" value="2739187">
-                                                                              <div class="invalid-feedback">Por favor ingresar código de despachador de aduana.</div>
-                                                                            </div>
-                                                                          </div>
+                                                                        
                                                                             <div class="col">
                                                                                 <div class="mb-3">
                                                                                     <label for="distrito" class="form-label">Distrito: (*)</label>
@@ -597,127 +591,50 @@
                                                                                     <div class="invalid-feedback">Por favor ingresar contraseña.</div>
                                                                                 </div>
                                                                             </div>
-                                                                          <div class="col">
-                                                                            <div class="mb-3">
-                                                                              <label for="RUC" class="form-label">RUC:</label>
-                                                                              <input type="text" name="RUC" id="RUC" class="form-control" value="10740745501">
-                                                                              <div class="invalid-feedback">Por favor ingresar RUC .</div>
-                                                                            </div>
-                                                                          </div>
+                                                                          
                                                                         </div>
-                                                                      <div class="row">
-                                                                        <div class="col">
-                                                                          <div class="mb-3">
-                                                                            <label for="razonsocial" class="form-label">Razón Social:</label>
-                                                                            <input type="text" name="razonsocial" id="razonsocial" class="form-control" value="Grupo Financiero Scotiabank SAC">
-                                                                            <div class="invalid-feedback">Por favor ingresar razón social.</div>
-                                                                          </div>
-                                                                        </div>
-                                                                        <div class="col">
-                                                                          <div class="mb-3">
-                                                                            <h6 class="obligatory-fields">(*) Campos obligatorios</h6>
-                                                                          </div>
-                                                                        </div>
-                                                                      </div>
+                                                                
                                         
                                                                         <!-- Botón para guardar cambios -->
                                                                         <div class="row">
                                                                             <div class="col">
-                                                                                <a href="javascript:;" class="btn btn-primary me-3" data-bs-target="#editUser" data-bs-toggle="modal">Edit</a>
-                                                                                <a href="tables/cambiarPassword.html" class="btn btn-primary me-3">Cambiar Contraseña</a>
+                                                                                <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                                                                                <a href="tables/cambiarPassword.html" class="btn btn-secondary me-3">Cambiar Contraseña</a>
                                                                             </div>
                                                                         </div>
+
+
                                         
                                                                     </div>
                                                                 </form>
+
+                                                              
+                                                              
+                                                                <div class="btn-container" style="text-align: center; margin-top: 20px;">
+                                                                  <button onclick="history.back()" class="btn btn-primary">Volver</button>
+                                                                </div>
+                                                                <script>
+                                                                  document.getElementById('confirmBack').addEventListener('click', function(event) {
+                                                                      const confirmSubmit = confirm('¿Estás seguro de que deseas volver a la página anterior?');
+                                                                      if (!confirmSubmit) {
+                                                                          event.preventDefault();  // Evita la acción si el usuario cancela
+                                                                      } else {
+                                                                          history.back(); // Volver a la página anterior si el usuario acepta
+                                                                      }
+                                                                  });
+                                                              </script>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-  
-   
-      
-  
-                                                  
-  
-  
-                           </div>
-  
-  
-  
-  
-                         
-      
-                          </div>
-  
-                          <div class="btn-container" style="text-align: center; margin-top: 20px;">
-                            <button type="submit" class="btn btn-primary" style="width: 280px;">Regresar</button>
-                          </div>
+                                                </div>                                                    
+                            </div>                                    
+                          </div>                            
                         </div>
                       </form>
                     </div>
                   </div>
                 </div>
   
-        </div>
-
-        <!-- Modal -->
-        <!-- Edit User Modal -->
-        <div class="modal fade" id="editUser" tabindex="-1" aria-hidden="true">
-            <div class="modal-dialog modal-lg modal-simple modal-edit-user">
-            <div class="modal-content p-3 p-md-5">
-                <div class="modal-body">
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                <div class="text-center mb-4">
-                    <h3>Edit User Information</h3>
-                    <p>Updating user details will receive a privacy audit.</p>
-                </div>
-                <form id="editUserForm" class="row g-3" onsubmit="return false">
-                    <div class="col-12 col-md-6">
-                    <label class="form-label" for="modalEditUserFirstName">First Name</label>
-                    <input type="text" id="modalEditUserFirstName" name="modalEditUserFirstName" class="form-control" placeholder="John" />
-                    </div>
-                    <div class="col-12 col-md-6">
-                    <label class="form-label" for="modalEditUserLastName">Last Name</label>
-                    <input type="text" id="modalEditUserLastName" name="modalEditUserLastName" class="form-control" placeholder="Doe" />
-                    </div>
-                    <div class="col-12">
-                    <label class="form-label" for="modalEditUserName">Username</label>
-                    <input type="text" id="modalEditUserName" name="modalEditUserName" class="form-control" placeholder="john.doe.007" />
-                    </div>
-                    <div class="col-12 col-md-6">
-                    <label class="form-label" for="modalEditUserEmail">Email</label>
-                    <input type="text" id="modalEditUserEmail" name="modalEditUserEmail" class="form-control" placeholder="example@domain.com" />
-                    </div>
-                    <div class="col-12 col-md-6">
-                    <label class="form-label" for="modalEditUserStatus">Status</label>
-                    <select id="modalEditUserStatus" name="modalEditUserStatus" class="form-select" aria-label="Default select example">
-                        <option selected>Status</option>
-                        <option value="1">Active</option>
-                        <option value="2">Inactive</option>
-                        <option value="3">Suspended</option>
-                    </select>
-                    </div>
-                    <div class="col-12 col-md-6">
-                    <label class="form-label" for="modalEditTaxID">Tax ID</label>
-                    <input type="text" id="modalEditTaxID" name="modalEditTaxID" class="form-control modal-edit-tax-id" placeholder="123 456 7890" />
-                    </div>
-                    <div class="col-12 col-md-6">
-                    <label class="form-label" for="modalEditUserPhone">Phone Number</label>
-                    <div class="input-group input-group-merge">
-                        <span class="input-group-text">+1</span>
-                        <input type="text" id="modalEditUserPhone" name="modalEditUserPhone" class="form-control phone-number-mask" placeholder="202 555 0111" />
-                    </div>
-                    </div>
-                    
-                    <div class="col-12 text-center">
-                    <button type="submit" class="btn btn-primary me-sm-3 me-1">Guardar cambios</button>
-                    <button type="reset" class="btn btn-label-secondary" data-bs-dismiss="modal" aria-label="Close">Cancelar</button>
-                    </div>
-                </form>
-                </div>
-            </div>
-            </div>
         </div>
       
     <!--   Core JS Files   -->
