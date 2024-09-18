@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="es"> 
   <head>
+    <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Datatables - Kaiadmin Bootstrap 5 Admin Dashboard</title>
+    <title>Pagina principal</title>
     <meta
       content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
       name="viewport"
@@ -494,25 +495,137 @@
 
         <div class="container">
           <div class="page-inner">
-              <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
-                  <div>
-                      <h3 class="fw-bold mb-3">¡Bienvenido a DOGLESS, Agente Nilo Cori!</h3>
-                      <h6 class="op-7 mb-2">El agente aduanero gestiona la importación y exportación de mercancías, asegurando el cumplimiento de las normativas y facilitando la comunicación con proveedores y usuarios para coordinar la documentación y resolver consultas, garantizando un proceso eficiente y legal.</h6>
+            <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
+              <div>
+                <h3 class="fw-bold mb-3">Historial de Productos</h3>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="card">
+
+                  <div class="card-body">
+
+                    <div class="table-responsive">
+                      <style>
+                        /* Estilo para alinear los botones horizontalmente */
+                        .acciones-container {
+                          display: flex;
+                          flex-direction: row; /* Alinea los botones en una fila horizontal */
+                          gap: 8px; /* Espacio entre los botones */
+                        }
+
+                      </style>
+
+                      <table id="basic-datatables" class="display table table-striped table-hover">
+                        <thead>
+                          <tr>
+                            <th>N° orden</th>
+                            <th>Imagen</th>
+                            <th>Producto</th>
+                            <th>Precio (S/.)</th>
+                            <th>Cantidad</th>
+                            <th>Fecha de orden</th>
+                            <th>Fecha de entrega</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>153449</td>
+                            <td><img src="../Plantilla_Admin/assets/img/productos/PS4.png" alt="Producto más vendido" style="width:50px; height:50px;"></td>
+                            <td>Sony PS4</td>
+                            <td>1499</td>
+                            <td>12</td>
+                            <td>12/08/24</td>
+                            <td>24/08/24</td>
+                            <td>En proceso</td>
+                            <td>
+                              <!-- Dropdown con ícono -->
+                              <div class="dropdown">
+                                <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                  <i class="fas fa-ellipsis-v"></i>
+                                </button>
+                                <!-- Dropdown oscuro -->
+                                <ul class="dropdown-menu dropdown-menu-primary" aria-labelledby="dropdownMenuButton1">
+                                  <li><a class="dropdown-item" href="VerProducto.html">Solicitar reembolso</a></li>
+                                  <li><a class="dropdown-item" href="EditarProducto.html">Calificar producto</a></li>
+                                  <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#denegarModal">Descargar boleta</a></li>
+                                </ul>
+                              </div>
+                            </td>
+                          </tr>
+
+                        </tbody>
+                      </table>
+                      <div class="modal fade" id="denegarModal" tabindex="-1" role="dialog" aria-labelledby="acceptModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="acceptModalLabel">Advertencia</h5>
+                              <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                              <p>¿Estas seguro que deseas descargar la boleta?</p>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" >Cancelar</button>
+                              <button type="button" class="btn btn-dark"  onclick="eliminarRegistro()">Aceptar</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <script>
+                        // Función para cerrar popups
+                        function cerrarPopup(id) {
+                          document.getElementById(id).style.display = 'none';
+                        }
+
+                        // Funciones para manejar la lógica de los botones
+                        function verRegistro(dni) {
+                          window.location.href = `VerProducto.html`; // Redirigir a la vista de ver
+                        }
+
+                        function editarRegistro(dni) {
+                          window.location.href = `EditarProducto.html`; // Redirigir a la vista de editar
+                        }
+
+                        function confirmarBorrado(dni) {
+                          document.getElementById('confirmarBorradoPopup').style.display = 'block';
+                          // Guardar el DNI del usuario a eliminar en algún lugar si es necesario
+                        }
+
+                        function eliminarRegistro() {
+                          alert('Registro eliminado.'); // Aquí se colocaría la lógica para eliminar el registro
+                          cerrarPopup('confirmarBorradoPopup');
+                        }
+
+                        function confirmarEspiar(dni) {
+                          document.getElementById('confirmarEspiarPopup').style.display = 'block';
+                          // Guardar el DNI del usuario a espiar si es necesario
+                        }
+
+                        function espiarCuenta() {
+                          window.location.href = '/espiarCuenta'; // Redirigir a la vista de espiar
+                          cerrarPopup('confirmarEspiarPopup');
+                        }
+                      </script>
+
+
+
+                    </div>
+
                   </div>
+                </div>
               </div>
-              
-              <!-- Imagen centrada inmediatamente después del texto -->
-              <div class="text-center mt-3">
-                  <img src="imagen_adminzonal.jpg" class="img-fluid mx-auto d-block" alt="Imagen principal">
-              </div>
-      
-              <!-- Subtítulos clicables en formato horizontal debajo de la imagen -->
-              <div class="d-flex justify-content-center mt-3">
-                  <a href="ruta/a/informacion-de-contacto.html" class="mx-3" style="font-size: 1.2rem;">Información de contacto</a>
-                  <a href="ruta/a/politica-de-privacidad.html" class="mx-3" style="font-size: 1.2rem;">Política de privacidad</a>
-              </div>
+
+            </div>
           </div>
-      </div>
+        </div>
       
     <!--   Core JS Files   -->
     <script src="assets/js/core/jquery-3.7.1.min.js"></script>
@@ -529,7 +642,17 @@
     <script src="assets/js/setting-demo2.js"></script>
     <script>
       $(document).ready(function () {
-        $("#basic-datatables").DataTable({});
+        $("#basic-datatables").DataTable({
+          language: {
+            search: "Buscar:",
+            lengthMenu: "Mostrar _MENU_ entradas por página",
+            info: "Mostrando _START_ a _END_ de _TOTAL_ entradas",
+            paginate: {
+              previous: "Anterior",
+              next: "Siguiente"
+            }
+          }
+        });
 
         $("#multi-filter-select").DataTable({
           pageLength: 5,
