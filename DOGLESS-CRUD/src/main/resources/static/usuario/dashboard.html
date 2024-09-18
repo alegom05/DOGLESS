@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>DOGLESS</title>
+    <meta
+      content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
+      name="viewport"
+    />
+    <link
+      rel="icon"
+      href="../assets/img/kaiadmin/logo_dogless.png"
+      type="image/x-icon"
+    />
+
+    <!-- Fonts and icons -->
+    <script src="assets/js/plugin/webfont/webfont.min.js"></script>
+    <script>
+      WebFont.load({
+        google: { families: ["Public Sans:300,400,500,600,700"] },
+        custom: {
+          families: [
+            "Font Awesome 5 Solid",
+            "Font Awesome 5 Regular",
+            "Font Awesome 5 Brands",
+            "simple-line-icons",
+          ],
+          urls: ["assets/css/fonts.min.css"],
+        },
+        active: function () {
+          sessionStorage.fonts = true;
+        },
+      });
+    </script>
+    
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="assets/css/plugins.min.css" />
+    <link rel="stylesheet" href="assets/css/kaiadmin.min.css" />
+
+    <!-- CSS Just for demo purpose, don't include it in your project -->
+    <link rel="stylesheet" href="assets/css/demo.css" />
+  </head>
+  <body>
+    <div class="wrapper">
+      <!-- Sidebar -->
+      <div class="sidebar" data-background-color="light-blue2">
+        <div class="sidebar-logo">
+          <!-- Logo Header -->
+          <div class="logo-header d-flex align-items-center justify-content-between" data-background-color="light-blue2">
+            <a href="paginaprincipal.html" class="logo d-flex align-items-center">
+              <img
+                src="assets/img/kaiadmin/logo_dogless.png"
+                alt="navbar brand"
+                class="navbar-brand"
+                height="50"
+              />
+              <span class="ms-2 text-white fw-bold text-truncate">DOGLESS</span> <!-- Texto blanco y limitado -->
+            </a>
+            <div class="nav-toggle">
+              <button class="btn btn-toggle toggle-sidebar">
+                <i class="gg-menu-right"></i>
+              </button>
+              <button class="btn btn-toggle sidenav-toggler">
+                <i class="gg-menu-left"></i>
+              </button>
+            </div>
+            <button class="topbar-toggler more">
+              <i class="gg-more-vertical-alt"></i>
+            </button>
+          </div>
+          <!-- End Logo Header -->
+        </div>
+        <div class="sidebar-wrapper scrollbar scrollbar-inner">
+          <div class="sidebar-content">
+            <ul class="nav nav-secondary">
+              <!-- Barra de navegacion -->
+            
+              <li class="nav-item">
+                <a href="paginaprincipal.html">
+                  <i class="fas fa-home"></i>
+                  <p>Pagina Principal</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="dashboard.html">
+                  <i class="fas fa-home"></i>
+                  <p>Dashboard</p>
+                </a>
+              </li>              
+              <li class="nav-item">
+                <a href="tables/ordenes.html">
+                  <i class="fas fa-user-plus"></i>
+                  <p>Órdenes</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a data-bs-toggle="collapse" href="#tables1">
+                  <i class="fas fa-users"></i>
+                  <p>Usuarios</p>
+                  <span class="caret"></span>
+                </a>
+                <div class="collapse" id="tables1">
+                  <ul class="nav nav-collapse">
+                    <li>
+                      <a href="usuariosasignados.html">
+                        <span class="sub-item">Asignados</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="usuariosbaneados.html">
+                        <span class="sub-item">Baneados</span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+              <li class="nav-item">
+                <a href="chats.html">
+                  <i class="fas fa-home"></i>
+                  <p>Chats</p>
+                </a>
+              </li> 
+              <li class="nav-item">
+                <a data-bs-toggle="collapse" href="#tables2">
+                  <i class="fas fa-users"></i>
+                  <p>Reportes</p>
+                  <span class="caret"></span>
+                </a>
+                <div class="collapse" id="tables2">
+                  <ul class="nav nav-collapse">
+                    <li>
+                      <a href="tables/reportesguardados.html">
+                        <span class="sub-item">Reportes guardados</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="tables/reportesordenes.html">
+                        <span class="sub-item">Reportes de órdenes</span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </li>  
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!-- End Sidebar -->
+
+      <div class="main-panel">
+        <div class="main-header">
+          <div class="main-header-logo">
+            <!-- Logo Header -->
+            <div class="logo-header" data-background-color="dark">
+              <a href="index.html" class="logo">
+                <img
+                  src="assets/img/kaiadmin/logo_dogless.png"
+                  alt="navbar brand"
+                  class="navbar-brand"
+                  height="20"
+                />
+              </a>
+              <div class="nav-toggle">
+                <button class="btn btn-toggle toggle-sidebar">
+                  <i class="gg-menu-right"></i>
+                </button>
+                <button class="btn btn-toggle sidenav-toggler">
+                  <i class="gg-menu-left"></i>
+                </button>
+              </div>
+              <button class="topbar-toggler more">
+                <i class="gg-more-vertical-alt"></i>
+              </button>
+            </div>
+            <!-- End Logo Header -->
+          </div>
+          <!-- Navbar Header -->
+          <nav class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom" data-background-color="light-blue2">
+            <div class="container-fluid">
+              <nav class="navbar navbar-header-left navbar-expand-lg navbar-form nav-search p-0 d-none d-lg-flex">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <button type="submit" class="btn btn-search pe-1">
+                      <i class="fa fa-search search-icon"></i>
+                    </button>
+                  </div>
+                  <input
+                    type="text"
+                    placeholder="Buscar ..."
+                    class="form-control"
+                  />
+                </div>
+              </nav>
+
+              <ul class="navbar-nav topbar-nav ms-md-auto align-items-center">
+                <li
+                  class="nav-item topbar-icon dropdown hidden-caret d-flex d-lg-none"
+                >
+                  <a
+                    class="nav-link dropdown-toggle"
+                    data-bs-toggle="dropdown"
+                    href="#"
+                    role="button"
+                    aria-expanded="false"
+                    aria-haspopup="true"
+                  >
+                    <i class="fa fa-search"></i>
+                  </a>
+                  <ul class="dropdown-menu dropdown-search animated fadeIn">
+                    <form class="navbar-left navbar-form nav-search">
+                      <div class="input-group">
+                        <input
+                          type="text"
+                          placeholder="Search ..."
+                          class="form-control"
+                        />
+                      </div>
+                    </form>
+                  </ul>
+                </li>
+                <li class="nav-item topbar-icon dropdown hidden-caret">
+                  <a
+                    class="nav-link dropdown-toggle"
+                    href="#"
+                    id="messageDropdown"
+                    role="button"
+                    data-bs-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                  >
+                    <i class="fa fa-envelope"></i>
+                  </a>
+                  <ul
+                    class="dropdown-menu messages-notif-box animated fadeIn"
+                    aria-labelledby="messageDropdown"
+                  >
+                    <li>
+                      <div
+                        class="dropdown-title d-flex justify-content-between align-items-center"
+                      >
+                        Messages
+                        <a href="#" class="small">Mark all as read</a>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="message-notif-scroll scrollbar-outer">
+                        <div class="notif-center">
+                          <a href="#">
+                            <div class="notif-img">
+                              <img
+                                src="assets/img/jm_denis.jpg"
+                                alt="Img Profile"
+                              />
+                            </div>
+                            <div class="notif-content">
+                              <span class="subject">Jimmy Denis</span>
+                              <span class="block"> How are you ? </span>
+                              <span class="time">5 minutes ago</span>
+                            </div>
+                          </a>
+                          <a href="#">
+                            <div class="notif-img">
+                              <img
+                                src="assets/img/chadengle.jpg"
+                                alt="Img Profile"
+                              />
+                            </div>
+                            <div class="notif-content">
+                              <span class="subject">Chad</span>
+                              <span class="block"> Ok, Thanks ! </span>
+                              <span class="time">12 minutes ago</span>
+                            </div>
+                          </a>
+                          <a href="#">
+                            <div class="notif-img">
+                              <img
+                                src="assets/img/mlane.jpg"
+                                alt="Img Profile"
+                              />
+                            </div>
+                            <div class="notif-content">
+                              <span class="subject">Jhon Doe</span>
+                              <span class="block">
+                                Ready for the meeting today...
+                              </span>
+                              <span class="time">12 minutes ago</span>
+                            </div>
+                          </a>
+                          <a href="#">
+                            <div class="notif-img">
+                              <img
+                                src="assets/img/talha.jpg"
+                                alt="Img Profile"
+                              />
+                            </div>
+                            <div class="notif-content">
+                              <span class="subject">Talha</span>
+                              <span class="block"> Hi, Apa Kabar ? </span>
+                              <span class="time">17 minutes ago</span>
+                            </div>
+                          </a>
+                        </div>
+                      </div>
+                    </li>
+                    <li>
+                      <a class="see-all" href="javascript:void(0);"
+                        >See all messages<i class="fa fa-angle-right"></i>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+                <li class="nav-item topbar-icon dropdown hidden-caret">
+                  <a
+                    class="nav-link dropdown-toggle"
+                    href="#"
+                    id="notifDropdown"
+                    role="button"
+                    data-bs-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                  >
+                    <i class="fa fa-bell"></i>
+                    <span class="notification">4</span>
+                  </a>
+                  <ul
+                    class="dropdown-menu notif-box animated fadeIn"
+                    aria-labelledby="notifDropdown"
+                  >
+                    <li>
+                      <div class="dropdown-title">
+                        You have 4 new notification
+                      </div>
+                    </li>
+                    <li>
+                      <div class="notif-scroll scrollbar-outer">
+                        <div class="notif-center">
+                          <a href="#">
+                            <div class="notif-icon notif-primary">
+                              <i class="fa fa-user-plus"></i>
+                            </div>
+                            <div class="notif-content">
+                              <span class="block"> New user registered </span>
+                              <span class="time">5 minutes ago</span>
+                            </div>
+                          </a>
+                          <a href="#">
+                            <div class="notif-icon notif-success">
+                              <i class="fa fa-comment"></i>
+                            </div>
+                            <div class="notif-content">
+                              <span class="block">
+                                Rahmad commented on Admin
+                              </span>
+                              <span class="time">12 minutes ago</span>
+                            </div>
+                          </a>
+                          <a href="#">
+                            <div class="notif-img">
+                              <img
+                                src="assets/img/profile2.jpg"
+                                alt="Img Profile"
+                              />
+                            </div>
+                            <div class="notif-content">
+                              <span class="block">
+                                Reza send messages to you
+                              </span>
+                              <span class="time">12 minutes ago</span>
+                            </div>
+                          </a>
+                          <a href="#">
+                            <div class="notif-icon notif-danger">
+                              <i class="fa fa-heart"></i>
+                            </div>
+                            <div class="notif-content">
+                              <span class="block"> Farrah liked Admin </span>
+                              <span class="time">17 minutes ago</span>
+                            </div>
+                          </a>
+                        </div>
+                      </div>
+                    </li>
+                    <li>
+                      <a class="see-all" href="javascript:void(0);"
+                        >See all notifications<i class="fa fa-angle-right"></i>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+                <li class="nav-item topbar-icon dropdown hidden-caret">
+                  <a
+                    class="nav-link"
+                    data-bs-toggle="dropdown"
+                    href="#"
+                    aria-expanded="false"
+                  >
+                    <i class="fas fa-layer-group"></i>
+                  </a>
+                  <div class="dropdown-menu quick-actions animated fadeIn">
+                    <div class="quick-actions-header">
+                      <span class="title mb-1">Quick Actions</span>
+                      <span class="subtitle op-7">Shortcuts</span>
+                    </div>
+                    <div class="quick-actions-scroll scrollbar-outer">
+                      <div class="quick-actions-items">
+                        <div class="row m-0">
+                          <a class="col-6 col-md-4 p-0" href="#">
+                            <div class="quick-actions-item">
+                              <div class="avatar-item bg-danger rounded-circle">
+                                <i class="far fa-calendar-alt"></i>
+                              </div>
+                              <span class="text">Calendar</span>
+                            </div>
+                          </a>
+                          <a class="col-6 col-md-4 p-0" href="#">
+                            <div class="quick-actions-item">
+                              <div
+                                class="avatar-item bg-warning rounded-circle"
+                              >
+                                <i class="fas fa-map"></i>
+                              </div>
+                              <span class="text">Maps</span>
+                            </div>
+                          </a>
+                          <a class="col-6 col-md-4 p-0" href="#">
+                            <div class="quick-actions-item">
+                              <div class="avatar-item bg-info rounded-circle">
+                                <i class="fas fa-file-excel"></i>
+                              </div>
+                              <span class="text">Reports</span>
+                            </div>
+                          </a>
+                          <a class="col-6 col-md-4 p-0" href="#">
+                            <div class="quick-actions-item">
+                              <div
+                                class="avatar-item bg-success rounded-circle"
+                              >
+                                <i class="fas fa-envelope"></i>
+                              </div>
+                              <span class="text">Emails</span>
+                            </div>
+                          </a>
+                          <a class="col-6 col-md-4 p-0" href="#">
+                            <div class="quick-actions-item">
+                              <div
+                                class="avatar-item bg-primary rounded-circle"
+                              >
+                                <i class="fas fa-file-invoice-dollar"></i>
+                              </div>
+                              <span class="text">Invoice</span>
+                            </div>
+                          </a>
+                          <a class="col-6 col-md-4 p-0" href="#">
+                            <div class="quick-actions-item">
+                              <div
+                                class="avatar-item bg-secondary rounded-circle"
+                              >
+                                <i class="fas fa-credit-card"></i>
+                              </div>
+                              <span class="text">Payments</span>
+                            </div>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li class="nav-item topbar-user dropdown hidden-caret">
+                  <a
+                    class="dropdown-toggle profile-pic"
+                    data-bs-toggle="dropdown"
+                    href="#"
+                    aria-expanded="false"
+                  >
+                    <div class="avatar-sm">
+                      <img
+                        src="assets/img/profile.jpg"
+                        alt="..."
+                        class="avatar-img rounded-circle"
+                      />              
+                    </div>
+                    <span class="profile-username">
+                      <span class="op-7">Hola,</span>
+                      <span class="fw-bold">Alonso Guevara</span>
+                    </span>
+                  </a>
+                  <ul class="dropdown-menu dropdown-user animated fadeIn">
+                    <div class="dropdown-user-scroll scrollbar-outer">
+                      <li>
+                        <div class="user-box">
+                          <div class="avatar-lg">
+                            <img
+                              src="assets/img/profile.jpg"
+                              alt="image profile"
+                              class="avatar-img rounded"
+                            />
+                          </div>
+                          <div class="u-text">
+                            <h4>Manuel</h4>
+                            <p class="text-muted">alonso.guevara@gmail.com</p>
+                            <a
+                              href="profile.html"
+                              class="btn btn-xs btn-secondary btn-sm"
+                              >Ver perfil</a
+                            >
+                          </div>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Mi perfil</a>
+                        <a class="dropdown-item" href="#">My Balance</a>
+                        <a class="dropdown-item" href="#">Inbox</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Ajustes</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Cerrar Sesion</a>
+                      </li>
+                    </div>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </nav>
+          <!-- End Navbar -->
+        </div>
+
+        <div class="container">
+          <div class="page-inner">
+            <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
+              <div>
+                <h3 class="fw-bold mb-3">Dashboard</h3>
+                <h6 class="op-7 mb-2">Aquí verás la cantidad de órdenes, estados de las órdenes tomadas, y comparar cifras, cantidad de usuarios, para poder gestionarlos correctamente.</h6>
+              </div>
+
+            </div>
+
+           
+
+            <!--Dashboards solicitados-->
+            <div class="row">
+              <div class="col-6">
+                <div class="card">
+                  <div class="card-header">
+                    <div class="card-title">Órdenes tomadas vs Órdenes sin tomar</div>
+                  </div>
+                  <div class="card-body">
+                    <div class="chart-container">
+                      <canvas id="productosMasImportadosZona"></canvas>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="card">
+                  <div class="card-header">
+                    <div class="card-title">Estado de las órdenes tomadas</div>
+                  </div>
+                  <div class="card-body">
+                    <div class="chart-container">
+                      <canvas id="pieChart"></canvas>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-6">
+                <div class="card">
+                  <div class="card-header">
+                    <div class="card-title">Cantidad de órdenes procesadas por mes</div>
+                  </div>
+                  <div class="card-body">
+                    <div class="chart-container">
+                      <canvas id="graficaTopImportaciones"></canvas>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="card">
+                  <div class="card-header">
+                    <div class="card-title">Tipos de órdenes y cantidad</div>
+                  </div>
+                  <div class="card-body">
+                    <div class="chart-container">
+                      <canvas id="graficaCantUserPerAgent"></canvas>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+ 
+      </div>
+
+      <!-- Custom template | don't include it in your project! -->
+      
+      <!-- End Custom template -->
+    
+    <!--   Core JS Files   -->
+    <script src="assets/js/core/jquery-3.7.1.min.js"></script>
+    <script src="assets/js/core/popper.min.js"></script>
+    <script src="assets/js/core/bootstrap.min.js"></script>
+
+    <!-- jQuery Scrollbar -->
+    <script src="assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+
+    <!-- Chart JS -->
+    <script src="assets/js/plugin/chart.js/chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+
+    <!-- jQuery Sparkline -->
+    <script src="assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js"></script>
+
+    <!-- Chart Circle -->
+    <script src="assets/js/plugin/chart-circle/circles.min.js"></script>
+
+    <!-- Datatables -->
+    <script src="assets/js/plugin/datatables/datatables.min.js"></script>
+
+    <!-- Bootstrap Notify -->
+
+    <!-- jQuery Vector Maps -->
+    <script src="assets/js/plugin/jsvectormap/jsvectormap.min.js"></script>
+    <script src="assets/js/plugin/jsvectormap/world.js"></script>
+
+    <!-- Sweet Alert -->
+
+    <!-- Kaiadmin JS -->
+    <script src="assets/js/kaiadmin.min.js"></script>
+
+    <!-- Kaiadmin DEMO methods, don't include it in your project! -->
+    <script src="assets/js/setting-demo.js"></script>
+    <script src="assets/js/demo.js"></script>
+    
+
+    <script>
+      //Seccion de dashboards:
+      /*1.Top 10 producto mas importados
+        2.Distribucion de usuarios registrados
+        3.top 5 proveedosres mas solicitados
+        4.Top 5 proveedores peor calificados
+        5.Distribucionde ordenes del semestre
+        6.Distribucion de ordenes por zona*/
+
+      //Top 10 producto mas importados:
+      var ctx1 = document.getElementById('productosMasImportadosZona').getContext('2d');
+      
+      var datosProductosImportados = {
+        labels: ['Hogar','Tecnologia', 'Joyeria', 'Juguetes', 'Mascotas'],
+        datasets: [{
+          label: 'Productos vendidos por categoria',
+          data: [34, 41, 31, 34, 36],
+          backgroundColor: 'rgba(30, 197, 255, 0.8)',
+          borderColor: 'rgba(30, 140, 255, 0.8)',
+          borderWidth: 1
+        }]
+      };
+      var verticalChartOptions = {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      };
+      new Chart(ctx1, {
+        type: 'bar', // Tipo 'bar' para gráfico de barras verticales
+        data: datosProductosImportados,
+        options: verticalChartOptions
+      });
+
+
+      //Distribucion de usuarios registrados:
+      var pieChart = document.getElementById("pieChart").getContext("2d");
+      var myPieChart = new Chart(pieChart, {
+        type: "pie",
+        data: {
+          datasets: [
+            {
+              data: [55, 45],
+              backgroundColor: ["#1d7af3", "#f3545d", "#fdaf4b"],
+              borderWidth: 0,
+            },
+          ],
+          labels: ["Activos", "Inactivos"],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          legend: {
+            position: "bottom",
+            labels: {
+              fontColor: "rgb(154, 154, 154)",
+              fontSize: 11,
+              usePointStyle: true,
+              padding: 20,
+            },
+          },
+          pieceLabel: {
+            render: "percentage",
+            fontColor: "white",
+            fontSize: 14,
+          },
+          tooltips: false,
+          layout: {
+            padding: {
+              left: 20,
+              right: 20,
+              top: 20,
+              bottom: 20,
+            },
+          },
+        },
+      });
+
+
+      //GRAFICA 3:
+      var ctxOtraGrafica = document.getElementById('graficaTopImportaciones').getContext('2d');
+      var otraChartData = {
+        labels: ['Robert', 'Aaron', 'Wilder', 'Elias', 'Jorge'],
+        datasets: [{
+          label: 'Numero de importaciones',
+          data: [16, 25, 33, 24, 15],
+          backgroundColor: 'rgba(75, 192, 192, 0.5)',
+          borderColor: 'rgba(75, 192, 192, 1)',
+          borderWidth: 1
+        }]
+      };
+
+      var otraChartOptions = {
+        indexAxis: 'y', // Gráfico horizontal
+        scales: {
+          x: {
+            beginAtZero: true
+          }
+        }
+      };
+
+      // Crear la nueva gráfica
+      new Chart(ctxOtraGrafica, {
+        type: 'bar', // Tipo de gráfico: barras
+        data: otraChartData,
+        options: otraChartOptions
+      });
+
+      // GRAFICA 4
+      var ctxOtraGrafica2 = document.getElementById('graficaCantUserPerAgent').getContext('2d');
+      var otraChartData2 = {
+        labels: ['Paolo', 'Daniel', 'Elio', 'Ricardo', 'Pedro', 'Gerardo'],
+        datasets: [{
+          label: 'Número de usuarios por agentes',
+          data: [50, 75, 60, 70, 30 , 54],
+          backgroundColor: 'rgba(240, 11, 14, 0.8)',
+          borderColor: 'rgba(255, 99, 132, 1)',
+          borderWidth: 1
+        }]
+      };
+
+      var otraChartOptions2 = {
+        indexAxis: 'y', // Gráfico de barras horizontal
+        scales: {
+          x: {
+            beginAtZero: true
+          }
+        }
+      };
+      new Chart(ctxOtraGrafica2, {
+        type: 'bar', // Gráfico de barras
+        data: otraChartData2,
+        options: otraChartOptions
+      });
+
+      //Ordenes por semestre:
+      var ctx5 = document.getElementById('productosPocoStock').getContext('2d');
+      
+      var datosProductosImportados = {
+        labels: ['Samsung Galaxy S24','LG Oled TV', 'Sony PS4', 'Nintendo Wii U', 'Zephyrus G16'],
+        datasets: [{
+          label: 'Productos con menos stock',
+          data: [12, 9, 17, 15, 14],
+          backgroundColor: 'rgba(255, 154, 30, 0.8) ',
+          borderColor: 'rgba(255, 125, 30, 0.8)',
+          borderWidth: 1
+        }]
+      };
+      var verticalChartOptions = {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      };
+      new Chart(ctx5, {
+        type: 'bar', // Tipo 'bar' para gráfico de barras verticales
+        data: datosProductosImportados,
+        options: verticalChartOptions
+      });
+
+      //GRAFICA 6:Ordenes por ZONA:
+      var ctx5 = document.getElementById('ordenesPorZona').getContext('2d');
+      
+      var datosProductosImportados = {
+        labels: ['Norte','Sur','Este','Oeste'],
+        datasets: [{
+          label: 'Zonas de seguimiento',
+          data: [83, 72, 98, 58, 64],
+          backgroundColor: 'rgba(255, 219, 30, 0.8)',
+          borderColor: 'rgba(255, 182, 30, 0.8)',
+          borderWidth: 1
+        }]
+      };
+      var verticalChartOptions = {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      };
+      new Chart(ctx5, {
+        type: 'bar', // Tipo 'bar' para gráfico de barras verticales
+        data: datosProductosImportados,
+        options: verticalChartOptions
+      });
+    
+    </script>
+  </body>
+</html>
