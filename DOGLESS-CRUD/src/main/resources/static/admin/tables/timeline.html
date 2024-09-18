@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Seguimiento de Estado con Colores</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .timeline {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 20px;
+    }
+    .step {
+      text-align: center;
+      position: relative;
+    }
+    .step-circle {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: 2px solid #ccc;
+      background-color: #f1f1f1;
+      overflow: hidden; /* Para recortar la imagen fuera del círculo */
+    }
+    .grayed-out {
+      background-color: #dcdcdc !important;
+      border-color: #999 !important;
+      color: #999;
+    }
+    .step img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover; /* Hace que la imagen cubra el área sin distorsión */
+      border-radius: 50%; /* Para mantener la imagen dentro del círculo */
+    }
+    .step-title {
+      margin-top: 10px;
+      font-weight: bold;
+    }
+    .step-date {
+      font-size: 12px;
+      color: #999;
+    }
+    /* Línea que conecta los círculos */
+    .step:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 100%;
+      width: 80px;
+      height: 2px;
+      background-color: #ccc;
+      transform: translateY(-50%);
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="timeline">
+    <!-- Creado (verdadero) -->
+    <div class="step">
+      <div class="step-circle">
+        <img src="/imagenes/creado.png" alt="Creado">
+      </div>
+      <div class="step-title">Creado</div>
+      <div class="step-date">2024-06-15 11:42:19</div>
+    </div>
+
+    <!-- En validación (falso, grisado) -->
+    <div class="step">
+      <div class="step-circle grayed-out">
+        <img src="/imagenes/en_validacion.png" alt="En validación">
+      </div>
+      <div class="step-title">En validación</div>
+      <div class="step-date">2024-06-15 11:43:19</div>
+    </div>
+
+    <!-- En proceso (falso, grisado) -->
+    <div class="step">
+      <div class="step-circle grayed-out">
+        <img src="/imagenes/en_proceso.png" alt="En proceso">
+      </div>
+      <div class="step-title">En proceso</div>
+      <div class="step-date">2024-06-15 11:44:19</div>
+    </div>
+
+    <!-- Arribo al país (verdadero) -->
+    <div class="step">
+      <div class="step-circle">
+        <img src="/imagenes/arribo_al_pais.png" alt="Arribo al país">
+      </div>
+      <div class="step-title">Arribo al país</div>
+      <div class="step-date">2024-06-19 18:42:19</div>
+    </div>
+
+    <!-- En aduanas (falso, grisado) -->
+    <div class="step">
+      <div class="step-circle grayed-out">
+        <img src="/imagenes/en_aduanas.png" alt="En aduanas">
+      </div>
+      <div class="step-title">En aduanas</div>
+      <div class="step-date">2024-06-20 11:41:19</div>
+    </div>
+
+    <!-- En ruta (falso, grisado) -->
+    <div class="step">
+      <div class="step-circle grayed-out">
+        <img src="/imagenes/en_ruta.png" alt="En ruta">
+      </div>
+      <div class="step-title">En ruta</div>
+      <div class="step-date">2024-06-21 11:42:19</div>
+    </div>
+
+    <!-- Recibido (falso, grisado) -->
+    <div class="step">
+      <div class="step-circle grayed-out">
+        <img src="/imagenes/recibido.png" alt="Recibido">
+      </div>
+      <div class="step-title">Recibido</div>
+      <div class="step-date">2024-06-22 11:40:00</div>
+    </div>
+  </div>
+</div>
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>
