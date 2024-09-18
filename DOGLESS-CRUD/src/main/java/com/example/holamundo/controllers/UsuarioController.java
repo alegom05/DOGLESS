@@ -1,23 +1,15 @@
 package com.example.holamundo.controllers;
 
-import com.example.holamundo.entity.Category;
-import com.example.holamundo.entity.OrderDetails;
-import com.example.holamundo.entity.Product;
-import com.example.holamundo.entity.Supplier;
 import com.example.holamundo.repository.*;
-import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import java.util.List;
-import java.util.Optional;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-@RequestMapping("/zonal")
-public class ZonalController {
+@RequestMapping("/usuario")
+public class UsuarioController {
 
 
     final ShipperRepository shipperRepository;
@@ -26,11 +18,11 @@ public class ZonalController {
     final SupplierRepository supplierRepository;
     final OrderDetailsRepository orderDetailsRepository;
 
-    public ZonalController(ProductRepository productRepository,
-                           CategoryRepository categoryRepository,
-                           SupplierRepository supplierRepository,
-                           OrderDetailsRepository orderDetailsRepository,
-                           ShipperRepository shipperRepository) {
+    public UsuarioController(ProductRepository productRepository,
+                             CategoryRepository categoryRepository,
+                             SupplierRepository supplierRepository,
+                             OrderDetailsRepository orderDetailsRepository,
+                             ShipperRepository shipperRepository) {
         this.productRepository = productRepository;
         this.categoryRepository = categoryRepository;
         this.supplierRepository = supplierRepository;
@@ -39,9 +31,9 @@ public class ZonalController {
     }
 
     @GetMapping({"/",""})
-    public String zonalPrincipal(Model model, @RequestParam(required = false) String zona) {
+    public String usuarioPrincipal(Model model, @RequestParam(required = false) String zona) {
         model.addAttribute("listaProductos", productRepository.findAll());
-        return "redirect:/zonal/paginaprincipal.html";
+        return "redirect:/usuario/paginaprincipal.html";
     }
     /*
     @GetMapping(value = "new")
