@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Proceso de pago</title>
+    <title>Checkout</title>
     <meta
       content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
       name="viewport"
@@ -404,7 +404,7 @@
         <div class="container">
           <div class="page-inner">
             <div class="page-header">
-              <h3 class="fw-bold mb-3">Procesos de pago</h3>
+              <h3 class="fw-bold mb-3">Detalles de compra</h3>
               <ul class="breadcrumbs mb-3">
                 <li class="nav-home">
                   <a href="../paginaprincipal.html">
@@ -418,88 +418,133 @@
                     <a href="checkout.html">Cesta de productos</a>
                 </li>
                 <li class="separator">
-                    <i class="icon-arrow-right"></i>
-                  </li>
-                  <li class="nav-item">
-                    <a href="checkout.html">Checkout</a>
-                  </li>
-                <li class="separator">
                   <i class="icon-arrow-right"></i>
                 </li>
                 <li class="nav-item">
-                  <a href="procesoDePago.html">Proceso de pago</a>
+                  <a href="checkout.html">Checkout</a>
                 </li>
               </ul>
             </div>
             <div class="row">
                 <!-- Multi Column with Form Separator -->
                 <div class="card mb-4">
-                    <h4 class="py-2 mb-2">Completa los datos de tu tarjeta</h4>
                     <div class="container-xxl flex-grow-1">
                         <!-- Checkout Wizard -->
                         <div id="wizard-checkout" class="bs-stepper wizard-icons wizard-icons-example mb-5">
                             <div class="bs-stepper-content border-top">
-                                <form id="wizard-checkout-form" onSubmit="return false">
-                                    <!-- Cart -->
-                                    <div id="checkout-cart" class="content">
+                                <form class="needs-validation" style="width: 100%; margin-left: 0%; margin-top: 3%;" method="POST" onsubmit="handleSubmit(event)" novalidate>
+                                    <div class="container">
                                         <div class="row">
-                                            <!-- Cart left -->
-                                            <div class="col-md-5">
-                                                
-                                                <div class="tab-pane fade show active" id="pills-cc" role="tabpanel" aria-labelledby="pills-cc-tab">
-                                                    
-                                                    <div class="row g-3">
-                                                        <div class="col-12">
-                                                            <label class="form-label w-100" for="paymentCard">Número de tarjeta</label>
-                                                            <div class="input-group input-group-merge">
-                                                            <input id="paymentCard" name="paymentCard" class="form-control credit-card-mask" type="text" placeholder="1234123412341234" aria-describedby="paymentCard2" />
-                                                            </div>
-                                                        </div>
-                                                    <div class="col-12 col-md-6">
-                                                        <label class="form-label" for="paymentCardName">Nombre del titular</label>
-                                                        <input type="text" id="paymentCardName" class="form-control" placeholder="Ej: Adrian Bala" />
-                                                    </div>
-                                                    <div class="col-6 col-md-3">
-                                                        <label class="form-label" for="paymentCardExpiryDate">Vencimiento</label>
-                                                        <input type="text" id="paymentCardExpiryDate" class="form-control expiry-date-mask" placeholder="MM/AA" />
-                                                    </div>
-                                                    <div class="col-6 col-md-3">
-                                                        <label class="form-label" for="paymentCardCvv">CVV</label>
-                                                        <div class="input-group input-group-merge">
-                                                        <input type="text" id="paymentCardCvv" class="form-control cvv-code-mask" maxlength="3" placeholder="123" />
-                                                        </div>
-                                                    </div>
-                                                    
-                                                    <div class="col-12">
-                                                        <button type="button" class="btn btn-primary btn-next me-sm-3 me-1">Continuar</button>
-                                                        <button type="reset" class="btn btn-label-secondary">Volver</button>
-                                                    </div>
-                                                    </div>
+                                          <!-- Columna izquierda -->
+                                          <div class="col-md-6">
+                                            <div class="row py-2">
+                                                <div class="col">
+                                                    <label for="nombre" class="form-label">Nombres: (*)</label>
+                                                    <input type="text" name="nombre" id="nombre" class="form-control" pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]+(\s[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]+){0,4}"
+                                                           placeholder="Jose" required>
+                                                    <div class="invalid-feedback">Por favor ingresar nombre(s).</div>
+                                                </div>
+                                                <div class="col">
+                                                    <label for="apellido" class="form-label">Apellidos: (*)</label>
+                                                    <input type="text" name="apellido" id="apellido" class="form-control" pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]+(\s[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]+){0,4}"
+                                                           placeholder="Lopez" required>
+                                                    <div class="invalid-feedback">Por favor ingresar apellido(s).</div>
                                                 </div>
                                             </div>
-                                
-                                            <!-- Cart right -->
-                                            <div class="col-md-4 ms-auto">
-                                                
-                                    
-                                                <!-- Price Details -->
-                                                <h4>Detalles del pago</h6>
+                                            <div class="row py-2">
+                                                <div class="col">
+                                                    <label for="departamento" class="form-label">Departamento: (*)</label>
+                                                    <input type="text" name="departamento" id="departamento" class="form-control" pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]+(\s[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]+){0,4}"
+                                                           placeholder="Lima" required>
+                                                </div>
+                                                <div class="col">
+                                                    <label for="provincia" class="form-label">Provincia: (*)</label>
+                                                    <input type="text" name="provincia" id="provincia" class="form-control" pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]+(\s[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]+){0,4}"
+                                                           placeholder="Lima" required>
+                                                </div>
+                                            </div>
+                                            <div class="row py-2">
+                                                <div class="col">
+                                                    <label for="distrito" class="form-label">Distrito: (*)</label>
+                                                    <input type="text" name="distrito" id="distrito" class="form-control" pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]+(\s[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]+){0,4}"
+                                                           placeholder="Lima" required>
+                                                </div>
+                                                <div class="col">
+                                                    <label for="codpostal" class="form-label">Código Postal: (*)</label>
+                                                    <input type="text" name="codpostal" id="codpostal" class="form-control" pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]+(\s[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]+){0,4}"
+                                                           placeholder="38011" required>
+                                                </div>
+                                            </div>
+                                            <div class="row py-2">
+                                                <div class="col">
+                                                    <label for="direccion" class="form-label">Dirección: (*)</label>
+                                                    <input type="text" name="direccion" id="direccion" class="form-control" pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]+(\s[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]+){0,4}"
+                                                           placeholder="Av. Universitaria 1838" required>
+                                                </div>
+                                            </div>
+                                            <div class="row py-2">
+                                                <div class="col">
+                                                    <label for="numtelefono" class="form-label">Número de teléfono: (*)</label>
+                                                    <input type="text" name="numtelefono" id="numtelefono" class="form-control" pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]+(\s[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]+){0,4}"
+                                                           placeholder="Lima" required>
+                                                </div>
+                                                <div class="col">
+                                                    <label for="correo" class="form-label">Correo Electrónico: (*)</label>
+                                                    <input type="text" name="correo" id="correo" class="form-control" pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]+(\s[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]+){0,4}"
+                                                           placeholder="38011" required>
+                                                </div>
+                                            </div>
+                                          </div>
+                                            
+                                                                                 
+                                          <!-- Columna derecha -->
+                                          <div class="col-md-4">
+                                            <!-- Price Details -->
+                                            <h4>Total de compra</h6>
+                                                <hr class="mx-n4">
+                                                <table class="table">
+                                                    <thead>
+                                                      <tr>
+                                                        <th scope="col">Productos</th>
+                                                        <th scope="col">Cantidad</th>
+                                                        <th scope="col">Total</th>
+                                                      </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                      <tr>
+                                                        <td>Celular Samsung S24+</td>
+                                                        <td>3</td>
+                                                        <td>S/.6000.00</td>
+                                                      </tr> 
+                                                      <tr>
+                                                        <td>Costo de envio</td>
+                                                        <td></td>
+                                                        <td>S/.9.00</td>
+                                                      </tr>
+                                              
+                                                    </tbody>
+                                                </table>
+                                                <hr class="mx-n4">
                                                 <dl class="row mb-0">
-                                                    <dt class="col-6 fw-normal">Play 5 x1</dt>
-                                                    <dd class="col-6 text-end">$1198.00</dd>
-                                                    
+                                                    <dt class="col-6">Subtotal</dt>
+                                                    <dd class="col-6 fw-medium text-end mb-0">S/.6000.00</dd>
                                                 </dl>
-                                    
                                                 <hr class="mx-n4">
                                                 <dl class="row mb-0">
                                                     <dt class="col-6">Total</dt>
-                                                    <dd class="col-6 fw-medium text-end mb-0">$1198.00</dd>
+                                                    <dd class="col-6 fw-medium text-end mb-0">S/.6009.00</dd>
                                                 </dl>
-                                                
-                                                
+                                            
+                                            <div class="btn-container py-4" style="text-align: center;">
+                                                <a href="procesoDePago.html" class="btn btn-primary">Realizar el pedido</a>
                                             </div>
+
+                                            
+                                          </div>
                                         </div>
-                                    </div>
+                
+                                        
+                                      </div>
                                 </form>
                             </div>
                         </div>                      
