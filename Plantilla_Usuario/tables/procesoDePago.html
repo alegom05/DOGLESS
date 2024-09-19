@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Cambiar contraseña</title>
+    <title>Proceso de pago</title>
     <meta
       content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
       name="viewport"
@@ -404,7 +404,7 @@
         <div class="container">
           <div class="page-inner">
             <div class="page-header">
-              <h3 class="fw-bold mb-3">Cambiar Contraseña</h3>
+              <h3 class="fw-bold mb-3">Procesos de pago</h3>
               <ul class="breadcrumbs mb-3">
                 <li class="nav-home">
                   <a href="../paginaprincipal.html">
@@ -412,62 +412,165 @@
                   </a>
                 </li>
                 <li class="separator">
+                    <i class="icon-arrow-right"></i>
+                </li>
+                <li class="nav-item">
+                    <a href="procesoDePago.html">Cesta de productos</a>
+                </li>
+                <li class="separator">
                   <i class="icon-arrow-right"></i>
                 </li>
                 <li class="nav-item">
-                  <a href="cambiarPassword.html">cambiar Contraseña</a>
+                  <a href="procesoDePago.html">Proceso de pago</a>
                 </li>
               </ul>
             </div>
             <div class="row">
-              
-
-              <!-- Multi Column with Form Separator -->
-            <div class="card mb-4">
-                <h6 class="card-header">Esta opción permite actualizar su contraseña. Para ello debe ingresar la contraseña actual y la nueva contraseña dos veces para confirmar. Este proceso garantiza que solo puedan modificar su acceso a la cuenta y resguardar la seguridad de Dogless</h5>
-                <form class="card-body">
-                    <div class="col-md-12 d-flex flex-column gap-4">
-                        <!-- Fila 1 -->
-                        <div class="d-flex">
-                            <label class="form-label mb-0 me-4" for="passwordInput1">Ingrese su contraseña actual</label>
-                            <div class="input-group">
-                                <input type="password" id="passwordInput" class="form-control" placeholder="" />
-                                <span class="input-group-text cursor-pointer" id="togglePassword">
-                                    <i class="fas fa-eye"></i>
-                                </span>
+                <!-- Multi Column with Form Separator -->
+                <div class="card mb-4">
+                    <h4 class="py-2 mb-2">Completa los datos de tu tarjeta</h4>
+                    <div class="container-xxl flex-grow-1">
+                        <!-- Checkout Wizard -->
+                        <div id="wizard-checkout" class="bs-stepper wizard-icons wizard-icons-example mb-5">
+                            <div class="bs-stepper-content border-top">
+                                <form id="wizard-checkout-form" onSubmit="return false">
+                                    <!-- Cart -->
+                                    <div id="checkout-cart" class="content">
+                                        <div class="row">
+                                            <!-- Cart left -->
+                                            <div class="col-md-5">
+                                                
+                                                <div class="tab-pane fade show active" id="pills-cc" role="tabpanel" aria-labelledby="pills-cc-tab">
+                                                    
+                                                    <div class="row g-3">
+                                                        <div class="col-12">
+                                                            <label class="form-label w-100" for="paymentCard">Número de tarjeta</label>
+                                                            <div class="input-group input-group-merge">
+                                                            <input id="paymentCard" name="paymentCard" class="form-control credit-card-mask" type="text" placeholder="1234123412341234" aria-describedby="paymentCard2" />
+                                                            </div>
+                                                        </div>
+                                                    <div class="col-12 col-md-6">
+                                                        <label class="form-label" for="paymentCardName">Nombre del titular</label>
+                                                        <input type="text" id="paymentCardName" class="form-control" placeholder="Ej: Adrian Bala" />
+                                                    </div>
+                                                    <div class="col-6 col-md-3">
+                                                        <label class="form-label" for="paymentCardExpiryDate">Vencimiento</label>
+                                                        <input type="text" id="paymentCardExpiryDate" class="form-control expiry-date-mask" placeholder="MM/AA" />
+                                                    </div>
+                                                    <div class="col-6 col-md-3">
+                                                        <label class="form-label" for="paymentCardCvv">CVV</label>
+                                                        <div class="input-group input-group-merge">
+                                                        <input type="text" id="paymentCardCvv" class="form-control cvv-code-mask" maxlength="3" placeholder="123" />
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="col-12">
+                                                        <button type="button" class="btn btn-primary btn-next me-sm-3 me-1">Continuar</button>
+                                                        <button type="reset" class="btn btn-label-secondary">Volver</button>
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                
+                                            <!-- Cart right -->
+                                            <div class="col-md-4 ms-auto">
+                                                
+                                    
+                                                <!-- Price Details -->
+                                                <h4>Detalles del pago</h6>
+                                                <dl class="row mb-0">
+                                                    <dt class="col-6 fw-normal">Play 5 x1</dt>
+                                                    <dd class="col-6 text-end">$1198.00</dd>
+                                                    
+                                                </dl>
+                                    
+                                                <hr class="mx-n4">
+                                                <dl class="row mb-0">
+                                                    <dt class="col-6">Total</dt>
+                                                    <dd class="col-6 fw-medium text-end mb-0">$1198.00</dd>
+                                                </dl>
+                                                
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
-                        </div>
-                        <!-- Fila 2 -->
-                        <div class="d-flex">
-                            <label class="form-label mb-0 me-4" for="passwordInput2">Ingrese su nueva contraseña</label>
-                            <div class="input-group">
-                                <input type="password" id="passwordInput" class="form-control" placeholder="" />
-                                <span class="input-group-text cursor-pointer" id="togglePassword">
-                                    <i class="fas fa-eye"></i>
-                                </span>
-                            </div>
-                        </div>
-                        <!-- Fila 3 -->
-                        <div class="d-flex">
-                            <label class="form-label mb-0 me-4" for="passwordInput">Repetir su nueva contraseña</label>
-                            <div class="input-group">
-                                <input type="password" id="passwordInput3" class="form-control" placeholder="" />
-                                <span class="input-group-text cursor-pointer" id="togglePassword">
-                                    <i class="fas fa-eye"></i>
-                                </span>
-                            </div>
-                        </div>
+                        </div>                      
                     </div>
-                    
-                    <div class="pt-4">
-                        <button type="submit" class="btn btn-primary">Subir</button>
-                        <button class="btn btn-secondary" type="button" class="btn-back" onclick="window.history.back()">Volver</button>
-                    </div>         
-                </form>
-            </div>
+                </div>
 
             </div>
           </div>
+          <section id="adv-footer">
+        
+            <footer class="footer">
+              <div>
+                <div class="row align-items-center">
+                  <div class="col-md-4">
+                    <h2>DOGLESS</h2>
+                  </div>
+                  <div class="col-md-4 offset-md-4 d-flex justify-content-center">
+                    <button type="button" class="btn btn-icon btn-round btn-primary mx-1">
+                      <i class="fab fa-facebook-f"></i>
+                    </button>
+                    <button type="button" class="btn btn-icon btn-round btn-info mx-1">
+                      <i class="fab fa-twitter"></i>
+                    </button>
+                    <button type="button" class="btn btn-icon btn-round btn-secondary mx-1">
+                      <i class="fab fa-linkedin-in"></i>
+                    </button>
+                    <button type="button" class="btn btn-icon btn-round btn-danger mx-1">
+                      <i class="fab fa-youtube"></i>
+                    </button>
+                    
+                  </div>
+                </div>
+              </div>
+              <hr class="my-2">
+              
+                <div class="row">
+                  <div class="col-md-3">
+                    <h5>Sobre nosotros</h5>
+                    <ul class="list-unstyled">
+                      <li><a href="javascript:void(0)" class="footer-link d-block pb-2">Acerca de dogless</a></li>
+                      <li><a href="javascript:void(0)" class="footer-link d-block pb-2">TyC</a></li>
+                      <li><a href="javascript:void(0)" class="footer-link d-block pb-2">Numero de RUC</a></li>
+                      <li><a href="javascript:void(0)" class="footer-link d-block pb-2">licenciamiento</a></li>
+                    </ul>
+                  </div>
+                  <div class="col-md-3">
+                    <h5>Cuenta</h5>
+                    <ul class="list-unstyled">
+                      <li><a href="javascript:void(0)" class="footer-link d-block pb-2">Crear cuenta</a></li>
+                      <li><a href="javascript:void(0)" class="footer-link d-block pb-2">Pago</a></li>
+                      <li><a href="javascript:void(0)" class="footer-link d-block pb-2">Envio</a></li>
+                      <li><a href="javascript:void(0)" class="footer-link d-block pb-2">Soporte</a></li>
+                    </ul>
+                  </div>
+                  <div class="col-md-3">
+                    <h5>Guia de compra</h5>
+                    <ul class="list-unstyled">
+                      <li><a href="javascript:void(0)" class="footer-link d-block pb-2">Mi cuenta</a></li>
+                      <li><a href="javascript:void(0)" class="footer-link d-block pb-2">Mis pedidos</a></li>
+                      <li><a href="javascript:void(0)" class="footer-link d-block pb-2">Favoritos</a></li>
+                      <li><a href="javascript:void(0)" class="footer-link d-block pb-2">Devoluciones</a></li>
+                    </ul>
+                  </div>
+                  <div class="col-md-3">
+                    <h5>Métodos de pago</h5>
+                    <div class="payment-methods">
+                      <img src="../assets/img/logo-visa.png" alt="Visa" class="img-fluid w-25 mx-2">
+                      <img src="../assets/img/logo-mastercard.png" alt="Mastercard" class="img-fluid w-25 mx-2">
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <h7>@2024-2090 Dogless.com, todos los derechos reservados</h7>
+                </div>
+              
+            </footer>
+          </section>
         </div>
 
       </div>

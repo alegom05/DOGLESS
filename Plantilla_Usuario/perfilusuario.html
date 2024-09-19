@@ -432,6 +432,24 @@
                            <div class="row">
                                                     <div class="col-md-12">
                                                         <div class="card">
+                                                          <div class="card-body">
+                                                            <div class="d-flex align-items-start align-items-sm-center gap-4">
+                                                              <img src="assets/img/profile.jpg" alt="user-avatar" class="d-block rounded" height="100" width="100" id="uploadedAvatar" />
+                                                              <div class="button-wrapper">
+                                                                <label for="upload" class="btn btn-primary text-white" tabindex="0">
+                                                                  <span class="">Actualizar foto</span>
+                                                                  <i class="bx bx-upload d-block d-sm-none"></i>
+                                                                  <input type="file" id="upload" class="account-file-input" hidden accept="image/png, image/jpeg" />
+                                                                </label>
+                                                                <button type="button" class="btn btn-secondary text-white account-image-reset" id="resetButton">
+                                                                  <i class="bx bx-reset d-block d-sm-none"></i>
+                                                                  <span class="">Reiniciar</span>
+                                                                </button>
+                                                                <p class="text-muted mb-0">Subir imagen JPG, GIF o PNG.</p>
+                                                              </div>
+                                                            </div>
+                                                          </div>
+                                                          <hr class="my-0">
                                                             <div class="card-body">
                                                                 <form class="needs-validation" style="width: 100%; margin-left: 0%; margin-top: 3%;" action="/guardarDatos" method="POST" novalidate>
                                                                     <div class="container">
@@ -477,32 +495,26 @@
                                                                                     <div class="invalid-feedback">Por favor ingresar un correo válido.</div>
                                                                                 </div>
                                                                             </div>
-                                                                          <div class="col">
-                                                                            <div class="mb-3">
-                                                                              <label for="zona" class="form-label">Zona:</label>
-                                                                              <select name="zona" id="zona" class="form-control">
-                                                                                <option value="Norte" selected>Norte</option>
-                                                                                <option value="Sur">Sur</option>
-                                                                                <option value="Este">Este</option>
-                                                                                <option value="Oeste">Oeste</option>
-                                                                              </select>
-                                                                              <div class="invalid-feedback">Por favor seleccionar una zona.</div>
+                                                                            <div class="col">
+                                                                              <div class="mb-3">
+                                                                                  <label for="zona" class="form-label">Zona:</label>
+                                                                                  <input type="text" name="zona" id="zona" class="form-control" value="Norte" placeholder="">
+                                                                                  <div class="invalid-feedback">Por favor ingresar un correo válido.</div>
+                                                                              </div>
                                                                             </div>
-                                                                          </div>
+                                                                          
                                                                         </div>
                                         
                                                                         <div class="row">
-                                                                        
-                                                                            <div class="col">
-                                                                                <div class="mb-3">
-                                                                                    <label for="distrito" class="form-label">Distrito: (*)</label>
-                                                                                    <select name="distrito" id="distrito" class="form-control">
-                                                                                        <option value="Los Olivos" selected>Los Olivos</option>
-                                                                                        <!-- Puedes añadir opciones de distritos aquí según la zona seleccionada -->
-                                                                                    </select>
-                                                                                    <div class="invalid-feedback">Por favor selecciona un distrito.</div>
-                                                                                </div>
+                                                                          <div class="col">
+                                                                            <div class="mb-3">
+                                                                                <label for="distrito" class="form-label">Zona:</label>
+                                                                                <input type="text" name="distrito" id="distrito" class="form-control" value="Los Olivos" placeholder="">
+                                                                                <div class="invalid-feedback">Por favor ingresar un correo válido.</div>
                                                                             </div>
+                                                                          </div>
+                                                                        
+                    
                                                                         </div>
                                         
                                                                         <div class="row">
@@ -559,6 +571,29 @@
     <script src="assets/js/kaiadmin.min.js"></script>
     <!-- Kaiadmin DEMO methods, don't include it in your project! -->
     <script src="assets/js/setting-demo2.js"></script>
+    <script>
+      const uploadInput = document.getElementById('upload');
+      const avatarImg = document.getElementById('uploadedAvatar');
+      const resetButton = document.getElementById('resetButton');
+    
+      // Mostrar la imagen seleccionada
+      uploadInput.addEventListener('change', function () {
+        const file = this.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = function (e) {
+            avatarImg.src = e.target.result;
+          };
+          reader.readAsDataURL(file);
+        }
+      });
+    
+      // Reiniciar la imagen al valor predeterminado
+      resetButton.addEventListener('click', function () {
+        avatarImg.src = 'assets/img/profile.jpg'; // Coloca aquí la ruta original de la imagen
+        uploadInput.value = ''; // Limpia la selección del input
+      });
+    </script>
      
   </body>
 </html>
