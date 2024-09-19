@@ -419,7 +419,8 @@
           </nav>
           <!-- Fin Navbar -->
         </div>
-        <!-- Fin del contenido central -->
+        <!--  contenido central -->
+        <!-- contenido central -->
         <div class="container">
           <div class="page-inner">
             <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
@@ -446,20 +447,12 @@
                     <input type="date" id="filterDate" class="form-control" placeholder="Fecha de actualización">
                   </div>
 
-                  <!-- Filtro de Estado del Pedido -->
+                  <!-- Filtro de DNI -->
                   <div class="form-group me-2">
-                    <select id="filterOrderStatus" class="form-control">
-                      <option value="">Estado del pedido</option>
-                      <option value="Generado">Generado</option>
-                      <option value="En validación">En validación</option>
-                      <option value="En proceso">En proceso</option>
-                      <option value="Arribo al país">Arribo al país</option>
-                      <option value="En aduanas">En aduanas</option>
-                      <option value="En ruta">En ruta</option>
-                      <option value="Recibido">Recibido</option>
-                      <option value="Cancelado">Cancelado</option>
-                    </select>
+                    <input type="text" id="filterDNI" class="form-control" placeholder="DNI">
                   </div>
+
+                  
 
                   <!-- Botones de acciones para filtros -->
                   <div class="d-flex">
@@ -478,17 +471,19 @@
                     <div class="table-responsive">
                       <table id="multi-filter-select" class="display table table-striped table-hover">
                         <thead>
-                          <tr>
-                            <th>Número de Orden</th>
+                          <tr class="text-center">
+                            <th>#</th>
+                            <th>DNI</th>
                             <th>Cantidad de órdenes</th>
                             <th>Nombre del Usuario</th>
                             <th>Fecha de asignación</th>
                             <th>Acciones</th>
                           </tr>
                         </thead>
-                        <tbody>
+                        <tbody class="text-center">
                           <tr>
-                            <td>0001</td>
+                            <td>1</td>
+                            <td>12345678</td>
                             <td>5</td>
                             <td>José González</td>
                             <td>2024-09-01</td>
@@ -505,7 +500,8 @@
                             </td>
                           </tr>
                           <tr>
-                            <td>0002</td>
+                            <td>2</td>
+                            <td>87654321</td>
                             <td>3</td>
                             <td>María Rojas</td>
                             <td>2024-08-30</td>
@@ -515,7 +511,6 @@
                                   <i class="fas fa-ellipsis-v"></i>
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2">
-                                  
                                   <li><a class="dropdown-item" href="#">Ver detalles del perfil</a></li>
                                   <li><a class="dropdown-item" href="formdebaneo.html">Banear usuario</a></li>
                                 </ul>
@@ -523,7 +518,8 @@
                             </td>
                           </tr>
                           <tr>
-                            <td>0003</td>
+                            <td>3</td>
+                            <td>56789012</td>
                             <td>8</td>
                             <td>Carlos Fernández</td>
                             <td>2024-08-28</td>
@@ -533,7 +529,6 @@
                                   <i class="fas fa-ellipsis-v"></i>
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton3">
-                                 
                                   <li><a class="dropdown-item" href="#">Ver detalles del perfil</a></li>
                                   <li><a class="dropdown-item" href="formdebaneo.html">Banear usuario</a></li>
                                 </ul>
@@ -541,7 +536,8 @@
                             </td>
                           </tr>
                           <tr>
-                            <td>0004</td>
+                            <td>4</td>
+                            <td>65432109</td>
                             <td>2</td>
                             <td>Lucía Ramírez</td>
                             <td>2024-08-27</td>
@@ -551,7 +547,6 @@
                                   <i class="fas fa-ellipsis-v"></i>
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton4">
-                                  
                                   <li><a class="dropdown-item" href="#">Ver detalles del perfil</a></li>
                                   <li><a class="dropdown-item" href="formdebaneo.html">Banear usuario</a></li>
                                 </ul>
@@ -559,7 +554,8 @@
                             </td>
                           </tr>
                           <tr>
-                            <td>0005</td>
+                            <td>5</td>
+                            <td>09876543</td>
                             <td>6</td>
                             <td>Jorge Vargas</td>
                             <td>2024-08-25</td>
@@ -569,7 +565,6 @@
                                   <i class="fas fa-ellipsis-v"></i>
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton5">
-                                  </li>
                                   <li><a class="dropdown-item" href="#">Ver detalles del perfil</a></li>
                                   <li><a class="dropdown-item" href="formdebaneo.html">Banear usuario</a></li>
                                 </ul>
@@ -585,6 +580,7 @@
             </div>
           </div>
         </div>
+
 
 
 
@@ -626,5 +622,66 @@
 
     <!-- Kaiadmin JS -->
     <script src="assets/js/kaiadmin.min.js"></script>
+    <script>
+      $(document).ready(function() {
+        // Initialize DataTable
+        var table = $('#multi-filter-select').DataTable({
+          paging: true,
+          pageLength: 5,
+          lengthChange: false,
+          info: true,
+          dom: 'tip',
+          initComplete: function() {
+            // Apply the search for all the existing filters
+            this.api().columns().every(function() {
+              var that = this;
+              $('input, select', this.header()).on('keyup change', function() {
+                if (that.search() !== this.value) {
+                  that.search(this.value).draw();
+                }
+              });
+            });
+          }
+        });
+
+        // Search button functionality
+        $('#searchBtn').on('click', function() {
+          // Apply the existing filters
+          table.columns(0).search($('#filterUserName').val());
+          table.columns(1).search($('#filterItemCount').val());
+          table.columns(3).search($('#filterDate').val());
+          table.columns(4).search($('#filterUserStatus').val());
+
+          // Apply filter by "Ordenar por"
+          var orderBy = $('#filterOrderBy').val();
+          if (orderBy === 'sinAsignar') {
+            table.columns(4).search('Motivo de baneo');
+          } else if (orderBy === 'mal_comportamiento') {
+            table.columns(4).search('Mal comportamiento');
+          } else if (orderBy === 'spam') {
+            table.columns(4).search('Spam');
+          } else if (orderBy === 'otro') {
+            table.columns(4).search('Otro');
+          } else {
+            table.columns(4).search('');
+          }
+
+          table.draw();
+        });
+
+        // Clear filters button functionality
+        $('#clearBtn').on('click', function() {
+          $('#filterOrderNumber').val('');
+          $('#filterItemCount').val('');
+          $('#filterUserName').val('');
+          $('#filterDate').val('');
+          $('#filterOrderStatus').val('');
+          $('#filterOrderBy').val('');
+          table.search('').columns().search('').draw();
+        });
+      });
+
+
+    </script>
   </body>
 </html>
