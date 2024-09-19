@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Agente - Página principal</title>
+    <title>Usuarios baneados</title>
     <meta
       content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
       name="viewport"
@@ -419,30 +419,174 @@
           </nav>
           <!-- Fin Navbar -->
         </div>
-
-        <!-- Texto o contenido central -->
+        <!-- Fin del contenido central -->
         <div class="container">
-          <div class="page-inner text-center">
-            <div class="d-flex flex-column align-items-center pt-2 pb-4">
+          <div class="page-inner">
+            <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
               <div>
-                <!-- Texto de bienvenida más grande y oscuro -->
-                <h3 class="fw-bold mb-3" style="font-size: 2.5rem; color: #333;">
-                  ¡Bienvenido a DOGLESS, Agente Nilo Cori!
-                </h3>
-                <!-- Texto adicional más grande y oscuro -->
-                <h6 class="op-7 mb-2" style="color: #000000; font-size: 1.2rem;">
-                  El agente aduanero gestiona la importación y exportación de mercancías, asegurando el cumplimiento de las normativas y facilitando la comunicación con proveedores y usuarios para coordinar la documentación y resolver consultas, garantizando un proceso eficiente y legal.
+                <h3 class="fw-bold mb-3">Usuarios baneados</h3>
+                <h6 class="op-7 mb-2">
+                  Utiliza los filtros para buscar y gestionar los usuarios baneados.
                 </h6>
               </div>
             </div>
-            
-            <!-- Imagen centrada inmediatamente después del texto -->
-            <div class="text-center mt-3">
-              <img src="imagen_adminzonal.jpg" class="img-fluid mx-auto d-block" alt="Imagen principal">
+
+            <!-- Filtros -->
+            <div class="row">
+              <div class="col-md-12">
+                <div class="d-flex justify-content-between align-items-center flex-wrap">
+                  <!-- Filtros ya existentes -->
+                  <div class="form-group me-2">
+                    <input type="text" id="filterUserName" class="form-control" placeholder="Nombre del comprador">
+                  </div>
+                  <div class="form-group me-2">
+                    <input type="number" id="filterItemCount" class="form-control" placeholder="Cantidad de ordenes">
+                  </div>
+                  <div class="form-group me-2">
+                    <input type="date" id="filterDate" class="form-control" placeholder="Fecha de actualización">
+                  </div>
+
+                  <!-- Filtro de Estado del Pedido -->
+                  <div class="form-group me-2">
+                    <select id="filterUserStatus" class="form-control">
+                      <option value="">Motivo de baneo</option>
+                      <option value="Mal comportamiento">Mal comportamiento</option>
+                      <option value="Spam">Spam</option>
+                      <option value="Otro">Otro</option>
+                    </select>
+                  </div>
+
+                  <!-- Botones de acciones para filtros -->
+                  <div class="d-flex">
+                    <button id="searchBtn" class="btn btn-primary me-2">Buscar</button>
+                    <button id="clearBtn" class="btn btn-secondary">Limpiar filtros</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tabla -->
+            <div class="row mt-4">
+              <div class="col-md-12">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="table-responsive">
+                      <table id="multi-filter-select" class="display table table-striped table-hover">
+                        <thead>
+                          <tr>
+                            <th>Número de Orden</th>
+                            <th>Cantidad de órdenes</th>
+                            <th>Nombre del Usuario</th>
+                            <th>Fecha de baneo</th>
+                            <th>Motivo de baneo</th>
+                            <th>Acciones</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>0001</td>
+                            <td>5</td>
+                            <td>José González</td>
+                            <td>2024-09-01</td>
+                            <td><span class="badge badge-danger">Mal comportamiento</span></td>
+                            <td>
+                              <div class="dropdown">
+                                <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                  <i class="fas fa-ellipsis-v"></i>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
+                                  <li><a class="dropdown-item" href="#">Ver detalles del perfil</a></li>
+                                  <li><a class="dropdown-item" href="#">Ver detalles de baneo</a></li>
+                                  <li><a class="dropdown-item" href="#">Desbanear usuario</a></li>
+                                </ul>
+                              </div>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>0002</td>
+                            <td>3</td>
+                            <td>María Rojas</td>
+                            <td>2024-08-30</td>
+                            <td><span class="badge badge-success">Spam</span></td>
+                            <td>
+                              <div class="dropdown">
+                                <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                                  <i class="fas fa-ellipsis-v"></i>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2">
+                                  <li><a class="dropdown-item" href="#">Ver detalles del perfil</a></li>
+                                  <li><a class="dropdown-item" href="#">Ver detalles de baneo</a></li>
+                                  <li><a class="dropdown-item" href="#">Desbanear usuario</a></li>
+                                </ul>
+                              </div>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>0003</td>
+                            <td>8</td>
+                            <td>Carlos Fernández</td>
+                            <td>2024-08-28</td>
+                            <td><span class="badge badge-warning">Otro</span></td>
+                            <td>
+                              <div class="dropdown">
+                                <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton3" data-bs-toggle="dropdown" aria-expanded="false">
+                                  <i class="fas fa-ellipsis-v"></i>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton3">
+                                  <li><a class="dropdown-item" href="#">Ver detalles del perfil</a></li>
+                                  <li><a class="dropdown-item" href="#">Ver detalles de baneo</a></li>
+                                  <li><a class="dropdown-item" href="#">Desbanear usuario</a></li>
+                                </ul>
+                              </div>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>0004</td>
+                            <td>2</td>
+                            <td>Lucía Ramírez</td>
+                            <td>2024-08-27
+                            <td><span class="badge badge-success">Spam</span></td>
+                            <td>
+                              <div class="dropdown">
+                                <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton4" data-bs-toggle="dropdown" aria-expanded="false">
+                                  <i class="fas fa-ellipsis-v"></i>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton4">
+                                  <li><a class="dropdown-item" href="#">Ver detalles del perfil</a></li>
+                                  <li><a class="dropdown-item" href="#">Ver detalles de baneo</a></li>
+                                  <li><a class="dropdown-item" href="#">Desbanear usuario</a></li>
+                                </ul>
+                              </div>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>0005</td>
+                            <td>6</td>
+                            <td>Jorge Vargas</td>
+                            <td>2024-08-25</td>
+                            <td><span class="badge badge-warning">Otro</span></td>
+                            <td>
+                              <div class="dropdown">
+                                <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton5" data-bs-toggle="dropdown" aria-expanded="false">
+                                  <i class="fas fa-ellipsis-v"></i>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton5">
+                                  <li><a class="dropdown-item" href="#">Ver detalles del perfil</a></li>
+                                  <li><a class="dropdown-item" href="#">Ver detalles de baneo</a></li>
+                                  <li><a class="dropdown-item" href="#">Desbanear usuario</a></li>
+                                </ul>
+                              </div>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-        <!-- Fin del contenido central -->
 
 
 
@@ -484,5 +628,66 @@
 
     <!-- Kaiadmin JS -->
     <script src="assets/js/kaiadmin.min.js"></script>
+    <script>
+      $(document).ready(function() {
+        // Initialize DataTable
+        var table = $('#multi-filter-select').DataTable({
+          paging: true,
+          pageLength: 5,
+          lengthChange: false,
+          info: true,
+          dom: 'tip',
+          initComplete: function() {
+            // Apply the search for all the existing filters
+            this.api().columns().every(function() {
+              var that = this;
+              $('input, select', this.header()).on('keyup change', function() {
+                if (that.search() !== this.value) {
+                  that.search(this.value).draw();
+                }
+              });
+            });
+          }
+        });
+
+        // Search button functionality
+        $('#searchBtn').on('click', function() {
+          // Apply the existing filters
+          table.columns(0).search($('#filterUserName').val());
+          table.columns(1).search($('#filterItemCount').val());
+          table.columns(3).search($('#filterDate').val());
+          table.columns(4).search($('#filterUserStatus').val());
+
+          // Apply filter by "Ordenar por"
+          var orderBy = $('#filterOrderBy').val();
+          if (orderBy === 'sinAsignar') {
+            table.columns(4).search('Motivo de baneo');
+          } else if (orderBy === 'mal_comportamiento') {
+            table.columns(4).search('Mal comportamiento');
+          } else if (orderBy === 'spam') {
+            table.columns(4).search('Spam');
+          } else if (orderBy === 'otro') {
+            table.columns(4).search('Otro');
+          } else {
+            table.columns(4).search('');
+          }
+
+          table.draw();
+        });
+
+        // Clear filters button functionality
+        $('#clearBtn').on('click', function() {
+          $('#filterOrderNumber').val('');
+          $('#filterItemCount').val('');
+          $('#filterUserName').val('');
+          $('#filterDate').val('');
+          $('#filterOrderStatus').val('');
+          $('#filterOrderBy').val('');
+          table.search('').columns().search('').draw();
+        });
+      });
+
+
+    </script>
   </body>
 </html>

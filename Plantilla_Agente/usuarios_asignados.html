@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Agente - Página principal</title>
+    <title>Usuarios asignados</title>
     <meta
       content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
       name="viewport"
@@ -419,30 +419,173 @@
           </nav>
           <!-- Fin Navbar -->
         </div>
-
-        <!-- Texto o contenido central -->
+        <!-- Fin del contenido central -->
         <div class="container">
-          <div class="page-inner text-center">
-            <div class="d-flex flex-column align-items-center pt-2 pb-4">
+          <div class="page-inner">
+            <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
               <div>
-                <!-- Texto de bienvenida más grande y oscuro -->
-                <h3 class="fw-bold mb-3" style="font-size: 2.5rem; color: #333;">
-                  ¡Bienvenido a DOGLESS, Agente Nilo Cori!
-                </h3>
-                <!-- Texto adicional más grande y oscuro -->
-                <h6 class="op-7 mb-2" style="color: #000000; font-size: 1.2rem;">
-                  El agente aduanero gestiona la importación y exportación de mercancías, asegurando el cumplimiento de las normativas y facilitando la comunicación con proveedores y usuarios para coordinar la documentación y resolver consultas, garantizando un proceso eficiente y legal.
+                <h3 class="fw-bold mb-3">Usuarios asignados</h3>
+                <h6 class="op-7 mb-2">
+                  Utiliza los filtros para buscar y gestionar los usuarios asignados.
                 </h6>
               </div>
             </div>
-            
-            <!-- Imagen centrada inmediatamente después del texto -->
-            <div class="text-center mt-3">
-              <img src="imagen_adminzonal.jpg" class="img-fluid mx-auto d-block" alt="Imagen principal">
+
+            <!-- Filtros -->
+            <div class="row">
+              <div class="col-md-12">
+                <div class="d-flex justify-content-between align-items-center flex-wrap">
+                  <!-- Filtros ya existentes -->
+                  <div class="form-group me-2">
+                    <input type="text" id="filterUserName" class="form-control" placeholder="Nombre del comprador">
+                  </div>
+                  <div class="form-group me-2">
+                    <input type="number" id="filterItemCount" class="form-control" placeholder="Cantidad de ordenes">
+                  </div>
+                  <div class="form-group me-2">
+                    <input type="date" id="filterDate" class="form-control" placeholder="Fecha de actualización">
+                  </div>
+
+                  <!-- Filtro de Estado del Pedido -->
+                  <div class="form-group me-2">
+                    <select id="filterOrderStatus" class="form-control">
+                      <option value="">Estado del pedido</option>
+                      <option value="Generado">Generado</option>
+                      <option value="En validación">En validación</option>
+                      <option value="En proceso">En proceso</option>
+                      <option value="Arribo al país">Arribo al país</option>
+                      <option value="En aduanas">En aduanas</option>
+                      <option value="En ruta">En ruta</option>
+                      <option value="Recibido">Recibido</option>
+                      <option value="Cancelado">Cancelado</option>
+                    </select>
+                  </div>
+
+                  <!-- Botones de acciones para filtros -->
+                  <div class="d-flex">
+                    <button id="searchBtn" class="btn btn-primary me-2">Buscar</button>
+                    <button id="clearBtn" class="btn btn-secondary">Limpiar filtros</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tabla -->
+            <div class="row mt-4">
+              <div class="col-md-12">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="table-responsive">
+                      <table id="multi-filter-select" class="display table table-striped table-hover">
+                        <thead>
+                          <tr>
+                            <th>Número de Orden</th>
+                            <th>Cantidad de órdenes</th>
+                            <th>Nombre del Usuario</th>
+                            <th>Fecha de asignación</th>
+                            <th>Acciones</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>0001</td>
+                            <td>5</td>
+                            <td>José González</td>
+                            <td>2024-09-01</td>
+                            <td>
+                              <div class="dropdown">
+                                <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                  <i class="fas fa-ellipsis-v"></i>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
+                                  <li><a class="dropdown-item" href="#">Ver detalles de orden</a></li>
+                                  <li><a class="dropdown-item" href="#">Contactar usuario</a></li>
+                                  <li><a class="dropdown-item" href="#">Banear usuario</a></li>
+                                </ul>
+                              </div>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>0002</td>
+                            <td>3</td>
+                            <td>María Rojas</td>
+                            <td>2024-08-30</td>
+                            <td>
+                              <div class="dropdown">
+                                <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                                  <i class="fas fa-ellipsis-v"></i>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2">
+                                  <li><a class="dropdown-item" href="#">Ver detalles de orden</a></li>
+                                  <li><a class="dropdown-item" href="#">Contactar usuario</a></li>
+                                  <li><a class="dropdown-item" href="#">Actualizar estado</a></li>
+                                </ul>
+                              </div>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>0003</td>
+                            <td>8</td>
+                            <td>Carlos Fernández</td>
+                            <td>2024-08-28</td>
+                            <td>
+                              <div class="dropdown">
+                                <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton3" data-bs-toggle="dropdown" aria-expanded="false">
+                                  <i class="fas fa-ellipsis-v"></i>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton3">
+                                  <li><a class="dropdown-item" href="#">Ver detalles de orden</a></li>
+                                  <li><a class="dropdown-item" href="#">Contactar usuario</a></li>
+                                  <li><a class="dropdown-item" href="#">Banear usuario</a></li>
+                                </ul>
+                              </div>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>0004</td>
+                            <td>2</td>
+                            <td>Lucía Ramírez</td>
+                            <td>2024-08-27</td>
+                            <td>
+                              <div class="dropdown">
+                                <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton4" data-bs-toggle="dropdown" aria-expanded="false">
+                                  <i class="fas fa-ellipsis-v"></i>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton4">
+                                  <li><a class="dropdown-item" href="#">Ver detalles de orden</a></li>
+                                  <li><a class="dropdown-item" href="#">Contactar usuario</a></li>
+                                  <li><a class="dropdown-item" href="#">Banear usuario</a></li>
+                                </ul>
+                              </div>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>0005</td>
+                            <td>6</td>
+                            <td>Jorge Vargas</td>
+                            <td>2024-08-25</td>
+                            <td>
+                              <div class="dropdown">
+                                <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton5" data-bs-toggle="dropdown" aria-expanded="false">
+                                  <i class="fas fa-ellipsis-v"></i>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton5">
+                                  <li><a class="dropdown-item" href="#">Ver detalles de orden</a></li>
+                                  <li><a class="dropdown-item" href="#">Contactar usuario</a></li>
+                                  <li><a class="dropdown-item" href="#">Banear usuario</a></li>
+                                </ul>
+                              </div>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-        <!-- Fin del contenido central -->
 
 
 
