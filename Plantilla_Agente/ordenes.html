@@ -421,6 +421,7 @@
         </div>
 
         <!-- Texto o contenido central -->
+        <!-- Texto o contenido central -->
         <div class="container">
           <div class="page-inner">
             <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
@@ -431,12 +432,11 @@
                 </h6>
               </div>
             </div>
-        
+
             <!-- Filtros -->
             <div class="row">
               <div class="col-md-12">
                 <div class="d-flex justify-content-between align-items-center flex-wrap">
-                  <!-- Filtros ya existentes -->
                   <div class="form-group me-2">
                     <input type="text" id="filterOrderNumber" class="form-control" placeholder="Número de orden">
                   </div>
@@ -449,7 +449,7 @@
                   <div class="form-group me-2">
                     <input type="date" id="filterDate" class="form-control" placeholder="Fecha de actualización">
                   </div>
-        
+
                   <!-- Filtro de Estado del Pedido -->
                   <div class="form-group me-2">
                     <select id="filterOrderStatus" class="form-control">
@@ -464,19 +464,7 @@
                       <option value="Cancelado">Cancelado</option>
                     </select>
                   </div>
-        
-                  <!-- Filtro "Ordenar por" -->
-                  <div class="form-group me-2">
-                    <select id="filterOrderBy" class="form-control">
-                      <option value="">Ordenar por</option>
-                      <option value="todas">Mostrar todas las órdenes</option>
-                      <option value="sinAsignar">Órdenes sin asignar (Generado)</option>
-                      <option value="pendientes">Órdenes pendientes (En validación)</option>
-                      <option value="resueltas">Órdenes resueltas (Recibido o Cancelado)</option>
-                      <option value="enProgreso">Órdenes en progreso</option>
-                    </select>
-                  </div>
-        
+
                   <!-- Botones de acciones para filtros -->
                   <div class="d-flex">
                     <button id="searchBtn" class="btn btn-primary me-2">Buscar</button>
@@ -485,7 +473,7 @@
                 </div>
               </div>
             </div>
-        
+
             <!-- Tabla -->
             <div class="row mt-4">
               <div class="col-md-12">
@@ -493,7 +481,7 @@
                   <div class="card-body">
                     <div class="table-responsive">
                       <table id="multi-filter-select" class="display table table-striped table-hover">
-                        <thead>
+                        <thead class="text-center">
                           <tr>
                             <th>Número de Orden</th>
                             <th>Cantidad de Items</th>
@@ -503,7 +491,7 @@
                             <th>Acciones</th>
                           </tr>
                         </thead>
-                        <tbody>
+                        <tbody class="text-center">
                           <tr>
                             <td>0001</td>
                             <td>5</td>
@@ -608,6 +596,7 @@
             </div>
           </div>
         </div>
+
         
         
         

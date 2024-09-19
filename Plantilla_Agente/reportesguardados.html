@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Detalle de baneo</title>
+    <title>Reportes Guardados</title>
     <meta
       content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
       name="viewport"
@@ -419,58 +419,114 @@
           </nav>
           <!-- Fin Navbar -->
         </div>
-
+        <!--  contenido central -->
+            
         <div class="container">
             <div class="page-inner">
-                <div class="row justify-content-center">
-                    <div class="col-md-8 col-lg-6">
-                        <div class="card">
-                            <div class="card-header">
-                                <div class="card-title">Detalle de baneo a usuario</div>
-                            </div>
-                            <div class="card-body">
-                                <div class="row">
-                                    <!-- Detalle de baneo a usuario -->
-                                    <div class="col-md-12">
-                                        <label class="mb-3"><b>Datos </b></label>
-                                        <div class="form-group">
-                                            <label for="username">Nombre de usuario</label>
-                                            <div class="input-icon">
-                                                
-                                                <p class="form-control-static">Juan Pérez</p> <!-- Nombre de ejemplo -->
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="DNI">DNI</label>
-                                            <div class="input-icon">
-                                                
-                                                <p class="form-control-static">12345678</p> <!-- DNI de ejemplo -->
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="exampleFormControlSelect1">Motivo de baneo</label>
-                                            <p class="form-control-static">Incumplimiento de políticas</p> <!-- Motivo de ejemplo -->
-                                        </div>
-                                        
-                                        <div class="form-group">
-                                            <label for="comment">Detalles del caso</label>
-                                            <p class="form-control-static">El usuario realizó comentarios inapropiados en varias publicaciones.</p> <!-- Detalles de ejemplo -->
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                          
-                            <div class="card-action text-center">
-                              <a href="usuarios_baneados.html" class="btn btn-primary me-2">Regresar</a>
-                              <button class="btn btn-warning ms-2">Confirmar baneo</button>
-                          </div> 
-                        </div>
+            <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
+                <div>
+                <h3 class="fw-bold mb-3">Reportes Guardados</h3>
+                <h6 class="op-7 mb-2">
+                    Utiliza los filtros para buscar y gestionar los reportes guardados.
+                </h6>
+                </div>
+            </div>
+        
+            <!-- Filtros -->
+            <div class="row">
+                <div class="col-md-12">
+                <div class="d-flex justify-content-between align-items-center flex-wrap">
+                    <!-- Filtro por número de reporte -->
+                    <div class="form-group me-2">
+                    <input type="text" id="filterReportNumber" class="form-control" placeholder="Número de reporte">
+                    </div>
+        
+                    <!-- Filtro por tipo de reporte -->
+                    <div class="form-group me-2">
+                    <select id="filterReportType" class="form-control">
+                        <option value="">Tipo de reporte</option>
+                        <option value="ordenes_totales">Órdenes Totales</option>
+                        <option value="ordenes_sistema">Total de Órdenes en el Sistema</option>
+                        <option value="ordenes_agente">Órdenes por Agente</option>
+                        <option value="ordenes_fecha">Órdenes Totales por Fecha</option>
+                    </select>
+                    </div>
+        
+                    <!-- Filtro de fecha -->
+                    <div class="form-group me-2">
+                    <input type="date" id="filterDate" class="form-control" placeholder="Fecha de generación">
+                    </div>
+        
+                    <!-- Botones de acciones para filtros -->
+                    <div class="d-flex">
+                    <button id="searchBtn" class="btn btn-primary me-2">Buscar</button>
+                    <button id="clearBtn" class="btn btn-secondary">Limpiar filtros</button>
                     </div>
                 </div>
+                </div>
+            </div>
+        
+            <!-- Tabla -->
+            <div class="row mt-4">
+                <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                    <div class="table-responsive">
+                        <table id="multi-filter-select" class="display table table-striped table-hover">
+                        <thead>
+                            <tr class="text-center">
+                            <th>Número de Reporte</th>
+                            <th>Tipo de Reporte</th>
+                            <th>Fecha de Generación</th>
+                            <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-center">
+                            <tr>
+                            <td>001</td>
+                            <td><span class="badge bg-primary">Órdenes Totales</span></td>
+                            <td>2024-09-15</td>
+                            <td>
+                                <div class="dropdown">
+                                <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
+                                    <li><a class="dropdown-item" href="#">Ver Documento</a></li>
+                                    <li><a class="dropdown-item" href="#">Descargar</a></li>
+                                </ul>
+                                </div>
+                            </td>
+                            </tr>
+                            <tr>
+                            <td>002</td>
+                            <td><span class="badge bg-warning">Órdenes por Agente</span></td>
+                            <td>2024-09-10</td>
+                            <td>
+                                <div class="dropdown">
+                                <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2">
+                                    <li><a class="dropdown-item" href="#">Ver Documento</a></li>
+                                    <li><a class="dropdown-item" href="#">Descargar</a></li>
+                                </ul>
+                                </div>
+                            </td>
+                            </tr>
+                            <!-- Add more rows as needed -->
+                        </tbody>
+                        </table>
+                    </div>
+                    </div>
+                </div>
+                </div>
+            </div>
             </div>
         </div>
         
-      
+  
+
 
 
         <!-- Pie de página -->
@@ -511,6 +567,66 @@
 
     <!-- Kaiadmin JS -->
     <script src="assets/js/kaiadmin.min.js"></script>
-    
+    <script>
+      $(document).ready(function() {
+        // Initialize DataTable
+        var table = $('#multi-filter-select').DataTable({
+          paging: true,
+          pageLength: 5,
+          lengthChange: false,
+          info: true,
+          dom: 'tip',
+          initComplete: function() {
+            // Apply the search for all the existing filters
+            this.api().columns().every(function() {
+              var that = this;
+              $('input, select', this.header()).on('keyup change', function() {
+                if (that.search() !== this.value) {
+                  that.search(this.value).draw();
+                }
+              });
+            });
+          }
+        });
+
+        // Search button functionality
+        $('#searchBtn').on('click', function() {
+          // Apply the existing filters
+          table.columns(0).search($('#filterUserName').val());
+          table.columns(1).search($('#filterItemCount').val());
+          table.columns(3).search($('#filterDate').val());
+          table.columns(4).search($('#filterUserStatus').val());
+
+          // Apply filter by "Ordenar por"
+          var orderBy = $('#filterOrderBy').val();
+          if (orderBy === 'sinAsignar') {
+            table.columns(4).search('Motivo de baneo');
+          } else if (orderBy === 'mal_comportamiento') {
+            table.columns(4).search('Mal comportamiento');
+          } else if (orderBy === 'spam') {
+            table.columns(4).search('Spam');
+          } else if (orderBy === 'otro') {
+            table.columns(4).search('Otro');
+          } else {
+            table.columns(4).search('');
+          }
+
+          table.draw();
+        });
+
+        // Clear filters button functionality
+        $('#clearBtn').on('click', function() {
+          $('#filterOrderNumber').val('');
+          $('#filterItemCount').val('');
+          $('#filterUserName').val('');
+          $('#filterDate').val('');
+          $('#filterOrderStatus').val('');
+          $('#filterOrderBy').val('');
+          table.search('').columns().search('').draw();
+        });
+      });
+
+
+    </script>
   </body>
 </html>

@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Detalle de baneo</title>
+    <title>Reporte - Ordenes por Usuario</title>
     <meta
       content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
       name="viewport"
@@ -419,58 +419,122 @@
           </nav>
           <!-- Fin Navbar -->
         </div>
-
+        <!--  contenido central -->
+        <!--  contenido central -->
         <div class="container">
-            <div class="page-inner">
-                <div class="row justify-content-center">
-                    <div class="col-md-8 col-lg-6">
-                        <div class="card">
-                            <div class="card-header">
-                                <div class="card-title">Detalle de baneo a usuario</div>
-                            </div>
-                            <div class="card-body">
-                                <div class="row">
-                                    <!-- Detalle de baneo a usuario -->
-                                    <div class="col-md-12">
-                                        <label class="mb-3"><b>Datos </b></label>
-                                        <div class="form-group">
-                                            <label for="username">Nombre de usuario</label>
-                                            <div class="input-icon">
-                                                
-                                                <p class="form-control-static">Juan Pérez</p> <!-- Nombre de ejemplo -->
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="DNI">DNI</label>
-                                            <div class="input-icon">
-                                                
-                                                <p class="form-control-static">12345678</p> <!-- DNI de ejemplo -->
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="exampleFormControlSelect1">Motivo de baneo</label>
-                                            <p class="form-control-static">Incumplimiento de políticas</p> <!-- Motivo de ejemplo -->
-                                        </div>
-                                        
-                                        <div class="form-group">
-                                            <label for="comment">Detalles del caso</label>
-                                            <p class="form-control-static">El usuario realizó comentarios inapropiados en varias publicaciones.</p> <!-- Detalles de ejemplo -->
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                          
-                            <div class="card-action text-center">
-                              <a href="usuarios_baneados.html" class="btn btn-primary me-2">Regresar</a>
-                              <button class="btn btn-warning ms-2">Confirmar baneo</button>
-                          </div> 
-                        </div>
-                    </div>
-                </div>
-            </div>
+          <div class="page-inner">
+              <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
+                  <div>
+                      <h3 class="fw-bold mb-3">Reporte de Órdenes por Usuario</h3>
+                      <h6 class="op-7 mb-2">
+                          Busca por DNI o nombre de usuario para visualizar las órdenes asociadas.
+                      </h6>
+                  </div>
+              </div>
+
+              <!-- DNI and Name Filter and Buttons -->
+              <div class="d-flex justify-content-between mb-3">
+                  <!-- DNI and Name Inputs -->
+                  <div class="d-flex align-items-center">
+                      <div class="form-group me-2">
+                          <label for="dniFilter">DNI:</label>
+                          <input type="text" id="dniFilter" class="form-control-sm" placeholder="Ingresa DNI">
+                      </div>
+                      <div class="form-group me-2">
+                          <label for="nameFilter">Nombre de usuario:</label>
+                          <input type="text" id="nameFilter" class="form-control-sm" placeholder="Ingresa nombre">
+                      </div>
+                  </div>
+                  <!-- Generate report and back buttons -->
+                  <div class="d-flex">
+                      <button id="generateReportBtn" class="btn btn-secondary me-2">Generar reporte</button>
+                      <a href="reportes.html" class="btn btn-primary">Regresar</a>
+                  </div>
+              </div>
+
+              <!-- Preview Section -->
+              <div>
+                  <h4 class="fw-bold mb-3">Previsualización:</h4>
+              </div>
+              <div class="card mt-4" style="width: 90%; margin: 0 auto;">
+                  <div class="card-header bg-info text-white">
+                      <h4 class="card-title text-center">Reporte de Órdenes por Usuario</h4>
+                      <h6 id="filterSubtitle" class="text-center">(DNI: -, Usuario: -)</h6>
+                  </div>
+                  <div class="card-body">
+                      <div class="table-responsive">
+                          <table class="table table-bordered text-center">
+                              <thead class="table-info">
+                                  <tr>
+                                      <th>Número de orden</th>
+                                      <th>Número de items</th>
+                                      <th>Fecha de generación</th>
+                                      <th>Estado de orden</th>
+                                  </tr>
+                              </thead>
+                              <tbody>
+                                  <tr>
+                                      <td>1499</td>
+                                      <td>3</td>
+                                      <td>14/11/2024</td>
+                                      <td class="text-warning">EN VALIDACIÓN</td>
+                                  </tr>
+                                  <tr>
+                                      <td>1236</td>
+                                      <td>1</td>
+                                      <td>14/11/2024</td>
+                                      <td class="text-warning">EN VALIDACIÓN</td>
+                                  </tr>
+                                  <tr>
+                                      <td>545</td>
+                                      <td>8</td>
+                                      <td>14/11/2024</td>
+                                      <td class="text-success">EN PROCESO</td>
+                                  </tr>
+                                  <tr>
+                                      <td>569</td>
+                                      <td>9</td>
+                                      <td>14/11/2024</td>
+                                      <td class="text-info">ARRIBO AL PAÍS</td>
+                                  </tr>
+                                  <tr>
+                                      <td>1456</td>
+                                      <td>2</td>
+                                      <td>14/11/2024</td>
+                                      <td class="text-primary">EN ADUANAS</td>
+                                  </tr>
+                                  <tr>
+                                      <td>1499</td>
+                                      <td>1</td>
+                                      <td>14/11/2024</td>
+                                      <td class="text-success">RECIBIDO</td>
+                                  </tr>
+                                  <tr>
+                                      <td>478</td>
+                                      <td>6</td>
+                                      <td>14/11/2024</td>
+                                      <td class="text-danger">CANCELADO</td>
+                                  </tr>
+                                  <tr>
+                                      <td>459</td>
+                                      <td>2</td>
+                                      <td>14/11/2024</td>
+                                      <td class="text-success">RECIBIDO</td>
+                                  </tr>
+                              </tbody>
+                          </table>
+                      </div>
+                  </div>
+              </div>
+
+              <!-- Save options -->
+              <div class="d-flex justify-content-center mt-4">
+                  <button class="btn btn-danger me-2">Guardar como PDF</button>
+                  <button class="btn btn-success">Guardar como Excel</button>
+              </div>
+          </div>
         </div>
-        
-      
+
 
 
         <!-- Pie de página -->
@@ -511,6 +575,24 @@
 
     <!-- Kaiadmin JS -->
     <script src="assets/js/kaiadmin.min.js"></script>
-    
+    <!-- JavaScript for refreshing the preview and updating the filters -->
+<script>
+  // Function to update the filters in the subtitle and refresh the preview
+  function refreshPreview() {
+      const dni = document.getElementById("dniFilter").value || '-';
+      const name = document.getElementById("nameFilter").value || '-';
+
+      // Update the subtitle with the selected filters
+      document.getElementById("filterSubtitle").textContent = `(DNI: ${dni}, Usuario: ${name})`;
+      
+      // Logic to refresh the preview goes here, for now, it just simulates a refresh
+      console.log("Preview refreshed with filters: DNI:", dni, "Usuario:", name);
+  }
+
+  // Event listener for the 'Generar reporte' button to refresh the preview
+  document.getElementById("generateReportBtn").addEventListener("click", refreshPreview);
+
+
+</script>
   </body>
 </html>
