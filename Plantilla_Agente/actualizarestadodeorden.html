@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Agente - Tabla órdenes</title>
+    <title>Actualizar estado de orden</title>
     <meta
       content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
       name="viewport"
@@ -422,195 +422,111 @@
 
         <!-- Texto o contenido central -->
         <div class="container">
-          <div class="page-inner">
-            <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
-              <div>
-                <h3 class="fw-bold mb-3">Lista de Órdenes</h3>
-                <h6 class="op-7 mb-2">
-                  Utiliza los filtros para buscar y gestionar las órdenes de los usuarios.
-                </h6>
+            <div class="page-inner">
+              <!-- Buttons for controlling order state -->
+              <div class="d-flex justify-content-end mb-3">
+                <button id="next-state" class="btn btn-success me-2">Avanzar estado</button>
+                <button id="cancel-order" class="btn btn-danger">Cancelar orden</button>
               </div>
-            </div>
-        
-            <!-- Filtros -->
-            <div class="row">
-              <div class="col-md-12">
-                <div class="d-flex justify-content-between align-items-center flex-wrap">
-                  <!-- Filtros ya existentes -->
-                  <div class="form-group me-2">
-                    <input type="text" id="filterOrderNumber" class="form-control" placeholder="Número de orden">
-                  </div>
-                  <div class="form-group me-2">
-                    <input type="number" id="filterItemCount" class="form-control" placeholder="Cantidad de items">
-                  </div>
-                  <div class="form-group me-2">
-                    <input type="text" id="filterUserName" class="form-control" placeholder="Nombre del usuario">
-                  </div>
-                  <div class="form-group me-2">
-                    <input type="date" id="filterDate" class="form-control" placeholder="Fecha de actualización">
-                  </div>
-        
-                  <!-- Filtro de Estado del Pedido -->
-                  <div class="form-group me-2">
-                    <select id="filterOrderStatus" class="form-control">
-                      <option value="">Estado del pedido</option>
-                      <option value="Generado">Generado</option>
-                      <option value="En validación">En validación</option>
-                      <option value="En proceso">En proceso</option>
-                      <option value="Arribo al país">Arribo al país</option>
-                      <option value="En aduanas">En aduanas</option>
-                      <option value="En ruta">En ruta</option>
-                      <option value="Recibido">Recibido</option>
-                      <option value="Cancelado">Cancelado</option>
-                    </select>
-                  </div>
-        
-                  <!-- Filtro "Ordenar por" -->
-                  <div class="form-group me-2">
-                    <select id="filterOrderBy" class="form-control">
-                      <option value="">Ordenar por</option>
-                      <option value="todas">Mostrar todas las órdenes</option>
-                      <option value="sinAsignar">Órdenes sin asignar (Generado)</option>
-                      <option value="pendientes">Órdenes pendientes (En validación)</option>
-                      <option value="resueltas">Órdenes resueltas (Recibido o Cancelado)</option>
-                      <option value="enProgreso">Órdenes en progreso</option>
-                    </select>
-                  </div>
-        
-                  <!-- Botones de acciones para filtros -->
-                  <div class="d-flex">
-                    <button id="searchBtn" class="btn btn-primary me-2">Buscar</button>
-                    <button id="clearBtn" class="btn btn-secondary">Limpiar filtros</button>
-                  </div>
+          
+              <!-- TimeLine -->
+              <h3 class="fw-bold mb-3">Estado de la Orden</h3>
+              <div class="row">
+                <div class="col-md-12">
+                  <ul class="timeline">
+                    <!-- Order received -->
+                    <li id="state-8" class="timeline-inverted">
+                      <div class="timeline-badge"><i class="far fa-check-circle"></i></div>
+                      <div class="timeline-panel shadow">
+                        <div class="timeline-heading">
+                          <h4 class="timeline-title">Orden recibida</h4>
+                          <p><small class="text-muted" id="time-8"></small></p>
+                        </div>
+                      </div>
+                    </li>
+                    <!-- Reached destination -->
+                    <li id="state-7">
+                      <div class="timeline-badge"><i class="fas fa-home"></i></div>
+                      <div class="timeline-panel shadow">
+                        <div class="timeline-heading">
+                          <h4 class="timeline-title">Llegó al destino</h4>
+                          <p><small class="text-muted" id="time-7"></small></p>
+                        </div>
+                      </div>
+                    </li>
+                    <!-- Customs cleared -->
+                    <li id="state-6" class="timeline-inverted">
+                      <div class="timeline-badge"><i class="fas fa-flag-checkered"></i></div>
+                      <div class="timeline-panel shadow">
+                        <div class="timeline-heading">
+                          <h4 class="timeline-title">Pasó aduanas</h4>
+                          <p><small class="text-muted" id="time-6"></small></p>
+                        </div>
+                      </div>
+                    </li>
+                    <!-- Arrived in country -->
+                    <li id="state-5">
+                      <div class="timeline-badge"><i class="fas fa-map-marker-alt"></i></div>
+                      <div class="timeline-panel shadow">
+                        <div class="timeline-heading">
+                          <h4 class="timeline-title">Arribo al país</h4>
+                          <p><small class="text-muted" id="time-5"></small></p>
+                        </div>
+                      </div>
+                    </li>
+                    <!-- Order processed -->
+                    <li id="state-4" class="timeline-inverted">
+                      <div class="timeline-badge"><i class="fas fa-cogs"></i></div>
+                      <div class="timeline-panel shadow">
+                        <div class="timeline-heading">
+                          <h4 class="timeline-title">Orden procesada</h4>
+                          <p><small class="text-muted" id="time-4"></small></p>
+                        </div>
+                      </div>
+                    </li>
+                    <!-- Order validated -->
+                    <li id="state-3">
+                      <div class="timeline-badge"><i class="fas fa-check-double"></i></div>
+                      <div class="timeline-panel shadow">
+                        <div class="timeline-heading">
+                          <h4 class="timeline-title">Orden validada</h4>
+                          <p><small class="text-muted" id="time-3"></small></p>
+                        </div>
+                      </div>
+                    </li>
+                    <!-- Order taken by agent -->
+                    <li id="state-2" class="timeline-inverted">
+                      <div class="timeline-badge"><i class="fas fa-user-check"></i></div>
+                      <div class="timeline-panel shadow">
+                        <div class="timeline-heading">
+                          <h4 class="timeline-title">Orden tomada por el agente</h4>
+                          <p><small class="text-muted" id="time-2"></small></p>
+                        </div>
+                      </div>
+                    </li>
+                    <!-- Order created (Always enabled initially) -->
+                    <li id="state-1">
+                      <div class="timeline-badge bg-success"><i class="fas fa-cart-plus"></i></div>
+                      <div class="timeline-panel">
+                        <div class="timeline-heading">
+                          <h4 class="timeline-title">Orden creada</h4>
+                          <p><small class="text-muted" id="time-1">Actualizado: Inmediatamente</small></p>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
                 </div>
               </div>
-            </div>
-        
-            <!-- Tabla -->
-            <div class="row mt-4">
-              <div class="col-md-12">
-                <div class="card">
-                  <div class="card-body">
-                    <div class="table-responsive">
-                      <table id="multi-filter-select" class="display table table-striped table-hover">
-                        <thead>
-                          <tr>
-                            <th>Número de Orden</th>
-                            <th>Cantidad de Items</th>
-                            <th>Nombre del Usuario</th>
-                            <th>Fecha de Última Actualización</th>
-                            <th>Estado del Pedido</th>
-                            <th>Acciones</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td>0001</td>
-                            <td>5</td>
-                            <td>José González</td>
-                            <td>2024-09-01</td>
-                            <td><span class="badge badge-primary">Generado</span></td>
-                            <td>
-                              <div class="dropdown">
-                                <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                  <i class="fas fa-ellipsis-v"></i>
-                                </button>
-                                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
-                                  <li><a class="dropdown-item" href="detalledeordenagente.html">Ver detalles de orden</a></li>
-                                  <li><a class="dropdown-item" href="#">Contactar usuario</a></li>
-                                  <li><a class="dropdown-item" href="actualizarestadodeorden.html">Actualizar estado</a></li>
-                                </ul>
-                              </div>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>0002</td>
-                            <td>3</td>
-                            <td>María Rojas</td>
-                            <td>2024-08-30</td>
-                            <td><span class="badge badge-warning">En validación</span></td>
-                            <td>
-                              <div class="dropdown">
-                                <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
-                                  <i class="fas fa-ellipsis-v"></i>
-                                </button>
-                                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2">
-                                  <li><a class="dropdown-item" href="detalledeordenagente.html">Ver detalles de orden</a></li>
-                                  <li><a class="dropdown-item" href="#">Contactar usuario</a></li>
-                                  <li><a class="dropdown-item" href="actualizarestadodeorden.html">Actualizar estado</a></li>
-                                </ul>
-                              </div>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>0003</td>
-                            <td>8</td>
-                            <td>Carlos Fernández</td>
-                            <td>2024-08-28</td>
-                            <td><span class="badge badge-success">Recibido</span></td>
-                            <td>
-                              <div class="dropdown">
-                                <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton3" data-bs-toggle="dropdown" aria-expanded="false">
-                                  <i class="fas fa-ellipsis-v"></i>
-                                </button>
-                                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton3">
-                                  <li><a class="dropdown-item" href="detalledeordenagente.html">Ver detalles de orden</a></li>
-                                  <li><a class="dropdown-item" href="#">Contactar usuario</a></li>
-                                  <li><a class="dropdown-item" href="actualizarestadodeorden.html">Actualizar estado</a></li>
-                                </ul>
-                              </div>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>0004</td>
-                            <td>2</td>
-                            <td>Lucía Ramírez</td>
-                            <td>2024-08-27</td>
-                            <td><span class="badge badge-info">En proceso</span></td>
-                            <td>
-                              <div class="dropdown">
-                                <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton4" data-bs-toggle="dropdown" aria-expanded="false">
-                                  <i class="fas fa-ellipsis-v"></i>
-                                </button>
-                                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton4">
-                                  <li><a class="dropdown-item" href="detalledeordenagente.html">Ver detalles de orden</a></li>
-                                  <li><a class="dropdown-item" href="#">Contactar usuario</a></li>
-                                  <li><a class="dropdown-item" href="actualizarestadodeorden.html">Actualizar estado</a></li>
-                                </ul>
-                              </div>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>0005</td>
-                            <td>6</td>
-                            <td>Jorge Vargas</td>
-                            <td>2024-08-25</td>
-                            <td><span class="badge badge-danger">En ruta</span></td>
-                            <td>
-                              <div class="dropdown">
-                                <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton5" data-bs-toggle="dropdown" aria-expanded="false">
-                                  <i class="fas fa-ellipsis-v"></i>
-                                </button>
-                                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton5">
-                                  <li><a class="dropdown-item" href="detalledeordenagente.html">Ver detalles de orden</a></li>
-                                  <li><a class="dropdown-item" href="#">Contactar usuario</a></li>
-                                  <li><a class="dropdown-item" href="actualizarestadodeorden.html">Actualizar estado</a></li>
-                                </ul>
-                              </div>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                </div>
+          
+              <!-- Return Button -->
+              <div class="card-action text-center mt-5">
+                <a href="ordenes.html" class="btn btn-primary">Regresar</a>
               </div>
             </div>
           </div>
-        </div>
-        
-        
-        
+          
+          
+          
         <!-- Fin del contenido central -->
 
 
@@ -653,66 +569,58 @@
 
     <!-- Kaiadmin JS -->
     <script src="assets/js/kaiadmin.min.js"></script>
+
     <script>
-      $(document).ready(function() {
-        // Initialize DataTable
-        var table = $('#multi-filter-select').DataTable({
-          paging: true,
-          pageLength: 5,
-          lengthChange: false,
-          info: true,
-          dom: 'tip',
-          initComplete: function() {
-            // Apply the search for all the existing filters
-            this.api().columns().every(function() {
-              var that = this;
-              $('input, select', this.header()).on('keyup change', function() {
-                if (that.search() !== this.value) {
-                  that.search(this.value).draw();
-                }
-              });
-            });
-          }
+        let currentState = 2; // Start at 2 since the first state (Orden creada) is always enabled
+        let isCanceled = false;
+
+        document.getElementById("next-state").addEventListener("click", function() {
+        if (currentState <= 8 && !isCanceled) {
+            const stateElement = document.getElementById(`state-${currentState}`);
+            const timeElement = document.getElementById(`time-${currentState}`);
+            const now = new Date();
+            const formattedTime = now.toLocaleString();
+
+            // Update panel and icon to color (celeste)
+            stateElement.querySelector('.timeline-panel').classList.remove('shadow');
+            stateElement.querySelector('.timeline-badge').style.backgroundColor = 'darkblue';
+            timeElement.textContent = `Actualizado: ${formattedTime}`;
+
+            // Advance to next state
+            currentState++;
+
+            // Disable button after last state
+            if (currentState > 8) {
+            document.getElementById("next-state").disabled = true;
+            }
+        }
         });
 
-        // Search button functionality
-        $('#searchBtn').on('click', function() {
-          // Apply the existing filters
-          table.columns(0).search($('#filterOrderNumber').val());
-          table.columns(1).search($('#filterItemCount').val());
-          table.columns(2).search($('#filterUserName').val());
-          table.columns(3).search($('#filterDate').val());
-          table.columns(4).search($('#filterOrderStatus').val());
+        document.getElementById("cancel-order").addEventListener("click", function() {
+        if (!isCanceled && currentState <= 8) {
+            const stateElement = document.getElementById(`state-${currentState}`);
+            const now = new Date();
+            const formattedTime = now.toLocaleString();
 
-          // Apply filter by "Ordenar por"
-          var orderBy = $('#filterOrderBy').val();
-          if (orderBy === 'sinAsignar') {
-            table.columns(4).search('Generado');
-          } else if (orderBy === 'pendientes') {
-            table.columns(4).search('En validación');
-          } else if (orderBy === 'resueltas') {
-            table.columns(4).search('Recibido|Cancelado', true, false);
-          } else if (orderBy === 'enProgreso') {
-            table.columns(4).search('En proceso|Arribo al país|En aduanas|En ruta', true, false);
-          } else {
-            table.columns(4).search('');
-          }
+            // Add cancel panel and badge
+            const cancelPanel = document.createElement('div');
+            cancelPanel.classList.add('timeline-panel', 'shadow', 'bg-danger', 'text-white');
+            cancelPanel.innerHTML = `
+            <div class="timeline-heading">
+                <h4 class="timeline-title">Orden cancelada</h4>
+                <p><small class="text-muted">Cancelado en: ${formattedTime}</small></p>
+            </div>
+            `;
+            
+            // Append the cancel panel next to the current state
+            stateElement.after(cancelPanel);
 
-          table.draw();
+            // Mark as canceled and disable buttons
+            isCanceled = true;
+            document.getElementById("next-state").disabled = true;
+            document.getElementById("cancel-order").disabled = true;
+        }
         });
-
-        // Clear filters button functionality
-        $('#clearBtn').on('click', function() {
-          $('#filterOrderNumber').val('');
-          $('#filterItemCount').val('');
-          $('#filterUserName').val('');
-          $('#filterDate').val('');
-          $('#filterOrderStatus').val('');
-          $('#filterOrderBy').val('');
-          table.search('').columns().search('').draw();
-        });
-      });
-
 
     </script>
   </body>

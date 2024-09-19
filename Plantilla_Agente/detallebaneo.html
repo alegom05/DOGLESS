@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Agente - Tabla órdenes</title>
+    <title>Detalle de baneo</title>
     <meta
       content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
       name="viewport"
@@ -420,199 +420,56 @@
           <!-- Fin Navbar -->
         </div>
 
-        <!-- Texto o contenido central -->
         <div class="container">
-          <div class="page-inner">
-            <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
-              <div>
-                <h3 class="fw-bold mb-3">Lista de Órdenes</h3>
-                <h6 class="op-7 mb-2">
-                  Utiliza los filtros para buscar y gestionar las órdenes de los usuarios.
-                </h6>
-              </div>
-            </div>
-        
-            <!-- Filtros -->
-            <div class="row">
-              <div class="col-md-12">
-                <div class="d-flex justify-content-between align-items-center flex-wrap">
-                  <!-- Filtros ya existentes -->
-                  <div class="form-group me-2">
-                    <input type="text" id="filterOrderNumber" class="form-control" placeholder="Número de orden">
-                  </div>
-                  <div class="form-group me-2">
-                    <input type="number" id="filterItemCount" class="form-control" placeholder="Cantidad de items">
-                  </div>
-                  <div class="form-group me-2">
-                    <input type="text" id="filterUserName" class="form-control" placeholder="Nombre del usuario">
-                  </div>
-                  <div class="form-group me-2">
-                    <input type="date" id="filterDate" class="form-control" placeholder="Fecha de actualización">
-                  </div>
-        
-                  <!-- Filtro de Estado del Pedido -->
-                  <div class="form-group me-2">
-                    <select id="filterOrderStatus" class="form-control">
-                      <option value="">Estado del pedido</option>
-                      <option value="Generado">Generado</option>
-                      <option value="En validación">En validación</option>
-                      <option value="En proceso">En proceso</option>
-                      <option value="Arribo al país">Arribo al país</option>
-                      <option value="En aduanas">En aduanas</option>
-                      <option value="En ruta">En ruta</option>
-                      <option value="Recibido">Recibido</option>
-                      <option value="Cancelado">Cancelado</option>
-                    </select>
-                  </div>
-        
-                  <!-- Filtro "Ordenar por" -->
-                  <div class="form-group me-2">
-                    <select id="filterOrderBy" class="form-control">
-                      <option value="">Ordenar por</option>
-                      <option value="todas">Mostrar todas las órdenes</option>
-                      <option value="sinAsignar">Órdenes sin asignar (Generado)</option>
-                      <option value="pendientes">Órdenes pendientes (En validación)</option>
-                      <option value="resueltas">Órdenes resueltas (Recibido o Cancelado)</option>
-                      <option value="enProgreso">Órdenes en progreso</option>
-                    </select>
-                  </div>
-        
-                  <!-- Botones de acciones para filtros -->
-                  <div class="d-flex">
-                    <button id="searchBtn" class="btn btn-primary me-2">Buscar</button>
-                    <button id="clearBtn" class="btn btn-secondary">Limpiar filtros</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-        
-            <!-- Tabla -->
-            <div class="row mt-4">
-              <div class="col-md-12">
-                <div class="card">
-                  <div class="card-body">
-                    <div class="table-responsive">
-                      <table id="multi-filter-select" class="display table table-striped table-hover">
-                        <thead>
-                          <tr>
-                            <th>Número de Orden</th>
-                            <th>Cantidad de Items</th>
-                            <th>Nombre del Usuario</th>
-                            <th>Fecha de Última Actualización</th>
-                            <th>Estado del Pedido</th>
-                            <th>Acciones</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td>0001</td>
-                            <td>5</td>
-                            <td>José González</td>
-                            <td>2024-09-01</td>
-                            <td><span class="badge badge-primary">Generado</span></td>
-                            <td>
-                              <div class="dropdown">
-                                <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                  <i class="fas fa-ellipsis-v"></i>
-                                </button>
-                                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
-                                  <li><a class="dropdown-item" href="detalledeordenagente.html">Ver detalles de orden</a></li>
-                                  <li><a class="dropdown-item" href="#">Contactar usuario</a></li>
-                                  <li><a class="dropdown-item" href="actualizarestadodeorden.html">Actualizar estado</a></li>
-                                </ul>
-                              </div>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>0002</td>
-                            <td>3</td>
-                            <td>María Rojas</td>
-                            <td>2024-08-30</td>
-                            <td><span class="badge badge-warning">En validación</span></td>
-                            <td>
-                              <div class="dropdown">
-                                <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
-                                  <i class="fas fa-ellipsis-v"></i>
-                                </button>
-                                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2">
-                                  <li><a class="dropdown-item" href="detalledeordenagente.html">Ver detalles de orden</a></li>
-                                  <li><a class="dropdown-item" href="#">Contactar usuario</a></li>
-                                  <li><a class="dropdown-item" href="actualizarestadodeorden.html">Actualizar estado</a></li>
-                                </ul>
-                              </div>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>0003</td>
-                            <td>8</td>
-                            <td>Carlos Fernández</td>
-                            <td>2024-08-28</td>
-                            <td><span class="badge badge-success">Recibido</span></td>
-                            <td>
-                              <div class="dropdown">
-                                <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton3" data-bs-toggle="dropdown" aria-expanded="false">
-                                  <i class="fas fa-ellipsis-v"></i>
-                                </button>
-                                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton3">
-                                  <li><a class="dropdown-item" href="detalledeordenagente.html">Ver detalles de orden</a></li>
-                                  <li><a class="dropdown-item" href="#">Contactar usuario</a></li>
-                                  <li><a class="dropdown-item" href="actualizarestadodeorden.html">Actualizar estado</a></li>
-                                </ul>
-                              </div>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>0004</td>
-                            <td>2</td>
-                            <td>Lucía Ramírez</td>
-                            <td>2024-08-27</td>
-                            <td><span class="badge badge-info">En proceso</span></td>
-                            <td>
-                              <div class="dropdown">
-                                <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton4" data-bs-toggle="dropdown" aria-expanded="false">
-                                  <i class="fas fa-ellipsis-v"></i>
-                                </button>
-                                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton4">
-                                  <li><a class="dropdown-item" href="detalledeordenagente.html">Ver detalles de orden</a></li>
-                                  <li><a class="dropdown-item" href="#">Contactar usuario</a></li>
-                                  <li><a class="dropdown-item" href="actualizarestadodeorden.html">Actualizar estado</a></li>
-                                </ul>
-                              </div>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>0005</td>
-                            <td>6</td>
-                            <td>Jorge Vargas</td>
-                            <td>2024-08-25</td>
-                            <td><span class="badge badge-danger">En ruta</span></td>
-                            <td>
-                              <div class="dropdown">
-                                <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton5" data-bs-toggle="dropdown" aria-expanded="false">
-                                  <i class="fas fa-ellipsis-v"></i>
-                                </button>
-                                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton5">
-                                  <li><a class="dropdown-item" href="detalledeordenagente.html">Ver detalles de orden</a></li>
-                                  <li><a class="dropdown-item" href="#">Contactar usuario</a></li>
-                                  <li><a class="dropdown-item" href="actualizarestadodeorden.html">Actualizar estado</a></li>
-                                </ul>
-                              </div>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
+            <div class="page-inner">
+                <div class="row justify-content-center">
+                    <div class="col-md-8 col-lg-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-title">Detalle de baneo a usuario</div>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <!-- Detalle de baneo a usuario -->
+                                    <div class="col-md-12">
+                                        <label class="mb-3"><b>Datos </b></label>
+                                        <div class="form-group">
+                                            <label for="username">Nombre de usuario</label>
+                                            <div class="input-icon">
+                                                
+                                                <p class="form-control-static">Juan Pérez</p> <!-- Nombre de ejemplo -->
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="DNI">DNI</label>
+                                            <div class="input-icon">
+                                                
+                                                <p class="form-control-static">12345678</p> <!-- DNI de ejemplo -->
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="exampleFormControlSelect1">Motivo de baneo</label>
+                                            <p class="form-control-static">Incumplimiento de políticas</p> <!-- Motivo de ejemplo -->
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label for="comment">Detalles del caso</label>
+                                            <p class="form-control-static">El usuario realizó comentarios inapropiados en varias publicaciones.</p> <!-- Detalles de ejemplo -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-action text-center">
+                                <button class="btn btn-primary me-2">Regresar</button>
+                                <button class="btn btn-warning ms-2">Confirmar baneo</button>
+                            </div>
+                        </div>
                     </div>
-                  </div>
                 </div>
-              </div>
             </div>
-          </div>
         </div>
         
-        
-        
-        <!-- Fin del contenido central -->
-
+      
 
 
         <!-- Pie de página -->
@@ -653,67 +510,6 @@
 
     <!-- Kaiadmin JS -->
     <script src="assets/js/kaiadmin.min.js"></script>
-    <script>
-      $(document).ready(function() {
-        // Initialize DataTable
-        var table = $('#multi-filter-select').DataTable({
-          paging: true,
-          pageLength: 5,
-          lengthChange: false,
-          info: true,
-          dom: 'tip',
-          initComplete: function() {
-            // Apply the search for all the existing filters
-            this.api().columns().every(function() {
-              var that = this;
-              $('input, select', this.header()).on('keyup change', function() {
-                if (that.search() !== this.value) {
-                  that.search(this.value).draw();
-                }
-              });
-            });
-          }
-        });
-
-        // Search button functionality
-        $('#searchBtn').on('click', function() {
-          // Apply the existing filters
-          table.columns(0).search($('#filterOrderNumber').val());
-          table.columns(1).search($('#filterItemCount').val());
-          table.columns(2).search($('#filterUserName').val());
-          table.columns(3).search($('#filterDate').val());
-          table.columns(4).search($('#filterOrderStatus').val());
-
-          // Apply filter by "Ordenar por"
-          var orderBy = $('#filterOrderBy').val();
-          if (orderBy === 'sinAsignar') {
-            table.columns(4).search('Generado');
-          } else if (orderBy === 'pendientes') {
-            table.columns(4).search('En validación');
-          } else if (orderBy === 'resueltas') {
-            table.columns(4).search('Recibido|Cancelado', true, false);
-          } else if (orderBy === 'enProgreso') {
-            table.columns(4).search('En proceso|Arribo al país|En aduanas|En ruta', true, false);
-          } else {
-            table.columns(4).search('');
-          }
-
-          table.draw();
-        });
-
-        // Clear filters button functionality
-        $('#clearBtn').on('click', function() {
-          $('#filterOrderNumber').val('');
-          $('#filterItemCount').val('');
-          $('#filterUserName').val('');
-          $('#filterDate').val('');
-          $('#filterOrderStatus').val('');
-          $('#filterOrderBy').val('');
-          table.search('').columns().search('').draw();
-        });
-      });
-
-
-    </script>
+    
   </body>
 </html>
