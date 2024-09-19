@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Usuarios baneados</title>
+    <title>Reportes de órdenes</title>
     <meta
       content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
       name="viewport"
@@ -133,7 +133,7 @@
                       </a>
                     </li>
                     <li>
-                      <a href="tables/reportesordenes.html">
+                      <a href="tables/reportesdeordenes.html">
                         <span class="sub-item">Reportes de órdenes</span>
                       </a>
                     </li>
@@ -419,186 +419,76 @@
           </nav>
           <!-- Fin Navbar -->
         </div>
-        
-         <!-- contenido central -->
-          <div class="container">
+        <!--  contenido central -->
+            
+        <div class="container">
             <div class="page-inner">
-              <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
+            <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
                 <div>
-                  <h3 class="fw-bold mb-3">Usuarios baneados</h3>
-                  <h6 class="op-7 mb-2">
-                    Utiliza los filtros para buscar y gestionar los usuarios baneados.
-                  </h6>
+                <h3 class="fw-bold mb-3">Reportes de órdenes</h3>
+                <h6 class="op-7 mb-2">
+                    Desde este sistema usted puede generar, guardar y visualizar reportes de los activos que maneja.
+                </h6>
                 </div>
-              </div>
-
-              <!-- Filtros -->
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="d-flex justify-content-between align-items-center flex-wrap">
-                    <!-- Filtros ya existentes -->
-                    <div class="form-group me-2">
-                      <input type="text" id="filterUserName" class="form-control" placeholder="Nombre del comprador">
-                    </div>
-                    
-                    <div class="form-group me-2">
-                      <input type="date" id="filterDate" class="form-control" placeholder="Fecha de actualización">
-                    </div>
-
-                    <!-- Filtro de DNI -->
-                    <div class="form-group me-2">
-                      <input type="text" id="filterDNI" class="form-control" placeholder="DNI">
-                    </div>
-
-                    <!-- Filtro de Motivo de Baneo -->
-                    <div class="form-group me-2">
-                      <select id="filterUserStatus" class="form-control">
-                        <option value="">Motivo de baneo</option>
-                        <option value="Incumplimiento de políticas">Incumplimiento de políticas</option>
-                        <option value="Uso inadecuado de la plataforma">Uso inadecuado de la plataforma</option>
-                        <option value="Comportamiento ofensivo">Comportamiento ofensivo</option>
-                        <option value="Suplantación de identidad">Suplantación de identidad</option>
-                      </select>
-                    </div>
-
-                    <!-- Botones de acciones para filtros -->
-                    <div class="d-flex">
-                      <button id="searchBtn" class="btn btn-primary me-2">Buscar</button>
-                      <button id="clearBtn" class="btn btn-secondary">Limpiar filtros</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Tabla -->
-              <div class="row mt-4">
-                <div class="col-md-12">
-                  <div class="card">
-                    <div class="card-body">
-                      <div class="table-responsive">
-                        <table id="multi-filter-select" class="display table table-striped table-hover">
-                          <thead>
-                            <tr class="text-center">
-                              <th>#</th>
-                              <th>DNI</th>
-                              <th>Cantidad de órdenes</th>
-                              <th>Nombre del Usuario</th>
-                              <th>Fecha de baneo</th>
-                              <th>Motivo de baneo</th>
-                              <th>Acciones</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr class="text-center">
-                              <td>1</td>
-                              <td>12345678</td>
-                              <td>5</td>
-                              <td>José González</td>
-                              <td>2024-09-01</td>
-                              <td><span class="badge badge-danger">Incumplimiento de políticas</span></td>
-                              <td>
-                                <div class="dropdown">
-                                  <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fas fa-ellipsis-v"></i>
-                                  </button>
-                                  <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
-                                    <li><a class="dropdown-item" href="#">Ver detalles del perfil</a></li>
-                                    <li><a class="dropdown-item" href="detallebaneo.html">Ver detalles de baneo</a></li>
-                                    <li><a class="dropdown-item" href="#">Desbanear usuario</a></li>
-                                  </ul>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr class="text-center">
-                              <td>2</td>
-                              <td>87654321</td>
-                              <td>3</td>
-                              <td>María Rojas</td>
-                              <td>2024-08-30</td>
-                              <td><span class="badge badge-success">Uso inadecuado de la plataforma</span></td>
-                              <td>
-                                <div class="dropdown">
-                                  <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fas fa-ellipsis-v"></i>
-                                  </button>
-                                  <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2">
-                                    <li><a class="dropdown-item" href="#">Ver detalles del perfil</a></li>
-                                    <li><a class="dropdown-item" href="detallebaneo.html">Ver detalles de baneo</a></li>
-                                    <li><a class="dropdown-item" href="#">Desbanear usuario</a></li>
-                                  </ul>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr class="text-center">
-                              <td>3</td>
-                              <td>56789012</td>
-                              <td>8</td>
-                              <td>Carlos Fernández</td>
-                              <td>2024-08-28</td>
-                              <td><span class="badge badge-warning">Comportamiento ofensivo</span></td>
-                              <td>
-                                <div class="dropdown">
-                                  <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton3" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fas fa-ellipsis-v"></i>
-                                  </button>
-                                  <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton3">
-                                    <li><a class="dropdown-item" href="#">Ver detalles del perfil</a></li>
-                                    <li><a class="dropdown-item" href="detallebaneo.html">Ver detalles de baneo</a></li>
-                                    <li><a class="dropdown-item" href="#">Desbanear usuario</a></li>
-                                  </ul>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr class="text-center">
-                              <td>4</td>
-                              <td>65432109</td>
-                              <td>2</td>
-                              <td>Lucía Ramírez</td>
-                              <td>2024-08-27</td>
-                              <td><span class="badge badge-success">Uso inadecuado de la plataforma</span></td>
-                              <td>
-                                <div class="dropdown">
-                                  <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton4" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fas fa-ellipsis-v"></i>
-                                  </button>
-                                  <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton4">
-                                    <li><a class="dropdown-item" href="#">Ver detalles del perfil</a></li>
-                                    <li><a class="dropdown-item" href="detallebaneo.html">Ver detalles de baneo</a></li>
-                                    <li><a class="dropdown-item" href="#">Desbanear usuario</a></li>
-                                  </ul>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr class="text-center">
-                              <td>5</td>
-                              <td>09876543</td>
-                              <td>6</td>
-                              <td>Jorge Vargas</td>
-                              <td>2024-08-25</td>
-                              <td><span class="badge badge-warning">Suplantación de identidad</span></td>
-                              <td>
-                                <div class="dropdown">
-                                  <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton5" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fas fa-ellipsis-v"></i>
-                                  </button>
-                                  <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton5">
-                                    <li><a class="dropdown-item" href="#">Ver detalles del perfil</a></li>
-                                    <li><a class="dropdown-item" href="detallebaneo.html">Ver detalles de baneo</a></li>
-                                    <li><a class="dropdown-item" href="#">Desbanear usuario</a></li>
-                                  </ul>
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
             </div>
-          </div>
- 
+                <!-- Tabla -->
+                <div class="row">
+                    <!-- Botón 1: Órdenes generadas por usuario -->
+                    <a href="reporteporusuario.html" class="col-12 btn btn-light text-start shadow-sm mb-3 py-3" role="button">
+                        <div class="d-flex align-items-center">
+                            <div class="me-3">
+                                <i class="fas fa-user fa-2x"></i> <!-- Icono -->
+                            </div>
+                            <div>
+                                <h5 class="fw-bold">Órdenes generadas por usuario</h5>
+                                <p class="mb-0">Este reporte contiene un listado de todas las órdenes que han sido generadas por un usuario específico.</p>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Botón 2: Total de órdenes en el sistema -->
+                    <a href="reporteordenestotales.html" class="col-12 btn btn-light text-start shadow-sm mb-3 py-3" role="button">
+                        <div class="d-flex align-items-center">
+                            <div class="me-3">
+                                <i class="fas fa-box fa-2x"></i> <!-- Icono -->
+                            </div>
+                            <div>
+                                <h5 class="fw-bold">Total de órdenes en el sistema</h5>
+                                <p class="mb-0">Un reporte que muestra el número total de órdenes registradas en el sistema.</p>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Botón 3: Órdenes por agente asignado en la zona -->
+                    <a href="reporteporagente.html" class="col-12 btn btn-light text-start shadow-sm mb-3 py-3" role="button">
+                        <div class="d-flex align-items-center">
+                            <div class="me-3">
+                                <i class="fas fa-map-marker-alt fa-2x"></i> <!-- Icono -->
+                            </div>
+                            <div>
+                                <h5 class="fw-bold">Órdenes por agente asignado en la zona</h5>
+                                <p class="mb-0">Este reporte presenta las órdenes que están asignadas a cada agente en una zona determinada.</p>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Botón 4: Total de órdenes (filtro de fecha) -->
+                    <a href="reporteporfecha.html" class="col-12 btn btn-light text-start shadow-sm mb-3 py-3" role="button">
+                        <div class="d-flex align-items-center">
+                            <div class="me-3">
+                                <i class="fas fa-calendar-alt fa-2x"></i> <!-- Icono -->
+                            </div>
+                            <div>
+                                <h5 class="fw-bold">Total de órdenes (filtro de fecha)</h5>
+                                <p class="mb-0">Un reporte que permite filtrar y mostrar el total de órdenes generadas en un rango de fechas específico.</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+  
 
 
 
