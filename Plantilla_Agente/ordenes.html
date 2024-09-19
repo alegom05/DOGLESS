@@ -113,7 +113,7 @@
                 </div>
               </li>
               <li class="nav-item">
-                <a href="tables/chats.html">
+                <a href="tables/chat.html">
                   <i class="fas fa-envelope"></i>
                   <p>Chats</p>
                   <span class="badge badge-success">5</span>
@@ -133,7 +133,7 @@
                       </a>
                     </li>
                     <li>
-                      <a href="tables/reportesordenes.html">
+                      <a href="tables/reportesdeordenes.html">
                         <span class="sub-item">Reportes de órdenes</span>
                       </a>
                     </li>
@@ -440,9 +440,7 @@
                   <div class="form-group me-2">
                     <input type="text" id="filterOrderNumber" class="form-control" placeholder="Número de orden">
                   </div>
-                  <div class="form-group me-2">
-                    <input type="number" id="filterItemCount" class="form-control" placeholder="Cantidad de items">
-                  </div>
+                  
                   <div class="form-group me-2">
                     <input type="text" id="filterUserName" class="form-control" placeholder="Nombre del usuario">
                   </div>
@@ -462,6 +460,17 @@
                       <option value="En ruta">En ruta</option>
                       <option value="Recibido">Recibido</option>
                       <option value="Cancelado">Cancelado</option>
+                    </select>
+                  </div>
+
+                  <!-- Filtro de Ordenar por -->
+                  <div class="form-group me-2">
+                    <select id="filterOrderBy" class="form-control">
+                      <option value="">Ordenar por</option>
+                      <option value="sinAsignar">Sin asignar</option>
+                      <option value="pendientes">Pendientes</option>
+                      <option value="resueltas">Resueltas</option>
+                      <option value="enProgreso">En progreso</option>
                     </select>
                   </div>
 
