@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Detalle de orden</title>
+    <meta
+      content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
+      name="viewport"
+    />
+    <link
+      rel="icon"
+      href="assets/img/kaiadmin/logodogless.ico"
+      type="image/x-icon"
+    />
+
+    <!-- Fonts and icons -->
+    <script src="assets/js/plugin/webfont/webfont.min.js"></script>
+    <script>
+      WebFont.load({
+        google: { families: ["Public Sans:300,400,500,600,700"] },
+        custom: {
+          families: [
+            "Font Awesome 5 Solid",
+            "Font Awesome 5 Regular",
+            "Font Awesome 5 Brands",
+            "simple-line-icons",
+          ],
+          urls: ["assets/css/fonts.min.css"],
+        },
+        active: function () {
+          sessionStorage.fonts = true;
+        },
+      });
+    </script>
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="assets/css/plugins.min.css" />
+    <link rel="stylesheet" href="assets/css/kaiadmin.min.css" />
+
+    
+  </head>
+  <body>
+    <div class="wrapper">
+      <!-- Barra lateral -->
+      <div class="sidebar sidebar-style-2" data-background-color="dark">
+        <div class="sidebar-logo">
+          <!-- Logo de cabecera -->
+          <div class="logo-header" data-background-color="dark">
+            <a href="paginaprincipal.html" class="logo">
+              <img
+                src="assets/img/kaiadmin/slogan_white_v3.png"
+                alt="navbar brand"
+                class="navbar-brand"
+                height="50"
+              />
+            </a>
+            <div class="nav-toggle">
+              <button class="btn btn-toggle toggle-sidebar">
+                <i class="gg-menu-right"></i>
+              </button>
+              <button class="btn btn-toggle sidenav-toggler">
+                <i class="gg-menu-left"></i>
+              </button>
+            </div>
+            <button class="topbar-toggler more">
+              <i class="gg-more-vertical-alt"></i>
+            </button>
+          </div>
+          <!-- End Logo cabecera -->
+        </div>
+        <div class="sidebar-wrapper scrollbar scrollbar-inner">
+          <div class="sidebar-content">
+            <ul class="nav nav-secondary">
+              <!-- Barra de navegacion lateral-->
+              <li class="nav-item">
+                <a href="paginaprincipal.html">
+                  <i class="fas fa-home"></i>
+                  <p>Página principal</p>
+                </a>
+              </li> 
+              <li class="nav-item">
+                <a href="dashboard.html">
+                  <i class="fas fa-chart-bar"></i>
+                  <p>Dashboard</p>
+                </a>
+              </li> 
+              <li class="nav-item">
+                <a href="ordenes.html">
+                  <i class="fas fa-boxes"></i>
+                  <p>Órdenes</p>
+                </a>
+              </li> 
+              <li class="nav-item">
+                <a data-bs-toggle="collapse" href="#tables1">
+                  <i class="fas fa-users"></i>
+                  <p>Usuarios</p>
+                  <span class="caret"></span>
+                </a>
+                <div class="collapse" id="tables1">
+                  <ul class="nav nav-collapse">
+                    <li>
+                      <a href="usuarios_asignados.html">
+                        <span class="sub-item">Asignados</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="usuarios_baneados.html">
+                        <span class="sub-item">Baneados</span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+              <li class="nav-item">
+                <a href="tables/chats.html">
+                  <i class="fas fa-envelope"></i>
+                  <p>Chats</p>
+                  <span class="badge badge-success">5</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a data-bs-toggle="collapse" href="#tables2">
+                  <i class="fas fa-file"></i>
+                  <p>Reportes</p>
+                  <span class="caret"></span>
+                </a>
+                <div class="collapse" id="tables2">
+                  <ul class="nav nav-collapse">
+                    <li>
+                      <a href="tables/reportesguardados.html">
+                        <span class="sub-item">Reportes guardados</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="tables/reportesordenes.html">
+                        <span class="sub-item">Reportes de órdenes</span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+    
+              <li class="nav-item">
+                <a href="notificacionesagente.html">
+                  <i class="fas fa-bell"></i>
+                  <p>Notificaciones</p>
+                  <span class="badge badge-secondary">6</span>
+                </a>
+              </li>
+              
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!-- Fin barra lateral -->
+
+      <div class="main-panel">
+        <div class="main-header">
+          <div class="main-header-logo">
+            <!-- Logo Header -->
+            <div class="logo-header" data-background-color="dark">
+              <a href="paginaprincipal.html" class="logo">
+                <img
+                  src="assets/img/kaiadmin/logodogless.svg"
+                  alt="navbar brand"
+                  class="navbar-brand"
+                  height="20"
+                />
+              </a>
+              <div class="nav-toggle">
+                <button class="btn btn-toggle toggle-sidebar">
+                  <i class="gg-menu-right"></i>
+                </button>
+                <button class="btn btn-toggle sidenav-toggler">
+                  <i class="gg-menu-left"></i>
+                </button>
+              </div>
+              <button class="topbar-toggler more">
+                <i class="gg-more-vertical-alt"></i>
+              </button>
+            </div>
+            <!-- End Logo Header -->
+          </div>
+          <!-- Navbar superior -->
+          <nav
+            class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom"
+            data-background-color="dark">
+            <div class="container-fluid">
+              <nav
+                class="navbar navbar-header-left navbar-expand-lg navbar-form nav-search p-0 d-none d-lg-flex"
+              >
+              </nav>
+
+              <ul class="navbar-nav topbar-nav ms-md-auto align-items-center">
+                <li class="nav-item topbar-icon dropdown hidden-caret">
+                  <a
+                    class="nav-link dropdown-toggle"
+                    href="#"
+                    id="messageDropdown"
+                    role="button"
+                    data-bs-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                  >
+                    <i class="fa fa-envelope"></i>
+                  </a>
+                  <ul
+                    class="dropdown-menu messages-notif-box animated fadeIn"
+                    aria-labelledby="messageDropdown"
+                  >
+                    <li>
+                      <div
+                        class="dropdown-title d-flex justify-content-between align-items-center"
+                      >
+                        Mensajes
+                        <a href="#" class="small">Marcar todo como leído</a>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="message-notif-scroll scrollbar-outer">
+                        <div class="notif-center">
+                          <a href="#">
+                            <div class="notif-img">
+                              <img
+                                src="assets/img/jm_denis.jpg"
+                                alt="Img Profile"
+                              />
+                            </div>
+                            <div class="notif-content">
+                              <span class="subject">Jimmy Denis</span>
+                              <span class="block"> Mi orden no llega </span>
+                              <span class="time">hace 5 minutos</span>
+                            </div>
+                          </a>
+                          <a href="#">
+                            <div class="notif-img">
+                              <img
+                                src="assets/img/chadengle.jpg"
+                                alt="Img Profile"
+                              />
+                            </div>
+                            <div class="notif-content">
+                              <span class="subject">Chad</span>
+                              <span class="block"> Gracias por la ayuda </span>
+                              <span class="time">hace 12 minutos</span>
+                            </div>
+                          </a>
+                          <a href="#">
+                            <div class="notif-img">
+                              <img
+                                src="assets/img/mlane.jpg"
+                                alt="Img Profile"
+                              />
+                            </div>
+                            <div class="notif-content">
+                              <span class="subject">Jhon Doe</span>
+                              <span class="block">
+                                Estoy listo para recoger mi orden
+                              </span>
+                              <span class="time">hace 13 minutos</span>
+                            </div>
+                          </a>
+                          <a href="#">
+                            <div class="notif-img">
+                              <img
+                                src="assets/img/talha.jpg"
+                                alt="Img Profile"
+                              />
+                            </div>
+                            <div class="notif-content">
+                              <span class="subject">Talha</span>
+                              <span class="block"> Puede ayudarme? </span>
+                              <span class="time">hace 17 minutos</span>
+                            </div>
+                          </a>
+                        </div>
+                      </div>
+                    </li>
+                    <li>
+                      <a class="see-all" href="tables/chatsagente.html"
+                        >ver todos los mensajes<i class="fa fa-angle-right"></i>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+                <li class="nav-item topbar-icon dropdown hidden-caret">
+                  <a
+                    class="nav-link dropdown-toggle"
+                    href="#"
+                    id="notifDropdown"
+                    role="button"
+                    data-bs-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                  >
+                    <i class="fa fa-bell"></i>
+                    <span class="notification">4</span>
+                  </a>
+                  <ul
+                    class="dropdown-menu notif-box animated fadeIn"
+                    aria-labelledby="notifDropdown"
+                  >
+                    <li>
+                      <div class="dropdown-title">
+                        Tienes 4 nuevas notificaciones
+                      </div>
+                    </li>
+                    <li>
+                      <div class="notif-scroll scrollbar-outer">
+                        <div class="notif-center">
+
+                          <a href="#">
+                            <div class="notif-icon notif-success">
+                              <i class="fa fa-comment"></i>
+                            </div>
+                            <div class="notif-content">
+                              <span class="block">
+                                Robert comentó en una orden
+                              </span>
+                              <span class="time">hace 5 minutos</span>
+                            </div>
+                          </a>
+                          <a href="#">
+                            <div class="notif-icon notif-primary">
+                              <i class="fa fa-boxes"></i>
+                            </div>
+                            <div class="notif-content">
+                              <span class="block">
+                                Nueva orden registrada
+                              </span>
+                              <span class="time">hace 12 minutos</span>
+                            </div>
+                          </a>
+                          <a href="#">
+                            <div class="notif-img">
+                              <img
+                                src="assets/img/profile2.jpg"
+                                alt="Img Profile"
+                              />
+                            </div>
+                            <div class="notif-content">
+                              <span class="block">
+                                Sandro te asignó una orden
+                              </span>
+                              <span class="time">hace 15 minutos</span>
+                            </div>
+                          </a>
+                          <a href="#">
+                            <div class="notif-icon notif-danger">
+                              <i class="fa fa-heart"></i>
+                            </div>
+                            <div class="notif-content">
+                              <span class="block"> Fabricio recibió su orden </span>
+                              <span class="time">hace 17 minutos</span>
+                            </div>
+                          </a>
+                        </div>
+                      </div>
+                    </li>
+                    <li>
+                      <a class="see-all" href="notificacionesagente.html"
+                        >Ver todas las notificaciones<i class="fa fa-angle-right"></i>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+              
+
+                <li class="nav-item topbar-user dropdown hidden-caret">
+                  <a
+                    class="dropdown-toggle profile-pic"
+                    data-bs-toggle="dropdown"
+                    href="#"
+                    aria-expanded="false"
+                  >
+                    <div class="avatar-sm">
+                      <img
+                        src="assets/img/perfil_nilo.jpg"
+                        alt="..."
+                        class="avatar-img rounded-circle"
+                      />
+                    </div>
+                    <span class="profile-username">
+                      <span class="fw-bold">Nilo Cori</span>
+                      <div class="fw-bold">Agente - Zona Norte</div>
+                    </span>
+                  </a>
+                  <ul class="dropdown-menu dropdown-user animated fadeIn">
+                    <div class="dropdown-user-scroll scrollbar-outer">
+                      <li>
+                        <div class="user-box">
+                          <div class="avatar-lg">
+                            <img
+                              src="assets/img/perfil_nilo.jpg"
+                              alt="image profile"
+                              class="avatar-img rounded"
+                            />
+                          </div>
+                          <div class="u-text" style="color: white;">
+                            <h4>Nilo</h4>
+                            <p class="text-info" style="color: white;">nilo.cori@gmail.com</p>
+                            <a href="perfil_agente.html" class="btn btn-xs btn-secondary btn-sm">Ver perfil</a>
+                          </div>
+                          
+                        </div>
+                      </li>
+                      <li>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Ajustes</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Cerrar Sesion</a>
+                      </li>
+                    </div>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </nav>
+          <!-- Fin Navbar -->
+        </div>
+        <div class="container">
+            <div class="page-inner">
+                <div class="row d-flex-center">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-title">Detalle de órden - #56</div>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <!-- Columna de Datos de Envío -->
+                                    <div class="col-md-6 col-lg-6">
+                                        <label class="mb-3"><b>Datos de envío</b></label>
+                                        <div class="form-group">
+                                            <label>Nombre de usuario</label>
+                                            <p>Nilo Cori</p>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Departamento</label>
+                                            <p>Lima</p>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Provincia</label>
+                                            <p>Lima</p>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Distrito</label>
+                                            <p>Miraflores</p>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Código postal</label>
+                                            <p>15074</p>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Dirección</label>
+                                            <p>Av. Pardo 123</p>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Teléfono</label>
+                                            <p>987654321</p>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Correo</label>
+                                            <p>nilo.cori@gmail.com</p>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Comentario adicional </label>
+                                            <p>La dirección está cerca del parque Kennedy, frente a la tienda Ripley.</p> <!-- Información de referencia -->
+                                        </div>
+                                    </div>
+        
+                                    <!-- Columna de Resumen de Compra -->
+                                    <div class="col-md-6 col-lg-6">
+                                        <label class="mb-3"><b>Resumen de compra</b></label>
+                                        <div class="summary-section table-responsive">
+                                            <table class="table table-borderless">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Productos</th>
+                                                        <th>Cantidad</th>
+                                                        <th>Total</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>Celular Samsung S24+</td>
+                                                        <td>12</td>
+                                                        <td>S/.60,569.98</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Notebook Air</td>
+                                                        <td>12</td>
+                                                        <td>S/.96,560.56</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Audífonos Bite</td>
+                                                        <td>24</td>
+                                                        <td>S/.2,500.90</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Costo de envío</td>
+                                                        <td></td>
+                                                        <td>S/.500.99</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <hr>
+                                            <div class="d-flex justify-content-between">
+                                                <p><strong>Subtotal</strong></p>
+                                                <p>S/.159,631.43</p>
+                                            </div>
+                                            <div class="d-flex justify-content-between">
+                                                <p><strong>Total</strong></p>
+                                                <p>S/.160,132.43</p>
+                                            </div>
+                                            <hr>
+                                            <div class="text-center">
+                                                <p><strong>Método de pago:</strong> Pago online</p>
+                                            </div>
+                                        </div>
+        
+                                        <!-- Imágenes de productos -->
+                                        <div class="form-group">
+                                            <label class="form-label">Imágenes de los productos</label>
+                                            <div class="row">
+                                                <div class="col-6 col-sm-4">
+                                                    <label class="imagecheck mb-4">
+                                                        <figure class="imagecheck-figure">
+                                                            <img src="assets/img/examples/product1.jpg" alt="Producto 1" class="imagecheck-image"/>
+                                                        </figure>
+                                                    </label>
+                                                </div>
+                                                <div class="col-6 col-sm-4">
+                                                    <label class="imagecheck mb-4">
+                                                        <figure class="imagecheck-figure">
+                                                            <img src="assets/img/examples/product2.jpg" alt="Producto 2" class="imagecheck-image"/>
+                                                        </figure>
+                                                    </label>
+                                                </div>
+                                                <div class="col-6 col-sm-4">
+                                                    <label class="imagecheck mb-4">
+                                                        <figure class="imagecheck-figure">
+                                                            <img src="assets/img/examples/product3.jpg" alt="Producto 3" class="imagecheck-image"/>
+                                                        </figure>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-action text-center">
+                                <a href="ordenes.html" class="btn btn-primary">Regresar</a>
+                            </div>                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        
+
+
+        <!-- Pie de página -->
+        <footer class="footer">
+          <div class="container-fluid d-flex justify-content-center">
+            <nav class="pull-left">
+              <ul class="nav">
+              
+                <li class="nav-item">
+                  <a class="nav-link" href="ruta/a/informacion-de-contacto.html"> Contacto </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="ruta/a/politica-de-privacidad.html"> Política de privacidad </a>
+                </li>
+              </ul>
+            </nav>
+
+          </div>
+        </footer>
+      </div>
+    </div>
+
+
+
+    <!--Core JS Files   -->
+    <script src="assets/js/core/jquery-3.7.1.min.js"></script>
+    <script src="assets/js/core/popper.min.js"></script>
+    <script src="assets/js/core/bootstrap.min.js"></script>
+
+    <!-- jQuery Scrollbar -->
+    <script src="assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+    <!-- Datatables -->
+    <script src="assets/js/plugin/datatables/datatables.min.js"></script>
+
+    <!-- jQuery Vector Maps -->
+    <script src="assets/js/plugin/jsvectormap/jsvectormap.min.js"></script>
+    <script src="assets/js/plugin/jsvectormap/world.js"></script>
+
+    <!-- Kaiadmin JS -->
+    <script src="assets/js/kaiadmin.min.js"></script>
+    <script>
+        $(document).ready(function() {
+          // Initialize DataTable
+          var table = $('#multi-filter-select').DataTable({
+            paging: true,
+            pageLength: 5,
+            lengthChange: false,
+            info: true,
+            dom: 'tip',
+            initComplete: function() {
+              // Apply the search for all the existing filters
+              this.api().columns().every(function() {
+                var that = this;
+                $('input, select', this.header()).on('keyup change', function() {
+                  if (that.search() !== this.value) {
+                    that.search(this.value).draw();
+                  }
+                });
+              });
+            }
+          });
+  
+          // Search button functionality
+          $('#searchBtn').on('click', function() {
+            // Apply the existing filters
+            table.columns(0).search($('#filterOrderNumber').val());
+            table.columns(1).search($('#filterItemCount').val());
+            table.columns(2).search($('#filterUserName').val());
+            table.columns(3).search($('#filterDate').val());
+            table.columns(4).search($('#filterOrderStatus').val());
+  
+            // Apply filter by "Ordenar por"
+            var orderBy = $('#filterOrderBy').val();
+            if (orderBy === 'sinAsignar') {
+              table.columns(4).search('Generado');
+            } else if (orderBy === 'pendientes') {
+              table.columns(4).search('En validación');
+            } else if (orderBy === 'resueltas') {
+              table.columns(4).search('Recibido|Cancelado', true, false);
+            } else if (orderBy === 'enProgreso') {
+              table.columns(4).search('En proceso|Arribo al país|En aduanas|En ruta', true, false);
+            } else {
+              table.columns(4).search('');
+            }
+  
+            table.draw();
+          });
+  
+          // Clear filters button functionality
+          $('#clearBtn').on('click', function() {
+            $('#filterOrderNumber').val('');
+            $('#filterItemCount').val('');
+            $('#filterUserName').val('');
+            $('#filterDate').val('');
+            $('#filterOrderStatus').val('');
+            $('#filterOrderBy').val('');
+            table.search('').columns().search('').draw();
+          });
+        });
+  
+  
+      </script>
+  </body>
+</html>
