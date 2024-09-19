@@ -8,10 +8,10 @@ import java.io.Serializable;
 @Embeddable
 public class OrderDetailId implements Serializable {
 
-    @Column(name = "OrderID", nullable = false)
+    @Column(name = "orderid", nullable = false)
     private Integer orderID;
 
-    @Column(name = "ProductID", nullable = false)
+    @Column(name = "productid", nullable = false)
     private Integer productID;
 
     public Integer getOrderID() {

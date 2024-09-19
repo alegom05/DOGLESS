@@ -23,7 +23,7 @@ public class Order {
     private Date shippeddate;
 
     @ManyToOne
-    @JoinColumn(name = "ShipVia")
+    @JoinColumn(name = "shipvia")
     private Shipper shipvia;
 
     private Double freight;
