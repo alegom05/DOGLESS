@@ -13,21 +13,21 @@ public class OrderDetails {
 
         @MapsId("orderID")
         @ManyToOne
-        @JoinColumn(name = "OrderID")
+        @JoinColumn(name = "orderid")
         private Order orderID;
 
         @MapsId("productID")
         @ManyToOne
-        @JoinColumn(name = "ProductID")
+        @JoinColumn(name = "productid")
         private Product productID;
 
-        @Column(name = "UnitPrice", nullable = false, precision = 10, scale = 4)
+        @Column(name = "unitprice", nullable = false, precision = 10, scale = 4)
         private BigDecimal unitPrice;
 
-        @Column(name = "Quantity", nullable = false)
+        @Column(name = "quantity", nullable = false)
         private Integer quantity;
 
-        @Column(name = "Discount", nullable = false)
+        @Column(name = "discount", nullable = false)
         private Double discount;
 
         public OrderDetailId getId() {

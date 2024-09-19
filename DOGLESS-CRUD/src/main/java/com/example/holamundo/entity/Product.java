@@ -33,13 +33,13 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="ProductID")
+    @Column(name="productid")
     private int id;
     @ManyToOne
-    @JoinColumn(name = "SupplierID")
+    @JoinColumn(name = "supplierid")
     private Supplier supplier;
     @ManyToOne
-    @JoinColumn(name = "CategoryID")
+    @JoinColumn(name = "categoryid")
     private Category category;
     private String quantityperunit;
 

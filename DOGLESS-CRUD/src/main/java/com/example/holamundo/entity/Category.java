@@ -13,13 +13,13 @@ public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "CategoryID", nullable = false)
+    @Column(name = "categoryID", nullable = false)
     private int id;
 
     @Column(nullable = false)
     private String categoryname;
 
-    @Column(name = "Description")
+    @Column(name = "description")
     private String description;
 
     @Lob

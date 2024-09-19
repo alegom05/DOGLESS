@@ -17,219 +17,219 @@ USE northwind;
 -- Add table "Categories"                                                 #
 -- ---------------------------------------------------------------------- #
 
-CREATE TABLE `Categories` (
-    `CategoryID` INTEGER NOT NULL AUTO_INCREMENT,
-    `CategoryName` VARCHAR(15) NOT NULL,
-    `Description` MEDIUMTEXT,
-    `Picture` LONGBLOB,
-    CONSTRAINT `PK_Categories` PRIMARY KEY (`CategoryID`)
+CREATE TABLE `categories` (
+    `categoryid` INTEGER NOT NULL AUTO_INCREMENT,
+    `categoryname` VARCHAR(15) NOT NULL,
+    `description` MEDIUMTEXT,
+    `picture` LONGBLOB,
+    CONSTRAINT `pk_categories` PRIMARY KEY (`categoryid`)
 );
 
-CREATE INDEX `CategoryName` ON `Categories` (`CategoryName`);
+CREATE INDEX `categoryname` ON `categories` (`categoryname`);
 
 -- ---------------------------------------------------------------------- #
 -- Add table "CustomerCustomerDemo"                                       #
 -- ---------------------------------------------------------------------- #
 
-CREATE TABLE `CustomerCustomerDemo` (
-    `CustomerID` VARCHAR(5) NOT NULL,
-    `CustomerTypeID` VARCHAR(10) NOT NULL,
-    CONSTRAINT `PK_CustomerCustomerDemo` PRIMARY KEY (`CustomerID`, `CustomerTypeID`)
+CREATE TABLE `customercustomerdemo` (
+    `customerid` VARCHAR(5) NOT NULL,
+    `customertypeid` VARCHAR(10) NOT NULL,
+    CONSTRAINT `pk_customercustomerdemo` PRIMARY KEY (`customerid`, `customertypeid`)
 );
 
 -- ---------------------------------------------------------------------- #
 -- Add table "CustomerDemographics"                                       #
 -- ---------------------------------------------------------------------- #
 
-CREATE TABLE `CustomerDemographics` (
-    `CustomerTypeID` VARCHAR(10) NOT NULL,
-    `CustomerDesc` MEDIUMTEXT,
-    CONSTRAINT `PK_CustomerDemographics` PRIMARY KEY (`CustomerTypeID`)
+CREATE TABLE `customerdemographics` (
+    `customertypeid` VARCHAR(10) NOT NULL,
+    `customerdesc` MEDIUMTEXT,
+    CONSTRAINT `pk_customerdemographics` PRIMARY KEY (`customertypeid`)
 );
 
 -- ---------------------------------------------------------------------- #
 -- Add table "Customers"                                                  #
 -- ---------------------------------------------------------------------- #
 
-CREATE TABLE `Customers` (
-    `CustomerID` VARCHAR(5) NOT NULL,
-    `CompanyName` VARCHAR(40) NOT NULL,
-    `ContactName` VARCHAR(30),
-    `ContactTitle` VARCHAR(30),
-    `Address` VARCHAR(60),
-    `City` VARCHAR(15),
-    `Region` VARCHAR(15),
-    `PostalCode` VARCHAR(10),
-    `Country` VARCHAR(15),
-    `Phone` VARCHAR(24),
-    `Fax` VARCHAR(24),
-    CONSTRAINT `PK_Customers` PRIMARY KEY (`CustomerID`)
+CREATE TABLE `customers` (
+    `customerid` VARCHAR(5) NOT NULL,
+    `companyname` VARCHAR(40) NOT NULL,
+    `contactname` VARCHAR(30),
+    `contacttitle` VARCHAR(30),
+    `address` VARCHAR(60),
+    `city` VARCHAR(15),
+    `region` VARCHAR(15),
+    `postalcode` VARCHAR(10),
+    `country` VARCHAR(15),
+    `phone` VARCHAR(24),
+    `fax` VARCHAR(24),
+    CONSTRAINT `pk_customers` PRIMARY KEY (`customerid`)
 );
 
-CREATE INDEX `City` ON `Customers` (`City`);
+CREATE INDEX `city` ON `customers` (`city`);
 
-CREATE INDEX `CompanyName` ON `Customers` (`CompanyName`);
+CREATE INDEX `companyname` ON `customers` (`companyname`);
 
-CREATE INDEX `PostalCode` ON `Customers` (`PostalCode`);
+CREATE INDEX `postalcode` ON `customers` (`postalcode`);
 
-CREATE INDEX `Region` ON `Customers` (`Region`);
+CREATE INDEX `region` ON `customers` (`region`);
 
 -- ---------------------------------------------------------------------- #
 -- Add table "Employees"                                                  #
 -- ---------------------------------------------------------------------- #
 
-CREATE TABLE `Employees` (
-    `EmployeeID` INTEGER NOT NULL AUTO_INCREMENT,
-    `LastName` VARCHAR(20) NOT NULL,
-    `FirstName` VARCHAR(10) NOT NULL,
-    `Title` VARCHAR(30),
-    `TitleOfCourtesy` VARCHAR(25),
-    `BirthDate` DATETIME,
-    `HireDate` DATETIME,
-    `Address` VARCHAR(60),
-    `City` VARCHAR(15),
-    `Region` VARCHAR(15),
-    `PostalCode` VARCHAR(10),
-    `Country` VARCHAR(15),
-    `HomePhone` VARCHAR(24),
-    `Extension` VARCHAR(4),
-    `Photo` LONGBLOB,
-    `Notes` MEDIUMTEXT NOT NULL,
-    `ReportsTo` INTEGER,
-    `PhotoPath` VARCHAR(255),
-     `Salary` FLOAT,
-    CONSTRAINT `PK_Employees` PRIMARY KEY (`EmployeeID`)
+CREATE TABLE `employees` (
+    `employeeid` INTEGER NOT NULL AUTO_INCREMENT,
+    `lastname` VARCHAR(20) NOT NULL,
+    `firstname` VARCHAR(10) NOT NULL,
+    `title` VARCHAR(30),
+    `titleofcourtesy` VARCHAR(25),
+    `birthdate` DATETIME,
+    `hiredate` DATETIME,
+    `address` VARCHAR(60),
+    `city` VARCHAR(15),
+    `region` VARCHAR(15),
+    `postalcode` VARCHAR(10),
+    `country` VARCHAR(15),
+    `homephone` VARCHAR(24),
+    `extension` VARCHAR(4),
+    `photo` LONGBLOB,
+    `notes` MEDIUMTEXT NOT NULL,
+    `reportsto` INTEGER,
+    `photopath` VARCHAR(255),
+     `salary` FLOAT,
+    CONSTRAINT `pk_employees` PRIMARY KEY (`employeeid`)
 );
 
-CREATE INDEX `LastName` ON `Employees` (`LastName`);
+CREATE INDEX `lastname` ON `employees` (`lastname`);
 
-CREATE INDEX `PostalCode` ON `Employees` (`PostalCode`);
+CREATE INDEX `postalcode` ON `employees` (`postalcode`);
 
 -- ---------------------------------------------------------------------- #
 -- Add table "EmployeeTerritories"                                        #
 -- ---------------------------------------------------------------------- #
 
-CREATE TABLE `EmployeeTerritories` (
-    `EmployeeID` INTEGER NOT NULL,
-    `TerritoryID` VARCHAR(20) NOT NULL,
-    CONSTRAINT `PK_EmployeeTerritories` PRIMARY KEY (`EmployeeID`, `TerritoryID`)
+CREATE TABLE `employeeterritories` (
+    `employeeid` INTEGER NOT NULL,
+    `territoryid` VARCHAR(20) NOT NULL,
+    CONSTRAINT `pk_employeeterritories` PRIMARY KEY (`employeeid`, `territoryid`)
 );
 
 -- ---------------------------------------------------------------------- #
 -- Add table "Order Details"                                              #
 -- ---------------------------------------------------------------------- #
 
-CREATE TABLE `Order Details` (
-    `OrderID` INTEGER NOT NULL,
-    `ProductID` INTEGER NOT NULL,
-    `UnitPrice` DECIMAL(10,4) NOT NULL DEFAULT 0,
-    `Quantity` SMALLINT(2) NOT NULL DEFAULT 1,
-    `Discount` REAL(8,0) NOT NULL DEFAULT 0,
-    CONSTRAINT `PK_Order Details` PRIMARY KEY (`OrderID`, `ProductID`)
+CREATE TABLE `order Details` (
+    `orderid` INTEGER NOT NULL,
+    `productid` INTEGER NOT NULL,
+    `unitprice` DECIMAL(10,4) NOT NULL DEFAULT 0,
+    `quantity` SMALLINT(2) NOT NULL DEFAULT 1,
+    `discount` REAL(8,0) NOT NULL DEFAULT 0,
+    CONSTRAINT `PK_Order Details` PRIMARY KEY (`orderid`, `productid`)
 );
 
 -- ---------------------------------------------------------------------- #
 -- Add table "Orders"                                                     #
 -- ---------------------------------------------------------------------- #
 
-CREATE TABLE `Orders` (
-    `OrderID` INTEGER NOT NULL AUTO_INCREMENT,
-    `CustomerID` VARCHAR(5),
-    `EmployeeID` INTEGER,
-    `OrderDate` DATETIME,
-    `RequiredDate` DATETIME,
-    `ShippedDate` DATETIME,
-    `ShipVia` INTEGER,
-    `Freight` DECIMAL(10,4) DEFAULT 0,
-    `ShipName` VARCHAR(40),
-    `ShipAddress` VARCHAR(60),
-    `ShipCity` VARCHAR(15),
-    `ShipRegion` VARCHAR(15),
-    `ShipPostalCode` VARCHAR(10),
-    `ShipCountry` VARCHAR(15),
-    CONSTRAINT `PK_Orders` PRIMARY KEY (`OrderID`)
+CREATE TABLE `orders` (
+    `orderid` INTEGER NOT NULL AUTO_INCREMENT,
+    `customerid` VARCHAR(5),
+    `employeeid` INTEGER,
+    `orderdate` DATETIME,
+    `requireddate` DATETIME,
+    `shippeddate` DATETIME,
+    `shipvia` INTEGER,
+    `freight` DECIMAL(10,4) DEFAULT 0,
+    `shipname` VARCHAR(40),
+    `shipaddress` VARCHAR(60),
+    `shipcity` VARCHAR(15),
+    `shipregion` VARCHAR(15),
+    `shippostalcode` VARCHAR(10),
+    `shipcountry` VARCHAR(15),
+    CONSTRAINT `pk_orders` PRIMARY KEY (`orderid`)
 );
 
-CREATE INDEX `OrderDate` ON `Orders` (`OrderDate`);
+CREATE INDEX `orderdate` ON `orders` (`orderdate`);
 
-CREATE INDEX `ShippedDate` ON `Orders` (`ShippedDate`);
+CREATE INDEX `shippeddate` ON `orders` (`shippeddate`);
 
-CREATE INDEX `ShipPostalCode` ON `Orders` (`ShipPostalCode`);
+CREATE INDEX `shippostalcode` ON `orders` (`shippostalcode`);
 
 -- ---------------------------------------------------------------------- #
 -- Add table "Products"                                                   #
 -- ---------------------------------------------------------------------- #
 
-CREATE TABLE `Products` (
-    `ProductID` INTEGER NOT NULL AUTO_INCREMENT,
-    `ProductName` VARCHAR(40) NOT NULL,
-    `SupplierID` INTEGER,
-    `CategoryID` INTEGER,
-    `QuantityPerUnit` VARCHAR(20),
-    `UnitPrice` DECIMAL(10,4) DEFAULT 0,
-    `UnitsInStock` SMALLINT(2) DEFAULT 0,
-    `UnitsOnOrder` SMALLINT(2) DEFAULT 0,
-    `ReorderLevel` SMALLINT(2) DEFAULT 0,
-    `Discontinued` BIT NOT NULL DEFAULT 0,
-    CONSTRAINT `PK_Products` PRIMARY KEY (`ProductID`)
+CREATE TABLE `products` (
+    `productid` INTEGER NOT NULL AUTO_INCREMENT,
+    `productname` VARCHAR(40) NOT NULL,
+    `supplierid` INTEGER,
+    `categoryid` INTEGER,
+    `quantityperunit` VARCHAR(20),
+    `unitprice` DECIMAL(10,4) DEFAULT 0,
+    `unitsinstock` SMALLINT(2) DEFAULT 0,
+    `unitsonorder` SMALLINT(2) DEFAULT 0,
+    `reorderlevel` SMALLINT(2) DEFAULT 0,
+    `discontinued` BIT NOT NULL DEFAULT 0,
+    CONSTRAINT `pk_products` PRIMARY KEY (`productid`)
 );
 
-CREATE INDEX `ProductName` ON `Products` (`ProductName`);
+CREATE INDEX `productname` ON `products` (`productname`);
 
 -- ---------------------------------------------------------------------- #
 -- Add table "Region"                                                     #
 -- ---------------------------------------------------------------------- #
 
-CREATE TABLE `Region` (
-    `RegionID` INTEGER NOT NULL,
-    `RegionDescription` VARCHAR(50) NOT NULL,
-    CONSTRAINT `PK_Region` PRIMARY KEY (`RegionID`)
+CREATE TABLE `region` (
+    `regionid` INTEGER NOT NULL,
+    `regiondescription` VARCHAR(50) NOT NULL,
+    CONSTRAINT `pk_region` PRIMARY KEY (`regionid`)
 );
 
 -- ---------------------------------------------------------------------- #
 -- Add table "Shippers"                                                   #
 -- ---------------------------------------------------------------------- #
 
-CREATE TABLE `Shippers` (
-    `ShipperID` INTEGER NOT NULL AUTO_INCREMENT,
-    `CompanyName` VARCHAR(40) NOT NULL,
-    `Phone` VARCHAR(24),
-    CONSTRAINT `PK_Shippers` PRIMARY KEY (`ShipperID`)
+CREATE TABLE `shippers` (
+    `shipperid` INTEGER NOT NULL AUTO_INCREMENT,
+    `companyname` VARCHAR(40) NOT NULL,
+    `phone` VARCHAR(24),
+    CONSTRAINT `pk_shippers` PRIMARY KEY (`shipperid`)
 );
 
 -- ---------------------------------------------------------------------- #
 -- Add table "Suppliers"                                                  #
 -- ---------------------------------------------------------------------- #
 
-CREATE TABLE `Suppliers` (
-    `SupplierID` INTEGER NOT NULL AUTO_INCREMENT,
-    `CompanyName` VARCHAR(40) NOT NULL,
-    `ContactName` VARCHAR(30),
-    `ContactTitle` VARCHAR(30),
-    `Address` VARCHAR(60),
-    `City` VARCHAR(15),
-    `Region` VARCHAR(15),
-    `PostalCode` VARCHAR(10),
-    `Country` VARCHAR(15),
-    `Phone` VARCHAR(24),
-    `Fax` VARCHAR(24),
-    `HomePage` MEDIUMTEXT,
-    CONSTRAINT `PK_Suppliers` PRIMARY KEY (`SupplierID`)
+CREATE TABLE `suppliers` (
+    `supplierid` INTEGER NOT NULL AUTO_INCREMENT,
+    `companyname` VARCHAR(40) NOT NULL,
+    `contactname` VARCHAR(30),
+    `contacttitle` VARCHAR(30),
+    `address` VARCHAR(60),
+    `city` VARCHAR(15),
+    `region` VARCHAR(15),
+    `postalcode` VARCHAR(10),
+    `country` VARCHAR(15),
+    `phone` VARCHAR(24),
+    `fax` VARCHAR(24),
+    `homepage` MEDIUMTEXT,
+    CONSTRAINT `pk_suppliers` PRIMARY KEY (`supplierid`)
 );
 
-CREATE INDEX `CompanyName` ON `Suppliers` (`CompanyName`);
+CREATE INDEX `companyname` ON `suppliers` (`companyname`);
 
-CREATE INDEX `PostalCode` ON `Suppliers` (`PostalCode`);
+CREATE INDEX `postalcode` ON `suppliers` (`postalcode`);
 
 -- ---------------------------------------------------------------------- #
 -- Add table "Territories"                                                #
 -- ---------------------------------------------------------------------- #
 
-CREATE TABLE `Territories` (
-    `TerritoryID` VARCHAR(20) NOT NULL,
-    `TerritoryDescription` VARCHAR(50) NOT NULL,
-    `RegionID` INTEGER NOT NULL,
-    CONSTRAINT `PK_Territories` PRIMARY KEY (`TerritoryID`)
+CREATE TABLE `territories` (
+    `territoryid` VARCHAR(20) NOT NULL,
+    `territorydescription` VARCHAR(50) NOT NULL,
+    `regionid` INTEGER NOT NULL,
+    CONSTRAINT `pk_territories` PRIMARY KEY (`territoryid`)
 );
 
 -- ---------------------------------------------------------------------- #
@@ -3912,41 +3912,41 @@ VALUES('98104', 'Seattle', 2);
 -- Foreign key constraints                                                #
 -- ---------------------------------------------------------------------- #
 
-ALTER TABLE `CustomerCustomerDemo` ADD CONSTRAINT `FK_CustomerCustomerDemo` 
-    FOREIGN KEY (`CustomerTypeID`) REFERENCES `CustomerDemographics` (`CustomerTypeID`);
+ALTER TABLE `customercustomerdemo` ADD CONSTRAINT `fk_customercustomerdemo` 
+    FOREIGN KEY (`customertypeid`) REFERENCES `customerdemographics` (`customertypeid`);
 
-ALTER TABLE `CustomerCustomerDemo` ADD CONSTRAINT `FK_CustomerCustomerDemo_Customers` 
-    FOREIGN KEY (`CustomerID`) REFERENCES `Customers` (`CustomerID`);
+ALTER TABLE `customercustomerdemo` ADD CONSTRAINT `fk_customercustomerdemo_customers` 
+    FOREIGN KEY (`customerid`) REFERENCES `customers` (`customerid`);
 
-ALTER TABLE `Employees` ADD CONSTRAINT `FK_Employees_Employees` 
-    FOREIGN KEY (`ReportsTo`) REFERENCES `Employees` (`EmployeeID`);
+ALTER TABLE `employees` ADD CONSTRAINT `fk_employees_employees` 
+    FOREIGN KEY (`reportsto`) REFERENCES `employees` (`employeeid`);
 
-ALTER TABLE `EmployeeTerritories` ADD CONSTRAINT `FK_EmployeeTerritories_Employees` 
-    FOREIGN KEY (`EmployeeID`) REFERENCES `Employees` (`EmployeeID`);
+ALTER TABLE `employeeterritories` ADD CONSTRAINT `fk_employeeterritories_employees` 
+    FOREIGN KEY (`employeeid`) REFERENCES `employees` (`employeeid`);
 
-ALTER TABLE `EmployeeTerritories` ADD CONSTRAINT `FK_EmployeeTerritories_Territories` 
-    FOREIGN KEY (`TerritoryID`) REFERENCES `Territories` (`TerritoryID`);
+ALTER TABLE `employeeterritories` ADD CONSTRAINT `fk_employeeterritories_territories` 
+    FOREIGN KEY (`territoryid`) REFERENCES `territories` (`territoryid`);
 
-ALTER TABLE `Order Details` ADD CONSTRAINT `FK_Order_Details_Orders` 
-    FOREIGN KEY (`OrderID`) REFERENCES `Orders` (`OrderID`);
+ALTER TABLE `Order Details` ADD CONSTRAINT `fk_order_details_orders` 
+    FOREIGN KEY (`orderid`) REFERENCES `orders` (`orderid`);
 
-ALTER TABLE `Order Details` ADD CONSTRAINT `FK_Order_Details_Products` 
-    FOREIGN KEY (`ProductID`) REFERENCES `Products` (`ProductID`);
+ALTER TABLE `Order Details` ADD CONSTRAINT `fk_order_details_products` 
+    FOREIGN KEY (`productid`) REFERENCES `products` (`productid`);
 
-ALTER TABLE `Orders` ADD CONSTRAINT `FK_Orders_Customers` 
-    FOREIGN KEY (`CustomerID`) REFERENCES `Customers` (`CustomerID`);
+ALTER TABLE `orders` ADD CONSTRAINT `fk_orders_customers` 
+    FOREIGN KEY (`customerid`) REFERENCES `customers` (`customerid`);
 
-ALTER TABLE `Orders` ADD CONSTRAINT `FK_Orders_Employees` 
-    FOREIGN KEY (`EmployeeID`) REFERENCES `Employees` (`EmployeeID`);
+ALTER TABLE `orders` ADD CONSTRAINT `fk_orders_employees` 
+    FOREIGN KEY (`employeeid`) REFERENCES `employees` (`employeeid`);
 
-ALTER TABLE `Orders` ADD CONSTRAINT `FK_Orders_Shippers` 
-    FOREIGN KEY (`ShipVia`) REFERENCES `Shippers` (`ShipperID`);
+ALTER TABLE `orders` ADD CONSTRAINT `fk_orders_shippers` 
+    FOREIGN KEY (`shipvia`) REFERENCES `shippers` (`shipperid`);
 
-ALTER TABLE `Products` ADD CONSTRAINT `FK_Products_Categories` 
-    FOREIGN KEY (`CategoryID`) REFERENCES `Categories` (`CategoryID`);
+ALTER TABLE `products` ADD CONSTRAINT `fk_products_categories` 
+    FOREIGN KEY (`categoryid`) REFERENCES `categories` (`categoryid`);
 
-ALTER TABLE `Products` ADD CONSTRAINT `FK_Products_Suppliers` 
-    FOREIGN KEY (`SupplierID`) REFERENCES `Suppliers` (`SupplierID`);
+ALTER TABLE `products` ADD CONSTRAINT `fk_products_suppliers` 
+    FOREIGN KEY (`supplierid`) REFERENCES `suppliers` (`supplierid`);
 
-ALTER TABLE `Territories` ADD CONSTRAINT `FK_Territories_Region` 
-    FOREIGN KEY (`RegionID`) REFERENCES `Region` (`RegionID`);
+ALTER TABLE `territories` ADD CONSTRAINT `fk_territories_region` 
+    FOREIGN KEY (`regionid`) REFERENCES `region` (`regionid`);
