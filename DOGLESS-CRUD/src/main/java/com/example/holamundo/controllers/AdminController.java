@@ -45,7 +45,7 @@ public class AdminController {
     @GetMapping({"/",""})
     public String listaProductos(Model model, @RequestParam(required = false) String zona) {
         model.addAttribute("listaProductos", productRepository.findAll());
-        return "redirect:/admin/paginaprincipal.html";
+        return "forward:/admin/paginaprincipal";
     }
 
     @GetMapping(value = "new")
