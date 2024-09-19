@@ -394,8 +394,8 @@
                             />
                           </div>
                           <div class="u-text">
-                            <h4>Manuel Yarleque</h4>
-                            <p class="text-muted">alonso.correa@gmail.com</p>
+                            <h4>Alonso Guevara</h4>
+                            <p class="text-muted">alonso.guevara@gmail.com</p>
                             <a
                               href="profile.html"
                               class="btn btn-xs btn-secondary btn-sm"
@@ -476,15 +476,16 @@
                                 <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                   <i class="fas fa-ellipsis-v"></i>
                                 </button>
-            
                                 <ul class="dropdown-menu dropdown-menu-primary" aria-labelledby="dropdownMenuButton1">
                                   <li><a class="dropdown-item" href="EditarProducto.html">Ver Solicitud</a></li>
                                   <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#enviarModal">Enviar Solicitud</a></li>
                                   <li><a class="dropdown-item" href="EditarProducto.html">Editar</a></li>
                                   <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#borrarModal">Borrar</a></li>
                                 </ul>
+        
                               </div>
                             </td>
+
                           </tr>
                           <tr>
                             <td>Samsung Galaxy S24</td>
@@ -699,36 +700,7 @@
                       </div>
                       
 
-                      <script>
-                        // Función para cerrar popups
-                        function cerrarPopup(id) {
-                          document.getElementById(id).style.display = 'none';
-                        }
-                        // Funciones para manejar la lógica de los botones
-                        function verRegistro(dni) {
-                          window.location.href = 'verRegistroAgente.html'
-                        }
-                        function crearRegistro(dni) {
-                          window.location.href = `NuevoRegistroAgente.html`; 
-                        }
                       
-
-                      
-                        // Generar dinámicamente los botones de "Acciones" y "Espiar" con JavaScript
-                        document.addEventListener('DOMContentLoaded', function() {
-                          document.querySelectorAll('#basic-datatables tbody tr').forEach(tr => {
-                            const dni = tr.cells[2].textContent; // Obtener el DNI del usuario desde la tercera celda
-                            const accionesTd = document.createElement('td'); // Crear la celda para "Acciones"
-                            accionesTd.className = 'acciones-container'; // Aplicar la clase de estilos
-                            accionesTd.innerHTML = `
-                              <button class="btn btn-info btn-sm" onclick="verRegistro('${dni}')">Ver</button>
-                              <button class="btn btn-warning btn-sm" onclick="crearRegistro('${dni}')">Crear</button>
-                            `;
-                            tr.appendChild(accionesTd); // Añadir la celda de "Acciones" a la fila
-                      
-                          });
-                        });
-                      </script>
                       
                       
                       
@@ -762,6 +734,7 @@
     <script src="../assets/js/kaiadmin.min.js"></script>
     <!-- Kaiadmin DEMO methods, don't include it in your project! -->
     <script src="../assets/js/setting-demo2.js"></script>
+
     <script>
       $(document).ready(function () {
         $("#basic-datatables").DataTable({});
@@ -819,5 +792,6 @@
         });
       });
     </script>
+
   </body>
 </html>

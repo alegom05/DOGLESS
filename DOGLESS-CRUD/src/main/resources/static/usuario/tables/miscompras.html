@@ -75,70 +75,43 @@
         <div class="sidebar-wrapper scrollbar scrollbar-inner">
           <div class="sidebar-content">
             <ul class="nav nav-secondary">
-             <!-- Barra de navegacion -->
+           <!-- Barra de navegacion -->
             
-             <li class="nav-item">
-              <a href="../paginaprincipal.html">
-                <i class="fas fa-home"></i>
-                <p>Pagina Principal</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="../dashboard.html">
-                <i class="fas fa-home"></i>
-                <p>Dashboard</p>
-              </a>
-            </li>              
-            <li class="nav-item">
-              <a href="ordenes.html">
-                <i class="fas fa-home"></i>
-                <p>Órdenes</p>
-              </a>
-            </li>  
-            <li class="nav-item">
-              <a data-bs-toggle="collapse" href="#tables1">
-                <i class="fas fa-users"></i>
-                <p>Usuarios</p>
-                <span class="caret"></span>
-              </a>
-              <div class="collapse" id="tables1">
-                <ul class="nav nav-collapse">
-                  <li>
-                    <a href="usuariosasignados.html">
-                      <span class="sub-item">Asignados</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="usuariosbaneados.html">
-                      <span class="sub-item">Baneados</span>
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            </li>
-            <li class="nav-item">
-              <a href="chats.html">
-                <i class="fas fa-home"></i>
-                <p>Chats</p>
-              </a>
-            </li> 
-            <li class="nav-item">
-              <a href="reportes.html">
-                <i class="far fa-chart-bar"></i>
-                <p>Reportes</p>
-              </a>
-            </li>   
-            <li class="nav-item">
-              <a href="soporte.html">
-                <i class="far fa-chart-bar"></i>
-                <p>Soporte</p>
-              </a>
-            </li> 
-          </ul>
-        </div>
+           <li class="nav-item">
+            <a href="paginaprincipal.html">
+              <i class="fas fa-home"></i>
+              <p>Pagina Principal</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="tables/tienda.html">
+              <i class="fas fa-shopping-cart"></i>
+              <p>Tienda</p>
+            </a>
+          </li>              
+          <li class="nav-item">
+            <a href="tables/miscompras.html">
+              <i class="fas fa-shopping-bag"></i>
+              <p>Mis compras</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="tables/guia.html">
+              <i class="fas fa-question-circle"></i>
+              <p>Guía de usuario</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="tables/libro.html">
+              <i class="fas fa-book"></i>
+              <p>Libro de reclamaciones</p>
+            </a>
+          </li>
+        </ul>
       </div>
     </div>
-    <!-- End Sidebar -->
+  </div>
+  <!-- End Sidebar -->
       <!-- Sidebar -->
       <div class="main-panel">
         <div class="main-header">
@@ -171,7 +144,18 @@
           <nav class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom" data-background-color="light-blue2">
             <div class="container-fluid">
               <nav class="navbar navbar-header-left navbar-expand-lg navbar-form nav-search p-0 d-none d-lg-flex">
-
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <button type="submit" class="btn btn-search pe-1">
+                      <i class="fa fa-search search-icon"></i>
+                    </button>
+                  </div>
+                  <input
+                    type="text"
+                    placeholder="Buscar ..."
+                    class="form-control"
+                  />
+                </div>
               </nav>
 
               <ul class="navbar-nav topbar-nav ms-md-auto align-items-center">
@@ -434,210 +418,55 @@
           <div class="page-inner">
             <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
              <div>
-              <h3 class="fw-bold mb-3">Lista de Órdenes</h3>
+              <h3 class="fw-bold mb-3">Mis compras</h3>
               <h6 class="op-7 mb-2">En las tablas encontrarás las identidades de los Agentes. Navega entre las páginas para explorar más información de cada uno.</h6>
              </div>
             </div>
-            <div class="row">
-              <div class="col-md-12">
-                <div class="card">
 
-                  <div class="card-body">
-                    <button
-                    class="btn btn-primary btn-round ms-auto"
-                    onclick="window.location.href='NuevoRegistroAgente.html';"
-            >
-              <i class="fa fa-plus"></i>
-              Agregar Producto
-            </button>
-                    <div class="table-responsive">
-
-                      
-                      <table id="basic-datatables" class="display table table-striped table-hover">
-                        <thead>
-                          <tr>
-                            <th>Nombre</th>
-                            <th>Apellido</th>
-                            <th>RUC</th>
-                            <th>Correo Electrónico</th>
-                            <th>Código de Aduanas</th>
-                            <th>Acciones</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td>José</td>
-                            <td>González</td>
-                            <td>412345678</td>
-                            <td>jose.gonzalez@gmail.com</td>
-                            <td>1001</td>
-                            <td>                                <div class="dropdown">
-                              <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fas fa-ellipsis-v"></i>
-                              </button>
-                              <!-- Dropdown oscuro -->
-                              <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
-                                <li><a class="dropdown-item" href="ver_ordenes.html">Ver</a></li>
-                              </ul>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>María</td>
-                            <td>Rojas</td>
-                            <td>23456789</td>
-                            <td>maria.rojas@gmail.com</td>
-                            <td>1002</td>
-                            <td>                                <div class="dropdown">
-                              <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fas fa-ellipsis-v"></i>
-                              </button>
-                              <!-- Dropdown oscuro -->
-                              <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
-                                <li><a class="dropdown-item" href="ver_ordenes.html">Ver</a></li>
-                              </ul>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>Carlos</td>
-                            <td>Fernández</td>
-                            <td>834567890</td>
-                            <td>carlos.fernandez@gmail.com</td>
-                            <td>1003</td>
-                            <td>                                <div class="dropdown">
-                              <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fas fa-ellipsis-v"></i>
-                              </button>
-                              <!-- Dropdown oscuro -->
-                              <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
-                                <li><a class="dropdown-item" href="ver_ordenes.html">Ver</a></li>
-                              </ul>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>Lucía</td>
-                            <td>Ramírez</td>
-                            <td>745678901</td>
-                            <td>lucia.ramirez@gmail.com</td>
-                            <td>1004</td>
-                            <td>                                <div class="dropdown">
-                              <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fas fa-ellipsis-v"></i>
-                              </button>
-                              <!-- Dropdown oscuro -->
-                              <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
-                                <li><a class="dropdown-item" href="ver_ordenes.html">Ver</a></li>
-                              </ul>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>Jorge</td>
-                            <td>Vargas</td>
-                            <td>456789012</td>
-                            <td>jorge.vargas@gmail.com</td>
-                            <td>1005</td>
-                            <td>                                <div class="dropdown">
-                              <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fas fa-ellipsis-v"></i>
-                              </button>
-                              <!-- Dropdown oscuro -->
-                              <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
-                                <li><a class="dropdown-item" href="verRegistroAgente.html">Ver</a></li>
-                              </ul>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>Ana</td>
-                            <td>Medina</td>
-                            <td>867890123</td>
-                            <td>ana.medina@gmail.com</td>
-                            <td>1006</td>
-                            <td>                                <div class="dropdown">
-                              <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fas fa-ellipsis-v"></i>
-                              </button>
-                              <!-- Dropdown oscuro -->
-                              <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
-                                <li><a class="dropdown-item" href="ver_ordenes.html">Ver</a></li>
-                              </ul>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>Ricardo</td>
-                            <td>Sánchez</td>
-                            <td>378901234</td>
-                            <td>ricardo.sanchez@gmail.com</td>
-                            <td>1007</td>
-                            <td>                                <div class="dropdown">
-                              <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fas fa-ellipsis-v"></i>
-                              </button>
-                              <!-- Dropdown oscuro -->
-                              <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
-                                <li><a class="dropdown-item" href="verRegistroAgente.html">Ver</a></li>
-                              </ul>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>Elena</td>
-                            <td>Torres</td>
-                            <td>589012345</td>
-                            <td>elena.torres@gmail.com</td>
-                            <td>1008</td>
-                            <td>                                <div class="dropdown">
-                              <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fas fa-ellipsis-v"></i>
-                              </button>
-                              <!-- Dropdown oscuro -->
-                              <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
-                                <li><a class="dropdown-item" href="verRegistroAgente.html">Ver</a></li>
-                              </ul>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>Fernando</td>
-                            <td>Pérez</td>
-                            <td>490123456</td>
-                            <td>fernando.perez@gmail.com</td>
-                            <td>1009</td>
-                            <td>                                <div class="dropdown">
-                              <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fas fa-ellipsis-v"></i>
-                              </button>
-                              <!-- Dropdown oscuro -->
-                              <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
-                                <li><a class="dropdown-item" href="verRegistroAgente.html">Ver</a></li>
-                              </ul>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>Sofía</td>
-                            <td>Castro</td>
-                            <td>301234567</td>
-                            <td>sofia.castro@gmail.com</td>
-                            <td>1010</td>
-                            <td>                                <div class="dropdown">
-                              <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fas fa-ellipsis-v"></i>
-                              </button>
-                              <!-- Dropdown oscuro -->
-                              <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
-                                <li><a class="dropdown-item" href="verRegistroAgente.html">Ver</a></li>
-                              </ul>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                      
-                      
-                      
-                      
+            <table id="basic-datatables" class="display table table-striped table-hover">
+              <thead>
+                <tr>
+                  <th>N° orden</th>
+                  <th>Imagen</th>
+                  <th>Producto</th>
+                  <th>Precio (S/.)</th>
+                  <th>Cantidad</th>
+                  <th>Fecha de orden</th>
+                  <th>Fecha de entrega</th>
+                  <th>Estado</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>153449</td>
+                  <td><img src="../Plantilla_Admin/assets/img/productos/PS4.png" alt="Producto más vendido" style="width:50px; height:50px;"></td>
+                  <td>Sony PS4</td>
+                  <td>1499</td>
+                  <td>12</td>
+                  <td>12/08/24</td>
+                  <td>24/08/24</td>
+                  <td>En proceso</td>
+                  <td>
+                    <!-- Dropdown con ícono -->
+                    <div class="dropdown">
+                      <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-ellipsis-v"></i>
+                      </button>
+                      <!-- Dropdown oscuro -->
+                      <ul class="dropdown-menu dropdown-menu-primary" aria-labelledby="dropdownMenuButton1">
+                        <li><a class="dropdown-item" href="VerProducto.html">Solicitar reembolso</a></li>
+                        <li><a class="dropdown-item" href="EditarProducto.html">Calificar producto</a></li>
+                        <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#denegarModal">Descargar boleta</a></li>
+                      </ul>
                     </div>
-         
-                  </div>
-                </div>
-              </div>
+                  </td>
+                </tr>
 
-            </div>
+              </tbody>
+            </table>
+
+
           </div>
         </div>
 
