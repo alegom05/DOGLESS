@@ -4,8 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="792986cf-32e3-467b-b09c-b28a7784e137" name="Changes" comment="vista usuarios asignados y baneados">
+    <list default="true" id="792986cf-32e3-467b-b09c-b28a7784e137" name="Changes" comment="vista chat y reporte">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plantilla_Agente/chat.html" beforeDir="false" afterPath="$PROJECT_DIR$/Plantilla_Agente/chat.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plantilla_Agente/dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/Plantilla_Agente/dashboard.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plantilla_Agente/ordenes.html" beforeDir="false" afterPath="$PROJECT_DIR$/Plantilla_Agente/ordenes.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plantilla_Agente/paginaprincipal.html" beforeDir="false" afterPath="$PROJECT_DIR$/Plantilla_Agente/paginaprincipal.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plantilla_Agente/usuarios_asignados.html" beforeDir="false" afterPath="$PROJECT_DIR$/Plantilla_Agente/usuarios_asignados.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Plantilla_Agente/usuarios_baneados.html" beforeDir="false" afterPath="$PROJECT_DIR$/Plantilla_Agente/usuarios_baneados.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -69,7 +74,7 @@
       <workItem from="1726244936334" duration="168000" />
       <workItem from="1726269992898" duration="9081000" />
       <workItem from="1726546005742" duration="8260000" />
-      <workItem from="1726713043274" duration="5576000" />
+      <workItem from="1726713043274" duration="5764000" />
     </task>
     <task id="LOCAL-00001" summary="vista usuarios asignados y baneados">
       <option name="closed" value="true" />
@@ -79,7 +84,15 @@
       <option name="project" value="LOCAL" />
       <updated>1726715838203</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="vista chat y reporte">
+      <option name="closed" value="true" />
+      <created>1726783093099</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1726783093099</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -87,6 +100,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="vista usuarios asignados y baneados" />
-    <option name="LAST_COMMIT_MESSAGE" value="vista usuarios asignados y baneados" />
+    <MESSAGE value="vista chat y reporte" />
+    <option name="LAST_COMMIT_MESSAGE" value="vista chat y reporte" />
   </component>
 </project>
