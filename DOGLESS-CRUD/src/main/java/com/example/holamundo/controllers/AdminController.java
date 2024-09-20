@@ -22,7 +22,7 @@ public class AdminController {
 
     @GetMapping({"lista",""})
     public String listaUsuarios(Model model, @RequestParam(required = false) String zona) {
-        model.addAttribute("listaProductos", usuarioRepository.findAll());
+        model.addAttribute("listaUsuarios", usuarioRepository.findAll());
         return "usuario/list";
     }
 

@@ -27,7 +27,7 @@
                 <td th:text="${usuario.apellido}"></td>
                 <td th:text="${usuario.dni}"></td>
                 <td th:text="${usuario.correo}"></td>
-                <td th:text="${usuario.distrito}"></td>
+                <td th:text="${usuario.distrito.distrito}"></td>
                 <td><a class="btn btn-primary"
                        th:href="@{'/usuario/edit' + '?id=' + ${usuario.id}}">Editar</a>
                 </td>
