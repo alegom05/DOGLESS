@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-@Entity
+@Entity (name="distritos")
 @Getter
 @Setter
 public class Distrito {
@@ -13,7 +13,8 @@ public class Distrito {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer iddistritos;
 
-    private String nombre;
+    @Column (name="nombre")
+    private String distrito;
 
     @ManyToOne
     @JoinColumn(name = "idzonas")

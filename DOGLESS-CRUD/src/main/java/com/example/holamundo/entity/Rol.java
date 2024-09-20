@@ -1,9 +1,6 @@
 package com.example.holamundo.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,6 +13,7 @@ public class Rol {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idroles;
 
-    private String nombre;
+    @Column (name="nombre")
+    private String rol;
 
 }
