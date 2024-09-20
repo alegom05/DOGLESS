@@ -1,31 +1,38 @@
-package com.example.holamundo.controllers;
+package com.example.holamundo.controllers2;
 
-import com.example.holamundo.Repository.UsuarioRepository;
-
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.holamundo.repository2.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping({"admin",""})
-public class AdminController {
-
-    /*@GetMapping("/")
-    @ResponseBody
-    public String unaPersona() {
-        return "olapaola5";
-    }*/
-    @Autowired
-    UsuarioRepository usuarioRepository;
+@RequestMapping("/zonal")
+public class ZonalController {
 
 
-    @GetMapping({"lista",""})
-    public String listaUsuarios(Model model, @RequestParam(required = false) String zona) {
-        model.addAttribute("listaProductos", usuarioRepository.findAll());
-        return "usuario/list";
+    final ShipperRepository shipperRepository;
+    final CategoryRepository categoryRepository;
+    final ProductRepository productRepository;
+    final SupplierRepository supplierRepository;
+    final OrderDetailsRepository orderDetailsRepository;
+
+    public ZonalController(ProductRepository productRepository,
+                           CategoryRepository categoryRepository,
+                           SupplierRepository supplierRepository,
+                           OrderDetailsRepository orderDetailsRepository,
+                           ShipperRepository shipperRepository) {
+        this.productRepository = productRepository;
+        this.categoryRepository = categoryRepository;
+        this.supplierRepository = supplierRepository;
+        this.orderDetailsRepository = orderDetailsRepository;
+        this.shipperRepository = shipperRepository;
     }
 
+    @GetMapping({"/",""})
+    public String zonalPrincipal(Model model, @RequestParam(required = false) String zona) {
+        model.addAttribute("listaProductos", productRepository.findAll());
+        return "redirect:/zonal/paginaprincipal.html";
+    }
     /*
     @GetMapping(value = "new")
     public String nuevoProductoFrm(Model model, @ModelAttribute("product") Product product) {
@@ -112,8 +119,8 @@ public class AdminController {
 
     }
 
-    */
 
+    */
 
 
 }

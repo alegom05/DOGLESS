@@ -1,32 +1,53 @@
-package com.example.holamundo.controllers;
+package com.example.holamundo.controllers2;
 
-import com.example.holamundo.Repository.UsuarioRepository;
-
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.holamundo.entity2.Category;
+import com.example.holamundo.entity2.OrderDetails;
+import com.example.holamundo.entity2.Product;
+import com.example.holamundo.entity2.Supplier;
+import com.example.holamundo.repository2.*;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.List;
+import java.util.Optional;
 
 @Controller
-@RequestMapping({"admin",""})
-public class AdminController {
+@RequestMapping("/product2")
+public class ProductController2 {
 
     /*@GetMapping("/")
     @ResponseBody
     public String unaPersona() {
         return "olapaola5";
     }*/
-    @Autowired
-    UsuarioRepository usuarioRepository;
+    final ShipperRepository shipperRepository;
+    final CategoryRepository categoryRepository;
+    final ProductRepository productRepository;
+    final SupplierRepository supplierRepository;
+    final OrderDetailsRepository orderDetailsRepository;
 
-
-    @GetMapping({"lista",""})
-    public String listaUsuarios(Model model, @RequestParam(required = false) String zona) {
-        model.addAttribute("listaProductos", usuarioRepository.findAll());
-        return "usuario/list";
+    public ProductController2(ProductRepository productRepository,
+                              CategoryRepository categoryRepository,
+                              SupplierRepository supplierRepository,
+                              OrderDetailsRepository orderDetailsRepository,
+                              ShipperRepository shipperRepository) {
+        this.productRepository = productRepository;
+        this.categoryRepository = categoryRepository;
+        this.supplierRepository = supplierRepository;
+        this.orderDetailsRepository = orderDetailsRepository;
+        this.shipperRepository = shipperRepository;
     }
 
-    /*
+    @GetMapping({"/",""})
+    public String listaProductos(Model model, @RequestParam(required = false) String zona) {
+        model.addAttribute("listaProductos", productRepository.findAll());
+        return "product/list";
+    }
+
     @GetMapping(value = "new")
     public String nuevoProductoFrm(Model model, @ModelAttribute("product") Product product) {
         List<Category> listaCategorias = categoryRepository.findAll();
@@ -112,7 +133,7 @@ public class AdminController {
 
     }
 
-    */
+
 
 
 
