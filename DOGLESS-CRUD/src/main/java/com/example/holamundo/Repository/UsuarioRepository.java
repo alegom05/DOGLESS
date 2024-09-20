@@ -13,7 +13,7 @@ import java.util.List;
 
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer>{
-    @Query(nativeQuery = true, value = "select * from shippers where idroles like %?1%")
+    @Query(nativeQuery = true, value = "select * from usuarios where idroles like %?1%")
     List<Usuario> findByRol(Integer idRol);
 
 

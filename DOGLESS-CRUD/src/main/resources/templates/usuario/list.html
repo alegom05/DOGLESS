@@ -21,6 +21,63 @@
             </tr>
             </thead>
             <tbody>
+            <tr th:each="usuario, info : ${listaZonales}">
+                <td th:text="${info.index + 1}"></td>
+                <td th:text="${usuario.nombre}"></td>
+                <td th:text="${usuario.apellido}"></td>
+                <td th:text="${usuario.dni}"></td>
+                <td th:text="${usuario.correo}"></td>
+                <td th:text="${usuario.distrito.distrito}"></td>
+                <td><a class="btn btn-primary"
+                       th:href="@{'/usuario/edit' + '?id=' + ${usuario.id}}">Editar</a>
+                </td>
+                <td><a class="btn btn-danger"
+                       th:href="@{'/usuario/delete' + '?id=' + ${usuario.id}}">Borrar</a>
+                </td>
+            </tr>
+            </tbody>
+
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Dni</th>
+                <th>Correo</th>
+                <th>Distrito</th>
+                <th></th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="usuario, info : ${listaAgentes}">
+                <td th:text="${info.index + 1}"></td>
+                <td th:text="${usuario.nombre}"></td>
+                <td th:text="${usuario.apellido}"></td>
+                <td th:text="${usuario.dni}"></td>
+                <td th:text="${usuario.correo}"></td>
+                <td th:text="${usuario.distrito.distrito}"></td>
+                <td><a class="btn btn-primary"
+                       th:href="@{'/usuario/edit' + '?id=' + ${usuario.id}}">Editar</a>
+                </td>
+                <td><a class="btn btn-danger"
+                       th:href="@{'/usuario/delete' + '?id=' + ${usuario.id}}">Borrar</a>
+                </td>
+            </tr>
+            </tbody>
+
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Dni</th>
+                <th>Correo</th>
+                <th>Distrito</th>
+                <th></th>
+                <th></th>
+            </tr>
+            </thead>
             <tr th:each="usuario, info : ${listaUsuarios}">
                 <td th:text="${info.index + 1}"></td>
                 <td th:text="${usuario.nombre}"></td>

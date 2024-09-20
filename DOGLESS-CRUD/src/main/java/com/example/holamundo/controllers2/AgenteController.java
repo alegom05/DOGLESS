@@ -33,6 +33,7 @@ public class AgenteController {
     @GetMapping({"/",""})
     public String usuarioPrincipal(Model model, @RequestParam(required = false) String zona) {
         model.addAttribute("listaProductos", productRepository.findAll());
+
         return "redirect:/agente/paginaprincipal.html";
     }
     /*
