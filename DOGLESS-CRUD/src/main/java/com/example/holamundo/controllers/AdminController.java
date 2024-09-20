@@ -26,7 +26,8 @@ public class AdminController {
         model.addAttribute("listaAgentes", usuarioRepository.findByRol(3));
         model.addAttribute("listaZonales", usuarioRepository.findByRol(2));
 
-        return "usuario/list";
+        return "admin/paginaprincipal";
+//        return "usuario/list";
     }
 
     /*

@@ -4,15 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="792986cf-32e3-467b-b09c-b28a7784e137" name="Changes" comment="vista chat y reporte">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plantilla_Agente/chat.html" beforeDir="false" afterPath="$PROJECT_DIR$/Plantilla_Agente/chat.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plantilla_Agente/dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/Plantilla_Agente/dashboard.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plantilla_Agente/ordenes.html" beforeDir="false" afterPath="$PROJECT_DIR$/Plantilla_Agente/ordenes.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plantilla_Agente/paginaprincipal.html" beforeDir="false" afterPath="$PROJECT_DIR$/Plantilla_Agente/paginaprincipal.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plantilla_Agente/usuarios_asignados.html" beforeDir="false" afterPath="$PROJECT_DIR$/Plantilla_Agente/usuarios_asignados.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plantilla_Agente/usuarios_baneados.html" beforeDir="false" afterPath="$PROJECT_DIR$/Plantilla_Agente/usuarios_baneados.html" afterDir="false" />
-    </list>
+    <list default="true" id="792986cf-32e3-467b-b09c-b28a7784e137" name="Changes" comment="vista chat y reporte" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -32,22 +24,23 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/damian/DOGLESS&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/LENOVO/Documents/Github/dogless/DOGLESS/DOGLESS-CRUD",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RunManager">
     <configuration default="true" type="JetRunConfigurationType">
       <module name="DOGLESS" />
@@ -63,6 +56,14 @@
       </method>
     </configuration>
   </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9f38398b9061-18abd8497189-intellij.indexing.shared.core-IU-241.14494.240" />
+        <option value="bundled-js-predefined-1d06a55b98c1-74d2a5396914-JavaScript-IU-241.14494.240" />
+      </set>
+    </attachedChunks>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -75,6 +76,7 @@
       <workItem from="1726269992898" duration="9081000" />
       <workItem from="1726546005742" duration="8260000" />
       <workItem from="1726713043274" duration="5764000" />
+      <workItem from="1726872494967" duration="1025000" />
     </task>
     <task id="LOCAL-00001" summary="vista usuarios asignados y baneados">
       <option name="closed" value="true" />
