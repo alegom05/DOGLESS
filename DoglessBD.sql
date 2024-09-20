@@ -29,22 +29,22 @@ INSERT INTO `dogless`.`zonas` (`idzonas`, `nombre`) VALUES
 
 
 -- -----------------------------------------------------
--- Table `dogless`.`adminzonasles`
+-- Table `dogless`.`adminzonales`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `dogless`.`adminzonasles` (
-  `idadminzonasleses` INT NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS `dogless`.`adminzonales` (
+  `idadminzonaleses` INT NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(45) NULL DEFAULT NULL,
   `apellido` VARCHAR(45) NULL DEFAULT NULL,
   `dni` VARCHAR(8) NULL DEFAULT NULL,
   `telefono` VARCHAR(9) NULL DEFAULT NULL,
   `email` VARCHAR(45) NULL DEFAULT NULL,
   `contraseña` VARCHAR(45) NOT NULL,
-  `id_zonas` INT NOT NULL,
+  `idzonas` INT NOT NULL,
   `contraseña_temp` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`idadminzonasleses`),
-  INDEX `fk_adminzonasles_zonas1_idx` (`id_zonas` ASC) VISIBLE,
-  CONSTRAINT `fk_adminzonasles_zonas1`
-    FOREIGN KEY (`id_zonas`)
+  PRIMARY KEY (`idadminzonaleses`),
+  INDEX `fk_adminzonales_zonas1_idx` (`idzonas` ASC) VISIBLE,
+  CONSTRAINT `fk_adminzonales_zonas1`
+    FOREIGN KEY (`idzonas`)
     REFERENCES `dogless`.`zonas` (`idzonas`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
@@ -68,19 +68,19 @@ INSERT INTO `dogless`.`roles` (`idroles`, `nombre`) VALUES
 -- Table `dogless`.`distritos`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `dogless`.`distritos` (
-  `iddistrito` INT NOT NULL,
+  `iddistritos` INT NOT NULL,
   `nombre` VARCHAR(45) NULL DEFAULT NULL,
-  `id_zonas` INT NOT NULL,
-  PRIMARY KEY (`iddistrito`),
-  INDEX `fk_distritos_zonas1_idx` (`id_zonas` ASC) VISIBLE,
+  `idzonas` INT NOT NULL,
+  PRIMARY KEY (`iddistritos`),
+  INDEX `fk_distritos_zonas1_idx` (`idzonas` ASC) VISIBLE,
   CONSTRAINT `fk_distritos_zonas1`
-    FOREIGN KEY (`id_zonas`)
+    FOREIGN KEY (`idzonas`)
     REFERENCES `dogless`.`zonas` (`idzonas`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB DEFAULT CHARACTER SET = utf8mb3;
 -- Insertar datos en la tabla `distritos`
-INSERT INTO `dogless`.`distritos` (`iddistrito`, `nombre`, `id_zonas`) VALUES
+INSERT INTO `dogless`.`distritos` (`iddistritos`, `nombre`, `idzonas`) VALUES
 -- zonas Norte
 (1, 'Ancon', 1),
 (2, 'Santa Rosa', 1),
@@ -144,68 +144,68 @@ CREATE TABLE IF NOT EXISTS `dogless`.`usuarios` (
   `contraseña` VARCHAR(45) NULL,
   `telefono` VARCHAR(45) NULL,
   `direccion` VARCHAR(45) NULL,
-  `idrol` INT NOT NULL,
+  `idroles` INT NOT NULL,
   `iddistritos` INT NOT NULL,
-  `idadminzonasles` INT NULL,
+  `idadminzonales` INT NULL,
   `estado` ENUM('activo', 'inactivo', 'baneado') NULL,
   `ruc` VARCHAR(11) NULL,
   `codigoaduana` VARCHAR(45) NULL,
   `razonsocial` VARCHAR(45) NULL,
   `codigojurisdiccion` VARCHAR(45) NULL,
-  `id_zonas` INT NOT NULL,
+  `idzonas` INT NOT NULL,
   PRIMARY KEY (`idusuarios`),
-  INDEX `idrol_idx` (`idrol` ASC) VISIBLE,
-  INDEX `iddistrito_idx` (`iddistritos` ASC) VISIBLE,
-  INDEX `idadminzonasles_idx` (`idadminzonasles` ASC) VISIBLE,
-  INDEX `fk_usuarios_zonas1_idx` (`id_zonas` ASC) VISIBLE,
-  CONSTRAINT `idrol`
-    FOREIGN KEY (`idrol`)
+  INDEX `idroles_idx` (`idroles` ASC) VISIBLE,
+  INDEX `iddistritos_idx` (`iddistritos` ASC) VISIBLE,
+  INDEX `idadminzonales_idx` (`idadminzonales` ASC) VISIBLE,
+  INDEX `fk_usuarios_zonas1_idx` (`idzonas` ASC) VISIBLE,
+  CONSTRAINT `idroles`
+    FOREIGN KEY (`idroles`)
     REFERENCES `dogless`.`roles` (`idroles`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `iddistritos`
     FOREIGN KEY (`iddistritos`)
-    REFERENCES `dogless`.`distritos` (`iddistrito`)
+    REFERENCES `dogless`.`distritos` (`iddistritos`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `idadminzonasles`
-    FOREIGN KEY (`idadminzonasles`)
-    REFERENCES `dogless`.`adminzonasles` (`idadminzonasleses`)
+  CONSTRAINT `idadminzonales`
+    FOREIGN KEY (`idadminzonales`)
+    REFERENCES `dogless`.`adminzonales` (`idadminzonaleses`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_usuarios_zonas1`
-    FOREIGN KEY (`id_zonas`)
+    FOREIGN KEY (`idzonas`)
     REFERENCES `dogless`.`zonas` (`idzonas`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 -- 1. Super Administradores (ID rol = 1)
-INSERT INTO `dogless`.`usuarios` (`idusuarios`, `nombre`, `apellido`, `dni`, `correo`, `contraseña`, `telefono`, `direccion`, `idrol`, `iddistritos`, `idadminzonasles`, `estado`, `ruc`, `codigoaduana`, `razonsocial`, `codigojurisdiccion`, `id_zonas`)
+INSERT INTO `dogless`.`usuarios` (`idusuarios`, `nombre`, `apellido`, `dni`, `correo`, `contraseña`, `telefono`, `direccion`, `idroles`, `iddistritos`, `idadminzonales`, `estado`, `ruc`, `codigoaduana`, `razonsocial`, `codigojurisdiccion`, `idzonas`)
 VALUES 
 (1, 'Fernando', 'Pérez', '11223344', 'fernando.perez@dogless.com', 'adminpass123', '987654321', NULL, 1, 1, 0, 'activo', NULL, NULL, NULL, NULL, 1),
 (2, 'Luisa', 'Gómez', '22334455', 'luisa.gomez@dogless.com', 'jefepass456', '987654322', NULL, 1, 1, 0, 'activo', NULL, NULL, NULL, NULL, 1);
 
-INSERT INTO `dogless`.`usuarios` (`idusuarios`, `nombre`, `apellido`, `dni`, `correo`, `contraseña`, `telefono`, `direccion`, `idrol`, `iddistritos`, `idadminzonasles`, `estado`, `ruc`, `codigoaduana`, `razonsocial`, `codigojurisdiccion`, `id_zonas`)
+INSERT INTO `dogless`.`usuarios` (`idusuarios`, `nombre`, `apellido`, `dni`, `correo`, `contraseña`, `telefono`, `direccion`, `idroles`, `iddistritos`, `idadminzonales`, `estado`, `ruc`, `codigoaduana`, `razonsocial`, `codigojurisdiccion`, `idzonas`)
 VALUES
--- zonas Norte (Administradores zonasles ID 1 y 2)
+-- zonas Norte (Administradores zonales ID 1 y 2)
 (3, 'Juan', 'Pérez', '12345678', 'juan.perez@norte.com', 'password123', '987654321', 'Calle Norte 101', 2, 1, 1, 'activo', NULL, NULL, NULL, NULL, 1),
 (4, 'María', 'Gómez', '23456789', 'maria.gomez@norte.com', 'password456', '987654322', 'Calle Norte 102', 2, 2, 2, 'activo', NULL, NULL, NULL, NULL, 1),
 
--- zonas Sur (Administradores zonasles ID 3 y 4)
+-- zonas Sur (Administradores zonales ID 3 y 4)
 (5, 'Carlos', 'Ramírez', '34567890', 'carlos.ramirez@sur.com', 'password789', '987654323', 'Av. Sur 101', 2, 9, 3, 'activo', NULL, NULL, NULL, NULL, 2),
 (6, 'Luisa', 'Fernández', '45678901', 'luisa.fernandez@sur.com', 'password101', '987654324', 'Av. Sur 102', 2, 10, 4, 'activo', NULL, NULL, NULL, NULL, 2),
 
--- zonas Este (Administradores zonasles ID 5 y 6)
+-- zonas Este (Administradores zonales ID 5 y 6)
 (7, 'Ricardo', 'López', '56789012', 'ricardo.lopez@este.com', 'password202', '987654325', 'Calle Este 101', 2, 19, 5, 'activo', NULL, NULL, NULL, NULL, 3),
 (8, 'Ana', 'Martínez', '67890123', 'ana.martinez@este.com', 'password303', '987654326', 'Av. Este 102', 2, 20, 6, 'activo', NULL, NULL, NULL, NULL, 3),
 
--- zonas Oeste (Administradores zonasles ID 7 y 8)
+-- zonas Oeste (Administradores zonales ID 7 y 8)
 (9, 'Pedro', 'Sánchez', '78901234', 'pedro.sanchez@oeste.com', 'password404', '987654327', 'Calle Oeste 101', 2, 26, 7, 'activo', NULL, NULL, NULL, NULL, 4),
 (10, 'Gabriela', 'Navarro', '89012345', 'gabriela.navarro@oeste.com', 'password1112', '987654328', 'Av. Oeste 102', 2, 27, 8, 'activo', NULL, NULL, NULL, NULL, 4);
 
--- Agentes zonas Norte (Admin zonasl 1Y 2)
-INSERT INTO `dogless`.`usuarios` (`idusuarios`, `nombre`, `apellido`, `dni`, `correo`, `contraseña`, `telefono`, `direccion`, `idrol`, `iddistritos`, `idadminzonasles`, `estado`, `ruc`, `codigoaduana`, `razonsocial`, `codigojurisdiccion`, `id_zonas`)
+-- Agentes zonas Norte (Admin zonas 1Y 2)
+INSERT INTO `dogless`.`usuarios` (`idusuarios`, `nombre`, `apellido`, `dni`, `correo`, `contraseña`, `telefono`, `direccion`, `idroles`, `iddistritos`, `idadminzonales`, `estado`, `ruc`, `codigoaduana`, `razonsocial`, `codigojurisdiccion`, `idzonas`)
 VALUES
 (11, 'Jorge', 'Ramírez', '33445566', 'jorge.ramirez@norte.com', 'agenteNpass123', '987654323', 'Calle Norte 123', 2, 1, 1, 'activo', '12345678901', 'ADU001', 'Agente Norte', 'JUR001', 1),
 (12, 'Rosa', 'Soto', '44556677', 'rosa.soto@norte.com', 'agenteNpass456', '987654324', 'Av. Norte 456', 2, 2, 1, 'activo', '10987654321', 'ADU002', 'Agente Norte', 'JUR002', 1),
@@ -214,8 +214,8 @@ VALUES
 (15, 'Carlos', 'Rivas', '77889900', 'carlos.rivas@norte.com', 'agenteNpass345', '987654327', 'Calle Norte 345', 2, 5, 2, 'activo', '10987654324', 'ADU005', 'Agente Norte', 'JUR005', 1),
 (16, 'Patricia', 'Flores', '88990011', 'patricia.flores@norte.com', 'agenteNpass678', '987654328', 'Av. Norte 678', 2, 6, 2, 'activo', '10987654325', 'ADU006', 'Agente Norte', 'JUR006', 1);
 
--- Agentes zonas Sur (Admin zonasl 3 Y 4)
-INSERT INTO `dogless`.`usuarios` (`idusuarios`, `nombre`, `apellido`, `dni`, `correo`, `contraseña`, `telefono`, `direccion`, `idrol`, `iddistritos`, `idadminzonasles`, `estado`, `ruc`, `codigoaduana`, `razonsocial`, `codigojurisdiccion`, `id_zonas`)
+-- Agentes zonas Sur (Admin zonas 3 Y 4)
+INSERT INTO `dogless`.`usuarios` (`idusuarios`, `nombre`, `apellido`, `dni`, `correo`, `contraseña`, `telefono`, `direccion`, `idroles`, `iddistritos`, `idadminzonales`, `estado`, `ruc`, `codigoaduana`, `razonsocial`, `codigojurisdiccion`, `idzonas`)
 VALUES
 (17, 'Laura', 'Martínez', '99001122', 'laura.martinez@sur.com', 'agenteSpass123', '987654329', 'Calle Sur 123', 2, 9, 3, 'activo', '12345678902', 'ADU007', 'Agente Sur', 'JUR007', 2),
 (18, 'Andrés', 'Pérez', '11002233', 'andres.perez@sur.com', 'agenteSpass456', '987654330', 'Av. Sur 456', 2, 10, 3, 'activo', '10987654326', 'ADU008', 'Agente Sur', 'JUR008', 2),
@@ -225,8 +225,8 @@ VALUES
 (22, 'Pablo', 'Cruz', '55006677', 'pablo.cruz@sur.com', 'agenteSpass678', '987654334', 'Av. Sur 678', 2, 14, 4, 'activo', '10987654330', 'ADU012', 'Agente Sur', 'JUR012', 2);
 
 
--- Agentes zonas Este (Admin zonasl 5 y 6)
-INSERT INTO `dogless`.`usuarios` (`idusuarios`, `nombre`, `apellido`, `dni`, `correo`, `contraseña`, `telefono`, `direccion`, `idrol`, `iddistritos`, `idadminzonasles`, `estado`, `ruc`, `codigoaduana`, `razonsocial`, `codigojurisdiccion`, `id_zonas`)
+-- Agentes zonas Este (Admin zonas 5 y 6)
+INSERT INTO `dogless`.`usuarios` (`idusuarios`, `nombre`, `apellido`, `dni`, `correo`, `contraseña`, `telefono`, `direccion`, `idroles`, `iddistritos`, `idadminzonales`, `estado`, `ruc`, `codigoaduana`, `razonsocial`, `codigojurisdiccion`, `idzonas`)
 VALUES
 (23, 'Martín', 'Hernández', '66007788', 'martin.hernandez@este.com', 'agenteEpass123', '987654335', 'Calle Este 123', 2, 19, 5, 'activo', '12345678903', 'ADU013', 'Agente Este', 'JUR013', 3),
 (24, 'Verónica', 'Díaz', '77008899', 'veronica.diaz@este.com', 'agenteEpass456', '987654336', 'Av. Este 456', 2, 20, 5, 'activo', '10987654331', 'ADU014', 'Agente Este', 'JUR014', 3),
@@ -235,8 +235,8 @@ VALUES
 (27, 'Tomás', 'Fernández', '11002233', 'tomas.fernandez@este.com', 'agenteEpass345', '987654339', 'Calle Este 345', 2, 23, 6, 'activo', '10987654334', 'ADU017', 'Agente Este', 'JUR017', 3),
 (28, 'Raquel', 'Paredes', '12003344', 'raquel.paredes@este.com', 'agenteEpass678', '987654340', 'Av. Este 678', 2, 24, 6, 'activo', '10987654335', 'ADU018', 'Agente Este', 'JUR018', 3);
 
--- Agentes zonas Oeste (Admin zonasl 7  y 8)
-INSERT INTO `dogless`.`usuarios` (`idusuarios`, `nombre`, `apellido`, `dni`, `correo`, `contraseña`, `telefono`, `direccion`, `idrol`, `iddistritos`, `idadminzonasles`, `estado`, `ruc`, `codigoaduana`, `razonsocial`, `codigojurisdiccion`, `id_zonas`)
+-- Agentes zonas Oeste (Admin zonas 7  y 8)
+INSERT INTO `dogless`.`usuarios` (`idusuarios`, `nombre`, `apellido`, `dni`, `correo`, `contraseña`, `telefono`, `direccion`, `idroles`, `iddistritos`, `idadminzonales`, `estado`, `ruc`, `codigoaduana`, `razonsocial`, `codigojurisdiccion`, `idzonas`)
 VALUES
 (29, 'Raúl', 'González', '13004455', 'raul.gonzalez@oeste.com', 'agenteWpass123', '987654341', 'Calle Oeste 123', 2, 26, 7, 'activo', '12345678904', 'ADU019', 'Agente Oeste', 'JUR019', 4),
 (30, 'Diana', 'Campos', '14005566', 'diana.campos@oeste.com', 'agenteWpass456', '987654342', 'Av. Oeste 456', 2, 27, 7, 'activo', '10987654336', 'ADU020', 'Agente Oeste', 'JUR020', 4),
@@ -246,7 +246,7 @@ VALUES
 (34, 'Alejandra', 'Ramos', '18009900', 'alejandra.ramos@oeste.com', 'agenteWpass678', '987654346', 'Av. Oeste 678', 2, 31, 8, 'activo', '10987654340', 'ADU024', 'Agente Oeste', 'JUR024', 4);
 
 -- Usuarios Finales 
-INSERT INTO `dogless`.`usuarios` (`idusuarios`, `nombre`, `apellido`, `dni`, `correo`, `contraseña`, `telefono`, `direccion`, `idrol`, `iddistritos`, `idadminzonasles`, `estado`, `ruc`, `codigoaduana`, `razonsocial`, `codigojurisdiccion`, `id_zonas`)
+INSERT INTO `dogless`.`usuarios` (`idusuarios`, `nombre`, `apellido`, `dni`, `correo`, `contraseña`, `telefono`, `direccion`, `idroles`, `iddistritos`, `idadminzonales`, `estado`, `ruc`, `codigoaduana`, `razonsocial`, `codigojurisdiccion`, `idzonas`)
 VALUES
 (35, 'Laura', 'Suárez', '22334455', 'laura.suarez@norte.com', 'userFpass1!', '987654347', 'Calle Norte 1', 3, 1, NULL, 'activo', NULL, NULL, NULL, NULL, 1),
 (36, 'Javier', 'Ortiz', '33445566', 'javier.ortiz@norte.com', 'userFpass2#$', '987654348', 'Calle Norte 2', 3, 2, NULL, 'activo', NULL, NULL, NULL, NULL, 1),
@@ -524,53 +524,53 @@ VALUES
 CREATE TABLE IF NOT EXISTS `dogless`.`stockproductos` (
   `productoid` INT NOT NULL,
   `cantidad` INT NULL,
-  `id_zonas` INT NOT NULL,
+  `idzonas` INT NOT NULL,
   INDEX `productoid_idx` (`productoid` ASC) VISIBLE,
-  INDEX `fk_stockproductos_zonas1_idx` (`id_zonas` ASC) VISIBLE,
+  INDEX `fk_stockproductos_zonas1_idx` (`idzonas` ASC) VISIBLE,
   CONSTRAINT `productoid`
     FOREIGN KEY (`productoid`)
     REFERENCES `dogless`.`productos` (`idproductos`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_stockproductos_zonas1`
-    FOREIGN KEY (`id_zonas`)
+    FOREIGN KEY (`idzonas`)
     REFERENCES `dogless`.`zonas` (`idzonas`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 -- Insertar datos en la tabla `stockproductos`
 INSERT INTO `dogless`.`stockproductos` 
-(`productoid`, `cantidad`, `id_zonas`)
+(`productoid`, `cantidad`, `idzonas`)
 VALUES
 -- Stock para la zonas Norte (ID zonas 1)
-(1, 50, 1), -- 50 unidades de Smartphone X en la zonas Norte
-(2, 30, 1), -- 30 unidades de Laptop Y en la zonas Norte
-(3, 100, 1), -- 100 unidades de Auriculares Z en la zonas Norte
-(4, 15, 1), -- 15 unidades de Cámara Fotográfica en la zonas Norte
-(5, 40, 1), -- 40 unidades de Tablet W en la zonas Norte
-(6, 10, 1), -- 10 unidades de Impresora 3D en la zonas Norte
+(1, 50, 1), -- 50 unidades de Smartphone X en la zona Norte
+(2, 30, 1), -- 30 unidades de Laptop Y en la zona Norte
+(3, 100, 1), -- 100 unidades de Auriculares Z en la zona Norte
+(4, 15, 1), -- 15 unidades de Cámara Fotográfica en la zona Norte
+(5, 40, 1), -- 40 unidades de Tablet W en la zona Norte
+(6, 10, 1), -- 10 unidades de Impresora 3D en la zona Norte
 
 -- Stock para la zonas Sur (ID zonas 2)
-(1, 40, 2), -- 40 unidades de Smartphone X en la zonas Sur
-(2, 25, 2), -- 25 unidades de Laptop Y en la zonas Sur
-(3, 90, 2), -- 90 unidades de Auriculares Z en la zonas Sur
-(7, 20, 2), -- 20 unidades de Drone Pro en la zonas Sur
-(8, 35, 2), -- 35 unidades de Consola de Videojuegos en la zonas Sur
+(1, 40, 2), -- 40 unidades de Smartphone X en la zona Sur
+(2, 25, 2), -- 25 unidades de Laptop Y en la zona Sur
+(3, 90, 2), -- 90 unidades de Auriculares Z en la zona Sur
+(7, 20, 2), -- 20 unidades de Drone Pro en la zona Sur
+(8, 35, 2), -- 35 unidades de Consola de Videojuegos en la zona Sur
 
 -- Stock para la zonas Este (ID zonas 3)
-(1, 60, 3), -- 60 unidades de Smartphone X en la zonas Este
-(4, 10, 3), -- 10 unidades de Cámara Fotográfica en la zonas Este
-(5, 50, 3), -- 50 unidades de Tablet W en la zonas Este
-(6, 5, 3),  -- 5 unidades de Impresora 3D en la zonas Este
-(9, 70, 3), -- 70 unidades de Reloj Inteligente en la zonas Este
-(10, 80, 3), -- 80 unidades de Teclado Mecánico en la zonas Este
+(1, 60, 3), -- 60 unidades de Smartphone X en la zona Este
+(4, 10, 3), -- 10 unidades de Cámara Fotográfica en la zona Este
+(5, 50, 3), -- 50 unidades de Tablet W en la zona Este
+(6, 5, 3),  -- 5 unidades de Impresora 3D en la zona Este
+(9, 70, 3), -- 70 unidades de Reloj Inteligente en la zona Este
+(10, 80, 3), -- 80 unidades de Teclado Mecánico en la zona Este
 
 -- Stock para la zonas Oeste (ID zonas 4)
-(2, 20, 4), -- 20 unidades de Laptop Y en la zonas Oeste
-(3, 120, 4), -- 120 unidades de Auriculares Z en la zonas Oeste
-(7, 15, 4), -- 15 unidades de Drone Pro en la zonas Oeste
-(9, 50, 4), -- 50 unidades de Reloj Inteligente en la zonas Oeste
-(10, 65, 4); -- 65 unidades de Teclado Mecánico en la zonas Oeste
+(2, 20, 4), -- 20 unidades de Laptop Y en la zona Oeste
+(3, 120, 4), -- 120 unidades de Auriculares Z en la zona Oeste
+(7, 15, 4), -- 15 unidades de Drone Pro en la zona Oeste
+(9, 50, 4), -- 50 unidades de Reloj Inteligente en la zona Oeste
+(10, 65, 4); -- 65 unidades de Teclado Mecánico en la zona Oeste
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;

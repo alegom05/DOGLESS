@@ -29,7 +29,7 @@ public class Usuario {
 
     private Integer idadminzonales;
 
-    private Integer estado;
+    private String estado;
     private String ruc;
     private String codigoaduana;
     private String razonsocial;
