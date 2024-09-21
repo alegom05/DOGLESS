@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
+import java.util.Date;
+
 @Entity (name="usuarios")
 @Getter
 @Setter
@@ -35,5 +38,8 @@ public class Usuario {
     private String codigoaduana;
     private String razonsocial;
     private String codigojurisdiccion;
-    private Integer idzonas;
+    @ManyToOne
+    @JoinColumn(name = "idzonas")
+    private Zona zona;
+    private String fechanacimiento;
 }

@@ -14,6 +14,7 @@
       type="image/x-icon"
     />
     <link href="../assets/css/style-SuperAdmin.css" rel="stylesheet">
+    <link th:href="@{/admin/assets/css/style-SuperAdmin.css}" rel="stylesheet">
 
     <!-- Fonts and icons -->
     <script src="../assets/js/plugin/webfont/webfont.min.js"></script>
@@ -510,137 +511,101 @@
                 <div class="card">
 
                   <div class="card-body">
-                    <form class="needs-validation" style="width: 100%; margin-left: 0%; margin-top: 3%;" action="adminzonales.html" method="POST" novalidate>
+                    <form class="needs-validation" style="width: 100%; margin-left: 0%; margin-top: 3%;" th:action="@{/admin/guardar}" method="POST" novalidate>
                       <div class="container">
-                         <div class="row">
-                                                  <div class="col-md-12">
-                                                      <div class="card">
-                                                          <div class="card-body">
-                                                              <form class="needs-validation" style="width: 100%; margin-left: 0%; margin-top: 3%;" action="adminzonales.html" method="POST" novalidate>
-                                                                  <div class="container">
-                                                                      <div class="row">
-                                                                          <div class="col">
-                                                                              <div class="mb-3">
-                                                                                  <label for="dni" class="form-label">DNI: (*)</label>
-                                                                                  <input type="text" name="dni" id="dni" class="form-control" value="" pattern="[0-9]{8}" placeholder="Ej: 77040283">
-                                                                                  <div class="invalid-feedback">Por favor ingresar DNI.</div>
-                                                                              </div>
-                                                                          </div>
-                                                                          <div class="col">
-                                                                              <div class="mb-3">
-                                                                                  <label for="telefono" class="form-label">Teléfono: (*)</label>
-                                                                                  <input type="text" name="telefono" id="telefono" class="form-control" value="" pattern="[0-9]{9}" placeholder="Ej: 984134144">
-                                                                                  <div class="invalid-feedback">Por favor ingresar teléfono(s).</div>
-                                                                              </div>
-                                                                          </div>
-                                                                      </div>
-                                      
-                                                                      <div class="row">
-                                                                          <div class="col">
-                                                                              <div class="mb-3">
-                                                                                  <label for="nombre" class="form-label">Nombre: (*)</label>
-                                                                                  <input type="text" name="nombre" id="nombre" class="form-control" value="" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+" placeholder="Ej: Epifanio">
-                                                                                  <div class="invalid-feedback">Por favor ingresar nombre(s).</div>
-                                                                              </div>
-                                                                          </div>
-                                                                          <div class="col">
-                                                                              <div class="mb-3">
-                                                                                  <label for="apellido" class="form-label">Apellido: (*)</label>
-                                                                                  <input type="text" name="apellido" id="apellido" class="form-control" value="" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+" placeholder="Ej: Bustamante">
-                                                                                  <div class="invalid-feedback">Por favor ingresar apellido(s).</div>
-                                                                              </div>
-                                                                          </div>
-                                                                      </div>
-                                      
-                                                                      <div class="row">
-                                                                          <div class="col">
-                                                                              <div class="mb-3">
-                                                                                  <label for="correo" class="form-label">Correo:</label>
-                                                                                  <input type="email" name="correo" id="correo" class="form-control" value="" placeholder="Ej: pedro.bustamante@gmail.com">
-                                                                                  <div class="invalid-feedback">Por favor ingresar un correo válido.</div>
-                                                                              </div>
-                                                                          </div>
-                                                                          <div class="col">
-                                                                              <div class="mb-3">
-                                                                                  <label for="fechaNacimiento" class="form-label">Fecha de nacimiento: (*)</label>
-                                                                                  <input type="date" name="fechaNacimiento" id="fechaNacimiento" class="form-control" value="">
-                                                                                  <div class="invalid-feedback">Por favor ingresar fecha de nacimiento.</div>
-                                                                              </div>
-                                                                          </div>
-                                                                      </div>
-                                      
-                                                                      <div class="row">
-                                                                          <div class="col">
-                                                                              <div class="mb-3">
-                                                                                  <label for="zona" class="form-label">Zona:</label>
-                                                                                  <select name="zona" id="zona" class="form-control">
-                                                                                      <option value="Norte" selected>Norte</option>
-                                                                                      <option value="Sur">Sur</option>
-                                                                                      <option value="Este">Este</option>
-                                                                                      <option value="Oeste">Oeste</option>
-                                                                                  </select>
-                                                                                  <div class="invalid-feedback">Por favor seleccionar una zona.</div>
-                                                                              </div>
-                                                                          </div>
-                                                                          <div class="col">
-                                                                              <div class="mb-3">
-                                                                                  <label for="distrito" class="form-label">Distrito: (*)</label>
-                                                                                  <select name="distrito" id="distrito" class="form-control">
-                                                                                      <option value="Los Olivos" selected>Los Olivos</option>
-                                                                                      <!-- Puedes añadir opciones de distritos aquí según la zona seleccionada -->
-                                                                                  </select>
-                                                                                  <div class="invalid-feedback">Por favor selecciona un distrito.</div>
-                                                                              </div>
-                                                                          </div>
-                                                                      </div>
-                                      
-                                                                      <div class="row">
-                                                                          <div class="col">
-                                                                              <div class="mb-3">
-                                                                                  <label for="contrasena" class="form-label">Contraseña:</label>
-                                                                                  <input type="password" name="contrasena" id="contrasena" class="form-control" value="">
-                                                                                  <div class="invalid-feedback">Por favor ingresar contraseña.</div>
-                                                                              </div>
-                                                                          </div>
-                                                                          <div class="col">
-                                                                              <div class="mb-3">
-                                                                                  <h6 class="obligatory-fields">(*) Campos obligatorios</h6>
-                                                                              </div>
-                                                                          </div>
-                                                                      </div>
-                                      
-                                                                      <!-- Botón para guardar cambios -->
-                                                                      <div class="row">
-                                                                          <div class="col">
-                                                                              <button type="submit" class="btn btn-primary">Guardar Cambios</button>
-                                                                          </div>
-                                                                      </div>
-                                      
-                                                                  </div>
-                                                              </form>
-                                                          </div>
-                                                      </div>
-                                                  </div>
-                                              </div>
-
- 
-    
-
-                                                
-
-
-                         </div>
-
-
-
-
-                       
-    
+                        <div class="row">
+                          <div class="col">
+                            <div class="mb-3">
+                              <label for="dni" class="form-label">DNI: (*)</label>
+                              <input type="tel" class="form-control" name="dni" id="dni" maxlength="8" minlength="8" placeholder="Ej: 87654321" pattern="[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]" title="ingrese su DNI" required>
+                              <div class="invalid-feedback">Por favor ingresar DNI.</div>
+                            </div>
+                          </div>
+                          <div class="col">
+                            <div class="mb-3">
+                              <label for="telefono" class="form-label">Teléfono: (*)</label>
+                              <input type="tel" class="form-control" name="telefono" id="telefono" maxlength="9" minlength="9" placeholder="Ej: 987654321" pattern="[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]" title="ingrese su número de teléfono" required>
+                              <div class="invalid-feedback">Por favor ingresar teléfono(s).</div>
+                            </div>
+                          </div>
                         </div>
 
-                        <div class="btn-container" style="text-align: center; margin-top: 20px;">
-                          <button type="submit" class="btn btn-primary" style="width: 280px;">Regresar</button>
+                        <div class="row">
+                          <div class="col">
+                            <div class="mb-3">
+                              <label for="nombre" class="form-label">Nombre: (*)</label>
+                              <input type="text" name="nombre" id="nombre" placeholder="Ej: Tomas" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ]+(\s[a-zA-ZáéíóúÁÉÍÓÚñÑ]+)?" class="form-control" required>
+                              <div class="invalid-feedback">Por favor ingresar nombre(s).</div>
+                            </div>
+                          </div>
+                          <div class="col">
+                            <div class="mb-3">
+                              <label for="apellido" class="form-label">Apellido: (*)</label>
+                              <input type="text" name="apellido" id="apellido" placeholder="Bustamante" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ]+(\s[a-zA-ZáéíóúÁÉÍÓÚñÑ]+)?" class="form-control" required>
+                              <div class="invalid-feedback">Por favor ingresar apellido(s).</div>
+                            </div>
+                          </div>
                         </div>
+
+                        <div class="row">
+                          <div class="col">
+                            <div class="mb-3">
+                              <label for="correo" class="form-label">Correo: (*)</label>
+                              <input type="email" name="correo" id="correo" placeholder="Ej: ejemplo@gmail.com" class="form-control" aria-describedby="emailHelp" required>
+                              <div class="invalid-feedback">Por favor ingresar un correo válido.</div>
+                            </div>
+                          </div>
+                          <div class="col">
+                            <div class="mb-3">
+                              <label for="fechanacimiento" class="form-label">Fecha de nacimiento: (*)</label>
+                              <input type="date" name="fechanacimiento" id="fechanacimiento" class="form-control" required>
+                              <div class="invalid-feedback">Por favor ingresar fecha de nacimiento.</div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="row">
+                          <div class="col">
+                            <div class="mb-3">
+                              <label for="idzonas" class="form-label">Zona: (*)</label>
+                              <select name="idzonas" id="idzonas" class="form-select" required>
+                                <option value="" disabled selected>Escoja una opción</option>
+                                <option th:each="zonas: ${listaZonas}"
+                                        th:text="${zonas.nombre}" th:value="${zonas.idzonas}">Elegir una zona</option>
+                              </select>
+                              <div class="invalid-feedback">Por favor seleccionar una zona.</div>
+                            </div>
+                          </div>
+                          <div class="col">
+                            <div class="mb-3">
+                              <label for="iddistritos" class="form-label">Distrito: (*)</label>
+                              <select name="iddistritos" id="iddistritos" class="form-select" required>
+                                <option value="" disabled selected>Escoja una opción</option>
+                                <option th:each="distrito: ${listaDistritos}"
+                                        th:text="${distrito.distrito}" th:value="${distrito.iddistritos}">Elegir un distrito</option>
+                              </select>
+                              <div class="invalid-feedback">Por favor selecciona un distrito.</div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="row">
+                          <div class="col">
+                            <div class="mb-3">
+                            </div>
+                          </div>
+                          <div class="col">
+                            <div class="mb-3">
+                              <h6 class="obligatory-fields">(*) Campos obligatorios</h6>
+                            </div>
+                          </div>
+                        </div>
+
+                        <!-- Botón para guardar cambios -->
+                        <div class="btn-container">
+                          <button type="submit" class="btn btn-primary" >Crear</button>
+                        </div>
+
                       </div>
                     </form>
                   </div>
@@ -653,200 +618,6 @@
 
       </div>
 
-      <!-- Custom template | don't include it in your project! -->
-      <div class="custom-template">
-        <div class="title">Settings</div>
-        <div class="custom-content">
-          <div class="switcher">
-            <div class="switch-block">
-              <h4>Logo Header</h4>
-              <div class="btnSwitch">
-                <button
-                  type="button"
-                  class="selected changeLogoHeaderColor"
-                  data-color="dark"
-                ></button>
-                <button
-                  type="button"
-                  class="selected changeLogoHeaderColor"
-                  data-color="blue"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="purple"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="light-blue"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="green"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="orange"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="red"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="white"
-                ></button>
-                <br />
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="dark2"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="blue2"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="purple2"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="light-blue2"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="green2"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="orange2"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="red2"
-                ></button>
-              </div>
-            </div>
-            <div class="switch-block">
-              <h4>Navbar Header</h4>
-              <div class="btnSwitch">
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="dark"
-                ></button>
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="blue"
-                ></button>
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="purple"
-                ></button>
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="light-blue"
-                ></button>
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="green"
-                ></button>
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="orange"
-                ></button>
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="red"
-                ></button>
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="white"
-                ></button>
-                <br />
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="dark2"
-                ></button>
-                <button
-                  type="button"
-                  class="selected changeTopBarColor"
-                  data-color="blue2"
-                ></button>
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="purple2"
-                ></button>
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="light-blue2"
-                ></button>
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="green2"
-                ></button>
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="orange2"
-                ></button>
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="red2"
-                ></button>
-              </div>
-            </div>
-            <div class="switch-block">
-              <h4>Sidebar</h4>
-              <div class="btnSwitch">
-                <button
-                  type="button"
-                  class="selected changeSideBarColor"
-                  data-color="white"
-                ></button>
-                <button
-                  type="button"
-                  class="changeSideBarColor"
-                  data-color="dark"
-                ></button>
-                <button
-                  type="button"
-                  class="changeSideBarColor"
-                  data-color="dark2"
-                ></button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="custom-toggle">
-          <i class="icon-settings"></i>
-        </div>
-      </div>
-      <!-- End Custom template -->
     </div>
     <!--   Core JS Files   -->
     <script src="../assets/js/core/jquery-3.7.1.min.js"></script>
