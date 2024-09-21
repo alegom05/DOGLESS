@@ -142,6 +142,16 @@ public class AdminController {
     }
 
 
+    @GetMapping({"lista2",""})
+    public String listaUsuarios2(Model model, @RequestParam(required = false) String zona) {
+        model.addAttribute("listaUsuarios", usuarioRepository.findByRol(2));
+        model.addAttribute("listaAgentes", usuarioRepository.findByRol(3));
+        model.addAttribute("listaZonales", usuarioRepository.findByRol(2));
+
+        return "admin2/list";
+//        return "usuario/list";
+    }
+
     /*
     @GetMapping(value = "new")
     public String nuevoProductoFrm(Model model, @ModelAttribute("product") Product product) {
