@@ -61,9 +61,10 @@ CREATE TABLE IF NOT EXISTS `dogless`.`roles` (
 ENGINE = InnoDB;
 -- Insertar datos en la tabla `roles` con IDs específicos
 INSERT INTO `dogless`.`roles` (`idroles`, `nombre`) VALUES
-(1, 'Super Administrador'),
-(2, 'Agente de Compras'),
-(3, 'Usuario Final');
+(1, 'Superadmin'),
+(2, 'Adminzonal'),
+(3, 'Agente'),
+(4, 'Usuario');
 -- -----------------------------------------------------
 -- Table `dogless`.`distritos`
 -- -----------------------------------------------------
