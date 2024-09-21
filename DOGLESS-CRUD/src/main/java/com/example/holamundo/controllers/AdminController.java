@@ -43,7 +43,7 @@ public class AdminController {
 
 
     @GetMapping({"lista",""})
-    public String listaUsuarios(Model model, @RequestParam(required = false) String zona) {
+    public String listaUsuariosTotales(Model model, @RequestParam(required = false) String zona) {
         model.addAttribute("listaUsuarios", usuarioRepository.findByRol(2));
         model.addAttribute("listaAgentes", usuarioRepository.findByRol(3));
         model.addAttribute("listaZonales", usuarioRepository.findByRol(2));
@@ -142,6 +142,30 @@ public class AdminController {
     }
 
 
+    @GetMapping({"listaZonales",""})
+    public String listaZonales(Model model, @RequestParam(required = false) String zona) {
+        model.addAttribute("listaUsuarios", usuarioRepository.findByRol(2));
+
+        return "admin2/list";
+//        return "usuario/list";
+    }
+
+    @GetMapping({"listaAgentes",""})
+    public String listaAgentes(Model model, @RequestParam(required = false) String zona) {
+        model.addAttribute("listaUsuarios", usuarioRepository.findByRol(3));
+
+        return "admin2/list";
+//        return "usuario/list";
+    }
+
+    @GetMapping({"listaUsuarios",""})
+    public String listaUsuarios(Model model, @RequestParam(required = false) String zona) {
+        model.addAttribute("listaUsuarios", usuarioRepository.findByRol(2));
+
+        return "admin2/list";
+//        return "usuario/list";
+    }
+
     @GetMapping({"lista2",""})
     public String listaUsuarios2(Model model, @RequestParam(required = false) String zona) {
         model.addAttribute("listaUsuarios", usuarioRepository.findByRol(2));
@@ -151,6 +175,8 @@ public class AdminController {
         return "admin2/list";
 //        return "usuario/list";
     }
+
+
 
     /*
     @GetMapping(value = "new")
