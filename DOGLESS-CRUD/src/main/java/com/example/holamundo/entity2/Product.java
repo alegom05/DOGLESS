@@ -7,9 +7,9 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 
+@Entity
 @Getter
 @Setter
-@Entity
 public class Product {
 
     @Column(nullable = false)
