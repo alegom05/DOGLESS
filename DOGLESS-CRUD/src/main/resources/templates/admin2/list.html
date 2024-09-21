@@ -21,7 +21,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="usuario, info : ${listaZonales}">
+            <tr th:each="usuario, info : ${listaUsuarios}">
                 <td th:text="${info.index + 1}"></td>
                 <td th:text="${usuario.nombre}"></td>
                 <td th:text="${usuario.apellido}"></td>
@@ -50,7 +50,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="usuario, info : ${listaAgentes}">
+            <tr th:each="usuario, info : ${listaUsuarios}">
                 <td th:text="${info.index + 1}"></td>
                 <td th:text="${usuario.nombre}"></td>
                 <td th:text="${usuario.apellido}"></td>

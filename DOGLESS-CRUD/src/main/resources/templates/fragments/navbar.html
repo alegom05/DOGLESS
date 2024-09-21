@@ -20,15 +20,15 @@
                     <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                         <li class="nav-item">
                             <a class="nav-link" th:classappend="${active == 'Employee'?'active':''}"
-                               th:href="@{/employee}">AdminZonal</a>
+                               th:href="@{/admin/listaZonales}">AdminZonal</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" th:classappend="${active == 'Shipper'?'active':''}"
-                               th:href="@{/shipper}">Agente</a>
+                               th:href="@{/admin/listaAgentes}">Agente</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" th:classappend="${active == 'Product'?'active':''}"
-                               th:href="@{/product}">Usuario</a>
+                               th:href="@{/admin/listaUsuarios}">Usuario</a>
                         </li>
                     </ul>
                 </div>
