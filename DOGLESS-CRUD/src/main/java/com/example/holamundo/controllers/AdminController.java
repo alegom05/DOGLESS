@@ -26,21 +26,14 @@ public class AdminController {
     public String unaPersona() {
         return "olapaola5";
     }*/
-    final UsuarioRepository usuarioRepository;
-    final ZonaRepository zonaRepository;
-    final DistritoRepository distritoRepository;
-    final RolRepository rolRepository;
-
-    public AdminController(UsuarioRepository usuarioRepository,
-                           ZonaRepository zonaRepository,
-                           DistritoRepository distritoRepository,
-                           RolRepository rolRepository) {
-        this.usuarioRepository = usuarioRepository;
-        this.zonaRepository = zonaRepository;
-        this.distritoRepository = distritoRepository;
-        this.rolRepository = rolRepository;
-    }
-
+    @Autowired
+    UsuarioRepository usuarioRepository;
+    @Autowired
+    ZonaRepository zonaRepository;
+    @Autowired
+    DistritoRepository distritoRepository;
+    @Autowired
+    RolRepository rolRepository;
 
     @GetMapping({"lista",""})
     public String listaUsuariosTotales(Model model, @RequestParam(required = false) String zona) {
@@ -53,9 +46,9 @@ public class AdminController {
     }
     @GetMapping("adminzonal")
     public String listaAdminZonal(Model model, @RequestParam(required = false) String zona) {
-        model.addAttribute("listaZonales", usuarioRepository.findByRol(2));
+        model.addAttribute("listaUsuarios", usuarioRepository.findByRol(2));
 
-        return "admin/tables/adminzonales";
+        return "admin/adminzonales";
     }
     @GetMapping("/new")
     public String nuevoAdminZonalFrm(Model model) {

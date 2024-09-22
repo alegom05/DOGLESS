@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@Entity (name="shippers")
+@Entity
 public class Shipper {
 
     @Id
