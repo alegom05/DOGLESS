@@ -50,7 +50,7 @@ public class AdminController {
     }
     @GetMapping("adminzonal")
     public String listaAdminZonal(Model model, @RequestParam(required = false) String zona) {
-        model.addAttribute("listaZonales", usuarioRepository.findByRol(2));
+        model.addAttribute("listaUsuarios", usuarioRepository.findByRol(2));
 
         return "admin/adminzonales";
     }
@@ -143,7 +143,7 @@ public class AdminController {
     public String listaZonales(Model model, @RequestParam(required = false) String zona) {
         model.addAttribute("listaUsuarios", usuarioRepository.findByRol(2));
 
-        return "admin/list";
+        return "admin2/list";
 //        return "usuario/list";
     }
 
@@ -151,7 +151,7 @@ public class AdminController {
     public String listaAgentes(Model model, @RequestParam(required = false) String zona) {
         model.addAttribute("listaUsuarios", usuarioRepository.findByRol(3));
 
-        return "admin/list";
+        return "admin2/list";
 //        return "usuario/list";
     }
 
@@ -159,7 +159,7 @@ public class AdminController {
     public String listaUsuarios(Model model, @RequestParam(required = false) String zona) {
         model.addAttribute("listaUsuarios", usuarioRepository.findByRol(2));
 
-        return "admin/list";
+        return "admin2/list";
 //        return "usuario/list";
     }
 
