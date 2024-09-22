@@ -9,6 +9,7 @@ import com.example.springdogless.entity.Distrito;
 import com.example.springdogless.entity.Rol;
 import com.example.springdogless.entity.Usuario;
 import com.example.springdogless.entity.Zona;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -28,20 +29,14 @@ public class AdminController {
 
     // Mapea la vista del login
 
-    final UsuarioRepository usuarioRepository;
-    final ZonaRepository zonaRepository;
-    final DistritoRepository distritoRepository;
-    final RolRepository rolRepository;
-
-    public AdminController(UsuarioRepository usuarioRepository,
-                           ZonaRepository zonaRepository,
-                           DistritoRepository distritoRepository,
-                           RolRepository rolRepository) {
-        this.usuarioRepository = usuarioRepository;
-        this.zonaRepository = zonaRepository;
-        this.distritoRepository = distritoRepository;
-        this.rolRepository = rolRepository;
-    }
+    @Autowired
+    UsuarioRepository usuarioRepository;
+    @Autowired
+    ZonaRepository zonaRepository;
+    @Autowired
+    DistritoRepository distritoRepository;
+    @Autowired
+    RolRepository rolRepository;
 
 
     @GetMapping({"lista",""})
@@ -144,7 +139,7 @@ public class AdminController {
     }
 
 
-    @GetMapping({"listaZonales",""})
+    @GetMapping("listaZonales")
     public String listaZonales(Model model, @RequestParam(required = false) String zona) {
         model.addAttribute("listaUsuarios", usuarioRepository.findByRol(2));
 
@@ -152,7 +147,7 @@ public class AdminController {
 //        return "usuario/list";
     }
 
-    @GetMapping({"listaAgentes",""})
+    @GetMapping("listaAgentes")
     public String listaAgentes(Model model, @RequestParam(required = false) String zona) {
         model.addAttribute("listaUsuarios", usuarioRepository.findByRol(3));
 
@@ -160,7 +155,7 @@ public class AdminController {
 //        return "usuario/list";
     }
 
-    @GetMapping({"listaUsuarios",""})
+    @GetMapping("listaUsuarios")
     public String listaUsuarios(Model model, @RequestParam(required = false) String zona) {
         model.addAttribute("listaUsuarios", usuarioRepository.findByRol(2));
 
@@ -168,7 +163,7 @@ public class AdminController {
 //        return "usuario/list";
     }
 
-    @GetMapping({"lista2",""})
+    @GetMapping("lista2")
     public String listaUsuarios2(Model model, @RequestParam(required = false) String zona) {
         model.addAttribute("listaUsuarios", usuarioRepository.findByRol(2));
         model.addAttribute("listaAgentes", usuarioRepository.findByRol(3));
