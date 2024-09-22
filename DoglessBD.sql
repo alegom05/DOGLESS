@@ -9,6 +9,8 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema dogless
 -- -----------------------------------------------------
+
+DROP DATABASE IF EXISTS `dogless`;
 CREATE SCHEMA IF NOT EXISTS `dogless` DEFAULT CHARACTER SET utf8mb3 ;
 USE `dogless` ;
 
@@ -177,6 +179,23 @@ CREATE TABLE IF NOT EXISTS `dogless`.`usuarios` (
   CONSTRAINT `fk_usuarios_zonas1`
     FOREIGN KEY (`idzonas`)
     REFERENCES `dogless`.`zonas` (`idzonas`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+-- -----------------------------------------------------
+-- Table `dogless`.`solicitudes`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `dogless`.`solicitudes` (
+  `idsolicitudes` INT NOT NULL,
+  `veredicto` TINYINT NULL,
+  `comentario` VARCHAR(300) NULL,
+  `usuarios_idusuarios` INT NOT NULL,
+  PRIMARY KEY (`idsolicitudes`),
+  INDEX `fk_solicitudes_usuarios1_idx` (`usuarios_idusuarios` ASC) VISIBLE,
+  CONSTRAINT `fk_solicitudes_usuarios1`
+    FOREIGN KEY (`usuarios_idusuarios`)
+    REFERENCES `dogless`.`usuarios` (`idusuarios`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -572,6 +591,20 @@ VALUES
 (7, 15, 4), -- 15 unidades de Drone Pro en la zona Oeste
 (9, 50, 4), -- 50 unidades de Reloj Inteligente en la zona Oeste
 (10, 65, 4); -- 65 unidades de Teclado Mecánico en la zona Oeste
+
+-- Solicitudes
+INSERT INTO `dogless`.`solicitudes` (`idsolicitudes`, `veredicto`, `usuarios_idusuarios`, `comentario`) 
+VALUES 
+('1', '1', '3', 'Estamos revisando tu solicitud. Te contactaremos pronto.'),
+('2', '1', '4', 'Tu solicitud ha sido aprobada. Te enviaremos más detalles.'),
+('3', '0', '5', 'Lamentablemente, no cumples con los requisitos en este momento.'),
+('4', '1', '6', 'Tu perfil está bajo revisión final. Pronto recibirás una respuesta.'),
+('5', '1', '7', 'Gracias por tu interés. Hemos recibido tu solicitud y está en proceso.'),
+('6', '1', '8', 'Enhorabuena, tu solicitud ha sido aceptada. Nos pondremos en contacto contigo.'),
+('7', '0', '9', 'No has sido seleccionado en esta ocasión. Te invitamos a postular nuevamente en el futuro.'),
+('8', '1', '10', 'Tu solicitud ha sido aprobada condicionalmente, faltan documentos.'),
+('9', '1', '11', 'Estamos evaluando tu perfil. Te informaremos en los próximos días.'),
+('10', '1', '12', 'Has sido aceptado. Pronto recibirás más información.');
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
