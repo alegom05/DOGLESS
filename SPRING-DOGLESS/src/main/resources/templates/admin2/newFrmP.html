@@ -8,21 +8,26 @@
                 <div class="col-md-6 offset-md-3">
                     <h2>Nuevo Proveedor</h2>
                     <hr/>
-                    <form method="post" th:action="@{/product/save}" th:object="${product}">
+                    <form method="post" th:action="@{/product/save}" th:object="${proveedor}">
+
                         <div class="mb-3">
-                            <label for="productname" class="form-label">Nombre del Proveedor</label>
-                            <input type="text" class="form-control" id="productname" th:field="*{nombre}"
-                                   th:classappend="${#fields.hasErrors('productname')?'is-invalid':''}">
-                            <div class="invalid-feedback" th:if="${#fields.hasErrors('productname')}"
+                            <label for="nombre" class="form-label">Nombre del Proveedor</label>
+                            <input type="text" class="form-control" id="nombre" th:field="*{nombre}"
+                                   th:classappend="${#fields.hasErrors('nombre')?'is-invalid':''}">
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('nombre')}"
                                  th:errors="*{nombre}" ></div>
                         </div>
+
+                        <!--
                         <div class="mb-3">
-                            <label for="productname" class="form-label">Tienda</label>
-                            <input type="text" class="form-control" id="productname" th:field="*{tienda}"
-                                   th:classappend="${#fields.hasErrors('productname')?'is-invalid':''}">
-                            <div class="invalid-feedback" th:if="${#fields.hasErrors('productname')}"
+                            <label for="tienda" class="form-label">Tienda</label>
+                            <input type="text" class="form-control" id="tienda" th:field="*{tienda}"
+                                   th:classappend="${#fields.hasErrors('tienda')?'is-invalid':''}">
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('tienda')}"
                                  th:errors="*{tienda}" ></div>
                         </div>
+                        -->
+
                         <!--
                         <div class="mb-3">
                             <label class="form-label">Proveedor</label>
