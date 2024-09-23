@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Usuarios - Lista de admins zonales</title>
+    <title>Superadmin - Solicitudes </title>
     <meta
             content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
             name="viewport"
@@ -75,13 +75,13 @@
           <div class="sidebar-content">
             <ul class="nav nav-secondary">
               <!-- Barra de navegacion lateral-->
-              <li class="nav-item ">
+              <li class="nav-item">
                 <a href="paginaprincipal.html">
                   <i class="fas fa-home"></i>
                   <p>Página principal</p>
                 </a>
               </li>
-              <li class="nav-item">
+              <li class="nav-item active submenu">
                 <a href="solicitudes.html">
                   <i class="fas fa-user-plus"></i>
                   <p>Solicitudes</p>
@@ -94,15 +94,15 @@
                 </a>
               </li>
 
-              <li class="nav-item active submenu">
+              <li class="nav-item">
                 <a data-bs-toggle="collapse" href="#tables1">
                   <i class="fas fa-users"></i>
                   <p>Usuarios</p>
                   <span class="caret"></span>
                 </a>
-                <div class="collapse show" id="tables1">
+                <div class="collapse" id="tables1">
                   <ul class="nav nav-collapse">
-                    <li class="active">
+                    <li>
                       <a href="adminzonales.html">
                         <span class="sub-item">Administradores zonales</span>
                       </a>
@@ -262,101 +262,165 @@
         <!-- Fin Navbar -->
 
         <!-- Texto o contenido central -->
-          <!-- Texto o contenido central -->
-          <div class="container">
+        <div class="container">
             <div class="page-inner">
               <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
                 <div>
-                  <h3 class="fw-bold mb-3">Lista de Administradores Zonales</h3>
-                  <h6 class="op-7 mb-2">En las tablas encontrarás las identidades de los Administradores Zonales. Navega entre las páginas para explorar más información de cada uno.</h6>
+                  <h3 class="fw-bold mb-3">Solicitudes Usuario-Agente</h3>
+                  <h6 class="op-7 mb-2">Aquí verás las solicitudes de usuarios para ser Agentes, verfifca la información correspondiente y acepta o deniega la solicitud.</h6>
                 </div>
-              </div>
-              <div th:if="${mensajeExito}" id="mensajeExito" class="alert alert-success fade-out" role="alert">
-                <p th:text="${mensajeExito}"></p>
+  
               </div>
               <div class="row">
                 <div class="col-md-12">
                   <div class="card">
-
+                    
                     <div class="card-body">
-                      <a
-                              class="btn btn-primary btn-round ms-auto"
-                              th:href="@{/admin/new}"
-                      >
-                        <i class="fa fa-plus"></i>
-                        Agregar Administrador Zonal
-                      </a>
                       <div class="table-responsive">
-                        <br>
-                        <style>
-                          /* Estilo para alinear los botones horizontalmente */
-                          .acciones-container {
-                            display: flex;
-                            flex-direction: row; /* Alinea los botones en una fila horizontal */
-                            gap: 8px; /* Espacio entre los botones */
-                          }
-
-                        </style>
-
-                        <table id="basic-datatables" class="display table table-striped table-hover">
+                          <div class="col-md-3 " >
+                              <input class="form-control mb-3" id="tableSearch" type="text" placeholder="Buscar">
+                          </div>
+                        <table class="display table table-striped table-hover">
                           <thead>
                             <tr>
-                              <th>Nombre</th>
-                              <th>Apellido</th>
-                              <th>DNI</th>
-                              <th>Correo Electrónico</th>
-                              <th>Distrito</th>
-                              <th>Acciones</th>
+                              <th>Nombre del usuario</th>
+                              <th>Codigo despachador</th>
+                              <th>Estado</th>
+                              <th>Codigo juridico</th>
+                              <th>Opciones</th>
                             </tr>
                           </thead>
-                          <tbody>
-                            <tr th:each="usuario : ${listaZonales}">
-                              <td th:text="${usuario.nombre}"></td>
-                              <td th:text="${usuario.apellido}"></td>
-                              <td th:text="${usuario.dni}"></td>
-                              <td th:text="${usuario.correo}"></td>
-                              <td th:text="${usuario.distrito.distrito}"></td>
-                              <td>
-                                <!-- Dropdown con ícono -->
-                                <div class="dropdown">
-                                  <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fas fa-ellipsis-v"></i>
-                                  </button>
-                                  <!-- Dropdown oscuro -->
-                                  <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
-                                    <li><a class="dropdown-item" href="ver_adminzonal.html">Ver</a></li>
-                                    <li><a class="dropdown-item" th:href="@{'/admin/edit' + '?id=' + ${usuario.id}}">Editar</a></li>
-                                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#denegarModal">Eliminar</a></li>
-                                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#aceptarModal">Espiar</a></li>
-                                  </ul>
-                                </div>
-                              </td>
-                            </tr>
+                          <tbody id="tableBody">
+                              <tr>
+                                  <td>Manuel Merino</td>
+                                  <td>1243</td>
+                                  <td>Habilitado</td>
+                                  <td>992</td>
+                                  <td>
+                                      <!-- Dropdown con ícono -->
+                                      <div class="dropdown">
+                                        <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                          <i class="fas fa-ellipsis-v"></i>
+                                        </button>
+                                        <!-- Dropdown oscuro -->
+                                        <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
+                                          <li><a class="dropdown-item" href="solicitudes_comentarios.html">Comentar</a></li>
+                                          <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#aceptarModal">Aceptar</a></li>
+                                          <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#denegarModal">Denegar</a></li>
+                                        </ul>
+                                      </div>
+                                  </td>
+                              
+                              </tr>
+                              <tr>
+                                  <td>Haley Kennedy</td>
+                                  <td>5392</td>
+                                  <td>Multado</td>
+                                  <td>992</td>
+                                  <td>
+                                    <!-- Dropdown con ícono -->
+                                    <div class="dropdown">
+                                      <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                          <i class="fas fa-ellipsis-v"></i>
+                                      </button>
+                                      <!-- Dropdown oscuro -->
+                                      <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
+                                        <li><a class="dropdown-item" href="solicitudes_comentarios.html">Comentar</a></li>
+                                        <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#aceptarModal">Aceptar</a></li>
+                                        <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#denegarModal">Denegar</a></li>
+                                      </ul>
+                                    </div>
+                                  </td>
+                                  
+                                </tr>
+                                <tr>
+                                  <td>Tatyana Fitzpatrick</td>
+                                  <td>9421</td>
+                                  <td>Sancionado</td>
+                                  <td>992</td>
+                                  <td>
+                                    <!-- Dropdown con ícono -->
+                                    <div class="dropdown">
+                                      <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                          <i class="fas fa-ellipsis-v"></i>
+                                      </button>
+                                      <!-- Dropdown oscuro -->
+                                      <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
+                                        <li><a class="dropdown-item" href="solicitudes_comentarios.html">Comentar</a></li>
+                                        <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#aceptarModal">Aceptar</a></li>
+                                        <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#denegarModal">Denegar</a></li>
+                                      </ul>
+                                    </div>
+                                  </td>
+                  
+                                </tr>
+                                <tr>
+                                  <td>Michael Silva</td>
+                                  <td>3924</td>
+                                  <td>Habilitado</td>
+                                  <td>992</td>
+                                  <td>
+                                    <!-- Dropdown con ícono -->
+                                    <div class="dropdown">
+                                      <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                          <i class="fas fa-ellipsis-v"></i>
+                                      </button>
+                                      <!-- Dropdown oscuro -->
+                                      <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
+                                        <li><a class="dropdown-item" href="solicitudes_comentarios.html">Comentar</a></li>
+                                        <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#aceptarModal">Aceptar</a></li>
+                                        <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#denegarModal">Denegar</a></li>
+                                      </ul>
+                                    </div>
+                                  </td>
+      
+                                  
+                                </tr>
+                                <tr>
+                                  <td>Paul Byrd</td>
+                                  <td>1999</td>
+                                  <td>Cancelado</td>
+                                  <td>974</td>
+                                  <td>
+                                    <!-- Dropdown con ícono -->
+                                    <div class="dropdown" >
+                                      <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                          <i class="fas fa-ellipsis-v"></i>
+                                      </button>
+                                      <!-- Dropdown oscuro -->
+                                      <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
+                                        <li><a class="dropdown-item" href="solicitudes_comentarios.html">Comentar</a></li>
+                                        <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#aceptarModal">Aceptar</a></li>
+                                        <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#denegarModal">Denegar</a></li>
+                                      </ul>
+                                    </div>
+                                  </td>
+      
+                                  
+                                </tr>
+                                <tr>
+                                  <td>Gloria Little</td>
+                                  <td>2024</td>
+                                  <td>Habilitado</td>
+                                  <td>974</td>
+                                  <td>
+                                    <!-- Dropdown con ícono -->
+                                    <div class="dropdown">
+                                      <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                          <i class="fas fa-ellipsis-v"></i>
+                                      </button>
+                                      <!-- Dropdown oscuro -->
+                                      <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
+                                        <li><a class="dropdown-item" href="solicitudes_comentarios.html">Comentar</a></li>
+                                        <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#aceptarModal">Aceptar</a></li>
+                                        <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#denegarModal">Denegar</a></li>
+                                      </ul>
+                                    </div>
+                                  </td>
+                                </tr>
+                            
                           </tbody>
                         </table>
-
-
-                        <!-- Modal para Denegar -->
-                        <div class="modal fade" id="denegarModal" tabindex="-1" role="dialog" aria-labelledby="acceptModalLabel" aria-hidden="true">
-                          <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <h5 class="modal-title" id="acceptModalLabel">Advertencia</h5>
-                                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                                  <span aria-hidden="true">&times;</span>
-                                </button>
-                              </div>
-                              <div class="modal-body">
-                                <p>¿Estas seguro de realizar la eliminación del adminsitrador zonal ?</p>
-                              </div>
-                              <div class="modal-footer">
-                                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                <button type="button" class="btn btn-dark"  onclick="window.location.href='adminzonales.html'">Aceptar</button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-
                         <!-- Modal para Aceptar -->
                         <div class="modal fade" id="aceptarModal" tabindex="-1" role="dialog" aria-labelledby="acceptModalLabel" aria-hidden="true">
                           <div class="modal-dialog" role="document">
@@ -368,32 +432,64 @@
                                 </button>
                               </div>
                               <div class="modal-body">
-                                <p>¿Estás seguro de que deseas espiar esta cuenta?</p>
+                                <p>¿Estas seguro de realizar la aprobación del usuario a ser agente ?</p>
                               </div>
                               <div class="modal-footer">
                                 <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                <button type="button" class="btn btn-dark"  onclick="window.location.href='espiar.html'">Aceptar</button>
+                                <button type="button" class="btn btn-dark"  onclick="window.location.href='solicitudes.html'">Aceptar</button>
                               </div>
                             </div>
                           </div>
                         </div>
-
-
-
-
-
-
+                        <!-- Modal para Denegar -->
+                        <div class="modal fade" id="denegarModal" tabindex="-1" role="dialog" aria-labelledby="acceptModalLabel" aria-hidden="true">
+                          <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="acceptModalLabel">Advertencia</h5>
+                                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              <div class="modal-body">
+                                <p>¿Estas seguro de realizar la denegación del usuario a ser agente ?</p>
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                <button type="button" class="btn btn-dark"  onclick="window.location.href='solicitudes.html'">Aceptar</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+  
+                        
                       </div>
-
+                      <div class="modal" tabindex="-1" role="dialog">
+                      <div class="modal-dialog" role="document">
+                          <div class="modal-content">
+                          <div class="modal-header">
+                              <h5 class="modal-title">Modal title</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                              </button>
+                          </div>
+                          <div class="modal-body">
+                              <p>Modal body text goes here.</p>
+                          </div>
+                          <div class="modal-footer">
+                              <button type="button" class="btn btn-primary">Save changes</button>
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                          </div>
+                          </div>
+                      </div>
+                      </div>
                     </div>
                   </div>
                 </div>
-
+  
               </div>
             </div>
           </div>
-          <!-- Fin del contenido central -->
-
         <!-- Fin del contenido central -->
 
 
@@ -437,83 +533,15 @@
       <!-- Kaiadmin JS -->
       <script src="../../static/assets/js/kaiadmin.min.js"></script>
       <script>
-        $(document).ready(function () {
-          $("#basic-datatables").DataTable({});
-
-          $("#multi-filter-select").DataTable({
-            pageLength: 5,
-            initComplete: function () {
-              this.api()
-                      .columns()
-                      .every(function () {
-                        var column = this;
-                        var select = $(
-                                '<select class="form-select"><option value=""></option></select>'
-                        )
-                                .appendTo($(column.footer()).empty())
-                                .on("change", function () {
-                                  var val = $.fn.dataTable.util.escapeRegex($(this).val());
-
-                                  column
-                                          .search(val ? "^" + val + "$" : "", true, false)
-                                          .draw();
-                                });
-
-                        column
-                                .data()
-                                .unique()
-                                .sort()
-                                .each(function (d, j) {
-                                  select.append(
-                                          '<option value="' + d + '">' + d + "</option>"
-                                  );
-                                });
-                      });
-            },
-          });
-
-          // Add Row
-          $("#add-row").DataTable({
-            pageLength: 5,
-          });
-
-          var action =
-                  '<td> <div class="form-button-action"> <button type="button" data-bs-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task"> <i class="fa fa-edit"></i> </button> <button type="button" data-bs-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove"> <i class="fa fa-times"></i> </button> </div> </td>';
-
-          $("#addRowButton").click(function () {
-            $("#add-row")
-                    .dataTable()
-                    .fnAddData([
-                      $("#addName").val(),
-                      $("#addPosition").val(),
-                      $("#addOffice").val(),
-                      action,
-                    ]);
-            $("#addRowModal").modal("hide");
-          });
-
-          $('#tabla-admins').DataTable({
-            "pageLength": 5, // Mostrar 5 registros por página
-            "lengthChange": false,  // Eliminar el menú de selección de cantidad de registros
-            "language": {
-              "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json"  // Traducción al español
-            }
-          });
-          $('#tabla-admins2').DataTable({
-            "pageLength": 5, // Mostrar 5 registros por página
-            "lengthChange": false,  // Eliminar el menú de selección de cantidad de registros
-            "language": {
-              "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json"  // Traducción al español
-            }
-          });
-          $('#tabla-admins3').DataTable({
-            "pageLength": 5, // Mostrar 5 registros por página
-            "lengthChange": false,  // Eliminar el menú de selección de cantidad de registros
-            "language": {
-              "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json"  // Traducción al español
-            }
-          });
+        // Función de búsqueda
+        $(document).ready(function(){
+            $("#tableSearch").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("#tableBody tr").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
         });
-      </script>
+    </script>
   </body>
 </html>

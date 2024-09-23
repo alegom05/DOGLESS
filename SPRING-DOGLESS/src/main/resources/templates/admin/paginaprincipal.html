@@ -10,12 +10,12 @@
     />
     <link
             rel="icon"
-            href="assets/img/kaiadmin/favicon.ico"
+            href="../../static/assets/img/kaiadmin/favicon.ico"
             type="image/x-icon"
     />
 
     <!-- Fonts and icons -->
-    <script src="assets/js/plugin/webfont/webfont.min.js"></script>
+    <script src="../../static/assets/js/plugin/webfont/webfont.min.js"></script>
     <script>
       WebFont.load({
         google: { families: ["Public Sans:300,400,500,600,700"] },
@@ -26,7 +26,7 @@
             "Font Awesome 5 Brands",
             "simple-line-icons",
           ],
-          urls: ["assets/css/fonts.min.css"],
+          urls: ["../../static/assets/css/fonts.min.css"],
         },
         active: function () {
           sessionStorage.fonts = true;
@@ -35,9 +35,10 @@
     </script>
 
     <!-- CSS Files -->
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="assets/css/plugins.min.css" />
-    <link rel="stylesheet" href="assets/css/kaiadmin.min.css" />
+    <link rel="stylesheet" href="../../static/assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../../static/assets/css/plugins.min.css" />
+    <link rel="stylesheet" href="../../static/assets/css/kaiadmin.min.css" />
+
 
 
   </head>
@@ -50,7 +51,7 @@
           <div class="logo-header" data-background-color="dark">
             <a href="paginaprincipal.html" class="logo">
               <img
-                      src="assets/img/kaiadmin/slogan_white_v3.png"
+                      src="../../static/assets/img/kaiadmin/slogan_white_v3.png"
                       alt="navbar brand"
                       class="navbar-brand"
                       height="50"
@@ -74,7 +75,7 @@
           <div class="sidebar-content">
             <ul class="nav nav-secondary">
               <!-- Barra de navegacion lateral-->
-              <li class="nav-item">
+              <li class="nav-item active submenu">
                 <a href="paginaprincipal.html">
                   <i class="fas fa-home"></i>
                   <p>Página principal</p>
@@ -102,17 +103,17 @@
                 <div class="collapse" id="tables1">
                   <ul class="nav nav-collapse">
                     <li>
-                      <a href="tables/adminzonales.html">
+                      <a href="adminzonales.html">
                         <span class="sub-item">Administradores zonales</span>
                       </a>
                     </li>
                     <li>
-                      <a href="tables/agentes.html">
+                      <a href="agentes.html">
                         <span class="sub-item">Agentes zonales</span>
                       </a>
                     </li>
                     <li>
-                      <a href="tables/usuarios.html">
+                      <a href="usuarios.html">
                         <span class="sub-item">Usuarios finales</span>
                       </a>
                     </li>
@@ -128,12 +129,12 @@
                 <div class="collapse" id="tables2">
                   <ul class="nav nav-collapse">
                     <li>
-                      <a href="tables/proveedores.html">
+                      <a href="proveedores.html">
                         <span class="sub-item">Proveedores</span>
                       </a>
                     </li>
                     <li>
-                      <a href="tables/productos.html">
+                      <a href="productos.html">
                         <span class="sub-item">Productos</span>
                       </a>
                     </li>
@@ -149,12 +150,12 @@
                 <div class="collapse" id="tables3">
                   <ul class="nav nav-collapse">
                     <li>
-                      <a href="tables/productospendientes.html">
+                      <a href="productospendientes.html">
                         <span class="sub-item">Productos pendientes</span>
                       </a>
                     </li>
                     <li>
-                      <a href="tables/productosaprobados.html">
+                      <a href="productosaprobados.html">
                         <span class="sub-item">Productos aprobados</span>
                       </a>
                     </li>
@@ -167,7 +168,7 @@
         </div>
       </div>
       <!-- Fin barra lateral -->
-
+      
       <div class="main-panel">
         <div class="main-header">
           <div class="main-header-logo">
@@ -175,7 +176,7 @@
             <div class="logo-header" data-background-color="dark">
               <a href="paginaprincipal.html" class="logo">
                 <img
-                        src="assets/img/kaiadmin/logodogless.svg"
+                        src="../../static/assets/img/kaiadmin/logodogless.svg"
                         alt="navbar brand"
                         class="navbar-brand"
                         height="20"
@@ -216,7 +217,7 @@
                   >
                     <div class="avatar-sm">
                       <img
-                              src="assets/img/profile2.jpg"
+                              src="../../static/assets/img/profile2.jpg"
                               alt="..."
                               class="avatar-img rounded-circle"
                       />
@@ -232,7 +233,7 @@
                         <div class="user-box">
                           <div class="avatar-lg">
                             <img
-                                    src="assets/img/profile2.jpg"
+                                    src="../../static/assets/img/profile2.jpg"
                                     alt="image profile"
                                     class="avatar-img rounded"
                             />
@@ -678,21 +679,21 @@
 
 
       <!--Core JS Files   -->
-      <script src="assets/js/core/jquery-3.7.1.min.js"></script>
-      <script src="assets/js/core/popper.min.js"></script>
-      <script src="assets/js/core/bootstrap.min.js"></script>
+      <script src="../../static/assets/js/core/jquery-3.7.1.min.js"></script>
+      <script src="../../static/assets/js/core/popper.min.js"></script>
+      <script src="../../static/assets/js/core/bootstrap.min.js"></script>
 
       <!-- jQuery Scrollbar -->
-      <script src="assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+      <script src="../../static/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
       <!-- Datatables -->
-      <script src="assets/js/plugin/datatables/datatables.min.js"></script>
+      <script src="../../static/assets/js/plugin/datatables/datatables.min.js"></script>
 
       <!-- jQuery Vector Maps -->
-      <script src="assets/js/plugin/jsvectormap/jsvectormap.min.js"></script>
-      <script src="assets/js/plugin/jsvectormap/world.js"></script>
+      <script src="../../static/assets/js/plugin/jsvectormap/jsvectormap.min.js"></script>
+      <script src="../../static/assets/js/plugin/jsvectormap/world.js"></script>
 
       <!-- Kaiadmin JS -->
-      <script src="assets/js/kaiadmin.min.js"></script>
+      <script src="../../static/assets/js/kaiadmin.min.js"></script>
       <script>
         $(document).ready(function () {
           $("#basic-datatables").DataTable({});
