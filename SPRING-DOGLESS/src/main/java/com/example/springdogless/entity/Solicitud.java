@@ -21,23 +21,8 @@ public class Solicitud {
 
     @ManyToOne
     @JoinColumn(name = "idusuarios", nullable = false)
-    private Usuario nombre;
+    private Usuario usuario;
 
-    @ManyToOne
-    @JoinColumn(name = "idusuariosapellido", nullable = false)
-    private Usuario apellido;
-
-    @ManyToOne
-    @JoinColumn(name = "idusuarioscodigoad", nullable = false)
-    private Usuario codigoaduana;
-
-    @ManyToOne
-    @JoinColumn(name = "idusuariosestado", nullable = false)
-    private Usuario estado;
-
-    @ManyToOne
-    @JoinColumn(name = "idusuarioscodigojur", nullable = false)
-    private Usuario codigojurisdiccion;
 
 
 }

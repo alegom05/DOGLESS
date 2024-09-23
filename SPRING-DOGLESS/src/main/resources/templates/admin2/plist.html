@@ -14,22 +14,20 @@
                 <th>Nombre</th>
                 <th>Apellido</th>
                 <th>Teléfono</th>
-                <th>Dni</th>
                 <th>Ruc</th>
-                <th>Ruc</th>
-                <th>Ruc</th>
+                <th>Nombre de tienda</th>
                 <th></th>
                 <th></th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="usuario, info : ${listaUsuarios}">
-                <td th:text="${info.index + 1}"></td>
-                <td th:text="${usuario.nombre}"></td>
-                <td th:text="${usuario.apellido}"></td>
-                <td th:text="${usuario.dni}"></td>
-                <td th:text="${usuario.correo}"></td>
-                <td th:text="${usuario.distrito.distrito}"></td>
+            <tr th:each="proveedor, info : ${listaProveedores}">
+                <td th:text="${proveedor.id}"></td>
+                <td th:text="${proveedor.nombre}"></td>
+                <td th:text="${proveedor.apellido}"></td>
+                <td th:text="${proveedor.telefono}"></td>
+                <td th:text="${proveedor.ruc}"></td>
+                <td th:text="${proveedor.tienda}"></td>
                 <td><a class="btn btn-primary"
                        th:href="@{'/usuario/edit' + '?id=' + ${usuario.id}}">Editar</a>
                 </td>
@@ -39,62 +37,6 @@
             </tr>
             </tbody>
 
-            <thead>
-            <tr>
-                <th>#</th>
-                <th>Nombre</th>
-                <th>Apellido</th>
-                <th>Dni</th>
-                <th>Correo</th>
-                <th>Distrito</th>
-                <th></th>
-                <th></th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="usuario, info : ${listaUsuarios}">
-                <td th:text="${info.index + 1}"></td>
-                <td th:text="${usuario.nombre}"></td>
-                <td th:text="${usuario.apellido}"></td>
-                <td th:text="${usuario.dni}"></td>
-                <td th:text="${usuario.correo}"></td>
-                <td th:text="${usuario.distrito.distrito}"></td>
-                <td><a class="btn btn-primary"
-                       th:href="@{'/usuario/edit' + '?id=' + ${usuario.id}}">Editar</a>
-                </td>
-                <td><a class="btn btn-danger"
-                       th:href="@{'/usuario/delete' + '?id=' + ${usuario.id}}">Borrar</a>
-                </td>
-            </tr>
-            </tbody>
-
-            <thead>
-            <tr>
-                <th>#</th>
-                <th>Nombre</th>
-                <th>Apellido</th>
-                <th>Dni</th>
-                <th>Correo</th>
-                <th>Distrito</th>
-                <th></th>
-                <th></th>
-            </tr>
-            </thead>
-            <tr th:each="usuario, info : ${listaUsuarios}">
-                <td th:text="${info.index + 1}"></td>
-                <td th:text="${usuario.nombre}"></td>
-                <td th:text="${usuario.apellido}"></td>
-                <td th:text="${usuario.dni}"></td>
-                <td th:text="${usuario.correo}"></td>
-                <td th:text="${usuario.distrito.distrito}"></td>
-                <td><a class="btn btn-primary"
-                       th:href="@{'/usuario/edit' + '?id=' + ${usuario.id}}">Editar</a>
-                </td>
-                <td><a class="btn btn-danger"
-                       th:href="@{'/usuario/delete' + '?id=' + ${usuario.id}}">Borrar</a>
-                </td>
-            </tr>
-            </tbody>
         </table>
     </div>
 </main>

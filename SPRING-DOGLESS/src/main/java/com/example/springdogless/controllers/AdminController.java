@@ -171,14 +171,14 @@ public class AdminController {
 //        return "usuario/list";
     }
 
-    @GetMapping("listaSolicitudes")
+    @GetMapping("solicitudes")
     public String listaSolicitudes(Model model, @RequestParam(required = false) String zona) {
         model.addAttribute("listaSolicitudes", solicitudRepository.findAll());
         return "admin2/slist";
 //        return "usuario/list";
     }
 
-    @GetMapping("listaProveedores")
+    @GetMapping("proveedores")
     public String listaProveedores(Model model, @RequestParam(required = false) String zona) {
         model.addAttribute("listaProveedores", solicitudRepository.findAll());
         return "admin2/plist";
