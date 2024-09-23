@@ -29,7 +29,7 @@
                 <td th:text="${proveedor.ruc}"></td>
                 <td th:text="${proveedor.tienda}"></td>
                 <td><a class="btn btn-primary"
-                       th:href="@{'/usuario/edit' + '?id=' + ${proveedor.id}}">Editar</a>
+                       th:href="@{'/admin/editarProveedor' + '?id=' + ${proveedor.id}}">Editar</a>
                 </td>
                 <td><a class="btn btn-danger"
                        th:href="@{'/usuario/delete' + '?id=' + ${proveedor.id}}">Borrar</a>

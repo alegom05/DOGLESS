@@ -196,7 +196,7 @@ public class AdminController {
         return "admin2/newFrmP";
     }
 
-    /*
+
 
     @GetMapping("/editarProveedor")
     public String editarProveedor(@ModelAttribute("proveedor") Proveedor proveedor, Model model, @RequestParam("id") int id) {
@@ -206,12 +206,12 @@ public class AdminController {
             model.addAttribute("proveedor", proveedor);
             model.addAttribute("listaProveedores", proveedorRepository.findAll());
 
-            return "product/newFrmP";
+            return "admin2/newFrmP";
         } else {
-            return "redirect:/product";
+            return "redirect:/admin/proveedores";
         }
     }
-    */
+
 
 
     @PostMapping("/guardarProveedor")
@@ -222,7 +222,7 @@ public class AdminController {
 
         if(bindingResult.hasErrors()){
             model.addAttribute("listaProveedores", proveedorRepository.findAll());
-            return "admin/newFrmP";
+            return "admin2/newFrmP";
         }else{
             if (proveedor.getId() == null || proveedor.getId() == 0) {
                 List<Proveedor> proveedorlist = proveedorRepository.findByNombre(proveedor.getNombre());
@@ -236,7 +236,7 @@ public class AdminController {
                 if (existe) {
                     System.out.println("El proveedor existe");
                     model.addAttribute("listaProveedores", proveedorRepository.findAll());
-                    return "admin/newFrmP";
+                    return "admin2/newFrmP";
                 } else {
                     attr.addFlashAttribute("msg", "Proveedor creado exitosamente");
                     proveedorRepository.save(proveedor);
