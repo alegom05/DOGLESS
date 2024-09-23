@@ -224,7 +224,7 @@ public class AdminController {
             model.addAttribute("listaProveedores", proveedorRepository.findAll());
             return "admin/newFrmP";
         }else{
-            if (proveedor.getId() == 0) {
+            if (proveedor.getId() == null || proveedor.getId() == 0) {
                 List<Proveedor> proveedorlist = proveedorRepository.findByNombre(proveedor.getNombre());
                 boolean existe = false;
                 for (Proveedor p : proveedorlist) {
