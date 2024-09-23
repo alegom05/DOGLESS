@@ -213,21 +213,21 @@ public class AdminController {
     }
     */
 
-    /*
-    @PostMapping("/save")
-    public String guardarProducto(RedirectAttributes attr,
+
+    @PostMapping("/guardarProveedor")
+    public String guardarProveedor(RedirectAttributes attr,
                                   Model model,
                                   @ModelAttribute("proveedor") @Valid Proveedor proveedor,
                                   BindingResult bindingResult) {
 
         if(bindingResult.hasErrors()){
             model.addAttribute("listaProveedores", proveedorRepository.findAll());
-            return "proveedor/newFrmP";
+            return "admin/newFrmP";
         }else{
             if (proveedor.getId() == 0) {
-                List<Proveedor> productList = proveedorRepository.findByProveedorName(proveedor.getProveedorName());
+                List<Proveedor> proveedorlist = proveedorRepository.findByNombre(proveedor.getNombre());
                 boolean existe = false;
-                for (Proveedor p : productList) {
+                for (Proveedor p : proveedorlist) {
                     if (p.getNombre().equals(proveedor.getNombre())) {
                         existe = true;
                         break;
@@ -236,28 +236,27 @@ public class AdminController {
                 if (existe) {
                     System.out.println("El proveedor existe");
                     model.addAttribute("listaProveedores", proveedorRepository.findAll());
-                    return "product/newFrm";
+                    return "admin/newFrmP";
                 } else {
                     attr.addFlashAttribute("msg", "Proveedor creado exitosamente");
                     proveedorRepository.save(proveedor);
-                    return "redirect:/product";
+                    return "redirect:/admin/proveedores";
                 }
             } else {
                 attr.addFlashAttribute("msg", "Proveedor actualizado exitosamente");
                 proveedorRepository.save(proveedor);
-                return "redirect:/product";
+                return "redirect:/admin/proveedores";
             }
         }
     }
-    */
 
     /*
     @GetMapping("/delete")
-    public String borrarTransportista(Model model,
+    public String borrarProveedor(Model model,
                                       @RequestParam("id") int id,
                                       RedirectAttributes attr) {
 
-        Optional<Product> optProduct = productRepository.findById(id);
+        Optional<Proveedor> optProveedor = proveedorRepository.findById(id);
 
         if (optProduct.isPresent()) {
             productRepository.deleteById(id);
