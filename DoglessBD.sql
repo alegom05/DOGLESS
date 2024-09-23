@@ -156,6 +156,7 @@ CREATE TABLE IF NOT EXISTS `dogless`.`usuarios` (
   `razonsocial` VARCHAR(45) NULL,
   `codigojurisdiccion` VARCHAR(45) NULL,
   `idzonas` INT NOT NULL,
+  `fechanacimiento` DATE NULL,
   PRIMARY KEY (`idusuarios`),
   INDEX `idroles_idx` (`idroles` ASC) VISIBLE,
   INDEX `iddistritos_idx` (`iddistritos` ASC) VISIBLE,
@@ -190,11 +191,11 @@ CREATE TABLE IF NOT EXISTS `dogless`.`solicitudes` (
   `idsolicitudes` INT NOT NULL,
   `veredicto` TINYINT NULL,
   `comentario` VARCHAR(300) NULL,
-  `usuarios_idusuarios` INT NOT NULL,
+  `idusuarios` INT NOT NULL,
   PRIMARY KEY (`idsolicitudes`),
-  INDEX `fk_solicitudes_usuarios1_idx` (`usuarios_idusuarios` ASC) VISIBLE,
+  INDEX `fk_solicitudes_usuarios1_idx` (`idusuarios` ASC) VISIBLE,
   CONSTRAINT `fk_solicitudes_usuarios1`
-    FOREIGN KEY (`usuarios_idusuarios`)
+    FOREIGN KEY (`idusuarios`)
     REFERENCES `dogless`.`usuarios` (`idusuarios`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
@@ -268,30 +269,30 @@ VALUES
 -- Usuarios Finales 
 INSERT INTO `dogless`.`usuarios` (`idusuarios`, `nombre`, `apellido`, `dni`, `correo`, `contraseña`, `telefono`, `direccion`, `idroles`, `iddistritos`, `idadminzonales`, `estado`, `ruc`, `codigoaduana`, `razonsocial`, `codigojurisdiccion`, `idzonas`)
 VALUES
-(35, 'Laura', 'Suárez', '22334455', 'laura.suarez@norte.com', 'userFpass1!', '987654347', 'Calle Norte 1', 3, 1, NULL, 'activo', NULL, NULL, NULL, NULL, 1),
-(36, 'Javier', 'Ortiz', '33445566', 'javier.ortiz@norte.com', 'userFpass2#$', '987654348', 'Calle Norte 2', 3, 2, NULL, 'activo', NULL, NULL, NULL, NULL, 1),
-(37, 'María', 'Santos', '44556677', 'maria.santos@norte.com', 'userFpass3&*', '987654349', 'Av. Norte 3', 3, 3, NULL, 'activo', NULL, NULL, NULL, NULL, 1),
-(38, 'Raúl', 'Pérez', '55667788', 'raul.perez@norte.com', 'userFpass4@!', '987654350', 'Calle Norte 4', 3, 4, NULL, 'activo', NULL, NULL, NULL, NULL, 1),
-(39, 'Carla', 'Mendoza', '66778899', 'carla.mendoza@norte.com', 'userFpass5^&', '987654351', 'Av. Norte 5', 3, 5, NULL, 'activo', NULL, NULL, NULL, NULL, 1),
-(40, 'Luis', 'García', '77889900', 'luis.garcia@norte.com', 'userFpass6*%', '987654352', 'Calle Norte 6', 3, 6, NULL, 'baneado', NULL, NULL, NULL, NULL, 1),
-(41, 'Sofía', 'Rodríguez', '88990011', 'sofia.rodriguez@sur.com', 'userFpass7$$', '987654353', 'Calle Sur 1', 3, 9, NULL, 'activo', NULL, NULL, NULL, NULL, 2),
-(42, 'Juan', 'Morales', '99001122', 'juan.morales@sur.com', 'userFpass8!!', '987654354', 'Av. Sur 2', 3, 10, NULL, 'baneado', NULL, NULL, NULL, NULL, 2),
-(43, 'Mónica', 'Ruiz', '11002233', 'monica.ruiz@sur.com', 'userFpass9@@', '987654355', 'Calle Sur 3', 3, 11, NULL, 'activo', NULL, NULL, NULL, NULL, 2),
-(44, 'Carlos', 'Martínez', '12003344', 'carlos.martinez@sur.com', 'userFpass10%%', '987654356', 'Av. Sur 4', 3, 12, NULL, 'activo', NULL, NULL, NULL, NULL, 2),
-(45, 'Julia', 'Castro', '13004455', 'julia.castro@sur.com', 'userFpass11^^', '987654357', 'Calle Sur 5', 3, 13, NULL, 'inactivo', NULL, NULL, NULL, NULL, 2),
-(46, 'Pablo', 'Fernández', '14005566', 'pablo.fernandez@sur.com', 'userFpass12&&', '987654358', 'Av. Sur 6', 3, 14, NULL, 'activo', NULL, NULL, NULL, NULL, 2),
-(47, 'Andrés', 'Silva', '15006677', 'andres.silva@este.com', 'userFpass13**', '987654359', 'Calle Este 1', 3, 19, NULL, 'activo', NULL, NULL, NULL, NULL, 3),
-(48, 'Elena', 'Reyes', '16007788', 'elena.reyes@este.com', 'userFpass14##', '987654360', 'Av. Este 2', 3, 20, NULL, 'activo', NULL, NULL, NULL, NULL, 3),
-(49, 'Hugo', 'Cano', '17008899', 'hugo.cano@este.com', 'userFpass15@@', '987654361', 'Calle Este 3', 3, 21, NULL, 'activo', NULL, NULL, NULL, NULL, 3),
-(50, 'Ana', 'Ramírez', '18009900', 'ana.ramirez@este.com', 'userFpass16$$', '987654362', 'Av. Este 4', 3, 22, NULL, 'baneado', NULL, NULL, NULL, NULL, 3),
-(51, 'David', 'Paredes', '19001111', 'david.paredes@este.com', 'userFpass17##', '987654363', 'Calle Este 5', 3, 23, NULL, 'inactivo', NULL, NULL, NULL, NULL, 3),
-(52, 'Carolina', 'Gómez', '20002222', 'carolina.gomez@este.com', 'userFpass18&&', '987654364', 'Av. Este 6', 3, 24, NULL, 'activo', NULL, NULL, NULL, NULL, 3),
-(53, 'Carmen', 'López', '21003333', 'carmen.lopez@oeste.com', 'userFpass19%%', '987654365', 'Calle Oeste 1', 3, 26, NULL, 'activo', NULL, NULL, NULL, NULL, 4),
-(54, 'Sergio', 'Castillo', '22004444', 'sergio.castillo@oeste.com', 'userFpass20!!', '987654366', 'Av. Oeste 2', 3, 27, NULL, 'activo', NULL, NULL, NULL, NULL, 4),
-(55, 'Isabel', 'Mendoza', '23005555', 'isabel.mendoza@oeste.com', 'userFpass21##', '987654367', 'Calle Oeste 3', 3, 28, NULL, 'activo', NULL, NULL, NULL, NULL, 4),
-(56, 'Jorge', 'Vega', '24006666', 'jorge.vega@oeste.com', 'userFpass22$$', '987654368', 'Av. Oeste 4', 3, 29, NULL, 'inactivo', NULL, NULL, NULL, NULL, 4),
-(57, 'Lucía', 'Carrillo', '25007777', 'lucia.carrillo@oeste.com', 'userFpass23&&', '987654369', 'Calle Oeste 5', 3, 30, NULL, 'activo', NULL, NULL, NULL, NULL, 4),
-(58, 'Emilio', 'Vargas', '26008888', 'emilio.vargas@oeste.com', 'userFpass24**', '987654370', 'Av. Oeste 6', 3, 31, NULL, 'activo', NULL, NULL, NULL, NULL, 4);
+(35, 'Laura', 'Suárez', '22334455', 'laura.suarez@norte.com', 'userFpass1!', '987654347', 'Calle Norte 1', 4, 1, NULL, 'activo', NULL, NULL, NULL, NULL, 1),
+(36, 'Javier', 'Ortiz', '33445566', 'javier.ortiz@norte.com', 'userFpass2#$', '987654348', 'Calle Norte 2', 4, 2, NULL, 'activo', NULL, NULL, NULL, NULL, 1),
+(37, 'María', 'Santos', '44556677', 'maria.santos@norte.com', 'userFpass3&*', '987654349', 'Av. Norte 3', 4, 3, NULL, 'activo', NULL, NULL, NULL, NULL, 1),
+(38, 'Raúl', 'Pérez', '55667788', 'raul.perez@norte.com', 'userFpass4@!', '987654350', 'Calle Norte 4', 4, 4, NULL, 'activo', NULL, NULL, NULL, NULL, 1),
+(39, 'Carla', 'Mendoza', '66778899', 'carla.mendoza@norte.com', 'userFpass5^&', '987654351', 'Av. Norte 5', 4, 5, NULL, 'activo', NULL, NULL, NULL, NULL, 1),
+(40, 'Luis', 'García', '77889900', 'luis.garcia@norte.com', 'userFpass6*%', '987654352', 'Calle Norte 6', 4, 6, NULL, 'baneado', NULL, NULL, NULL, NULL, 1),
+(41, 'Sofía', 'Rodríguez', '88990011', 'sofia.rodriguez@sur.com', 'userFpass7$$', '987654353', 'Calle Sur 1', 4, 9, NULL, 'activo', NULL, NULL, NULL, NULL, 2),
+(42, 'Juan', 'Morales', '99001122', 'juan.morales@sur.com', 'userFpass8!!', '987654354', 'Av. Sur 2', 4, 10, NULL, 'baneado', NULL, NULL, NULL, NULL, 2),
+(43, 'Mónica', 'Ruiz', '11002233', 'monica.ruiz@sur.com', 'userFpass9@@', '987654355', 'Calle Sur 3', 4, 11, NULL, 'activo', NULL, NULL, NULL, NULL, 2),
+(44, 'Carlos', 'Martínez', '12003344', 'carlos.martinez@sur.com', 'userFpass10%%', '987654356', 'Av. Sur 4', 4, 12, NULL, 'activo', NULL, NULL, NULL, NULL, 2),
+(45, 'Julia', 'Castro', '13004455', 'julia.castro@sur.com', 'userFpass11^^', '987654357', 'Calle Sur 5', 4, 13, NULL, 'inactivo', NULL, NULL, NULL, NULL, 2),
+(46, 'Pablo', 'Fernández', '14005566', 'pablo.fernandez@sur.com', 'userFpass12&&', '987654358', 'Av. Sur 6', 4, 14, NULL, 'activo', NULL, NULL, NULL, NULL, 2),
+(47, 'Andrés', 'Silva', '15006677', 'andres.silva@este.com', 'userFpass13**', '987654359', 'Calle Este 1', 4, 19, NULL, 'activo', NULL, NULL, NULL, NULL, 3),
+(48, 'Elena', 'Reyes', '16007788', 'elena.reyes@este.com', 'userFpass14##', '987654360', 'Av. Este 2', 4, 20, NULL, 'activo', NULL, NULL, NULL, NULL, 3),
+(49, 'Hugo', 'Cano', '17008899', 'hugo.cano@este.com', 'userFpass15@@', '987654361', 'Calle Este 3', 4, 21, NULL, 'activo', NULL, NULL, NULL, NULL, 3),
+(50, 'Ana', 'Ramírez', '18009900', 'ana.ramirez@este.com', 'userFpass16$$', '987654362', 'Av. Este 4', 4, 22, NULL, 'baneado', NULL, NULL, NULL, NULL, 3),
+(51, 'David', 'Paredes', '19001111', 'david.paredes@este.com', 'userFpass17##', '987654363', 'Calle Este 5', 4, 23, NULL, 'inactivo', NULL, NULL, NULL, NULL, 3),
+(52, 'Carolina', 'Gómez', '20002222', 'carolina.gomez@este.com', 'userFpass18&&', '987654364', 'Av. Este 6', 4, 24, NULL, 'activo', NULL, NULL, NULL, NULL, 3),
+(53, 'Carmen', 'López', '21003333', 'carmen.lopez@oeste.com', 'userFpass19%%', '987654365', 'Calle Oeste 1', 4, 26, NULL, 'activo', NULL, NULL, NULL, NULL, 4),
+(54, 'Sergio', 'Castillo', '22004444', 'sergio.castillo@oeste.com', 'userFpass20!!', '987654366', 'Av. Oeste 2', 4, 27, NULL, 'activo', NULL, NULL, NULL, NULL, 4),
+(55, 'Isabel', 'Mendoza', '23005555', 'isabel.mendoza@oeste.com', 'userFpass21##', '987654367', 'Calle Oeste 3', 4, 28, NULL, 'activo', NULL, NULL, NULL, NULL, 4),
+(56, 'Jorge', 'Vega', '24006666', 'jorge.vega@oeste.com', 'userFpass22$$', '987654368', 'Av. Oeste 4', 4, 29, NULL, 'inactivo', NULL, NULL, NULL, NULL, 4),
+(57, 'Lucía', 'Carrillo', '25007777', 'lucia.carrillo@oeste.com', 'userFpass23&&', '987654369', 'Calle Oeste 5', 4, 30, NULL, 'activo', NULL, NULL, NULL, NULL, 4),
+(58, 'Emilio', 'Vargas', '26008888', 'emilio.vargas@oeste.com', 'userFpass24**', '987654370', 'Av. Oeste 6', 4, 31, NULL, 'activo', NULL, NULL, NULL, NULL, 4);
 -- -----------------------------------------------------
 -- Table `dogless`.`ordenes`
 -- -----------------------------------------------------
@@ -593,7 +594,7 @@ VALUES
 (10, 65, 4); -- 65 unidades de Teclado Mecánico en la zona Oeste
 
 -- Solicitudes
-INSERT INTO `dogless`.`solicitudes` (`idsolicitudes`, `veredicto`, `usuarios_idusuarios`, `comentario`) 
+INSERT INTO `dogless`.`solicitudes` (`idsolicitudes`, `veredicto`, `idusuarios`, `comentario`) 
 VALUES 
 ('1', '1', '3', 'Estamos revisando tu solicitud. Te contactaremos pronto.'),
 ('2', '1', '4', 'Tu solicitud ha sido aprobada. Te enviaremos más detalles.'),

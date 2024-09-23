@@ -19,8 +19,9 @@ public class Solicitud {
     @Column(name = "comentario", length = 300)
     private String comentario;
 
-    @Column(name = "idusuarios", nullable = false)
-    private Integer idusuarios;
+    @ManyToOne
+    @JoinColumn(name = "idusuarios", nullable = false)
+    private Usuario usuario;
 
 
 
