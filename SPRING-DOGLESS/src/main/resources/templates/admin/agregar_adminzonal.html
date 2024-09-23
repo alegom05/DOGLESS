@@ -1,21 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Superadmin - Agregar Admin Zonal</title>
+    <title>Agregar admin zonal</title>
     <meta
             content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
             name="viewport"
     />
     <link
             rel="icon"
-            href="assets/img/kaiadmin/favicon.ico"
+            href="../../static/assets/img/kaiadmin/favicon.ico"
             type="image/x-icon"
     />
 
     <!-- Fonts and icons -->
-    <script src="assets/js/plugin/webfont/webfont.min.js"></script>
+    <script src="../../static/assets/js/plugin/webfont/webfont.min.js"></script>
     <script>
       WebFont.load({
         google: { families: ["Public Sans:300,400,500,600,700"] },
@@ -26,7 +26,7 @@
             "Font Awesome 5 Brands",
             "simple-line-icons",
           ],
-          urls: ["assets/css/fonts.min.css"],
+          urls: ["../../static/assets/css/fonts.min.css"],
         },
         active: function () {
           sessionStorage.fonts = true;
@@ -35,9 +35,10 @@
     </script>
 
     <!-- CSS Files -->
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="assets/css/plugins.min.css" />
-    <link rel="stylesheet" href="assets/css/kaiadmin.min.css" />
+    <link rel="stylesheet" href="../../static/assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../../static/assets/css/plugins.min.css" />
+    <link rel="stylesheet" href="../../static/assets/css/kaiadmin.min.css" />
+
 
 
   </head>
@@ -50,7 +51,7 @@
           <div class="logo-header" data-background-color="dark">
             <a href="paginaprincipal.html" class="logo">
               <img
-                      src="assets/img/kaiadmin/slogan_white_v3.png"
+                      src="../../static/assets/img/kaiadmin/slogan_white_v3.png"
                       alt="navbar brand"
                       class="navbar-brand"
                       height="50"
@@ -74,7 +75,7 @@
           <div class="sidebar-content">
             <ul class="nav nav-secondary">
               <!-- Barra de navegacion lateral-->
-              <li class="nav-item">
+              <li class="nav-item ">
                 <a href="paginaprincipal.html">
                   <i class="fas fa-home"></i>
                   <p>Página principal</p>
@@ -93,26 +94,26 @@
                 </a>
               </li>
 
-              <li class="nav-item">
+              <li class="nav-item active submenu">
                 <a data-bs-toggle="collapse" href="#tables1">
                   <i class="fas fa-users"></i>
                   <p>Usuarios</p>
                   <span class="caret"></span>
                 </a>
-                <div class="collapse" id="tables1">
+                <div class="collapse show" id="tables1">
                   <ul class="nav nav-collapse">
-                    <li>
-                      <a href="tables/adminzonales.html">
+                    <li class="active">
+                      <a href="adminzonales.html">
                         <span class="sub-item">Administradores zonales</span>
                       </a>
                     </li>
                     <li>
-                      <a href="tables/agentes.html">
+                      <a href="agentes.html">
                         <span class="sub-item">Agentes zonales</span>
                       </a>
                     </li>
                     <li>
-                      <a href="tables/usuarios.html">
+                      <a href="usuarios.html">
                         <span class="sub-item">Usuarios finales</span>
                       </a>
                     </li>
@@ -128,12 +129,12 @@
                 <div class="collapse" id="tables2">
                   <ul class="nav nav-collapse">
                     <li>
-                      <a href="tables/proveedores.html">
+                      <a href="proveedores.html">
                         <span class="sub-item">Proveedores</span>
                       </a>
                     </li>
                     <li>
-                      <a href="tables/productos.html">
+                      <a href="productos.html">
                         <span class="sub-item">Productos</span>
                       </a>
                     </li>
@@ -149,12 +150,12 @@
                 <div class="collapse" id="tables3">
                   <ul class="nav nav-collapse">
                     <li>
-                      <a href="tables/productospendientes.html">
+                      <a href="productospendientes.html">
                         <span class="sub-item">Productos pendientes</span>
                       </a>
                     </li>
                     <li>
-                      <a href="tables/productosaprobados.html">
+                      <a href="productosaprobados.html">
                         <span class="sub-item">Productos aprobados</span>
                       </a>
                     </li>
@@ -167,7 +168,7 @@
         </div>
       </div>
       <!-- Fin barra lateral -->
-
+      
       <div class="main-panel">
         <div class="main-header">
           <div class="main-header-logo">
@@ -175,7 +176,7 @@
             <div class="logo-header" data-background-color="dark">
               <a href="paginaprincipal.html" class="logo">
                 <img
-                        src="assets/img/kaiadmin/logodogless.svg"
+                        src="../../static/assets/img/kaiadmin/logodogless.svg"
                         alt="navbar brand"
                         class="navbar-brand"
                         height="20"
@@ -216,7 +217,7 @@
                   >
                     <div class="avatar-sm">
                       <img
-                              src="assets/img/profile2.jpg"
+                              src="../../static/assets/img/profile2.jpg"
                               alt="..."
                               class="avatar-img rounded-circle"
                       />
@@ -232,7 +233,7 @@
                         <div class="user-box">
                           <div class="avatar-lg">
                             <img
-                                    src="assets/img/profile2.jpg"
+                                    src="../../static/assets/img/profile2.jpg"
                                     alt="image profile"
                                     class="avatar-img rounded"
                             />
@@ -379,158 +380,162 @@
         </div>
 
       </div>
-      <!-- Fin del contenido central -->
+
+        <!-- Fin del contenido central -->
 
 
 
-      <!-- Pie de página -->
-      <footer class="footer">
-        <div class="container-fluid d-flex justify-content-center">
-          <nav class="pull-left">
-            <ul class="nav">
+          <!-- Pie de página -->
+          <footer class="footer">
+            <div class="container-fluid d-flex justify-content-center">
+              <nav class="pull-left">
+                <ul class="nav">
 
-              <li class="nav-item">
-                <a class="nav-link" href="ruta/a/informacion-de-contacto.html"> Contacto </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="ruta/a/politica-de-privacidad.html"> Política de privacidad </a>
-              </li>
-            </ul>
-          </nav>
+                  <li class="nav-item">
+                    <a class="nav-link" href="ruta/a/informacion-de-contacto.html"> Contacto </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="ruta/a/politica-de-privacidad.html"> Política de privacidad </a>
+                  </li>
+                </ul>
+              </nav>
 
+            </div>
+          </footer>
         </div>
-      </footer>
-    </div>
-    </div>
+      </div>
 
 
 
-    <!--   Core JS Files   -->
-    <script src="../assets/js/core/jquery-3.7.1.min.js"></script>
-    <script src="../assets/js/core/popper.min.js"></script>
-    <script src="../assets/js/core/bootstrap.min.js"></script>
+      <!--Core JS Files   -->
+      <script src="../../static/assets/js/core/jquery-3.7.1.min.js"></script>
+      <script src="../../static/assets/js/core/popper.min.js"></script>
+      <script src="../../static/assets/js/core/bootstrap.min.js"></script>
 
-    <!-- jQuery Scrollbar -->
-    <script src="../assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
-    <!-- Datatables -->
-    <script src="../assets/js/plugin/datatables/datatables.min.js"></script>
-    <!-- Kaiadmin JS -->
-    <script src="../assets/js/kaiadmin.min.js"></script>
-    <!-- Kaiadmin DEMO methods, don't include it in your project! -->
-    <script src="../assets/js/setting-demo2.js"></script>
-    <script>
-      $(document).ready(function () {
-        var forms = document.querySelectorAll('.needs-validation');
+      <!-- jQuery Scrollbar -->
+      <script src="../../static/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+      <!-- Datatables -->
+      <script src="../../static/assets/js/plugin/datatables/datatables.min.js"></script>
 
-        Array.prototype.slice.call(forms).forEach(function (form) {
-          form.addEventListener('submit', function (event) {
-            if (!form.checkValidity()) {
-              event.preventDefault();
-              event.stopPropagation();
+      <!-- jQuery Vector Maps -->
+      <script src="../../static/assets/js/plugin/jsvectormap/jsvectormap.min.js"></script>
+      <script src="../../static/assets/js/plugin/jsvectormap/world.js"></script>
+
+      <!-- Kaiadmin JS -->
+      <script src="../../static/assets/js/kaiadmin.min.js"></script>
+      <script>
+        $(document).ready(function () {
+          var forms = document.querySelectorAll('.needs-validation');
+  
+          Array.prototype.slice.call(forms).forEach(function (form) {
+            form.addEventListener('submit', function (event) {
+              if (!form.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+              }
+  
+              form.classList.add('was-validated');
+            }, false);
+          });
+          // Validar que solo se ingresen letras en los campos de nombre y apellidos
+          document.addEventListener("input", function(event) {
+            if (event.target && event.target.id === "nombre") {
+              event.target.value = event.target.value.replace(/[^a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ\s]/g, "");
+            } else if (event.target && event.target.id === "apellidos") {
+              event.target.value = event.target.value.replace(/[^a-zA-ZñÑáéíóúÁÉÍÓÚ\s]/g, "");
             }
-
-            form.classList.add('was-validated');
-          }, false);
-        });
-        // Validar que solo se ingresen letras en los campos de nombre y apellidos
-        document.addEventListener("input", function(event) {
-          if (event.target && event.target.id === "nombre") {
-            event.target.value = event.target.value.replace(/[^a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ\s]/g, "");
-          } else if (event.target && event.target.id === "apellidos") {
-            event.target.value = event.target.value.replace(/[^a-zA-ZñÑáéíóúÁÉÍÓÚ\s]/g, "");
-          }
-        });
-        // Validar que solo se ingresen letras en los campos de color
-        document.addEventListener("input", function(event) {
-          if (event.target && event.target.id === "color") {
-            event.target.value = event.target.value.replace(/[^a-zA-ZñÑáéíóúÁÉÍÓÚ\s]/g, "");
-          }
-        });
-
-        //Validar que se ingresen letras y números
-        document.addEventListener("input", function(event) {
-          if (event.target && event.target.id === "modelo") {
-            // Permitir letras, números, espacios y caracteres especiales de acentuación
-            event.target.value = event.target.value.replace(/[^a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ\s]/g, "");
-          }
-        });
-
-
-
-
-        // Validar que solo se ingresen números en el campo de DNI
-        document.addEventListener("input", function(event) {
-          if (event.target && event.target.id === "dni") {
-            let value = event.target.value.replace(/\D/g, ""); // Eliminar caracteres no numéricos
-            if (value.length > 8) {
-              value = value.slice(0, 8); // Limitar a 8 dígitos
+          });
+          // Validar que solo se ingresen letras en los campos de color
+          document.addEventListener("input", function(event) {
+            if (event.target && event.target.id === "color") {
+              event.target.value = event.target.value.replace(/[^a-zA-ZñÑáéíóúÁÉÍÓÚ\s]/g, "");
             }
-            event.target.value = value;
-          }
-        });
-
-        // Validar que solo se ingresen números en el campo de RUC
-        document.addEventListener("input", function(event) {
-          if (event.target && event.target.id === "ruc") {
-            let value = event.target.value.replace(/\D/g, ""); // Eliminar caracteres no numéricos
-            if (value.length > 11) {
-              value = value.slice(0, 11); // Limitar a 11 dígitos
+          });
+  
+          //Validar que se ingresen letras y números
+          document.addEventListener("input", function(event) {
+            if (event.target && event.target.id === "modelo") {
+              // Permitir letras, números, espacios y caracteres especiales de acentuación
+              event.target.value = event.target.value.replace(/[^a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ\s]/g, "");
             }
-            event.target.value = value;
-          }
-        });
-        // Validar que solo se ingresen números en el campo de teléfono
-        document.addEventListener("input", function(event) {
-          if (event.target && event.target.id === "telefono") {
-            let value = event.target.value.replace(/\D/g, ""); // Eliminar caracteres no numéricos
-            if (value.length > 9) {
-              value = value.slice(0, 9); // Limitar a 9 dígitos
+          });
+  
+  
+  
+  
+          // Validar que solo se ingresen números en el campo de DNI
+          document.addEventListener("input", function(event) {
+            if (event.target && event.target.id === "dni") {
+              let value = event.target.value.replace(/\D/g, ""); // Eliminar caracteres no numéricos
+              if (value.length > 8) {
+                value = value.slice(0, 8); // Limitar a 8 dígitos
+              }
+              event.target.value = value;
             }
-            event.target.value = value;
-          }
-        });
-        document.addEventListener("input", function(event) {
-          if (event.target && event.target.id === "direccion") {
-            let pattern = /^[a-zA-Z0-9#áéíóúÁÉÍÓÚñÑ.]+\s[a-zA-Z0-9#áéíóúÁÉÍÓÚñÑ.]+(\s[a-zA-Z0-9#áéíóúÁÉÍÓÚñÑ.]+)?(\s[a-zA-Z0-9#áéíóúÁÉÍÓÚñÑ.]+)?$/;
-            let value = event.target.value;
-            if (!pattern.test(value)) {
-              event.target.setCustomValidity("La dirección no cumple con el formato requerido.");
-            } else {
-              event.target.setCustomValidity("");
+          });
+  
+          // Validar que solo se ingresen números en el campo de RUC
+          document.addEventListener("input", function(event) {
+            if (event.target && event.target.id === "ruc") {
+              let value = event.target.value.replace(/\D/g, ""); // Eliminar caracteres no numéricos
+              if (value.length > 11) {
+                value = value.slice(0, 11); // Limitar a 11 dígitos
+              }
+              event.target.value = value;
             }
-          }
-        });
-        document.addEventListener("input", function(event) {
-          if (event.target && event.target.id === "correo") {
-            let pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Patrón de correo
-            if (!pattern.test(event.target.value)) {
-              event.target.setCustomValidity("Por favor, ingrese un correo válido.");
-            } else {
-              event.target.setCustomValidity("");
+          });
+          // Validar que solo se ingresen números en el campo de teléfono
+          document.addEventListener("input", function(event) {
+            if (event.target && event.target.id === "telefono") {
+              let value = event.target.value.replace(/\D/g, ""); // Eliminar caracteres no numéricos
+              if (value.length > 9) {
+                value = value.slice(0, 9); // Limitar a 9 dígitos
+              }
+              event.target.value = value;
             }
-          }
+          });
+          document.addEventListener("input", function(event) {
+            if (event.target && event.target.id === "direccion") {
+              let pattern = /^[a-zA-Z0-9#áéíóúÁÉÍÓÚñÑ.]+\s[a-zA-Z0-9#áéíóúÁÉÍÓÚñÑ.]+(\s[a-zA-Z0-9#áéíóúÁÉÍÓÚñÑ.]+)?(\s[a-zA-Z0-9#áéíóúÁÉÍÓÚñÑ.]+)?$/;
+              let value = event.target.value;
+              if (!pattern.test(value)) {
+                event.target.setCustomValidity("La dirección no cumple con el formato requerido.");
+              } else {
+                event.target.setCustomValidity("");
+              }
+            }
+          });
+          document.addEventListener("input", function(event) {
+            if (event.target && event.target.id === "correo") {
+              let pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Patrón de correo
+              if (!pattern.test(event.target.value)) {
+                event.target.setCustomValidity("Por favor, ingrese un correo válido.");
+              } else {
+                event.target.setCustomValidity("");
+              }
+            }
+          });
+  
+          document.addEventListener("input", function(event) {
+            if (event.target && event.target.id === "contrasenia") {
+              // Permitir letras, números y caracteres especiales específicos
+              event.target.value = event.target.value.replace(/[^a-zA-Z0-9!@#$%^&*]/g, "");
+            }
+          });
         });
-
-        document.addEventListener("input", function(event) {
-          if (event.target && event.target.id === "contrasenia") {
-            // Permitir letras, números y caracteres especiales específicos
-            event.target.value = event.target.value.replace(/[^a-zA-Z0-9!@#$%^&*]/g, "");
+      </script>
+      <!-- Script para vista previa de imagen -->
+      <script>
+        function previewImage(event) {
+          var input = event.target;
+          var reader = new FileReader();
+          reader.onload = function() {
+            var preview = document.getElementById('imagePreview');
+            preview.src = reader.result;  // Reemplazar imagen por defecto con la seleccionada
+            preview.style.display = 'block';
           }
-        });
-      });
-    </script>
-    <!-- Script para vista previa de imagen -->
-    <script>
-      function previewImage(event) {
-        var input = event.target;
-        var reader = new FileReader();
-        reader.onload = function() {
-          var preview = document.getElementById('imagePreview');
-          preview.src = reader.result;  // Reemplazar imagen por defecto con la seleccionada
-          preview.style.display = 'block';
+          reader.readAsDataURL(input.files[0]);
         }
-        reader.readAsDataURL(input.files[0]);
-      }
-    </script>
+      </script>
   </body>
 </html>
