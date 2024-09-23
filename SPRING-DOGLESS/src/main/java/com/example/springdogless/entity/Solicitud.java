@@ -19,9 +19,25 @@ public class Solicitud {
     @Column(name = "comentario", length = 300)
     private String comentario;
 
-    @Column(name = "idusuarios", nullable = false)
-    private Integer idusuarios;
+    @ManyToOne
+    @JoinColumn(name = "idusuarios", nullable = false)
+    private Usuario nombre;
 
+    @ManyToOne
+    @JoinColumn(name = "idusuariosapellido", nullable = false)
+    private Usuario apellido;
+
+    @ManyToOne
+    @JoinColumn(name = "idusuarioscodigoad", nullable = false)
+    private Usuario codigoaduana;
+
+    @ManyToOne
+    @JoinColumn(name = "idusuariosestado", nullable = false)
+    private Usuario estado;
+
+    @ManyToOne
+    @JoinColumn(name = "idusuarioscodigojur", nullable = false)
+    private Usuario codigojurisdiccion;
 
 
 }

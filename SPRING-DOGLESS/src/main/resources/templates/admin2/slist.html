@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/navbar.html :: header( title = 'Usuarios')}"></head>
+<body>
+<main>
+    <div class="container px-4 pb-5">
+        <nav th:replace="~{fragments/navbar.html :: navbar( active = 'Users')}"></nav>
+        <h1 class="pb-2 border-bottom">Usuarios</h1>
+        <a class="btn btn-primary mt-4 mb-4" th:href="@{'/usuario/new'}">Nuevo Usuario</a>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Código Despachador/th>
+                <th>Estado</th>
+                <th>Código jurídico</th>
+                <th></th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="solicitud, info : ${listaSolicitudes}">
+                <td th:text="${info.index + 1}"></td>
+                <td th:text="${solicitud.usuario.nombre}"></td>
+                <!--
+                <td th:text="${solicitud.usuario.apellido}"></td>
+                <td th:text="${solicitud.usuario.codigoaduana}"></td>
+                <td th:text="${solicitud.usuario.estado}"></td>
+                <td th:text="${solicitud.usuario.codigojurisdiccion}"></td>
+                -->
+                <td><a class="btn btn-primary"
+                       th:href="@{'/admin2/edit' + '?id=' + ${solicitud.id}}">Editar</a>
+                </td>
+                <td><a class="btn btn-danger"
+                       th:href="@{'/admin2/delete' + '?id=' + ${solicitud.id}}">Borrar</a>
+                </td>
+            </tr>
+            </tbody>
+
+        </table>
+    </div>
+</main>
+<script th:replace="~{fragments/navbar.html :: footer-bootstrap}"></script>
+</body>
+</html>

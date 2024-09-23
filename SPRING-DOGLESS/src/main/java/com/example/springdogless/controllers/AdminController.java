@@ -1,9 +1,6 @@
 package com.example.springdogless.controllers;
 
-import com.example.springdogless.Repository.DistritoRepository;
-import com.example.springdogless.Repository.RolRepository;
-import com.example.springdogless.Repository.UsuarioRepository;
-import com.example.springdogless.Repository.ZonaRepository;
+import com.example.springdogless.Repository.*;
 
 import com.example.springdogless.entity.Distrito;
 import com.example.springdogless.entity.Rol;
@@ -18,7 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.Optional;
 
 @Controller
-@RequestMapping({"admin",""})
+@RequestMapping("/admin")
 public class AdminController {
 
     /*@GetMapping("/")
@@ -37,18 +34,19 @@ public class AdminController {
     DistritoRepository distritoRepository;
     @Autowired
     RolRepository rolRepository;
+    @Autowired
+    SolicitudRepository solicitudRepository;
 
-
-    @GetMapping({"lista",""})
+    @GetMapping({"/lista",""})
     public String listaUsuariosTotales(Model model, @RequestParam(required = false) String zona) {
-        model.addAttribute("listaUsuarios", usuarioRepository.findByRol(2));
+        model.addAttribute("listaUsuarios", usuarioRepository.findByRol(4));
         model.addAttribute("listaAgentes", usuarioRepository.findByRol(3));
         model.addAttribute("listaZonales", usuarioRepository.findByRol(2));
 
         return "admin/paginaprincipal";
 //        return "usuario/list";
     }
-    @GetMapping("adminzonal")
+    @GetMapping("/adminzonal")
     public String listaAdminZonal(Model model, @RequestParam(required = false) String zona) {
         model.addAttribute("listaUsuarios", usuarioRepository.findByRol(2));
 
@@ -173,6 +171,19 @@ public class AdminController {
 //        return "usuario/list";
     }
 
+    @GetMapping("listaSolicitudes")
+    public String listaSolicitudes(Model model, @RequestParam(required = false) String zona) {
+        model.addAttribute("listaSolicitudes", solicitudRepository.findAll());
+        return "admin2/slist";
+//        return "usuario/list";
+    }
+
+    @GetMapping("listaProveedores")
+    public String listaProveedores(Model model, @RequestParam(required = false) String zona) {
+        model.addAttribute("listaProveedores", solicitudRepository.findAll());
+        return "admin2/plist";
+//        return "usuario/list";
+    }
 
 
     /*
