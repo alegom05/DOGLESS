@@ -711,52 +711,8 @@
         </script>
         
         
-        <!-- Scripts para los filtros -->
-        <script>
-          function filtrarPorZona() {
-            var zonaFiltro = document.getElementById("zonaFiltro").value;
-            var tabla = document.getElementById("tablaProductos");
-            var filas = tabla.getElementsByTagName("tr");
+
         
-            for (var i = 0; i < filas.length; i++) {
-              var zona = filas[i].getElementsByTagName("td")[3].innerText;
-              if (zonaFiltro === "" || zona === zonaFiltro) {
-                filas[i].style.display = "";
-              } else {
-                filas[i].style.display = "none";
-              }
-            }
-          }
-        
-          function limpiarFiltro() {
-            document.getElementById("zonaFiltro").value = ""; // Resetea el filtro a todas las zonas
-            filtrarPorZona(); // Muestra todas las filas de nuevo
-          }
-        </script>
-         
-        
-        <!-- Scripts para los filtros -->
-        <script>
-          function filtrarPorZona() {
-            var zonaFiltro = document.getElementById("zonaFiltro").value;
-            var tabla = document.getElementById("tablaProductos");
-            var filas = tabla.getElementsByTagName("tr");
-        
-            for (var i = 0; i < filas.length; i++) {
-              var zona = filas[i].getElementsByTagName("td")[3].innerText;
-              if (zonaFiltro === "" || zona === zonaFiltro) {
-                filas[i].style.display = "";
-              } else {
-                filas[i].style.display = "none";
-              }
-            }
-          }
-        
-          function limpiarFiltro() {
-            document.getElementById("zonaFiltro").value = ""; // Resetea el filtro a todas las zonas
-            filtrarPorZona(); // Muestra todas las filas de nuevo
-          }
-        </script>
         
 
       </div>

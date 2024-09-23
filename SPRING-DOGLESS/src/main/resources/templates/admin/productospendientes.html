@@ -261,230 +261,252 @@
         </div>
         <!-- Fin Navbar -->
 
-        <!-- Texto o contenido central -->
+        
         <div class="container">
-            <div class="page-inner">
-              <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
-                <div>
-                  <h3 class="fw-bold mb-3">Lista de Productos Pendientes</h3>
-                </div>
+          <div class="page-inner">
+            <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
+              <div>
+                <h3 class="fw-bold mb-3">Lista de Productos Pendientes</h3>
               </div>
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="card">
-  
-                    <div class="card-body">
-                      <button
-                              class="btn btn-primary btn-round ms-auto"
-                              onclick="window.location.href='NuevoProducto.html';"
-                      >
-                        <i class="fa fa-plus"></i>
-                        Agregar Producto
-                      </button>
-                      <br>
-                      <br>
-                      <div class="table-responsive">
-                        <style>
-                          /* Estilo para alinear los botones horizontalmente */
-                          .acciones-container {
-                            display: flex;
-                            flex-direction: row; /* Alinea los botones en una fila horizontal */
-                            gap: 8px; /* Espacio entre los botones */
-                          }
-  
-                        </style>
-  
-                        <table id="basic-datatables" class="display table table-striped table-hover">
-                          <thead>
-                            <tr>
-                              <th>Imagen</th>
-                              <th>Nombre</th>
-                              <th>Descripcion</th>
-                              <th>Precio (S/.)</th>
-                              <th>Proveedor</th>
-                              <th>Acciones</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr>
-                              <td><img src="../assets/img/productos/DJIMavicAir.png" alt="Producto más vendido" style="width:50px; height:50px;"></td>
-                              <td>DJI Mavic Air</td>
-                              <td>Drone GPS con cámara 4K UHD...</td>
-                              <td>2100</td>
-                              <td>TecnoProveedores</td>
-                              <td>
-                                <button class="btn btn-info btn-sm" onclick="verRegistro('${dni}')">Ver</button>
-                                <button class="btn btn-warning btn-sm" onclick="editarRegistro('${dni}')">Editar</button>
-                                <button class="btn btn-danger btn-sm" onclick="confirmarBorrado('${dni}')">Borrar</button>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td><img src="../assets/img/productos/DJIPhantom4.png" alt="Producto más vendido" style="width:50px; height:50px;"></td>
-                              <td>DJI Phantom 4 PRO</td>
-                              <td>Dron con cámara 4K UHD ...</td>
-                              <td>6000</td>
-                              <td>Innovatech Solutions</td>
-                              <td>
-                                <button class="btn btn-info btn-sm" onclick="verRegistro('${dni}')">Ver</button>
-                                <button class="btn btn-warning btn-sm" onclick="editarRegistro('${dni}')">Editar</button>
-                                <button class="btn btn-danger btn-sm" onclick="confirmarBorrado('${dni}')">Borrar</button>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td><img src="../assets/img/productos/LGOledTV.png" alt="Producto más vendido" style="width:50px; height:50px;"></td>
-                              <td>LG OLED TV</td>
-                              <td>Smart TV, procesador OLED 4K...</td>
-                              <td>2999</td>
-                              <td>Suministros Digitales</td>
-                              <td>
-                                <button class="btn btn-info btn-sm" onclick="verRegistro('${dni}')">Ver</button>
-                                <button class="btn btn-warning btn-sm" onclick="editarRegistro('${dni}')">Editar</button>
-                                <button class="btn btn-danger btn-sm" onclick="confirmarBorrado('${dni}')">Borrar</button>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td><img src="../assets/img/productos/ONEPlusNord.png" alt="Producto más vendido" style="width:50px; height:50px;"></td>
-                              <td>ONEPlus Nord 5G</td>
-                              <td>Tlf inteligente Android dual SIM...</td>
-                              <td>2199</td>
-                              <td>TechDistribuciones</td>
-                              <td>
-                                <button class="btn btn-info btn-sm" onclick="verRegistro('${dni}')">Ver</button>
-                                <button class="btn btn-warning btn-sm" onclick="editarRegistro('${dni}')">Editar</button>
-                                <button class="btn btn-danger btn-sm" onclick="confirmarBorrado('${dni}')">Borrar</button>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td><img src="../assets/img/productos/PS4.png" alt="Producto más vendido" style="width:50px; height:50px;"></td>
-                              <td>Sony PS4</td>
-                              <td>Consola PlayStation 4 Pro 1TB...</td>
-                              <td>1499</td>
-                              <td>Hardware & Co</td>
-                              <td>
-                                <button class="btn btn-info btn-sm" onclick="verRegistro('${dni}')">Ver</button>
-                                <button class="btn btn-warning btn-sm" onclick="editarRegistro('${dni}')">Editar</button>
-                                <button class="btn btn-danger btn-sm" onclick="confirmarBorrado('${dni}')">Borrar</button>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td><img src="../assets/img/productos/PS5.png" alt="Producto más vendido" style="width:50px; height:50px;"></td>
-                              <td>Sony PS5</td>
-                              <td>Consola PlayStation 5 1TB.....</td>
-                              <td>2500</td>
-                              <td>GlobalTech Supplies</td>
-                              <td>
-                                <button class="btn btn-info btn-sm" onclick="verRegistro('${dni}')">Ver</button>
-                                <button class="btn btn-warning btn-sm" onclick="editarRegistro('${dni}')">Editar</button>
-                                <button class="btn btn-danger btn-sm" onclick="confirmarBorrado('${dni}')">Borrar</button>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td><img src="../assets/img/productos/SamsungS24.png" alt="Producto más vendido" style="width:50px; height:50px;"></td>
-                              <td>Samsung Galaxy S24</td>
-                              <td>Samsung Galaxy S24, 256 GB.....</td>
-                              <td>3600</td>
-                              <td>Distribuidores Unidos</td>
-                              <td>
-                                <button class="btn btn-info btn-sm" onclick="verRegistro('${dni}')">Ver</button>
-                                <button class="btn btn-warning btn-sm" onclick="editarRegistro('${dni}')">Editar</button>
-                                <button class="btn btn-danger btn-sm" onclick="confirmarBorrado('${dni}')">Borrar</button>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td><img src="../assets/img/productos/XiaomiMi11.png" alt="Producto más vendido" style="width:50px; height:50px;"></td>
-                              <td>Xiaomi Mi 11 5G</td>
-                              <td>Xiamomi MI 11, 256 GB + 8 GB .....</td>
-                              <td>1600</td>
-                              <td>Proveedora del Norte</td>
-                              <td>
-                                <button class="btn btn-info btn-sm" onclick="verRegistro('${dni}')">Ver</button>
-                                <button class="btn btn-warning btn-sm" onclick="editarRegistro('${dni}')">Editar</button>
-                                <button class="btn btn-danger btn-sm" onclick="confirmarBorrado('${dni}')">Borrar</button>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td><img src="../assets/img/productos/ZephyrusG16.png" alt="Producto más vendido" style="width:50px; height:50px;"></td>
-                              <td>Zephyrus G16</td>
-                              <td>Laptop Oled 240hz Ultra 9.....</td>
-                              <td>9699</td>
-                              <td>Proveedora del Norte</td>
-                              <td>
-                                <button class="btn btn-info btn-sm" onclick="verRegistro('${dni}')">Ver</button>
-                                <button class="btn btn-warning btn-sm" onclick="editarRegistro('${dni}')">Editar</button>
-                                <button class="btn btn-danger btn-sm" onclick="confirmarBorrado('${dni}')">Borrar</button>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-  
-                        <!-- Popup para confirmar eliminación -->
-                        <div id="confirmarBorradoPopup" class="modal" tabindex="-1" role="dialog">
-                          <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <h5 class="modal-title">Confirmar Eliminación</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="cerrarPopup('confirmarBorradoPopup')">
-                                  <span aria-hidden="true">&times;</span>
-                                </button>
-                              </div>
-                              <div class="modal-body">
-                                <p>¿Estás seguro de que deseas eliminar este registro?</p>
-                              </div>
-                              <div class="modal-footer">
-                                <button type="button" class="btn btn-primary" onclick="eliminarRegistro()">Sí, eliminar</button>
-                                <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="cerrarPopup('confirmarBorradoPopup')">Cancelar</button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-  
-                        <script>
-                          // Función para cerrar popups
-                          function cerrarPopup(id) {
-                            document.getElementById(id).style.display = 'none';
-                          }
-  
-                          // Funciones para manejar la lógica de los botones
-                          function verRegistro(dni) {
-                            window.location.href = `VerProducto.html`; // Redirigir a la vista de ver
-                          }
-  
-                          function editarRegistro(dni) {
-                            window.location.href = `EditarProducto.html`; // Redirigir a la vista de editar
-                          }
-  
-                          function confirmarBorrado(dni) {
-                            document.getElementById('confirmarBorradoPopup').style.display = 'block';
-                            // Guardar el DNI del usuario a eliminar en algún lugar si es necesario
-                          }
-  
-                          function eliminarRegistro() {
-                            alert('Registro eliminado.'); // Aquí se colocaría la lógica para eliminar el registro
-                            cerrarPopup('confirmarBorradoPopup');
-                          }
-  
-                          function confirmarEspiar(dni) {
-                            document.getElementById('confirmarEspiarPopup').style.display = 'block';
-                            // Guardar el DNI del usuario a espiar si es necesario
-                          }
-  
-                          function espiarCuenta() {
-                            window.location.href = '/espiarCuenta'; // Redirigir a la vista de espiar
-                            cerrarPopup('confirmarEspiarPopup');
-                          }
-                        </script>
-  
-  
-  
+            </div>
+        
+            <div class="row">
+              <div class="col-md-12">
+                <div class="card">
+                  <div class="card-body">
+        
+                    <!-- Filtros -->
+                    <form id="filtroForm" class="form-inline d-flex align-items-center">
+                      <div class="form-group mb-2 me-2">
+                        <label for="zonaFiltro" class="mr-2">Filtrar por zona:</label>
+                        <select id="zonaFiltro" class="form-control filtro-pequeno">
+                          <option value="">Todas las zonas</option>
+                          <option value="Norte">Norte</option>
+                          <option value="Sur">Sur</option>
+                          <option value="Este">Este</option>
+                          <option value="Oeste">Oeste</option>
+                        </select>
                       </div>
-  
+                      <button type="button" class="btn btn-dark mb-2 me-2" onclick="filtrarPorZona()">Filtrar</button>
+                      <button type="button" class="btn btn-outline-secondary mb-2" onclick="limpiarFiltro()">Limpiar Filtro</button>
+                    </form>
+        
+                    <br>
+        
+                    <div class="table-responsive">
+                      <style>
+                        /* Estilo para alinear los botones horizontalmente */
+                        .acciones-container {
+                          display: flex;
+                          flex-direction: row; /* Alinea los botones en una fila horizontal */
+                          gap: 8px; /* Espacio entre los botones */
+                        }
+        
+                        /* Reducir el tamaño de la barra del filtro */
+                        .filtro-pequeno {
+                          width: 150px; /* Ajusta el ancho a lo que necesites */
+                          font-size: 0.875rem; /* Ajusta el tamaño de la fuente si es necesario */
+                        }
+        
+                        /* Alineación de los elementos en el formulario de filtro */
+                        .form-inline {
+                          display: flex;
+                          align-items: center; /* Alinea verticalmente los elementos */
+                          gap: 8px; /* Espacio entre los elementos del formulario */
+                        }
+                      </style>
+        
+                      <table id="basic-datatables" class="display table table-striped table-hover">
+                        <thead>
+                          <tr>
+                          
+                            <th>Nombre</th>
+                            <th>Cantidad</th>
+                            <th>Zona</th>
+                            <th>Fecha de pedido</th>
+                            <th>Acciones</th>
+                          </tr>
+                        </thead>
+                        <tbody id="tablaProductos">
+
+
+                          <tr>
+                         
+                            <td>DJI Phantom 4 PRO</td>
+                            <td>12</td>
+                            <td>Este</td>
+                            <td>2024-08-07 18:05:52</td>
+                            <td>
+                              <div class="dropdown">
+                                <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                  <i class="fas fa-ellipsis-v"></i>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
+                                  <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#aceptarModal">Aprobar</a></li>
+                                  <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#denegarModal">Rechazar</a></li>
+                                </ul>
+                              </div>
+                            </td>
+                          </tr>
+
+                          <tr>
+                          
+                            <td>ONEPlus Nord 5G</td>
+                            <td>34</td>
+                            <td>Oeste</td>
+                            <td>2024-08-08 20:34:12</td>
+                          
+                            <td>
+                              <!-- Dropdown con ícono -->
+                              <div class="dropdown">
+                                <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                  <i class="fas fa-ellipsis-v"></i>
+                                </button>                       <!-- Dropdown oscuro -->
+                                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
+                                  <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#aceptarModal">Aprobar</a></li>
+                                  <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#denegarModal">Rechazar</a></li>        
+                                </ul>
+                              </div>
+                          </td>
+                          </tr>
+                          <tr>
+                          
+                            <td>Sony PS4</td>
+                            <td>37</td>
+                            <td>Sur</td>
+                            <td>2024-08-08 21:44:24</td>
+                            <td>
+                              <!-- Dropdown con ícono -->
+                              <div class="dropdown">
+                                <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                  <i class="fas fa-ellipsis-v"></i>
+                                </button>
+                                                       <!-- Dropdown oscuro -->
+                                                       <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
+                                                        <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#aceptarModal">Aprobar</a></li>
+                                                        <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#denegarModal">Rechazar</a></li>        
+                                                      </ul>
+                              </div>
+                          </td>
+                          </tr>
+                          <tr>
+                           
+                            <td>Sony PS5</td>
+                            <td>42</td>
+                            <td>Sur</td>
+                            <td>2024-08-09 12:57:15</td>
+                            <td>
+                              <!-- Dropdown con ícono -->
+                              <div class="dropdown">
+                                <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                  <i class="fas fa-ellipsis-v"></i>
+                                </button>
+                                <!-- Dropdown oscuro -->
+                                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
+                                  <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#aceptarModal">Aprobar</a></li>
+                                  <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#denegarModal">Rechazar</a></li>        
+                                </ul>
+                              </div>
+                          </td>
+                          </tr>
+                          <tr>
+                           
+                            <td>Samsung Galaxy S24</td>
+                            <td>38</td>
+                            <td>Norte</td>
+                            <td>2024-08-08 09:43:13</td>
+                            <td>
+                              <!-- Dropdown con ícono -->
+                              <div class="dropdown">
+                                <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                  <i class="fas fa-ellipsis-v"></i>
+                                </button>                       <!-- Dropdown oscuro -->
+                                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
+                                  <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#aceptarModal">Aprobar</a></li>
+                                  <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#denegarModal">Rechazar</a></li>        
+                                </ul>
+                              </div>
+                          </td>
+
+                          </tr>
+                          <tr>
+                        
+                            <td>Xiaomi Mi 11 5G</td>
+                            <td>35</td>
+                            <td>Norte</td>
+                            <td>2024-08-10 10:23:21</td>
+                            <td>
+                              <!-- Dropdown con ícono -->
+                              <div class="dropdown">
+                                <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                  <i class="fas fa-ellipsis-v"></i>
+                                </button>                       <!-- Dropdown oscuro -->
+                                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
+                                  <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#aceptarModal">Aprobar</a></li>
+                                  <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#denegarModal">Rechazar</a></li>        
+                                </ul>
+                              </div>
+                          </td>
+                          </tr>
+                          <tr>
+                            
+                            <td>Zephyrus G16</td>
+                            <td>35</td>
+                            <td>Sur</td>
+                            <td>2024-08-10 11:23:21</td>
+                            <td>
+                              <!-- Dropdown con ícono -->
+                              <div class="dropdown">
+                                <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                  <i class="fas fa-ellipsis-v"></i>
+                                </button>                       <!-- Dropdown oscuro -->
+                                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
+                                  <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#aceptarModal">Aprobar</a></li>
+                                  <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#denegarModal">Rechazar</a></li>        
+                                </ul>
+                              </div>
+                          </td>
+
+                          </tr>
+
+
+                        </tbody>
+                      </table>
+        
+                      <!-- Modal para Denegar -->
+                      <!-- Código de modales existente... -->
+        
                     </div>
                   </div>
                 </div>
-  
               </div>
             </div>
           </div>
+        </div>
+        
+        <!-- Scripts para los filtros -->
+        <script>
+          function filtrarPorZona() {
+            var zonaFiltro = document.getElementById("zonaFiltro").value;
+            var tabla = document.getElementById("tablaProductos");
+            var filas = tabla.getElementsByTagName("tr");
+        
+            for (var i = 0; i < filas.length; i++) {
+              var zona = filas[i].getElementsByTagName("td")[3].innerText;
+              if (zonaFiltro === "" || zona === zonaFiltro) {
+                filas[i].style.display = "";
+              } else {
+                filas[i].style.display = "none";
+              }
+            }
+          }
+        
+          function limpiarFiltro() {
+            document.getElementById("zonaFiltro").value = ""; // Resetea el filtro a todas las zonas
+            filtrarPorZona(); // Muestra todas las filas de nuevo
+          }
+        </script>
+        
         <!-- Fin del contenido central -->
 
 
