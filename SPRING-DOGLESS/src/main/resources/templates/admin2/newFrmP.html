@@ -9,6 +9,8 @@
                     <h2>Nuevo Proveedor</h2>
                     <hr/>
                     <form method="post" th:action="@{/admin/guardarProveedor}" th:object="${proveedor}">
+                    <input type="hidden" name="id" value="${proveedor.id}">
+                    <div th:if="${msg != null}" th:text="${msg}" class="alert alert-success" role="alert"></div>
 
                         <div class="mb-3">
                             <label for="nombre" class="form-label">Nombre del Proveedor</label>
