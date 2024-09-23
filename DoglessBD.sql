@@ -191,6 +191,7 @@ CREATE TABLE IF NOT EXISTS `dogless`.`solicitudes` (
   `idsolicitudes` INT NOT NULL,
   `veredicto` TINYINT NULL,
   `comentario` VARCHAR(300) NULL,
+  `borrado` VARCHAR(300) NULL,
   `idusuarios` INT NOT NULL,
   PRIMARY KEY (`idsolicitudes`),
   INDEX `fk_solicitudes_usuarios1_idx` (`idusuarios` ASC) VISIBLE,
