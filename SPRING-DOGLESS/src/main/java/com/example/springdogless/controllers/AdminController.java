@@ -187,15 +187,16 @@ public class AdminController {
 //        return "usuario/list";
     }
 
-    /*
+
     @GetMapping(value = "nuevoProveedor")
     public String nuevoProveedor(Model model, @ModelAttribute("proveedor") Proveedor proveedor) {
         List<Proveedor> listaProveedores = proveedorRepository.findAll();
         model.addAttribute("listaProveedores", listaProveedores);
         //model.addAttribute("listaOrderDetails", listaOrderDetailsm);
-        return "product/newFrmP";
+        return "admin2/newFrmP";
     }
 
+    /*
 
     @GetMapping("/editarProveedor")
     public String editarProveedor(@ModelAttribute("proveedor") Proveedor proveedor, Model model, @RequestParam("id") int id) {
