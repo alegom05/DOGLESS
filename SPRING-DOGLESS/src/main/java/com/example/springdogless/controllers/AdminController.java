@@ -2,16 +2,16 @@ package com.example.springdogless.controllers;
 
 import com.example.springdogless.Repository.*;
 
-import com.example.springdogless.entity.Distrito;
-import com.example.springdogless.entity.Rol;
-import com.example.springdogless.entity.Usuario;
-import com.example.springdogless.entity.Zona;
+import com.example.springdogless.entity.*;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -36,6 +36,8 @@ public class AdminController {
     RolRepository rolRepository;
     @Autowired
     SolicitudRepository solicitudRepository;
+    @Autowired
+    ProveedorRepository proveedorRepository;
 
     @GetMapping({"/lista",""})
     public String listaUsuariosTotales(Model model, @RequestParam(required = false) String zona) {
@@ -180,10 +182,90 @@ public class AdminController {
 
     @GetMapping("proveedores")
     public String listaProveedores(Model model, @RequestParam(required = false) String zona) {
-        model.addAttribute("listaProveedores", solicitudRepository.findAll());
+        model.addAttribute("listaProveedores", proveedorRepository.findAll());
         return "admin2/plist";
 //        return "usuario/list";
     }
+
+    /*
+    @GetMapping(value = "nuevoProveedor")
+    public String nuevoProveedor(Model model, @ModelAttribute("proveedor") Proveedor proveedor) {
+        List<Proveedor> listaProveedores = proveedorRepository.findAll();
+        model.addAttribute("listaProveedores", listaProveedores);
+        //model.addAttribute("listaOrderDetails", listaOrderDetailsm);
+        return "product/newFrmP";
+    }
+
+
+    @GetMapping("/editarProveedor")
+    public String editarProveedor(@ModelAttribute("proveedor") Proveedor proveedor, Model model, @RequestParam("id") int id) {
+        Optional<Proveedor> optProveedor = proveedorRepository.findById(id);
+        if (optProveedor.isPresent()) {
+            proveedor = optProveedor.get();
+            model.addAttribute("proveedor", proveedor);
+            model.addAttribute("listaProveedores", proveedorRepository.findAll());
+
+            return "product/newFrmP";
+        } else {
+            return "redirect:/product";
+        }
+    }
+    */
+
+    /*
+    @PostMapping("/save")
+    public String guardarProducto(RedirectAttributes attr,
+                                  Model model,
+                                  @ModelAttribute("proveedor") @Valid Proveedor proveedor,
+                                  BindingResult bindingResult) {
+
+        if(bindingResult.hasErrors()){
+            model.addAttribute("listaProveedores", proveedorRepository.findAll());
+            return "proveedor/newFrmP";
+        }else{
+            if (proveedor.getId() == 0) {
+                List<Proveedor> productList = proveedorRepository.findByProveedorName(proveedor.getProveedorName());
+                boolean existe = false;
+                for (Proveedor p : productList) {
+                    if (p.getNombre().equals(proveedor.getNombre())) {
+                        existe = true;
+                        break;
+                    }
+                }
+                if (existe) {
+                    System.out.println("El proveedor existe");
+                    model.addAttribute("listaProveedores", proveedorRepository.findAll());
+                    return "product/newFrm";
+                } else {
+                    attr.addFlashAttribute("msg", "Proveedor creado exitosamente");
+                    proveedorRepository.save(proveedor);
+                    return "redirect:/product";
+                }
+            } else {
+                attr.addFlashAttribute("msg", "Proveedor actualizado exitosamente");
+                proveedorRepository.save(proveedor);
+                return "redirect:/product";
+            }
+        }
+    }
+    */
+
+    /*
+    @GetMapping("/delete")
+    public String borrarTransportista(Model model,
+                                      @RequestParam("id") int id,
+                                      RedirectAttributes attr) {
+
+        Optional<Product> optProduct = productRepository.findById(id);
+
+        if (optProduct.isPresent()) {
+            productRepository.deleteById(id);
+            attr.addFlashAttribute("msg", "Producto borrado exitosamente");
+        }
+        return "redirect:/product";
+
+    }
+    */
 
 
     /*

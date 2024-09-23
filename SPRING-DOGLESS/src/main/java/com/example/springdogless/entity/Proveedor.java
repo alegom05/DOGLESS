@@ -33,5 +33,7 @@ public class Proveedor {
     private String tienda;
 
     @Column(name = "estado")
-    private Boolean estado;
+    private String estado;
+
+
 }
