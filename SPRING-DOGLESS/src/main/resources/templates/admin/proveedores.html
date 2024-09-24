@@ -277,8 +277,7 @@
                     <div class="card-body">
                       <button
                               class="btn btn-primary btn-round ms-auto"
-                              onclick="window.location.href='NuevoProveedor.html';"
-                      >
+                              onclick="window.location.href='/agregarProveedor';">
                         <i class="fa fa-plus"></i>
                         Agregar Proveedor
                       </button>
@@ -325,7 +324,7 @@
                                   <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
                                     <li><a class="dropdown-item" href="@{/admin}">Ver</a></li>
 
-                                    <li><a class="dropdown-item" th:ref="@{'/admin/editarProveedor' + '?id=' + ${proveedor.id}}">Editar</a></li>
+                                    <li><a class="dropdown-item" th:href="@{'/admin/editarProveedor' + '?id=' + ${proveedor.id}}">Editar</a></li>
                                     <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#denegarModal">Eliminar</a></li>
                                   </ul>
                                 </div>
