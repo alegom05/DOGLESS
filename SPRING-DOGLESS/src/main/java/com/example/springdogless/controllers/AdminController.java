@@ -38,8 +38,10 @@ public class AdminController {
     SolicitudRepository solicitudRepository;
     @Autowired
     ProveedorRepository proveedorRepository;
+    @Autowired
+    private ProductRepository productRepository;
 
-    @GetMapping({"/lista",""})
+    @GetMapping({"/lista", ""})
     public String listaUsuariosTotales(Model model, @RequestParam(required = false) String zona) {
         model.addAttribute("listaUsuarios", usuarioRepository.findByRol(4));
         model.addAttribute("listaAgentes", usuarioRepository.findByRol(3));
@@ -48,18 +50,21 @@ public class AdminController {
         return "admin/paginaprincipal";
 //        return "usuario/list";
     }
+
     @GetMapping("/adminzonal")
     public String listaAdminZonal(Model model, @RequestParam(required = false) String zona) {
         model.addAttribute("listaUsuarios", usuarioRepository.findByRol(2));
 
         return "admin/adminzonales";
     }
+
     @GetMapping("/new")
     public String nuevoAdminZonalFrm(Model model) {
-        model.addAttribute("listaZonas",zonaRepository.findAll());
-        model.addAttribute("listaDistritos",distritoRepository.findAll());
+        model.addAttribute("listaZonas", zonaRepository.findAll());
+        model.addAttribute("listaDistritos", distritoRepository.findAll());
         return "admin/agregar_adminzonal";
     }
+
     @PostMapping("/guardar")
     public String crearAdminZonal(Usuario usuario, @RequestParam("idzonas") Integer idZona,
                                   @RequestParam("iddistritos") Integer idDistrito,
@@ -96,13 +101,14 @@ public class AdminController {
         if (optUsuario.isPresent()) {
             Usuario usuario = optUsuario.get();
             model.addAttribute("usuario", usuario);
-            model.addAttribute("listaZonas",zonaRepository.findAll());
-            model.addAttribute("listaDistritos",distritoRepository.findAll());
+            model.addAttribute("listaZonas", zonaRepository.findAll());
+            model.addAttribute("listaDistritos", distritoRepository.findAll());
             return "admin/editar_adminzonal";
         } else {
             return "redirect:/admin/adminzonal";
         }
     }
+
     @PostMapping("/save")
     public String guardarAdminZonal(@RequestParam("id") int id,
                                     @RequestParam String correo,
@@ -197,7 +203,6 @@ public class AdminController {
     }
 
 
-
     @GetMapping("/editarProveedor")
     public String editarProveedor(@ModelAttribute("proveedor") Proveedor proveedor, Model model, @RequestParam("id") int id) {
         Optional<Proveedor> optProveedor = proveedorRepository.findById(id);
@@ -213,48 +218,54 @@ public class AdminController {
     }
 
 
-
     @PostMapping("/guardarProveedor")
     public String guardarProveedor(RedirectAttributes attr,
-                                  Model model,
-                                  @ModelAttribute("proveedor") @Valid Proveedor proveedor,
-                                  BindingResult bindingResult) {
+                                   Model model,
+                                   @ModelAttribute("proveedor") @Valid Proveedor proveedor,
+                                   BindingResult bindingResult) {
 
-        if(bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             model.addAttribute("listaProveedores", proveedorRepository.findAll());
             return "admin2/newFrmP";
-        }else{
-            if (proveedor.getId() == null || proveedor.getId()==0) {
-                List<Proveedor> proveedorlist = proveedorRepository.findByNombre(proveedor.getNombre());
-                boolean existe = false;
-                for (Proveedor p : proveedorlist) {
-                    if (p.getNombre().equals(proveedor.getNombre())) {
-                        existe = true;
-                        break;
-                    }
+        }
+
+        boolean isNewProveedor = (proveedor.getId() == null);
+
+        if (isNewProveedor) {
+            Optional<Proveedor> proveedorlist = proveedorRepository.findByDni(proveedor.getDni());
+
+            boolean existe = false;
+
+            if (proveedorlist.isPresent()) {
+                Proveedor existingProveedor = proveedorlist.get();
+                if (existingProveedor.getDni().equals(proveedor.getDni())) {
+                    existe = true;
                 }
-                if (existe) {
-                    System.out.println("El proveedor existe");
-                    model.addAttribute("listaProveedores", proveedorRepository.findAll());
-                    return "admin2/newFrmP";
-                } else {
-                    attr.addFlashAttribute("msg", "Proveedor creado exitosamente");
-                    proveedorRepository.save(proveedor);
-                    return "redirect:/admin/proveedores";
-                }
+            }
+            if (existe) {
+                System.out.println("El proveedor existe");
+                model.addAttribute("listaProveedores", proveedorRepository.findAll());
+                return "admin2/newFrmP";
             } else {
-                attr.addFlashAttribute("msg", "Proveedor actualizado exitosamente");
+                attr.addFlashAttribute("msg", "Proveedor creado exitosamente");
                 proveedorRepository.save(proveedor);
                 return "redirect:/admin/proveedores";
             }
+        } else {
+            attr.addFlashAttribute("msg", "Proveedor actualizado exitosamente");
+            proveedorRepository.save(proveedor);
+            return "redirect:/admin/proveedores";
         }
     }
+
 
     //Vista de productos
     @GetMapping("productos")
     public String listaProductos(Model model, @RequestParam(required = false) String zona) {
-        model.addAttribute("listaProveedores", proveedorRepository.findAll());
-        return "admin2/dlist";
+
+        model.addAttribute("listaProductos", productRepository.findAll());
+        return "admin2/plist";
+
     }
 
 

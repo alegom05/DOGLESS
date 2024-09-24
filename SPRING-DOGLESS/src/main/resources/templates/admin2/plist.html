@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{fragments/navbar.html :: header( title = 'Usuarios')}"></head>
+<head th:replace="~{fragments/navbar.html :: header( title = 'Productos')}"></head>
 <body>
 <main>
     <div class="container px-4 pb-5">
         <nav th:replace="~{fragments/navbar.html :: navbar( active = 'Users')}"></nav>
-        <h1 class="pb-2 border-bottom">Proveedores</h1>
-        <a class="btn btn-primary mt-4 mb-4" th:href="@{'/admin/nuevoProveedor'}">Nuevo Proveedor</a>
+        <h1 class="pb-2 border-bottom">Productos</h1>
+        <a class="btn btn-primary mt-4 mb-4" th:href="@{'/admin/nuevoProveedor'}">Nuevo Producto</a>
         <table class="table">
             <thead>
             <tr>
@@ -35,10 +35,10 @@
                 descripcion
                 -->
                 <td><a class="btn btn-primary"
-                       th:href="@{'/admin/editarProveedor' + '?id=' + ${proveedor.id}}">Editar</a>
+                       th:href="@{'/admin/editarProveedor' + '?id=' + ${producto.id}}">Editar</a>
                 </td>
                 <td><a class="btn btn-danger"
-                       th:href="@{'/admin/borrarProveedor' + '?id=' + ${proveedor.id}}">Borrar</a>
+                       th:href="@{'/admin/borrarProveedor' + '?id=' + ${producto.id}}">Borrar</a>
                 </td>
             </tr>
             </tbody>
