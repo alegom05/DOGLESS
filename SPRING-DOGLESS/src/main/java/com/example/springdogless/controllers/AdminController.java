@@ -184,7 +184,7 @@ public class AdminController {
     @GetMapping("proveedores")
     public String listaProveedores(Model model, @RequestParam(required = false) String zona) {
         model.addAttribute("listaProveedores", proveedorRepository.findAll());
-        return "plist";
+        return "admin2/vlist";
     }
 
 
