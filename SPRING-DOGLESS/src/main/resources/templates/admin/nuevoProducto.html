@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Ver Proveedor</title>
+    <title>Nuevo Productos</title>
     <meta
             content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
             name="viewport"
@@ -128,12 +128,12 @@
                 </a>
                 <div class="collapse show" id="tables2">
                   <ul class="nav nav-collapse">
-                    <li class="active">
+                    <li>
                       <a href="proveedores.html">
                         <span class="sub-item">Proveedores</span>
                       </a>
                     </li>
-                    <li>
+                    <li class="active">
                       <a href="productos.html">
                         <span class="sub-item">Productos</span>
                       </a>
@@ -266,7 +266,7 @@
                          <div class="page-inner">
                            <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
                              <div>
-                               <h3 class="fw-bold mb-3">Ver Proveedor</h3>
+                               <h3 class="fw-bold mb-3">Nuevo Producto</h3>
                              </div>
                            </div>
                            <div class="row">
@@ -274,64 +274,79 @@
                                <div class="card">
                
                                  <div class="card-body">
-                                   <form class="needs-validation" style="width: 100%; margin-left: 0%; margin-top: 3%;" action="proveedores.html" method="POST" novalidate>
+                                   <form class="needs-validation" style="width: 100%; margin-left: 0%; margin-top: 3%;" action="productos.html" method="POST" novalidate>
                                      <div class="container">
-                                       <div class="container" style="margin-top: 3%; ">
-                                         <div class="row">
-                                           <div class="col">
-                                             <div class="mb-3">
-                                               <label for="nombre" class="form-label">Nombres: (*)</label>
-                                               <input type="text" name="nombre" id="nombre" placeholder="Ej: Tomas" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ]+(\s[a-zA-ZáéíóúÁÉÍÓÚñÑ]+)?" class="form-control" required>
-                                               <div class="invalid-feedback">Por favor ingresar nombre(s).</div>
-                                             </div>
+                                       <div class="row">
+                                         <!-- Columna izquierda -->
+                                         <div class="col-md-6">
+                                           <div class="mb-3">
+                                             <label for="nombre" class="form-label">Nombre: (*)</label>
+                                             <input type="text" name="nombre" id="nombre" class="form-control" pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]+(\s[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]+){0,4}"
+                                                    placeholder="Ej: iPhone 14" required>
+                                             <div class="invalid-feedback">Por favor ingresar nombre(s).</div>
                                            </div>
-                                           <div class="col">
-                                             <div class="mb-3">
-                                               <label for="apellido" class="form-label">Nombre de Tienda: (*)</label>
-                                               <input type="text" name="apellido" id="apellido" placeholder="Ej: Rodriguez S.A" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ]+(\s[a-zA-ZáéíóúÁÉÍÓÚñÑ]+)?" class="form-control" aria-describedby="emailHelp" required>
-                                               <div class="invalid-feedback">Por favor ingresar un nombre de tienda valido.</div>
-                                             </div>
+                                           <div class="mb-3">
+                                             <label for="categoria" class="form-label">Categoría: (*)</label>
+                                             <input type="text" name="categoria" id="categoria" class="form-control" pattern="[a-zA-áéíóúÁÉÍÓÚñÑ]+(\s[a-zA-áéíóúÁÉÍÓÚñÑ]+){0,4}"
+                                                    placeholder="Ej: Teléfono móvil" required>
+                                             <div class="invalid-feedback">Por favor ingresar categoría</div>
+                                           </div>
+                                           <div class="mb-3">
+                                             <label for="proveedor" class="form-label">Proveedor: (*)</label>
+                                             <select name="proveedor" id="proveedor" class="form-select" required>
+                                               <option value="" disabled selected>Seleccionar proveedor</option>
+                                               <option value="Proveedor 1">Proveedor 1</option>
+                                               <option value="Proveedor 2">Proveedor 2</option>
+                                             </select>
+                                             <div class="invalid-feedback">Por favor selecciona un proveedor.</div>
+                                           </div>
+                                           <div class="mb-3">
+                                             <label for="precio" class="form-label">Precio: (*)</label>
+                                             <input type="number" name="precio" id="precio" class="form-control" placeholder="Ej: 4000" required>
+                                             <div class="invalid-feedback">Por favor ingresar el precio.</div>
+                                           </div>
+                                           <div class="mb-3">
+                                             <label for="modelo" class="form-label">Modelo: </label>
+                                             <input type="text" name="modelo" id="modelo" class="form-control" pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]+(\s[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]+){0,4}"
+                                                    placeholder="Ej: iPhone 14 Pro 256GB" >
+                                             <div class="invalid-feedback">Por favor ingresar modelo válido.</div>
+                                           </div>
+                                           <div class="mb-3">
+                                             <label for="costo_envio" class="form-label">Costo de envío: (*)</label>
+                                             <input type="number" name="costo_envio" id="costo_envio" class="form-control" placeholder="Ej: 0.50" step="0.01" required>
+                                             <div class="invalid-feedback">Por favor ingresar el costo de envio.</div>
+                                           </div>
+                                           <div class="mb-3">
+                                             <label for="color" class="form-label">Color: </label>
+                                             <input type="text" name="color" id="color" class="form-control" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ]+(\s[a-zA-ZáéíóúÁÉÍÓÚñÑ]+)?" placeholder="Ej: Gris" >
+                                             <div class="invalid-feedback">Por favor ingresar un color válido.</div>
                                            </div>
                                          </div>
-                                         <div class="row">
-                                           <div class="col">
-                                             <div class="mb-3">
-                                               <label for="dni" class="form-label" >DNI: (*)</label>
-                                               <input type="tel" class="form-control" name="dni" id="dni" maxlength="8" minlength="8" placeholder="Ej: 87654321" pattern="[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]" title="ingrese su DNI" required>
-                                               <div class="invalid-feedback">Por favor ingresar DNI.</div>
+               
+                                         <!-- Columna derecha -->
+                                         <div class="col-md-6">
+                                           <div class="mb-3">
+                                             <label for="imagen" class="form-label">Imagen: (*)</label>
+                                             <input type="file" name="imagen" id="imagen" class="form-control" accept="image/*" onchange="previewImage(event)" required>
+                                             <div class="invalid-feedback">Por favor seleccione una imagen.</div>
+                                             <div class="mt-3">
+                                               <img id="imagePreview" src="#" alt="Vista previa de la imagen" style="display:none; max-width: 100%; max-height: 200px;">
                                              </div>
                                            </div>
-                                           <div class="col">
-                                             <div class="mb-3">
-                                               <label for="dni" class="form-label" >RUC: (*)</label>
-                                               <input type="tel" class="form-control" name="dni" id="ruc" maxlength="11" minlength="11" placeholder="Ej: 87654321682" pattern="[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]" title="ingrese su RUC" required>
-                                               <div class="invalid-feedback">Por favor ingresar RUC.</div>
-                                             </div>
-                                           </div>
-                                         </div>
-                                         <div class="row">
-                                           <div class="col">
-                                             <div class="mb-3">
-                                               <label for="telefono" class="form-label">Número de Teléfono: (*)</label>
-                                               <input type="tel" class="form-control" name="telefono" id="telefono" maxlength="9" minlength="9" placeholder="Ej: 987654321" pattern="[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]" title="ingrese su número de teléfono" required>
-                                               <div class="invalid-feedback">Por favor ingresar número de teléfono.</div>
-                                             </div>
-                                           </div>
-                                           <div class="col">
-                                             <div class="mb-3">
-                                               <br>
-                                               <br>
-                                               <h6 class="obligatory-fields">(*)Campos obligatorios</h6>
-                                             </div>
+                                           <div class="mb-3">
+                                             <label for="descripcion" class="form-label">Descripción: (*)</label>
+                                             <textarea name="descripcion" id="descripcion" class="form-control" rows="10" placeholder="Ej: El iPhone 14 Pro es el último modelo de la serie de teléfonos móviles premium..." required></textarea>
+                                             <div class="invalid-feedback">Por favor ingresa una descripción.</div>
+                                             <h6 class="obligatory-fields">(*)Campos obligatorios</h6>
                                            </div>
                                          </div>
                                        </div>
-                                     </div>
-                                     <div class="btn-container">
-                                       <button type="submit" class="btn btn-primary" style="width: 200px;">Crear</button>
+               
+                                       <div class="btn-container" style="text-align: center; margin-top: 20px;">
+                                         <button type="submit" class="btn btn-primary" style="width: 280px;">Crear</button>
+                                       </div>
                                      </div>
                                    </form>
-               
                                  </div>
                                </div>
                              </div>
@@ -365,15 +380,13 @@
 
 
 
-      <!-- Core JS Files -->
+      <!--Core JS Files   -->
       <script src="../../static/assets/js/core/jquery-3.7.1.min.js"></script>
       <script src="../../static/assets/js/core/popper.min.js"></script>
       <script src="../../static/assets/js/core/bootstrap.min.js"></script>
 
       <!-- jQuery Scrollbar -->
       <script src="../../static/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
-
-
       <!-- Datatables -->
       <script src="../../static/assets/js/plugin/datatables/datatables.min.js"></script>
 
@@ -385,7 +398,17 @@
       <script src="../../static/assets/js/kaiadmin.min.js"></script>
       <script>
         $(document).ready(function () {
-          $("#basic-datatables").DataTable({});
+          $("#basic-datatables").DataTable({
+            language: {
+              search: "Buscar:",
+              lengthMenu: "Mostrar _MENU_ entradas por página",
+              info: "Mostrando _START_ a _END_ de _TOTAL_ entradas",
+              paginate: {
+                previous: "Anterior",
+                next: "Siguiente"
+              }
+            }
+          });
   
           $("#multi-filter-select").DataTable({
             pageLength: 5,
@@ -422,6 +445,7 @@
           // Add Row
           $("#add-row").DataTable({
             pageLength: 5,
+  
           });
   
           var action =
@@ -440,5 +464,6 @@
           });
         });
       </script>
+      
   </body>
 </html>

@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Ver Proveedor</title>
+    <title>Ver Usuarios final</title>
     <meta
             content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
             name="viewport"
@@ -94,15 +94,15 @@
                 </a>
               </li>
 
-              <li class="nav-item">
+              <li class="nav-item active submenu">
                 <a data-bs-toggle="collapse" href="#tables1">
                   <i class="fas fa-users"></i>
                   <p>Usuarios</p>
                   <span class="caret"></span>
                 </a>
-                <div class="collapse" id="tables1">
+                <div class="collapse show" id="tables1">
                   <ul class="nav nav-collapse">
-                    <li>
+                    <li >
                       <a href="adminzonales.html">
                         <span class="sub-item">Administradores zonales</span>
                       </a>
@@ -112,7 +112,7 @@
                         <span class="sub-item">Agentes zonales</span>
                       </a>
                     </li>
-                    <li>
+                    <li class="active">
                       <a href="usuarios.html">
                         <span class="sub-item">Usuarios finales</span>
                       </a>
@@ -120,15 +120,15 @@
                   </ul>
                 </div>
               </li>
-              <li class="nav-item active submenu">
+              <li class="nav-item">
                 <a data-bs-toggle="collapse" href="#tables2">
                   <i class="far fa-handshake"></i>
                   <p>Personal</p>
                   <span class="caret"></span>
                 </a>
-                <div class="collapse show" id="tables2">
+                <div class="collapse" id="tables2">
                   <ul class="nav nav-collapse">
-                    <li class="active">
+                    <li>
                       <a href="proveedores.html">
                         <span class="sub-item">Proveedores</span>
                       </a>
@@ -263,82 +263,123 @@
 
         <!-- Texto o contenido central -->
         <div class="container">
-                         <div class="page-inner">
-                           <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
-                             <div>
-                               <h3 class="fw-bold mb-3">Ver Proveedor</h3>
-                             </div>
-                           </div>
-                           <div class="row">
-                             <div class="col-md-12">
-                               <div class="card">
+            <div class="page-inner">
+              <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
+               <div>
+                <h3 class="fw-bold mb-3">Ver Usuarios Finales</h3>
+               </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="card">
+  
+                         <div class="card-body">
+                                                  <form class="needs-validation" style="width: 100%; margin-left: 0%; margin-top: 3%;" action="agentes.html" method="POST" novalidate>
+                                                    <div class="container">
+                              
+                                                       <div class="row">
+                                                                  <div class="col">
+                                                                                  <div class="mb-3">
+                                                                                                         <label for="dni" class="form-label">DNI: (*)</label>
+                                                                                                           <input type="text" name="dni" id="dni" class="form-control" value="77040283" pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]+(\s[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]+){0,4}"
+                                                                                                                  placeholder="Ej: 77040283" readonly>
+                                                                                                           <div class="invalid-feedback">Por favor ingresar DNI.</div>
+                                                                                          </div>
+                                                                 </div>
+                                                                                <div class="col">
+                                                                                                      <div class="mb-3">
+                                                                                                         <label for="telefono" class="form-label">Teléfono: (*)</label>
+                                                                                                         <input type="text" name="telefono" id="telefono" class="form-control" value="948134144" pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]+(\s[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]+){0,4}"
+                                                                                                                placeholder="Ej: 984134144" readonly>
+                                                                                                         <div class="invalid-feedback">Por favor ingresar teléfono(s).</div>
+                                                                                                      </div>
+                                                                                                    </div>
+                                                                              </div>
+                                                       
+                                                                              <div class="row">
+                                                                                <div class="col">
+                                                                                  <div class="mb-3">
+                                                                                                         <label for="nombre" class="form-label">Nombre: (*)</label>
+                                                                                                           <input type="text" name="nombre" id="nombre" class="form-control" value="Pedro" pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]+(\s[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]+){0,4}"
+                                                                                                                  placeholder="Ej: Epifanio" readonly>
+                                                                                                           <div class="invalid-feedback">Por favor ingresar nombre(s).</div>
+                                                                                  </div>
+                                                                                </div>
+                                                                                <div class="col">
+                                                                                                      <div class="mb-3">
+                                                                                                         <label for="apellido" class="form-label">Apellido: (*)</label>
+                                                                                                         <input type="text" name="apellido" id="apellido" class="form-control" value="Bustamante" pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]+(\s[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]+){0,4}"
+                                                                                                                placeholder="Ej: Bustamante" readonly> 
+                                                                                                         <div class="invalid-feedback">Por favor ingresar apellido(s).</div>
+                                                                                                      </div>
+                                                                                                    </div>
+                                                                              </div>
+                              
+                                                                              <div class="row">
+                                                                                <div class="col">
+                                                                                  <div class="mb-3">
+                                                                                                         <label for="correo" class="form-label">Correo: </label>
+                                                                                                         <input type="text" name="correo" id="correo" class="form-control" value="pedro.bustamante@gmail.com" pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]+(\s[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]+){0,4}"
+                                                                                                                placeholder="Ej: pedro.bustamante@gmail.com" readonly>
+                                                                                                          <div class="invalid-feedback">Por favor ingresar modelo válido.</div>
+                                                                                  </div>
+                                                                                </div>
+                                                                                <div class="col">
+                                                                                  <div class="mb-3">
+                                                                                    <label for="zona" class="form-label">Zona:</label>
+                                                                                    <select name="zona" id="zona" class="form-control" disabled>
+                                                                                      <option value="Norte" selected>Norte</option>
+                                                                                      <option value="Sur">Sur</option>
+                                                                                      <option value="Este">Este</option>
+                                                                                      <option value="Oeste">Oeste</option>
+                                                                                    </select>
+                                                                                    <div class="invalid-feedback">Por favor ingresar zona.</div>
+                                                                                  </div>
+                              
+                                                                                </div>
+                              
+                                                                              </div>
+                              
+                                                      <div class="row">
+                                                                           <div class="col">
+                                                                                                    <div class="mb-3">
+                                                                                                                           <label for="contrasena" class="form-label">Contraseña: </label>
+                                                                                                                           <input type="text" name="contrasena" id="contrasena" class="form-control" value="AaBbCc123" pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]+(\s[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]+){0,4}"
+                                                                                                                                  placeholder="Ej: AaBbCc123" readonly>
+                                                                                                                            <div class="invalid-feedback">Por favor ingresar contraseña.</div>
+                                                                                                    </div>
+                                                                                                  </div>
+                                                        <div class="col">
+                                                          <div class="mb-3">
+                                                            <label for="distrito" class="form-label">Distrito: (*)</label>
+                                                            <select name="distrito" id="distrito" class="form-control" disabled>
+                                                              <option value="Los Olivos" selected>Los Olivos</option>
+                                                            </select>
+                                                            <div class="invalid-feedback">Por favor selecciona un distrito.</div>
+                                                          </div>
+                                                        </div>
+                                                      </div>
+                              
+                         
+                                                       </div>
                
-                                 <div class="card-body">
-                                   <form class="needs-validation" style="width: 100%; margin-left: 0%; margin-top: 3%;" action="proveedores.html" method="POST" novalidate>
-                                     <div class="container">
-                                       <div class="container" style="margin-top: 3%; ">
-                                         <div class="row">
-                                           <div class="col">
-                                             <div class="mb-3">
-                                               <label for="nombre" class="form-label">Nombres: (*)</label>
-                                               <input type="text" name="nombre" id="nombre" placeholder="Ej: Tomas" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ]+(\s[a-zA-ZáéíóúÁÉÍÓÚñÑ]+)?" class="form-control" required>
-                                               <div class="invalid-feedback">Por favor ingresar nombre(s).</div>
-                                             </div>
-                                           </div>
-                                           <div class="col">
-                                             <div class="mb-3">
-                                               <label for="apellido" class="form-label">Nombre de Tienda: (*)</label>
-                                               <input type="text" name="apellido" id="apellido" placeholder="Ej: Rodriguez S.A" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ]+(\s[a-zA-ZáéíóúÁÉÍÓÚñÑ]+)?" class="form-control" aria-describedby="emailHelp" required>
-                                               <div class="invalid-feedback">Por favor ingresar un nombre de tienda valido.</div>
-                                             </div>
-                                           </div>
-                                         </div>
-                                         <div class="row">
-                                           <div class="col">
-                                             <div class="mb-3">
-                                               <label for="dni" class="form-label" >DNI: (*)</label>
-                                               <input type="tel" class="form-control" name="dni" id="dni" maxlength="8" minlength="8" placeholder="Ej: 87654321" pattern="[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]" title="ingrese su DNI" required>
-                                               <div class="invalid-feedback">Por favor ingresar DNI.</div>
-                                             </div>
-                                           </div>
-                                           <div class="col">
-                                             <div class="mb-3">
-                                               <label for="dni" class="form-label" >RUC: (*)</label>
-                                               <input type="tel" class="form-control" name="dni" id="ruc" maxlength="11" minlength="11" placeholder="Ej: 87654321682" pattern="[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]" title="ingrese su RUC" required>
-                                               <div class="invalid-feedback">Por favor ingresar RUC.</div>
-                                             </div>
-                                           </div>
-                                         </div>
-                                         <div class="row">
-                                           <div class="col">
-                                             <div class="mb-3">
-                                               <label for="telefono" class="form-label">Número de Teléfono: (*)</label>
-                                               <input type="tel" class="form-control" name="telefono" id="telefono" maxlength="9" minlength="9" placeholder="Ej: 987654321" pattern="[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]" title="ingrese su número de teléfono" required>
-                                               <div class="invalid-feedback">Por favor ingresar número de teléfono.</div>
-                                             </div>
-                                           </div>
-                                           <div class="col">
-                                             <div class="mb-3">
-                                               <br>
-                                               <br>
-                                               <h6 class="obligatory-fields">(*)Campos obligatorios</h6>
-                                             </div>
-                                           </div>
-                                         </div>
-                                       </div>
-                                     </div>
-                                     <div class="btn-container">
-                                       <button type="submit" class="btn btn-primary" style="width: 200px;">Crear</button>
-                                     </div>
-                                   </form>
-               
-                                 </div>
-                               </div>
-                             </div>
-               
-                           </div>
-                         </div>
-                       </div>
+                                                      </div>
+                                                      
+                                                      <div class="btn-container" style="text-align: center; margin-top: 20px;">
+                                                                           <div class="mb-3">
+                                                                 <a href="usuarios.html" class="btn btn-primary" style="width: 280px;">Regresar</a>
+                                                               </div>
+                                                  </div>
+                                                  </div>
+                  </div>
+                </div>
+  
+              </div>
+            </div>
+          </div>
+  
+        </div>
+
         <!-- Fin del contenido central -->
 
 
@@ -365,15 +406,13 @@
 
 
 
-      <!-- Core JS Files -->
+      <!--Core JS Files   -->
       <script src="../../static/assets/js/core/jquery-3.7.1.min.js"></script>
       <script src="../../static/assets/js/core/popper.min.js"></script>
       <script src="../../static/assets/js/core/bootstrap.min.js"></script>
 
       <!-- jQuery Scrollbar -->
       <script src="../../static/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
-
-
       <!-- Datatables -->
       <script src="../../static/assets/js/plugin/datatables/datatables.min.js"></script>
 
@@ -383,6 +422,7 @@
 
       <!-- Kaiadmin JS -->
       <script src="../../static/assets/js/kaiadmin.min.js"></script>
+
       <script>
         $(document).ready(function () {
           $("#basic-datatables").DataTable({});
@@ -440,5 +480,6 @@
           });
         });
       </script>
+      
   </body>
 </html>
