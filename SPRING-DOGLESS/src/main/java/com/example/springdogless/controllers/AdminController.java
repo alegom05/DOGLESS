@@ -177,14 +177,14 @@ public class AdminController {
     public String listaSolicitudes(Model model, @RequestParam(required = false) String zona) {
         model.addAttribute("listaSolicitudes", solicitudRepository.findAll());
         return "admin2/slist";
-//        return "usuario/list";
     }
+
+    //Vista de Proveedores
 
     @GetMapping("proveedores")
     public String listaProveedores(Model model, @RequestParam(required = false) String zona) {
         model.addAttribute("listaProveedores", proveedorRepository.findAll());
-        return "admin2/plist";
-//        return "usuario/list";
+        return "plist";
     }
 
 
@@ -224,7 +224,7 @@ public class AdminController {
             model.addAttribute("listaProveedores", proveedorRepository.findAll());
             return "admin2/newFrmP";
         }else{
-            if (proveedor.getId() == null) {
+            if (proveedor.getId() == null || proveedor.getId()==0) {
                 List<Proveedor> proveedorlist = proveedorRepository.findByNombre(proveedor.getNombre());
                 boolean existe = false;
                 for (Proveedor p : proveedorlist) {
@@ -249,6 +249,14 @@ public class AdminController {
             }
         }
     }
+
+    //Vista de productos
+    @GetMapping("productos")
+    public String listaProductos(Model model, @RequestParam(required = false) String zona) {
+        model.addAttribute("listaProveedores", proveedorRepository.findAll());
+        return "admin2/dlist";
+    }
+
 
     /*
     @GetMapping("/delete")

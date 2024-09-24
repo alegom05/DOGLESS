@@ -6,7 +6,7 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 
-@Entity
+@Entity (name="productos")
 @Getter
 @Setter
 public class Producto {
