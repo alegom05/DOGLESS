@@ -10,12 +10,12 @@
     />
     <link
             rel="icon"
-            href="../../static/assets/img/kaiadmin/favicon.ico"
+            href="/assets/img/kaiadmin/favicon.ico"
             type="image/x-icon"
     />
 
     <!-- Fonts and icons -->
-    <script src="../../static/assets/js/plugin/webfont/webfont.min.js"></script>
+    <script src="/assets/js/plugin/webfont/webfont.min.js"></script>
     <script>
       WebFont.load({
         google: { families: ["Public Sans:300,400,500,600,700"] },
@@ -26,7 +26,7 @@
             "Font Awesome 5 Brands",
             "simple-line-icons",
           ],
-          urls: ["../../static/assets/css/fonts.min.css"],
+          urls: ["/assets/css/fonts.min.css"],
         },
         active: function () {
           sessionStorage.fonts = true;
@@ -35,9 +35,9 @@
     </script>
 
     <!-- CSS Files -->
-    <link rel="stylesheet" href="../../static/assets/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="../../static/assets/css/plugins.min.css" />
-    <link rel="stylesheet" href="../../static/assets/css/kaiadmin.min.css" />
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/assets/css/plugins.min.css" />
+    <link rel="stylesheet" href="/assets/css/kaiadmin.min.css" />
 
 
 
@@ -51,7 +51,7 @@
           <div class="logo-header" data-background-color="dark">
             <a href="paginaprincipal.html" class="logo">
               <img
-                      src="../../static/assets/img/kaiadmin/slogan_white_v3.png"
+                      src="/assets/img/kaiadmin/slogan_white_v3.png"
                       alt="navbar brand"
                       class="navbar-brand"
                       height="50"
@@ -176,7 +176,7 @@
             <div class="logo-header" data-background-color="dark">
               <a href="paginaprincipal.html" class="logo">
                 <img
-                        src="../../static/assets/img/kaiadmin/logodogless.svg"
+                        src="/assets/img/kaiadmin/logodogless.svg"
                         alt="navbar brand"
                         class="navbar-brand"
                         height="20"
@@ -217,7 +217,7 @@
                   >
                     <div class="avatar-sm">
                       <img
-                              src="../../static/assets/img/profile2.jpg"
+                              src="/assets/img/profile2.jpg"
                               alt="..."
                               class="avatar-img rounded-circle"
                       />
@@ -233,7 +233,7 @@
                         <div class="user-box">
                           <div class="avatar-lg">
                             <img
-                                    src="../../static/assets/img/profile2.jpg"
+                                    src="/assets/img/profile2.jpg"
                                     alt="image profile"
                                     class="avatar-img rounded"
                             />
@@ -299,6 +299,7 @@
                           <thead>
                             <tr>
                               <th>Nombre</th>
+                              <th>Apellido</th>
                               <th>Teléfono</th>
                               <th>DNI</th>
                               <th>RUC</th>
@@ -307,12 +308,13 @@
                             </tr>
                           </thead>
                           <tbody>
-                            <tr>
-                              <td>Gabriela Gutiérrez</td>
-                              <td>938276451</td>
-                              <td>65432109</td>
-                              <td>20457896321</td>
-                              <td>TecnoProveedores</td>
+                            <tr th:each="proveedor, info : ${listaProveedores}">
+                              <td th:text="${proveedor.id}"></td>
+                              <td th:text="${proveedor.nombre}"></td>
+                              <td th:text="${proveedor.apellido}"></td>
+                              <td th:text="${proveedor.telefono}"></td>
+                              <td th:text="${proveedor.ruc}"></td>
+                              <td th:text="${proveedor.tienda}"></td>
                               <td>
                                 <!-- Dropdown con ícono -->
                                 <div class="dropdown">
@@ -328,153 +330,7 @@
                                 </div>
                               </td>
                             </tr>
-                            <tr>
-                              <td>Leonardo Abanto</td>
-                              <td>942581936</td>
-                              <td>6544411</td>
-                              <td>10156784322</td>
-                              <td>Innovatech Solutions</td>
-                              <td>
-                                <!-- Dropdown con ícono -->
-                                <div class="dropdown">
-                                  <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fas fa-ellipsis-v"></i>
-                                  </button>
-                                  <!-- Dropdown oscuro -->
-                                  <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
-                                    <li><a class="dropdown-item" href="VerProveedor.html">Ver</a></li>
-                                    <li><a class="dropdown-item" href="EditarProveedor.html">Editar</a></li>
-                                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#denegarModal">Eliminar</a></li>
-                                  </ul>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>Jorge Coronado</td>
-                              <td>956392174</td>
-                              <td>75432109</td>
-                              <td>20546789210</td>
-                              <td>Suministros Digitales</td>
-                              <td>
-                                <!-- Dropdown con ícono -->
-                                <div class="dropdown">
-                                  <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fas fa-ellipsis-v"></i>
-                                  </button>
-                                  <!-- Dropdown oscuro -->
-                                  <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
-                                    <li><a class="dropdown-item" href="VerProveedor.html">Ver</a></li>
-                                    <li><a class="dropdown-item" href="EditarProveedor.html">Editar</a></li>
-                                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#denegarModal">Eliminar</a></li>
-                                  </ul>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>Renato Paredes</td>
-                              <td>937562325</td>
-                              <td>54321098</td>
-                              <td>10254876345</td>
-                              <td>TechDistribuciones</td>
-                              <td>
-                                <!-- Dropdown con ícono -->
-                                <div class="dropdown">
-                                  <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fas fa-ellipsis-v"></i>
-                                  </button>
-                                  <!-- Dropdown oscuro -->
-                                  <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
-                                    <li><a class="dropdown-item" href="VerProveedor.html">Ver</a></li>
-                                    <li><a class="dropdown-item" href="EditarProveedor.html">Editar</a></li>
-                                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#denegarModal">Eliminar</a></li>
-                                  </ul>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>Marta López</td>
-                              <td>929583712</td>
-                              <td>43210987</td>
-                              <td>20678945312</td>
-                              <td>Hardware & Co</td>
-                              <td>
-                                <!-- Dropdown con ícono -->
-                                <div class="dropdown">
-                                  <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fas fa-ellipsis-v"></i>
-                                  </button>
-                                  <!-- Dropdown oscuro -->
-                                  <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
-                                    <li><a class="dropdown-item" href="VerProveedor.html">Ver</a></li>
-                                    <li><a class="dropdown-item" href="EditarProveedor.html">Editar</a></li>
-                                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#denegarModal">Eliminar</a></li>
-                                  </ul>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>Carolina Alvarez</td>
-                              <td>985193627</td>
-                              <td>98765430</td>
-                              <td>10345789265</td>
-                              <td>GlobalTech Supplies</td>
-                              <td>
-                                <!-- Dropdown con ícono -->
-                                <div class="dropdown">
-                                  <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fas fa-ellipsis-v"></i>
-                                  </button>
-                                  <!-- Dropdown oscuro -->
-                                  <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
-                                    <li><a class="dropdown-item" href="VerProveedor.html">Ver</a></li>
-                                    <li><a class="dropdown-item" href="EditarProveedor.html">Editar</a></li>
-                                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#denegarModal">Eliminar</a></li>
-                                  </ul>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>Mario Chavez</td>
-                              <td>991827564</td>
-                              <td>87654309</td>
-                              <td>20415678934</td>
-                              <td>Distribuidores Unidos</td>
-                              <td>
-                                <!-- Dropdown con ícono -->
-                                <div class="dropdown">
-                                  <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fas fa-ellipsis-v"></i>
-                                  </button>
-                                  <!-- Dropdown oscuro -->
-                                  <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
-                                    <li><a class="dropdown-item" href="VerProveedor.html">Ver</a></li>
-                                    <li><a class="dropdown-item" href="EditarProveedor.html">Editar</a></li>
-                                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#denegarModal">Eliminar</a></li>
-                                  </ul>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>Luisa Meza</td>
-                              <td>928394761</td>
-                              <td>76543208</td>
-                              <td>10237894562</td>
-                              <td>Proveedora del Norte</td>
-                              <td>
-                                <!-- Dropdown con ícono -->
-                                <div class="dropdown">
-                                  <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fas fa-ellipsis-v"></i>
-                                  </button>
-                                  <!-- Dropdown oscuro -->
-                                  <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
-                                    <li><a class="dropdown-item" href="VerProveedor.html">Ver</a></li>
-                                    <li><a class="dropdown-item" href="EditarProveedor.html">Editar</a></li>
-                                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#denegarModal">Eliminar</a></li>
-                                  </ul>
-                                </div>
-                              </td>
-                            </tr>
+
                           </tbody>
                         </table>
   
@@ -597,21 +453,21 @@
 
 
       <!--Core JS Files   -->
-      <script src="../../static/assets/js/core/jquery-3.7.1.min.js"></script>
-      <script src="../../static/assets/js/core/popper.min.js"></script>
-      <script src="../../static/assets/js/core/bootstrap.min.js"></script>
+      <script src="/assets/js/core/jquery-3.7.1.min.js"></script>
+      <script src="/assets/js/core/popper.min.js"></script>
+      <script src="/assets/js/core/bootstrap.min.js"></script>
 
       <!-- jQuery Scrollbar -->
-      <script src="../../static/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+      <script src="/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
       <!-- Datatables -->
-      <script src="../../static/assets/js/plugin/datatables/datatables.min.js"></script>
+      <script src=/assets/js/plugin/datatables/datatables.min.js"></script>
 
       <!-- jQuery Vector Maps -->
-      <script src="../../static/assets/js/plugin/jsvectormap/jsvectormap.min.js"></script>
-      <script src="../../static/assets/js/plugin/jsvectormap/world.js"></script>
+      <script src="/assets/js/plugin/jsvectormap/jsvectormap.min.js"></script>
+      <script src="/assets/js/plugin/jsvectormap/world.js"></script>
 
       <!-- Kaiadmin JS -->
-      <script src="../../static/assets/js/kaiadmin.min.js"></script>
+      <script src="/assets/js/kaiadmin.min.js"></script>
         <script>
             $(document).ready(function () {
             $("#basic-datatables").DataTable({

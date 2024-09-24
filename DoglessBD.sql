@@ -398,18 +398,20 @@ CREATE TABLE IF NOT EXISTS `dogless`.`productos` (
   `categoria` VARCHAR(45) NULL DEFAULT NULL,
   `precio` DECIMAL(10,2) NULL DEFAULT NULL,
   `costoenvio` DECIMAL(10,2) NULL DEFAULT NULL,
-  `proveedorid` INT NOT NULL,
+  `idproveedores` INT NOT NULL,
   `modelos` VARCHAR(100) NULL DEFAULT NULL,
   `colores` VARCHAR(100) NULL DEFAULT NULL,
+  `aprobado` TINYINT NULL,
+  `estado` INT NULL,
   PRIMARY KEY (`idproductos`),
-  INDEX `proveedor_id_idx_productos` (`proveedorid` ASC) VISIBLE,
+  INDEX `proveedor_id_idx_productos` (`idproveedores` ASC) VISIBLE,
   CONSTRAINT `fk_proveedor_id_productos`
-    FOREIGN KEY (`proveedorid`)
+    FOREIGN KEY (`idproveedores`)
     REFERENCES `dogless`.`proveedores` (`idproveedores`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
 INSERT INTO `dogless`.`productos` 
-(`nombre`, `descripcion`, `categoria`, `precio`, `costoenvio`, `proveedorid`, `modelos`, `colores`) 
+(`nombre`, `descripcion`, `categoria`, `precio`, `costoenvio`, `idproveedores`, `modelos`, `colores`) 
 VALUES
 ('Smartphone X', 'Teléfono móvil avanzado', 'Electrónica', 599.99, 9.99, 1, 'Modelo X2023, Modelo XPro', 'Negro, Blanco, Azul'),
 ('Laptop Y', 'Computadora portátil', 'Informática', 899.99, 12.99, 2, 'Laptop YUltra, Laptop YMax', 'Plata, Gris Oscuro'),
