@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Datatables - Kaiadmin Bootstrap 5 Admin Dashboard</title>
+    <title>DOGLESS</title>
     <meta
       content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
       name="viewport"
@@ -13,6 +13,7 @@
       href="../assets/img/kaiadmin/favicon.ico"
       type="image/x-icon"
     />
+    <link th:href="@{/admin/assets/css/style-SuperAdmin.css}" rel="stylesheet">
 
     <!-- Fonts and icons -->
     <script src="../assets/js/plugin/webfont/webfont.min.js"></script>
@@ -41,6 +42,9 @@
 
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link rel="stylesheet" href="../assets/css/demo.css" />
+    <style>
+    </style>
+
   </head>
   <body>
     <div class="wrapper">
@@ -206,18 +210,7 @@
           <nav class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom" data-background-color="light-blue2">
             <div class="container-fluid">
               <nav class="navbar navbar-header-left navbar-expand-lg navbar-form nav-search p-0 d-none d-lg-flex">
-                <div class="input-group">
-                  <div class="input-group-prepend">
-                    <button type="submit" class="btn btn-search pe-1">
-                      <i class="fa fa-search search-icon"></i>
-                    </button>
-                  </div>
-                  <input
-                    type="text"
-                    placeholder="Buscar ..."
-                    class="form-control"
-                  />
-                </div>
+
               </nav>
 
               <ul class="navbar-nav topbar-nav ms-md-auto align-items-center">
@@ -323,7 +316,7 @@
                             </div>
                             <div class="notif-content">
                               <span class="subject">Talha</span>
-                              <span class="block"> Hi, Apa Kabar ? </span>
+                              <span class="block"> Hola,Apa Kabar ? </span>
                               <span class="time">17 minutes ago</span>
                             </div>
                           </a>
@@ -414,85 +407,7 @@
                       </a>
                     </li>
                   </ul>
-                </li>
-                <li class="nav-item topbar-icon dropdown hidden-caret">
-                  <a
-                    class="nav-link"
-                    data-bs-toggle="dropdown"
-                    href="#"
-                    aria-expanded="false"
-                  >
-                    <i class="fas fa-layer-group"></i>
-                  </a>
-                  <div class="dropdown-menu quick-actions animated fadeIn">
-                    <div class="quick-actions-header">
-                      <span class="title mb-1">Quick Actions</span>
-                      <span class="subtitle op-7">Shortcuts</span>
-                    </div>
-                    <div class="quick-actions-scroll scrollbar-outer">
-                      <div class="quick-actions-items">
-                        <div class="row m-0">
-                          <a class="col-6 col-md-4 p-0" href="#">
-                            <div class="quick-actions-item">
-                              <div class="avatar-item bg-danger rounded-circle">
-                                <i class="far fa-calendar-alt"></i>
-                              </div>
-                              <span class="text">Calendar</span>
-                            </div>
-                          </a>
-                          <a class="col-6 col-md-4 p-0" href="#">
-                            <div class="quick-actions-item">
-                              <div
-                                class="avatar-item bg-warning rounded-circle"
-                              >
-                                <i class="fas fa-map"></i>
-                              </div>
-                              <span class="text">Maps</span>
-                            </div>
-                          </a>
-                          <a class="col-6 col-md-4 p-0" href="#">
-                            <div class="quick-actions-item">
-                              <div class="avatar-item bg-info rounded-circle">
-                                <i class="fas fa-file-excel"></i>
-                              </div>
-                              <span class="text">Reports</span>
-                            </div>
-                          </a>
-                          <a class="col-6 col-md-4 p-0" href="#">
-                            <div class="quick-actions-item">
-                              <div
-                                class="avatar-item bg-success rounded-circle"
-                              >
-                                <i class="fas fa-envelope"></i>
-                              </div>
-                              <span class="text">Emails</span>
-                            </div>
-                          </a>
-                          <a class="col-6 col-md-4 p-0" href="#">
-                            <div class="quick-actions-item">
-                              <div
-                                class="avatar-item bg-primary rounded-circle"
-                              >
-                                <i class="fas fa-file-invoice-dollar"></i>
-                              </div>
-                              <span class="text">Invoice</span>
-                            </div>
-                          </a>
-                          <a class="col-6 col-md-4 p-0" href="#">
-                            <div class="quick-actions-item">
-                              <div
-                                class="avatar-item bg-secondary rounded-circle"
-                              >
-                                <i class="fas fa-credit-card"></i>
-                              </div>
-                              <span class="text">Payments</span>
-                            </div>
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </li>
+
 
                 <li class="nav-item topbar-user dropdown hidden-caret">
                   <a
@@ -562,19 +477,23 @@
               <h6 class="op-7 mb-2">En las tablas encontrarás las identidades de los Administradores Zonales. Navega entre las páginas para explorar más información de cada uno.</h6>
              </div>
             </div>
+            <div th:if="${mensajeExito}" id="mensajeExito" class="alert alert-success fade-out" role="alert">
+              <p th:text="${mensajeExito}"></p>
+            </div>
             <div class="row">
               <div class="col-md-12">
                 <div class="card">
 
                   <div class="card-body">
-                    <button
-                    class="btn btn-primary btn-round ms-auto"
-                    onclick="window.location.href='agregar_adminzonal.html';"
-            >
-              <i class="fa fa-plus"></i>
-              Agregar Administrador Zonal
-            </button>
+                    <a
+                            class="btn btn-primary btn-round ms-auto"
+                            th:href="@{/admin/new}"
+                    >
+                      <i class="fa fa-plus"></i>
+                      Agregar Administrador Zonal
+                    </a>
                     <div class="table-responsive">
+                      <br>
                       <style>
                         /* Estilo para alinear los botones horizontalmente */
                         .acciones-container {
@@ -597,12 +516,12 @@
                           </tr>
                         </thead>
                         <tbody>
-                          <tr>
-                            <td>Gabriela</td>
-                            <td>Gutiérrez</td>
-                            <td>65432109</td>
-                            <td>gabriela.gutierrez@gmail.com</td>
-                            <td>Breña</td>
+                          <tr th:each="usuario : ${listaZonales}">
+                            <td th:text="${usuario.nombre}"></td>
+                            <td th:text="${usuario.apellido}"></td>
+                            <td th:text="${usuario.dni}"></td>
+                            <td th:text="${usuario.correo}"></td>
+                            <td th:text="${usuario.distrito.distrito}"></td>
                             <td>
                               <!-- Dropdown con ícono -->
                               <div class="dropdown">
@@ -612,166 +531,12 @@
                                 <!-- Dropdown oscuro -->
                                 <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
                                   <li><a class="dropdown-item" href="ver_adminzonal.html">Ver</a></li>
-                                  <li><a class="dropdown-item" href="editar_adminzonal.html">Editar</a></li>
+                                  <li><a class="dropdown-item" th:href="@{'/admin/edit' + '?id=' + ${usuario.id}}">Editar</a></li>
                                   <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#denegarModal">Eliminar</a></li>
                                   <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#aceptarModal">Espiar</a></li>
                                 </ul>
                               </div>
-                          </td>
-                          </tr>
-                          <tr>
-                            <td>Leonardo</td>
-                            <td>Abanto</td>
-                            <td>36544411</td>
-                            <td>leo.abanto@gmail.com</td>
-                            <td>Pachacamac</td>
-                            <td>
-                              <!-- Dropdown con ícono -->
-                              <div class="dropdown">
-                                <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                  <i class="fas fa-ellipsis-v"></i>
-                                </button>
-                                <!-- Dropdown oscuro -->
-                                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
-                                  <li><a class="dropdown-item" href="ver_adminzonal.html">Ver</a></li>
-                                  <li><a class="dropdown-item" href="editar_adminzonal.html">Editar</a></li>
-                                  <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#denegarModal">Eliminar</a></li>
-                                  <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#aceptarModal">Espiar</a></li>
-                                </ul>
-                              </div>
-                          </td>
-                          </tr>
-                          <tr>
-                            <td>Jorge</td>
-                            <td>Coronado</td>
-                            <td>75432109</td>
-                            <td>jorge.coronado@gmail.com</td>
-                            <td>Los Olivos</td>
-                            <td>
-                              <!-- Dropdown con ícono -->
-                              <div class="dropdown">
-                                <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                  <i class="fas fa-ellipsis-v"></i>
-                                </button>
-                                <!-- Dropdown oscuro -->
-                                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
-                                  <li><a class="dropdown-item" href="ver_adminzonal.html">Ver</a></li>
-                                  <li><a class="dropdown-item" href="editar_adminzonal.html">Editar</a></li>
-                                  <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#denegarModal">Eliminar</a></li>
-                                  <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#aceptarModal">Espiar</a></li>
-                                </ul>
-                              </div>
-                          </td>
-                          </tr>
-                          <tr>
-                            <td>Renato</td>
-                            <td>Paredes</td>
-                            <td>54321098</td>
-                            <td>renato.paredes@gmail.com</td>
-                            <td>San Juan de Lurigancho</td>
-                            <td>
-                              <!-- Dropdown con ícono -->
-                              <div class="dropdown">
-                                <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                  <i class="fas fa-ellipsis-v"></i>
-                                </button>
-                                <!-- Dropdown oscuro -->
-                                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
-                                  <li><a class="dropdown-item" href="ver_adminzonal.html">Ver</a></li>
-                                  <li><a class="dropdown-item" href="editar_adminzonal.html">Editar</a></li>
-                                  <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#denegarModal">Eliminar</a></li>
-                                  <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#aceptarModal">Espiar</a></li>
-                                </ul>
-                              </div>
-                          </td>
-                          </tr>
-                          <tr>
-                            <td>Marta</td>
-                            <td>López</td>
-                            <td>43210987</td>
-                            <td>marta.lopez@gmail.com</td>
-                            <td>Santa Anita</td>
-                            <td>
-                              <!-- Dropdown con ícono -->
-                              <div class="dropdown">
-                                <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                  <i class="fas fa-ellipsis-v"></i>
-                                </button>
-                                <!-- Dropdown oscuro -->
-                                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
-                                  <li><a class="dropdown-item" href="ver_adminzonal.html">Ver</a></li>
-                                  <li><a class="dropdown-item" href="editar_adminzonal.html">Editar</a></li>
-                                  <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#denegarModal">Eliminar</a></li>
-                                  <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#aceptarModal">Espiar</a></li>
-                                </ul>
-                              </div>
-                          </td>
-                          </tr>
-                          <tr>
-                            <td>Carolina</td>
-                            <td>Alvarez</td>
-                            <td>98765430</td>
-                            <td>carolina.alvarez@gmail.com</td>
-                            <td>Cercado de Lima</td>
-                            <td>
-                              <!-- Dropdown con ícono -->
-                              <div class="dropdown">
-                                <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                  <i class="fas fa-ellipsis-v"></i>
-                                </button>
-                                <!-- Dropdown oscuro -->
-                                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
-                                  <li><a class="dropdown-item" href="ver_adminzonal.html">Ver</a></li>
-                                  <li><a class="dropdown-item" href="editar_adminzonal.html">Editar</a></li>
-                                  <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#denegarModal">Eliminar</a></li>
-                                  <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#aceptarModal">Espiar</a></li>
-                                </ul>
-                              </div>
-                          </td>
-                          </tr>
-                          <tr>
-                            <td>Mario</td>
-                            <td>Chavez</td>
-                            <td>87654309</td>
-                            <td>mario.chavez@gmail.com</td>
-                            <td>San Martín de Porres</td>
-                            <td>
-                              <!-- Dropdown con ícono -->
-                              <div class="dropdown">
-                                <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                  <i class="fas fa-ellipsis-v"></i>
-                                </button>
-                                <!-- Dropdown oscuro -->
-                                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
-                                  <li><a class="dropdown-item" href="ver_adminzonal.html">Ver</a></li>
-                                  <li><a class="dropdown-item" href="editar_adminzonal.html">Editar</a></li>
-                                  <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#denegarModal">Eliminar</a></li>
-                                  <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#aceptarModal">Espiar</a></li>
-                                </ul>
-                              </div>
-                          </td>
-                          </tr>
-                          <tr>
-                            <td>Luisa</td>
-                            <td>Meza</td>
-                            <td>76543208</td>
-                            <td>luisa.meza@gmail.com</td>
-                            <td>Barranco</td>
-                            <td>
-                              <!-- Dropdown con ícono -->
-                              <div class="dropdown">
-                                <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                  <i class="fas fa-ellipsis-v"></i>
-                                </button>
-                                <!-- Dropdown oscuro -->
-                                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
-                                  <li><a class="dropdown-item" href="ver_adminzonal.html">Ver</a></li>
-                                  <li><a class="dropdown-item" href="editar_adminzonal.html">Editar</a></li>
-                                  <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#denegarModal">Eliminar</a></li>
-                                  <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#aceptarModal">Espiar</a></li>
-                                </ul>
-                              </div>
-                          </td>
+                            </td>
                           </tr>
                         </tbody>
                       </table>
@@ -835,34 +600,7 @@
         </div>
 
         
-      
-        <footer class="footer">
-          <div class="container-fluid d-flex justify-content-between">
-            <nav class="pull-left">
-              <ul class="nav">
-                <li class="nav-item">
-                  <a class="nav-link" href="http://www.themekita.com">
-                    ThemeKita
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#"> Help </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#"> Licenses </a>
-                </li>
-              </ul>
-            </nav>
-            <div class="copyright">
-              2024, made with <i class="fa fa-heart heart text-danger"></i> by
-              <a href="http://www.themekita.com">ThemeKita</a>
-            </div>
-            <div>
-              Distributed by
-              <a target="_blank" href="https://themewagon.com/">ThemeWagon</a>.
-            </div>
-          </div>
-        </footer>
+   
       </div>
 
       <!-- Custom template | don't include it in your project! -->
@@ -1075,7 +813,17 @@
     <script src="../assets/js/setting-demo2.js"></script>
     <script>
       $(document).ready(function () {
-        $("#basic-datatables").DataTable({});
+        $("#basic-datatables").DataTable({
+          language: {
+            search: "Buscar:",
+            lengthMenu: "Mostrar _MENU_ entradas por página",
+            info: "Mostrando _START_ a _END_ de _TOTAL_ entradas",
+            paginate: {
+              previous: "Anterior",
+              next: "Siguiente"
+            }
+          }
+        });
 
         $("#multi-filter-select").DataTable({
           pageLength: 5,
@@ -1130,5 +878,20 @@
         });
       });
     </script>
+    <script>
+      // Espera 3 segundos (3000 milisegundos) antes de empezar a ocultar el mensaje
+      setTimeout(function() {
+        var alert = document.getElementById('mensajeExito');
+        if (alert) {
+          alert.classList.add('hidden'); // Añadir la clase que reduce la opacidad gradualmente
+
+          // Después de 1 segundo (duración de la transición), ocultar completamente
+          setTimeout(function() {
+            alert.classList.add('remove'); // Ocultar completamente el mensaje y el espacio
+          }, 1000); // 1000 ms coincide con la duración de la transición de opacidad
+        }
+      }, 3000); // Cambia 3000 por el tiempo en milisegundos que desees (3 segundos en este caso)
+    </script>
+
   </body>
 </html>

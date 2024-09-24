@@ -469,225 +469,271 @@
           <div class="page-inner">
             <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
               <div>
-                <h3 class="fw-bold mb-3">Lista de Productos Aprobados</h3>
+                <h3 class="fw-bold mb-3">Lista de Productos Pendientes</h3>
               </div>
             </div>
+        
             <div class="row">
               <div class="col-md-12">
                 <div class="card">
-
                   <div class="card-body">
-                    <button
-                            class="btn btn-primary btn-round ms-auto"
-                            onclick="window.location.href='NuevoProducto.html';"
-                    >
-                      <i class="fa fa-plus"></i>
-                      Agregar Producto
-                    </button>
-                    <br>
-                    <br>
-                    <div class="table-responsive">
-                      <style>
-                        /* Estilo para alinear los botones horizontalmente */
-                        .acciones-container {
-                          display: flex;
-                          flex-direction: row; /* Alinea los botones en una fila horizontal */
-                          gap: 8px; /* Espacio entre los botones */
-                        }
-
-                      </style>
-
-                      <table id="basic-datatables" class="display table table-striped table-hover">
-                        <thead>
-                          <tr>
-                            <th>Imagen</th>
-                            <th>Nombre</th>
-                            <th>Descripcion</th>
-                            <th>Precio (S/.)</th>
-                            <th>Proveedor</th>
-                            <th>Acciones</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td><img src="../assets/img/productos/DJIMavicAir.png" alt="Producto más vendido" style="width:50px; height:50px;"></td>
-                            <td>DJI Mavic Air</td>
-                            <td>Drone GPS con cámara 4K UHD...</td>
-                            <td>2100</td>
-                            <td>TecnoProveedores</td>
-                            <td>
-                              <button class="btn btn-info btn-sm" onclick="verRegistro('${dni}')">Ver</button>
-                              <button class="btn btn-warning btn-sm" onclick="editarRegistro('${dni}')">Editar</button>
-                              <button class="btn btn-danger btn-sm" onclick="confirmarBorrado('${dni}')">Borrar</button>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td><img src="../assets/img/productos/DJIPhantom4.png" alt="Producto más vendido" style="width:50px; height:50px;"></td>
-                            <td>DJI Phantom 4 PRO</td>
-                            <td>Dron con cámara 4K UHD ...</td>
-                            <td>6000</td>
-                            <td>Innovatech Solutions</td>
-                            <td>
-                              <button class="btn btn-info btn-sm" onclick="verRegistro('${dni}')">Ver</button>
-                              <button class="btn btn-warning btn-sm" onclick="editarRegistro('${dni}')">Editar</button>
-                              <button class="btn btn-danger btn-sm" onclick="confirmarBorrado('${dni}')">Borrar</button>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td><img src="../assets/img/productos/LGOledTV.png" alt="Producto más vendido" style="width:50px; height:50px;"></td>
-                            <td>LG OLED TV</td>
-                            <td>Smart TV, procesador OLED 4K...</td>
-                            <td>2999</td>
-                            <td>Suministros Digitales</td>
-                            <td>
-                              <button class="btn btn-info btn-sm" onclick="verRegistro('${dni}')">Ver</button>
-                              <button class="btn btn-warning btn-sm" onclick="editarRegistro('${dni}')">Editar</button>
-                              <button class="btn btn-danger btn-sm" onclick="confirmarBorrado('${dni}')">Borrar</button>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td><img src="../assets/img/productos/ONEPlusNord.png" alt="Producto más vendido" style="width:50px; height:50px;"></td>
-                            <td>ONEPlus Nord 5G</td>
-                            <td>Tlf inteligente Android dual SIM...</td>
-                            <td>2199</td>
-                            <td>TechDistribuciones</td>
-                            <td>
-                              <button class="btn btn-info btn-sm" onclick="verRegistro('${dni}')">Ver</button>
-                              <button class="btn btn-warning btn-sm" onclick="editarRegistro('${dni}')">Editar</button>
-                              <button class="btn btn-danger btn-sm" onclick="confirmarBorrado('${dni}')">Borrar</button>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td><img src="../assets/img/productos/PS4.png" alt="Producto más vendido" style="width:50px; height:50px;"></td>
-                            <td>Sony PS4</td>
-                            <td>Consola PlayStation 4 Pro 1TB...</td>
-                            <td>1499</td>
-                            <td>Hardware & Co</td>
-                            <td>
-                              <button class="btn btn-info btn-sm" onclick="verRegistro('${dni}')">Ver</button>
-                              <button class="btn btn-warning btn-sm" onclick="editarRegistro('${dni}')">Editar</button>
-                              <button class="btn btn-danger btn-sm" onclick="confirmarBorrado('${dni}')">Borrar</button>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td><img src="../assets/img/productos/PS5.png" alt="Producto más vendido" style="width:50px; height:50px;"></td>
-                            <td>Sony PS5</td>
-                            <td>Consola PlayStation 5 1TB.....</td>
-                            <td>2500</td>
-                            <td>GlobalTech Supplies</td>
-                            <td>
-                              <button class="btn btn-info btn-sm" onclick="verRegistro('${dni}')">Ver</button>
-                              <button class="btn btn-warning btn-sm" onclick="editarRegistro('${dni}')">Editar</button>
-                              <button class="btn btn-danger btn-sm" onclick="confirmarBorrado('${dni}')">Borrar</button>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td><img src="../assets/img/productos/SamsungS24.png" alt="Producto más vendido" style="width:50px; height:50px;"></td>
-                            <td>Samsung Galaxy S24</td>
-                            <td>Samsung Galaxy S24, 256 GB.....</td>
-                            <td>3600</td>
-                            <td>Distribuidores Unidos</td>
-                            <td>
-                              <button class="btn btn-info btn-sm" onclick="verRegistro('${dni}')">Ver</button>
-                              <button class="btn btn-warning btn-sm" onclick="editarRegistro('${dni}')">Editar</button>
-                              <button class="btn btn-danger btn-sm" onclick="confirmarBorrado('${dni}')">Borrar</button>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td><img src="../assets/img/productos/XiaomiMi11.png" alt="Producto más vendido" style="width:50px; height:50px;"></td>
-                            <td>Xiaomi Mi 11 5G</td>
-                            <td>Xiamomi MI 11, 256 GB + 8 GB .....</td>
-                            <td>1600</td>
-                            <td>Proveedora del Norte</td>
-                            <td>
-                              <button class="btn btn-info btn-sm" onclick="verRegistro('${dni}')">Ver</button>
-                              <button class="btn btn-warning btn-sm" onclick="editarRegistro('${dni}')">Editar</button>
-                              <button class="btn btn-danger btn-sm" onclick="confirmarBorrado('${dni}')">Borrar</button>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td><img src="../assets/img/productos/ZephyrusG16.png" alt="Producto más vendido" style="width:50px; height:50px;"></td>
-                            <td>Zephyrus G16</td>
-                            <td>Laptop Oled 240hz Ultra 9.....</td>
-                            <td>9699</td>
-                            <td>Proveedora del Norte</td>
-                            <td>
-                              <button class="btn btn-info btn-sm" onclick="verRegistro('${dni}')">Ver</button>
-                              <button class="btn btn-warning btn-sm" onclick="editarRegistro('${dni}')">Editar</button>
-                              <button class="btn btn-danger btn-sm" onclick="confirmarBorrado('${dni}')">Borrar</button>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-
-                      <!-- Popup para confirmar eliminación -->
-                      <div id="confirmarBorradoPopup" class="modal" tabindex="-1" role="dialog">
-                        <div class="modal-dialog" role="document">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <h5 class="modal-title">Confirmar Eliminación</h5>
-                              <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="cerrarPopup('confirmarBorradoPopup')">
-                                <span aria-hidden="true">&times;</span>
-                              </button>
-                            </div>
-                            <div class="modal-body">
-                              <p>¿Estás seguro de que deseas eliminar este registro?</p>
-                            </div>
-                            <div class="modal-footer">
-                              <button type="button" class="btn btn-primary" onclick="eliminarRegistro()">Sí, eliminar</button>
-                              <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="cerrarPopup('confirmarBorradoPopup')">Cancelar</button>
-                            </div>
-                          </div>
-                        </div>
+        
+                    <!-- Filtros -->
+                    <form id="filtroForm" class="form-inline d-flex align-items-center">
+                      <div class="form-group mb-2 me-2">
+                        <label for="zonaFiltro" class="mr-2">Filtrar por zona:</label>
+                        <select id="zonaFiltro" class="form-control filtro-pequeno">
+                          <option value="">Todas las zonas</option>
+                          <option value="Norte">Norte</option>
+                          <option value="Sur">Sur</option>
+                          <option value="Este">Este</option>
+                          <option value="Oeste">Oeste</option>
+                        </select>
                       </div>
+                      <div class="form-group mb-2 me-2">
+                        <label for="estadoFiltro" class="mr-2">Filtrar por estado:</label>
+                        <select id="estadoFiltro" class="form-control filtro-pequeno">
+                          <option value="">Todos los estados</option>
+                          <option value="Generado">Generado</option>
+                          <option value="En validación">En validación</option>
+                          <option value="Recibido">Recibido</option>
+                          <option value="En proceso">En proceso</option>
+                          <option value="En ruta">En ruta</option>
+                        </select>
+                      </div>
+                      <div class="form-group mb-2 me-2">
+                        <label for="searchInput" class="mr-2">Buscar:</label>
+                        <input type="text" id="searchInput" class="form-control filtro-pequeno" placeholder="Buscar">
+                      </div>
+                      <button type="button" class="btn btn-dark mb-2" onclick="limpiarFiltro()">Limpiar Filtro</button>
+                    </form>
+        
+                    <br>
+        
+                    <table id="basic-datatables" class="display table table-striped table-hover">
+                      <thead>
+                        <tr>
+                          <th>Código</th>
+                          <th>Imagen</th>
+                          <th>Nombre del Producto</th>
+                          <th>Cantidad</th>
+                          <th>Zona</th>
+                          <th>Fecha de Solicitud</th>
+                          <th>Fecha de Llegada</th>
+                          <th>Estado</th>
+                          <th>Acciones</th>
+                        </tr>
+                      </thead>
+                      <tbody id="tablaProductos">
+                        <tr>
+                          <td>001</td>
+                          <td><img src="../assets/img/productos/ONEPlusNord.png" alt="Producto más vendido" style="width:50px; height:50px;"></td>
+                          <td>ONEPlus Nord 5G</td>
+                          <td>34</td>
+                          <td>Oeste</td>
+                          <td>2024-08-08 20:34:12</td>
+                          <td>2024-08-10</td>
+                          <td><span class="badge badge-warning">En validacion </span></td>
+                          <td>
+                            <div class="dropdown">
+                              <button class="btn btn-dark dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-ellipsis-v"></i>
+                              </button>
+                              <ul class="dropdown-menu dropdown-menu-dark">
+                                <li><a class="dropdown-item" href="detallesOrden.html">Ver Detalles</a></li>
+                              
+                              </ul>
+                            </div>
+                          </td>
+                        </tr>
 
-                      <script>
-                        // Función para cerrar popups
-                        function cerrarPopup(id) {
-                          document.getElementById(id).style.display = 'none';
-                        }
 
-                        // Funciones para manejar la lógica de los botones
-                        function verRegistro(dni) {
-                          window.location.href = `VerProducto.html`; // Redirigir a la vista de ver
-                        }
-
-                        function editarRegistro(dni) {
-                          window.location.href = `EditarProducto.html`; // Redirigir a la vista de editar
-                        }
-
-                        function confirmarBorrado(dni) {
-                          document.getElementById('confirmarBorradoPopup').style.display = 'block';
-                          // Guardar el DNI del usuario a eliminar en algún lugar si es necesario
-                        }
-
-                        function eliminarRegistro() {
-                          alert('Registro eliminado.'); // Aquí se colocaría la lógica para eliminar el registro
-                          cerrarPopup('confirmarBorradoPopup');
-                        }
-
-                        function confirmarEspiar(dni) {
-                          document.getElementById('confirmarEspiarPopup').style.display = 'block';
-                          // Guardar el DNI del usuario a espiar si es necesario
-                        }
-
-                        function espiarCuenta() {
-                          window.location.href = '/espiarCuenta'; // Redirigir a la vista de espiar
-                          cerrarPopup('confirmarEspiarPopup');
-                        }
-                      </script>
+                        <tr>
+                          <td>002</td>
+                          <td><img src="../assets/img/productos/ONEPlusNord.png" alt="Producto más vendido" style="width:50px; height:50px;"></td>
+                          <td>ONEPlus Nord 5G</td>
+                          <td>34</td>
+                          <td>Oeste</td>
+                          <td>2024-08-08 20:34:12</td>
+                          <td>2024-08-10</td>
+                          <td><span class="badge badge-danger">En ruta</span></td>
+                          <td>
+                            <div class="dropdown">
+                              <button class="btn btn-dark dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-ellipsis-v"></i>
+                              </button>
+                              <ul class="dropdown-menu dropdown-menu-dark">
+                                <li><a class="dropdown-item" href="detallesOrden.html">Ver Detalles</a></li>
+                              </ul>
+                            </div>
+                          </td>
+                        </tr>
 
 
+                        <tr>
+                          <td>003</td>
+                          <td><img src="../assets/img/productos/PS4.png" alt="Producto más vendido" style="width:50px; height:50px;"></td>
+                          <td>Sony PS4</td>
+                          <td>37</td>
+                          <td>Sur</td>
+                          <td>2024-08-08 21:44:24</td>
+                          <td>2024-08-10</td>
+                          <td><span class="badge badge-primary">Generado</span></td>
+                          <td>
+                            <div class="dropdown">
+                              <button class="btn btn-dark dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-ellipsis-v"></i>
+                              </button>
+                              <ul class="dropdown-menu dropdown-menu-dark">
+                                <li><a class="dropdown-item" href="detallesOrden.html">Ver Detalles</a></li>
+                              
+                              </ul>
+                            </div>
+                          </td>
+                        </tr>
 
-                    </div>
 
+
+                        <tr>
+                          <td>004</td>
+                          <td><img src="../assets/img/productos/PS5.png" alt="Producto más vendido" style="width:50px; height:50px;"></td>
+                          <td>Sony PS5</td>
+                          <td>42</td>
+                          <td>Sur</td>
+                          <td>2024-08-09 12:57:15</td>
+                          <td>2024-08-10</td>
+                          <td><span class="badge badge-success">Recibido</span></td>
+                          <td>
+                            <div class="dropdown">
+                              <button class="btn btn-dark dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-ellipsis-v"></i>
+                              </button>
+                              <ul class="dropdown-menu dropdown-menu-dark">
+                                <li><a class="dropdown-item" href="detallesOrden.html">Ver Detalles</a></li>
+                              </ul>
+                            </div>
+                          </td>
+                        </tr>
+
+
+                        <tr>
+                          <td>005</td>
+                          <td><img src="../assets/img/productos/SamsungS24.png" alt="Producto más vendido" style="width:50px; height:50px;"></td>
+                          <td>Samsung Galaxy S24</td>
+                          <td>38</td>
+                          <td>Norte</td>
+                          <td>2024-08-08 09:43:13</td>
+                          <td>2024-08-10</td>
+                          <td><span class="badge badge-info">En proceso</span></td>
+                          <td>
+                            <div class="dropdown">
+                              <button class="btn btn-dark dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-ellipsis-v"></i>
+                              </button>
+                              <ul class="dropdown-menu dropdown-menu-dark">
+                                <li><a class="dropdown-item" href="detallesOrden.html">Ver Detalles</a></li>
+                              
+                              </ul>
+                            </div>
+                          </td>
+                        </tr>
+
+                        <tr>
+                          <td>006</td>
+                          <td><img src="../assets/img/productos/XiaomiMi11.png" alt="Producto más vendido" style="width:50px; height:50px;"></td>
+                          <td>Xiaomi Mi 11 5G</td>
+                          <td>35</td>
+                          <td>Norte</td>
+                          <td>2024-08-10 10:23:21</td>
+                          <td>2024-08-10</td>
+                          <td><span class="badge badge-danger">En ruta</span></td>
+                          <td>
+                            <div class="dropdown">
+                              <button class="btn btn-dark dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-ellipsis-v"></i>
+                              </button>
+                              <ul class="dropdown-menu dropdown-menu-dark">
+                                <li><a class="dropdown-item" href="detallesOrden.html">Ver Detalles</a></li>
+                              </ul>
+                            </div>
+                          </td>
+                        </tr>
+
+
+                        <tr>
+                          <td>007</td>
+                          <td><img src="../assets/img/productos/ZephyrusG16.png" alt="Producto más vendido" style="width:50px; height:50px;"></td>
+                          <td>Zephyrus G16</td>
+                          <td>35</td>
+                          <td>Sur</td>
+                          <td>2024-08-10 11:23:21</td>
+                          <td>2024-08-10</td>
+                          <td><span class="badge badge-warning">En validación</span></td>
+                          <td>
+                            <div class="dropdown">
+                              <button class="btn btn-dark dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-ellipsis-v"></i>
+                              </button>
+                              <ul class="dropdown-menu dropdown-menu-dark">
+                               <li><a class="dropdown-item" href="detallesOrden.html">Ver Detalles</a></li>
+                              
+                              </ul>
+                            </div>
+                          </td>
+                        </tr>
+                        <!-- Agrega más productos aquí -->
+                      </tbody>
+                    </table>
+        
                   </div>
                 </div>
               </div>
-
             </div>
           </div>
         </div>
+        
+        <script>
+          const searchInput = document.getElementById('searchInput');
+          const zonaFiltro = document.getElementById('zonaFiltro');
+          const estadoFiltro = document.getElementById('estadoFiltro');
+        
+          function filtrar() {
+            const searchValue = searchInput.value.toLowerCase();
+            const zonaValue = zonaFiltro.value.toLowerCase();
+            const estadoValue = estadoFiltro.value.toLowerCase();
+            const filas = document.querySelectorAll('#tablaProductos tr');
+        
+            filas.forEach(fila => {
+              const zona = fila.cells[4].textContent.toLowerCase();
+              const estado = fila.cells[7].textContent.toLowerCase();
+              const nombre = fila.cells[2].textContent.toLowerCase();
+        
+              // Comprobar si la fila contiene el texto del filtro
+              const coincide = (zona.includes(zonaValue) || zonaValue === '') &&
+                               (estado.includes(estadoValue) || estadoValue === '') &&
+                               (nombre.includes(searchValue) || searchValue === '');
+        
+              fila.style.display = coincide ? '' : 'none';
+            });
+          }
+        
+          searchInput.addEventListener('input', filtrar);
+          zonaFiltro.addEventListener('change', filtrar);
+          estadoFiltro.addEventListener('change', filtrar);
+        
+          function limpiarFiltro() {
+            searchInput.value = '';
+            zonaFiltro.selectedIndex = 0;
+            estadoFiltro.selectedIndex = 0;
+            filtrar();
+          }
+        </script>
+        
+        
+ 
+        
+
+        
 
       </div>
 

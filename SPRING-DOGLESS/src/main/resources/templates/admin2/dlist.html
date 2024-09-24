@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/navbar.html :: header( title = 'Usuarios')}"></head>
+<body>
+<main>
+    <div class="container px-4 pb-5">
+        <nav th:replace="~{fragments/navbar.html :: navbar( active = 'Users')}"></nav>
+        <h1 class="pb-2 border-bottom">Proveedores</h1>
+        <a class="btn btn-primary mt-4 mb-4" th:href="@{'/admin/nuevoProveedor'}">Nuevo Proveedor</a>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Precio</th>
+                <th>Proveedor</th>
+                <th></th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="producto, info : ${listaProductos}">
+                <td th:text="${producto.id}"></td>
+                <td th:text="${producto.nombre}"></td>
+                <td th:text="${producto.descripcion}"></td>
+                <td th:text="${producto.precio}"></td>
+                <td th:text="${producto.proveedor.nombre + ' ' + producto.proveedor.apellido}"></td>
+                <!--
+                nombre
+                categoria
+                proveedor
+                precio
+                modelo
+                descripcion
+                -->
+                <td><a class="btn btn-primary"
+                       th:href="@{'/admin/editarProveedor' + '?id=' + ${proveedor.id}}">Editar</a>
+                </td>
+                <td><a class="btn btn-danger"
+                       th:href="@{'/admin/borrarProveedor' + '?id=' + ${proveedor.id}}">Borrar</a>
+                </td>
+            </tr>
+            </tbody>
+
+        </table>
+    </div>
+</main>
+<script th:replace="~{fragments/navbar.html :: footer-bootstrap}"></script>
+</body>
+</html>

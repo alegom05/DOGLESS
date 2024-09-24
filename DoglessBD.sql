@@ -1,32 +1,33 @@
 -- MySQL Workbench Forward Engineering
+-- The Awesome Dogless Database
 
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
--- -----------------------------------------------------
--- Schema mydb
--- -----------------------------------------------------
--- -----------------------------------------------------
--- Schema dogless
--- -----------------------------------------------------
 
 -- -----------------------------------------------------
 -- Schema dogless
 -- -----------------------------------------------------
+
+
+-- -----------------------------------------------------
+DROP DATABASE IF EXISTS `dogless`;
 CREATE SCHEMA IF NOT EXISTS `dogless` DEFAULT CHARACTER SET utf8mb3 ;
 USE `dogless` ;
+-- -----------------------------------------------------
+
 
 -- -----------------------------------------------------
--- Table `dogless`.`zona`
+-- Table `dogless`.`zonas`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `dogless`.`zona` (
-  `idzona` INT NOT NULL,
+CREATE TABLE IF NOT EXISTS `dogless`.`zonas` (
+  `idzonas` INT NOT NULL,
   `nombre` VARCHAR(45) NULL DEFAULT NULL,
-  PRIMARY KEY (`idzona`))
+  PRIMARY KEY (`idzonas`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
-INSERT INTO `dogless`.`zona` (`idzona`, `nombre`) VALUES
+INSERT INTO `dogless`.`zonas` (`idzonas`, `nombre`) VALUES
 (1, 'Norte'),
 (2, 'Sur'),
 (3, 'Este'),
@@ -34,23 +35,23 @@ INSERT INTO `dogless`.`zona` (`idzona`, `nombre`) VALUES
 
 
 -- -----------------------------------------------------
--- Table `dogless`.`adminzonal`
+-- Table `dogless`.`adminzonales`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `dogless`.`adminzonal` (
-  `idadminzonal` INT NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS `dogless`.`adminzonales` (
+  `idadminzonaleses` INT NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(45) NULL DEFAULT NULL,
   `apellido` VARCHAR(45) NULL DEFAULT NULL,
   `dni` VARCHAR(8) NULL DEFAULT NULL,
   `telefono` VARCHAR(9) NULL DEFAULT NULL,
   `email` VARCHAR(45) NULL DEFAULT NULL,
   `contraseña` VARCHAR(45) NOT NULL,
-  `zona_idzona` INT NOT NULL,
+  `idzonas` INT NOT NULL,
   `contraseña_temp` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`idadminzonal`),
-  INDEX `fk_adminzonal_zona1_idx` (`zona_idzona` ASC) VISIBLE,
-  CONSTRAINT `fk_adminzonal_zona1`
-    FOREIGN KEY (`zona_idzona`)
-    REFERENCES `dogless`.`zona` (`idzona`)
+  PRIMARY KEY (`idadminzonaleses`),
+  INDEX `fk_adminzonales_zonas1_idx` (`idzonas` ASC) VISIBLE,
+  CONSTRAINT `fk_adminzonales_zonas1`
+    FOREIGN KEY (`idzonas`)
+    REFERENCES `dogless`.`zonas` (`idzonas`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -66,27 +67,28 @@ CREATE TABLE IF NOT EXISTS `dogless`.`roles` (
 ENGINE = InnoDB;
 -- Insertar datos en la tabla `roles` con IDs específicos
 INSERT INTO `dogless`.`roles` (`idroles`, `nombre`) VALUES
-(1, 'Super Administrador'),
-(2, 'Agente de Compras'),
-(3, 'Usuario Final');
+(1, 'Superadmin'),
+(2, 'Adminzonal'),
+(3, 'Agente'),
+(4, 'Usuario');
 -- -----------------------------------------------------
 -- Table `dogless`.`distritos`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `dogless`.`distritos` (
-  `iddistrito` INT NOT NULL,
+  `iddistritos` INT NOT NULL,
   `nombre` VARCHAR(45) NULL DEFAULT NULL,
-  `zona_idzona` INT NOT NULL,
-  PRIMARY KEY (`iddistrito`),
-  INDEX `fk_distritos_zona1_idx` (`zona_idzona` ASC) VISIBLE,
-  CONSTRAINT `fk_distritos_zona1`
-    FOREIGN KEY (`zona_idzona`)
-    REFERENCES `dogless`.`zona` (`idzona`)
+  `idzonas` INT NOT NULL,
+  PRIMARY KEY (`iddistritos`),
+  INDEX `fk_distritos_zonas1_idx` (`idzonas` ASC) VISIBLE,
+  CONSTRAINT `fk_distritos_zonas1`
+    FOREIGN KEY (`idzonas`)
+    REFERENCES `dogless`.`zonas` (`idzonas`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB DEFAULT CHARACTER SET = utf8mb3;
 -- Insertar datos en la tabla `distritos`
-INSERT INTO `dogless`.`distritos` (`iddistrito`, `nombre`, `zona_idzona`) VALUES
--- Zona Norte
+INSERT INTO `dogless`.`distritos` (`iddistritos`, `nombre`, `idzonas`) VALUES
+-- zonas Norte
 (1, 'Ancon', 1),
 (2, 'Santa Rosa', 1),
 (3, 'Carabayllo', 1),
@@ -96,7 +98,7 @@ INSERT INTO `dogless`.`distritos` (`iddistrito`, `nombre`, `zona_idzona`) VALUES
 (7, 'San Martín de Porres', 1),
 (8, 'Independencia', 1),
 
--- Zona Sur
+-- zonas Sur
 (9, 'San Juan de Miraflores', 2),
 (10, 'Villa María del Triunfo', 2),
 (11, 'Villa el Salvador', 2),
@@ -108,7 +110,7 @@ INSERT INTO `dogless`.`distritos` (`iddistrito`, `nombre`, `zona_idzona`) VALUES
 (17, 'Santa María del Mar', 2),
 (18, 'Pucusana', 2),
 
--- Zona Este
+-- zonas Este
 (19, 'San Juan de Lurigancho', 3),
 (20, 'Lurigancho/Chosica', 3),
 (21, 'Ate', 3),
@@ -117,7 +119,7 @@ INSERT INTO `dogless`.`distritos` (`iddistrito`, `nombre`, `zona_idzona`) VALUES
 (24, 'La Molina', 3),
 (25, 'Cieneguilla', 3),
 
--- Zona Oeste
+-- zonas Oeste
 (26, 'Rimac', 4),
 (27, 'Cercado de Lima', 4),
 (28, 'Breña', 4),
@@ -149,68 +151,87 @@ CREATE TABLE IF NOT EXISTS `dogless`.`usuarios` (
   `contraseña` VARCHAR(45) NULL,
   `telefono` VARCHAR(45) NULL,
   `direccion` VARCHAR(45) NULL,
-  `idrol` INT NOT NULL,
-  `distritoid` INT NOT NULL,
-  `adminzonalid` INT NOT NULL,
+  `idroles` INT NOT NULL,
+  `iddistritos` INT NOT NULL,
+  `idadminzonales` INT NULL,
   `estado` ENUM('activo', 'inactivo', 'baneado') NULL,
   `ruc` VARCHAR(11) NULL,
   `codigoaduana` VARCHAR(45) NULL,
   `razonsocial` VARCHAR(45) NULL,
-  `codigojuridiccion` VARCHAR(45) NULL,
-  `zona_idzona` INT NOT NULL,
+  `codigojurisdiccion` VARCHAR(45) NULL,
+  `idzonas` INT NOT NULL,
+  `fechanacimiento` DATE NULL,
   PRIMARY KEY (`idusuarios`),
-  INDEX `idrol_idx` (`idrol` ASC) VISIBLE,
-  INDEX `iddistrito_idx` (`distritoid` ASC) VISIBLE,
-  INDEX `adminzonalid_idx` (`adminzonalid` ASC) VISIBLE,
-  INDEX `fk_usuarios_zona1_idx` (`zona_idzona` ASC) VISIBLE,
-  CONSTRAINT `idrol`
-    FOREIGN KEY (`idrol`)
+  INDEX `idroles_idx` (`idroles` ASC) VISIBLE,
+  INDEX `iddistritos_idx` (`iddistritos` ASC) VISIBLE,
+  INDEX `idadminzonales_idx` (`idadminzonales` ASC) VISIBLE,
+  INDEX `fk_usuarios_zonas1_idx` (`idzonas` ASC) VISIBLE,
+  CONSTRAINT `idroles`
+    FOREIGN KEY (`idroles`)
     REFERENCES `dogless`.`roles` (`idroles`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `distritoid`
-    FOREIGN KEY (`distritoid`)
-    REFERENCES `dogless`.`distritos` (`iddistrito`)
+  CONSTRAINT `iddistritos`
+    FOREIGN KEY (`iddistritos`)
+    REFERENCES `dogless`.`distritos` (`iddistritos`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `adminzonalid`
-    FOREIGN KEY (`adminzonalid`)
-    REFERENCES `dogless`.`adminzonal` (`idadminzonal`)
+  CONSTRAINT `idadminzonales`
+    FOREIGN KEY (`idadminzonales`)
+    REFERENCES `dogless`.`adminzonales` (`idadminzonaleses`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_usuarios_zona1`
-    FOREIGN KEY (`zona_idzona`)
-    REFERENCES `dogless`.`zona` (`idzona`)
+  CONSTRAINT `fk_usuarios_zonas1`
+    FOREIGN KEY (`idzonas`)
+    REFERENCES `dogless`.`zonas` (`idzonas`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+-- -----------------------------------------------------
+-- Table `dogless`.`solicitudes`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `dogless`.`solicitudes` (
+  `idsolicitudes` INT NOT NULL,
+  `veredicto` TINYINT NULL,
+  `comentario` VARCHAR(300) NULL,
+  `borrado` VARCHAR(300) NULL,
+  `idusuarios` INT NOT NULL,
+  PRIMARY KEY (`idsolicitudes`),
+  INDEX `fk_solicitudes_usuarios1_idx` (`idusuarios` ASC) VISIBLE,
+  CONSTRAINT `fk_solicitudes_usuarios1`
+    FOREIGN KEY (`idusuarios`)
+    REFERENCES `dogless`.`usuarios` (`idusuarios`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 -- 1. Super Administradores (ID rol = 1)
-INSERT INTO `dogless`.`usuarios` (`idusuarios`, `nombre`, `apellido`, `dni`, `correo`, `contraseña`, `telefono`, `direccion`, `idrol`, `distritoid`, `adminzonalid`, `estado`, `ruc`, `codigoaduana`, `razonsocial`, `codigojuridiccion`, `zona_idzona`)
+INSERT INTO `dogless`.`usuarios` (`idusuarios`, `nombre`, `apellido`, `dni`, `correo`, `contraseña`, `telefono`, `direccion`, `idroles`, `iddistritos`, `idadminzonales`, `estado`, `ruc`, `codigoaduana`, `razonsocial`, `codigojurisdiccion`, `idzonas`)
 VALUES 
-(1, 'Fernando', 'Pérez', '11223344', 'fernando.perez@dogless.com', 'adminpass123', '987654321', NULL, 1, NULL, NULL, 'activo', NULL, NULL, NULL, NULL, NULL),
-(2, 'Luisa', 'Gómez', '22334455', 'luisa.gomez@dogless.com', 'jefepass456', '987654322', NULL, 1, NULL, NULL, 'activo', NULL, NULL, NULL, NULL, NULL);
+(1, 'Fernando', 'Pérez', '11223344', 'fernando.perez@dogless.com', 'adminpass123', '987654321', NULL, 1, 1, 0, 'activo', NULL, NULL, NULL, NULL, 1),
+(2, 'Luisa', 'Gómez', '22334455', 'luisa.gomez@dogless.com', 'jefepass456', '987654322', NULL, 1, 1, 0, 'activo', NULL, NULL, NULL, NULL, 1);
 
-INSERT INTO `dogless`.`usuarios` (`idusuarios`, `nombre`, `apellido`, `dni`, `correo`, `contraseña`, `telefono`, `direccion`, `idrol`, `distritoid`, `adminzonalid`, `estado`, `ruc`, `codigoaduana`, `razonsocial`, `codigojuridiccion`, `zona_idzona`)
+INSERT INTO `dogless`.`usuarios` (`idusuarios`, `nombre`, `apellido`, `dni`, `correo`, `contraseña`, `telefono`, `direccion`, `idroles`, `iddistritos`, `idadminzonales`, `estado`, `ruc`, `codigoaduana`, `razonsocial`, `codigojurisdiccion`, `idzonas`)
 VALUES
--- Zona Norte (Administradores zonales ID 1 y 2)
-(3, 'Juan', 'Pérez', '12345678', 'juan.perez@norte.com', 'password123', '987654321', 'Calle Norte 101', null, 1, 1, 'activo', NULL, NULL, NULL, NULL, 1),
-(4, 'María', 'Gómez', '23456789', 'maria.gomez@norte.com', 'password456', '987654322', 'Calle Norte 102', null, 2, 2, 'activo', NULL, NULL, NULL, NULL, 1),
+-- zonas Norte (Administradores zonales ID 1 y 2)
+(3, 'Juan', 'Pérez', '12345678', 'juan.perez@norte.com', 'password123', '987654321', 'Calle Norte 101', 2, 1, 1, 'activo', NULL, NULL, NULL, NULL, 1),
+(4, 'María', 'Gómez', '23456789', 'maria.gomez@norte.com', 'password456', '987654322', 'Calle Norte 102', 2, 2, 2, 'activo', NULL, NULL, NULL, NULL, 1),
 
--- Zona Sur (Administradores zonales ID 3 y 4)
-(5, 'Carlos', 'Ramírez', '34567890', 'carlos.ramirez@sur.com', 'password789', '987654323', 'Av. Sur 101', NULL, 9, 3, 'activo', NULL, NULL, NULL, NULL, 2),
-(6, 'Luisa', 'Fernández', '45678901', 'luisa.fernandez@sur.com', 'password101', '987654324', 'Av. Sur 102', NULL, 10, 4, 'activo', NULL, NULL, NULL, NULL, 2),
+-- zonas Sur (Administradores zonales ID 3 y 4)
+(5, 'Carlos', 'Ramírez', '34567890', 'carlos.ramirez@sur.com', 'password789', '987654323', 'Av. Sur 101', 2, 9, 3, 'activo', NULL, NULL, NULL, NULL, 2),
+(6, 'Luisa', 'Fernández', '45678901', 'luisa.fernandez@sur.com', 'password101', '987654324', 'Av. Sur 102', 2, 10, 4, 'activo', NULL, NULL, NULL, NULL, 2),
 
--- Zona Este (Administradores zonales ID 5 y 6)
-(7, 'Ricardo', 'López', '56789012', 'ricardo.lopez@este.com', 'password202', '987654325', 'Calle Este 101', NULL, 19, 5, 'activo', NULL, NULL, NULL, NULL, 3),
-(8, 'Ana', 'Martínez', '67890123', 'ana.martinez@este.com', 'password303', '987654326', 'Av. Este 102', NULL, 20, 6, 'activo', NULL, NULL, NULL, NULL, 3),
+-- zonas Este (Administradores zonales ID 5 y 6)
+(7, 'Ricardo', 'López', '56789012', 'ricardo.lopez@este.com', 'password202', '987654325', 'Calle Este 101', 2, 19, 5, 'activo', NULL, NULL, NULL, NULL, 3),
+(8, 'Ana', 'Martínez', '67890123', 'ana.martinez@este.com', 'password303', '987654326', 'Av. Este 102', 2, 20, 6, 'activo', NULL, NULL, NULL, NULL, 3),
 
--- Zona Oeste (Administradores zonales ID 7 y 8)
-(9, 'Pedro', 'Sánchez', '78901234', 'pedro.sanchez@oeste.com', 'password404', '987654327', 'Calle Oeste 101', NULL, 26, 7, 'activo', NULL, NULL, NULL, NULL, 4),
-(10, 'Gabriela', 'Navarro', '89012345', 'gabriela.navarro@oeste.com', 'password1112', '987654328', 'Av. Oeste 102', NULL, 27, 8, 'activo', NULL, NULL, NULL, NULL, 4);
+-- zonas Oeste (Administradores zonales ID 7 y 8)
+(9, 'Pedro', 'Sánchez', '78901234', 'pedro.sanchez@oeste.com', 'password404', '987654327', 'Calle Oeste 101', 2, 26, 7, 'activo', NULL, NULL, NULL, NULL, 4),
+(10, 'Gabriela', 'Navarro', '89012345', 'gabriela.navarro@oeste.com', 'password1112', '987654328', 'Av. Oeste 102', 2, 27, 8, 'activo', NULL, NULL, NULL, NULL, 4);
 
--- Agentes Zona Norte (Admin Zonal 1Y 2)
-INSERT INTO `dogless`.`usuarios` (`idusuarios`, `nombre`, `apellido`, `dni`, `correo`, `contraseña`, `telefono`, `direccion`, `idrol`, `distritoid`, `adminzonalid`, `estado`, `ruc`, `codigoaduana`, `razonsocial`, `codigojuridiccion`, `zona_idzona`)
+-- Agentes zonas Norte (Admin zonas 1Y 2)
+INSERT INTO `dogless`.`usuarios` (`idusuarios`, `nombre`, `apellido`, `dni`, `correo`, `contraseña`, `telefono`, `direccion`, `idroles`, `iddistritos`, `idadminzonales`, `estado`, `ruc`, `codigoaduana`, `razonsocial`, `codigojurisdiccion`, `idzonas`)
 VALUES
 (11, 'Jorge', 'Ramírez', '33445566', 'jorge.ramirez@norte.com', 'agenteNpass123', '987654323', 'Calle Norte 123', 2, 1, 1, 'activo', '12345678901', 'ADU001', 'Agente Norte', 'JUR001', 1),
 (12, 'Rosa', 'Soto', '44556677', 'rosa.soto@norte.com', 'agenteNpass456', '987654324', 'Av. Norte 456', 2, 2, 1, 'activo', '10987654321', 'ADU002', 'Agente Norte', 'JUR002', 1),
@@ -219,8 +240,8 @@ VALUES
 (15, 'Carlos', 'Rivas', '77889900', 'carlos.rivas@norte.com', 'agenteNpass345', '987654327', 'Calle Norte 345', 2, 5, 2, 'activo', '10987654324', 'ADU005', 'Agente Norte', 'JUR005', 1),
 (16, 'Patricia', 'Flores', '88990011', 'patricia.flores@norte.com', 'agenteNpass678', '987654328', 'Av. Norte 678', 2, 6, 2, 'activo', '10987654325', 'ADU006', 'Agente Norte', 'JUR006', 1);
 
--- Agentes Zona Sur (Admin Zonal 3 Y 4)
-INSERT INTO `dogless`.`usuarios` (`idusuarios`, `nombre`, `apellido`, `dni`, `correo`, `contraseña`, `telefono`, `direccion`, `idrol`, `distritoid`, `adminzonalid`, `estado`, `ruc`, `codigoaduana`, `razonsocial`, `codigojuridiccion`, `zona_idzona`)
+-- Agentes zonas Sur (Admin zonas 3 Y 4)
+INSERT INTO `dogless`.`usuarios` (`idusuarios`, `nombre`, `apellido`, `dni`, `correo`, `contraseña`, `telefono`, `direccion`, `idroles`, `iddistritos`, `idadminzonales`, `estado`, `ruc`, `codigoaduana`, `razonsocial`, `codigojurisdiccion`, `idzonas`)
 VALUES
 (17, 'Laura', 'Martínez', '99001122', 'laura.martinez@sur.com', 'agenteSpass123', '987654329', 'Calle Sur 123', 2, 9, 3, 'activo', '12345678902', 'ADU007', 'Agente Sur', 'JUR007', 2),
 (18, 'Andrés', 'Pérez', '11002233', 'andres.perez@sur.com', 'agenteSpass456', '987654330', 'Av. Sur 456', 2, 10, 3, 'activo', '10987654326', 'ADU008', 'Agente Sur', 'JUR008', 2),
@@ -230,8 +251,8 @@ VALUES
 (22, 'Pablo', 'Cruz', '55006677', 'pablo.cruz@sur.com', 'agenteSpass678', '987654334', 'Av. Sur 678', 2, 14, 4, 'activo', '10987654330', 'ADU012', 'Agente Sur', 'JUR012', 2);
 
 
--- Agentes Zona Este (Admin Zonal 5 y 6)
-INSERT INTO `dogless`.`usuarios` (`idusuarios`, `nombre`, `apellido`, `dni`, `correo`, `contraseña`, `telefono`, `direccion`, `idrol`, `distritoid`, `adminzonalid`, `estado`, `ruc`, `codigoaduana`, `razonsocial`, `codigojuridiccion`, `zona_idzona`)
+-- Agentes zonas Este (Admin zonas 5 y 6)
+INSERT INTO `dogless`.`usuarios` (`idusuarios`, `nombre`, `apellido`, `dni`, `correo`, `contraseña`, `telefono`, `direccion`, `idroles`, `iddistritos`, `idadminzonales`, `estado`, `ruc`, `codigoaduana`, `razonsocial`, `codigojurisdiccion`, `idzonas`)
 VALUES
 (23, 'Martín', 'Hernández', '66007788', 'martin.hernandez@este.com', 'agenteEpass123', '987654335', 'Calle Este 123', 2, 19, 5, 'activo', '12345678903', 'ADU013', 'Agente Este', 'JUR013', 3),
 (24, 'Verónica', 'Díaz', '77008899', 'veronica.diaz@este.com', 'agenteEpass456', '987654336', 'Av. Este 456', 2, 20, 5, 'activo', '10987654331', 'ADU014', 'Agente Este', 'JUR014', 3),
@@ -240,8 +261,8 @@ VALUES
 (27, 'Tomás', 'Fernández', '11002233', 'tomas.fernandez@este.com', 'agenteEpass345', '987654339', 'Calle Este 345', 2, 23, 6, 'activo', '10987654334', 'ADU017', 'Agente Este', 'JUR017', 3),
 (28, 'Raquel', 'Paredes', '12003344', 'raquel.paredes@este.com', 'agenteEpass678', '987654340', 'Av. Este 678', 2, 24, 6, 'activo', '10987654335', 'ADU018', 'Agente Este', 'JUR018', 3);
 
--- Agentes Zona Oeste (Admin Zonal 7  y 8)
-INSERT INTO `dogless`.`usuarios` (`idusuarios`, `nombre`, `apellido`, `dni`, `correo`, `contraseña`, `telefono`, `direccion`, `idrol`, `distritoid`, `adminzonalid`, `estado`, `ruc`, `codigoaduana`, `razonsocial`, `codigojuridiccion`, `zona_idzona`)
+-- Agentes zonas Oeste (Admin zonas 7  y 8)
+INSERT INTO `dogless`.`usuarios` (`idusuarios`, `nombre`, `apellido`, `dni`, `correo`, `contraseña`, `telefono`, `direccion`, `idroles`, `iddistritos`, `idadminzonales`, `estado`, `ruc`, `codigoaduana`, `razonsocial`, `codigojurisdiccion`, `idzonas`)
 VALUES
 (29, 'Raúl', 'González', '13004455', 'raul.gonzalez@oeste.com', 'agenteWpass123', '987654341', 'Calle Oeste 123', 2, 26, 7, 'activo', '12345678904', 'ADU019', 'Agente Oeste', 'JUR019', 4),
 (30, 'Diana', 'Campos', '14005566', 'diana.campos@oeste.com', 'agenteWpass456', '987654342', 'Av. Oeste 456', 2, 27, 7, 'activo', '10987654336', 'ADU020', 'Agente Oeste', 'JUR020', 4),
@@ -251,32 +272,32 @@ VALUES
 (34, 'Alejandra', 'Ramos', '18009900', 'alejandra.ramos@oeste.com', 'agenteWpass678', '987654346', 'Av. Oeste 678', 2, 31, 8, 'activo', '10987654340', 'ADU024', 'Agente Oeste', 'JUR024', 4);
 
 -- Usuarios Finales 
-INSERT INTO `dogless`.`usuarios` (`idusuarios`, `nombre`, `apellido`, `dni`, `correo`, `contraseña`, `telefono`, `direccion`, `idrol`, `distritoid`, `adminzonalid`, `estado`, `ruc`, `codigoaduana`, `razonsocial`, `codigojuridiccion`, `zona_idzona`)
+INSERT INTO `dogless`.`usuarios` (`idusuarios`, `nombre`, `apellido`, `dni`, `correo`, `contraseña`, `telefono`, `direccion`, `idroles`, `iddistritos`, `idadminzonales`, `estado`, `ruc`, `codigoaduana`, `razonsocial`, `codigojurisdiccion`, `idzonas`)
 VALUES
-(35, 'Laura', 'Suárez', '22334455', 'laura.suarez@norte.com', 'userFpass1!', '987654347', 'Calle Norte 1', 3, 1, NULL, 'activo', NULL, NULL, NULL, NULL, 1),
-(36, 'Javier', 'Ortiz', '33445566', 'javier.ortiz@norte.com', 'userFpass2#$', '987654348', 'Calle Norte 2', 3, 2, NULL, 'activo', NULL, NULL, NULL, NULL, 1),
-(37, 'María', 'Santos', '44556677', 'maria.santos@norte.com', 'userFpass3&*', '987654349', 'Av. Norte 3', 3, 3, NULL, 'activo', NULL, NULL, NULL, NULL, 1),
-(38, 'Raúl', 'Pérez', '55667788', 'raul.perez@norte.com', 'userFpass4@!', '987654350', 'Calle Norte 4', 3, 4, NULL, 'activo', NULL, NULL, NULL, NULL, 1),
-(39, 'Carla', 'Mendoza', '66778899', 'carla.mendoza@norte.com', 'userFpass5^&', '987654351', 'Av. Norte 5', 3, 5, NULL, 'activo', NULL, NULL, NULL, NULL, 1),
-(40, 'Luis', 'García', '77889900', 'luis.garcia@norte.com', 'userFpass6*%', '987654352', 'Calle Norte 6', 3, 6, NULL, 'baneado', NULL, NULL, NULL, NULL, 1),
-(41, 'Sofía', 'Rodríguez', '88990011', 'sofia.rodriguez@sur.com', 'userFpass7$$', '987654353', 'Calle Sur 1', 3, 9, NULL, 'activo', NULL, NULL, NULL, NULL, 2),
-(42, 'Juan', 'Morales', '99001122', 'juan.morales@sur.com', 'userFpass8!!', '987654354', 'Av. Sur 2', 3, 10, NULL, 'baneado', NULL, NULL, NULL, NULL, 2),
-(43, 'Mónica', 'Ruiz', '11002233', 'monica.ruiz@sur.com', 'userFpass9@@', '987654355', 'Calle Sur 3', 3, 11, NULL, 'activo', NULL, NULL, NULL, NULL, 2),
-(44, 'Carlos', 'Martínez', '12003344', 'carlos.martinez@sur.com', 'userFpass10%%', '987654356', 'Av. Sur 4', 3, 12, NULL, 'activo', NULL, NULL, NULL, NULL, 2),
-(45, 'Julia', 'Castro', '13004455', 'julia.castro@sur.com', 'userFpass11^^', '987654357', 'Calle Sur 5', 3, 13, NULL, 'inactivo', NULL, NULL, NULL, NULL, 2),
-(46, 'Pablo', 'Fernández', '14005566', 'pablo.fernandez@sur.com', 'userFpass12&&', '987654358', 'Av. Sur 6', 3, 14, NULL, 'activo', NULL, NULL, NULL, NULL, 2),
-(47, 'Andrés', 'Silva', '15006677', 'andres.silva@este.com', 'userFpass13**', '987654359', 'Calle Este 1', 3, 19, NULL, 'activo', NULL, NULL, NULL, NULL, 3),
-(48, 'Elena', 'Reyes', '16007788', 'elena.reyes@este.com', 'userFpass14##', '987654360', 'Av. Este 2', 3, 20, NULL, 'activo', NULL, NULL, NULL, NULL, 3),
-(49, 'Hugo', 'Cano', '17008899', 'hugo.cano@este.com', 'userFpass15@@', '987654361', 'Calle Este 3', 3, 21, NULL, 'activo', NULL, NULL, NULL, NULL, 3),
-(50, 'Ana', 'Ramírez', '18009900', 'ana.ramirez@este.com', 'userFpass16$$', '987654362', 'Av. Este 4', 3, 22, NULL, 'baneado', NULL, NULL, NULL, NULL, 3),
-(51, 'David', 'Paredes', '19001111', 'david.paredes@este.com', 'userFpass17##', '987654363', 'Calle Este 5', 3, 23, NULL, 'inactivo', NULL, NULL, NULL, NULL, 3),
-(52, 'Carolina', 'Gómez', '20002222', 'carolina.gomez@este.com', 'userFpass18&&', '987654364', 'Av. Este 6', 3, 24, NULL, 'activo', NULL, NULL, NULL, NULL, 3),
-(53, 'Carmen', 'López', '21003333', 'carmen.lopez@oeste.com', 'userFpass19%%', '987654365', 'Calle Oeste 1', 3, 26, NULL, 'activo', NULL, NULL, NULL, NULL, 4),
-(54, 'Sergio', 'Castillo', '22004444', 'sergio.castillo@oeste.com', 'userFpass20!!', '987654366', 'Av. Oeste 2', 3, 27, NULL, 'activo', NULL, NULL, NULL, NULL, 4),
-(55, 'Isabel', 'Mendoza', '23005555', 'isabel.mendoza@oeste.com', 'userFpass21##', '987654367', 'Calle Oeste 3', 3, 28, NULL, 'activo', NULL, NULL, NULL, NULL, 4),
-(56, 'Jorge', 'Vega', '24006666', 'jorge.vega@oeste.com', 'userFpass22$$', '987654368', 'Av. Oeste 4', 3, 29, NULL, 'inactivo', NULL, NULL, NULL, NULL, 4),
-(57, 'Lucía', 'Carrillo', '25007777', 'lucia.carrillo@oeste.com', 'userFpass23&&', '987654369', 'Calle Oeste 5', 3, 30, NULL, 'activo', NULL, NULL, NULL, NULL, 4),
-(58, 'Emilio', 'Vargas', '26008888', 'emilio.vargas@oeste.com', 'userFpass24**', '987654370', 'Av. Oeste 6', 3, 31, NULL, 'activo', NULL, NULL, NULL, NULL, 4);
+(35, 'Laura', 'Suárez', '22334455', 'laura.suarez@norte.com', 'userFpass1!', '987654347', 'Calle Norte 1', 4, 1, NULL, 'activo', NULL, NULL, NULL, NULL, 1),
+(36, 'Javier', 'Ortiz', '33445566', 'javier.ortiz@norte.com', 'userFpass2#$', '987654348', 'Calle Norte 2', 4, 2, NULL, 'activo', NULL, NULL, NULL, NULL, 1),
+(37, 'María', 'Santos', '44556677', 'maria.santos@norte.com', 'userFpass3&*', '987654349', 'Av. Norte 3', 4, 3, NULL, 'activo', NULL, NULL, NULL, NULL, 1),
+(38, 'Raúl', 'Pérez', '55667788', 'raul.perez@norte.com', 'userFpass4@!', '987654350', 'Calle Norte 4', 4, 4, NULL, 'activo', NULL, NULL, NULL, NULL, 1),
+(39, 'Carla', 'Mendoza', '66778899', 'carla.mendoza@norte.com', 'userFpass5^&', '987654351', 'Av. Norte 5', 4, 5, NULL, 'activo', NULL, NULL, NULL, NULL, 1),
+(40, 'Luis', 'García', '77889900', 'luis.garcia@norte.com', 'userFpass6*%', '987654352', 'Calle Norte 6', 4, 6, NULL, 'baneado', NULL, NULL, NULL, NULL, 1),
+(41, 'Sofía', 'Rodríguez', '88990011', 'sofia.rodriguez@sur.com', 'userFpass7$$', '987654353', 'Calle Sur 1', 4, 9, NULL, 'activo', NULL, NULL, NULL, NULL, 2),
+(42, 'Juan', 'Morales', '99001122', 'juan.morales@sur.com', 'userFpass8!!', '987654354', 'Av. Sur 2', 4, 10, NULL, 'baneado', NULL, NULL, NULL, NULL, 2),
+(43, 'Mónica', 'Ruiz', '11002233', 'monica.ruiz@sur.com', 'userFpass9@@', '987654355', 'Calle Sur 3', 4, 11, NULL, 'activo', NULL, NULL, NULL, NULL, 2),
+(44, 'Carlos', 'Martínez', '12003344', 'carlos.martinez@sur.com', 'userFpass10%%', '987654356', 'Av. Sur 4', 4, 12, NULL, 'activo', NULL, NULL, NULL, NULL, 2),
+(45, 'Julia', 'Castro', '13004455', 'julia.castro@sur.com', 'userFpass11^^', '987654357', 'Calle Sur 5', 4, 13, NULL, 'inactivo', NULL, NULL, NULL, NULL, 2),
+(46, 'Pablo', 'Fernández', '14005566', 'pablo.fernandez@sur.com', 'userFpass12&&', '987654358', 'Av. Sur 6', 4, 14, NULL, 'activo', NULL, NULL, NULL, NULL, 2),
+(47, 'Andrés', 'Silva', '15006677', 'andres.silva@este.com', 'userFpass13**', '987654359', 'Calle Este 1', 4, 19, NULL, 'activo', NULL, NULL, NULL, NULL, 3),
+(48, 'Elena', 'Reyes', '16007788', 'elena.reyes@este.com', 'userFpass14##', '987654360', 'Av. Este 2', 4, 20, NULL, 'activo', NULL, NULL, NULL, NULL, 3),
+(49, 'Hugo', 'Cano', '17008899', 'hugo.cano@este.com', 'userFpass15@@', '987654361', 'Calle Este 3', 4, 21, NULL, 'activo', NULL, NULL, NULL, NULL, 3),
+(50, 'Ana', 'Ramírez', '18009900', 'ana.ramirez@este.com', 'userFpass16$$', '987654362', 'Av. Este 4', 4, 22, NULL, 'baneado', NULL, NULL, NULL, NULL, 3),
+(51, 'David', 'Paredes', '19001111', 'david.paredes@este.com', 'userFpass17##', '987654363', 'Calle Este 5', 4, 23, NULL, 'inactivo', NULL, NULL, NULL, NULL, 3),
+(52, 'Carolina', 'Gómez', '20002222', 'carolina.gomez@este.com', 'userFpass18&&', '987654364', 'Av. Este 6', 4, 24, NULL, 'activo', NULL, NULL, NULL, NULL, 3),
+(53, 'Carmen', 'López', '21003333', 'carmen.lopez@oeste.com', 'userFpass19%%', '987654365', 'Calle Oeste 1', 4, 26, NULL, 'activo', NULL, NULL, NULL, NULL, 4),
+(54, 'Sergio', 'Castillo', '22004444', 'sergio.castillo@oeste.com', 'userFpass20!!', '987654366', 'Av. Oeste 2', 4, 27, NULL, 'activo', NULL, NULL, NULL, NULL, 4),
+(55, 'Isabel', 'Mendoza', '23005555', 'isabel.mendoza@oeste.com', 'userFpass21##', '987654367', 'Calle Oeste 3', 4, 28, NULL, 'activo', NULL, NULL, NULL, NULL, 4),
+(56, 'Jorge', 'Vega', '24006666', 'jorge.vega@oeste.com', 'userFpass22$$', '987654368', 'Av. Oeste 4', 4, 29, NULL, 'inactivo', NULL, NULL, NULL, NULL, 4),
+(57, 'Lucía', 'Carrillo', '25007777', 'lucia.carrillo@oeste.com', 'userFpass23&&', '987654369', 'Calle Oeste 5', 4, 30, NULL, 'activo', NULL, NULL, NULL, NULL, 4),
+(58, 'Emilio', 'Vargas', '26008888', 'emilio.vargas@oeste.com', 'userFpass24**', '987654370', 'Av. Oeste 6', 4, 31, NULL, 'activo', NULL, NULL, NULL, NULL, 4);
 -- -----------------------------------------------------
 -- Table `dogless`.`ordenes`
 -- -----------------------------------------------------
@@ -529,53 +550,67 @@ VALUES
 CREATE TABLE IF NOT EXISTS `dogless`.`stockproductos` (
   `productoid` INT NOT NULL,
   `cantidad` INT NULL,
-  `zona_idzona` INT NOT NULL,
+  `idzonas` INT NOT NULL,
   INDEX `productoid_idx` (`productoid` ASC) VISIBLE,
-  INDEX `fk_stockproductos_zona1_idx` (`zona_idzona` ASC) VISIBLE,
+  INDEX `fk_stockproductos_zonas1_idx` (`idzonas` ASC) VISIBLE,
   CONSTRAINT `productoid`
     FOREIGN KEY (`productoid`)
     REFERENCES `dogless`.`productos` (`idproductos`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_stockproductos_zona1`
-    FOREIGN KEY (`zona_idzona`)
-    REFERENCES `dogless`.`zona` (`idzona`)
+  CONSTRAINT `fk_stockproductos_zonas1`
+    FOREIGN KEY (`idzonas`)
+    REFERENCES `dogless`.`zonas` (`idzonas`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 -- Insertar datos en la tabla `stockproductos`
 INSERT INTO `dogless`.`stockproductos` 
-(`productoid`, `cantidad`, `zona_idzona`)
+(`productoid`, `cantidad`, `idzonas`)
 VALUES
--- Stock para la Zona Norte (ID Zona 1)
-(1, 50, 1), -- 50 unidades de Smartphone X en la Zona Norte
-(2, 30, 1), -- 30 unidades de Laptop Y en la Zona Norte
-(3, 100, 1), -- 100 unidades de Auriculares Z en la Zona Norte
-(4, 15, 1), -- 15 unidades de Cámara Fotográfica en la Zona Norte
-(5, 40, 1), -- 40 unidades de Tablet W en la Zona Norte
-(6, 10, 1), -- 10 unidades de Impresora 3D en la Zona Norte
+-- Stock para la zonas Norte (ID zonas 1)
+(1, 50, 1), -- 50 unidades de Smartphone X en la zona Norte
+(2, 30, 1), -- 30 unidades de Laptop Y en la zona Norte
+(3, 100, 1), -- 100 unidades de Auriculares Z en la zona Norte
+(4, 15, 1), -- 15 unidades de Cámara Fotográfica en la zona Norte
+(5, 40, 1), -- 40 unidades de Tablet W en la zona Norte
+(6, 10, 1), -- 10 unidades de Impresora 3D en la zona Norte
 
--- Stock para la Zona Sur (ID Zona 2)
-(1, 40, 2), -- 40 unidades de Smartphone X en la Zona Sur
-(2, 25, 2), -- 25 unidades de Laptop Y en la Zona Sur
-(3, 90, 2), -- 90 unidades de Auriculares Z en la Zona Sur
-(7, 20, 2), -- 20 unidades de Drone Pro en la Zona Sur
-(8, 35, 2), -- 35 unidades de Consola de Videojuegos en la Zona Sur
+-- Stock para la zonas Sur (ID zonas 2)
+(1, 40, 2), -- 40 unidades de Smartphone X en la zona Sur
+(2, 25, 2), -- 25 unidades de Laptop Y en la zona Sur
+(3, 90, 2), -- 90 unidades de Auriculares Z en la zona Sur
+(7, 20, 2), -- 20 unidades de Drone Pro en la zona Sur
+(8, 35, 2), -- 35 unidades de Consola de Videojuegos en la zona Sur
 
--- Stock para la Zona Este (ID Zona 3)
-(1, 60, 3), -- 60 unidades de Smartphone X en la Zona Este
-(4, 10, 3), -- 10 unidades de Cámara Fotográfica en la Zona Este
-(5, 50, 3), -- 50 unidades de Tablet W en la Zona Este
-(6, 5, 3),  -- 5 unidades de Impresora 3D en la Zona Este
-(9, 70, 3), -- 70 unidades de Reloj Inteligente en la Zona Este
-(10, 80, 3), -- 80 unidades de Teclado Mecánico en la Zona Este
+-- Stock para la zonas Este (ID zonas 3)
+(1, 60, 3), -- 60 unidades de Smartphone X en la zona Este
+(4, 10, 3), -- 10 unidades de Cámara Fotográfica en la zona Este
+(5, 50, 3), -- 50 unidades de Tablet W en la zona Este
+(6, 5, 3),  -- 5 unidades de Impresora 3D en la zona Este
+(9, 70, 3), -- 70 unidades de Reloj Inteligente en la zona Este
+(10, 80, 3), -- 80 unidades de Teclado Mecánico en la zona Este
 
--- Stock para la Zona Oeste (ID Zona 4)
-(2, 20, 4), -- 20 unidades de Laptop Y en la Zona Oeste
-(3, 120, 4), -- 120 unidades de Auriculares Z en la Zona Oeste
-(7, 15, 4), -- 15 unidades de Drone Pro en la Zona Oeste
-(9, 50, 4), -- 50 unidades de Reloj Inteligente en la Zona Oeste
-(10, 65, 4); -- 65 unidades de Teclado Mecánico en la Zona Oeste
+-- Stock para la zonas Oeste (ID zonas 4)
+(2, 20, 4), -- 20 unidades de Laptop Y en la zona Oeste
+(3, 120, 4), -- 120 unidades de Auriculares Z en la zona Oeste
+(7, 15, 4), -- 15 unidades de Drone Pro en la zona Oeste
+(9, 50, 4), -- 50 unidades de Reloj Inteligente en la zona Oeste
+(10, 65, 4); -- 65 unidades de Teclado Mecánico en la zona Oeste
+
+-- Solicitudes
+INSERT INTO `dogless`.`solicitudes` (`idsolicitudes`, `veredicto`, `idusuarios`, `comentario`) 
+VALUES 
+('1', '1', '3', 'Estamos revisando tu solicitud. Te contactaremos pronto.'),
+('2', '1', '4', 'Tu solicitud ha sido aprobada. Te enviaremos más detalles.'),
+('3', '0', '5', 'Lamentablemente, no cumples con los requisitos en este momento.'),
+('4', '1', '6', 'Tu perfil está bajo revisión final. Pronto recibirás una respuesta.'),
+('5', '1', '7', 'Gracias por tu interés. Hemos recibido tu solicitud y está en proceso.'),
+('6', '1', '8', 'Enhorabuena, tu solicitud ha sido aceptada. Nos pondremos en contacto contigo.'),
+('7', '0', '9', 'No has sido seleccionado en esta ocasión. Te invitamos a postular nuevamente en el futuro.'),
+('8', '1', '10', 'Tu solicitud ha sido aprobada condicionalmente, faltan documentos.'),
+('9', '1', '11', 'Estamos evaluando tu perfil. Te informaremos en los próximos días.'),
+('10', '1', '12', 'Has sido aceptado. Pronto recibirás más información.');
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
