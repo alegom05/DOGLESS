@@ -49,7 +49,7 @@
         <div class="sidebar-logo">
           <!-- Logo de cabecera -->
           <div class="logo-header" data-background-color="dark">
-            <a href="paginaprincipal.html" class="logo">
+            <a th:href="@{/admin}" class="logo">
               <img
                       src="assets/img/kaiadmin/slogan_white_v3.png"
                       alt="navbar brand"
@@ -76,7 +76,7 @@
             <ul class="nav nav-secondary">
               <!-- Barra de navegacion lateral-->
               <li class="nav-item active submenu">
-                <a href="paginaprincipal.html">
+                <a th:href="@{/admin}">
                   <i class="fas fa-home"></i>
                   <p>Página principal</p>
                 </a>
@@ -290,13 +290,13 @@
                           </tr>
                         </thead>
                         <tbody>
-                          <tr>
-                            <td>Fernando</td>
-                            <td>Salas</td>
-                            <td>76543210</td>
-                            <td>fernando.salas@gmail.com</td>
-                            <td>San Luis</td>
-                          </tr>
+                        <tr th:each="usuario : ${listaZonales}">
+                          <td th:text="${usuario.nombre}"></td>
+                          <td th:text="${usuario.apellido}"></td>
+                          <td th:text="${usuario.dni}"></td>
+                          <td th:text="${usuario.correo}"></td>
+                          <td th:text="${usuario.distrito.distrito}"></td>
+                        </tr>
 
                         </tbody>
                       </table>
@@ -321,78 +321,17 @@
                             <th>Distrito</th>
                           </tr>
                         </thead>
+
                         <tbody>
-                          <tr>
-                            <td>José</td>
-                            <td>González</td>
-                            <td>12345678</td>
-                            <td>jose.gonzalez@gmail.com</td>
-                            <td>Miraflores</td>
-                          </tr>
-                          <tr>
-                            <td>María</td>
-                            <td>Rojas</td>
-                            <td>23456789</td>
-                            <td>maria.rojas@gmail.com</td>
-                            <td>San Isidro</td>
-                          </tr>
-                          <tr>
-                            <td>Carlos</td>
-                            <td>Fernández</td>
-                            <td>34567890</td>
-                            <td>carlos.fernandez@gmail.com</td>
-                            <td>Surco</td>
-                          </tr>
-                          <tr>
-                            <td>Lucía</td>
-                            <td>Ramírez</td>
-                            <td>45678901</td>
-                            <td>lucia.ramirez@gmail.com</td>
-                            <td>La Molina</td>
-                          </tr>
-                          <tr>
-                            <td>Jorge</td>
-                            <td>Vargas</td>
-                            <td>56789012</td>
-                            <td>jorge.vargas@gmail.com</td>
-                            <td>San Borja</td>
-                          </tr>
-                          <tr>
-                            <td>Ana</td>
-                            <td>Medina</td>
-                            <td>67890123</td>
-                            <td>ana.medina@gmail.com</td>
-                            <td>San Miguel</td>
-                          </tr>
-                          <tr>
-                            <td>Ricardo</td>
-                            <td>Sánchez</td>
-                            <td>78901234</td>
-                            <td>ricardo.sanchez@gmail.com</td>
-                            <td>Pueblo Libre</td>
-                          </tr>
-                          <tr>
-                            <td>Elena</td>
-                            <td>Torres</td>
-                            <td>89012345</td>
-                            <td>elena.torres@gmail.com</td>
-                            <td>Lince</td>
-                          </tr>
-                          <tr>
-                            <td>Fernando</td>
-                            <td>Pérez</td>
-                            <td>90123456</td>
-                            <td>fernando.perez@gmail.com</td>
-                            <td>Chorrillos</td>
-                          </tr>
-                          <tr>
-                            <td>Sofía</td>
-                            <td>Castro</td>
-                            <td>01234567</td>
-                            <td>sofia.castro@gmail.com</td>
-                            <td>Jesús María</td>
+                          <tr th:each="usuario : ${listaZonales}">
+                            <td th:text="${usuario.nombre}"></td>
+                            <td th:text="${usuario.apellido}"></td>
+                            <td th:text="${usuario.dni}"></td>
+                            <td th:text="${usuario.correo}"></td>
+                            <td th:text="${usuario.distrito.distrito}"></td>
                           </tr>
                         </tbody>
+
                       </table>
                     </div>
                   </div>
@@ -416,153 +355,14 @@
                           </tr>
                         </thead>
                         <tbody>
-                          <tr>
-                            <td>David</td>
-                            <td>Navarro</td>
-                            <td>32109876</td>
-                            <td>david.navarro@gmail.com</td>
-                            <td>Ate</td>
+                          <tr th:each="usuario : ${listaZonales}">
+                            <td th:text="${usuario.nombre}"></td>
+                            <td th:text="${usuario.apellido}"></td>
+                            <td th:text="${usuario.dni}"></td>
+                            <td th:text="${usuario.correo}"></td>
+                            <td th:text="${usuario.distrito.distrito}"></td>
                           </tr>
-                          <tr>
-                            <td>Luciana</td>
-                            <td>Bravo</td>
-                            <td>21098765</td>
-                            <td>luciana.bravo@gmail.com</td>
-                            <td>Lince</td>
-                          </tr>
-                          <tr>
-                            <td>Álvaro</td>
-                            <td>Mendoza</td>
-                            <td>10987654</td>
-                            <td>alvaro.mendoza@gmail.com</td>
-                            <td>Chorrillos</td>
-                          </tr>
-                          <tr>
-                            <td>Elena</td>
-                            <td>Espinoza</td>
-                            <td>98765432</td>
-                            <td>elena.espinoza@gmail.com</td>
-                            <td>Magdalena del Mar</td>
-                          </tr>
-                          <tr>
-                            <td>Felipe</td>
-                            <td>Camacho</td>
-                            <td>87654322</td>
-                            <td>felipe.camacho@gmail.com</td>
-                            <td>Rímac</td>
-                          </tr>
-                          <tr>
-                            <td>Valeria</td>
-                            <td>Santos</td>
-                            <td>76543212</td>
-                            <td>valeria.santos@gmail.com</td>
-                            <td>San Miguel</td>
-                          </tr>
-                          <tr>
-                            <td>Rodrigo</td>
-                            <td>Vega</td>
-                            <td>65432123</td>
-                            <td>rodrigo.vega@gmail.com</td>
-                            <td>San Borja</td>
-                          </tr>
-                          <tr>
-                            <td>Paola</td>
-                            <td>Chávez</td>
-                            <td>54321034</td>
-                            <td>paola.chavez@gmail.com</td>
-                            <td>Pueblo Libre</td>
-                          </tr>
-                          <tr>
-                            <td>Andrés</td>
-                            <td>Acuña</td>
-                            <td>43210945</td>
-                            <td>andres.acuna@gmail.com</td>
-                            <td>Comas</td>
-                          </tr>
-                          <tr>
-                            <td>Cecilia</td>
-                            <td>Ramírez</td>
-                            <td>32109856</td>
-                            <td>cecilia.ramirez@gmail.com</td>
-                            <td>El Agustino</td>
-                          </tr>
-                          <tr>
-                            <td>Victor</td>
-                            <td>Pérez</td>
-                            <td>21098767</td>
-                            <td>victor.perez@gmail.com</td>
-                            <td>La Victoria</td>
-                          </tr>
-                          <tr>
-                            <td>Marisol</td>
-                            <td>Figueroa</td>
-                            <td>10987678</td>
-                            <td>marisol.figueroa@gmail.com</td>
-                            <td>Jesús María</td>
-                          </tr>
-                          <tr>
-                            <td>Carlos</td>
-                            <td>Castro</td>
-                            <td>98765421</td>
-                            <td>carlos.castro@gmail.com</td>
-                            <td>San Isidro</td>
-                          </tr>
-                          <tr>
-                            <td>Rosa</td>
-                            <td>Valverde</td>
-                            <td>87654310</td>
-                            <td>rosa.valverde@gmail.com</td>
-                            <td>Miraflores</td>
-                          </tr>
-                          <tr>
-                            <td>Manuel</td>
-                            <td>Benavides</td>
-                            <td>76543209</td>
-                            <td>manuel.benavides@gmail.com</td>
-                            <td>Villa El Salvador</td>
-                          </tr>
-                          <tr>
-                            <td>Claudia</td>
-                            <td>Sifuentes</td>
-                            <td>65432198</td>
-                            <td>claudia.sifuentes@gmail.com</td>
-                            <td>Villa María del Triunfo</td>
-                          </tr>
-                          <tr>
-                            <td>Jorge</td>
-                            <td>Huerta</td>
-                            <td>54321087</td>
-                            <td>jorge.huerta@gmail.com</td>
-                            <td>Los Olivos</td>
-                          </tr>
-                          <tr>
-                            <td>Marina</td>
-                            <td>Suárez</td>
-                            <td>43210976</td>
-                            <td>marina.suarez@gmail.com</td>
-                            <td>Surco</td>
-                          </tr>
-                          <tr>
-                            <td>Raúl</td>
-                            <td>Ortega</td>
-                            <td>32109865</td>
-                            <td>raul.ortega@gmail.com</td>
-                            <td>Independencia</td>
-                          </tr>
-                          <tr>
-                            <td>Patricia</td>
-                            <td>Luna</td>
-                            <td>21098754</td>
-                            <td>patricia.luna@gmail.com</td>
-                            <td>Carabayllo</td>
-                          </tr>
-                          <tr>
-                            <td>Alfredo</td>
-                            <td>Delgado</td>
-                            <td>10987643</td>
-                            <td>alfredo.delgado@gmail.com</td>
-                            <td>San Juan de Miraflores</td>
-                          </tr>
+
                         </tbody>
                       </table>
                     </div>
