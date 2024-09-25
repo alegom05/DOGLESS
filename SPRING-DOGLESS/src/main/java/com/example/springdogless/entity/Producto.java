@@ -33,6 +33,8 @@ public class Producto {
     private String modelos;
     private String colores;
     private Integer borrado;
+    private String estado;
+    private String aprobado;
 
     @ManyToOne
     @JoinColumn(name = "idproveedores", nullable = false)
