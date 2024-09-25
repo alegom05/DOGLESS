@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Controller
@@ -181,6 +182,24 @@ public class AdminController {
     public String listaSolicitudes(Model model, @RequestParam(required = false) String zona) {
         model.addAttribute("listaSolicitudes", solicitudRepository.findAll());
         return "admin/solicitudes";
+    }
+    //Aceptar Solicitudes
+    @GetMapping(value="{id}/aceptar")
+    public String aceptarSolicitud(@PathVariable Integer id , RedirectAttributes redirectAttributes){
+        Solicitud solicitud = solicitudRepository.findById(id).orElseThrow(()-> new NoSuchElementException("Solicitud no encontrada"));
+        solicitud.setVeredicto((byte)1); //aceptada
+        solicitudRepository.save(solicitud);
+        redirectAttributes.addFlashAttribute("mensajeExito","La solicitud ha sido aceptada"); // para enviar mensaje temporal
+        return "redirect:admin/solicitudes";
+    }
+    //Denegar Solicitudes
+    @GetMapping(value="{id}/denegar")
+    public String denegarSolicitud(@PathVariable Integer id , RedirectAttributes redirectAttributes){
+        Solicitud solicitud = solicitudRepository.findById(id).orElseThrow(()-> new NoSuchElementException("Solicitud no encontrada"));
+        solicitud.setVeredicto((byte)0);  //aceptada
+        solicitudRepository.save(solicitud);
+        redirectAttributes.addFlashAttribute("mensajeExito","La solicitud ha sido denegada"); // para enviar mensaje temporal
+        return "redirect:admin/solicitudes";
     }
 
     //Vista de Proveedores
