@@ -314,7 +314,7 @@ public class AdminController {
     //Lista Productos pendientes
     @GetMapping("/pendientes")
     public String pendientes(Model model, @RequestParam(required = false) String zona) {
-        model.addAttribute("listaProductos", productRepository.findByEstado("Aprobado"));
+        model.addAttribute("listaProductos", productRepository.findByEstado("Pendiente"));
 
         return "/admin/productosPendientes";
     }
@@ -323,7 +323,7 @@ public class AdminController {
     public String aprobados(Model model, @RequestParam(required = false) String zona) {
         model.addAttribute("listaProductos", productRepository.findByEstado("Aprobado"));
 
-        return "/admin/productosPendientes";
+        return "/admin/productosAprobados";
     }
 
     //Lista Productos pendientes
