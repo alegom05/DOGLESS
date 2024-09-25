@@ -264,6 +264,7 @@
         <!-- Texto o contenido central -->
         <div class="container">
           <form method="post" th:action="@{/admin/guardarProducto}" th:object="${producto}">
+            <input th:field="*{id}" name="id" type="hidden"/>
             <div th:if="${msg != null}" th:text="${msg}" class="alert alert-success" role="alert"></div>
 
             <div class="page-inner">

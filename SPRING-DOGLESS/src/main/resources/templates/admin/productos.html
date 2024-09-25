@@ -320,7 +320,7 @@
                                   <!-- Dropdown oscuro -->
                                   <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
                                     <li><a class="dropdown-item" href="VerProducto.html">Ver</a></li>
-                                    <li><a class="dropdown-item" href="/admin/editarProducto">Editar</a></li>
+                                    <a class="dropdown-item" th:href="@{/admin/editarProducto(id=${producto.id})}">Editar</a>
                                     <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#denegarModal">Eliminar</a></li>
                                   </ul>
                                 </div>
