@@ -288,6 +288,7 @@
                       <th>Codigo despachador</th>
                       <th>Estado</th>
                       <th>Codigo Jurídico</th>
+                      <th>Veredicto</th>
                       <th>Opciones</th>
                     </tr>
                     </thead>
@@ -296,11 +297,11 @@
                     <tr th:each="solicitud, info : ${listaSolicitudes}">
                       <td th:text="${solicitud.usuario.nombre}"></td>
                       <td th:text="${solicitud.usuario.apellido}"></td>
+                      <td th:text="${solicitud.usuario.codigojurisdiccion}"></td>
                       <td th:text="${solicitud.usuario.estado}"></td>
                       <td th:text="${solicitud.usuario.codigoaduana}"></td>
                       <!-- Mostrar estado: Pendiente , aceptada o Denegada-->
                       <td th:text="${solicitud.veredicto == null ? 'PENDIENTE' : (solicitud.veredicto == 1 ? 'ACEPTADA' : 'DENEGADA')}"></td>
-                      <td th:text="${solicitud.usuario.codigojurisdiccion}"></td>
                       <td>
                         <!-- Dropdown con ícono -->
                         <div class="dropdown">
