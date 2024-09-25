@@ -1,6 +1,9 @@
 package com.example.springdogless.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Digits;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,8 +22,12 @@ public class Producto {
     private String nombre;
     private String descripcion;
     private String categoria;
-    private BigDecimal precio;
-    private BigDecimal costoenvio;
+
+    @Digits(integer = 10, fraction = 1, message = "Puede tener hasta un dígito decimal")
+    @Max(value = 15)
+    @Min(value = 0)
+    private Double precio;
+    private Double costoenvio;
     private String modelos;
     private String colores;
 

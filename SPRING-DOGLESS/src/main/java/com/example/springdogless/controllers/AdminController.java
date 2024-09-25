@@ -238,17 +238,43 @@ public class AdminController {
     @GetMapping(value = "nuevoProducto")
     public String nuevoProductoFrm(Model model, @ModelAttribute("product") Producto producto) {
         model.addAttribute("listaProductos", productRepository.findAll());
+        model.addAttribute("listaProveedores", proveedorRepository.findAll());
         model.addAttribute("producto", producto);
 
         //model.addAttribute("listaOrderDetails", listaOrderDetailsm);
-        return "admin2/newFrmP";
+        return "admin/nuevoProducto";
+    }
+
+    @GetMapping("/editarProducto")
+    public String editarProducto(@ModelAttribute("producto") Producto producto, Model model, @RequestParam("id") int id) {
+        Optional<Producto> optProducto = productRepository.findById(id);
+        if (optProducto.isPresent()) {
+            producto = optProducto.get();
+            model.addAttribute("producto", producto);
+            model.addAttribute("listaProductos", proveedorRepository.findAll());
+
+            return "admin2/";
+        } else {
+            return "redirect:/admin/productos";
+        }
     }
 
     @PostMapping("/guardarProducto")
-    public String guardarProducto(Producto producto, RedirectAttributes attr) {
+    public String guardarProducto(@RequestParam("idproveedor") Integer idproveedor, Producto producto, RedirectAttributes attr) {
+        Optional<Proveedor> optProveedor = proveedorRepository.findById(idproveedor);
+
+        if (optProveedor.isPresent()) {
+            Proveedor proveedor = optProveedor.get();
+            producto.setProveedor(proveedor);  // Asignar el proveedor al producto
+        } else {
+            attr.addFlashAttribute("error", "Proveedor no encontrado");
+            return "redirect:/admin/productos";
+        }
+
         productRepository.save(producto);
+
         attr.addFlashAttribute("msg", "Producto creado exitosamente");
-        return "redirect:/productos";
+        return "redirect:/admin/productos";
     }
     /*
     @PostMapping("/guardarProducto")

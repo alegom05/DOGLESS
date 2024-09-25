@@ -27,17 +27,23 @@
                         </div>
 
 
-                        <div class="mb-3">
-                            <label for="proveedor" class="form-label">Proveedor</label>
-                            <input type="text" class="form-control" id="proveedor" th:field="*{proveedor}"
-                                   th:classappend="${#fields.hasErrors('proveedor')?'is-invalid':''}">
-                            <div class="invalid-feedback" th:if="${#fields.hasErrors('proveedor')}"
-                                 th:errors="*{proveedor}" ></div>
+                        <div class="col">
+                            <div class="mb-3">
+                                <label for="idproveedor" class="form-label">Proveedor: (*)</label>
+                                <select name="idproveedor" id="idproveedor" class="form-select" required>
+                                    <option value="" disabled selected>Escoja una opción</option>
+                                    <option th:each="proveedor : ${listaProveedores}"
+                                            th:text="${proveedor.nombre}"
+                                            th:value="${proveedor.id}">
+                                    </option>
+                                </select>
+                                <div class="invalid-feedback">Por favor seleccionar una zona.</div>
+                            </div>
                         </div>
 
                         <div class="mb-3">
                             <label for="precio" class="form-label">Precio</label>
-                            <input type="text" class="form-control" id="precio" th:field="*{precio}"
+                            <input type="number" class="form-control" id="precio" th:field="*{precio}"
                                    th:classappend="${#fields.hasErrors('precio')?'is-invalid':''}">
                             <div class="invalid-feedback" th:if="${#fields.hasErrors('precio')}"
                                  th:errors="*{precio}" ></div>
@@ -49,6 +55,28 @@
                             <div class="invalid-feedback" th:if="${#fields.hasErrors('modelos')}"
                                  th:errors="*{modelos}" ></div>
                         </div>
+                        <div class="mb-3">
+                            <label for="costoenvio" class="form-label">Costo de envío</label>
+                            <input type="number" class="form-control" id="costoenvio" th:field="*{costoenvio}"
+                                   th:classappend="${#fields.hasErrors('costoenvio')?'is-invalid':''}">
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('costoenvio')}"
+                                 th:errors="*{costoenvio}" ></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="colores" class="form-label">Color</label>
+                            <input type="text" class="form-control" id="color" th:field="*{colores}"
+                                   th:classappend="${#fields.hasErrors('colores')?'is-invalid':''}">
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('colores')}"
+                                 th:errors="*{colores}" ></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="descripcion" class="form-label">Descripción</label>
+                            <input type="text" class="form-control" id="descripcion" th:field="*{descripcion}"
+                                   th:classappend="${#fields.hasErrors('descripcion')?'is-invalid':''}">
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('descripcion')}"
+                                 th:errors="*{descripcion}" ></div>
+                        </div>
+
                         <!--
                         <div class="mb-3">
                             <label for="ruc" class="form-label">Ruc</label>
