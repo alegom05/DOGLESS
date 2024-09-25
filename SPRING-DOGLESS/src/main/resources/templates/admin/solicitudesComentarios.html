@@ -82,7 +82,7 @@
                 </a>
               </li>
               <li class="nav-item active submenu">
-                <a href="solicitudes.html">
+                <a href="/admin/solicitudes">
                   <i class="fas fa-user-plus"></i>
                   <p>Solicitudes</p>
                 </a>
@@ -134,7 +134,7 @@
                       </a>
                     </li>
                     <li>
-                      <a href="productos.html">
+                      <a href="/admin/productos">
                         <span class="sub-item">Productos</span>
                       </a>
                     </li>
@@ -280,7 +280,7 @@
                                            </label>
                                            <textarea id="basic-default-message" class="form-control" placeholder="Hola, hemos visto tu solicitud"></textarea>
                                          </div>
-                                         <button type="button" class="btn btn-outline-secondary" onclick="window.location.href='solicitudes.html'">Volver</button>
+                                         <button type="button" class="btn btn-outline-secondary" onclick="window.location.href='/solicitudes'">Volver</button>
                                          <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#acceptModal">Aceptar</button>
                                        </form>
                                        
@@ -340,8 +340,8 @@
                              // Envía el formulario
                              document.getElementById('myForm').submit();
                          
-                             // Luego de enviar el formulario, redirige a la página 'solicitudes.html'
-                             window.location.href = "solicitudes.html";
+                             // Luego de enviar el formulario, redirige a la página '/solicitudes'
+                             window.location.href = "/solicitudes";
                          }
                          </script>
                          

@@ -253,7 +253,7 @@ public class AdminController {
             model.addAttribute("producto", producto);
             model.addAttribute("listaProductos", proveedorRepository.findAll());
 
-            return "admin2/";
+            return "admin/editarProducto";
         } else {
             return "redirect:/admin/productos";
         }
