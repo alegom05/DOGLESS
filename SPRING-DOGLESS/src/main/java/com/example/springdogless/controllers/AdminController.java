@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
-@RequestMapping({"admin", "admin/"})
+@RequestMapping({"admin", "admin/",""})
 public class AdminController {
 
     /*@GetMapping("/")
@@ -229,8 +229,7 @@ public class AdminController {
     //Vista de productos
     @GetMapping("productos")
     public String listaProductos(Model model, @RequestParam(required = false) String zona) {
-
-        model.addAttribute("listaProductos", productRepository.findAll());
+        model.addAttribute("listaProductos", productRepository.findByBorrado(1));
         return "admin/productos";
 
     }
@@ -252,6 +251,7 @@ public class AdminController {
             producto = optProducto.get();
             model.addAttribute("producto", producto);
             model.addAttribute("listaProductos", proveedorRepository.findAll());
+            model.addAttribute("listaProveedores", proveedorRepository.findAll());
 
             return "admin/editarProducto";
         } else {
@@ -261,21 +261,49 @@ public class AdminController {
 
     @PostMapping("/guardarProducto")
     public String guardarProducto(@RequestParam("idproveedor") Integer idproveedor, Producto producto, RedirectAttributes attr) {
-        Optional<Proveedor> optProveedor = proveedorRepository.findById(idproveedor);
+        Optional<Proveedor> optProducto = proveedorRepository.findById(idproveedor);
 
-        if (optProveedor.isPresent()) {
-            Proveedor proveedor = optProveedor.get();
+        if (optProducto.isPresent()) {
+            Proveedor proveedor = optProducto.get();
             producto.setProveedor(proveedor);  // Asignar el proveedor al producto
         } else {
             attr.addFlashAttribute("error", "Proveedor no encontrado");
             return "redirect:/admin/productos";
         }
-
+        producto.setBorrado(1);
         productRepository.save(producto);
 
         attr.addFlashAttribute("msg", "Producto creado exitosamente");
         return "redirect:/admin/productos";
     }
+
+    @GetMapping("/delete")
+    public String borrarProveedor(@RequestParam("id") int id, RedirectAttributes attr) {
+        Optional<Producto> optProducto = productRepository.findById(id);
+
+        if (optProducto.isPresent()) {
+            Producto producto = optProducto.get();
+            producto.setBorrado(0);
+            productRepository.save(producto);
+            attr.addFlashAttribute("msg", "Producto borrado exitosamente");
+        } else {
+            attr.addFlashAttribute("error", "Producto no encontrado");
+        }
+
+        return "redirect:/product";
+    }
+
+    /*
+    //Lista Productos pendientes
+    @GetMapping("/pendientes")
+    public String pendientes(Model model, @RequestParam(required = false) String zona) {
+        model.addAttribute("listaProductos", productRepository.findBy(2));
+
+        return "admin/productospendientes";
+    }
+
+    //Lista Productos pendientes
+    //Waiting for it...
     /*
     @PostMapping("/guardarProducto")
     public String guardarProducto(RedirectAttributes attr,

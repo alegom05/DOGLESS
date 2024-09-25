@@ -11,7 +11,7 @@ import java.util.List;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Producto, Integer>{
-
+    List<Producto> findByBorrado(int borrado);
 
 }
 

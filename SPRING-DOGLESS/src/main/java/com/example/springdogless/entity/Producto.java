@@ -23,13 +23,16 @@ public class Producto {
     private String descripcion;
     private String categoria;
 
+    /*
     @Digits(integer = 10, fraction = 1, message = "Puede tener hasta un dígito decimal")
     @Max(value = 15)
     @Min(value = 0)
+    */
     private Double precio;
     private Double costoenvio;
     private String modelos;
     private String colores;
+    private Integer borrado;
 
     @ManyToOne
     @JoinColumn(name = "idproveedores", nullable = false)
