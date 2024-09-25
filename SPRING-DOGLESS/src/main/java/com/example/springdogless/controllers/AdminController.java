@@ -199,7 +199,7 @@ public class AdminController {
         List<Proveedor> listaProveedores = proveedorRepository.findAll();
         model.addAttribute("listaProveedores", listaProveedores);
         //model.addAttribute("listaOrderDetails", listaOrderDetailsm);
-        return "admin2/newFrmP";
+        return "admin/nuevoProveedor";
     }
 
 
