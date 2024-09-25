@@ -452,6 +452,34 @@ CREATE TABLE IF NOT EXISTS `dogless`.`detallesorden` (
     REFERENCES `dogless`.`productos` (`idproductos`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
+
+-- -----------------------------------------------------
+-- Table `dogless`.`reposicion`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `dogless`.`reposicion` (
+  `idreposicion` INT NOT NULL,
+  `nombre_producto` VARCHAR(45) NULL,
+  `cantidad` INT NULL,
+  `fecha_pedido` DATE NULL,
+  `aprobar` VARCHAR(45) NULL,
+  `productos_idproductos` INT NOT NULL,
+  `zonas_idzonas` INT NOT NULL,
+  PRIMARY KEY (`idreposicion`),
+  INDEX `fk_reposicion_productos1_idx` (`productos_idproductos` ASC) VISIBLE,
+  INDEX `fk_reposicion_zonas1_idx` (`zonas_idzonas` ASC) VISIBLE,
+  CONSTRAINT `fk_reposicion_productos1`
+    FOREIGN KEY (`productos_idproductos`)
+    REFERENCES `dogless`.`productos` (`idproductos`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_reposicion_zonas1`
+    FOREIGN KEY (`zonas_idzonas`)
+    REFERENCES `dogless`.`zonas` (`idzonas`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb3;
+
 -- Insertar datos en la tabla `detallesorden`
 INSERT INTO `dogless`.`detallesorden` 
 (`idorden`, `idproducto`, `cantidad`, `preciounitario`, `subtotal`) 

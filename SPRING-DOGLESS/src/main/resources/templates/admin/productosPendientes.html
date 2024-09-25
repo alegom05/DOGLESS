@@ -319,7 +319,6 @@
                       <table id="basic-datatables" class="display table table-striped table-hover">
                         <thead>
                           <tr>
-                          
                             <th>Nombre</th>
                             <th>Cantidad</th>
                             <th>Zona</th>
@@ -328,12 +327,11 @@
                           </tr>
                         </thead>
                         <tbody id="tablaProductos">
-                        <tr th:each="producto, info : ${listaProductos}">
+                        <tr th:each="producto : ${listaReposicion}">
                           <td th:text="${producto.id}"></td>
-                          <td th:text="${producto.nombre}"></td>
-                          <td th:text="${producto.descripcion}"></td>
-                          <td th:text="${producto.precio}"></td>
-                          <td th:text="${producto.proveedor.nombre + ' ' + producto.proveedor.apellido}"></td>
+                          <td th:text="${producto.cantidad}"></td>
+                          <td th:text="${producto.zona}"></td>
+                          <td th:text="${producto.fecha_pedido}"></td>
                           <!-- Dropdown con ícono -->
                               <div class="dropdown">
                                 <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -362,7 +360,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        ¿Estás seguro de que deseas aprobar este producto?
+        ¿Estás seguro de que deseas aprobar esta reposición?
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
@@ -381,7 +379,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        ¿Estás seguro de que deseas rechazar este producto?
+        ¿Estás seguro de que deseas rechazar esta reposición?
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>

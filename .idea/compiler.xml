@@ -12,6 +12,10 @@
         <module name="holamundo (1)" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="DOGLESS-CRUD" target="1.5" />
+      <module name="DOGLESS-CRUD - copia" target="1.5" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
