@@ -15,7 +15,7 @@
     />
 
     <!-- Fonts and icons -->
-    <script src="../../static/assets/js/plugin/webfont/webfont.min.js"></script>
+    <script src="/assets/js/plugin/webfont/webfont.min.js"></script>
     <script>
       WebFont.load({
         google: { families: ["Public Sans:300,400,500,600,700"] },
@@ -26,7 +26,7 @@
             "Font Awesome 5 Brands",
             "simple-line-icons",
           ],
-          urls: ["../../static/assets/css/fonts.min.css"],
+          urls: ["/assets/css/fonts.min.css"],
         },
         active: function () {
           sessionStorage.fonts = true;
@@ -35,9 +35,9 @@
     </script>
 
     <!-- CSS Files -->
-    <link rel="stylesheet" href="../../static/assets/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="../../static/assets/css/plugins.min.css" />
-    <link rel="stylesheet" href="../../static/assets/css/kaiadmin.min.css" />
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/assets/css/plugins.min.css" />
+    <link rel="stylesheet" href="/assets/css/kaiadmin.min.css" />
 
 
 
@@ -51,7 +51,7 @@
           <div class="logo-header" data-background-color="dark">
             <a href="paginaprincipal.html" class="logo">
               <img
-                      src="../../static/assets/img/kaiadmin/slogan_white_v3.png"
+                      src="/assets/img/kaiadmin/slogan_white_v3.png"
                       alt="navbar brand"
                       class="navbar-brand"
                       height="50"
@@ -176,7 +176,7 @@
             <div class="logo-header" data-background-color="dark">
               <a href="paginaprincipal.html" class="logo">
                 <img
-                        src="../../static/assets/img/kaiadmin/logodogless.svg"
+                        src="/assets/img/kaiadmin/logodogless.svg"
                         alt="navbar brand"
                         class="navbar-brand"
                         height="20"
@@ -217,7 +217,7 @@
                   >
                     <div class="avatar-sm">
                       <img
-                              src="../../static/assets/img/profile2.jpg"
+                              src="/assets/img/profile2.jpg"
                               alt="..."
                               class="avatar-img rounded-circle"
                       />
@@ -233,7 +233,7 @@
                         <div class="user-box">
                           <div class="avatar-lg">
                             <img
-                                    src="../../static/assets/img/profile2.jpg"
+                                    src="/assets/img/profile2.jpg"
                                     alt="image profile"
                                     class="avatar-img rounded"
                             />
@@ -276,10 +276,9 @@
                     <div class="card-body">
                       <button
                               class="btn btn-primary btn-round ms-auto"
-                              onclick="window.location.href='NuevoProducto.html';"
+                              th:onclick="|window.location.href='@{/admin/nuevoProducto}'|"
                       >
-                        <i class="fa fa-plus"></i>
-                        Agregar Producto
+                        Nuevo Producto
                       </button>
                       <br>
                       <br>
@@ -306,12 +305,12 @@
                             </tr>
                           </thead>
                           <tbody>
-                            <tr>
-                              <td><img src="../../assets/img/productos/DJIMavicAir.png" alt="Producto más vendido" style="width:50px; height:50px;"></td>
-                              <td>DJI Mavic Air</td>
-                              <td>Drone GPS con cámara 4K UHD...</td>
-                              <td>2100</td>
-                              <td>TecnoProveedores</td>
+                          <tr th:each="producto, info : ${listaProductos}">
+                            <td th:text="${producto.id}"></td>
+                            <td th:text="${producto.nombre}"></td>
+                            <td th:text="${producto.descripcion}"></td>
+                            <td th:text="${producto.precio}"></td>
+                            <td th:text="${producto.proveedor.nombre + ' ' + producto.proveedor.apellido}"></td>
                               <td>
                                 <!-- Dropdown con ícono -->
                                 <div class="dropdown">
@@ -327,174 +326,8 @@
                                 </div>
                               </td>
                             </tr>
-                            <tr>
-                              <td><img src="../assets/img/productos/DJIPhantom4.png" alt="Producto más vendido" style="width:50px; height:50px;"></td>
-                              <td>DJI Phantom 4 PRO</td>
-                              <td>Dron con cámara 4K UHD ...</td>
-                              <td>6000</td>
-                              <td>Innovatech Solutions</td>
-                              <td>
-                                <!-- Dropdown con ícono -->
-                                <div class="dropdown">
-                                  <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fas fa-ellipsis-v"></i>
-                                  </button>
-                                  <!-- Dropdown oscuro -->
-                                  <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
-                                    <li><a class="dropdown-item" href="VerProducto.html">Ver</a></li>
-                                    <li><a class="dropdown-item" href="EditarProducto.html">Editar</a></li>
-                                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#denegarModal">Eliminar</a></li>
-                                  </ul>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td><img src="../assets/img/productos/LGOledTV.png" alt="Producto más vendido" style="width:50px; height:50px;"></td>
-                              <td>LG OLED TV</td>
-                              <td>Smart TV, procesador OLED 4K...</td>
-                              <td>2999</td>
-                              <td>Suministros Digitales</td>
-                              <td>
-                                <!-- Dropdown con ícono -->
-                                <div class="dropdown">
-                                  <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fas fa-ellipsis-v"></i>
-                                  </button>
-                                  <!-- Dropdown oscuro -->
-                                  <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
-                                    <li><a class="dropdown-item" href="VerProducto.html">Ver</a></li>
-                                    <li><a class="dropdown-item" href="EditarProducto.html">Editar</a></li>
-                                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#denegarModal">Eliminar</a></li>
-                                  </ul>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td><img src="../assets/img/productos/ONEPlusNord.png" alt="Producto más vendido" style="width:50px; height:50px;"></td>
-                              <td>ONEPlus Nord 5G</td>
-                              <td>Tlf inteligente Android dual SIM...</td>
-                              <td>2199</td>
-                              <td>TechDistribuciones</td>
-                              <td>
-                                <!-- Dropdown con ícono -->
-                                <div class="dropdown">
-                                  <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fas fa-ellipsis-v"></i>
-                                  </button>
-                                  <!-- Dropdown oscuro -->
-                                  <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
-                                    <li><a class="dropdown-item" href="VerProducto.html">Ver</a></li>
-                                    <li><a class="dropdown-item" href="EditarProducto.html">Editar</a></li>
-                                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#denegarModal">Eliminar</a></li>
-                                  </ul>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td><img src="../assets/img/productos/PS4.png" alt="Producto más vendido" style="width:50px; height:50px;"></td>
-                              <td>Sony PS4</td>
-                              <td>Consola PlayStation 4 Pro 1TB...</td>
-                              <td>1499</td>
-                              <td>Hardware & Co</td>
-                              <td>
-                                <!-- Dropdown con ícono -->
-                                <div class="dropdown">
-                                  <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fas fa-ellipsis-v"></i>
-                                  </button>
-                                  <!-- Dropdown oscuro -->
-                                  <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
-                                    <li><a class="dropdown-item" href="VerProducto.html">Ver</a></li>
-                                    <li><a class="dropdown-item" href="EditarProducto.html">Editar</a></li>
-                                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#denegarModal">Eliminar</a></li>
-                                  </ul>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td><img src="../assets/img/productos/PS5.png" alt="Producto más vendido" style="width:50px; height:50px;"></td>
-                              <td>Sony PS5</td>
-                              <td>Consola PlayStation 5 1TB.....</td>
-                              <td>2500</td>
-                              <td>GlobalTech Supplies</td>
-                              <td>
-                                <!-- Dropdown con ícono -->
-                                <div class="dropdown">
-                                  <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fas fa-ellipsis-v"></i>
-                                  </button>
-                                  <!-- Dropdown oscuro -->
-                                  <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
-                                    <li><a class="dropdown-item" href="VerProducto.html">Ver</a></li>
-                                    <li><a class="dropdown-item" href="EditarProducto.html">Editar</a></li>
-                                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#denegarModal">Eliminar</a></li>
-                                  </ul>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td><img src="../assets/img/productos/SamsungS24.png" alt="Producto más vendido" style="width:50px; height:50px;"></td>
-                              <td>Samsung Galaxy S24</td>
-                              <td>Samsung Galaxy S24, 256 GB.....</td>
-                              <td>3600</td>
-                              <td>Distribuidores Unidos</td>
-                              <td>
-                                <!-- Dropdown con ícono -->
-                                <div class="dropdown">
-                                  <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fas fa-ellipsis-v"></i>
-                                  </button>
-                                  <!-- Dropdown oscuro -->
-                                  <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
-                                    <li><a class="dropdown-item" href="VerProducto.html">Ver</a></li>
-                                    <li><a class="dropdown-item" href="EditarProducto.html">Editar</a></li>
-                                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#denegarModal">Eliminar</a></li>
-                                  </ul>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td><img src="../assets/img/productos/XiaomiMi11.png" alt="Producto más vendido" style="width:50px; height:50px;"></td>
-                              <td>Xiaomi Mi 11 5G</td>
-                              <td>Xiamomi MI 11, 256 GB + 8 GB .....</td>
-                              <td>1600</td>
-                              <td>Proveedora del Norte</td>
-                              <td>
-                                <!-- Dropdown con ícono -->
-                                <div class="dropdown">
-                                  <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fas fa-ellipsis-v"></i>
-                                  </button>
-                                  <!-- Dropdown oscuro -->
-                                  <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
-                                    <li><a class="dropdown-item" href="VerProducto.html">Ver</a></li>
-                                    <li><a class="dropdown-item" href="EditarProducto.html">Editar</a></li>
-                                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#denegarModal">Eliminar</a></li>
-                                  </ul>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td><img src="../assets/img/productos/ZephyrusG16.png" alt="Producto más vendido" style="width:50px; height:50px;"></td>
-                              <td>Zephyrus G16</td>
-                              <td>Laptop Oled 240hz Ultra 9.....</td>
-                              <td>9699</td>
-                              <td>Proveedora del Norte</td>
-                              <td>
-                                <!-- Dropdown con ícono -->
-                                <div class="dropdown">
-                                  <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fas fa-ellipsis-v"></i>
-                                  </button>
-                                  <!-- Dropdown oscuro -->
-                                  <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
-                                    <li><a class="dropdown-item" href="VerProducto.html">Ver</a></li>
-                                    <li><a class="dropdown-item" href="EditarProducto.html">Editar</a></li>
-                                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#denegarModal">Eliminar</a></li>
-                                  </ul>
-                                </div>
-                              </td>
-                            </tr>
+
+
                           </tbody>
                         </table>
                         <div class="modal fade" id="denegarModal" tabindex="-1" role="dialog" aria-labelledby="acceptModalLabel" aria-hidden="true">
@@ -591,14 +424,14 @@
 
 
       <!--Core JS Files   -->
-      <script src="../../static/assets/js/core/jquery-3.7.1.min.js"></script>
-      <script src="../../static/assets/js/core/popper.min.js"></script>
-      <script src="../../static/assets/js/core/bootstrap.min.js"></script>
+      <script src="/assets/js/core/jquery-3.7.1.min.js"></script>
+      <script src="/assets/js/core/popper.min.js"></script>
+      <script src="/assets/js/core/bootstrap.min.js"></script>
 
       <!-- jQuery Scrollbar -->
-      <script src="../../static/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+      <script src="/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
       <!-- Datatables -->
-      <script src="../../static/assets/js/plugin/datatables/datatables.min.js"></script>
+      <script src="/assets/js/plugin/datatables/datatables.min.js"></script>
 
       <!-- jQuery Vector Maps -->
       <script src="../../static/assets/js/plugin/jsvectormap/jsvectormap.min.js"></script>

@@ -6,18 +6,20 @@
             <nav th:replace="~{fragments/navbar.html :: navbar( active = 'Provider')}"></nav>
             <div class="row mb-4">
                 <div class="col-md-6 offset-md-3">
-                    <h2>Nuevo Proveedor</h2>
+                    <h2>Nuevo Producto</h2>
                     <hr/>
-                    <form method="post" th:action="@{/admin/guardarProveedor}" th:object="${proveedor}">
+                    <form method="post" th:action="@{/admin/guardarProducto}" th:object="${proveedor}">
                     <div th:if="${msg != null}" th:text="${msg}" class="alert alert-success" role="alert"></div>
 
                         <div class="mb-3">
-                            <label for="nombre" class="form-label">Nombre del Proveedor</label>
+                            <label for="nombre" class="form-label">Nombre del producto</label>
                             <input type="text" class="form-control" id="nombre" th:field="*{nombre}"
                                    th:classappend="${#fields.hasErrors('nombre')?'is-invalid':''}">
                             <div class="invalid-feedback" th:if="${#fields.hasErrors('nombre')}"
                                  th:errors="*{nombre}" ></div>
                         </div>
+
+                        <!--
                         <div class="mb-3">
                             <label for="apellido" class="form-label">Apellido del Proveedor</label>
                             <input type="text" class="form-control" id="apellido" th:field="*{nombre}"
@@ -53,6 +55,10 @@
                             <div class="invalid-feedback" th:if="${#fields.hasErrors('telefono')}"
                                  th:errors="*{telefono}" ></div>
                         </div>
+                        Aquí termina
+                        -->
+
+
                         <!--
                         <div class="mb-3">
                             <label class="form-label">Proveedor</label>

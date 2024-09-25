@@ -264,8 +264,16 @@ public class AdminController {
     public String listaProductos(Model model, @RequestParam(required = false) String zona) {
 
         model.addAttribute("listaProductos", productRepository.findAll());
-        return "admin2/plist";
+        return "admin/productos";
 
+    }
+
+    @GetMapping(value = "nuevoProducto")
+    public String nuevoProductoFrm(Model model, @ModelAttribute("product") Producto producto) {
+        model.addAttribute("listaProductos", productRepository.findAll());
+
+        //model.addAttribute("listaOrderDetails", listaOrderDetailsm);
+        return "admin2/newFrmP";
     }
 
 
