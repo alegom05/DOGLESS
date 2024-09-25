@@ -283,7 +283,8 @@
                         <table class="display table table-striped table-hover">
                           <thead>
                             <tr>
-                              <th>Nombre del usuario</th>
+                              <th>Nombre</th>
+                              <th>Apellido</th>
                               <th>Codigo despachador</th>
                               <th>Estado</th>
                               <th>Codigo juridico</th>
@@ -291,11 +292,11 @@
                             </tr>
                           </thead>
                           <tbody id="tableBody">
-                              <tr>
-                                  <td>Manuel Merino</td>
-                                  <td>1243</td>
-                                  <td>Habilitado</td>
-                                  <td>992</td>
+                            <tr th:each="solicitud, info : ${listaSolicitudes}">
+                            <td th:text="${solicitud.usuario.nombre}"></td>
+                            <td th:text="${solicitud.usuario.apellido}"></td>                            <td th:text="${solicitud.usuario.codigoaduana}"></td>
+                            <td th:text="${solicitud.usuario.estado}"></td>
+                            <td th:text="${solicitud.usuario.codigojurisdiccion}"></td>
                                   <td>
                                       <!-- Dropdown con ícono -->
                                       <div class="dropdown">
@@ -312,112 +313,6 @@
                                   </td>
                               
                               </tr>
-                              <tr>
-                                  <td>Haley Kennedy</td>
-                                  <td>5392</td>
-                                  <td>Multado</td>
-                                  <td>992</td>
-                                  <td>
-                                    <!-- Dropdown con ícono -->
-                                    <div class="dropdown">
-                                      <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                          <i class="fas fa-ellipsis-v"></i>
-                                      </button>
-                                      <!-- Dropdown oscuro -->
-                                      <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
-                                        <li><a class="dropdown-item" href="solicitudesComentarios.html">Comentar</a></li>
-                                        <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#aceptarModal">Aceptar</a></li>
-                                        <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#denegarModal">Denegar</a></li>
-                                      </ul>
-                                    </div>
-                                  </td>
-                                  
-                                </tr>
-                                <tr>
-                                  <td>Tatyana Fitzpatrick</td>
-                                  <td>9421</td>
-                                  <td>Sancionado</td>
-                                  <td>992</td>
-                                  <td>
-                                    <!-- Dropdown con ícono -->
-                                    <div class="dropdown">
-                                      <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                          <i class="fas fa-ellipsis-v"></i>
-                                      </button>
-                                      <!-- Dropdown oscuro -->
-                                      <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
-                                        <li><a class="dropdown-item" href="solicitudesComentarios.html">Comentar</a></li>
-                                        <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#aceptarModal">Aceptar</a></li>
-                                        <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#denegarModal">Denegar</a></li>
-                                      </ul>
-                                    </div>
-                                  </td>
-                  
-                                </tr>
-                                <tr>
-                                  <td>Michael Silva</td>
-                                  <td>3924</td>
-                                  <td>Habilitado</td>
-                                  <td>992</td>
-                                  <td>
-                                    <!-- Dropdown con ícono -->
-                                    <div class="dropdown">
-                                      <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                          <i class="fas fa-ellipsis-v"></i>
-                                      </button>
-                                      <!-- Dropdown oscuro -->
-                                      <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
-                                        <li><a class="dropdown-item" href="solicitudesComentarios.html">Comentar</a></li>
-                                        <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#aceptarModal">Aceptar</a></li>
-                                        <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#denegarModal">Denegar</a></li>
-                                      </ul>
-                                    </div>
-                                  </td>
-      
-                                  
-                                </tr>
-                                <tr>
-                                  <td>Paul Byrd</td>
-                                  <td>1999</td>
-                                  <td>Cancelado</td>
-                                  <td>974</td>
-                                  <td>
-                                    <!-- Dropdown con ícono -->
-                                    <div class="dropdown" >
-                                      <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                          <i class="fas fa-ellipsis-v"></i>
-                                      </button>
-                                      <!-- Dropdown oscuro -->
-                                      <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
-                                        <li><a class="dropdown-item" href="solicitudes_Cmentarios.html">Comentar</a></li>
-                                        <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#aceptarModal">Aceptar</a></li>
-                                        <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#denegarModal">Denegar</a></li>
-                                      </ul>
-                                    </div>
-                                  </td>
-      
-                                  
-                                </tr>
-                                <tr>
-                                  <td>Gloria Little</td>
-                                  <td>2024</td>
-                                  <td>Habilitado</td>
-                                  <td>974</td>
-                                  <td>
-                                    <!-- Dropdown con ícono -->
-                                    <div class="dropdown">
-                                      <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                          <i class="fas fa-ellipsis-v"></i>
-                                      </button>
-                                      <!-- Dropdown oscuro -->
-                                      <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
-                                        <li><a class="dropdown-item" href="solicitudes_comentarios.html">Comentar</a></li>
-                                        <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#aceptarModal">Aceptar</a></li>
-                                        <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#denegarModal">Denegar</a></li>
-                                      </ul>
-                                    </div>
-                                  </td>
-                                </tr>
                             
                           </tbody>
                         </table>

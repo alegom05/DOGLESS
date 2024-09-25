@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/admin")
+@RequestMapping({"admin", "admin/"})
 public class AdminController {
 
     /*@GetMapping("/")
@@ -47,13 +47,13 @@ public class AdminController {
         model.addAttribute("listaAgentes", usuarioRepository.findByRol(3));
         model.addAttribute("listaZonales", usuarioRepository.findByRol(2));
 
-        return "admin/paginaprincipal";
+        return "admin/paginaPrincipal";
 //        return "usuario/list";
     }
 
     @GetMapping("/adminzonal")
     public String listaAdminZonal(Model model, @RequestParam(required = false) String zona) {
-        model.addAttribute("listaUsuarios", usuarioRepository.findByRol(2));
+        model.addAttribute("listaZonales", usuarioRepository.findByRol(2));
 
         return "admin/adminzonales";
     }
@@ -182,7 +182,7 @@ public class AdminController {
     @GetMapping("solicitudes")
     public String listaSolicitudes(Model model, @RequestParam(required = false) String zona) {
         model.addAttribute("listaSolicitudes", solicitudRepository.findAll());
-        return "admin2/slist";
+        return "admin/solicitudes";
     }
 
     //Vista de Proveedores
