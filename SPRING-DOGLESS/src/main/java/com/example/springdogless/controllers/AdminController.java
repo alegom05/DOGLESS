@@ -271,12 +271,50 @@ public class AdminController {
     @GetMapping(value = "nuevoProducto")
     public String nuevoProductoFrm(Model model, @ModelAttribute("product") Producto producto) {
         model.addAttribute("listaProductos", productRepository.findAll());
+        model.addAttribute("producto", producto);
 
         //model.addAttribute("listaOrderDetails", listaOrderDetailsm);
         return "admin2/newFrmP";
     }
 
+    /*
+    @PostMapping("/guardarProducto")
+    public String guardarProducto(RedirectAttributes attr,
+                                  Model model,
+                                  @ModelAttribute("producto") @Valid Producto producto,
+                                  BindingResult bindingResult) {
 
+        if(bindingResult.hasErrors()){
+            model.addAttribute("listaProductos", productRepository.findAll());
+            return "admin2/newFrmP";
+        }else{
+            if (producto.getId() == 0) {
+                List<Producto> productList = productRepository.findByProductname(producto.getProductname());
+                boolean existe = false;
+                for (Producto p : productList) {
+                    if (p.getNombre().equals(producto.getProductname())) {
+                        existe = true;
+                        break;
+                    }
+                }
+                if (existe) {
+                    System.out.println("El producto existe");
+                    model.addAttribute("listaProductos", productRepository.findAll());
+                    return "product/newFrmP";
+                } else {
+                    attr.addFlashAttribute("msg", "Producto creado exitosamente");
+                    productRepository.save(producto);
+                    return "redirect:/admin/productos";
+                }
+            } else {
+                attr.addFlashAttribute("msg", "Producto actualizado exitosamente");
+                productRepository.save(producto);
+                return "redirect:/admin/productos";
+            }
+        }
+    }
+    */
+    
     /*
     @GetMapping("/delete")
     public String borrarProveedor(Model model,
