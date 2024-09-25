@@ -18,29 +18,38 @@
                             <div class="invalid-feedback" th:if="${#fields.hasErrors('nombre')}"
                                  th:errors="*{nombre}" ></div>
                         </div>
+                        <div class="mb-3">
+                            <label for="categoria" class="form-label">Categoría</label>
+                            <input type="text" class="form-control" id="categoria" th:field="*{categoria}"
+                                   th:classappend="${#fields.hasErrors('categoria')?'is-invalid':''}">
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('categoria')}"
+                                 th:errors="*{categoria}" ></div>
+                        </div>
 
+
+                        <div class="mb-3">
+                            <label for="proveedor" class="form-label">Proveedor</label>
+                            <input type="text" class="form-control" id="proveedor" th:field="*{proveedor}"
+                                   th:classappend="${#fields.hasErrors('proveedor')?'is-invalid':''}">
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('proveedor')}"
+                                 th:errors="*{proveedor}" ></div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="precio" class="form-label">Precio</label>
+                            <input type="text" class="form-control" id="precio" th:field="*{precio}"
+                                   th:classappend="${#fields.hasErrors('precio')?'is-invalid':''}">
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('precio')}"
+                                 th:errors="*{precio}" ></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="modelos" class="form-label">Modelo</label>
+                            <input type="text" class="form-control" id="modelos" th:field="*{modelos}"
+                                   th:classappend="${#fields.hasErrors('modelos')?'is-invalid':''}">
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('modelos')}"
+                                 th:errors="*{modelos}" ></div>
+                        </div>
                         <!--
-                        <div class="mb-3">
-                            <label for="apellido" class="form-label">Apellido del Proveedor</label>
-                            <input type="text" class="form-control" id="apellido" th:field="*{nombre}"
-                                   th:classappend="${#fields.hasErrors('nombre')?'is-invalid':''}">
-                            <div class="invalid-feedback" th:if="${#fields.hasErrors('apellido')}"
-                                 th:errors="*{apellido}" ></div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="tienda" class="form-label">Tienda</label>
-                            <input type="text" class="form-control" id="tienda" th:field="*{tienda}"
-                                   th:classappend="${#fields.hasErrors('tienda')?'is-invalid':''}">
-                            <div class="invalid-feedback" th:if="${#fields.hasErrors('tienda')}"
-                                 th:errors="*{tienda}" ></div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="dni" class="form-label">Dni</label>
-                            <input type="text" class="form-control" id="dni" th:field="*{dni}"
-                                   th:classappend="${#fields.hasErrors('tienda')?'is-invalid':''}">
-                            <div class="invalid-feedback" th:if="${#fields.hasErrors('dni')}"
-                                 th:errors="*{dni}" ></div>
-                        </div>
                         <div class="mb-3">
                             <label for="ruc" class="form-label">Ruc</label>
                             <input type="text" class="form-control" id="ruc" th:field="*{ruc}"

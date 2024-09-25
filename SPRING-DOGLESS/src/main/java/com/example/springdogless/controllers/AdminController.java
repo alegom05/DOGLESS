@@ -219,43 +219,10 @@ public class AdminController {
 
 
     @PostMapping("/guardarProveedor")
-    public String guardarProveedor(RedirectAttributes attr,
-                                   Model model,
-                                   @ModelAttribute("proveedor") @Valid Proveedor proveedor,
-                                   BindingResult bindingResult) {
-
-        if (bindingResult.hasErrors()) {
-            model.addAttribute("listaProveedores", proveedorRepository.findAll());
-            return "admin2/newFrmP";
-        }
-
-        boolean isNewProveedor = (proveedor.getId() == null);
-
-        if (isNewProveedor) {
-            Optional<Proveedor> proveedorlist = proveedorRepository.findByDni(proveedor.getDni());
-
-            boolean existe = false;
-
-            if (proveedorlist.isPresent()) {
-                Proveedor existingProveedor = proveedorlist.get();
-                if (existingProveedor.getDni().equals(proveedor.getDni())) {
-                    existe = true;
-                }
-            }
-            if (existe) {
-                System.out.println("El proveedor existe");
-                model.addAttribute("listaProveedores", proveedorRepository.findAll());
-                return "admin2/newFrmP";
-            } else {
-                attr.addFlashAttribute("msg", "Proveedor creado exitosamente");
-                proveedorRepository.save(proveedor);
-                return "redirect:/admin/proveedores";
-            }
-        } else {
-            attr.addFlashAttribute("msg", "Proveedor actualizado exitosamente");
-            proveedorRepository.save(proveedor);
-            return "redirect:/admin/proveedores";
-        }
+    public String guardarProveedor(Proveedor proveedor, RedirectAttributes attr) {
+        proveedorRepository.save(proveedor);
+        attr.addFlashAttribute("msg", "Proveedor creado exitosamente");
+        return "redirect:/proveedores";
     }
 
 
@@ -277,6 +244,12 @@ public class AdminController {
         return "admin2/newFrmP";
     }
 
+    @PostMapping("/guardarProducto")
+    public String guardarProducto(Producto producto, RedirectAttributes attr) {
+        productRepository.save(producto);
+        attr.addFlashAttribute("msg", "Producto creado exitosamente");
+        return "redirect:/productos";
+    }
     /*
     @PostMapping("/guardarProducto")
     public String guardarProducto(RedirectAttributes attr,
@@ -314,7 +287,7 @@ public class AdminController {
         }
     }
     */
-    
+
     /*
     @GetMapping("/delete")
     public String borrarProveedor(Model model,

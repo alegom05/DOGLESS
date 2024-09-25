@@ -60,15 +60,12 @@ public class ProductController {
 
 
     @GetMapping("/edit")
-    public String editarProducto(@ModelAttribute("product") Product product, Model model, @RequestParam("id") int id) {
+    public String editarProducto(Model model, @RequestParam("id") int id) {
         Optional<Product> optProduct = productRepository.findById(id);
-        if (optProduct.isPresent()) {
-            product = optProduct.get();
-            model.addAttribute("product", product);
-            model.addAttribute("listaCategorias", categoryRepository.findAll());
-            model.addAttribute("listaProveedores", supplierRepository.findAll());
-            model.addAttribute("listaOrderDetails", orderDetailsRepository.findAll());
 
+        if (optProduct.isPresent()) {
+            Product product = optProduct.get();
+            model.addAttribute("product", product);
             return "product/newFrm";
         } else {
             return "redirect:/product";

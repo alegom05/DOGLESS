@@ -29,9 +29,9 @@
             <td th:text="${info.index + 1}"></td>
             <td th:text="${shipper.companyname}"></td>
             <td th:text="${shipper.phone}"></td>
-            <td><a class="btn btn-primary" th:href="@{'/shipper/editar' + '?id=' + ${shipper.id}}">Editar</a>
+            <td><a class="btn btn-primary" th:href="@{'/empleado/editar' + '?id=' + ${shipper.id}}">Editar</a>
             </td>
-            <td><a class="btn btn-danger" th:href="@{'/shipper/borrar' + '?id=' + ${shipper.id}}">Borrar</a></td>
+            <td><a class="btn btn-danger" th:href="@{'/empleado/borrar' + '?id=' + ${shipper.id}}">Borrar</a></td>
         </tr>
     </table>
 </div>
