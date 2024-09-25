@@ -401,7 +401,7 @@ CREATE TABLE IF NOT EXISTS `dogless`.`productos` (
   `idproveedores` INT NOT NULL,
   `modelos` VARCHAR(100) NULL DEFAULT NULL,
   `colores` VARCHAR(100) NULL DEFAULT NULL,
-  `aprobado` TINYINT NULL,
+  `aprobado` VARCHAR(10) NULL DEFAULT NULL,
   `borrado` TINYINT DEFAULT 1,
   `estado` INT NULL,
   PRIMARY KEY (`idproductos`),
@@ -412,18 +412,22 @@ CREATE TABLE IF NOT EXISTS `dogless`.`productos` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
 INSERT INTO `dogless`.`productos` 
-(`nombre`, `descripcion`, `categoria`, `precio`, `costoenvio`, `idproveedores`, `modelos`, `colores`) 
+(`nombre`, `descripcion`, `categoria`, `precio`, `costoenvio`, `idproveedores`, `modelos`, `colores`, `aprobado`) 
 VALUES
-('Smartphone X', 'Teléfono móvil avanzado', 'Electrónica', 599.99, 9.99, 1, 'Modelo X2023, Modelo XPro', 'Negro, Blanco, Azul'),
-('Laptop Y', 'Computadora portátil', 'Informática', 899.99, 12.99, 2, 'Laptop YUltra, Laptop YMax', 'Plata, Gris Oscuro'),
-('Auriculares Z', 'Auriculares inalámbricos', 'Accesorios', 49.99, 5.99, 3, 'Z-Lite, Z-Pro', 'Rojo, Negro'),
-('Cámara Fotográfica', 'Cámara DSLR con lente 18-55mm', 'Fotografía', 1200.00, 15.00, 4, 'CamFX, CamUltra', 'Negro, Plata'),
-('Tablet W', 'Tableta gráfica para diseño', 'Electrónica', 350.50, 10.50, 1, 'Tablet W-Lite, Tablet W-Pro', 'Negro, Blanco'),
-('Impresora 3D', 'Impresora 3D con tecnología FDM', 'Equipos', 750.99, 20.00, 2, 'Impresora 3D X1, Impresora 3D Z2', 'Negro, Azul'),
-('Drone Pro', 'Drone con cámara 4K', 'Electrónica', 499.99, 18.99, 3, 'Drone Pro 2023, Drone Pro X', 'Negro, Blanco'),
-('Consola de Videojuegos', 'Consola de videojuegos de última generación', 'Videojuegos', 399.99, 14.99, 4, 'Console V2023, Console Max', 'Negro, Blanco'),
-('Reloj Inteligente', 'Reloj inteligente con monitor de salud', 'Accesorios', 199.99, 7.99, 1, 'Watch X2023, Watch Pro', 'Negro, Blanco, Rosa'),
-('Teclado Mecánico', 'Teclado mecánico retroiluminado', 'Periféricos', 89.99, 4.99, 2, 'Keyboard Pro, Keyboard X', 'Negro, Blanco, Rojo');
+('Smartphone X', 'Teléfono móvil avanzado', 'Electrónica', 599.99, 9.99, 1, 'Modelo X2023, Modelo XPro', 'Negro, Blanco, Azul', 'Aprobado'),
+('Laptop Y', 'Computadora portátil', 'Informática', 899.99, 12.99, 2, 'Laptop YUltra, Laptop YMax', 'Plata, Gris Oscuro', 'Aprobado'),
+('Auriculares Z', 'Auriculares inalámbricos', 'Accesorios', 49.99, 5.99, 3, 'Z-Lite, Z-Pro', 'Rojo, Negro', 'Aprobado'),
+('Cámara Fotográfica', 'Cámara DSLR con lente 18-55mm', 'Fotografía', 1200.00, 15.00, 4, 'CamFX, CamUltra', 'Negro, Plata', 'Aprobado'),
+('Tablet W', 'Tableta gráfica para diseño', 'Electrónica', 350.50, 10.50, 1, 'Tablet W-Lite, Tablet W-Pro', 'Negro, Blanco', 'Aprobado'),
+('Impresora 3D', 'Impresora 3D con tecnología FDM', 'Equipos', 750.99, 20.00, 2, 'Impresora 3D X1, Impresora 3D Z2', 'Negro, Azul', 'Aprobado'),
+('Drone Pro', 'Drone con cámara 4K', 'Electrónica', 499.99, 18.99, 3, 'Drone Pro 2023, Drone Pro X', 'Negro, Blanco', 'Aprobado'),
+('Consola de Videojuegos', 'Consola de videojuegos de última generación', 'Videojuegos', 399.99, 14.99, 4, 'Console V2023, Console Max', 'Negro, Blanco', 'Aprobado'),
+('Reloj Inteligente', 'Reloj inteligente con monitor de salud', 'Accesorios', 199.99, 7.99, 1, 'Watch X2023, Watch Pro', 'Negro, Blanco, Rosa', 'Aprobado'),
+('Teclado Mecánico', 'Teclado mecánico retroiluminado', 'Periféricos', 89.99, 4.99, 2, 'Keyboard Pro, Keyboard X', 'Negro, Blanco, Rojo', 'Aprobado'),
+('Monitor Curvo', 'Monitor curvo de 34 pulgadas', 'Periféricos', 449.99, 19.99, 3, 'CurveMax, CurvePro', 'Negro, Plata', 'Pendiente'),
+('Altavoces Bluetooth', 'Altavoces portátiles con conexión Bluetooth', 'Accesorios', 79.99, 6.99, 4, 'SoundMax, SoundPro', 'Negro, Azul, Rojo', 'Pendiente'),
+('Disco Duro Externo', 'Disco duro externo de 2TB', 'Almacenamiento', 89.99, 4.99, 1, 'StorageX, StoragePro', 'Negro, Plata', 'Pendiente'),
+('Ratón Gamer', 'Ratón ergonómico para gaming', 'Periféricos', 59.99, 3.99, 2, 'GamerX, GamerPro', 'Negro, Rojo, Verde', 'Pendiente');
 
 
 
