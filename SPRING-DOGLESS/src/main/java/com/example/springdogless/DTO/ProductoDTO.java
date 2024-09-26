@@ -1,5 +1,6 @@
 package com.example.springdogless.DTO;
 
+
 public interface ProductoDTO {
     int getIdproductos();
     String getNombre();
@@ -18,4 +19,6 @@ public interface ProductoDTO {
     // Nuevos métodos para proveedor
     String getProveedorNombre();
     String getProveedorApellido();
+
+
 }
