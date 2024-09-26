@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Reposición - Pendientes</title>
+    <title>Reposición - Aprobadas</title>
     <meta
             content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
             name="viewport"
@@ -271,7 +271,7 @@
             <div class="page-inner">
                 <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
                     <div>
-                        <h3 class="fw-bold mb-3">Lista de Productos Pendientes</h3>
+                        <h3 class="fw-bold mb-3">Lista de Productos Aprobados</h3>
                     </div>
                 </div>
 
@@ -324,7 +324,7 @@
                                     <table id="basic-datatables" class="display table table-striped table-hover">
                                         <thead>
                                         <tr>
-                                            <th>ID</th>
+                                            <th>ID del producto</th>
                                             <th>Nombre</th>
                                             <th>Cantidad</th>
                                             <th>Zona</th>
@@ -333,7 +333,7 @@
                                         </thead>
                                         <tbody id="tablaProductos">
                                         <tr th:each="reposicion : ${listaReposicionesAprobadas}">
-                                            <td th:text="${reposicion.idreposicion}"></td>
+                                            <td th:text="${reposicion.producto.getId()}"></td>
                                             <td th:text="${reposicion.producto.getNombre()}"></td>
                                             <td th:text="${reposicion.cantidad}"></td>
                                             <td th:text="${reposicion.zona.getNombre()}"></td>

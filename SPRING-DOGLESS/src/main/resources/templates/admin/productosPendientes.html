@@ -319,7 +319,7 @@
                       <table id="basic-datatables" class="display table table-striped table-hover">
                         <thead>
                           <tr>
-                            <th>ID</th>
+                            <th>ID del producto</th>
                             <th>Nombre</th>
                             <th>Cantidad</th>
                             <th>Zona</th>
@@ -329,7 +329,7 @@
                         </thead>
                         <tbody id="tablaProductos">
                         <tr th:each="reposicion : ${listaReposiciones}">
-                          <td th:text="${reposicion.idreposicion}"></td>
+                          <td th:text="${reposicion.producto.getId()}"></td>
                           <td th:text="${reposicion.producto.getNombre()}"></td>
                           <td th:text="${reposicion.cantidad}"></td>
                           <td th:text="${reposicion.zona.getNombre()}"></td>
