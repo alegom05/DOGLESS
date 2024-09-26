@@ -348,7 +348,7 @@ public class AdminController {
     //Lista Productos pendientes
     @GetMapping("/pendientes")
     public String pendientes(Model model) {
-        model.addAttribute("listaReposiciones", reposicionesRepository.findAll());
+        model.addAttribute("listaReposiciones", reposicionesRepository.findByAprobarIsNull());
         return "/admin/productosPendientes";
     }
 
@@ -357,16 +357,36 @@ public class AdminController {
         // Busca la reposición por ID
         Reposicion reposicion = reposicionesRepository.findById(id).orElse(null);
 
-        if (reposicion != null) {
+        if (reposicion != null && reposicion.getAprobar()==null) {
             Optional<Producto> producto = productRepository.findById(reposicion.getProducto().getId());
 
             if (producto.isPresent()) {
                 // Actualiza el stock usando la cantidad de reposición
                 stockRepository.actualizarStock(Integer.parseInt(reposicion.getCantidad()), reposicion.getProducto().getId(), reposicion.getZona().getIdzonas());
+                // Actualiza el atributo 'aprobado' de la reposición
+                reposicion.setAprobar("aprobado");
+                reposicionesRepository.save(reposicion); // Guarda los cambios en la base de datos
                 return "redirect:/admin/pendientes";
             }
         }
+        // Redirige si la reposición no se encuentra o el producto no está presente
+        return "redirect:/admin";
+    }
 
+    @GetMapping("/rechazar/{id}")
+    public String rechazar(@PathVariable Integer id) {
+        // Busca la reposición por ID
+        Reposicion reposicion = reposicionesRepository.findById(id).orElse(null);
+
+        if (reposicion != null && reposicion.getAprobar()==null) {
+            Optional<Producto> producto = productRepository.findById(reposicion.getProducto().getId());
+            if (producto.isPresent()) {
+                // Actualiza el atributo 'rechazado' de la reposición
+                reposicion.setAprobar("rechazado");
+                reposicionesRepository.save(reposicion); // Guarda los cambios en la base de datos
+                return "redirect:/admin/pendientes";
+            }
+        }
         // Redirige si la reposición no se encuentra o el producto no está presente
         return "redirect:/admin";
     }
