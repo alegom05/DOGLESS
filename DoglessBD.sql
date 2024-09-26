@@ -233,43 +233,43 @@ VALUES
 -- Agentes zonas Norte (Admin zonas 1Y 2)
 INSERT INTO `dogless`.`usuarios` (`idusuarios`, `nombre`, `apellido`, `dni`, `correo`, `contraseña`, `telefono`, `direccion`, `idroles`, `iddistritos`, `idadminzonales`, `estado`, `ruc`, `codigoaduana`, `razonsocial`, `codigojurisdiccion`, `idzonas`)
 VALUES
-(11, 'Jorge', 'Ramírez', '33445566', 'jorge.ramirez@norte.com', 'agenteNpass123', '987654323', 'Calle Norte 123', 2, 1, 1, 'activo', '12345678901', 'ADU001', 'Agente Norte', 'JUR001', 1),
-(12, 'Rosa', 'Soto', '44556677', 'rosa.soto@norte.com', 'agenteNpass456', '987654324', 'Av. Norte 456', 2, 2, 1, 'activo', '10987654321', 'ADU002', 'Agente Norte', 'JUR002', 1),
-(13, 'Luis', 'Gómez', '55667788', 'luis.gomez@norte.com', 'agenteNpass789', '987654325', 'Calle Norte 789', 2, 3, 1, 'activo', '10987654322', 'ADU003', 'Agente Norte', 'JUR003', 1),
-(14, 'María', 'López', '66778899', 'maria.lopez@norte.com', 'agenteNpass012', '987654326', 'Av. Norte 012', 2, 4, 2, 'activo', '10987654323', 'ADU004', 'Agente Norte', 'JUR004', 1),
-(15, 'Carlos', 'Rivas', '77889900', 'carlos.rivas@norte.com', 'agenteNpass345', '987654327', 'Calle Norte 345', 2, 5, 2, 'activo', '10987654324', 'ADU005', 'Agente Norte', 'JUR005', 1),
-(16, 'Patricia', 'Flores', '88990011', 'patricia.flores@norte.com', 'agenteNpass678', '987654328', 'Av. Norte 678', 2, 6, 2, 'activo', '10987654325', 'ADU006', 'Agente Norte', 'JUR006', 1);
+(11, 'Jorge', 'Ramírez', '33445566', 'jorge.ramirez@norte.com', 'agenteNpass123', '987654323', 'Calle Norte 123', 3, 1, 1, 'activo', '12345678901', 'ADU001', 'Agente Norte', 'JUR001', 1),
+(12, 'Rosa', 'Soto', '44556677', 'rosa.soto@norte.com', 'agenteNpass456', '987654324', 'Av. Norte 456', 3, 2, 1, 'activo', '10987654321', 'ADU002', 'Agente Norte', 'JUR002', 1),
+(13, 'Luis', 'Gómez', '55667788', 'luis.gomez@norte.com', 'agenteNpass789', '987654325', 'Calle Norte 789', 3, 3, 1, 'activo', '10987654322', 'ADU003', 'Agente Norte', 'JUR003', 1),
+(14, 'María', 'López', '66778899', 'maria.lopez@norte.com', 'agenteNpass012', '987654326', 'Av. Norte 012', 3, 4, 2, 'activo', '10987654323', 'ADU004', 'Agente Norte', 'JUR004', 1),
+(15, 'Carlos', 'Rivas', '77889900', 'carlos.rivas@norte.com', 'agenteNpass345', '987654327', 'Calle Norte 345', 3, 5, 2, 'activo', '10987654324', 'ADU005', 'Agente Norte', 'JUR005', 1),
+(16, 'Patricia', 'Flores', '88990011', 'patricia.flores@norte.com', 'agenteNpass678', '987654328', 'Av. Norte 678', 3, 6, 2, 'activo', '10987654325', 'ADU006', 'Agente Norte', 'JUR006', 1);
 
 -- Agentes zonas Sur (Admin zonas 3 Y 4)
 INSERT INTO `dogless`.`usuarios` (`idusuarios`, `nombre`, `apellido`, `dni`, `correo`, `contraseña`, `telefono`, `direccion`, `idroles`, `iddistritos`, `idadminzonales`, `estado`, `ruc`, `codigoaduana`, `razonsocial`, `codigojurisdiccion`, `idzonas`)
 VALUES
-(17, 'Laura', 'Martínez', '99001122', 'laura.martinez@sur.com', 'agenteSpass123', '987654329', 'Calle Sur 123', 2, 9, 3, 'activo', '12345678902', 'ADU007', 'Agente Sur', 'JUR007', 2),
-(18, 'Andrés', 'Pérez', '11002233', 'andres.perez@sur.com', 'agenteSpass456', '987654330', 'Av. Sur 456', 2, 10, 3, 'activo', '10987654326', 'ADU008', 'Agente Sur', 'JUR008', 2),
-(19, 'Claudia', 'Vega', '22003344', 'claudia.vega@sur.com', 'agenteSpass789', '987654331', 'Calle Sur 789', 2, 11, 3, 'activo', '10987654327', 'ADU009', 'Agente Sur', 'JUR009', 2),
-(20, 'Roberto', 'Ramos', '33004455', 'roberto.ramos@sur.com', 'agenteSpass012', '987654332', 'Av. Sur 012', 2, 12, 4, 'activo', '10987654328', 'ADU010', 'Agente Sur', 'JUR010', 2),
-(21, 'Sofía', 'Torres', '44005566', 'sofia.torres@sur.com', 'agenteSpass345', '987654333', 'Calle Sur 345', 2, 13, 4, 'activo', '10987654329', 'ADU011', 'Agente Sur', 'JUR011', 2),
-(22, 'Pablo', 'Cruz', '55006677', 'pablo.cruz@sur.com', 'agenteSpass678', '987654334', 'Av. Sur 678', 2, 14, 4, 'activo', '10987654330', 'ADU012', 'Agente Sur', 'JUR012', 2);
+(17, 'Laura', 'Martínez', '99001122', 'laura.martinez@sur.com', 'agenteSpass123', '987654329', 'Calle Sur 123', 3, 9, 3, 'activo', '12345678902', 'ADU007', 'Agente Sur', 'JUR007', 2),
+(18, 'Andrés', 'Pérez', '11002233', 'andres.perez@sur.com', 'agenteSpass456', '987654330', 'Av. Sur 456', 3, 10, 3, 'activo', '10987654326', 'ADU008', 'Agente Sur', 'JUR008', 2),
+(19, 'Claudia', 'Vega', '22003344', 'claudia.vega@sur.com', 'agenteSpass789', '987654331', 'Calle Sur 789', 3, 11, 3, 'activo', '10987654327', 'ADU009', 'Agente Sur', 'JUR009', 2),
+(20, 'Roberto', 'Ramos', '33004455', 'roberto.ramos@sur.com', 'agenteSpass012', '987654332', 'Av. Sur 012', 3, 12, 4, 'activo', '10987654328', 'ADU010', 'Agente Sur', 'JUR010', 2),
+(21, 'Sofía', 'Torres', '44005566', 'sofia.torres@sur.com', 'agenteSpass345', '987654333', 'Calle Sur 345', 3, 13, 4, 'activo', '10987654329', 'ADU011', 'Agente Sur', 'JUR011', 2),
+(22, 'Pablo', 'Cruz', '55006677', 'pablo.cruz@sur.com', 'agenteSpass678', '987654334', 'Av. Sur 678', 3, 14, 4, 'activo', '10987654330', 'ADU012', 'Agente Sur', 'JUR012', 2);
 
 
 -- Agentes zonas Este (Admin zonas 5 y 6)
 INSERT INTO `dogless`.`usuarios` (`idusuarios`, `nombre`, `apellido`, `dni`, `correo`, `contraseña`, `telefono`, `direccion`, `idroles`, `iddistritos`, `idadminzonales`, `estado`, `ruc`, `codigoaduana`, `razonsocial`, `codigojurisdiccion`, `idzonas`)
 VALUES
-(23, 'Martín', 'Hernández', '66007788', 'martin.hernandez@este.com', 'agenteEpass123', '987654335', 'Calle Este 123', 2, 19, 5, 'activo', '12345678903', 'ADU013', 'Agente Este', 'JUR013', 3),
-(24, 'Verónica', 'Díaz', '77008899', 'veronica.diaz@este.com', 'agenteEpass456', '987654336', 'Av. Este 456', 2, 20, 5, 'activo', '10987654331', 'ADU014', 'Agente Este', 'JUR014', 3),
-(25, 'Alberto', 'Cabrera', '88009900', 'alberto.cabrera@este.com', 'agenteEpass789', '987654337', 'Calle Este 789', 2, 21, 5, 'activo', '10987654332', 'ADU015', 'Agente Este', 'JUR015', 3),
-(26, 'Lucía', 'Ortiz', '99001122', 'lucia.ortiz@este.com', 'agenteEpass012', '987654338', 'Av. Este 012', 2, 22, 6, 'activo', '10987654333', 'ADU016', 'Agente Este', 'JUR016', 3),
-(27, 'Tomás', 'Fernández', '11002233', 'tomas.fernandez@este.com', 'agenteEpass345', '987654339', 'Calle Este 345', 2, 23, 6, 'activo', '10987654334', 'ADU017', 'Agente Este', 'JUR017', 3),
-(28, 'Raquel', 'Paredes', '12003344', 'raquel.paredes@este.com', 'agenteEpass678', '987654340', 'Av. Este 678', 2, 24, 6, 'activo', '10987654335', 'ADU018', 'Agente Este', 'JUR018', 3);
+(23, 'Martín', 'Hernández', '66007788', 'martin.hernandez@este.com', 'agenteEpass123', '987654335', 'Calle Este 123', 3, 19, 5, 'activo', '12345678903', 'ADU013', 'Agente Este', 'JUR013', 3),
+(24, 'Verónica', 'Díaz', '77008899', 'veronica.diaz@este.com', 'agenteEpass456', '987654336', 'Av. Este 456', 3, 20, 5, 'activo', '10987654331', 'ADU014', 'Agente Este', 'JUR014', 3),
+(25, 'Alberto', 'Cabrera', '88009900', 'alberto.cabrera@este.com', 'agenteEpass789', '987654337', 'Calle Este 789', 3, 21, 5, 'activo', '10987654332', 'ADU015', 'Agente Este', 'JUR015', 3),
+(26, 'Lucía', 'Ortiz', '99001122', 'lucia.ortiz@este.com', 'agenteEpass012', '987654338', 'Av. Este 012', 3, 22, 6, 'activo', '10987654333', 'ADU016', 'Agente Este', 'JUR016', 3),
+(27, 'Tomás', 'Fernández', '11002233', 'tomas.fernandez@este.com', 'agenteEpass345', '987654339', 'Calle Este 345', 3, 23, 6, 'activo', '10987654334', 'ADU017', 'Agente Este', 'JUR017', 3),
+(28, 'Raquel', 'Paredes', '12003344', 'raquel.paredes@este.com', 'agenteEpass678', '987654340', 'Av. Este 678', 3, 24, 6, 'activo', '10987654335', 'ADU018', 'Agente Este', 'JUR018', 3);
 
 -- Agentes zonas Oeste (Admin zonas 7  y 8)
 INSERT INTO `dogless`.`usuarios` (`idusuarios`, `nombre`, `apellido`, `dni`, `correo`, `contraseña`, `telefono`, `direccion`, `idroles`, `iddistritos`, `idadminzonales`, `estado`, `ruc`, `codigoaduana`, `razonsocial`, `codigojurisdiccion`, `idzonas`)
 VALUES
-(29, 'Raúl', 'González', '13004455', 'raul.gonzalez@oeste.com', 'agenteWpass123', '987654341', 'Calle Oeste 123', 2, 26, 7, 'activo', '12345678904', 'ADU019', 'Agente Oeste', 'JUR019', 4),
-(30, 'Diana', 'Campos', '14005566', 'diana.campos@oeste.com', 'agenteWpass456', '987654342', 'Av. Oeste 456', 2, 27, 7, 'activo', '10987654336', 'ADU020', 'Agente Oeste', 'JUR020', 4),
-(31, 'Emilio', 'Méndez', '15006677', 'emilio.mendez@oeste.com', 'agenteWpass789', '987654343', 'Calle Oeste 789', 2, 28, 7, 'activo', '10987654337', 'ADU021', 'Agente Oeste', 'JUR021', 4),
-(32, 'Paola', 'Moreno', '16007788', 'paola.moreno@oeste.com', 'agenteWpass012', '987654344', 'Av. Oeste 012', 2, 29, 8, 'activo', '10987654338', 'ADU022', 'Agente Oeste', 'JUR022', 4),
-(33, 'Felipe', 'Santos', '17008899', 'felipe.santos@oeste.com', 'agenteWpass345', '987654345', 'Calle Oeste 345', 2, 30, 8, 'activo', '10987654339', 'ADU023', 'Agente Oeste', 'JUR023', 4),
-(34, 'Alejandra', 'Ramos', '18009900', 'alejandra.ramos@oeste.com', 'agenteWpass678', '987654346', 'Av. Oeste 678', 2, 31, 8, 'activo', '10987654340', 'ADU024', 'Agente Oeste', 'JUR024', 4);
+(29, 'Raúl', 'González', '13004455', 'raul.gonzalez@oeste.com', 'agenteWpass123', '987654341', 'Calle Oeste 123', 3, 26, 7, 'activo', '12345678904', 'ADU019', 'Agente Oeste', 'JUR019', 4),
+(30, 'Diana', 'Campos', '14005566', 'diana.campos@oeste.com', 'agenteWpass456', '987654342', 'Av. Oeste 456', 3, 27, 7, 'activo', '10987654336', 'ADU020', 'Agente Oeste', 'JUR020', 4),
+(31, 'Emilio', 'Méndez', '15006677', 'emilio.mendez@oeste.com', 'agenteWpass789', '987654343', 'Calle Oeste 789', 3, 28, 7, 'activo', '10987654337', 'ADU021', 'Agente Oeste', 'JUR021', 4),
+(32, 'Paola', 'Moreno', '16007788', 'paola.moreno@oeste.com', 'agenteWpass012', '987654344', 'Av. Oeste 012', 3, 29, 8, 'activo', '10987654338', 'ADU022', 'Agente Oeste', 'JUR022', 4),
+(33, 'Felipe', 'Santos', '17008899', 'felipe.santos@oeste.com', 'agenteWpass345', '987654345', 'Calle Oeste 345', 3, 30, 8, 'activo', '10987654339', 'ADU023', 'Agente Oeste', 'JUR023', 4),
+(34, 'Alejandra', 'Ramos', '18009900', 'alejandra.ramos@oeste.com', 'agenteWpass678', '987654346', 'Av. Oeste 678', 3, 31, 8, 'activo', '10987654340', 'ADU024', 'Agente Oeste', 'JUR024', 4);
 
 -- Usuarios Finales 
 INSERT INTO `dogless`.`usuarios` (`idusuarios`, `nombre`, `apellido`, `dni`, `correo`, `contraseña`, `telefono`, `direccion`, `idroles`, `iddistritos`, `idadminzonales`, `estado`, `ruc`, `codigoaduana`, `razonsocial`, `codigojurisdiccion`, `idzonas`)

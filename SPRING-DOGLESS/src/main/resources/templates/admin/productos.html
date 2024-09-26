@@ -308,22 +308,25 @@
                         <table id="basic-datatables" class="display table table-striped table-hover">
                           <thead>
                             <tr>
-                              <th>Imagen</th>
+                              <th>ID Producto</th>
                               <th>Nombre</th>
                               <th>Descripcion</th>
                               <th>Precio (S/.)</th>
+                              <th>Cantidad</th>
+                              <th>Zona</th>
                               <th>Proveedor</th>
                               <th>Acciones</th>
                             </tr>
                           </thead>
                           <tbody>
-                          <tr th:each="producto, info : ${listaProductos}">
-                            <th></th>
-                            <td th:text="${producto.id}"></td>
+                          <tr th:each="producto, info : ${listaProductosCompleto}">
+                            <td th:text="${producto.idproductos}"></td>
                             <td th:text="${producto.nombre}"></td>
                             <td th:text="${producto.descripcion}"></td>
                             <td th:text="${producto.precio}"></td>
-                            <td th:text="${producto.proveedor.nombre + ' ' + producto.proveedor.apellido}"></td>
+                            <td th:text="${producto.cantidad}"></td>
+                            <td th:text="${producto.nombreZona}"></td>
+                            <td th:text="${producto.proveedorNombre + ' ' + producto.proveedorApellido}"></td>
                               <td>
                                 <!-- Dropdown con ícono -->
                                 <div class="dropdown">
@@ -333,7 +336,7 @@
                                   <!-- Dropdown oscuro -->
                                   <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
                                     <li><a class="dropdown-item" href="VerProducto.html">Ver</a></li>
-                                    <a class="dropdown-item" th:href="@{/admin/editarProducto(id=${producto.id})}">Editar</a>
+                                    <a class="dropdown-item" th:href="@{/admin/editarProducto(id=${producto.idproductos})}">Editar</a>
                                     <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#denegarModal">Eliminar</a></li>
                                   </ul>
                                 </div>
