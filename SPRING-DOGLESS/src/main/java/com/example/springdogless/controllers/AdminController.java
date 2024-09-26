@@ -15,7 +15,7 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Controller
-@RequestMapping({"admin", "admin/",""})
+@RequestMapping({"admin", "admin/"})
 public class AdminController {
 
     /*@GetMapping("/")
