@@ -488,7 +488,7 @@ public class AdminController {
     //Lista Productos pendientes
     @GetMapping("/pendientes")
     public String pendientes(Model model) {
-        model.addAttribute("listaReposiciones", reposicionesRepository.findAll());
+        model.addAttribute("listaReposiciones", reposicionesRepository.findByAprobarIsNull());
         return "/admin/productosPendientes";
     }
 
