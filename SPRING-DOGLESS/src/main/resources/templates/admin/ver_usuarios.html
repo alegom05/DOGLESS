@@ -10,12 +10,12 @@
     />
     <link
             rel="icon"
-            href="../../static/assets/img/kaiadmin/favicon.ico"
+            href="/assets/img/kaiadmin/favicon.ico"
             type="image/x-icon"
     />
 
     <!-- Fonts and icons -->
-    <script src="../../static/assets/js/plugin/webfont/webfont.min.js"></script>
+    <script src="/assets/js/plugin/webfont/webfont.min.js"></script>
     <script>
       WebFont.load({
         google: { families: ["Public Sans:300,400,500,600,700"] },
@@ -26,7 +26,7 @@
             "Font Awesome 5 Brands",
             "simple-line-icons",
           ],
-          urls: ["../../static/assets/css/fonts.min.css"],
+          urls: ["/assets/css/fonts.min.css"],
         },
         active: function () {
           sessionStorage.fonts = true;
@@ -35,9 +35,9 @@
     </script>
 
     <!-- CSS Files -->
-    <link rel="stylesheet" href="../../static/assets/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="../../static/assets/css/plugins.min.css" />
-    <link rel="stylesheet" href="../../static/assets/css/kaiadmin.min.css" />
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/assets/css/plugins.min.css" />
+    <link rel="stylesheet" href="/assets/css/kaiadmin.min.css" />
 
 
 
@@ -51,7 +51,7 @@
           <div class="logo-header" data-background-color="dark">
             <a href=/admin class="logo">
               <img
-                      src="../../static/assets/img/kaiadmin/slogan_white_v3.png"
+                      src="/assets/img/kaiadmin/slogan_white_v3.png"
                       alt="navbar brand"
                       class="navbar-brand"
                       height="50"
@@ -154,16 +154,11 @@
                         <span class="sub-item">Productos pendientes</span>
                       </a>
                     </li>
-                                <li>
-                                    <a href="/admin/productosAprobados">
-                                        <span class="sub-item">Productos aprobados</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="/admin/productosRechazados">
-                                        <span class="sub-item">Productos rechazados</span>
-                                    </a>
-                                </li>
+                    <li>
+                      <a href=/admin/aprobados>
+                        <span class="sub-item">Productos aprobados</span>
+                      </a>
+                    </li>
                   </ul>
                 </div>
               </li>
@@ -173,7 +168,7 @@
         </div>
       </div>
       <!-- Fin barra lateral -->
-      
+
       <div class="main-panel">
         <div class="main-header">
           <div class="main-header-logo">
@@ -181,7 +176,7 @@
             <div class="logo-header" data-background-color="dark">
               <a href=/admin class="logo">
                 <img
-                        src="../../static/assets/img/kaiadmin/logodogless.svg"
+                        src="/assets/img/kaiadmin/logodogless.svg"
                         alt="navbar brand"
                         class="navbar-brand"
                         height="20"
@@ -222,7 +217,7 @@
                   >
                     <div class="avatar-sm">
                       <img
-                              src="../../static/assets/img/profile2.jpg"
+                              src="/assets/img/profile2.jpg"
                               alt="..."
                               class="avatar-img rounded-circle"
                       />
@@ -238,7 +233,7 @@
                         <div class="user-box">
                           <div class="avatar-lg">
                             <img
-                                    src="../../static/assets/img/profile2.jpg"
+                                    src="/assets/img/profile2.jpg"
                                     alt="image profile"
                                     class="avatar-img rounded"
                             />
@@ -268,222 +263,195 @@
 
         <!-- Texto o contenido central -->
         <div class="container">
-            <div class="page-inner">
-              <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
-               <div>
-                <h3 class="fw-bold mb-3">Ver Usuarios Finales</h3>
-               </div>
+          <div class="page-inner">
+            <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
+              <div>
+                <h3 class="fw-bold mb-3">Ver Usuario Final</h3>
               </div>
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="card">
-  
-                         <div class="card-body">
-                                                  <form class="needs-validation" style="width: 100%; margin-left: 0%; margin-top: 3%;" action="agentes.html" method="POST" novalidate>
-                                                    <div class="container">
-                              
-                                                       <div class="row">
-                                                         <div class="col">
-                                                           <div class="mb-3">
-                                                             <label for="dni" class="form-label">DNI: (*)</label>
-                                                             <input type="text" name="dni" id="dni" class="form-control" value="77040283" pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]+(\s[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]+){0,4}"
-                                                                    placeholder="Ej: 77040283" readonly>
-                                                             <div class="invalid-feedback">Por favor ingresar DNI.</div>
-                                                           </div>
-                                                         </div>
-                                                         <div class="col">
-                                                           <div class="mb-3">
-                                                             <label for="telefono" class="form-label">Teléfono: (*)</label>
-                                                             <input type="text" name="telefono" id="telefono" class="form-control" value="948134144" pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]+(\s[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]+){0,4}"
-                                                                    placeholder="Ej: 984134144" readonly>
-                                                             <div class="invalid-feedback">Por favor ingresar teléfono(s).</div>
-                                                           </div>
-                                                         </div>
-                                                       </div>
-                                                       
-                                                      <div class="row">
-                                                        <div class="col">
-                                                          <div class="mb-3">
-                                                            <label for="nombre" class="form-label">Nombre: (*)</label>
-                                                            <input type="text" name="nombre" id="nombre" class="form-control" value="Pedro" pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]+(\s[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]+){0,4}"
-                                                                   placeholder="Ej: Epifanio" readonly>
-                                                            <div class="invalid-feedback">Por favor ingresar nombre(s).</div>
-                                                          </div>
-                                                        </div>
-                                                        <div class="col">
-                                                          <div class="mb-3">
-                                                            <label for="apellido" class="form-label">Apellido: (*)</label>
-                                                            <input type="text" name="apellido" id="apellido" class="form-control" value="Bustamante" pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]+(\s[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]+){0,4}"
-                                                                   placeholder="Ej: Bustamante" readonly>
-                                                            <div class="invalid-feedback">Por favor ingresar apellido(s).</div>
-                                                          </div>
-                                                        </div>
-                                                      </div>
-                              
-                                                      <div class="row">
-                                                        <div class="col">
-                                                          <div class="mb-3">
-                                                            <label for="correo" class="form-label">Correo: </label>
-                                                            <input type="text" name="correo" id="correo" class="form-control" value="pedro.bustamante@gmail.com" pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]+(\s[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]+){0,4}"
-                                                                   placeholder="Ej: pedro.bustamante@gmail.com" readonly>
-                                                            <div class="invalid-feedback">Por favor ingresar modelo válido.</div>
-                                                          </div>
-                                                        </div>
-                                                        <div class="col">
-                                                          <div class="mb-3">
-                                                            <label for="zona" class="form-label">Zona:</label>
-                                                            <select name="zona" id="zona" class="form-control" disabled>
-                                                              <option value="Norte" selected>Norte</option>
-                                                              <option value="Sur">Sur</option>
-                                                              <option value="Este">Este</option>
-                                                              <option value="Oeste">Oeste</option>
-                                                            </select>
-                                                            <div class="invalid-feedback">Por favor ingresar zona.</div>
-                                                          </div>
-                                                        </div>
-                              
-                                                                              </div>
-                              
-                                                      <div class="row">
-                                                        <div class="col">
-                                                          <div class="mb-3">
-                                                            <label for="contrasena" class="form-label">Contraseña: </label>
-                                                            <input type="text" name="contrasena" id="contrasena" class="form-control" value="AaBbCc123" pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]+(\s[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]+){0,4}"
-                                                                   placeholder="Ej: AaBbCc123" readonly>
-                                                            <div class="invalid-feedback">Por favor ingresar contraseña.</div>
-                                                          </div>
-                                                        </div>
-                                                        <div class="col">
-                                                          <div class="mb-3">
-                                                            <label for="distrito" class="form-label">Distrito: (*)</label>
-                                                            <select name="distrito" id="distrito" class="form-control" disabled>
-                                                              <option value="Los Olivos" selected>Los Olivos</option>
-                                                            </select>
-                                                            <div class="invalid-feedback">Por favor selecciona un distrito.</div>
-                                                          </div>
-                                                        </div>
-                                                      </div>
-                              
-                         
-                                                       </div>
-               
-                                                      </div>
-                                                      
-                                                      <div class="btn-container" style="text-align: center; margin-top: 20px;">
-                                                                           <div class="mb-3">
-                                                                 <a href=/admin/usuarios class="btn btn-primary" style="width: 280px;">Regresar</a>
-                                                               </div>
-                                                  </div>
-                                                  </div>
-                  </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="card">
+
+                  <div class="card-body">
+                    <form class="needs-validation" style="width: 100%; margin-left: 0%; margin-top: 3%;" action="agentes.html" method="POST" novalidate>
+                      <div class="container">
+
+                        <div class="row">
+                          <div class="col">
+                            <div class="mb-3">
+                              <label for="dni" class="form-label">DNI: (*)</label>
+                              <input type="text" name="dni" id="dni" class="form-control" th:value="${usuario.dni}" readonly>
+                            </div>
+                          </div>
+                          <div class="col">
+                            <div class="mb-3">
+                              <label for="telefono" class="form-label">Teléfono: (*)</label>
+                              <input type="text" name="telefono" id="telefono" class="form-control" th:value="${usuario.telefono}" readonly>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="row">
+                          <div class="col">
+                            <div class="mb-3">
+                              <label for="nombre" class="form-label">Nombre: (*)</label>
+                              <input type="text" name="nombre" id="nombre" class="form-control" th:value="${usuario.nombre}" readonly>
+                            </div>
+                          </div>
+                          <div class="col">
+                            <div class="mb-3">
+                              <label for="apellido" class="form-label">Apellido: (*)</label>
+                              <input type="text" name="apellido" id="apellido" class="form-control" th:value="${usuario.apellido}" readonly>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="row">
+                          <div class="col">
+                            <div class="mb-3">
+                              <label for="correo" class="form-label">Correo: </label>
+                              <input type="text" name="correo" id="correo" class="form-control" th:value="${usuario.correo}" readonly>
+                            </div>
+                          </div>
+                          <div class="col">
+                            <div class="mb-3">
+                              <label for="zona" class="form-label">Zona:</label>
+                              <input type="text" name="zona" id="zona" class="form-control" th:value="${usuario.zona.nombre}" readonly>
+
+                            </div>
+                          </div>
+
+                        </div>
+                        <div class="row">
+                          <div class="col">
+                            <div class="mb-3">
+                              <label for="contrasena" class="form-label">Contraseña: </label>
+                              <input type="text" name="contrasena" id="contrasena" class="form-control" th:value="${usuario.contrasena}" readonly>
+                            </div>
+                          </div>
+                          <div class="col">
+                            <div class="mb-3">
+                              <label for="distrito" class="form-label">Distrito: (*)</label>
+                              <input type="text" name="distrito" id="distrito" class="form-control" th:value="${usuario.distrito.distrito}" readonly>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="row">
+                          <div class="col text-center"> <!-- Añadido text-center para centrar el contenido -->
+                            <div class="button-group d-flex justify-content-center"> <!-- Clases de Bootstrap -->
+                              <a href="/admin/usuarios" class="btn btn-secondary btn-lg">Regresar a la vista de usuarios</a> <!-- ms-2 para margen a la izquierda -->
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  </div >
                 </div>
-  
               </div>
+
             </div>
           </div>
-  
         </div>
-
         <!-- Fin del contenido central -->
-
-
-
-          <!-- Pie de página -->
-          <footer class="footer">
-            <div class="container-fluid d-flex justify-content-center">
-              <nav class="pull-left">
-                <ul class="nav">
-
-                  <li class="nav-item">
-                    <a class="nav-link" href="ruta/a/informacion-de-contacto.html"> Contacto </a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="ruta/a/politica-de-privacidad.html"> Política de privacidad </a>
-                  </li>
-                </ul>
-              </nav>
-
-            </div>
-          </footer>
-        </div>
+        <!-- Pie de página -->
       </div>
+      <footer class="footer">
+        <div class="container-fluid d-flex justify-content-center">
+          <nav class="pull-left">
+            <ul class="nav">
+
+              <li class="nav-item">
+                <a class="nav-link" href="ruta/a/informacion-de-contacto.html"> Contacto </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="ruta/a/politica-de-privacidad.html"> Política de privacidad </a>
+              </li>
+            </ul>
+          </nav>
+
+        </div>
+      </footer>
+    </div>
 
 
 
-      <!--Core JS Files   -->
-      <script src="../../static/assets/js/core/jquery-3.7.1.min.js"></script>
-      <script src="../../static/assets/js/core/popper.min.js"></script>
-      <script src="../../static/assets/js/core/bootstrap.min.js"></script>
+    <!--Core JS Files   -->
+    <script src="/assets/js/core/jquery-3.7.1.min.js"></script>
+    <script src="/assets/js/core/popper.min.js"></script>
+    <script src="/assets/js/core/bootstrap.min.js"></script>
 
-      <!-- jQuery Scrollbar -->
-      <script src="../../static/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
-      <!-- Datatables -->
-      <script src="../../static/assets/js/plugin/datatables/datatables.min.js"></script>
+    <!-- jQuery Scrollbar -->
+    <script src="/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+    <!-- Datatables -->
+    <script src="/assets/js/plugin/datatables/datatables.min.js"></script>
 
-      <!-- jQuery Vector Maps -->
-      <script src="../../static/assets/js/plugin/jsvectormap/jsvectormap.min.js"></script>
-      <script src="../../static/assets/js/plugin/jsvectormap/world.js"></script>
+    <!-- jQuery Vector Maps -->
+    <script src="/assets/js/plugin/jsvectormap/jsvectormap.min.js"></script>
+    <script src="/assets/js/plugin/jsvectormap/world.js"></script>
 
-      <!-- Kaiadmin JS -->
-      <script src="../../static/assets/js/kaiadmin.min.js"></script>
+    <!-- Kaiadmin JS -->
+    <script src="/assets/js/kaiadmin.min.js"></script>
 
-      <script>
-        $(document).ready(function () {
-          $("#basic-datatables").DataTable({});
-  
-          $("#multi-filter-select").DataTable({
-            pageLength: 5,
-            initComplete: function () {
-              this.api()
-                .columns()
-                .every(function () {
-                  var column = this;
-                  var select = $(
-                    '<select class="form-select"><option value=""></option></select>'
-                  )
-                    .appendTo($(column.footer()).empty())
-                    .on("change", function () {
-                      var val = $.fn.dataTable.util.escapeRegex($(this).val());
-  
+    <script>
+      $(document).ready(function () {
+        $("#basic-datatables").DataTable({});
+
+        $("#multi-filter-select").DataTable({
+          pageLength: 5,
+          initComplete: function () {
+            this.api()
+                    .columns()
+                    .every(function () {
+                      var column = this;
+                      var select = $(
+                              '<select class="form-select"><option value=""></option></select>'
+                      )
+                              .appendTo($(column.footer()).empty())
+                              .on("change", function () {
+                                var val = $.fn.dataTable.util.escapeRegex($(this).val());
+
+                                column
+                                        .search(val ? "^" + val + "$" : "", true, false)
+                                        .draw();
+                              });
+
                       column
-                        .search(val ? "^" + val + "$" : "", true, false)
-                        .draw();
+                              .data()
+                              .unique()
+                              .sort()
+                              .each(function (d, j) {
+                                select.append(
+                                        '<option value="' + d + '">' + d + "</option>"
+                                );
+                              });
                     });
-  
-                  column
-                    .data()
-                    .unique()
-                    .sort()
-                    .each(function (d, j) {
-                      select.append(
-                        '<option value="' + d + '">' + d + "</option>"
-                      );
-                    });
-                });
-            },
-          });
-  
-          // Add Row
-          $("#add-row").DataTable({
-            pageLength: 5,
-          });
-  
-          var action =
-            '<td> <div class="form-button-action"> <button type="button" data-bs-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task"> <i class="fa fa-edit"></i> </button> <button type="button" data-bs-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove"> <i class="fa fa-times"></i> </button> </div> </td>';
-  
-          $("#addRowButton").click(function () {
-            $("#add-row")
-              .dataTable()
-              .fnAddData([
-                $("#addName").val(),
-                $("#addPosition").val(),
-                $("#addOffice").val(),
-                action,
-              ]);
-            $("#addRowModal").modal("hide");
-          });
+          },
         });
-      </script>
-      
+
+        // Add Row
+        $("#add-row").DataTable({
+          pageLength: 5,
+        });
+
+        var action =
+                '<td> <div class="form-button-action"> <button type="button" data-bs-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task"> <i class="fa fa-edit"></i> </button> <button type="button" data-bs-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove"> <i class="fa fa-times"></i> </button> </div> </td>';
+
+        $("#addRowButton").click(function () {
+          $("#add-row")
+                  .dataTable()
+                  .fnAddData([
+                    $("#addName").val(),
+                    $("#addPosition").val(),
+                    $("#addOffice").val(),
+                    action,
+                  ]);
+          $("#addRowModal").modal("hide");
+        });
+      });
+    </script>
+
   </body>
 </html>
+
