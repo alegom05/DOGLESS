@@ -241,7 +241,7 @@ public class AdminController {
     @GetMapping("proveedores")
     public String listaProveedores(Model model, @RequestParam(required = false) String zona) {
         model.addAttribute("listaProveedores", proveedorRepository.findAll());
-        return "admin/proveedores";
+        return "/admin/proveedores";
     }
 
 
@@ -273,15 +273,15 @@ public class AdminController {
     public String guardarProveedor(Proveedor proveedor, RedirectAttributes attr) {
         proveedorRepository.save(proveedor);
         attr.addFlashAttribute("msg", "Proveedor creado exitosamente");
-        return "redirect:/proveedores";
+        return "redirect:/admin/proveedores";
     }
 
 
     //Vista de productos
-    @GetMapping("productos")
+    @GetMapping("/productos")
     public String listaProductos(Model model, @RequestParam(required = false) String zona) {
         model.addAttribute("listaProductos", productRepository.findByBorrado(1));
-        return "admin/productos";
+        return "/admin/productos";
 
     }
 
