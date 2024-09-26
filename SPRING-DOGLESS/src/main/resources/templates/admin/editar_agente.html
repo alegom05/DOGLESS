@@ -105,9 +105,9 @@
             <ul class="nav nav-secondary">
               <!-- Barra de navegacion lateral-->
               <li class="nav-item ">
-                <a href=/>
-                  <i class="fas fa-home"></i>
-                  <p>Página principal</p>
+                <a href=/admin/lista>
+                <i class="fas fa-home"></i>
+                <p>Página principal</p>
                 </a>
               </li>
               <li class="nav-item">
@@ -411,13 +411,12 @@
                         </div>
 
                         <div class="row">
-                          <div class="col">
-                            <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                          <div class="col text-center"> <!-- Añadido text-center para centrar el contenido -->
+                            <div class="button-group d-flex justify-content-center"> <!-- Clases de Bootstrap -->
+                              <button class="btn btn-primary btn-lg" type="submit">Guardar cambios</button>
+                              <a href="/admin/agentes" class="btn btn-secondary ms-2 btn-lg">Regresar</a> <!-- ms-2 para margen a la izquierda -->
+                            </div>
                           </div>
-
-                        </div>
-                        <div class="btn-container" style="text-align: center; margin-top: 20px;">
-                          <button type="submit" class="btn btn-primary" style="width: 280px;">Regresar</button>
                         </div>
                       </div>
                     </form>
@@ -427,148 +426,145 @@
             </div>
           </div>
         </div>
-
-        <div>
-
-
-        </div>
       </div>
 
-      <!-- Fin del contenido central -->
-      <script>
-        $(document).ready(function () {
-          var forms = document.querySelectorAll('.needs-validation');
+    </div>
 
-          Array.prototype.slice.call(forms).forEach(function (form) {
-            form.addEventListener('submit', function (event) {
-              if (!form.checkValidity()) {
-                event.preventDefault();
-                event.stopPropagation();
-              }
+    <!-- Fin del contenido central -->
+    <script>
+      $(document).ready(function () {
+        var forms = document.querySelectorAll('.needs-validation');
 
-              form.classList.add('was-validated');
-            }, false);
-          });
-          // Validar que solo se ingresen letras en los campos de nombre y apellidos
-          document.addEventListener("input", function(event) {
-            if (event.target && event.target.id === "nombre") {
-              event.target.value = event.target.value.replace(/[^a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ\s]/g, "");
-            } else if (event.target && event.target.id === "apellidos") {
-              event.target.value = event.target.value.replace(/[^a-zA-ZñÑáéíóúÁÉÍÓÚ\s]/g, "");
+        Array.prototype.slice.call(forms).forEach(function (form) {
+          form.addEventListener('submit', function (event) {
+            if (!form.checkValidity()) {
+              event.preventDefault();
+              event.stopPropagation();
             }
-          });
-          // Validar que solo se ingresen letras en los campos de color
-          document.addEventListener("input", function(event) {
-            if (event.target && event.target.id === "color") {
-              event.target.value = event.target.value.replace(/[^a-zA-ZñÑáéíóúÁÉÍÓÚ\s]/g, "");
-            }
-          });
 
-          //Validar que se ingresen letras y números
-          document.addEventListener("input", function(event) {
-            if (event.target && event.target.id === "modelo") {
-              // Permitir letras, números, espacios y caracteres especiales de acentuación
-              event.target.value = event.target.value.replace(/[^a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ\s]/g, "");
-            }
-          });
-
-
-
-
-          // Validar que solo se ingresen números en el campo de DNI
-          document.addEventListener("input", function(event) {
-            if (event.target && event.target.id === "dni") {
-              let value = event.target.value.replace(/\D/g, ""); // Eliminar caracteres no numéricos
-              if (value.length > 8) {
-                value = value.slice(0, 8); // Limitar a 8 dígitos
-              }
-              event.target.value = value;
-            }
-          });
-
-          // Validar que solo se ingresen números en el campo de RUC
-          document.addEventListener("input", function(event) {
-            if (event.target && event.target.id === "ruc") {
-              let value = event.target.value.replace(/\D/g, ""); // Eliminar caracteres no numéricos
-              if (value.length > 11) {
-                value = value.slice(0, 11); // Limitar a 11 dígitos
-              }
-              event.target.value = value;
-            }
-          });
-          // Validar que solo se ingresen números en el campo de teléfono
-          document.addEventListener("input", function(event) {
-            if (event.target && event.target.id === "telefono") {
-              let value = event.target.value.replace(/\D/g, ""); // Eliminar caracteres no numéricos
-              if (value.length > 9) {
-                value = value.slice(0, 9); // Limitar a 9 dígitos
-              }
-              event.target.value = value;
-            }
-          });
-          document.addEventListener("input", function(event) {
-            if (event.target && event.target.id === "direccion") {
-              let pattern = /^[a-zA-Z0-9#áéíóúÁÉÍÓÚñÑ.]+\s[a-zA-Z0-9#áéíóúÁÉÍÓÚñÑ.]+(\s[a-zA-Z0-9#áéíóúÁÉÍÓÚñÑ.]+)?(\s[a-zA-Z0-9#áéíóúÁÉÍÓÚñÑ.]+)?$/;
-              let value = event.target.value;
-              if (!pattern.test(value)) {
-                event.target.setCustomValidity("La dirección no cumple con el formato requerido.");
-              } else {
-                event.target.setCustomValidity("");
-              }
-            }
-          });
-          document.addEventListener("input", function(event) {
-            if (event.target && event.target.id === "correo") {
-              let pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Patrón de correo
-              if (!pattern.test(event.target.value)) {
-                event.target.setCustomValidity("Por favor, ingrese un correo válido.");
-              } else {
-                event.target.setCustomValidity("");
-              }
-            }
-          });
-
-          document.addEventListener("input", function(event) {
-            if (event.target && event.target.id === "contrasenia") {
-              // Permitir letras, números y caracteres especiales específicos
-              event.target.value = event.target.value.replace(/[^a-zA-Z0-9!@#$%^&*]/g, "");
-            }
-          });
+            form.classList.add('was-validated');
+          }, false);
         });
-      </script>
-      <!-- Script para vista previa de imagen -->
-      <script>
-        function previewImage(event) {
-          var input = event.target;
-          var reader = new FileReader();
-          reader.onload = function() {
-            var preview = document.getElementById('imagePreview');
-            preview.src = reader.result;  // Reemplazar imagen por defecto con la seleccionada
-            preview.style.display = 'block';
+        // Validar que solo se ingresen letras en los campos de nombre y apellidos
+        document.addEventListener("input", function(event) {
+          if (event.target && event.target.id === "nombre") {
+            event.target.value = event.target.value.replace(/[^a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ\s]/g, "");
+          } else if (event.target && event.target.id === "apellidos") {
+            event.target.value = event.target.value.replace(/[^a-zA-ZñÑáéíóúÁÉÍÓÚ\s]/g, "");
           }
-          reader.readAsDataURL(input.files[0]);
+        });
+        // Validar que solo se ingresen letras en los campos de color
+        document.addEventListener("input", function(event) {
+          if (event.target && event.target.id === "color") {
+            event.target.value = event.target.value.replace(/[^a-zA-ZñÑáéíóúÁÉÍÓÚ\s]/g, "");
+          }
+        });
+
+        //Validar que se ingresen letras y números
+        document.addEventListener("input", function(event) {
+          if (event.target && event.target.id === "modelo") {
+            // Permitir letras, números, espacios y caracteres especiales de acentuación
+            event.target.value = event.target.value.replace(/[^a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ\s]/g, "");
+          }
+        });
+
+
+
+
+        // Validar que solo se ingresen números en el campo de DNI
+        document.addEventListener("input", function(event) {
+          if (event.target && event.target.id === "dni") {
+            let value = event.target.value.replace(/\D/g, ""); // Eliminar caracteres no numéricos
+            if (value.length > 8) {
+              value = value.slice(0, 8); // Limitar a 8 dígitos
+            }
+            event.target.value = value;
+          }
+        });
+
+        // Validar que solo se ingresen números en el campo de RUC
+        document.addEventListener("input", function(event) {
+          if (event.target && event.target.id === "ruc") {
+            let value = event.target.value.replace(/\D/g, ""); // Eliminar caracteres no numéricos
+            if (value.length > 11) {
+              value = value.slice(0, 11); // Limitar a 11 dígitos
+            }
+            event.target.value = value;
+          }
+        });
+        // Validar que solo se ingresen números en el campo de teléfono
+        document.addEventListener("input", function(event) {
+          if (event.target && event.target.id === "telefono") {
+            let value = event.target.value.replace(/\D/g, ""); // Eliminar caracteres no numéricos
+            if (value.length > 9) {
+              value = value.slice(0, 9); // Limitar a 9 dígitos
+            }
+            event.target.value = value;
+          }
+        });
+        document.addEventListener("input", function(event) {
+          if (event.target && event.target.id === "direccion") {
+            let pattern = /^[a-zA-Z0-9#áéíóúÁÉÍÓÚñÑ.]+\s[a-zA-Z0-9#áéíóúÁÉÍÓÚñÑ.]+(\s[a-zA-Z0-9#áéíóúÁÉÍÓÚñÑ.]+)?(\s[a-zA-Z0-9#áéíóúÁÉÍÓÚñÑ.]+)?$/;
+            let value = event.target.value;
+            if (!pattern.test(value)) {
+              event.target.setCustomValidity("La dirección no cumple con el formato requerido.");
+            } else {
+              event.target.setCustomValidity("");
+            }
+          }
+        });
+        document.addEventListener("input", function(event) {
+          if (event.target && event.target.id === "correo") {
+            let pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Patrón de correo
+            if (!pattern.test(event.target.value)) {
+              event.target.setCustomValidity("Por favor, ingrese un correo válido.");
+            } else {
+              event.target.setCustomValidity("");
+            }
+          }
+        });
+
+        document.addEventListener("input", function(event) {
+          if (event.target && event.target.id === "contrasenia") {
+            // Permitir letras, números y caracteres especiales específicos
+            event.target.value = event.target.value.replace(/[^a-zA-Z0-9!@#$%^&*]/g, "");
+          }
+        });
+      });
+    </script>
+    <!-- Script para vista previa de imagen -->
+    <script>
+      function previewImage(event) {
+        var input = event.target;
+        var reader = new FileReader();
+        reader.onload = function() {
+          var preview = document.getElementById('imagePreview');
+          preview.src = reader.result;  // Reemplazar imagen por defecto con la seleccionada
+          preview.style.display = 'block';
         }
-      </script>
+        reader.readAsDataURL(input.files[0]);
+      }
+    </script>
 
 
 
-      <!-- Pie de página -->
-      <footer class="footer">
-        <div class="container-fluid d-flex justify-content-center">
-          <nav class="pull-left">
-            <ul class="nav">
+    <!-- Pie de página -->
+    <footer class="footer">
+      <div class="container-fluid d-flex justify-content-center">
+        <nav class="pull-left">
+          <ul class="nav">
 
-              <li class="nav-item">
-                <a class="nav-link" href="ruta/a/informacion-de-contacto.html"> Contacto </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="ruta/a/politica-de-privacidad.html"> Política de privacidad </a>
-              </li>
-            </ul>
-          </nav>
+            <li class="nav-item">
+              <a class="nav-link" href="ruta/a/informacion-de-contacto.html"> Contacto </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="ruta/a/politica-de-privacidad.html"> Política de privacidad </a>
+            </li>
+          </ul>
+        </nav>
 
-        </div>
-      </footer>
+      </div>
+    </footer>
     </div>
     </div>
 

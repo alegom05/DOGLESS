@@ -106,9 +106,9 @@
                         <ul class="nav nav-secondary">
                             <!-- Barra de navegacion lateral-->
                             <li class="nav-item ">
-                                <a href=/>
-                                    <i class="fas fa-home"></i>
-                                    <p>Página principal</p>
+                                <a href=/admin/lista>
+                                <i class="fas fa-home"></i>
+                                <p>Página principal</p>
                                 </a>
                             </li>
                             <li class="nav-item">
@@ -133,17 +133,17 @@
                                 <div class="collapse show" id="tables1">
                                     <ul class="nav nav-collapse">
                                         <li >
-                                            <a href="adminzonales.html">
+                                            <a href="/admin/adminzonal">
                                                 <span class="sub-item">Administradores zonales</span>
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="agentes.html">
+                                            <a href="/admin/agentes">
                                                 <span class="sub-item">Agentes zonales</span>
                                             </a>
                                         </li>
                                         <li class="active">
-                                            <a href="usuarios.html">
+                                            <a href="admin/usuarios">
                                                 <span class="sub-item">Usuarios finales</span>
                                             </a>
                                         </li>
@@ -302,7 +302,6 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="card">
-
                                     <div class="card-body">
                                         <form class="needs-validation" style="width: 100%; margin-left: 0%; margin-top: 3%;" th:action="@{'/admin/saveusuario'}" method="POST" novalidate>
                                             <input  name="id"  th:value="${usuario.id}" type="hidden"/>
@@ -382,35 +381,27 @@
                                                     </div>
                                                 </div>
 
-
-
                                                 <!-- Botón para guardar cambios -->
                                                 <div class="row">
-                                                    <div class="col">
-                                                        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                                                    <div class="col text-center"> <!-- Añadido text-center para centrar el contenido -->
+                                                        <div class="button-group d-flex justify-content-center"> <!-- Clases de Bootstrap -->
+                                                            <button class="btn btn-primary btn-lg" type="submit">Guardar cambios</button>
+                                                            <a href="/admin/usuarios" class="btn btn-secondary ms-2 btn-lg">Regresar</a> <!-- ms-2 para margen a la izquierda -->
+                                                        </div>
                                                     </div>
                                                 </div>
 
                                             </div>
-                                    </div>
-                                    <div class="btn-container" style="text-align: center; margin-top: 20px;">
-                                        <div class="mb-3">
-                                            <a href="/admin/usuarios" class="btn btn-primary" style="width: 280px;">Regresar</a>
-                                        </div>
+                                        </form>
                                     </div>
 
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
 
             </div>
-
-            <!-- Fin del contenido central -->
-
-
 
             <!-- Pie de página -->
             <footer class="footer">
@@ -429,7 +420,6 @@
 
                 </div>
             </footer>
-        </div>
         </div>
 
 

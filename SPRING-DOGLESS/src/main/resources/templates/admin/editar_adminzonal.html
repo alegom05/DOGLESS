@@ -107,8 +107,8 @@
 
                             <li class="nav-item">
                                 <a href="/admin/lista"/>
-                                    <i class="fas fa-home"></i>
-                                    <p>Pagina Principal</p>
+                                <i class="fas fa-home"></i>
+                                <p>Página Principal</p>
                                 </a>
                             </li>
 
@@ -184,12 +184,12 @@
                                 <div class="collapse" id="tables3">
                                     <ul class="nav nav-collapse">
                                         <li>
-                                            <a href="tables/tables.html">
+                                            <a href="/admin/pendientes">
                                                 <span class="sub-item">Productos pendientes</span>
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="tables/datatables.html">
+                                            <a href="/admin/aprobados">
                                                 <span class="sub-item">Productos aprobados</span>
                                             </a>
                                         </li>
@@ -299,7 +299,6 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="card">
-
                                     <div class="card-body">
                                         <form class="needs-validation" style="width: 100%; margin-left: 0%; margin-top: 3%;" th:action="@{'/admin/saveadminzonal'}" method="POST" novalidate>
                                             <input  name="id"  th:value="${usuario.id}" type="hidden"/>
@@ -397,33 +396,24 @@
 
                                                 <!-- Botón para guardar cambios -->
                                                 <div class="row">
-                                                    <div class="col">
-                                                        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                                                    <div class="col text-center"> <!-- Añadido text-center para centrar el contenido -->
+                                                        <div class="button-group d-flex justify-content-center"> <!-- Clases de Bootstrap -->
+                                                            <button class="btn btn-primary btn-lg" type="submit">Guardar cambios</button>
+                                                            <a href="/admin/adminzonal" class="btn btn-secondary ms-2 btn-lg">Regresar</a> <!-- ms-2 para margen a la izquierda -->
+                                                        </div>
                                                     </div>
-
                                                 </div>
-                                                <div class="btn-container" style="text-align: center; margin-top: 20px;">
-                                                    <button type="submit" class="btn btn-primary" style="width: 280px;">Regresar</button>
-                                                </div>
-
                                             </div>
                                         </form>
 
+                                    </div>
                                 </div>
-                                </form>
                             </div>
                         </div>
                     </div>
 
                 </div>
             </div>
-        </div>
-
-        </div>
-
-        <!-- Custom template | don't include it in your project! -->
-
-        <!-- End Custom template -->
         </div>
         <!--   Core JS Files   -->
         <script src="/assets/js/core/jquery-3.7.1.min.js"></script>
