@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -37,6 +38,10 @@ public class AdminController {
     SolicitudRepository solicitudRepository;
     @Autowired
     ProveedorRepository proveedorRepository;
+    @Autowired
+    StockRepository stockRepository;
+    @Autowired
+    ReposicionesRepository reposicionesRepository;
     @Autowired
     private ProductRepository productRepository;
 
@@ -342,10 +347,28 @@ public class AdminController {
 
     //Lista Productos pendientes
     @GetMapping("/pendientes")
-    public String pendientes(Model model, @RequestParam(required = false) String zona) {
-        model.addAttribute("listaProductos", productRepository.findByEstado("Pendiente"));
-
+    public String pendientes(Model model) {
+        model.addAttribute("listaReposiciones", reposicionesRepository.findAll());
         return "/admin/productosPendientes";
+    }
+
+    @GetMapping("/aprobar/{id}")
+    public String aprobar(@PathVariable Integer id) {
+        // Busca la reposición por ID
+        Reposicion reposicion = reposicionesRepository.findById(id).orElse(null);
+
+        if (reposicion != null) {
+            Optional<Producto> producto = productRepository.findById(reposicion.getProducto().getId());
+
+            if (producto.isPresent()) {
+                // Actualiza el stock usando la cantidad de reposición
+                stockRepository.actualizarStock(Integer.parseInt(reposicion.getCantidad()), reposicion.getProducto().getId(), reposicion.getZona().getIdzonas());
+                return "redirect:/admin/pendientes";
+            }
+        }
+
+        // Redirige si la reposición no se encuentra o el producto no está presente
+        return "redirect:/admin";
     }
 
     @GetMapping("/aprobados")
