@@ -452,8 +452,8 @@ public class AdminController {
         return "redirect:/admin/productos";
     }
 
-    @GetMapping("/delete")
-    public String borrarProveedor(@RequestParam("id") int id, RedirectAttributes attr) {
+    @GetMapping("/borrarProducto")
+    public String borrarProducto(@RequestParam("id") int id, RedirectAttributes attr) {
         Optional<Producto> optProducto = productRepository.findById(id);
 
         if (optProducto.isPresent()) {
