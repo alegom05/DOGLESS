@@ -13,6 +13,8 @@
             href="/assets/img/kaiadmin/favicon.ico"
             type="image/x-icon"
     />
+    <link th:href="@{/assets/css/style-SuperAdmin.css}" rel="stylesheet">
+
 
     <!-- Fonts and icons -->
     <script src="/assets/js/plugin/webfont/webfont.min.js"></script>
@@ -438,7 +440,24 @@
     <script src="/assets/js/kaiadmin.min.js"></script>
     <script>
       $(document).ready(function () {
-        $("#basic-datatables").DataTable({});
+        $("#basic-datatables").DataTable({
+          "language": {
+            "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json",
+            "info": false,
+            "infoEmpty": "Mostrando 0 a 0 de 0 registros",
+            "infoFiltered": "(filtrado de _MAX_ registros en total)",
+            "lengthMenu": "Mostrar _MENU_ registros por página",
+            "zeroRecords": "No se encontraron registros coincidentes",
+            "paginate": {
+              "first": "Primero",
+              "last": "Último",
+              "next": "Siguiente",
+              "previous": "Anterior"
+            },
+            "search": "Buscar:"
+          }
+        });
+
 
         $("#multi-filter-select").DataTable({
           pageLength: 5,
@@ -491,29 +510,21 @@
                   ]);
           $("#addRowModal").modal("hide");
         });
-
-        $('#tabla-admins').DataTable({
-          "pageLength": 5, // Mostrar 5 registros por página
-          "lengthChange": false,  // Eliminar el menú de selección de cantidad de registros
-          "language": {
-            "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json"  // Traducción al español
-          }
-        });
-        $('#tabla-admins2').DataTable({
-          "pageLength": 5, // Mostrar 5 registros por página
-          "lengthChange": false,  // Eliminar el menú de selección de cantidad de registros
-          "language": {
-            "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json"  // Traducción al español
-          }
-        });
-        $('#tabla-admins3').DataTable({
-          "pageLength": 5, // Mostrar 5 registros por página
-          "lengthChange": false,  // Eliminar el menú de selección de cantidad de registros
-          "language": {
-            "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json"  // Traducción al español
-          }
-        });
       });
+    </script>
+    <script>
+      // Espera 3 segundos (3000 milisegundos) antes de empezar a ocultar el mensaje
+      setTimeout(function() {
+        var alert = document.getElementById('mensajeExito');
+        if (alert) {
+          alert.classList.add('hidden'); // Añadir la clase que reduce la opacidad gradualmente
+
+          // Después de 1 segundo (duración de la transición), ocultar completamente
+          setTimeout(function() {
+            alert.classList.add('remove'); // Ocultar completamente el mensaje y el espacio
+          }, 1000); // 1000 ms coincide con la duración de la transición de opacidad
+        }
+      }, 3000); // Cambia 3000 por el tiempo en milisegundos que desees (3 segundos en este caso)
     </script>
   </body>
 </html>
