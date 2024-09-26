@@ -355,6 +355,12 @@ public class AdminController {
         return "/admin/productosAprobados";
     }
 
+    @GetMapping("dashboard")
+    public String elDashboardEstaTristeYAzul(Model model, @RequestParam(required = false) String zona) {
+        /*model.addAttribute("listaProveedores", proveedorRepository.findAll());*/
+        return "admin/dashboard";
+    }
+
     //Lista Productos pendientes
     //Waiting for it...
     /*
