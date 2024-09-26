@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS `dogless`.`adminzonales` (
   `email` VARCHAR(45) NULL DEFAULT NULL,
   `contrasena` VARCHAR(45) NOT NULL,
   `idzonas` INT NOT NULL,
-  `contraseña_temp` VARCHAR(45) NOT NULL,
+  `contrasena_temp` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`idadminzonaleses`),
   INDEX `fk_adminzonales_zonas1_idx` (`idzonas` ASC) VISIBLE,
   CONSTRAINT `fk_adminzonales_zonas1`
