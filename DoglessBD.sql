@@ -458,10 +458,9 @@ DEFAULT CHARACTER SET = utf8mb3;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `dogless`.`reposicion` (
   `idreposicion` INT NOT NULL,
-  `nombre_producto` VARCHAR(45) NULL,
   `cantidad` INT NULL,
   `fecha_pedido` DATE NULL,
-  `aprobar` VARCHAR(45) NULL,
+  `aprobar` VARCHAR(10) NULL,
   `productos_idproductos` INT NOT NULL,
   `zonas_idzonas` INT NOT NULL,
   PRIMARY KEY (`idreposicion`),
@@ -479,6 +478,22 @@ CREATE TABLE IF NOT EXISTS `dogless`.`reposicion` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
+
+-- Insertar datos en la tabla `reposicion`
+INSERT INTO `dogless`.`reposicion` (`idreposicion`, `cantidad`, `fecha_pedido`, `aprobar`, `productos_idproductos`, `zonas_idzonas`) VALUES ('4', '20', '2024-09-03', NULL, '1', '1');
+INSERT INTO `dogless`.`reposicion` (`idreposicion`, `cantidad`, `fecha_pedido`, `aprobar`, `productos_idproductos`, `zonas_idzonas`) VALUES ('5', '15', '2024-09-04', 'aprobado', '2', '2');
+INSERT INTO `dogless`.`reposicion` (`idreposicion`, `cantidad`, `fecha_pedido`, `aprobar`, `productos_idproductos`, `zonas_idzonas`) VALUES ('6', '30', '2024-09-05', NULL, '3', '3');
+INSERT INTO `dogless`.`reposicion` (`idreposicion`, `cantidad`, `fecha_pedido`, `aprobar`, `productos_idproductos`, `zonas_idzonas`) VALUES ('7', '10', '2024-09-06', 'rechazado', '4', '1');
+INSERT INTO `dogless`.`reposicion` (`idreposicion`, `cantidad`, `fecha_pedido`, `aprobar`, `productos_idproductos`, `zonas_idzonas`) VALUES ('8', '25', '2024-09-07', NULL, '5', '2');
+INSERT INTO `dogless`.`reposicion` (`idreposicion`, `cantidad`, `fecha_pedido`, `aprobar`, `productos_idproductos`, `zonas_idzonas`) VALUES ('9', '40', '2024-09-08', 'aprobado', '6', '3');
+INSERT INTO `dogless`.`reposicion` (`idreposicion`, `cantidad`, `fecha_pedido`, `aprobar`, `productos_idproductos`, `zonas_idzonas`) VALUES ('10', '60', '2024-09-09', 'rechazado', '7', '1');
+INSERT INTO `dogless`.`reposicion` (`idreposicion`, `cantidad`, `fecha_pedido`, `aprobar`, `productos_idproductos`, `zonas_idzonas`) VALUES ('11', '50', '2024-09-10', NULL, '8', '2');
+INSERT INTO `dogless`.`reposicion` (`idreposicion`, `cantidad`, `fecha_pedido`, `aprobar`, `productos_idproductos`, `zonas_idzonas`) VALUES ('12', '20', '2024-09-11', 'aprobado', '9', '3');
+INSERT INTO `dogless`.`reposicion` (`idreposicion`, `cantidad`, `fecha_pedido`, `aprobar`, `productos_idproductos`, `zonas_idzonas`) VALUES ('13', '35', '2024-09-12', NULL, '10', '4');
+INSERT INTO `dogless`.`reposicion` (`idreposicion`, `cantidad`, `fecha_pedido`, `aprobar`, `productos_idproductos`, `zonas_idzonas`) VALUES ('14', '45', '2024-09-13', 'rechazado', '11', '1');
+INSERT INTO `dogless`.`reposicion` (`idreposicion`, `cantidad`, `fecha_pedido`, `aprobar`, `productos_idproductos`, `zonas_idzonas`) VALUES ('15', '15', '2024-09-14', NULL, '12', '2');
+INSERT INTO `dogless`.`reposicion` (`idreposicion`, `cantidad`, `fecha_pedido`, `aprobar`, `productos_idproductos`, `zonas_idzonas`) VALUES ('16', '55', '2024-09-15', 'aprobado', '13', '3');
+INSERT INTO `dogless`.`reposicion` (`idreposicion`, `cantidad`, `fecha_pedido`, `aprobar`, `productos_idproductos`, `zonas_idzonas`) VALUES ('17', '30', '2024-09-16', NULL, '14', '4');
 
 -- Insertar datos en la tabla `detallesorden`
 INSERT INTO `dogless`.`detallesorden` 
