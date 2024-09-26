@@ -62,6 +62,75 @@ public class AdminController {
         return "admin/adminzonales";
     }
 
+
+    @GetMapping("/agentes")
+    public String listaAgentes(Model model, @RequestParam(required = false) String zona) {
+        model.addAttribute("listaAgentes", usuarioRepository.findByRol(3));
+
+        return "admin/agentes";
+
+    }
+
+    @GetMapping("/usuarios")
+    public String listaUsuarios(Model model, @RequestParam(required = false) String zona) {
+        model.addAttribute("listaUsuarios", usuarioRepository.findByRol(4));
+
+        return "admin/usuarios";
+    }
+
+
+
+    @GetMapping("/editadminzonal")
+    public String editarAdminZonal(Model model, @RequestParam("id") int id) {
+
+        Optional<Usuario> optUsuario = usuarioRepository.findById(id);
+
+        if (optUsuario.isPresent()) {
+            Usuario usuario = optUsuario.get();
+            model.addAttribute("usuario", usuario);
+            model.addAttribute("listaZonas", zonaRepository.findAll());
+            model.addAttribute("listaDistritos", distritoRepository.findAll());
+            return "admin/editar_adminzonal";
+        } else {
+            return "redirect:/admin/adminzonal";
+        }
+    }
+
+    @GetMapping("/editagente")
+    public String editarAgente(Model model, @RequestParam("id") int id) {
+
+        Optional<Usuario> optUsuario = usuarioRepository.findById(id);
+
+        if (optUsuario.isPresent()) {
+            Usuario usuario = optUsuario.get();
+            model.addAttribute("usuario", usuario);
+            model.addAttribute("listaZonas", zonaRepository.findAll());
+            model.addAttribute("listaDistritos", distritoRepository.findAll());
+            return "admin/editar_agente";
+        } else {
+            return "redirect:/admin/agentes";
+        }
+    }
+
+    @GetMapping("/editusuario")
+    public String editarUsuario(Model model, @RequestParam("id") int id) {
+
+        Optional<Usuario> optUsuario = usuarioRepository.findById(id);
+
+        if (optUsuario.isPresent()) {
+            Usuario usuario = optUsuario.get();
+            model.addAttribute("usuario", usuario);
+            model.addAttribute("listaZonas", zonaRepository.findAll());
+            model.addAttribute("listaDistritos", distritoRepository.findAll());
+            return "admin/editar_usuarios";
+        } else {
+            return "redirect:/admin/usuarios";
+        }
+    }
+
+
+
+
     @GetMapping("/new")
     public String nuevoAdminZonalFrm(Model model) {
         model.addAttribute("listaZonas", zonaRepository.findAll());
@@ -96,22 +165,6 @@ public class AdminController {
         return "redirect:/admin/adminzonal";
     }
 
-
-    @GetMapping("/edit")
-    public String editarAdminZonal(Model model, @RequestParam("id") int id) {
-
-        Optional<Usuario> optUsuario = usuarioRepository.findById(id);
-
-        if (optUsuario.isPresent()) {
-            Usuario usuario = optUsuario.get();
-            model.addAttribute("usuario", usuario);
-            model.addAttribute("listaZonas", zonaRepository.findAll());
-            model.addAttribute("listaDistritos", distritoRepository.findAll());
-            return "admin/editar_adminzonal";
-        } else {
-            return "redirect:/admin/adminzonal";
-        }
-    }
 
     @PostMapping("/save")
     public String guardarAdminZonal(@RequestParam("id") int id,
@@ -148,30 +201,6 @@ public class AdminController {
         return "redirect:/admin/adminzonal";
     }
 
-
-    @GetMapping("listaZonales")
-    public String listaZonales(Model model, @RequestParam(required = false) String zona) {
-        model.addAttribute("listaUsuarios", usuarioRepository.findByRol(2));
-
-        return "admin2/list";
-//        return "usuario/list";
-    }
-
-    @GetMapping("listaAgentes")
-    public String listaAgentes(Model model, @RequestParam(required = false) String zona) {
-        model.addAttribute("listaUsuarios", usuarioRepository.findByRol(3));
-
-        return "admin2/list";
-//        return "usuario/list";
-    }
-
-    @GetMapping("listaUsuarios")
-    public String listaUsuarios(Model model, @RequestParam(required = false) String zona) {
-        model.addAttribute("listaUsuarios", usuarioRepository.findByRol(2));
-
-        return "admin2/list";
-//        return "usuario/list";
-    }
 
     @GetMapping("lista2")
     public String listaUsuarios2(Model model, @RequestParam(required = false) String zona) {
