@@ -317,9 +317,13 @@
                             <td th:text="${producto.nombre}"></td>
                             <td th:text="${producto.descripcion}"></td>
                             <td th:text="${producto.precio}"></td>
-                            <td th:text="${producto.cantidad}"></td>
-                            <td th:text="${producto.nombreZona}"></td>
-                            <td th:text="${producto.proveedorNombre + ' ' + producto.proveedorApellido}"></td>
+                            <!-- Si cantidad es nulo, muestra "-" -->
+                            <td th:text="${producto.cantidad != null ? producto.cantidad : 'Sin Stock'}"></td>
+                            <!-- Si nombre de zona es nulo, muestra "-" -->
+                            <td th:text="${producto.nombreZona != null ? producto.nombreZona : '---'}"></td>
+                            <!-- Si proveedorNombre o proveedorApellido son nulos, también manejamos eso -->
+                            <td th:text="${(producto.proveedorNombre != null ? producto.proveedorNombre : '---') + ' ' +
+                   (producto.proveedorApellido != null ? producto.proveedorApellido : '---')}"></td>
                               <td>
                                 <!-- Dropdown con ícono -->
                                 <div class="dropdown">
