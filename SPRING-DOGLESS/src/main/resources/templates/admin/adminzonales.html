@@ -323,7 +323,7 @@
                                 </button>
                                 <!-- Dropdown oscuro -->
                                 <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
-                                  <li><a class="dropdown-item" href="#">Ver</a></li>
+                                  <li><a class="dropdown-item" th:href="@{'/admin/veradminzonal' + '?id=' + ${usuario.id}}">Ver</a></li>
                                   <li><a class="dropdown-item" th:href="@{'/admin/editadminzonal' + '?id=' + ${usuario.id}}">Editar</a></li>
                                   <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#denegarModal">Eliminar</a></li>
                                   <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#aceptarModal">Espiar</a></li>
