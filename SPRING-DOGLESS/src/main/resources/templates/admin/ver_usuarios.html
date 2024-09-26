@@ -71,11 +71,15 @@
           </div>
           <!-- End Logo cabecera -->
         </div>
+
+
+
+
         <div class="sidebar-wrapper scrollbar scrollbar-inner">
           <div class="sidebar-content">
             <ul class="nav nav-secondary">
               <!-- Barra de navegacion lateral-->
-              <li class="nav-item ">
+              <li class="nav-item active submenu">
                 <a href=/admin>
                   <i class="fas fa-home"></i>
                   <p>Página principal</p>
@@ -94,26 +98,26 @@
                 </a>
               </li>
 
-              <li class="nav-item active submenu">
+              <li class="nav-item">
                 <a data-bs-toggle="collapse" href="#tables1">
                   <i class="fas fa-users"></i>
                   <p>Usuarios</p>
                   <span class="caret"></span>
                 </a>
-                <div class="collapse show" id="tables1">
+                <div class="collapse" id="tables1">
                   <ul class="nav nav-collapse">
-                    <li >
+                    <li>
                       <a href="/admin/adminzonal">
                         <span class="sub-item">Administradores zonales</span>
                       </a>
                     </li>
                     <li>
-                      <a href="agentes.html">
+                      <a href="/admin/agentes">
                         <span class="sub-item">Agentes zonales</span>
                       </a>
                     </li>
-                    <li class="active">
-                      <a href="usuarios.html">
+                    <li>
+                      <a href="/admin/usuarios">
                         <span class="sub-item">Usuarios finales</span>
                       </a>
                     </li>
@@ -129,12 +133,12 @@
                 <div class="collapse" id="tables2">
                   <ul class="nav nav-collapse">
                     <li>
-                      <a href="proveedores.html">
+                      <a href="admin/proveedores">
                         <span class="sub-item">Proveedores</span>
                       </a>
                     </li>
                     <li>
-                      <a href="/admin/productos">
+                      <a href="admin/productos">
                         <span class="sub-item">Productos</span>
                       </a>
                     </li>
@@ -149,14 +153,19 @@
                 </a>
                 <div class="collapse" id="tables3">
                   <ul class="nav nav-collapse">
-                    <li>
+                    <li class="active">
                       <a href=/admin/pendientes>
                         <span class="sub-item">Productos pendientes</span>
                       </a>
                     </li>
                     <li>
-                      <a href="productosAprobados.html">
+                      <a href="/admin/productosAprobados">
                         <span class="sub-item">Productos aprobados</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="/admin/productosRechazados">
+                        <span class="sub-item">Productos rechazados</span>
                       </a>
                     </li>
                   </ul>
@@ -166,6 +175,9 @@
             </ul>
           </div>
         </div>
+
+
+
       </div>
       <!-- Fin barra lateral -->
       

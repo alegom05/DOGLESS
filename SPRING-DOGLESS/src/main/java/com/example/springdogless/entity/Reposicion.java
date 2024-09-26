@@ -15,9 +15,6 @@ public class Reposicion {
     @Column(name = "idreposicion")
     private Integer idreposicion;
 
-    @Column(name = "nombre_producto", length = 45)
-    private String nombre_producto;
-
     @Column(name = "cantidad", length = 45)
     private String cantidad;
 

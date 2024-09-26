@@ -344,6 +344,22 @@ public class AdminController {
         return "redirect:/product";
     }
 
+    //Lista Productos aprobados
+    @GetMapping("/productosAprobados")
+    public String aprobados(Model model) {
+        // Busca todas las reposiciones con el campo "aprobado" igual a "aprobado"
+        List<Reposicion> reposicionesAprobadas = reposicionesRepository.findByAprobar("aprobado");
+        model.addAttribute("listaReposicionesAprobadas", reposicionesAprobadas);
+        return "/admin/productosAprobados1";
+    }
+
+    @GetMapping("/productosRechazados")
+    public String rechazados(Model model) {
+        // Busca todas las reposiciones con el campo "aprobado" igual a "rechazado"
+        List<Reposicion> reposicionesRechazadas = reposicionesRepository.findByAprobar("rechazado");
+        model.addAttribute("listaReposicionesRechazadas", reposicionesRechazadas);
+        return "/admin/productosRechazado1";
+    }
 
     //Lista Productos pendientes
     @GetMapping("/pendientes")
