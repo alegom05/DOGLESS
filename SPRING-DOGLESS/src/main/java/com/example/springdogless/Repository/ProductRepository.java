@@ -25,5 +25,6 @@ public interface ProductRepository extends JpaRepository<Producto, Integer>{
             " LEFT JOIN dogless.zonas z ON s.idzonas = z.idzonas " +
             "JOIN dogless.proveedores prov ON p.idproveedores = prov.idproveedores", nativeQuery = true)
     List<ProductoDTO> ProductosCompleto();
+
 }
 
