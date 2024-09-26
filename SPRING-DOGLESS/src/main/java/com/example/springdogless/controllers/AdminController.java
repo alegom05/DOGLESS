@@ -51,18 +51,15 @@ public class AdminController {
         model.addAttribute("listaAgentes", usuarioRepository.findByRol(3));
         model.addAttribute("listaZonales", usuarioRepository.findByRol(2));
 
-        return "admin/paginaPrincipal";
-//        return "usuario/list";
+        return "admin/paginaprincipal";
     }
-
+    /*seccion de usuarios */
     @GetMapping("/adminzonal")
     public String listaAdminZonal(Model model, @RequestParam(required = false) String zona) {
         model.addAttribute("listaZonales", usuarioRepository.findByRol(2));
 
         return "admin/adminzonales";
     }
-
-
     @GetMapping("/agentes")
     public String listaAgentes(Model model, @RequestParam(required = false) String zona) {
         model.addAttribute("listaAgentes", usuarioRepository.findByRol(3));
@@ -70,15 +67,12 @@ public class AdminController {
         return "admin/agentes";
 
     }
-
     @GetMapping("/usuarios")
     public String listaUsuarios(Model model, @RequestParam(required = false) String zona) {
         model.addAttribute("listaUsuarios", usuarioRepository.findByRol(4));
 
         return "admin/usuarios";
     }
-
-
 
     @GetMapping("/editadminzonal")
     public String editarAdminZonal(Model model, @RequestParam("id") int id) {
@@ -128,8 +122,173 @@ public class AdminController {
         }
     }
 
+    @PostMapping("/saveadminzonal")
+    public String guardarAdminZonal(@RequestParam("id") int id,
+                                    @RequestParam("nombre") String nombre,
+                                    @RequestParam("apellido") String apellido,
+                                    @RequestParam("correo") String correo,
+                                    @RequestParam("telefono") String telefono,
+                                    @RequestParam int zona,
+                                    @RequestParam int distrito,
+                                    RedirectAttributes attr) {
+        // Obtener el usuario existente
+        Optional<Usuario> optUsuario = usuarioRepository.findById(id);
+
+        if (optUsuario.isPresent()) {
+            Usuario usuario = optUsuario.get();
+
+            // Actualizar solo los campos editables
+            usuario.setNombre(nombre);
+            usuario.setApellido(apellido);
+            usuario.setCorreo(correo);
+            usuario.setTelefono(telefono);
+
+            // Buscar las entidades relacionadas por sus IDs
+            Zona zonaEntity = zonaRepository.findById(zona).orElse(null); // Se maneja si no existe
+            Distrito distritoEntity = distritoRepository.findById(distrito).orElse(null); // Se maneja si no existe
+
+            // Asignar las entidades encontradas al usuario
+            usuario.setZona(zonaEntity);
+            usuario.setDistrito(distritoEntity);
+
+            // Guardar el usuario actualizado
+            usuarioRepository.save(usuario);
+            attr.addFlashAttribute("mensajeExito", "Cambios guardados correctamente");
+        } else {
+            attr.addFlashAttribute("error", "Usuario no encontrado");
+        }
+
+        return "redirect:/admin/adminzonal";
+    }
+    @PostMapping("/saveagente")
+    public String guardarAgente(@RequestParam("id") int id,
+                                @RequestParam("nombre") String nombre,
+                                @RequestParam("apellido") String apellido,
+                                @RequestParam("correo") String correo,
+                                @RequestParam("telefono") String telefono,
+                                @RequestParam("ruc") String ruc,
+                                @RequestParam("codigoAduana") String codidoaduana,
+                                @RequestParam("razonsocial") String razonsocial,
+                                @RequestParam int zona,
+                                @RequestParam int distrito,
+                                RedirectAttributes attr) {
+        // Obtener el usuario existente
+        Optional<Usuario> optUsuario = usuarioRepository.findById(id);
+
+        if (optUsuario.isPresent()) {
+            Usuario usuario = optUsuario.get();
+
+            // Actualizar solo los campos editables
+            usuario.setNombre(nombre);
+            usuario.setApellido(apellido);
+            usuario.setCorreo(correo);
+            usuario.setTelefono(telefono);
+            usuario.setRuc(ruc);
+            usuario.setCodigoaduana(codidoaduana);
+            usuario.setRazonsocial(razonsocial);
+
+            // Buscar las entidades relacionadas por sus IDs
+            Zona zonaEntity = zonaRepository.findById(zona).orElse(null); // Se maneja si no existe
+            Distrito distritoEntity = distritoRepository.findById(distrito).orElse(null); // Se maneja si no existe
+
+            // Asignar las entidades encontradas al usuario
+            usuario.setZona(zonaEntity);
+            usuario.setDistrito(distritoEntity);
+
+            // Guardar el usuario actualizado
+            usuarioRepository.save(usuario);
+            attr.addFlashAttribute("mensajeExito", "Cambios guardados correctamente");
+        } else {
+            attr.addFlashAttribute("error", "Usuario no encontrado");
+        }
+
+        return "redirect:/admin/agentes";
+    }
+
+    @PostMapping("/saveusuario")
+    public String guardarUsuario(@RequestParam("id") int id,
+                                 @RequestParam("nombre") String nombre,
+                                 @RequestParam("apellido") String apellido,
+                                 @RequestParam("correo") String correo,
+                                 @RequestParam("telefono") String telefono,
+                                 @RequestParam int zona,
+                                 @RequestParam int distrito,
+                                 RedirectAttributes attr) {
+        // Obtener el usuario existente
+        Optional<Usuario> optUsuario = usuarioRepository.findById(id);
+
+        if (optUsuario.isPresent()) {
+            Usuario usuario = optUsuario.get();
+
+            // Actualizar solo los campos editables
+            usuario.setNombre(nombre);
+            usuario.setApellido(apellido);
+            usuario.setCorreo(correo);
+            usuario.setTelefono(telefono);
+
+            // Buscar las entidades relacionadas por sus IDs
+            Zona zonaEntity = zonaRepository.findById(zona).orElse(null); // Se maneja si no existe
+            Distrito distritoEntity = distritoRepository.findById(distrito).orElse(null); // Se maneja si no existe
+
+            // Asignar las entidades encontradas al usuario
+            usuario.setZona(zonaEntity);
+            usuario.setDistrito(distritoEntity);
+
+            // Guardar el usuario actualizado
+            usuarioRepository.save(usuario);
+            attr.addFlashAttribute("mensajeExito", "Cambios guardados correctamente");
+        } else {
+            attr.addFlashAttribute("error", "Usuario no encontrado");
+        }
+
+        return "redirect:/admin/usuarios";
+    }
+
+    @GetMapping("/veradminzonal")
+    public String verAdminZonal(Model model, @RequestParam("id") int id) {
+
+        Optional<Usuario> optUsuario = usuarioRepository.findById(id);
+
+        if (optUsuario.isPresent()) {
+            Usuario usuario = optUsuario.get();
+            model.addAttribute("usuario", usuario);
+            return "admin/ver_adminzonal";
+        } else {
+            return "redirect:/admin/adminzonal";
+        }
+    }
+
+    @GetMapping("/veragente")
+    public String verAgente(Model model, @RequestParam("id") int id) {
+
+        Optional<Usuario> optUsuario = usuarioRepository.findById(id);
+
+        if (optUsuario.isPresent()) {
+            Usuario usuario = optUsuario.get();
+            model.addAttribute("usuario", usuario);
+            return "admin/ver_agente";
+        } else {
+            return "redirect:/admin/agentes";
+        }
+    }
+
+    @GetMapping("/verusuario")
+    public String verUsuario(Model model, @RequestParam("id") int id) {
+
+        Optional<Usuario> optUsuario = usuarioRepository.findById(id);
+
+        if (optUsuario.isPresent()) {
+            Usuario usuario = optUsuario.get();
+            model.addAttribute("usuario", usuario);
+            return "admin/ver_usuarios";
+        } else {
+            return "redirect:/admin/usuarios";
+        }
+    }
 
 
+
+    /*termina usuarios*/
 
     @GetMapping("/new")
     public String nuevoAdminZonalFrm(Model model) {
@@ -166,40 +325,6 @@ public class AdminController {
     }
 
 
-    @PostMapping("/save")
-    public String guardarAdminZonal(@RequestParam("id") int id,
-                                    @RequestParam String correo,
-                                    @RequestParam String telefono,
-                                    @RequestParam int zona,
-                                    @RequestParam int distrito,
-                                    RedirectAttributes attr) {
-        // Obtener el usuario existente
-        Optional<Usuario> optUsuario = usuarioRepository.findById(id);
-
-        if (optUsuario.isPresent()) {
-            Usuario usuario = optUsuario.get();
-
-            // Actualizar solo los campos editables
-            usuario.setCorreo(correo);
-            usuario.setTelefono(telefono);
-
-            // Buscar las entidades relacionadas por sus IDs
-            Zona zonaEntity = zonaRepository.findById(zona).orElse(null); // Se maneja si no existe
-            Distrito distritoEntity = distritoRepository.findById(distrito).orElse(null); // Se maneja si no existe
-
-            // Asignar las entidades encontradas al usuario
-            usuario.setZona(zonaEntity);
-            usuario.setDistrito(distritoEntity);
-
-            // Guardar el usuario actualizado
-            usuarioRepository.save(usuario);
-            attr.addFlashAttribute("mensajeExito", "Cambios guardados correctamente");
-        } else {
-            attr.addFlashAttribute("error", "Usuario no encontrado");
-        }
-
-        return "redirect:/admin/adminzonal";
-    }
 
 
     @GetMapping("lista2")
@@ -241,7 +366,7 @@ public class AdminController {
     @GetMapping("proveedores")
     public String listaProveedores(Model model, @RequestParam(required = false) String zona) {
         model.addAttribute("listaProveedores", proveedorRepository.findAll());
-        return "admin/proveedores";
+        return "/admin/proveedores";
     }
 
 
@@ -273,15 +398,15 @@ public class AdminController {
     public String guardarProveedor(Proveedor proveedor, RedirectAttributes attr) {
         proveedorRepository.save(proveedor);
         attr.addFlashAttribute("msg", "Proveedor creado exitosamente");
-        return "redirect:/proveedores";
+        return "redirect:/admin/proveedores";
     }
 
 
     //Vista de productos
-    @GetMapping("productos")
+    @GetMapping("/productos")
     public String listaProductos(Model model, @RequestParam(required = false) String zona) {
         model.addAttribute("listaProductos", productRepository.findByBorrado(1));
-        return "admin/productos";
+        return "/admin/productos";
 
     }
 
@@ -344,27 +469,11 @@ public class AdminController {
         return "redirect:/product";
     }
 
-    //Lista Productos aprobados
-    @GetMapping("/productosAprobados")
-    public String aprobados(Model model) {
-        // Busca todas las reposiciones con el campo "aprobado" igual a "aprobado"
-        List<Reposicion> reposicionesAprobadas = reposicionesRepository.findByAprobar("aprobado");
-        model.addAttribute("listaReposicionesAprobadas", reposicionesAprobadas);
-        return "/admin/productosAprobados1";
-    }
-
-    @GetMapping("/productosRechazados")
-    public String rechazados(Model model) {
-        // Busca todas las reposiciones con el campo "aprobado" igual a "rechazado"
-        List<Reposicion> reposicionesRechazadas = reposicionesRepository.findByAprobar("rechazado");
-        model.addAttribute("listaReposicionesRechazadas", reposicionesRechazadas);
-        return "/admin/productosRechazado1";
-    }
 
     //Lista Productos pendientes
     @GetMapping("/pendientes")
     public String pendientes(Model model) {
-        model.addAttribute("listaReposiciones", reposicionesRepository.findByAprobarIsNull());
+        model.addAttribute("listaReposiciones", reposicionesRepository.findAll());
         return "/admin/productosPendientes";
     }
 
@@ -373,36 +482,16 @@ public class AdminController {
         // Busca la reposición por ID
         Reposicion reposicion = reposicionesRepository.findById(id).orElse(null);
 
-        if (reposicion != null && reposicion.getAprobar()==null) {
+        if (reposicion != null) {
             Optional<Producto> producto = productRepository.findById(reposicion.getProducto().getId());
 
             if (producto.isPresent()) {
                 // Actualiza el stock usando la cantidad de reposición
                 stockRepository.actualizarStock(Integer.parseInt(reposicion.getCantidad()), reposicion.getProducto().getId(), reposicion.getZona().getIdzonas());
-                // Actualiza el atributo 'aprobado' de la reposición
-                reposicion.setAprobar("aprobado");
-                reposicionesRepository.save(reposicion); // Guarda los cambios en la base de datos
                 return "redirect:/admin/pendientes";
             }
         }
-        // Redirige si la reposición no se encuentra o el producto no está presente
-        return "redirect:/admin";
-    }
 
-    @GetMapping("/rechazar/{id}")
-    public String rechazar(@PathVariable Integer id) {
-        // Busca la reposición por ID
-        Reposicion reposicion = reposicionesRepository.findById(id).orElse(null);
-
-        if (reposicion != null && reposicion.getAprobar()==null) {
-            Optional<Producto> producto = productRepository.findById(reposicion.getProducto().getId());
-            if (producto.isPresent()) {
-                // Actualiza el atributo 'rechazado' de la reposición
-                reposicion.setAprobar("rechazado");
-                reposicionesRepository.save(reposicion); // Guarda los cambios en la base de datos
-                return "redirect:/admin/pendientes";
-            }
-        }
         // Redirige si la reposición no se encuentra o el producto no está presente
         return "redirect:/admin";
     }

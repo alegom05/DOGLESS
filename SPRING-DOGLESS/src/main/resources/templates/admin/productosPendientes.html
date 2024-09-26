@@ -103,24 +103,24 @@
                 <div class="collapse" id="tables1">
                   <ul class="nav nav-collapse">
                     <li>
-                      <a href="/admin/adminzonal">
+                      <a href=/admin/adminzonal>
                         <span class="sub-item">Administradores zonales</span>
                       </a>
                     </li>
                     <li>
-                      <a href="/admin/agentes">
+                      <a href=/admin/agentes>
                         <span class="sub-item">Agentes zonales</span>
                       </a>
                     </li>
                     <li>
-                      <a href="/admin/usuarios">
+                      <a href="usuarios.html">
                         <span class="sub-item">Usuarios finales</span>
                       </a>
                     </li>
                   </ul>
                 </div>
               </li>
-              <li class="nav-item ">
+              <li class="nav-item">
                 <a data-bs-toggle="collapse" href="#tables2">
                   <i class="far fa-handshake"></i>
                   <p>Personal</p>
@@ -129,12 +129,12 @@
                 <div class="collapse" id="tables2">
                   <ul class="nav nav-collapse">
                     <li>
-                      <a href="/proveedores">
+                      <a href=/admin/proveedores>
                         <span class="sub-item">Proveedores</span>
                       </a>
                     </li>
                     <li >
-                      <a href="/admin/productos">
+                      <a href=/admin/productos>
                         <span class="sub-item">Productos</span>
                       </a>
                     </li>
@@ -155,13 +155,8 @@
                       </a>
                     </li>
                     <li>
-                      <a href="/admin/productosAprobados">
+                      <a href=/admin/aprobados>
                         <span class="sub-item">Productos aprobados</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="/admin/productosRechazados">
-                        <span class="sub-item">Productos rechazados</span>
                       </a>
                     </li>
                   </ul>
@@ -350,7 +345,7 @@
                                    <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
                                     <li>    <a class="dropdown-item" th:href="@{/aprobar/{id}(id=${reposicion.idreposicion})}">Aprobar</a>
                                     </li>
-                                    <li><a class="dropdown-item" th:href="@{/rechazar/{id}(id=${reposicion.idreposicion})}" >Rechazar</a></li>
+                                    <li><a class="dropdown-item" href="@{/rechazar/{id}(id=${reposicion.idreposicion})}" >Rechazar</a></li>
                                   </ul>
                               </div>
                           </td>

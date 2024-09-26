@@ -79,7 +79,7 @@
                 <div class="sidebar-logo">
                     <!-- Logo de cabecera -->
                     <div class="logo-header" data-background-color="dark">
-                        <a href="paginaprincipal.html" class="logo">
+                        <a href=/ class="logo">
                             <img
                                     src="/assets/img/kaiadmin/slogan_white_v3.png"
                                     alt="navbar brand"
@@ -106,13 +106,13 @@
                         <ul class="nav nav-secondary">
                             <!-- Barra de navegacion lateral-->
                             <li class="nav-item ">
-                                <a href="paginaprincipal.html">
-                                    <i class="fas fa-home"></i>
-                                    <p>Página principal</p>
+                                <a href=/admin/lista>
+                                <i class="fas fa-home"></i>
+                                <p>Página principal</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="solicitudes.html">
+                                <a href=/admin/solicitudes>
                                     <i class="fas fa-user-plus"></i>
                                     <p>Solicitudes</p>
                                 </a>
@@ -133,17 +133,17 @@
                                 <div class="collapse show" id="tables1">
                                     <ul class="nav nav-collapse">
                                         <li >
-                                            <a href="adminzonales.html">
+                                            <a href="/admin/adminzonal">
                                                 <span class="sub-item">Administradores zonales</span>
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="agentes.html">
+                                            <a href="/admin/agentes">
                                                 <span class="sub-item">Agentes zonales</span>
                                             </a>
                                         </li>
                                         <li class="active">
-                                            <a href="usuarios.html">
+                                            <a href="admin/usuarios">
                                                 <span class="sub-item">Usuarios finales</span>
                                             </a>
                                         </li>
@@ -159,12 +159,12 @@
                                 <div class="collapse" id="tables2">
                                     <ul class="nav nav-collapse">
                                         <li>
-                                            <a href="proveedores.html">
+                                            <a href=/admin/proveedores>
                                                 <span class="sub-item">Proveedores</span>
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="productos.html">
+                                            <a href=/admin/productos>
                                                 <span class="sub-item">Productos</span>
                                             </a>
                                         </li>
@@ -180,12 +180,12 @@
                                 <div class="collapse" id="tables3">
                                     <ul class="nav nav-collapse">
                                         <li>
-                                            <a href="productospendientes.html">
+                                            <a href=/admin/pendientes>
                                                 <span class="sub-item">Productos pendientes</span>
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="productosaprobados.html">
+                                            <a href=/admin/aprobados>
                                                 <span class="sub-item">Productos aprobados</span>
                                             </a>
                                         </li>
@@ -204,7 +204,7 @@
                     <div class="main-header-logo">
                         <!-- Logo Header -->
                         <div class="logo-header" data-background-color="dark">
-                            <a href="paginaprincipal.html" class="logo">
+                            <a href=/ class="logo">
                                 <img
                                         src="/assets/img/kaiadmin/logodogless.svg"
                                         alt="navbar brand"
@@ -302,15 +302,16 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="card">
-
                                     <div class="card-body">
-                                        <form class="needs-validation" style="width: 100%; margin-left: 0%; margin-top: 3%;" action="agentes.html" method="POST" novalidate>
+                                        <form class="needs-validation" style="width: 100%; margin-left: 0%; margin-top: 3%;" th:action="@{'/admin/saveusuario'}" method="POST" novalidate>
+                                            <input  name="id"  th:value="${usuario.id}" type="hidden"/>
+
                                             <div class="container">
                                                 <div class="row">
                                                     <div class="col">
                                                         <div class="mb-3">
                                                             <label for="dni" class="form-label">DNI: (*)</label>
-                                                            <input type="text" name="dni" id="dni" class="form-control" th:value="${usuario.dni}" pattern="[0-9]{8}" placeholder="Ej: 77040283">
+                                                            <input type="text" name="dni" id="dni" class="form-control" th:value="${usuario.dni}" disabled>
                                                             <div class="invalid-feedback">Por favor ingresar DNI.</div>
                                                         </div>
                                                     </div>
@@ -364,7 +365,7 @@
                                                     <div class="col">
                                                         <div class="mb-3">
                                                             <label for="contrasena" class="form-label">Contraseña:</label>
-                                                            <input type="password" name="contrasena" id="contrasena" class="form-control" value="AaBbCc123">
+                                                            <input type="password" name="contrasena" id="contrasena" class="form-control" th:value="${usuario.contrasena}" disabled>
                                                             <div class="invalid-feedback">Por favor ingresar contraseña.</div>
                                                         </div>
                                                     </div>
@@ -380,35 +381,27 @@
                                                     </div>
                                                 </div>
 
-
-
                                                 <!-- Botón para guardar cambios -->
                                                 <div class="row">
-                                                    <div class="col">
-                                                        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                                                    <div class="col text-center"> <!-- Añadido text-center para centrar el contenido -->
+                                                        <div class="button-group d-flex justify-content-center"> <!-- Clases de Bootstrap -->
+                                                            <button class="btn btn-primary btn-lg" type="submit">Guardar cambios</button>
+                                                            <a href="/admin/usuarios" class="btn btn-secondary ms-2 btn-lg">Regresar</a> <!-- ms-2 para margen a la izquierda -->
+                                                        </div>
                                                     </div>
                                                 </div>
 
                                             </div>
-                                    </div>
-                                    <div class="btn-container" style="text-align: center; margin-top: 20px;">
-                                        <div class="mb-3">
-                                            <a href="/admin/usuarios" class="btn btn-primary" style="width: 280px;">Regresar</a>
-                                        </div>
+                                        </form>
                                     </div>
 
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
 
             </div>
-
-            <!-- Fin del contenido central -->
-
-
 
             <!-- Pie de página -->
             <footer class="footer">
@@ -427,7 +420,6 @@
 
                 </div>
             </footer>
-        </div>
         </div>
 
 

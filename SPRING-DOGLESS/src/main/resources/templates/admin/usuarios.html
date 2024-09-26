@@ -71,18 +71,12 @@
           </div>
           <!-- End Logo cabecera -->
         </div>
-
-
-
-
-
-
         <div class="sidebar-wrapper scrollbar scrollbar-inner">
           <div class="sidebar-content">
             <ul class="nav nav-secondary">
               <!-- Barra de navegacion lateral-->
-              <li class="nav-item active submenu">
-                <a href=/admin>
+              <li class="nav-item ">
+                <a href="/admin/">
                   <i class="fas fa-home"></i>
                   <p>Página principal</p>
                 </a>
@@ -100,13 +94,13 @@
                 </a>
               </li>
 
-              <li class="nav-item">
-                <a data-bs-toggle="collapse" href="#tables1">
+              <li class="nav-item active submenu">
+                <a data-bs-toggle="collapse" href="#tables1" role="button">
                   <i class="fas fa-users"></i>
                   <p>Usuarios</p>
                   <span class="caret"></span>
                 </a>
-                <div class="collapse" id="tables1">
+                <div class="collapse show" id="tables1">
                   <ul class="nav nav-collapse">
                     <li>
                       <a href="/admin/adminzonal">
@@ -118,7 +112,7 @@
                         <span class="sub-item">Agentes zonales</span>
                       </a>
                     </li>
-                    <li>
+                    <li class="active">
                       <a href="/admin/usuarios">
                         <span class="sub-item">Usuarios finales</span>
                       </a>
@@ -135,12 +129,12 @@
                 <div class="collapse" id="tables2">
                   <ul class="nav nav-collapse">
                     <li>
-                      <a href="proveedores">
+                      <a href=/admin/proveedores>
                         <span class="sub-item">Proveedores</span>
                       </a>
                     </li>
                     <li>
-                      <a href="productos">
+                      <a href=/productos>
                         <span class="sub-item">Productos</span>
                       </a>
                     </li>
@@ -155,19 +149,14 @@
                 </a>
                 <div class="collapse" id="tables3">
                   <ul class="nav nav-collapse">
-                    <li class="active">
+                    <li>
                       <a href=/admin/pendientes>
                         <span class="sub-item">Productos pendientes</span>
                       </a>
                     </li>
                     <li>
-                      <a href="/admin/productosAprobados">
+                      <a href=/admin/aprobados>
                         <span class="sub-item">Productos aprobados</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="/admin/productosRechazados">
-                        <span class="sub-item">Productos rechazados</span>
                       </a>
                     </li>
                   </ul>
@@ -177,11 +166,6 @@
             </ul>
           </div>
         </div>
-
-
-
-
-
       </div>
       <!-- Fin barra lateral -->
 
@@ -190,7 +174,7 @@
           <div class="main-header-logo">
             <!-- Logo Header -->
             <div class="logo-header" data-background-color="dark">
-              <a href="paginaprincipal.html" class="logo">
+              <a href=/ class="logo">
                 <img
                         src="/assets/img/kaiadmin/logodogless.svg"
                         alt="navbar brand"
@@ -285,6 +269,9 @@
                 <h3 class="fw-bold mb-3">Lista de Usuarios Finales</h3>
                 <h6 class="op-7 mb-2">En las tablas encontrarás las identidades de los Usuarios Finales. Navega entre las páginas para explorar más información de cada uno.</h6>
               </div>
+            </div>
+            <div th:if="${mensajeExito}" id="mensajeExito" class="alert alert-success fade-out" role="alert">
+              <p th:text="${mensajeExito}"></p>
             </div>
             <div class="row">
               <div class="col-md-12">

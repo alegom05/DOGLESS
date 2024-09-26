@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <title>Editar Adminsitrador Zonal</title>
+        <title>Editar Administrador Zonal</title>
         <meta
                 content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
                 name="viewport"
@@ -106,9 +106,9 @@
                             <!-- Barra de navegacion -->
 
                             <li class="nav-item">
-                                <a href="paginaprincipal.html">
-                                    <i class="fas fa-home"></i>
-                                    <p>Pagina Principal</p>
+                                <a href="/admin/lista"/>
+                                <i class="fas fa-home"></i>
+                                <p>Página Principal</p>
                                 </a>
                             </li>
 
@@ -162,12 +162,12 @@
                                 <div class="collapse" id="tables2">
                                     <ul class="nav nav-collapse">
                                         <li>
-                                            <a href="proveedores.html">
+                                            <a href=/admin/proveedores>
                                                 <span class="sub-item">Proveedores</span>
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="productos.html">
+                                            <a href=/admin/productos>
                                                 <span class="sub-item">Productos</span>
                                             </a>
                                         </li>
@@ -184,12 +184,12 @@
                                 <div class="collapse" id="tables3">
                                     <ul class="nav nav-collapse">
                                         <li>
-                                            <a href="tables/tables.html">
+                                            <a href="/admin/pendientes">
                                                 <span class="sub-item">Productos pendientes</span>
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="tables/datatables.html">
+                                            <a href="/admin/aprobados">
                                                 <span class="sub-item">Productos aprobados</span>
                                             </a>
                                         </li>
@@ -208,7 +208,7 @@
                     <div class="main-header-logo">
                         <!-- Logo Header -->
                         <div class="logo-header" data-background-color="dark">
-                            <a href="paginaprincipal.html" class="logo">
+                            <a href=/ class="logo">
                                 <img
                                         src="/assets/img/kaiadmin/logodogless.svg"
                                         alt="navbar brand"
@@ -299,153 +299,121 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="card">
-
                                     <div class="card-body">
-                                        <form class="needs-validation" style="width: 100%; margin-left: 0%; margin-top: 3%;" action="adminzonales.html" method="POST" novalidate>
+                                        <form class="needs-validation" style="width: 100%; margin-left: 0%; margin-top: 3%;" th:action="@{'/admin/saveadminzonal'}" method="POST" novalidate>
+                                            <input  name="id"  th:value="${usuario.id}" type="hidden"/>
+
                                             <div class="container">
                                                 <div class="row">
-                                                    <div class="col-md-12">
-                                                        <div class="card">
-                                                            <div class="card-body">
-                                                                <form class="needs-validation" style="width: 100%; margin-left: 0%; margin-top: 3%;" action="agentes.html" method="POST" novalidate>
-                                                                    <div class="container">
-                                                                        <div class="row">
-                                                                            <div class="col">
-                                                                                <div class="mb-3">
-                                                                                    <label for="dni" class="form-label">DNI: (*)</label>
-                                                                                    <input type="text" name="dni" id="dni" class="form-control" value="77040283" pattern="[0-9]{8}" placeholder="Ej: 77040283">
-                                                                                    <div class="invalid-feedback">Por favor ingresar DNI.</div>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="col">
-                                                                                <div class="mb-3">
-                                                                                    <label for="telefono" class="form-label">Teléfono: (*)</label>
-                                                                                    <input type="text" name="telefono" id="telefono" class="form-control" th:value="${usuario.telefono}" pattern="[0-9]{9}" placeholder="Ej: 984134144">
-                                                                                    <div class="invalid-feedback">Por favor ingresar teléfono(s).</div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-
-                                                                        <div class="row">
-                                                                            <div class="col">
-                                                                                <div class="mb-3">
-                                                                                    <label for="nombre" class="form-label">Nombre: (*)</label>
-                                                                                    <input th:value="${usuario.nombre}" name="nombre" type="text" class="form-control" id="nombre" />
-
-                                                                                    <div class="invalid-feedback">Por favor ingresar nombre(s).</div>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="col">
-                                                                                <div class="mb-3">
-                                                                                    <label for="apellido" class="form-label">Apellido: (*)</label>
-                                                                                    <input th:value="${usuario.apellido}" name="apellido" type="text" class="form-control" id="apellido" />
-                                                                                    <div class="invalid-feedback">Por favor ingresar apellido(s).</div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-
-                                                                        <div class="row">
-                                                                            <div class="col">
-                                                                                <div class="mb-3">
-                                                                                    <label for="correo" class="form-label">Correo:</label>
-                                                                                    <input th:value="${usuario.correo}" type="email" name="correo" id="correo" class="form-control"  placeholder="Ej: pedro.bustamante@gmail.com">
-                                                                                    <div class="invalid-feedback">Por favor ingresar un correo válido.</div>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="col">
-                                                                                <div class="mb-3">
-                                                                                    <label for="fechaNacimiento" class="form-label">Fecha de nacimiento: (*)</label>
-                                                                                    <input type="date" name="fechaNacimiento" id="fechaNacimiento" class="form-control" th:value="${usuario.fechanacimiento}">
-                                                                                    <div class="invalid-feedback">Por favor ingresar fecha de nacimiento.</div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-
-                                                                        <div class="row">
-                                                                            <div class="col">
-                                                                                <div class="mb-3">
-                                                                                    <label for="zona" class="form-label">Zona:</label>
-                                                                                    <select name="zona" id="zona" class="form-control">
-                                                                                        <option th:each="zonas: ${listaZonas}"
-                                                                                                th:text="${zonas.nombre}" th:value="${zonas.idzonas}">Elegir una zona</option>
-                                                                                    </select>
-                                                                                    <div class="invalid-feedback">Por favor seleccionar una zona.</div>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="col">
-                                                                                <div class="mb-3">
-                                                                                    <label for="distrito" class="form-label">Distrito: (*)</label>
-                                                                                    <select name="distrito" id="distrito" class="form-control">
-                                                                                        <option th:each="distrito: ${listaDistritos}"
-                                                                                                th:text="${distrito.distrito}" th:value="${distrito.iddistritos}">Elegir un distrito</option>
-                                                                                    </select>
-                                                                                    <div class="invalid-feedback">Por favor selecciona un distrito.</div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-
-                                                                        <div class="row">
-                                                                            <div class="col">
-                                                                                <div class="mb-3">
-                                                                                    <label for="contrasena" class="form-label">Contraseña:</label>
-                                                                                    <input type="password" name="contrasena" id="contrasena" class="form-control" th:value="">
-                                                                                    <div class="invalid-feedback">Por favor ingresar contraseña.</div>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="col">
-                                                                                <div class="mb-3">
-                                                                                    <h6 class="obligatory-fields">(*) Campos obligatorios</h6>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-
-                                                                        <!-- Botón para guardar cambios -->
-                                                                        <div class="row">
-                                                                            <div class="col">
-                                                                                <button type="submit" class="btn btn-primary">Guardar Cambios</button>
-                                                                            </div>
-                                                                        </div>
-
-                                                                    </div>
-                                                                </form>
-                                                            </div>
+                                                    <div class="col">
+                                                        <div class="mb-3">
+                                                            <label for="dni" class="form-label">DNI: (*)</label>
+                                                            <input type="text" name="dni" id="dni" class="form-control" th:value="${usuario.dni}" pattern="[0-9]{8}" placeholder="Ej: 77040283" disabled>
+                                                            <div class="invalid-feedback">Por favor ingresar DNI.</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col">
+                                                        <div class="mb-3">
+                                                            <label for="telefono" class="form-label">Teléfono: (*)</label>
+                                                            <input type="text" name="telefono" id="telefono" class="form-control" th:value="${usuario.telefono}" pattern="[0-9]{9}" placeholder="Ej: 984134144">
+                                                            <div class="invalid-feedback">Por favor ingresar teléfono(s).</div>
                                                         </div>
                                                     </div>
                                                 </div>
 
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <div class="mb-3">
+                                                            <label for="nombre" class="form-label">Nombre: (*)</label>
+                                                            <input th:value="${usuario.nombre}" name="nombre" type="text" class="form-control" id="nombre" />
 
+                                                            <div class="invalid-feedback">Por favor ingresar nombre(s).</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col">
+                                                        <div class="mb-3">
+                                                            <label for="apellido" class="form-label">Apellido: (*)</label>
+                                                            <input th:value="${usuario.apellido}" name="apellido" type="text" class="form-control" id="apellido" />
+                                                            <div class="invalid-feedback">Por favor ingresar apellido(s).</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
 
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <div class="mb-3">
+                                                            <label for="correo" class="form-label">Correo:</label>
+                                                            <input th:value="${usuario.correo}" type="email" name="correo" id="correo" class="form-control"  placeholder="Ej: pedro.bustamante@gmail.com">
+                                                            <div class="invalid-feedback">Por favor ingresar un correo válido.</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col">
+                                                        <div class="mb-3">
+                                                            <label for="fechaNacimiento" class="form-label">Fecha de nacimiento: (*)</label>
+                                                            <input type="date" name="fechaNacimiento" id="fechaNacimiento" class="form-control" th:value="${usuario.fechanacimiento}" disabled>
+                                                            <div class="invalid-feedback">Por favor ingresar fecha de nacimiento.</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
 
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <div class="mb-3">
+                                                            <label for="zona" class="form-label">Zona:</label>
+                                                            <select name="zona" id="zona" class="form-control">
+                                                                <option th:each="zonas: ${listaZonas}"
+                                                                        th:text="${zonas.nombre}" th:value="${zonas.idzonas}">Elegir una zona</option>
+                                                            </select>
+                                                            <div class="invalid-feedback">Por favor seleccionar una zona.</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col">
+                                                        <div class="mb-3">
+                                                            <label for="distrito" class="form-label">Distrito: (*)</label>
+                                                            <select name="distrito" id="distrito" class="form-control">
+                                                                <option th:each="distrito: ${listaDistritos}"
+                                                                        th:text="${distrito.distrito}" th:value="${distrito.iddistritos}">Elegir un distrito</option>
+                                                            </select>
+                                                            <div class="invalid-feedback">Por favor selecciona un distrito.</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
 
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <div class="mb-3">
+                                                            <label for="contrasena" class="form-label">Contraseña:</label>
+                                                            <input type="password" name="contrasena" id="contrasena" class="form-control" th:value="${usuario.contrasena}" disabled>
+                                                            <div class="invalid-feedback">Por favor ingresar contraseña.</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col">
+                                                        <div class="mb-3">
+                                                            <h6 class="obligatory-fields">(*) Campos obligatorios</h6>
+                                                        </div>
+                                                    </div>
+                                                </div>
 
-
+                                                <!-- Botón para guardar cambios -->
+                                                <div class="row">
+                                                    <div class="col text-center"> <!-- Añadido text-center para centrar el contenido -->
+                                                        <div class="button-group d-flex justify-content-center"> <!-- Clases de Bootstrap -->
+                                                            <button class="btn btn-primary btn-lg" type="submit">Guardar cambios</button>
+                                                            <a href="/admin/adminzonal" class="btn btn-secondary ms-2 btn-lg">Regresar</a> <!-- ms-2 para margen a la izquierda -->
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
+                                        </form>
 
-
-
-
-
-
-                                    </div>
-
-                                    <div class="btn-container" style="text-align: center; margin-top: 20px;">
-                                        <button type="submit" class="btn btn-primary" style="width: 280px;">Regresar</button>
                                     </div>
                                 </div>
-                                </form>
                             </div>
                         </div>
                     </div>
 
                 </div>
             </div>
-        </div>
-
-        </div>
-
-        <!-- Custom template | don't include it in your project! -->
-
-        <!-- End Custom template -->
         </div>
         <!--   Core JS Files   -->
         <script src="/assets/js/core/jquery-3.7.1.min.js"></script>
