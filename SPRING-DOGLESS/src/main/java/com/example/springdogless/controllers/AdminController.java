@@ -452,8 +452,8 @@ public class AdminController {
         return "redirect:/admin/productos";
     }
 
-    @GetMapping("/delete")
-    public String borrarProveedor(@RequestParam("id") int id, RedirectAttributes attr) {
+    @GetMapping("/borrarProducto")
+    public String borrarProducto(@RequestParam("id") int id, RedirectAttributes attr) {
         Optional<Producto> optProducto = productRepository.findById(id);
 
         if (optProducto.isPresent()) {
@@ -501,12 +501,29 @@ public class AdminController {
             Optional<Producto> producto = productRepository.findById(reposicion.getProducto().getId());
 
             if (producto.isPresent()) {
-                // Actualiza el stock usando la cantidad de reposición
-                stockRepository.actualizarStock(Integer.parseInt(reposicion.getCantidad()), reposicion.getProducto().getId(), reposicion.getZona().getIdzonas());
+
+                // Verificar si el producto ya existe en la tabla stockproductos
+                Integer cantidadExistente = stockRepository.existeProductoEnZona(reposicion.getProducto().getId(), reposicion.getZona().getIdzonas());
+
+                if (cantidadExistente != 0) {
+                    // Si el producto existe, actualiza el stock
+                    stockRepository.actualizarStock(
+                            Integer.parseInt(reposicion.getCantidad()),
+                            reposicion.getProducto().getId(),
+                            reposicion.getZona().getIdzonas());
+                } else {
+                    // Si el producto no existe, inserta un nuevo registro en la tabla stockproductos
+                    stockRepository.insertarNuevoStock(
+                            reposicion.getProducto().getId(),
+                            reposicion.getZona().getIdzonas(),
+                            Integer.parseInt(reposicion.getCantidad()));
+                }
                 // Actualiza el atributo 'aprobado' de la reposición
                 reposicion.setAprobar("aprobado");
                 reposicionesRepository.save(reposicion); // Guarda los cambios en la base de datos
+
                 return "redirect:/admin/pendientes";
+
             }
         }
         // Redirige si la reposición no se encuentra o el producto no está presente

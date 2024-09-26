@@ -154,11 +154,16 @@
                         <span class="sub-item">Productos pendientes</span>
                       </a>
                     </li>
-                    <li>
-                      <a href=/admin/aprobados>
-                        <span class="sub-item">Productos aprobados</span>
-                      </a>
-                    </li>
+                                <li>
+                                    <a href="/admin/productosAprobados">
+                                        <span class="sub-item">Productos aprobados</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/admin/productosRechazados">
+                                        <span class="sub-item">Productos rechazados</span>
+                                    </a>
+                                </li>
                   </ul>
                 </div>
               </li>
@@ -312,9 +317,13 @@
                             <td th:text="${producto.nombre}"></td>
                             <td th:text="${producto.descripcion}"></td>
                             <td th:text="${producto.precio}"></td>
-                            <td th:text="${producto.cantidad}"></td>
-                            <td th:text="${producto.nombreZona}"></td>
-                            <td th:text="${producto.proveedorNombre + ' ' + producto.proveedorApellido}"></td>
+                            <!-- Si cantidad es nulo, muestra "-" -->
+                            <td th:text="${producto.cantidad != null ? producto.cantidad : 'Sin Stock'}"></td>
+                            <!-- Si nombre de zona es nulo, muestra "-" -->
+                            <td th:text="${producto.nombreZona != null ? producto.nombreZona : '---'}"></td>
+                            <!-- Si proveedorNombre o proveedorApellido son nulos, también manejamos eso -->
+                            <td th:text="${(producto.proveedorNombre != null ? producto.proveedorNombre : '---') + ' ' +
+                   (producto.proveedorApellido != null ? producto.proveedorApellido : '---')}"></td>
                               <td>
                                 <!-- Dropdown con ícono -->
                                 <div class="dropdown">
@@ -383,10 +392,28 @@
                             // Guardar el DNI del usuario a eliminar en algún lugar si es necesario
                           }
 
-                          function eliminarRegistro() {
-                            //alert('Registro eliminado.'); // Aquí se colocaría la lógica para eliminar el registro
-                            cerrarPopup('confirmarBorradoPopup');
-                            window.location.href = '/admin/productos';
+                          function eliminarRegistro(idProducto) {
+                            // Realizar la petición al backend para eliminar el producto
+                            fetch(`/admin/borrarProducto`, {
+                              method: 'POST', // Cambia a 'DELETE' si tu backend lo requiere
+                              headers: {
+                                'Content-Type': 'application/json',
+                              },
+                              body: JSON.stringify({ id: idProducto }) // Enviar el ID del producto en formato JSON
+                            })
+                                    .then(response => {
+                                      if (response.ok) {
+                                        // Si el registro se eliminó correctamente
+                                        cerrarPopup('confirmarBorradoPopup');
+                                        window.location.href = '/admin/productos'; // Redirigir a la página de productos
+                                      } else {
+                                        alert('Error al eliminar el registro.');
+                                      }
+                                    })
+                                    .catch(error => {
+                                      console.error('Error:', error);
+                                      alert('Ocurrió un error al eliminar el registro.');
+                                    });
                           }
 
                           function confirmarEspiar(dni) {

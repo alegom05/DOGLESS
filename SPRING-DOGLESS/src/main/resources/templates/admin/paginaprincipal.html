@@ -169,95 +169,10 @@
       <!-- Fin barra lateral -->
       
       <div class="main-panel">
-        <div class="main-header">
-          <div class="main-header-logo">
-            <!-- Logo Header -->
-            <div class="logo-header" data-background-color="dark">
-              <a href=/admin/ class="logo">
-                <img
-                        src="/assets/img/kaiadmin/logodogless.svg"
-                        alt="navbar brand"
-                        class="navbar-brand"
-                        height="20"
-                />
-              </a>
-              <div class="nav-toggle">
-                <button class="btn btn-toggle toggle-sidebar">
-                  <i class="gg-menu-right"></i>
-                </button>
-                <button class="btn btn-toggle sidenav-toggler">
-                  <i class="gg-menu-left"></i>
-                </button>
-              </div>
-              <button class="topbar-toggler more">
-                <i class="gg-more-vertical-alt"></i>
-              </button>
-            </div>
-            <!-- End Logo Header -->
-          </div>
-          <!-- Navbar superior -->
-          <nav
-                  class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom"
-                  data-background-color="dark">
-            <div class="container-fluid">
-              <nav
-                      class="navbar navbar-header-left navbar-expand-lg navbar-form nav-search p-0 d-none d-lg-flex"
-              >
-              </nav>
+        <!-- Reemplaza navbar con el fragmento de Thymeleaf -->
+        <div th:replace="admin/fragments/navbarheaderadmin :: fragment"></div>
 
-              <ul class="navbar-nav topbar-nav ms-md-auto align-items-center">
 
-                <li class="nav-item topbar-user dropdown hidden-caret">
-                  <a
-                          class="dropdown-toggle profile-pic"
-                          data-bs-toggle="dropdown"
-                          href="#"
-                          aria-expanded="false"
-                  >
-                    <div class="avatar-sm">
-                      <img
-                              src="/assets/img/profile2.jpg"
-                              alt="..."
-                              class="avatar-img rounded-circle"
-                      />
-                    </div>
-                    <span class="profile-username">
-                      <span class="fw-bold">Manuel Yarleque</span>
-                      <div class="fw-bold">Superadmin</div>
-                    </span>
-                  </a>
-                  <ul class="dropdown-menu dropdown-user animated fadeIn">
-                    <div class="dropdown-user-scroll scrollbar-outer">
-                      <li>
-                        <div class="user-box">
-                          <div class="avatar-lg">
-                            <img
-                                    src="/assets/img/profile2.jpg"
-                                    alt="image profile"
-                                    class="avatar-img rounded"
-                            />
-                          </div>
-                          <div class="u-text" style="color: white;">
-                            <h4>Manuel</h4>
-                            <p class="text-info" style="color: white;">manuel.yarleque@gmail.com</p>
-                            <a href="perfil_superadmin.html" class="btn btn-xs btn-secondary btn-sm">Ver perfil</a>
-                          </div>
-
-                        </div>
-                      </li>
-                      <li>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Ajustes</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Cerrar Sesion</a>
-                      </li>
-                    </div>
-                  </ul>
-                </li>
-              </ul>
-            </div>
-          </nav>
-        </div>
         <!-- Fin Navbar -->
 
         <!-- Texto o contenido central -->
@@ -398,22 +313,8 @@
 
 
           <!-- Pie de página -->
-          <footer class="footer">
-            <div class="container-fluid d-flex justify-content-center">
-              <nav class="pull-left">
-                <ul class="nav">
-
-                  <li class="nav-item">
-                    <a class="nav-link" href="ruta/a/informacion-de-contacto.html"> Contacto </a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="ruta/a/politica-de-privacidad.html"> Política de privacidad </a>
-                  </li>
-                </ul>
-              </nav>
-
-            </div>
-          </footer>
+          <!-- Reemplaza navbar con el fragmento de Thymeleaf -->
+          <div th:replace="admin/fragments/piedepagina :: fragment"></div>
         </div>
       </div>
 

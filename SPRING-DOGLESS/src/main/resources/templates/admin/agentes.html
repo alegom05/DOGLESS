@@ -154,11 +154,16 @@
                         <span class="sub-item">Productos pendientes</span>
                       </a>
                     </li>
-                    <li>
-                      <a href=/admin/aprobados>
-                        <span class="sub-item">Productos aprobados</span>
-                      </a>
-                    </li>
+                                <li>
+                                    <a href="/admin/productosAprobados">
+                                        <span class="sub-item">Productos aprobados</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/admin/productosRechazados">
+                                        <span class="sub-item">Productos rechazados</span>
+                                    </a>
+                                </li>
                   </ul>
                 </div>
               </li>
@@ -315,7 +320,7 @@
                                 </button>
                                 <!-- Dropdown oscuro -->
                                 <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
-                                  <li><a class="dropdown-item" href="ver_adminzonal.html">Ver</a></li>
+                                  <li><a class="dropdown-item" th:href="@{'/admin/veragente' + '?id=' + ${usuario.id}}">Ver</a></li>
                                   <li><a class="dropdown-item" th:href="@{'/admin/editagente' + '?id=' + ${usuario.id}}">Editar</a></li>
                                   <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#denegarModal">Eliminar</a></li>
                                   <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#aceptarModal">Espiar</a></li>
