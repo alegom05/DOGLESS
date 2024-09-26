@@ -11,9 +11,9 @@ public interface ProductoDTO {
     String getModelos();
     String getColores();
     String getAprobado();
-    int getBorrado();
+    Integer getBorrado();
     String getEstado();
-    int getCantidad();
+    Integer getCantidad();
     String getNombreZona();
 
     // Nuevos métodos para proveedor
