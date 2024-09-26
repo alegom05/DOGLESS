@@ -270,6 +270,9 @@
                 <h6 class="op-7 mb-2">En las tablas encontrarás las identidades de los Agentes. Navega entre las páginas para explorar más información de cada uno.</h6>
               </div>
             </div>
+            <div th:if="${mensajeExito}" id="mensajeExito" class="alert alert-success fade-out" role="alert">
+              <p th:text="${mensajeExito}"></p>
+            </div>
             <div class="row">
               <div class="col-md-12">
                 <div class="card">
@@ -313,101 +316,14 @@
                                 <!-- Dropdown oscuro -->
                                 <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
                                   <li><a class="dropdown-item" href="ver_adminzonal.html">Ver</a></li>
-                                  <li><a class="dropdown-item" th:href="@{'/admin/editaragente' + '?id=' + ${usuario.id}}">Editar</a></li>
+                                  <li><a class="dropdown-item" th:href="@{'/admin/editagente' + '?id=' + ${usuario.id}}">Editar</a></li>
                                   <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#denegarModal">Eliminar</a></li>
                                   <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#aceptarModal">Espiar</a></li>
                                 </ul>
                               </div>
                             </td>
                           </tr>
-                          <tr>
-                            <td>Ricardo</td>
-                            <td>Sánchez</td>
-                            <td>78901234</td>
-                            <td>ricardo.sanchez@gmail.com</td>
-                            <td>Pueblo Libre</td>
-                            <td>
-                              <!-- Dropdown con ícono -->
-                              <div class="dropdown">
-                                <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                  <i class="fas fa-ellipsis-v"></i>
-                                </button>
-                                <!-- Dropdown oscuro -->
-                                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
-                                  <li><a class="dropdown-item" href="ver_agente.html">Ver</a></li>
-                                  <li><a class="dropdown-item" href="editar_agente.html">Editar</a></li>
-                                  <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#denegarModal">Eliminar</a></li>
-                                  <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#aceptarModal">Espiar</a></li>
-                                </ul>
-                              </div>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>Elena</td>
-                            <td>Torres</td>
-                            <td>89012345</td>
-                            <td>elena.torres@gmail.com</td>
-                            <td>Lince</td>
-                            <td>
-                              <!-- Dropdown con ícono -->
-                              <div class="dropdown">
-                                <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                  <i class="fas fa-ellipsis-v"></i>
-                                </button>
-                                <!-- Dropdown oscuro -->
-                                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
-                                  <li><a class="dropdown-item" href="ver_agente.html">Ver</a></li>
-                                  <li><a class="dropdown-item" href="editar_agente.html">Editar</a></li>
-                                  <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#denegarModal">Eliminar</a></li>
-                                  <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#aceptarModal">Espiar</a></li>
-                                </ul>
-                              </div>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>Fernando</td>
-                            <td>Pérez</td>
-                            <td>90123456</td>
-                            <td>fernando.perez@gmail.com</td>
-                            <td>Chorrillos</td>
-                            <td>
-                              <!-- Dropdown con ícono -->
-                              <div class="dropdown">
-                                <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                  <i class="fas fa-ellipsis-v"></i>
-                                </button>
-                                <!-- Dropdown oscuro -->
-                                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
-                                  <li><a class="dropdown-item" href="ver_agente.html">Ver</a></li>
-                                  <li><a class="dropdown-item" href="editar_agente.html">Editar</a></li>
-                                  <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#denegarModal">Eliminar</a></li>
-                                  <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#aceptarModal">Espiar</a></li>
-                                </ul>
-                              </div>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>Sofía</td>
-                            <td>Castro</td>
-                            <td>01234567</td>
-                            <td>sofia.castro@gmail.com</td>
-                            <td>Jesús María</td>
-                            <td>
-                              <!-- Dropdown con ícono -->
-                              <div class="dropdown">
-                                <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                  <i class="fas fa-ellipsis-v"></i>
-                                </button>
-                                <!-- Dropdown oscuro -->
-                                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
-                                  <li><a class="dropdown-item" href="ver_agente.html">Ver</a></li>
-                                  <li><a class="dropdown-item" href="editar_agente.html">Editar</a></li>
-                                  <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#denegarModal">Eliminar</a></li>
-                                  <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#aceptarModal">Espiar</a></li>
-                                </ul>
-                              </div>
-                            </td>
-                          </tr>
+
                         </tbody>
                       </table>
 

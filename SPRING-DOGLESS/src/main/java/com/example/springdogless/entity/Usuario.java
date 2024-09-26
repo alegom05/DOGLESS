@@ -22,6 +22,7 @@ public class Usuario {
     private String correo;
     private String telefono;
     private String direccion;
+    private String contrasena;
 
     @ManyToOne
     @JoinColumn(name = "idroles")

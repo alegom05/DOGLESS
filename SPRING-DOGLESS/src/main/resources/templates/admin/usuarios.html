@@ -270,6 +270,9 @@
                 <h6 class="op-7 mb-2">En las tablas encontrarás las identidades de los Usuarios Finales. Navega entre las páginas para explorar más información de cada uno.</h6>
               </div>
             </div>
+            <div th:if="${mensajeExito}" id="mensajeExito" class="alert alert-success fade-out" role="alert">
+              <p th:text="${mensajeExito}"></p>
+            </div>
             <div class="row">
               <div class="col-md-12">
                 <div class="card">

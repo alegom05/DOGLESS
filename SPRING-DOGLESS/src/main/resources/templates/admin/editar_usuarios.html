@@ -304,13 +304,15 @@
                                 <div class="card">
 
                                     <div class="card-body">
-                                        <form class="needs-validation" style="width: 100%; margin-left: 0%; margin-top: 3%;" action="agentes.html" method="POST" novalidate>
+                                        <form class="needs-validation" style="width: 100%; margin-left: 0%; margin-top: 3%;" th:action="@{'/admin/saveusuario'}" method="POST" novalidate>
+                                            <input  name="id"  th:value="${usuario.id}" type="hidden"/>
+
                                             <div class="container">
                                                 <div class="row">
                                                     <div class="col">
                                                         <div class="mb-3">
                                                             <label for="dni" class="form-label">DNI: (*)</label>
-                                                            <input type="text" name="dni" id="dni" class="form-control" th:value="${usuario.dni}" pattern="[0-9]{8}" placeholder="Ej: 77040283">
+                                                            <input type="text" name="dni" id="dni" class="form-control" th:value="${usuario.dni}" disabled>
                                                             <div class="invalid-feedback">Por favor ingresar DNI.</div>
                                                         </div>
                                                     </div>
@@ -364,7 +366,7 @@
                                                     <div class="col">
                                                         <div class="mb-3">
                                                             <label for="contrasena" class="form-label">Contraseña:</label>
-                                                            <input type="password" name="contrasena" id="contrasena" class="form-control" value="AaBbCc123">
+                                                            <input type="password" name="contrasena" id="contrasena" class="form-control" th:value="${usuario.contrasena}" disabled>
                                                             <div class="invalid-feedback">Por favor ingresar contraseña.</div>
                                                         </div>
                                                     </div>
