@@ -66,7 +66,7 @@
                 </div>
                 <div class="row">
                     <form method="post" th:action="@{/admin/guardarProveedor}" th:object="${proveedor}">
-
+                    <input th:field="*{id}" name="id" type="hidden"/>
                         <div class="col-md-12">
                             <div class="card">
 
@@ -118,7 +118,7 @@
                                                     <div class="col">
                                                         <div class="mb-3">
                                                             <label for="telefono" class="form-label">Teléfono:</label>
-                                                            <input th:value="${proveedor.dni}" name="telefono" type="text" class="form-control" id="telefono" />
+                                                            <input th:value="${proveedor.telefono}" name="telefono" type="text" class="form-control" id="telefono" />
                                                             <div class="invalid-feedback">Por favor ingresar Teléfono.</div>
                                                         </div>
                                                     </div>

@@ -299,6 +299,51 @@ public class AdminController {
             return "redirect:/admin/usuarios";
         }
     }
+    @PostMapping("/deleteadminzonal")
+    public String borrarAdminZonal(@RequestParam("id") Integer id, RedirectAttributes attr) {
+        Optional<Usuario> optUsuario = usuarioRepository.findById(id);
+
+        if (optUsuario.isPresent()) {
+            Usuario usuario = optUsuario.get();
+            usuario.setBorrado(0);
+            usuarioRepository.save(usuario);
+            attr.addFlashAttribute("msg", "Admin borrado exitosamente");
+        } else {
+            attr.addFlashAttribute("error", "Admin no encontrado");
+        }
+
+        return "redirect:/admin/adminzonal";
+    }
+    @PostMapping("/deleteagente")
+    public String borrarAgente(@RequestParam("id") Integer id, RedirectAttributes attr) {
+        Optional<Usuario> optUsuario = usuarioRepository.findById(id);
+
+        if (optUsuario.isPresent()) {
+            Usuario usuario = optUsuario.get();
+            usuario.setBorrado(0);
+            usuarioRepository.save(usuario);
+            attr.addFlashAttribute("msg", "Agente borrado exitosamente");
+        } else {
+            attr.addFlashAttribute("error", "Agente no encontrado");
+        }
+
+        return "redirect:/admin/agentes";
+    }
+    @PostMapping("/deleteusuario")
+    public String borrarUsuario(@RequestParam("id") Integer id, RedirectAttributes attr) {
+        Optional<Usuario> optUsuario = usuarioRepository.findById(id);
+
+        if (optUsuario.isPresent()) {
+            Usuario usuario = optUsuario.get();
+            usuario.setBorrado(0);
+            usuarioRepository.save(usuario);
+            attr.addFlashAttribute("msg", "Usuario borrado exitosamente");
+        } else {
+            attr.addFlashAttribute("error", "Usuario no encontrado");
+        }
+
+        return "redirect:/admin/usuarios";
+    }
 
 
 
@@ -401,6 +446,7 @@ public class AdminController {
 
 
 
+
     @GetMapping(value = "nuevoProveedor")
     public String nuevoProveedor(Model model, @ModelAttribute("proveedor") Proveedor proveedor) {
         List<Proveedor> listaProveedores = proveedorRepository.findAll();
@@ -460,6 +506,20 @@ public class AdminController {
         return "admin/productos";
     }
 
+
+    @GetMapping("/verProducto")
+    public String verProducto(Model model, @RequestParam("id") int id) {
+
+        Optional<Producto> optProducto = productRepository.findById(id);
+
+        if (optProducto.isPresent()) {
+            Producto producto = optProducto.get();
+            model.addAttribute("producto", producto);
+            return "admin/verProducto";
+        } else {
+            return "redirect:/admin/adminzonal";
+        }
+    }
     @GetMapping(value = "nuevoProducto")
     public String nuevoProductoFrm(Model model, @ModelAttribute("product") Producto producto) {
         model.addAttribute("listaProductos", productRepository.findAll());

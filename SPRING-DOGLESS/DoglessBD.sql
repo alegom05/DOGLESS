@@ -357,6 +357,7 @@ CREATE TABLE IF NOT EXISTS `dogless`.`proveedores` (
   `dni` VARCHAR(8) NULL DEFAULT NULL,
   `tienda` VARCHAR(45) NULL DEFAULT NULL,
   `estado` ENUM('activo', 'inactivo', 'baneado') NULL DEFAULT NULL,
+  `borrado` TINYINT DEFAULT 1,
   PRIMARY KEY (`idproveedores`),
   INDEX `fk_proveedores_proveedores1_idx` (`idproveedores` ASC) VISIBLE)
 ENGINE = InnoDB

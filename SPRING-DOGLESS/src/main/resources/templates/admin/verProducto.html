@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Ver Proveedor</title>
+    <title>Ver Producto</title>
     <meta
             content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
             name="viewport"
@@ -59,7 +59,7 @@
           <div class="page-inner">
             <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
               <div>
-                <h3 class="fw-bold mb-3">Ver Proveedor</h3>
+                <h3 class="fw-bold mb-3">Ver Producto</h3>
               </div>
             </div>
                <div class="row">
@@ -70,13 +70,17 @@
 
                          <div class="container">
                            <div class="container" style="margin-top: 3%; ">
+
                              <div class="row">
                                <div class="col">
                                  <div class="mb-3">
                                    <label for="nombre" class="form-label">Nombre:</label>
-                                   <input type="text" name="nombre" id="nombre" class="form-control" th:value="${proveedor.nombre}" readonly>
+                                   <input type="text" name="nombre" id="nombre" class="form-control" th:value="${producto.nombre}" readonly>
                                  </div>
                                </div>
+                             </div>
+                             <div class="row">
+                               <!--
                                <div class="col">
                                  <div class="mb-3">
                                    <label for="apellido" class="form-label">Apellido:</label>
