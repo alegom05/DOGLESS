@@ -6,6 +6,7 @@ import com.example.springdogless.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -419,7 +420,7 @@ public class AdminController {
             model.addAttribute("id", proveedor);
             model.addAttribute("proveedor", proveedor);
 
-            return "admin/editarProveedor";
+            return "/admin/editarProveedor";
         } else {
             return "redirect:/admin/proveedores";
         }
