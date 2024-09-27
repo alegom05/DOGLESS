@@ -122,6 +122,21 @@ public class AdminController {
         }
     }
 
+    @GetMapping("/admin/borrarUsuario")
+    public String eliminarUsuario(Model model,
+                                  @RequestParam("id") int id,
+                                  RedirectAttributes attr) {
+
+        Optional<Usuario> optUsuario = usuarioRepository.findById(id);
+
+        if (optUsuario.isPresent()) {
+            usuarioRepository.deleteById(id);
+            attr.addFlashAttribute("msg", "Producto borrado exitosamente");
+        }
+        return "redirect:/admin/usuarios";
+
+    }
+
     @PostMapping("/saveadminzonal")
     public String guardarAdminZonal(@RequestParam("id") int id,
                                     @RequestParam("nombre") String nombre,

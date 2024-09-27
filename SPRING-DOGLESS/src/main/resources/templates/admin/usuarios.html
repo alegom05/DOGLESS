@@ -347,7 +347,7 @@
                             </div>
                             <div class="modal-footer">
                               <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
-                              <button type="button" class="btn btn-dark"  onclick="window.location.href='agentes.html'">Aceptar</button>
+                              <button type="button" class="btn btn-dark" onclick="eliminarUsuario()">Aceptar</button>
                             </div>
                           </div>
                         </div>
@@ -411,6 +411,27 @@
       </footer>
     </div>
     </div>
+
+    <script>
+      function eliminarUsuario(id) {
+        fetch(`/admin/borrarUsuario/${id}`, { // Pasar el id en la URL
+          method: 'DELETE',
+        })
+                .then(response => {
+                  if (response.ok) {
+                    cerrarPopup();
+                    window.location.href = '/admin/usuarios'; // Redirigir a la lista de usuarios
+                  } else {
+                    alert('Error al eliminar el registro.');
+                  }
+                })
+                .catch(error => {
+                  console.error('Error:', error);
+                  alert('Ocurrió un error al eliminar el registro.');
+                });
+      }
+
+    </script>
 
 
 
