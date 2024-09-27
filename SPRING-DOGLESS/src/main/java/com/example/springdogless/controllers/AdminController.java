@@ -501,7 +501,7 @@ public class AdminController {
     //Vista de productos
     @GetMapping("/productos")
     public String listaProductos(Model model, @RequestParam(required = false) String zona) {
-        model.addAttribute("listaProductos", productRepository.findByBorrado((byte) 1));
+        model.addAttribute("listaProductos", productRepository.findByBorrado(1));
 
         return "admin/productos";
     }
@@ -569,7 +569,7 @@ public class AdminController {
 
         if (optProducto.isPresent()) {
             Producto producto = optProducto.get();
-            producto.setBorrado(0);
+            producto.setBorrado(2);
             productRepository.save(producto);
             attr.addFlashAttribute("msg", "Producto borrado exitosamente");
         } else {
