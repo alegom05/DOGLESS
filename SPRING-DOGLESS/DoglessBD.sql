@@ -405,7 +405,6 @@ CREATE TABLE IF NOT EXISTS `dogless`.`productos` (
   `aprobado` VARCHAR(10) NULL DEFAULT NULL,
   `borrado` TINYINT DEFAULT 1,
   `estado` VARCHAR(20) NULL DEFAULT NULL,
-  `borrado` TINYINT DEFAULT 1,
   PRIMARY KEY (`idproductos`),
   INDEX `proveedor_id_idx_productos` (`idproveedores` ASC) VISIBLE,
   CONSTRAINT `fk_proveedor_id_productos`
