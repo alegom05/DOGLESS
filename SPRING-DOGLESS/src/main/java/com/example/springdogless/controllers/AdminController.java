@@ -415,7 +415,7 @@ public class AdminController {
         Optional<Proveedor> optProveedor = proveedorRepository.findById(id);
         if (optProveedor.isPresent()) {
             proveedor = optProveedor.get();
-            model.addAttribute("id", proveedor);
+            model.addAttribute("id", id);
             model.addAttribute("proveedor", proveedor);
 
             return "admin/editarProveedor";

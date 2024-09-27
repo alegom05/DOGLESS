@@ -35,5 +35,6 @@ public class Proveedor {
     @Column(name = "estado")
     private String estado;
 
-
+    @Column(name = "borrado")
+    private Integer borrado;
 }

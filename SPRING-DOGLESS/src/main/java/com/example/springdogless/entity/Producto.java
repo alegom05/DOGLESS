@@ -36,6 +36,7 @@ public class Producto {
     private String estado;
     private String aprobado;
 
+
     @ManyToOne
     @JoinColumn(name = "idproveedores", nullable = false)
     private Proveedor proveedor;
