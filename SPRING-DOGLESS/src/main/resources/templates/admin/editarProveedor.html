@@ -47,8 +47,10 @@
     <!-- Reemplaza barra lateral con el fragmento de Thymeleaf -->
     <div th:replace="~{admin/fragments/barralateraladmin :: body(activePage='personal', activeSubPage='proveedores')}"></div>
     <!-- Fin barra lateral -->
+    <input th:value="${proveedor.id}" name="id" type="hidden" />
 
     <div class="main-panel">
+
 
         <!-- Reemplaza navbar con el fragmento de Thymeleaf -->
         <div th:replace="~{admin/fragments/navbarheaderadmin :: fragment}"></div>

@@ -425,12 +425,31 @@ public class AdminController {
     }
 
 
+
     @PostMapping("/guardarProveedor")
-    public String guardarProveedor(Proveedor proveedor, RedirectAttributes attr) {
-        proveedorRepository.save(proveedor);
-        attr.addFlashAttribute("msg", "Proveedor creado exitosamente");
+    public String guardarProveedor(@RequestParam(value = "id", required = false) Integer id, @ModelAttribute Proveedor proveedor, RedirectAttributes attr) {
+        if (id != null) {
+            Optional<Proveedor> optProveedor = proveedorRepository.findById(id);
+
+            if (optProveedor.isPresent()) {
+                Proveedor proveedorExistente = optProveedor.get();
+                proveedorExistente.setDni(proveedor.getDni());
+                proveedorExistente.setRuc(proveedor.getRuc());
+                proveedorExistente.setTelefono(proveedor.getTelefono());
+                attr.addFlashAttribute("msg", "Proveedor actualizado exitosamente");
+            } else {
+                attr.addFlashAttribute("error", "Proveedor no encontrado");
+                return "redirect:/admin/proveedores";
+            }
+        } else {
+            proveedor.setBorrado(1); // Inicialización en caso de ser un nuevo proveedor
+            proveedorRepository.save(proveedor);
+            attr.addFlashAttribute("msg", "Proveedor creado exitosamente");
+        }
         return "redirect:/admin/proveedores";
     }
+
+
 
 
     //Vista de productos
