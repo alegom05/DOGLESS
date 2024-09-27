@@ -80,8 +80,7 @@
                                  <div class="col-md-6">
                                    <div class="mb-3">
                                      <label for="nombre" class="form-label">Nombre del producto</label>
-                                     <input type="text" class="form-control" id="nombre" th:field="*{nombre}"
-                                            th:classappend="${#fields.hasErrors('nombre')?'is-invalid':''}">
+                                     <input type="text" class="form-control" id="nombre" th:field="*{nombre}">
                                      <div class="invalid-feedback" th:if="${#fields.hasErrors('nombre')}"
                                           th:errors="*{nombre}" ></div>
                                    </div>
