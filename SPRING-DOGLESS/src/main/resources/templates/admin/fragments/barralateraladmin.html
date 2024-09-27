@@ -107,8 +107,13 @@
                       </a>
                     </li>
                     <li th:classappend="${activeSubPage == 'aprobados' ? 'active' : ''}">
-                      <a href="/admin/aprobados">
+                      <a href="/admin/productosAprobados">
                         <span class="sub-item">Productos aprobados</span>
+                      </a>
+                    </li>
+                    <li th:classappend="${activeSubPage == 'rechazados' ? 'active' : ''}">
+                      <a href="/admin/productosRechazados">
+                        <span class="sub-item">Productos rechazados</span>
                       </a>
                     </li>
                   </ul>
