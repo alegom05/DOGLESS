@@ -548,10 +548,10 @@ public class AdminController {
         return "redirect:/admin";
     }
 
-    @GetMapping("dashboard")
+    @GetMapping("/dashboard")
     public String elDashboardEstaTristeYAzul(Model model, @RequestParam(required = false) String zona) {
         /*model.addAttribute("listaProveedores", proveedorRepository.findAll());*/
-        return "admin/dashboard";
+        return "/admin/dashboard";
     }
 
     //Lista Productos pendientes
