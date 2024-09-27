@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Editar Proveedor</title>
+    <title>Editar Producto</title>
     <meta
             content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
             name="viewport"
@@ -43,107 +43,149 @@
 
   </head>
   <body>
-       <div class="wrapper">
-         <!-- Reemplaza barra lateral con el fragmento de Thymeleaf -->
-         <div th:replace="~{admin/fragments/barralateraladmin :: body(activePage='personal', activeSubPage='proveedores')}"></div>
-         <!-- Fin barra lateral -->
+    <div class="wrapper">
+      <!-- Reemplaza barra lateral con el fragmento de Thymeleaf -->
+      <div th:replace="~{admin/fragments/barralateraladmin :: body(activePage='personal', activeSubPage='productos')}"></div>
+      <!-- Fin barra lateral -->
+      
+      <div class="main-panel">
+        <!-- Reemplaza navbar con el fragmento de Thymeleaf -->
+        <div th:replace="~{admin/fragments/navbarheaderadmin :: fragment}"></div>
+        <!-- Fin Navbar -->
 
-          <div class="main-panel">
 
-            <!-- Reemplaza navbar con el fragmento de Thymeleaf -->
-            <div th:replace="~{admin/fragments/navbarheaderadmin :: fragment}"></div>
-            <!-- Fin Navbar -->
+        <!-- Texto o contenido central -->
+        <div class="container">
+          <form method="post" th:action="@{/admin/guardarProducto}" th:object="${producto}">
+            <input th:field="*{id}" name="id" type="hidden"/>
+            <div th:if="${msg != null}" th:text="${msg}" class="alert alert-success" role="alert"></div>
 
-            <!-- Texto o contenido central -->
-            <div class="container">
-                             <div class="page-inner">
-                               <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
-                                 <div>
-                                   <h3 class="fw-bold mb-3">Editar Proveedor</h3>
-                                 </div>
-                               </div>
+            <div class="page-inner">
+                 <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
+                   <div>
+                     <h3 class="fw-bold mb-3">Editar Producto</h3>
+                   </div>
+                 </div>
+                 <div class="row">
+                   <form method="post" th:action="@{/admin/guardarProducto}" th:object="${producto}">
+
+                     <div class="col-md-12">
+                       <div class="card">
+
+                         <div class="card-body">
+                           <form class="needs-validation" style="width: 100%; margin-left: 0%; margin-top: 3%;" action="productos.html" method="POST" novalidate>
+                             <div class="container">
                                <div class="row">
-                                 <div class="col-md-12">
-                                   <div class="card">
-
-                                     <div class="card-body">
-                                       <form class="needs-validation" style="width: 100%; margin-left: 0%; margin-top: 3%;" action="proveedores.html" method="POST" novalidate>
-                                         <div class="container">
-                                           <div class="container" style="margin-top: 3%; ">
-                                             <div class="row">
-                                               <div class="col">
-                                                 <div class="mb-3">
-                                                   <label for="nombre" class="form-label">Nombre</label>
-                                                   <input type="text" class="form-control" id="nombre" th:field="*{nombre}"
-                                                          th:classappend="${#fields.hasErrors('nombre')?'is-invalid':''}">
-                                                   <div class="invalid-feedback" th:if="${#fields.hasErrors('nombre')}"
-                                                        th:errors="*{nombre}" ></div>
-                                                 </div>
-                                               </div>
-                                               <div class="col">
-                                                 <div class="mb-3">
-                                                   <label for="apellido" class="form-label">Apellido</label>
-                                                   <input type="text" class="form-control" id="apellido" th:field="*{apellido}"
-                                                          th:classappend="${#fields.hasErrors('apellido')?'is-invalid':''}">
-                                                   <div class="invalid-feedback" th:if="${#fields.hasErrors('apellido')}"
-                                                        th:errors="*{apellido}" ></div>
-                                                 </div>
-                                               </div>
-                                             </div>
-                                             <div class="row">
-                                               <div class="col">
-                                                 <div class="mb-3">
-                                                   <label for="dni" class="form-label" >DNI: (*)</label>
-                                                   <input type="tel" class="form-control" name="dni" id="dni" maxlength="8" minlength="8" placeholder="Ej: 87654321" pattern="[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]" title="ingrese su DNI" required>
-                                                   <div class="invalid-feedback">Por favor ingresar DNI.</div>
-                                                 </div>
-                                               </div>
-                                               <div class="col">
-                                                 <div class="mb-3">
-                                                   <label for="dni" class="form-label" >RUC: (*)</label>
-                                                   <input type="tel" class="form-control" name="dni" id="ruc" maxlength="11" minlength="11" placeholder="Ej: 87654321682" pattern="[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]" title="ingrese su RUC" required>
-                                                   <div class="invalid-feedback">Por favor ingresar RUC.</div>
-                                                 </div>
-                                               </div>
-                                             </div>
-                                             <div class="row">
-                                               <div class="col">
-                                                 <div class="mb-3">
-                                                   <label for="telefono" class="form-label">Número de Teléfono: (*)</label>
-                                                   <input type="tel" class="form-control" name="telefono" id="telefono" maxlength="9" minlength="9" placeholder="Ej: 987654321" pattern="[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]" title="ingrese su número de teléfono" required>
-                                                   <div class="invalid-feedback">Por favor ingresar número de teléfono.</div>
-                                                 </div>
-                                               </div>
-                                               <div class="col">
-                                                 <div class="mb-3">
-                                                   <br>
-                                                   <br>
-                                                   <h6 class="obligatory-fields">(*)Campos obligatorios</h6>
-                                                 </div>
-                                               </div>
-                                             </div>
-                                           </div>
-                                         </div>
-                                         <div class="btn-container">
-                                           <button type="submit" class="btn btn-primary" style="width: 200px;">Crear</button>
-                                         </div>
-                                       </form>
-
+                                 <!-- Columna izquierda -->
+                                 <div class="col-md-6">
+                                   <div class="mb-3">
+                                     <label for="nombre" class="form-label">Nombre del producto</label>
+                                     <input type="text" class="form-control" id="nombre" th:field="*{nombre}"
+                                            th:classappend="${#fields.hasErrors('nombre')?'is-invalid':''}">
+                                     <div class="invalid-feedback" th:if="${#fields.hasErrors('nombre')}"
+                                          th:errors="*{nombre}" ></div>
+                                   </div>
+                                   <div class="mb-3">
+                                     <label for="categoria" class="form-label">Categoría</label>
+                                     <input type="text" class="form-control" id="categoria" th:field="*{categoria}"
+                                            th:classappend="${#fields.hasErrors('categoria')?'is-invalid':''}">
+                                     <div class="invalid-feedback" th:if="${#fields.hasErrors('categoria')}"
+                                          th:errors="*{categoria}" ></div>
+                                   </div>
+                                   <!--
+                                   <div class="col">
+                                     <div class="mb-3">
+                                       <label for="idproveedor" class="form-label">Proveedor: (*)</label>
+                                       <select name="idproveedor" id="idproveedor" class="form-select" required>
+                                         <option value="" disabled selected>Escoja una opción</option>
+                                         <option th:each="proveedor : ${listaProveedores}"
+                                                 th:text="${proveedor.nombre}"
+                                                 th:value="${proveedor.id}">
+                                         </option>
+                                       </select>
+                                       <div class="invalid-feedback">Por favor seleccionar una zona.</div>
                                      </div>
                                    </div>
-                                 </div>
 
+
+                                   <div class="mb-3">
+                                     <label for="precio" class="form-label">Precio</label>
+                                     <input type="number" class="form-control" id="precio" th:field="*{precio}"
+                                            th:classappend="${#fields.hasErrors('precio')?'is-invalid':''}">
+                                     <div class="invalid-feedback" th:if="${#fields.hasErrors('precio')}"
+                                          th:errors="*{precio}" ></div>
+                                   </div>
+
+                                   <div class="mb-3">
+                                     <label for="modelos" class="form-label">Modelo</label>
+                                     <input type="text" class="form-control" id="modelos" th:field="*{modelos}"
+                                            th:classappend="${#fields.hasErrors('modelos')?'is-invalid':''}">
+                                     <div class="invalid-feedback" th:if="${#fields.hasErrors('modelos')}"
+                                          th:errors="*{modelos}" ></div>
+                                   </div>
+                                   <div class="mb-3">
+                                     <label for="costoenvio" class="form-label">Costo de envío</label>
+                                     <input type="number" class="form-control" id="costoenvio" th:field="*{costoenvio}"
+                                            th:classappend="${#fields.hasErrors('costoenvio')?'is-invalid':''}">
+                                     <div class="invalid-feedback" th:if="${#fields.hasErrors('costoenvio')}"
+                                          th:errors="*{costoenvio}" ></div>
+                                   </div>
+                                   <div class="mb-3">
+                                     <label for="colores" class="form-label">Color</label>
+                                     <input type="text" class="form-control" id="color" th:field="*{colores}"
+                                            th:classappend="${#fields.hasErrors('colores')?'is-invalid':''}">
+                                     <div class="invalid-feedback" th:if="${#fields.hasErrors('colores')}"
+                                          th:errors="*{colores}" ></div>
+                                   </div>
+
+                                 </div>
+                                  -->
+                                 <!-- Columna derecha -->
+                                 <div class="col-md-6">
+                                   <div class="mb-3">
+                                     <label for="imagen" class="form-label">Imagen: (*)</label>
+                                     <input type="file" name="imagen" id="imagen" class="form-control" accept="image/*" onchange="previewImage(event)" required>
+                                     <div class="invalid-feedback">Por favor seleccione una imagen.</div>
+                                     <div class="mt-3">
+                                       <img id="imagePreview" src="#" alt="Vista previa de la imagen" style="display:none; max-width: 100%; max-height: 200px;">
+                                     </div>
+                                   </div>
+                                   <div class="mb-3">
+                                     <label for="descripcion" class="form-label">Descripción: (*)</label>
+                                     <textarea name="descripcion" id="descripcion" class="form-control" rows="10" placeholder="Ej: El iPhone 14 Pro es el último modelo de la serie de teléfonos móviles premium..."
+                                               th:field="*{descripcion}"
+                                               th:classappend="${#fields.hasErrors('descripcion') ? 'is-invalid' : ''}" required></textarea>
+                                     <div class="invalid-feedback" th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}"></div>
+                                     <div class="invalid-feedback" th:unless="${#fields.hasErrors('descripcion')}">
+                                       Por favor ingresa una descripción.
+                                     </div>
+                                     <h6 class="obligatory-fields">(*) Campos obligatorios</h6>
+                                   </div>
+                                 </div>
+                               </div>
+                               <div class="btn-container" style="text-align: center; margin-top: 20px;">
+                                 <button type="submit" class="btn btn-primary" style="width: 280px;">Crear</button>
+                                 <a th:href="@{/admin/productos}" class="btn btn-secondary" style="width: 280px;">Cancelar</a>
                                </div>
                              </div>
-                           </div>
-            <!-- Fin del contenido central -->
+
+                           </form>
+                         </div>
+                       </div>
+                     </div>
+                   </form>
+                 </div>
+               </div>
+          </form>
+        </div>
+        <!-- Fin del contenido central -->
 
 
 
-            <!-- Pie de página -->
-            <div th:replace="~{admin/fragments/piedepagina :: fragment}"></div>
-            </div>
-          </div>
+        <!-- Pie de página -->
+        <div th:replace="~{admin/fragments/piedepagina :: fragment}"></div>
+        </div>
+      </div>
 
 
 
@@ -165,7 +207,17 @@
     <script src="/assets/js/kaiadmin.min.js"></script>
       <script>
         $(document).ready(function () {
-          $("#basic-datatables").DataTable({});
+          $("#basic-datatables").DataTable({
+            language: {
+              search: "Buscar:",
+              lengthMenu: "Mostrar _MENU_ entradas por página",
+              info: "Mostrando _START_ a _END_ de _TOTAL_ entradas",
+              paginate: {
+                previous: "Anterior",
+                next: "Siguiente"
+              }
+            }
+          });
   
           $("#multi-filter-select").DataTable({
             pageLength: 5,
@@ -202,6 +254,7 @@
           // Add Row
           $("#add-row").DataTable({
             pageLength: 5,
+  
           });
   
           var action =
@@ -220,5 +273,6 @@
           });
         });
       </script>
+      
   </body>
 </html>
