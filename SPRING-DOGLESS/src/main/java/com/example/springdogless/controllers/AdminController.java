@@ -474,7 +474,7 @@ public class AdminController {
 
     @PostMapping("/guardarProveedor")
     public String guardarProveedor(@RequestParam(value = "id", required = false) Integer id, @ModelAttribute Proveedor proveedor, RedirectAttributes attr) {
-        if (id != null) {
+        if (id != 0) {
             Optional<Proveedor> optProveedor = proveedorRepository.findById(id);
 
             if (optProveedor.isPresent()) {
@@ -501,7 +501,7 @@ public class AdminController {
     //Vista de productos
     @GetMapping("/productos")
     public String listaProductos(Model model, @RequestParam(required = false) String zona) {
-        model.addAttribute("listaProductos", productRepository.findByproductosinBorrar(1));
+        model.addAttribute("listaProductos", productRepository.findByBorrado((byte) 1));
 
         return "admin/productos";
     }
@@ -603,7 +603,7 @@ public class AdminController {
 
     @PostMapping("/borrarProducto")
     public String borrarProducto(@RequestParam("id") int id, RedirectAttributes attr) {
-        Optional<Producto> optProducto = productRepository.findById(id);
+        Optional<Producto> optProducto = productRepository.findByproductosinBorrar(id);
 
         if (optProducto.isPresent()) {
             Producto producto = optProducto.get();
