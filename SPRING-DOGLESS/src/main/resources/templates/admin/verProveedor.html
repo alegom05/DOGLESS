@@ -10,12 +10,12 @@
     />
     <link
             rel="icon"
-            href="../../static/assets/img/kaiadmin/favicon.ico"
+            href="/assets/img/kaiadmin/favicon.ico"
             type="image/x-icon"
     />
 
     <!-- Fonts and icons -->
-    <script src="../../static/assets/js/plugin/webfont/webfont.min.js"></script>
+    <script src="/assets/js/plugin/webfont/webfont.min.js"></script>
     <script>
       WebFont.load({
         google: { families: ["Public Sans:300,400,500,600,700"] },
@@ -26,7 +26,7 @@
             "Font Awesome 5 Brands",
             "simple-line-icons",
           ],
-          urls: ["../../static/assets/css/fonts.min.css"],
+          urls: ["/assets/css/fonts.min.css"],
         },
         active: function () {
           sessionStorage.fonts = true;
@@ -35,9 +35,9 @@
     </script>
 
     <!-- CSS Files -->
-    <link rel="stylesheet" href="../../static/assets/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="../../static/assets/css/plugins.min.css" />
-    <link rel="stylesheet" href="../../static/assets/css/kaiadmin.min.css" />
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/assets/css/plugins.min.css" />
+    <link rel="stylesheet" href="/assets/css/kaiadmin.min.css" />
 
 
 
@@ -56,88 +56,78 @@
 
         <!-- Texto o contenido central -->
         <div class="container">
-          <input th:field="*{id}" name="id" type="hidden"/>
-           <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
-                             <div>
-                               <h3 class="fw-bold mb-3">Ver Proveedor</h3>
-                             </div>
-                           </div>
-                           <div class="row">
-                             <div class="col-md-12">
-                               <div class="card">
-               
-                                 <div class="card-body">
+          <div class="page-inner">
+            <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
+              <div>
+                <h3 class="fw-bold mb-3">Ver Proveedor</h3>
+              </div>
+            </div>
+               <div class="row">
+                 <div class="col-md-12">
+                   <div class="card">
 
-                                   <form method="post" th:action="@{/admin/guardarProveedor}" th:object="${proveedor}">
-                                     <div class="container">
-                                       <div class="container" style="margin-top: 3%; ">
-                                         <div class="row">
-                                           <div class="col">
-                                             <div class="mb-3">
-                                               <label for="nombre" class="form-label">Nombre</label>
-                                               <input type="text" class="form-control" id="nombre" th:field="*{nombre}"
-                                                      th:classappend="${#fields.hasErrors('nombre')?'is-invalid':''}">
-                                               <div class="invalid-feedback" th:if="${#fields.hasErrors('nombre')}"
-                                                    th:errors="*{nombre}" ></div>
-                                             </div>
-                                           </div>
-                                           <div class="col">
-                                             <div class="mb-3">
-                                               <label for="apellido" class="form-label">Apellido</label>
-                                               <input type="text" class="form-control" id="apellido" th:field="*{apellido}"
-                                                      th:classappend="${#fields.hasErrors('nombre')?'is-invalid':''}">
-                                               <div class="invalid-feedback" th:if="${#fields.hasErrors('apellido')}"
-                                                    th:errors="*{apellido}" ></div>
-                                             </div>
-                                           </div>
-                                         </div>
-                                         <div class="row">
-                                           <div class="col">
-                                             <div class="mb-3">
-                                               <label for="dni" class="form-label" >DNI: (*)</label>
-                                               <input type="tel" class="form-control" name="dni" id="dni" maxlength="8" minlength="8" placeholder="Ej: 87654321" pattern="[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]" title="ingrese su DNI" required>
-                                               <div class="invalid-feedback">Por favor ingresar DNI.</div>
-                                             </div>
-                                           </div>
-                                           <div class="col">
-                                             <div class="mb-3">
-                                               <label for="dni" class="form-label" >RUC: (*)</label>
-                                               <input type="tel" class="form-control" name="dni" id="ruc" maxlength="11" minlength="11" placeholder="Ej: 87654321682" pattern="[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]" title="ingrese su RUC" required>
-                                               <div class="invalid-feedback">Por favor ingresar RUC.</div>
-                                             </div>
-                                           </div>
-                                         </div>
-                                         <div class="row">
-                                           <div class="col">
-                                             <div class="mb-3">
-                                               <label for="telefono" class="form-label">Número de Teléfono: (*)</label>
-                                               <input type="tel" class="form-control" name="telefono" id="telefono" maxlength="9" minlength="9" placeholder="Ej: 987654321" pattern="[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]" title="ingrese su número de teléfono" required>
-                                               <div class="invalid-feedback">Por favor ingresar número de teléfono.</div>
-                                             </div>
-                                           </div>
-                                           <div class="col">
-                                             <div class="mb-3">
-                                               <br>
-                                               <br>
-                                               <h6 class="obligatory-fields">(*)Campos obligatorios</h6>
-                                             </div>
-                                           </div>
-                                         </div>
-                                       </div>
-                                     </div>
-                                     <div class="btn-container">
-                                       <button type="submit" class="btn btn-primary" style="width: 200px;">Crear</button>
-                                     </div>
-                                   </form>
-               
+                     <div class="card-body">
+
+                         <div class="container">
+                           <div class="container" style="margin-top: 3%; ">
+                             <div class="row">
+                               <div class="col">
+                                 <div class="mb-3">
+                                   <label for="nombre" class="form-label">Nombre:</label>
+                                   <input type="text" name="nombre" id="nombre" class="form-control" th:value="${proveedor.nombre}" readonly>
+                                 </div>
+                               </div>
+                               <div class="col">
+                                 <div class="mb-3">
+                                   <label for="apellido" class="form-label">Apellido:</label>
+                                   <input type="text" name="apellido" id="apellido" class="form-control" th:value="${proveedor.apellido}" readonly>
                                  </div>
                                </div>
                              </div>
-               
+                             <div class="row">
+                               <div class="col">
+                                 <div class="mb-3">
+                                   <label for="tienda" class="form-label">Tienda:</label>
+                                   <input type="text" name="tienda" id="tienda" class="form-control" th:value="${proveedor.tienda}" readonly>
+                                 </div>
+                               </div>
+                               <div class="col">
+                                 <div class="mb-3">
+                                   <label for="dni" class="form-label">DNI:</label>
+                                   <input type="text" name="dni" id="dni" class="form-control" th:value="${proveedor.dni}" readonly>
+                                 </div>
+                               </div>
+                             </div>
+                             <div class="row">
+                               <div class="col">
+                                 <div class="mb-3">
+                                   <label for="ruc" class="form-label">RUC:</label>
+                                   <input type="text" name="ruc" id="ruc" class="form-control" th:value="${proveedor.ruc}" readonly>
+                                 </div>
+                               </div>
+                               <div class="col">
+                                 <div class="mb-3">
+                                   <label for="telefono" class="form-label">Teléfono:</label>
+                                   <input type="text" name="telefono" id="telefono" class="form-control" th:value="${proveedor.telefono}" readonly>
+                                 </div>
+                               </div>
+                               <div class="btn-container" style="text-align: center; margin-top: 20px;">
+                                 <a th:href="@{/admin/proveedores}" class="btn btn-secondary" style="width: 280px">Regresar</a>
+                               </div>
+                             </div>
+
                            </div>
-                         </div>
+
                        </div>
-        <!-- Fin del contenido central -->
+
+                     </div>
+                   </div>
+                 </div>
+
+               </div>
+             </div>
+           </div>
+<!-- Fin del contenido central -->
 
 
 
