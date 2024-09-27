@@ -544,6 +544,44 @@ public class AdminController {
             return "redirect:/admin/productos";
         }
     }
+    @PostMapping("/saveproducto")
+    public String guardarProducto2(@RequestParam("id") int id,
+                                    @RequestParam("nombre") String nombre,
+                                    @RequestParam("descripcion") String descripcion,
+                                    @RequestParam("categoria") String categoria,
+                                    @RequestParam("precio") Double precio,
+                                    @RequestParam("costoenvio") Double costoenvio,
+                                    @RequestParam("colores") String colores,
+                                    @RequestParam int proveedor,
+                                    RedirectAttributes attr) {
+        // Obtener el usuario existente
+        Optional<Producto> optProducto = productRepository.findById(id);
+
+        if (optProducto.isPresent()) {
+            Producto producto = optProducto.get();
+
+            // Actualizar solo los campos editables
+            producto.setNombre(nombre);
+            producto.setDescripcion(descripcion);
+            producto.setCategoria(categoria);
+            producto.setPrecio(precio);
+            producto.setCostoenvio(costoenvio);
+            producto.setColores(colores);
+
+            // Buscar las entidades relacionadas por sus IDs
+            Proveedor proveedorEntity = proveedorRepository.findById(proveedor).orElse(null); // Se maneja si no existe
+
+            // Asignar las entidades encontradas al usuario
+            producto.setProveedor(proveedorEntity);
+            // Guardar el usuario actualizado
+            productRepository.save(producto);
+            attr.addFlashAttribute("mensajeExito", "Cambios guardados correctamente");
+        } else {
+            attr.addFlashAttribute("error", "Usuario no encontrado");
+        }
+
+        return "redirect:/admin/productos";
+    }
 
     @PostMapping("/guardarProducto")
     public String guardarProducto(@RequestParam("idproveedor") Integer idproveedor, Producto producto, RedirectAttributes attr) {

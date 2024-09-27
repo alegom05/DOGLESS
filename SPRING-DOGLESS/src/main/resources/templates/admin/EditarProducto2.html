@@ -484,7 +484,8 @@
                 <div class="card">
 
                   <div class="card-body">
-                    <form class="needs-validation" style="width: 100%; margin-left: 0%; margin-top: 3%;" action="productos.html" method="POST" novalidate>
+                    <form class="needs-validation" style="width: 100%; margin-left: 0%; margin-top: 3%;" th:action="@{'/admin/saveproducto'}" method="POST" novalidate>
+                      <input  name="id"  th:value="${producto.id}" type="hidden"/>
                       <div class="container">
                         <div class="row">
                           <!-- Columna izquierda -->
@@ -504,30 +505,30 @@
                             <div class="mb-3">
                               <label for="proveedor" class="form-label">Proveedor: (*)</label>
                               <select name="proveedor" id="proveedor" class="form-control">
-                                <option th:each="zonas: ${listaZonas}"
-                                        th:text="${zonas.nombre}" th:value="${zonas.idzonas}">Elegir proveedor</option>
+                                <option th:each="proveedor: ${listaProveedores}"
+                                        th:text="${proveedor.nombre}" th:value="${proveedor.id}">Elegir proveedor</option>
                               </select>
                               <div class="invalid-feedback">Por favor selecciona un proveedor.</div>
                             </div>
                             <div class="mb-3">
                               <label for="precio" class="form-label">Precio: (*)</label>
-                              <input type="number" name="precio" id="precio" class="form-control" value="9699" placeholder="Ej: 4000" required>
+                              <input type="number" name="precio" id="precio" class="form-control" th:value="${producto.precio}" placeholder="Ej: 4000" required>
                               <div class="invalid-feedback">Por favor ingresar el precio.</div>
                             </div>
                             <div class="mb-3">
-                              <label for="modelo" class="form-label">Modelo: </label>
-                              <input type="text" name="modelo" id="modelo" class="form-control" value="ASUS ROG ZEPHYRUS G16" pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]+(\s[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]+){0,4}"
+                              <label for="modelos" class="form-label">Modelo: </label>
+                              <input type="text" name="modelos" id="modelos" class="form-control" th:value="${producto.modelos}" pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]+(\s[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]+){0,4}"
                                      placeholder="Ej: iPhone 14 Pro 256GB" >
                               <div class="invalid-feedback">Por favor ingresar modelo válido.</div>
                             </div>
                             <div class="mb-3">
-                              <label for="costo_envio" class="form-label">Costo de envío: (*)</label>
-                              <input type="number" name="costo_envio" id="costo_envio" class="form-control" value="20" placeholder="Ej: 0.50" step="0.01" required>
+                              <label for="costoenvio" class="form-label">Costo de envío: (*)</label>
+                              <input type="number" name="costoenvio" id="costoenvio" class="form-control" th:value="${producto.costoenvio}" placeholder="Ej: 0.50" step="0.01" required>
                               <div class="invalid-feedback">Por favor ingresar el costo de envio.</div>
                             </div>
                             <div class="mb-3">
-                              <label for="color" class="form-label">Color: </label>
-                              <input type="text" name="color" id="color" class="form-control" value="Gris" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ]+(\s[a-zA-ZáéíóúÁÉÍÓÚñÑ]+)?" placeholder="Ej: Gris" >
+                              <label for="colores" class="form-label">Color: </label>
+                              <input type="text" name="colores" id="colores" class="form-control" th:value="${producto.colores}" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ]+(\s[a-zA-ZáéíóúÁÉÍÓÚñÑ]+)?" placeholder="Ej: Gris" >
                               <div class="invalid-feedback">Por favor ingresar un color válido.</div>
                             </div>
                           </div>
@@ -539,21 +540,26 @@
                               <input type="file" name="imagen" id="imagen" class="form-control" accept="image/*" onchange="previewImage(event)" >
                               <div class="invalid-feedback">Por favor seleccione una imagen.</div>
                               <div class="mt-3">
-                                <img id="imagePreview" src="../assets/img/productos/ZephyrusG16.png" alt="Vista previa de la imagen" style="max-width: 100%; max-height: 200px;">
+                                <img id="imagePreview" src="/assets/img/productos/ZephyrusG16.png" alt="Vista previa de la imagen" style="max-width: 100%; max-height: 200px;">
                               </div>
                             </div>
                             <div class="mb-3">
                               <label for="descripcion" class="form-label">Descripción: (*)</label>
-                              <textarea name="descripcion" id="descripcion" class="form-control" rows="10" placeholder="Ej: El iPhone 14 Pro es el último modelo de la serie de teléfonos móviles premium..." required>Asus Rog Zephyrus G16 Oled 240hz Rtx 4070 1tb Color Gris Oscuro.4 puertos USB y puerto HDMI. Resolución: 2560px x 1600px
-Procesador: Intel Intel Core Ultra 9 Series 1 Intel Core Ultra 9 185H</textarea>
-                              <div class="invalid-feedback">Por favor ingresa una descripción.</div>
-                              <h6 class="obligatory-fields">(*)Campos obligatorios</h6>
+                              <textarea name="descripcion" id="descripcion" class="form-control" rows="10" placeholder="Ej: El iPhone 14 Pro es el último modelo de la serie de teléfonos móviles premium..."
+                                        th:field="*{descripcion}"
+                                        th:classappend="${#fields.hasErrors('descripcion') ? 'is-invalid' : ''}" required></textarea>
+                              <div class="invalid-feedback" th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}"></div>
+                              <div class="invalid-feedback" th:unless="${#fields.hasErrors('descripcion')}">
+                                Por favor ingresa una descripción.
+                              </div>
+                              <h6 class="obligatory-fields">(*) Campos obligatorios</h6>
                             </div>
                           </div>
                         </div>
 
                         <div class="btn-container" style="text-align: center; margin-top: 20px;">
                           <button type="submit" class="btn btn-primary" style="width: 280px;">Editar</button>
+                          <a th:href="@{/admin/productos}" class="btn btn-secondary" style="width: 280px;">Cancelar</a>
                         </div>
                       </div>
                     </form>
