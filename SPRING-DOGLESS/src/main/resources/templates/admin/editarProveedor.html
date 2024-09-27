@@ -75,15 +75,16 @@
                                                 <div class="row">
                                                     <div class="col">
                                                         <div class="mb-3">
-                                                            <label for="nombre" class="form-label">Nombre: (*)</label>
-                                                            <input th:value="${proveedor.nombre}" name="nombre" type="text" class="form-control" id="nombre" />
+                                                            <label for="nombre" class="form-label">Nombre:</label>
+                                                            <input th:value="${proveedor.nombre}" name="nombre" type="text" class="form-control" id="nombre" disabled/>
+
                                                             <div class="invalid-feedback">Por favor ingresar nombre(s).</div>
                                                         </div>
                                                     </div>
                                                     <div class="col">
                                                         <div class="mb-3">
-                                                            <label for="apellido" class="form-label">Apellido: (*)</label>
-                                                            <input th:value="${proveedor.apellido}" name="apellido" type="text" class="form-control" id="apellido" />
+                                                            <label for="apellido" class="form-label">Apellido:</label>
+                                                            <input th:value="${proveedor.apellido}" name="apellido" type="text" class="form-control" id="apellido" disabled/>
                                                             <div class="invalid-feedback">Por favor ingresar apellido(s).</div>
                                                         </div>
                                                     </div>
@@ -91,13 +92,36 @@
                                                 <div class="row">
                                                     <div class="col">
                                                         <div class="mb-3">
-                                                            <label for="tienda" class="form-label">Apellido: (*)</label>
-                                                            <input th:value="${proveedor.tienda}" name="tienda" type="text" class="form-control" id="tienda" />
+                                                            <label for="tienda" class="form-label">Tienda:</label>
+                                                            <input th:value="${proveedor.tienda}" name="tienda" type="text" class="form-control" id="tienda" disabled/>
                                                             <div class="invalid-feedback">Por favor ingresar tienda.</div>
                                                         </div>
                                                     </div>
+                                                    <div class="col">
+                                                        <div class="mb-3">
+                                                            <label for="dni" class="form-label">DNI:</label>
+                                                            <input th:value="${proveedor.dni}" name="dni" type="text" class="form-control" id="dni" />
+                                                            <div class="invalid-feedback">Por favor ingresar DNI.</div>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                <!--
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <div class="mb-3">
+                                                            <label for="ruc" class="form-label">RUC:</label>
+                                                            <input th:value="${proveedor.ruc}" name="ruc" type="text" class="form-control" id="ruc" />
+                                                            <div class="invalid-feedback">Por favor ingresar tienda.</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col">
+                                                        <div class="mb-3">
+                                                            <label for="telefono" class="form-label">Teléfono:</label>
+                                                            <input th:value="${proveedor.dni}" name="telefono" type="text" class="form-control" id="telefono" />
+                                                            <div class="invalid-feedback">Por favor ingresar Teléfono.</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            <!--
                                                 <div class="row">
                                                   <div class="col">
                                                     <div class="mb-3">
