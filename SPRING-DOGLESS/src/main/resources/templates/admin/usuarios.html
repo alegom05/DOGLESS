@@ -13,6 +13,7 @@
             href="/assets/img/kaiadmin/favicon.ico"
             type="image/x-icon"
     />
+    <link th:href="@{/assets/css/style-SuperAdmin.css}" rel="stylesheet">
 
     <!-- Fonts and icons -->
     <script src="/assets/js/plugin/webfont/webfont.min.js"></script>
@@ -44,15 +45,12 @@
   </head>
   <body>
     <div class="wrapper">
-      <!-- Reemplaza barra lateral con el fragmento de Thymeleaf -->
-      <div th:replace="~{admin/fragments/barralateraladmin :: body(activePage='usuarios', activeSubPage='usuariosfinales')}"></div>
+      <!-- Barra lateral -->
+      <div th:replace="~{admin/fragments/barralateraladmin :: body(activePage='usuarios', activeSubPage='adminzonal')}"></div>
       <!-- Fin barra lateral -->
 
       <div class="main-panel">
-        <!-- Reemplaza navbar con el fragmento de Thymeleaf -->
         <div th:replace="~{admin/fragments/navbarheaderadmin :: fragment}"></div>
-        <!-- Fin Navbar -->
-
         <!-- Fin Navbar -->
 
         <!-- Texto o contenido central -->
@@ -111,7 +109,8 @@
                                 <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
                                   <li><a class="dropdown-item" th:href="@{'/admin/verusuario' + '?id=' + ${usuario.id}}">Ver</a></li>
                                   <li><a class="dropdown-item" th:href="@{'/admin/editusuario' + '?id=' + ${usuario.id}}">Editar</a></li>
-                                  <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#denegarModal">Eliminar</a></li>
+                                  <li><a href="#" class="dropdown-item" data-toggle="modal"  data-target="#confirmDeleteModal" th:data-id="${usuario.id}">Eliminar</a></li>
+
                                   <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#aceptarModal">Espiar</a></li>
                                 </ul>
                               </div>
@@ -122,26 +121,29 @@
                       </table>
 
 
-                      <div class="modal fade" id="denegarModal" tabindex="-1" role="dialog" aria-labelledby="acceptModalLabel" aria-hidden="true">
+                      <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                           <div class="modal-content">
                             <div class="modal-header">
-                              <h5 class="modal-title" id="acceptModalLabel">Advertencia</h5>
-                              <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                              <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmar Eliminación</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                               </button>
                             </div>
                             <div class="modal-body">
-                              <p>¿Estas seguro de realizar la eliminación del usuario?</p>
+                              ¿Estás seguro de que deseas eliminar este usuario?
+
                             </div>
                             <div class="modal-footer">
-                              <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
-                              <button type="button" class="btn btn-dark" onclick="eliminarUsuario()">Aceptar</button>
+                              <form id="deleteForm" method="post" th:action="@{'/admin/deleteusuario'}" novalidate>
+                                <input type="hidden" name="id" id="userId">
+                                <button type="submit" class="btn btn-dark">Eliminar</button>
+                              </form>
+                              <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancelar</button>
                             </div>
                           </div>
                         </div>
                       </div>
-
                       <!-- Modal para Aceptar -->
                       <div class="modal fade" id="aceptarModal" tabindex="-1" role="dialog" aria-labelledby="acceptModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
@@ -174,46 +176,20 @@
             </div>
           </div>
         </div>
+        <!-- Fin del contenido central -->
 
+        <!-- Pie de página -->
+        <div th:replace="~{admin/fragments/piedepagina :: fragment}"></div>
       </div>
-
-      <!-- Fin del contenido central -->
-
-
-
-      <!-- Pie de página -->
-      <!-- Pie de página -->
-      <div th:replace="~{admin/fragments/piedepagina :: fragment}"></div>
     </div>
-    </div>
-
-    <script>
-      function eliminarUsuario(id) {
-        fetch(`/admin/borrarUsuario/${id}`, { // Pasar el id en la URL
-          method: 'DELETE',
-        })
-                .then(response => {
-                  if (response.ok) {
-                    cerrarPopup();
-                    window.location.href = '/admin/usuarios'; // Redirigir a la lista de usuarios
-                  } else {
-                    alert('Error al eliminar el registro.');
-                  }
-                })
-                .catch(error => {
-                  console.error('Error:', error);
-                  alert('Ocurrió un error al eliminar el registro.');
-                });
-      }
-
-    </script>
-
 
 
     <!--Core JS Files   -->
     <script src="/assets/js/core/jquery-3.7.1.min.js"></script>
     <script src="/assets/js/core/popper.min.js"></script>
     <script src="/assets/js/core/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
 
     <!-- jQuery Scrollbar -->
     <script src="/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
@@ -226,6 +202,16 @@
 
     <!-- Kaiadmin JS -->
     <script src="/assets/js/kaiadmin.min.js"></script>
+    <script>
+      $('#confirmDeleteModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget); // Botón que activó el modal
+        var userId = button.data('id'); // Extraer el id del atributo data-id
+
+        // Actualizar el campo hidden con el id del usuario
+        var modal = $(this);
+        modal.find('#userId').val(userId);
+      });
+    </script>
 
     <script>
       $(document).ready(function () {
@@ -300,6 +286,20 @@
           $("#addRowModal").modal("hide");
         });
       });
+    </script>
+    <script>
+      // Espera 3 segundos (3000 milisegundos) antes de empezar a ocultar el mensaje
+      setTimeout(function() {
+        var alert = document.getElementById('mensajeExito');
+        if (alert) {
+          alert.classList.add('hidden'); // Añadir la clase que reduce la opacidad gradualmente
+
+          // Después de 1 segundo (duración de la transición), ocultar completamente
+          setTimeout(function() {
+            alert.classList.add('remove'); // Ocultar completamente el mensaje y el espacio
+          }, 1000); // 1000 ms coincide con la duración de la transición de opacidad
+        }
+      }, 3000); // Cambia 3000 por el tiempo en milisegundos que desees (3 segundos en este caso)
     </script>
 
   </body>
