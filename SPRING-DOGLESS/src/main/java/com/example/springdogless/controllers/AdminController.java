@@ -417,16 +417,17 @@ public class AdminController {
         solicitud.setVeredicto((byte)0);  //aceptada
         solicitudRepository.save(solicitud);
         redirectAttributes.addFlashAttribute("mensajeExito","La solicitud ha sido denegada"); // para enviar mensaje temporal
-        return "redirect:admin/solicitudes";
+        return "redirect:/admin/solicitudes";
     }
 
     //Vista de Proveedores
 
-    @GetMapping("proveedores")
+    @GetMapping("/proveedores")
     public String listaProveedores(Model model, @RequestParam(required = false) String zona) {
         model.addAttribute("listaProveedores", proveedorRepository.findAll());
-        return "admin/proveedores";
+        return "/admin/proveedores";
     }
+
 
     @GetMapping("/verProveedor")
     public String verProveedor(Model model, @RequestParam("id") int id) {
@@ -444,10 +445,7 @@ public class AdminController {
     }
 
 
-
-
-
-    @GetMapping(value = "nuevoProveedor")
+    @GetMapping(value = "/nuevoProveedor")
     public String nuevoProveedor(Model model, @ModelAttribute("proveedor") Proveedor proveedor) {
         List<Proveedor> listaProveedores = proveedorRepository.findAll();
         model.addAttribute("listaProveedores", listaProveedores);
@@ -503,7 +501,7 @@ public class AdminController {
     public String listaProductos(Model model, @RequestParam(required = false) String zona) {
         model.addAttribute("listaProductos", productRepository.findByBorrado(1));
 
-        return "admin/productos";
+        return "/admin/productos";
     }
 
 
@@ -520,7 +518,7 @@ public class AdminController {
             return "redirect:/admin/adminzonal";
         }
     }
-    @GetMapping(value = "nuevoProducto")
+    @GetMapping(value = "/nuevoProducto")
     public String nuevoProductoFrm(Model model, @ModelAttribute("product") Producto producto) {
         model.addAttribute("listaProductos", productRepository.findAll());
         model.addAttribute("listaProveedores", proveedorRepository.findAll());
@@ -623,7 +621,7 @@ public class AdminController {
         // Busca todas las reposiciones con el campo "aprobado" igual a "aprobado"
         List<Reposicion> reposicionesAprobadas = reposicionesRepository.findByAprobar("aprobado");
         model.addAttribute("listaReposicionesAprobadas", reposicionesAprobadas);
-        return "admin/productosAprobados1";
+        return "/admin/productosAprobados1";
     }
 
     @GetMapping("/productosRechazados")
@@ -631,14 +629,14 @@ public class AdminController {
         // Busca todas las reposiciones con el campo "aprobado" igual a "rechazado"
         List<Reposicion> reposicionesRechazadas = reposicionesRepository.findByAprobar("rechazado");
         model.addAttribute("listaReposicionesRechazadas", reposicionesRechazadas);
-        return "admin/productosRechazados1";
+        return "/admin/productosRechazados1";
     }
 
     //Lista Productos pendientes
     @GetMapping("/pendientes")
     public String pendientes(Model model) {
         model.addAttribute("listaReposiciones", reposicionesRepository.findByAprobarIsNull());
-        return "admin/productosPendientes";
+        return "/admin/productosPendientes";
     }
 
     @GetMapping("/aprobar/{id}")
@@ -703,6 +701,22 @@ public class AdminController {
         return "admin/dashboard";
     }
 
+
+    @PostMapping("/borrarProveedores")
+    public String borrarProveedores(@RequestParam("id") Integer id, RedirectAttributes attr) {
+        Optional<Proveedor> optProv = proveedorRepository.findById(id);
+
+        if (optProv.isPresent()) {
+            Proveedor proveedor = optProv.get();
+            proveedor.setBorrado(0);
+            proveedorRepository.save(proveedor);
+            attr.addFlashAttribute("msg", "Proveedor borrado exitosamente");
+        } else {
+            attr.addFlashAttribute("error", "Proveedor no encontrado");
+        }
+
+        return "redirect:/admin/agentes";
+    }
     //Lista Productos pendientes
     //Waiting for it...
     /*
