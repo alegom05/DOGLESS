@@ -433,7 +433,24 @@
 
     <script>
       $(document).ready(function () {
-        $("#basic-datatables").DataTable({});
+
+        $("#basic-datatables").DataTable({
+          "language": {
+            "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json",
+            "info": false,
+            "infoEmpty": "Mostrando 0 a 0 de 0 registros",
+            "infoFiltered": "(filtrado de _MAX_ registros en total)",
+            "lengthMenu": "Mostrar _MENU_ registros por página",
+            "zeroRecords": "No se encontraron registros coincidentes",
+            "paginate": {
+              "first": "Primero",
+              "last": "Último",
+              "next": "Siguiente",
+              "previous": "Anterior"
+            },
+            "search": "Buscar:"
+          }
+        });
 
         $("#multi-filter-select").DataTable({
           pageLength: 5,

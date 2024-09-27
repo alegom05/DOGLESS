@@ -366,7 +366,7 @@ public class AdminController {
     @GetMapping("proveedores")
     public String listaProveedores(Model model, @RequestParam(required = false) String zona) {
         model.addAttribute("listaProveedores", proveedorRepository.findAll());
-        return "/admin/proveedores";
+        return "admin/proveedores";
     }
 
 
@@ -406,7 +406,7 @@ public class AdminController {
     @GetMapping("/productos")
     public String listaProductos(Model model, @RequestParam(required = false) String zona) {
         model.addAttribute("listaProductosCompleto", productRepository.ProductosCompleto());
-        return "/admin/productos";
+        return "admin/productos";
     }
 
     @GetMapping(value = "nuevoProducto")
@@ -474,7 +474,7 @@ public class AdminController {
         // Busca todas las reposiciones con el campo "aprobado" igual a "aprobado"
         List<Reposicion> reposicionesAprobadas = reposicionesRepository.findByAprobar("aprobado");
         model.addAttribute("listaReposicionesAprobadas", reposicionesAprobadas);
-        return "/admin/productosAprobados1";
+        return "admin/productosAprobados1";
     }
 
     @GetMapping("/productosRechazados")
@@ -482,14 +482,14 @@ public class AdminController {
         // Busca todas las reposiciones con el campo "aprobado" igual a "rechazado"
         List<Reposicion> reposicionesRechazadas = reposicionesRepository.findByAprobar("rechazado");
         model.addAttribute("listaReposicionesRechazadas", reposicionesRechazadas);
-        return "/admin/productosRechazados1";
+        return "admin/productosRechazados1";
     }
 
     //Lista Productos pendientes
     @GetMapping("/pendientes")
     public String pendientes(Model model) {
         model.addAttribute("listaReposiciones", reposicionesRepository.findByAprobarIsNull());
-        return "/admin/productosPendientes";
+        return "admin/productosPendientes";
     }
 
     @GetMapping("/aprobar/{id}")
@@ -551,7 +551,7 @@ public class AdminController {
     @GetMapping("/dashboard")
     public String elDashboardEstaTristeYAzul(Model model, @RequestParam(required = false) String zona) {
         /*model.addAttribute("listaProveedores", proveedorRepository.findAll());*/
-        return "/admin/dashboard";
+        return "admin/dashboard";
     }
 
     //Lista Productos pendientes
