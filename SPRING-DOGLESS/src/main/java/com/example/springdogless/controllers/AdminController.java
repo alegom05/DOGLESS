@@ -375,6 +375,7 @@ public class AdminController {
         Distrito distrito = distritoRepository.findById(idDistrito)
                 .orElseThrow(() -> new IllegalArgumentException("Distrito no encontrado"));
         usuario.setDistrito(distrito);
+        usuario.setBorrado(1);
 
         // Guardar el nuevo Adminzonal
         usuarioRepository.save(usuario);
