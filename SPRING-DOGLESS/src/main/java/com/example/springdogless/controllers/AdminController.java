@@ -670,7 +670,7 @@ public class AdminController {
                 reposicion.setAprobar("aprobado");
                 reposicionesRepository.save(reposicion); // Guarda los cambios en la base de datos
 
-                return "redirect:/admin/pendientes";
+                return "redirect:/admin/productosAprobados";
 
             }
         }
@@ -689,7 +689,7 @@ public class AdminController {
                 // Actualiza el atributo 'rechazado' de la reposición
                 reposicion.setAprobar("rechazado");
                 reposicionesRepository.save(reposicion); // Guarda los cambios en la base de datos
-                return "redirect:/admin/pendientes";
+                return "redirect:/admin/productosRechazados";
             }
         }
         // Redirige si la reposición no se encuentra o el producto no está presente
