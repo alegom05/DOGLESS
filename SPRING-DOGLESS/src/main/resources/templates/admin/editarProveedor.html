@@ -73,16 +73,20 @@
                                              <div class="row">
                                                <div class="col">
                                                  <div class="mb-3">
-                                                   <label for="nombre" class="form-label">Nombres: (*)</label>
-                                                   <input type="text" name="nombre" id="nombre" placeholder="Ej: Tomas" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ]+(\s[a-zA-ZáéíóúÁÉÍÓÚñÑ]+)?" class="form-control" required>
-                                                   <div class="invalid-feedback">Por favor ingresar nombre(s).</div>
+                                                   <label for="nombre" class="form-label">Nombre</label>
+                                                   <input type="text" class="form-control" id="nombre" th:field="*{nombre}"
+                                                          th:classappend="${#fields.hasErrors('nombre')?'is-invalid':''}">
+                                                   <div class="invalid-feedback" th:if="${#fields.hasErrors('nombre')}"
+                                                        th:errors="*{nombre}" ></div>
                                                  </div>
                                                </div>
                                                <div class="col">
                                                  <div class="mb-3">
-                                                   <label for="apellido" class="form-label">Nombre de Tienda: (*)</label>
-                                                   <input type="text" name="apellido" id="apellido" placeholder="Ej: Rodriguez S.A" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ]+(\s[a-zA-ZáéíóúÁÉÍÓÚñÑ]+)?" class="form-control" aria-describedby="emailHelp" required>
-                                                   <div class="invalid-feedback">Por favor ingresar un nombre de tienda valido.</div>
+                                                   <label for="apellido" class="form-label">Apellido</label>
+                                                   <input type="text" class="form-control" id="apellido" th:field="*{apellido}"
+                                                          th:classappend="${#fields.hasErrors('nombre')?'is-invalid':''}">
+                                                   <div class="invalid-feedback" th:if="${#fields.hasErrors('apellido')}"
+                                                        th:errors="*{apellido}" ></div>
                                                  </div>
                                                </div>
                                              </div>

@@ -384,6 +384,23 @@ public class AdminController {
         return "admin/proveedores";
     }
 
+    @GetMapping("/verProveedor")
+    public String verProveedor(Model model, @RequestParam("id") int id) {
+
+        Optional<Proveedor> optProveedor = proveedorRepository.findById(id);
+
+        if (optProveedor.isPresent()) {
+            Proveedor proveedor = optProveedor.get();
+            model.addAttribute("proveedor", proveedor);
+
+            return "/admin/verProveedor";
+        } else {
+            return "redirect:/admin/proveedores";
+        }
+    }
+
+
+
 
     @GetMapping(value = "nuevoProveedor")
     public String nuevoProveedor(Model model, @ModelAttribute("proveedor") Proveedor proveedor) {
@@ -399,10 +416,10 @@ public class AdminController {
         Optional<Proveedor> optProveedor = proveedorRepository.findById(id);
         if (optProveedor.isPresent()) {
             proveedor = optProveedor.get();
+            model.addAttribute("id", proveedor);
             model.addAttribute("proveedor", proveedor);
-            model.addAttribute("listaProveedores", proveedorRepository.findAll());
 
-            return "admin2/newFrmP";
+            return "admin/editarProveedor";
         } else {
             return "redirect:/admin/proveedores";
         }
