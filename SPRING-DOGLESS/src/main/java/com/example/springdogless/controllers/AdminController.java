@@ -401,6 +401,7 @@ public class AdminController {
 
 
 
+
     @GetMapping(value = "nuevoProveedor")
     public String nuevoProveedor(Model model, @ModelAttribute("proveedor") Proveedor proveedor) {
         List<Proveedor> listaProveedores = proveedorRepository.findAll();
@@ -459,6 +460,20 @@ public class AdminController {
         return "admin/productos";
     }
 
+
+    @GetMapping("/verProducto")
+    public String verProducto(Model model, @RequestParam("id") int id) {
+
+        Optional<Producto> optProducto = productRepository.findById(id);
+
+        if (optProducto.isPresent()) {
+            Producto producto = optProducto.get();
+            model.addAttribute("producto", producto);
+            return "admin/verProducto";
+        } else {
+            return "redirect:/admin/adminzonal";
+        }
+    }
     @GetMapping(value = "nuevoProducto")
     public String nuevoProductoFrm(Model model, @ModelAttribute("product") Producto producto) {
         model.addAttribute("listaProductos", productRepository.findAll());
