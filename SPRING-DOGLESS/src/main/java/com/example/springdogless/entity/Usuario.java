@@ -23,7 +23,7 @@ public class Usuario {
     private String telefono;
     private String direccion;
     private String contrasena;
-
+    private Integer borrado;
     @ManyToOne
     @JoinColumn(name = "idroles")
     private Rol rol;
