@@ -455,7 +455,8 @@ public class AdminController {
     //Vista de productos
     @GetMapping("/productos")
     public String listaProductos(Model model, @RequestParam(required = false) String zona) {
-        model.addAttribute("listaProductosCompleto", productRepository.ProductosCompleto());
+        model.addAttribute("listaProductos", productRepository.findByproductosinBorrar(1));
+
         return "admin/productos";
     }
 
