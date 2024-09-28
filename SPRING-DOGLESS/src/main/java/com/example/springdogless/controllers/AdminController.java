@@ -44,6 +44,11 @@ public class AdminController {
     @Autowired
     private ProductRepository productRepository;
 
+    @GetMapping("/perfil_superadmin")
+    public String verperfiladmin(Model model) {
+        return "admin/perfil_superadmin"; // Esto renderiza la vista perfil_superadmin.html
+    }
+
     @GetMapping({"/lista", ""})
     public String listaUsuariosTotales(Model model, @RequestParam(required = false) String zona) {
         model.addAttribute("listaUsuarios", usuarioRepository.findByRol(4));
@@ -706,6 +711,7 @@ public class AdminController {
         /*model.addAttribute("listaProveedores", proveedorRepository.findAll());*/
         return "admin/dashboard";
     }
+
 
 
     @PostMapping("/borrarProveedores")
