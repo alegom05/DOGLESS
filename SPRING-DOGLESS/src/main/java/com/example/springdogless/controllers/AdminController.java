@@ -376,7 +376,6 @@ public class AdminController {
                 .orElseThrow(() -> new IllegalArgumentException("Distrito no encontrado"));
         usuario.setDistrito(distrito);
         usuario.setBorrado(1);
-        usuario.setBorrado(1);
         String contrasenaPorDefecto = "contraseñaPredeterminada";
         usuario.setContrasena(contrasenaPorDefecto);
         // Guardar el nuevo Adminzonal
