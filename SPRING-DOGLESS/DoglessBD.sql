@@ -654,14 +654,10 @@ VALUES
 -- Solicitudes
 INSERT INTO `dogless`.`solicitudes` (`idsolicitudes`, `veredicto`, `idusuarios`, `comentario`) 
 VALUES 
-('1', '1', '3', 'Estamos revisando tu solicitud. Te contactaremos pronto.'),
-('2', '1', '4', 'Tu solicitud ha sido aprobada. Te enviaremos más detalles.'),
-('3', '0', '5', 'Lamentablemente, no cumples con los requisitos en este momento.'),
-('4', '1', '6', 'Tu perfil está bajo revisión final. Pronto recibirás una respuesta.'),
-('5', '1', '7', 'Gracias por tu interés. Hemos recibido tu solicitud y está en proceso.'),
-('6', '1', '8', 'Enhorabuena, tu solicitud ha sido aceptada. Nos pondremos en contacto contigo.'),
-('7', '0', '9', 'No has sido seleccionado en esta ocasión. Te invitamos a postular nuevamente en el futuro.'),
-('8', '1', '10', 'Tu solicitud ha sido aprobada condicionalmente, faltan documentos.'),
+('5', '1', '16', 'Gracias por tu interés. Hemos recibido tu solicitud y está en proceso.'),
+('6', '1', '15', 'Enhorabuena, tu solicitud ha sido aceptada. Nos pondremos en contacto contigo.'),
+('7', '0', '14', 'No has sido seleccionado en esta ocasión. Te invitamos a postular nuevamente en el futuro.'),
+('8', '1', '13', 'Tu solicitud ha sido aprobada condicionalmente, faltan documentos.'),
 ('9', '1', '11', 'Estamos evaluando tu perfil. Te informaremos en los próximos días.'),
 ('10', '1', '12', 'Has sido aceptado. Pronto recibirás más información.');
 

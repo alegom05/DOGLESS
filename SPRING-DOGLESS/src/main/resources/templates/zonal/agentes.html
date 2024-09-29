@@ -70,13 +70,6 @@
                 <div class="card">
 
                   <div class="card-body">
-
-                    <a class="btn btn-primary btn-round ms-auto" th:href="@{/zonal/nuevoAgente}">
-                    <i class="fa fa-plus"></i>
-                      Agregar Agente
-                    </a>
-                    <div class="table-responsive">
-                    <br>
                     <div class="table-responsive">
                       <style>
                         /* Estilo para alinear los botones horizontalmente */
@@ -114,7 +107,7 @@
                                 </button>
                                 <!-- Dropdown oscuro -->
                                 <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
-                                  <li><a class="dropdown-item" th:href="@{'/admin/veragente' + '?id=' + ${usuario.id}}">Ver</a></li>
+                                  <li><a class="dropdown-item" th:href="@{'/zonal/veragente' + '?id=' + ${usuario.id}}">Ver</a></li>
                                   <li><a class="dropdown-item" th:href="@{'/admin/editagente' + '?id=' + ${usuario.id}}">Editar</a></li>
                                   <li><a href="#" class="dropdown-item" data-toggle="modal"  data-target="#confirmDeleteModal" th:data-id="${usuario.id}">Eliminar</a></li>
 

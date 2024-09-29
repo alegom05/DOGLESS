@@ -28,7 +28,7 @@ public class AdminController {
     @Autowired
     UsuarioRepository usuarioRepository;
     @Autowired
-    ZonaRepository zonaRepository;
+    ZonalRepository zonaRepository;
     @Autowired
     DistritoRepository distritoRepository;
     @Autowired
