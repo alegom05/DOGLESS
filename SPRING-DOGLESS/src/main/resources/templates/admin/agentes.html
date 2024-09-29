@@ -45,12 +45,12 @@
   <body>
     <div class="wrapper">
       <!-- Reemplaza barra lateral con el fragmento de Thymeleaf -->
-      <div th:replace="~{admin/fragments/barralateralzonal :: body(activePage='usuarios', activeSubPage='agentes')}"></div>
+      <div th:replace="~{admin/fragments/barralateraladmin :: body(activePage='usuarios', activeSubPage='agentes')}"></div>
       <!-- Fin barra lateral -->
 
       <div class="main-panel">
         <!-- Reemplaza navbar con el fragmento de Thymeleaf -->
-        <div th:replace="~{admin/fragments/navbarheaderzonal :: fragment}"></div>
+        <div th:replace="~{admin/fragments/navbarheaderadmin :: fragment}"></div>
         <!-- Fin Navbar -->
 
         <!-- Texto o contenido central -->
@@ -70,13 +70,6 @@
                 <div class="card">
 
                   <div class="card-body">
-
-                    <a class="btn btn-primary btn-round ms-auto" th:href="@{/zonal/nuevoAgente}">
-                    <i class="fa fa-plus"></i>
-                      Agregar Agente
-                    </a>
-                    <div class="table-responsive">
-                    <br>
                     <div class="table-responsive">
                       <style>
                         /* Estilo para alinear los botones horizontalmente */
