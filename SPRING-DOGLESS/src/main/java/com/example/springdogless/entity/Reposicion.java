@@ -13,7 +13,7 @@ public class Reposicion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idreposicion")
-    private Integer id;
+    private Integer idreposicion;
 
     @Column(name = "cantidad", length = 45)
     private String cantidad;

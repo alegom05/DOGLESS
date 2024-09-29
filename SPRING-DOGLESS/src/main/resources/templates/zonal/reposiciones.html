@@ -70,7 +70,6 @@
                 <div class="card">
 
                   <div class="card-body">
-
                     <a class="btn btn-primary btn-round ms-auto" th:href="@{/admin/new}">
                     <i class="fa fa-plus"></i>
                       Agregar Reposición
@@ -116,12 +115,11 @@
                                 <!-- Dropdown oscuro -->
 
                                 <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
-                                  <!--
-                                 <li><a class="dropdown-item" th:href="@{'/zonal/verReposicion' + '?id=' + ${reposicion.id}}">Ver</a></li>
-                                 -->
+                                 <!--
+                                  <li><a class="dropdown-item" th:href="@{'/zonal/verReposicion' + '?id=' + ${reposicion.id}}">Ver</a></li>
                                   <li><a class="dropdown-item" th:href="@{'/zonal/editarReposicion' + '?id=' + ${reposicion.id}}">Editar</a></li>
                                   <li><a href="#" class="dropdown-item" data-toggle="modal"  data-target="#confirmDeleteModal" th:data-id="${reposicion.id}">Eliminar</a></li>
-
+                                -->
                                   <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#aceptarModal">Espiar</a></li>
                                 </ul>
                               </div>
@@ -145,7 +143,7 @@
 
                             </div>
                             <div class="modal-footer">
-                              <form id="deleteForm" method="post" th:action="@{'/zonal/borrarReposicion'}" novalidate>
+                              <form id="deleteForm" method="post" th:action="@{'/admin/deleteagente'}" novalidate>
                                 <input type="hidden" name="id" id="userId">
                                 <button type="submit" class="btn btn-dark">Eliminar</button>
                               </form>
