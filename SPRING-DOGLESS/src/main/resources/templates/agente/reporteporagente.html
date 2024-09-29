@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Reporte - Ordenes por agente</title>
+    <meta
+      content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
+      name="viewport"
+    />
+    <link
+      rel="icon"
+      href="assets/img/kaiadmin/logodogless.ico"
+      type="image/x-icon"
+    />
+
+    <!-- Fonts and icons -->
+    <script src="assets/js/plugin/webfont/webfont.min.js"></script>
+    <script>
+      WebFont.load({
+        google: { families: ["Public Sans:300,400,500,600,700"] },
+        custom: {
+          families: [
+            "Font Awesome 5 Solid",
+            "Font Awesome 5 Regular",
+            "Font Awesome 5 Brands",
+            "simple-line-icons",
+          ],
+          urls: ["assets/css/fonts.min.css"],
+        },
+        active: function () {
+          sessionStorage.fonts = true;
+        },
+      });
+    </script>
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="assets/css/plugins.min.css" />
+    <link rel="stylesheet" href="assets/css/kaiadmin.min.css" />
+
+    
+  </head>
+  <body>
+    <div class="wrapper">
+      <!-- Barra lateral -->
+      <div class="sidebar sidebar-style-2" data-background-color="dark">
+        <div class="sidebar-logo">
+          <!-- Logo de cabecera -->
+          <div class="logo-header" data-background-color="dark">
+            <a href="paginaprincipal.html" class="logo">
+              <img
+                src="assets/img/kaiadmin/slogan_white_v3.png"
+                alt="navbar brand"
+                class="navbar-brand"
+                height="50"
+              />
+            </a>
+            <div class="nav-toggle">
+              <button class="btn btn-toggle toggle-sidebar">
+                <i class="gg-menu-right"></i>
+              </button>
+              <button class="btn btn-toggle sidenav-toggler">
+                <i class="gg-menu-left"></i>
+              </button>
+            </div>
+            <button class="topbar-toggler more">
+              <i class="gg-more-vertical-alt"></i>
+            </button>
+          </div>
+          <!-- End Logo cabecera -->
+        </div>
+        <div class="sidebar-wrapper scrollbar scrollbar-inner">
+          <div class="sidebar-content">
+            <ul class="nav nav-secondary">
+              <!-- Barra de navegacion lateral-->
+              <li class="nav-item">
+                <a href="paginaprincipal.html">
+                  <i class="fas fa-home"></i>
+                  <p>Página principal</p>
+                </a>
+              </li> 
+              <li class="nav-item">
+                <a href="dashboard.html">
+                  <i class="fas fa-chart-bar"></i>
+                  <p>Dashboard</p>
+                </a>
+              </li> 
+              <li class="nav-item">
+                <a href="ordenes.html">
+                  <i class="fas fa-boxes"></i>
+                  <p>Órdenes</p>
+                </a>
+              </li> 
+              <li class="nav-item">
+                <a data-bs-toggle="collapse" href="#tables1">
+                  <i class="fas fa-users"></i>
+                  <p>Usuarios</p>
+                  <span class="caret"></span>
+                </a>
+                <div class="collapse" id="tables1">
+                  <ul class="nav nav-collapse">
+                    <li>
+                      <a href="usuarios_asignados.html">
+                        <span class="sub-item">Asignados</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="usuarios_baneados.html">
+                        <span class="sub-item">Baneados</span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+              <li class="nav-item">
+                <a href="tables/chats.html">
+                  <i class="fas fa-envelope"></i>
+                  <p>Chats</p>
+                  <span class="badge badge-success">5</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a data-bs-toggle="collapse" href="#tables2">
+                  <i class="fas fa-file"></i>
+                  <p>Reportes</p>
+                  <span class="caret"></span>
+                </a>
+                <div class="collapse" id="tables2">
+                  <ul class="nav nav-collapse">
+                    <li>
+                      <a href="tables/reportesguardados.html">
+                        <span class="sub-item">Reportes guardados</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="tables/reportesordenes.html">
+                        <span class="sub-item">Reportes de órdenes</span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+    
+              <li class="nav-item">
+                <a href="notificacionesagente.html">
+                  <i class="fas fa-bell"></i>
+                  <p>Notificaciones</p>
+                  <span class="badge badge-secondary">6</span>
+                </a>
+              </li>
+              
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!-- Fin barra lateral -->
+
+      <div class="main-panel">
+        <div class="main-header">
+          <div class="main-header-logo">
+            <!-- Logo Header -->
+            <div class="logo-header" data-background-color="dark">
+              <a href="paginaprincipal.html" class="logo">
+                <img
+                  src="assets/img/kaiadmin/logodogless.svg"
+                  alt="navbar brand"
+                  class="navbar-brand"
+                  height="20"
+                />
+              </a>
+              <div class="nav-toggle">
+                <button class="btn btn-toggle toggle-sidebar">
+                  <i class="gg-menu-right"></i>
+                </button>
+                <button class="btn btn-toggle sidenav-toggler">
+                  <i class="gg-menu-left"></i>
+                </button>
+              </div>
+              <button class="topbar-toggler more">
+                <i class="gg-more-vertical-alt"></i>
+              </button>
+            </div>
+            <!-- End Logo Header -->
+          </div>
+          <!-- Navbar superior -->
+          <nav
+            class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom"
+            data-background-color="dark">
+            <div class="container-fluid">
+              <nav
+                class="navbar navbar-header-left navbar-expand-lg navbar-form nav-search p-0 d-none d-lg-flex"
+              >
+              </nav>
+
+              <ul class="navbar-nav topbar-nav ms-md-auto align-items-center">
+                <li class="nav-item topbar-icon dropdown hidden-caret">
+                  <a
+                    class="nav-link dropdown-toggle"
+                    href="#"
+                    id="messageDropdown"
+                    role="button"
+                    data-bs-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                  >
+                    <i class="fa fa-envelope"></i>
+                  </a>
+                  <ul
+                    class="dropdown-menu messages-notif-box animated fadeIn"
+                    aria-labelledby="messageDropdown"
+                  >
+                    <li>
+                      <div
+                        class="dropdown-title d-flex justify-content-between align-items-center"
+                      >
+                        Mensajes
+                        <a href="#" class="small">Marcar todo como leído</a>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="message-notif-scroll scrollbar-outer">
+                        <div class="notif-center">
+                          <a href="#">
+                            <div class="notif-img">
+                              <img
+                                src="assets/img/jm_denis.jpg"
+                                alt="Img Profile"
+                              />
+                            </div>
+                            <div class="notif-content">
+                              <span class="subject">Jimmy Denis</span>
+                              <span class="block"> Mi orden no llega </span>
+                              <span class="time">hace 5 minutos</span>
+                            </div>
+                          </a>
+                          <a href="#">
+                            <div class="notif-img">
+                              <img
+                                src="assets/img/chadengle.jpg"
+                                alt="Img Profile"
+                              />
+                            </div>
+                            <div class="notif-content">
+                              <span class="subject">Chad</span>
+                              <span class="block"> Gracias por la ayuda </span>
+                              <span class="time">hace 12 minutos</span>
+                            </div>
+                          </a>
+                          <a href="#">
+                            <div class="notif-img">
+                              <img
+                                src="assets/img/mlane.jpg"
+                                alt="Img Profile"
+                              />
+                            </div>
+                            <div class="notif-content">
+                              <span class="subject">Jhon Doe</span>
+                              <span class="block">
+                                Estoy listo para recoger mi orden
+                              </span>
+                              <span class="time">hace 13 minutos</span>
+                            </div>
+                          </a>
+                          <a href="#">
+                            <div class="notif-img">
+                              <img
+                                src="assets/img/talha.jpg"
+                                alt="Img Profile"
+                              />
+                            </div>
+                            <div class="notif-content">
+                              <span class="subject">Talha</span>
+                              <span class="block"> Puede ayudarme? </span>
+                              <span class="time">hace 17 minutos</span>
+                            </div>
+                          </a>
+                        </div>
+                      </div>
+                    </li>
+                    <li>
+                      <a class="see-all" href="tables/chatsagente.html"
+                        >ver todos los mensajes<i class="fa fa-angle-right"></i>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+                <li class="nav-item topbar-icon dropdown hidden-caret">
+                  <a
+                    class="nav-link dropdown-toggle"
+                    href="#"
+                    id="notifDropdown"
+                    role="button"
+                    data-bs-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                  >
+                    <i class="fa fa-bell"></i>
+                    <span class="notification">4</span>
+                  </a>
+                  <ul
+                    class="dropdown-menu notif-box animated fadeIn"
+                    aria-labelledby="notifDropdown"
+                  >
+                    <li>
+                      <div class="dropdown-title">
+                        Tienes 4 nuevas notificaciones
+                      </div>
+                    </li>
+                    <li>
+                      <div class="notif-scroll scrollbar-outer">
+                        <div class="notif-center">
+
+                          <a href="#">
+                            <div class="notif-icon notif-success">
+                              <i class="fa fa-comment"></i>
+                            </div>
+                            <div class="notif-content">
+                              <span class="block">
+                                Robert comentó en una orden
+                              </span>
+                              <span class="time">hace 5 minutos</span>
+                            </div>
+                          </a>
+                          <a href="#">
+                            <div class="notif-icon notif-primary">
+                              <i class="fa fa-boxes"></i>
+                            </div>
+                            <div class="notif-content">
+                              <span class="block">
+                                Nueva orden registrada
+                              </span>
+                              <span class="time">hace 12 minutos</span>
+                            </div>
+                          </a>
+                          <a href="#">
+                            <div class="notif-img">
+                              <img
+                                src="assets/img/profile2.jpg"
+                                alt="Img Profile"
+                              />
+                            </div>
+                            <div class="notif-content">
+                              <span class="block">
+                                Sandro te asignó una orden
+                              </span>
+                              <span class="time">hace 15 minutos</span>
+                            </div>
+                          </a>
+                          <a href="#">
+                            <div class="notif-icon notif-danger">
+                              <i class="fa fa-heart"></i>
+                            </div>
+                            <div class="notif-content">
+                              <span class="block"> Fabricio recibió su orden </span>
+                              <span class="time">hace 17 minutos</span>
+                            </div>
+                          </a>
+                        </div>
+                      </div>
+                    </li>
+                    <li>
+                      <a class="see-all" href="notificacionesagente.html"
+                        >Ver todas las notificaciones<i class="fa fa-angle-right"></i>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+              
+
+                <li class="nav-item topbar-user dropdown hidden-caret">
+                  <a
+                    class="dropdown-toggle profile-pic"
+                    data-bs-toggle="dropdown"
+                    href="#"
+                    aria-expanded="false"
+                  >
+                    <div class="avatar-sm">
+                      <img
+                        src="assets/img/perfil_nilo.jpg"
+                        alt="..."
+                        class="avatar-img rounded-circle"
+                      />
+                    </div>
+                    <span class="profile-username">
+                      <span class="fw-bold">Nilo Cori</span>
+                      <div class="fw-bold">Agente - Zona Norte</div>
+                    </span>
+                  </a>
+                  <ul class="dropdown-menu dropdown-user animated fadeIn">
+                    <div class="dropdown-user-scroll scrollbar-outer">
+                      <li>
+                        <div class="user-box">
+                          <div class="avatar-lg">
+                            <img
+                              src="assets/img/perfil_nilo.jpg"
+                              alt="image profile"
+                              class="avatar-img rounded"
+                            />
+                          </div>
+                          <div class="u-text" style="color: white;">
+                            <h4>Nilo</h4>
+                            <p class="text-info" style="color: white;">nilo.cori@gmail.com</p>
+                            <a href="perfil_agente.html" class="btn btn-xs btn-secondary btn-sm">Ver perfil</a>
+                          </div>
+                          
+                        </div>
+                      </li>
+                      <li>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Ajustes</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Cerrar Sesion</a>
+                      </li>
+                    </div>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </nav>
+          <!-- Fin Navbar -->
+        </div>
+        <!--  contenido central -->
+        <!--  contenido central -->
+        <div class="container">
+            <div class="page-inner">
+                <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
+                    <div>
+                        <h3 class="fw-bold mb-3">Reporte de Órdenes por agente</h3>
+                        <h6 class="op-7 mb-2">
+                            Genera y visualiza un reporte correspondiente a las órdenes que actualmente Gestionas.
+                        </h6>
+                    </div>
+                </div>
+
+                <!-- Buttons aligned to the right -->
+                <div class="d-flex justify-content-end mb-3">
+                    <div class="d-flex">
+                        <button id="generateReportBtn" class="btn btn-secondary me-2">Generar reporte</button>
+                        <a href="reportes.html" class="btn btn-primary">Regresar</a>
+                    </div>
+                </div>
+
+                <!-- Preview Section (acts like a frame within the page) -->
+                <div>
+                    <h4 class="fw-bold mb-3">Previsualización:</h4>
+                </div>
+                <div class="card mt-4" style="width: 90%; margin: 0 auto;">
+                    <div class="card-header bg-info text-white">
+                        <h4 class="card-title text-center">Órdenes Gestionadas por agente</h4>
+                        <h6 class="text-center">(Agente Nilo Cori - Zona Norte)</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered text-center">
+                                <thead class="table-info">
+                                    <tr>
+                                        <th>Número de orden</th>
+                                        <th>Número de items</th>
+                                        <th>Usuario</th>
+                                        <th>Fecha de generación</th>
+                                        <th>Estado de orden</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1499</td>
+                                        <td>3</td>
+                                        <td>Javier Perez</td>
+                                        <td>14/11/2024</td>
+                                        <td class="text-warning">EN VALIDACIÓN</td>
+                                    </tr>
+                                    <tr>
+                                        <td>1236</td>
+                                        <td>1</td>
+                                        <td>Red Richards</td>
+                                        <td>14/11/2024</td>
+                                        <td class="text-warning">EN VALIDACIÓN</td>
+                                    </tr>
+                                    <tr>
+                                        <td>545</td>
+                                        <td>8</td>
+                                        <td>Peter Pan</td>
+                                        <td>14/11/2024</td>
+                                        <td class="text-success">EN PROCESO</td>
+                                    </tr>
+                                    <tr>
+                                        <td>569</td>
+                                        <td>9</td>
+                                        <td>Peter Parker</td>
+                                        <td>14/11/2024</td>
+                                        <td class="text-info">ARRIBO AL PAÍS</td>
+                                    </tr>
+                                    <tr>
+                                        <td>1456</td>
+                                        <td>2</td>
+                                        <td>Misterio Rey</td>
+                                        <td>14/11/2024</td>
+                                        <td class="text-primary">EN ADUANAS</td>
+                                    </tr>
+                                    <tr>
+                                        <td>1499</td>
+                                        <td>1</td>
+                                        <td>Melania Reyes</td>
+                                        <td>14/11/2024</td>
+                                        <td class="text-success">RECIBIDO</td>
+                                    </tr>
+                                    <tr>
+                                        <td>478</td>
+                                        <td>6</td>
+                                        <td>Jairo Rocop</td>
+                                        <td>14/11/2024</td>
+                                        <td class="text-danger">CANCELADO</td>
+                                    </tr>
+                                    <tr>
+                                        <td>459</td>
+                                        <td>2</td>
+                                        <td>Yani Yoru</td>
+                                        <td>14/11/2024</td>
+                                        <td class="text-success">RECIBIDO</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Save options -->
+                <div class="d-flex justify-content-center mt-4">
+                    <button class="btn btn-danger me-2">Guardar como PDF</button>
+                    <button class="btn btn-success">Guardar como Excel</button>
+                </div>
+            </div>
+        </div>
+          
+  
+
+
+
+        <!-- Pie de página -->
+        <footer class="footer">
+          <div class="container-fluid d-flex justify-content-center">
+            <nav class="pull-left">
+              <ul class="nav">
+              
+                <li class="nav-item">
+                  <a class="nav-link" href="ruta/a/informacion-de-contacto.html"> Contacto </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="ruta/a/politica-de-privacidad.html"> Política de privacidad </a>
+                </li>
+              </ul>
+            </nav>
+
+          </div>
+        </footer>
+      </div>
+    </div>
+
+
+
+    <!--Core JS Files   -->
+    <script src="assets/js/core/jquery-3.7.1.min.js"></script>
+    <script src="assets/js/core/popper.min.js"></script>
+    <script src="assets/js/core/bootstrap.min.js"></script>
+
+    <!-- jQuery Scrollbar -->
+    <script src="assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+    <!-- Datatables -->
+    <script src="assets/js/plugin/datatables/datatables.min.js"></script>
+
+    <!-- jQuery Vector Maps -->
+    <script src="assets/js/plugin/jsvectormap/jsvectormap.min.js"></script>
+    <script src="assets/js/plugin/jsvectormap/world.js"></script>
+
+    <!-- Kaiadmin JS -->
+    <script src="assets/js/kaiadmin.min.js"></script>
+    <script>
+  
+            // Function to refresh the preview
+            function refreshPreview() {
+                // Logic to refresh the preview goes here.
+                // For now, it simply reloads the page.
+                window.location.reload();
+            }
+
+            // Add event listener to the 'Generar reporte' button to refresh the preview
+            document.getElementById("generateReportBtn").addEventListener("click", function() {
+                refreshPreview();
+            });
+
+
+    </script>
+  </body>
+</html>
