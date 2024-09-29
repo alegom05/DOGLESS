@@ -146,13 +146,13 @@
             <ul class="nav nav-secondary">
               <!-- Barra de navegacion lateral-->
               <li class="nav-item" th:classappend="${activePage == 'home' ? 'active submenu' : ''}">
-                <a href="paginaprincipal.html">
+                <a th:href="@{/agente}">
                   <i class="fas fa-home"></i>
                   <p>Página principal</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="dashboard.html" th:classappend="${activePage == 'dashboard' ? 'active submenu' : ''}">
+                <a th:href="@{/agente/dashboard}" th:classappend="${activePage == 'dashboard' ? 'active submenu' : ''}">
                   <i class="fas fa-chart-bar"></i>
                   <p>Dashboard</p>
                 </a>

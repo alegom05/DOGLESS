@@ -1,5 +1,6 @@
 package com.example.springdogless.controllers;
 
+import com.example.springdogless.Repository.ProductRepository;
 import com.example.springdogless.Repository.ReposicionRepository;
 import com.example.springdogless.Repository.UsuarioRepository;
 import com.example.springdogless.entity.Reposicion;
@@ -24,6 +25,8 @@ public class ZonalController {
     UsuarioRepository usuarioRepository;
     @Autowired
     ReposicionRepository reposicionRepository;
+    @Autowired
+    ProductRepository productRepository;
     @GetMapping(value = "agentes")
     public String listaAgentes(Model model) {
         model.addAttribute("listaAgentes", usuarioRepository.findByRol_RolAndBorrado("Agente",1));
@@ -92,26 +95,26 @@ public class ZonalController {
         return "/zonal/reposiciones";
     }
 
-    /*
-    @GetMapping("/edit")
-    public String editarTransportista(@ModelAttribute("product") Product product,
+
+    @GetMapping("/editarReposiciones")
+    public String editarReposiciones(@ModelAttribute("reposicion") Reposicion reposicion,
                                       Model model, @RequestParam("id") int id) {
 
-        Optional<Product> optProduct = productRepository.findById(id);
+        Optional<Reposicion> optReposicion = reposicionRepository.findById(id);
 
-        if (optProduct.isPresent()) {
-            product = optProduct.get();
-            model.addAttribute("product", product);
-            model.addAttribute("listaCategorias", categoryRepository.findAll());
-            model.addAttribute("listaProveedores", supplierRepository.findAll());
-            return "product/editFrm";
+        if (optReposicion.isPresent()) {
+            reposicion = optReposicion.get();
+            model.addAttribute("reposicion", reposicion);
+            model.addAttribute("listaReposiciones", reposicionRepository.findAll());
+            model.addAttribute("listaProductos", productRepository.findAll());
+            return "reposiciones/editarReposiciones";
         } else {
-            return "redirect:/product";
+            return "redirect:/reposiciones";
         }
     }
-    */
-    @GetMapping("/borrarReposicion")
-    public String borrarTransportista(@RequestParam("id") int id,
+
+    @PostMapping("/borrarReposicion")
+    public String borrarReposicion(@RequestParam("id") int id,
                                       RedirectAttributes attr) {
 
         Optional<Reposicion> optReposicion = reposicionRepository.findById(id);
