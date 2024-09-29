@@ -713,8 +713,6 @@ public class AdminController {
         return "admin/dashboard";
     }
     */
-
-
         /*model.addAttribute("listaProveedores", proveedorRepository.findAll());*/
         return "admin/dashboard";
     }
