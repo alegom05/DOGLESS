@@ -25,7 +25,7 @@ public class Reposicion {
     private String aprobar;
 
     @ManyToOne
-    @JoinColumn(name = "productos_idproductos", nullable = false)
+    @JoinColumn(name = "idproductos", nullable = false)
     private Producto producto;
 
     @ManyToOne

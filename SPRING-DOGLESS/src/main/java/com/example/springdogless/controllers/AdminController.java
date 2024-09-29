@@ -40,7 +40,7 @@ public class AdminController {
     @Autowired
     StockRepository stockRepository;
     @Autowired
-    ReposicionesRepository reposicionesRepository;
+    ReposicionRepository reposicionesRepository;
     @Autowired
     private ProductRepository productRepository;
 

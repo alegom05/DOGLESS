@@ -1,5 +1,6 @@
 package com.example.springdogless.controllers;
 
+import com.example.springdogless.Repository.ReposicionRepository;
 import com.example.springdogless.Repository.UsuarioRepository;
 import com.example.springdogless.entity.Usuario;
 import jakarta.validation.Valid;
@@ -19,6 +20,8 @@ public class ZonalController {
 
     @Autowired
     UsuarioRepository usuarioRepository;
+    @Autowired
+    ReposicionRepository reposicionRepository;
     @GetMapping(value = "agentes")
     public String listaAgentes(Model model) {
         model.addAttribute("listaAgentes", usuarioRepository.findByRol_Rol("Agente"));
@@ -72,9 +75,17 @@ public class ZonalController {
         }
     }
 
+    //Importaciones
     @GetMapping(value = "importaciones")
     public String listaImportaciones(Model model) {
         model.addAttribute("listaImportaciones", usuarioRepository.findByRol_Rol("Agente"));
+        return "/zonal/importaciones";
+    }
+
+    //Reposiciones
+    @GetMapping(value = "reposiciones")
+    public String listaReposiciones(Model model) {
+        model.addAttribute("listaReposiciones", reposicionRepository.findAll());
         return "/zonal/importaciones";
     }
 
