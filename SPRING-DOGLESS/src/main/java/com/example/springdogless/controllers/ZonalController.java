@@ -86,7 +86,7 @@ public class ZonalController {
     @GetMapping(value = "reposiciones")
     public String listaReposiciones(Model model) {
         model.addAttribute("listaReposiciones", reposicionRepository.findAll());
-        return "/zonal/importaciones";
+        return "/zonal/reposiciones";
     }
 
     /*
