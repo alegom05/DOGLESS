@@ -31,4 +31,6 @@ public class Reposicion {
     @ManyToOne
     @JoinColumn(name = "idzonas", nullable = false)
     private Zona zona;
+
+    private Integer borrado;
 }

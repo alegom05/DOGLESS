@@ -465,6 +465,7 @@ CREATE TABLE IF NOT EXISTS `dogless`.`reposicion` (
   `aprobar` VARCHAR(45) NULL,
   `idproductos` INT NOT NULL,
   `idzonas` INT NOT NULL,
+  `borrado` INT DEFAULT 1,
   PRIMARY KEY (`idreposicion`),
   INDEX `fk_reposicion_productos1_idx` (`idproductos` ASC) VISIBLE,
   INDEX `fk_reposicion_zonas1_idx` (`idzonas` ASC) VISIBLE,

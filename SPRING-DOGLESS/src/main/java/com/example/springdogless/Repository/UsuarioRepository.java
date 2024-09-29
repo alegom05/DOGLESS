@@ -15,7 +15,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer>{
     @Query(nativeQuery = true, value = "select * from usuarios where idroles like %?1% and borrado = 1")
     List<Usuario> findByRol(Integer idRol);
 
-    List<Usuario> findByRol_Rol(String rol);
+    List<Usuario> findByRol_RolAndBorrado(String rol, Integer borrado);
 
 
 }

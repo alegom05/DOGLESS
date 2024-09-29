@@ -2,10 +2,12 @@ package com.example.springdogless.controllers;
 
 import com.example.springdogless.Repository.ReposicionRepository;
 import com.example.springdogless.Repository.UsuarioRepository;
+import com.example.springdogless.entity.Reposicion;
 import com.example.springdogless.entity.Usuario;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +26,7 @@ public class ZonalController {
     ReposicionRepository reposicionRepository;
     @GetMapping(value = "agentes")
     public String listaAgentes(Model model) {
-        model.addAttribute("listaAgentes", usuarioRepository.findByRol_Rol("Agente"));
+        model.addAttribute("listaAgentes", usuarioRepository.findByRol_RolAndBorrado("Agente",1));
         return "/zonal/zagentes";
     }
 
@@ -78,7 +80,7 @@ public class ZonalController {
     //Importaciones
     @GetMapping(value = "importaciones")
     public String listaImportaciones(Model model) {
-        model.addAttribute("listaImportaciones", usuarioRepository.findByRol_Rol("Agente"));
+        model.addAttribute("listaImportaciones", usuarioRepository.findByRol_RolAndBorrado("Agente",1));
         return "/zonal/importaciones";
     }
 
@@ -107,19 +109,39 @@ public class ZonalController {
             return "redirect:/product";
         }
     }
-
-    @GetMapping("/delete")
+    */
+    @GetMapping("/borrarReposicion")
     public String borrarTransportista(@RequestParam("id") int id,
                                       RedirectAttributes attr) {
 
-        Optional<Product> optProduct = productRepository.findById(id);
+        Optional<Reposicion> optReposicion = reposicionRepository.findById(id);
 
-        if (optProduct.isPresent()) {
-            productRepository.deleteById(id);
+        if (optReposicion.isPresent()) {
+            Reposicion reposicion = optReposicion.get();
+            reposicion.setBorrado(0);
             attr.addFlashAttribute("msg", "Producto borrado exitosamente");
+        } else {
+            attr.addFlashAttribute("error", "Producto no encontrado");
         }
-        return "redirect:/product";
+        return "redirect:/zonal/reposiciones";
 
+    }
+
+    /*
+    @PostMapping("/deleteadminzonal")
+    public String borrarAdminZonal(@RequestParam("id") Integer id, RedirectAttributes attr) {
+        Optional<Usuario> optUsuario = usuarioRepository.findById(id);
+
+        if (optUsuario.isPresent()) {
+            Usuario usuario = optUsuario.get();
+            usuario.setBorrado(0);
+            usuarioRepository.save(usuario);
+            attr.addFlashAttribute("msg", "Admin borrado exitosamente");
+        } else {
+            attr.addFlashAttribute("error", "Admin no encontrado");
+        }
+
+        return "redirect:/admin/adminzonal";
     }
     */
 }
