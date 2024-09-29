@@ -25,7 +25,7 @@ public class ZonalController {
     @GetMapping(value = "agentes")
     public String listaAgentes(Model model) {
         model.addAttribute("listaAgentes", usuarioRepository.findByRol_Rol("Agente"));
-        return "/zonal/agentes";
+        return "/zonal/zagentes";
     }
 
     @GetMapping("/veragente")
