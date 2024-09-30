@@ -133,9 +133,9 @@
                           </tr>
                         </thead>
                         <tbody class="text-center">
-                          <tr>
-                            <td>0001</td>
-                            <td>5</td>
+                        <tr th:each="usuario : ${listaZonales}">
+                          <td th:text="${usuario.id}"></td>
+                          <td th:text="${usuario.producto.}"></td>
                             <td>José González</td>
                             <td>2024-09-01</td>
                             <td><span class="badge badge-primary">Generado</span></td>

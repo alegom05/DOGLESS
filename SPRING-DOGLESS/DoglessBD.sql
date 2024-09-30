@@ -530,7 +530,7 @@ VALUES
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `dogless`.`resenas` (
   `idresenas` INT NOT NULL AUTO_INCREMENT,
-  `productoid` INT NOT NULL,
+  `idproductos` INT NOT NULL,
   `comentario` MEDIUMTEXT NULL DEFAULT NULL,
   `satisfaccion` INT NULL DEFAULT NULL,
   `fecha` DATE NULL DEFAULT NULL,
@@ -539,10 +539,10 @@ CREATE TABLE IF NOT EXISTS `dogless`.`resenas` (
   `serecibiorapido` INT NULL DEFAULT NULL,
   `usuarioid` INT NOT NULL,
   PRIMARY KEY (`idresenas`),
-  INDEX `producto_id_idx_resenas` (`productoid` ASC) VISIBLE,
+  INDEX `producto_id_idx_resenas` (`idproductos` ASC) VISIBLE,
   INDEX `usuarioid_idx` (`usuarioid` ASC) VISIBLE,
   CONSTRAINT `fk_producto_id_resenas`
-    FOREIGN KEY (`productoid`)
+    FOREIGN KEY (`idproductos`)
     REFERENCES `dogless`.`productos` (`idproductos`),
   CONSTRAINT `usuarioid`
     FOREIGN KEY (`usuarioid`)
@@ -553,7 +553,7 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
 -- Insertar datos en la tabla `resenas`
 INSERT INTO `dogless`.`resenas` 
-(`productoid`, `comentario`, `satisfaccion`, `fecha`, `atencion`, `calidad`, `serecibiorapido`, `usuarioid`)
+(`idproductos`, `comentario`, `satisfaccion`, `fecha`, `atencion`, `calidad`, `serecibiorapido`, `usuarioid`)
 VALUES
 -- Reseñas para el producto 1: Smartphone X
 (1, 'Gran producto, funciona perfectamente y llegó a tiempo.', 5, '2024-09-01', 5, 5, 1, 35),
@@ -603,13 +603,13 @@ VALUES
 -- Table `dogless`.`stockproductos`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `dogless`.`stockproductos` (
-  `productoid` INT NOT NULL,
+  `idproductos` INT NOT NULL,
   `cantidad` INT NULL,
   `idzonas` INT NOT NULL,
-  INDEX `productoid_idx` (`productoid` ASC) VISIBLE,
+  INDEX `idproductos_idx` (`idproductos` ASC) VISIBLE,
   INDEX `fk_stockproductos_zonas1_idx` (`idzonas` ASC) VISIBLE,
-  CONSTRAINT `productoid`
-    FOREIGN KEY (`productoid`)
+  CONSTRAINT `idproductos`
+    FOREIGN KEY (`idproductos`)
     REFERENCES `dogless`.`productos` (`idproductos`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
@@ -621,7 +621,7 @@ CREATE TABLE IF NOT EXISTS `dogless`.`stockproductos` (
 ENGINE = InnoDB;
 -- Insertar datos en la tabla `stockproductos`
 INSERT INTO `dogless`.`stockproductos` 
-(`productoid`, `cantidad`, `idzonas`)
+(`idproductos`, `cantidad`, `idzonas`)
 VALUES
 -- Stock para la zonas Norte (ID zonas 1)
 (1, 50, 1), -- 50 unidades de Smartphone X en la zona Norte
