@@ -51,7 +51,7 @@ public class AgenteController {
     }
 
     @GetMapping({"dashboard"})
-    public String ElDashboardDeAgente(Model model) {
+    public String ElDashboard007(Model model) {
         return "/agente/dashboard";
     }
     /*
