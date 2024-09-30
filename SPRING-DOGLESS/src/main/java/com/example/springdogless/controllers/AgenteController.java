@@ -75,6 +75,20 @@ public class AgenteController {
         } else {
             return "redirect:/admin/ordenes";
         }
+    }
+
+    @GetMapping(value = "usuariosAsignados")
+    public String usuariosAsignados(Model model) {
+        model.addAttribute("listaOrdenes", ordenRepository.findAll());
+
+        model.addAttribute("listaAsignados", usuarioRepository.findByRol_RolAndBorrado("Usuario",1));
+
+        return "/agente/usuariosAsignados";
+    }
+
+    
+
+
 
     /*
     @GetMapping({"/lista", ""})
@@ -741,6 +755,6 @@ public class AgenteController {
     }
     */
 
-    }
+
 
 }
