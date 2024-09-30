@@ -38,6 +38,8 @@ public class Orden {
     @JoinColumn(name = "usuariosid", nullable = false)
     private Usuario usuario;
 
+
+
     /*
     @OneToMany(mappedBy = "orden", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<DetallesOrden> detallesOrden;

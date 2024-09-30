@@ -59,9 +59,22 @@ public class AgenteController {
 
     @GetMapping(value = "ordenes")
     public String listaReposiciones(Model model) {
-        model.addAttribute("listaordenes", ordenRepository.findByBorrado(1));
+        model.addAttribute("listaOrdenes", ordenRepository.findByBorrado(1));
         return "/agente/ordenes";
     }
+
+    @GetMapping("/verOrdenes")
+    public String verAdminZonal(Model model, @RequestParam("id") int id) {
+
+        Optional<Orden> optOrden = ordenRepository.findById(id);
+
+        if (optOrden.isPresent()) {
+            Orden orden = optOrden.get();
+            model.addAttribute("orden", orden);
+            return "admin/verOrdenes";
+        } else {
+            return "redirect:/admin/ordenes";
+        }
 
     /*
     @GetMapping({"/lista", ""})
@@ -728,6 +741,6 @@ public class AgenteController {
     }
     */
 
-
+    }
 
 }

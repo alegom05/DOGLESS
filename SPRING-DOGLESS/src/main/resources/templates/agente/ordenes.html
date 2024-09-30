@@ -50,6 +50,7 @@
 
 
     <div class="main-panel">
+
       <!-- Reemplaza navbar con el fragmento de Thymeleaf -->
       <div th:replace="~{agente/fragments/navbarheaderagente :: fragment}"></div>
       <!-- Fin Navbar -->
@@ -133,49 +134,46 @@
                           </tr>
                         </thead>
                         <tbody class="text-center">
-                        <tr th:each="usuario : ${listaZonales}">
-                          <td th:text="${usuario.id}"></td>
-                          <td th:text="${usuario.producto.}"></td>
-                            <td>José González</td>
-                            <td>2024-09-01</td>
-                            <td><span class="badge badge-primary">Generado</span></td>
+                          <tr th:each="orden : ${listaOrdenes}">
+                            <td th:text="${orden.id}"></td>
+
+                            <td></td>
+
+                            <td th:text="${orden.usuario.nombre + ' ' + orden.usuario.apellido}"></td>
+                            <td th:text="${orden.fecha}"></td>
                             <td>
+                            <span th:text="${orden.estado}"
+                                  th:classappend="${orden.estado == 'Recibido'} ? 'badge badge-success' :
+                                                  (${orden.estado == 'En proceso'} ? 'badge badge-primary' :
+                                                  (${orden.estado == 'En ruta'} ? 'badge badge-danger' : 'badge badge-secondary'))">
+                            </span>
+                            </td>
+
+                            <td>
+                              <!-- Dropdown con ícono -->
                               <div class="dropdown">
                                 <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                   <i class="fas fa-ellipsis-v"></i>
                                 </button>
+                                <!-- Dropdown oscuro -->
                                 <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
-                                  <li><a class="dropdown-item" href="detalledeordenagente.html">Ver detalles de orden</a></li>
-                                  <li><a class="dropdown-item" href="#">Contactar usuario</a></li>
-                                  <li><a class="dropdown-item" href="actualizarestadodeorden.html">Actualizar estado</a></li>
+                                  <li><a class="dropdown-item" th:href="@{'/admin/veradminzonal' + '?id=' + ${usuario.id}}">Ver</a></li>
+                                  <li><a class="dropdown-item" th:href="@{'/admin/editadminzonal' + '?id=' + ${usuario.id}}">Editar</a></li>
+                                  <li><a href="#" class="dropdown-item" data-toggle="modal"  data-target="#confirmDeleteModal" th:data-id="${usuario.id}">Eliminar</a></li>
+
+                                  <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#aceptarModal">Espiar</a></li>
                                 </ul>
                               </div>
                             </td>
                           </tr>
-                          <tr>
-                            <td>0002</td>
-                            <td>3</td>
-                            <td>María Rojas</td>
-                            <td>2024-08-30</td>
-                            <td><span class="badge badge-warning">En validación</span></td>
-                            <td>
-                              <div class="dropdown">
-                                <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
-                                  <i class="fas fa-ellipsis-v"></i>
-                                </button>
-                                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2">
-                                  <li><a class="dropdown-item" href="detalledeordenagente.html">Ver detalles de orden</a></li>
-                                  <li><a class="dropdown-item" href="#">Contactar usuario</a></li>
-                                  <li><a class="dropdown-item" href="actualizarestadodeorden.html">Actualizar estado</a></li>
-                                </ul>
-                              </div>
-                            </td>
-                          </tr>
+
+
                           <tr>
                             <td>0003</td>
                             <td>8</td>
                             <td>Carlos Fernández</td>
                             <td>2024-08-28</td>
+
                             <td><span class="badge badge-success">Recibido</span></td>
                             <td>
                               <div class="dropdown">
