@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Perfil Admin Zonal</title>
+    <meta
+            content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
+            name="viewport"
+    />
+    <link
+            rel="icon"
+            href="/assets/img/kaiadmin/favicon.ico"
+            type="image/x-icon"
+    />
+
+    <!-- Fonts and icons -->
+    <script src="/assets/js/plugin/webfont/webfont.min.js"></script>
+    <script>
+      WebFont.load({
+        google: { families: ["Public Sans:300,400,500,600,700"] },
+        custom: {
+          families: [
+            "Font Awesome 5 Solid",
+            "Font Awesome 5 Regular",
+            "Font Awesome 5 Brands",
+            "simple-line-icons",
+          ],
+          urls: ["/assets/css/fonts.min.css"],
+        },
+        active: function () {
+          sessionStorage.fonts = true;
+        },
+      });
+    </script>
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/assets/css/plugins.min.css" />
+    <link rel="stylesheet" href="/assets/css/kaiadmin.min.css" />
+
+
+
+  </head>
+  <body>
+    <div class="wrapper">
+      <!-- Reemplaza barra lateral con el fragmento de Thymeleaf -->
+      <div th:replace="~{zonal/fragments/barralateralzonal :: body(activePage='')}"></div>
+      <!-- Fin barra lateral -->
+
+      <div class="main-panel">
+        <!-- Reemplaza navbar con el fragmento de Thymeleaf -->
+        <div th:replace="~{zonal/fragments/navbarheaderzonal :: fragment}"></div>
+        <!-- Fin Navbar -->
+
+        <!-- Texto o contenido central -->
+        <div class="container">
+          <div class="page-inner">
+            <div class="row justify-content-center">
+              <div class="col-md-8 col-lg-6">
+                <div class="card card-profile text-center">
+                  <div class="card-header" style="background-image: url('/assets/img/blogpost.jpg')">
+                    <div class="profile-picture">
+                      <div class="avatar avatar-xl">
+                        <img src="/assets/img/profile2.jpg" alt="..." class="avatar-img rounded-circle" />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <div class="user-profile">
+                      <div class="name">ALONSO GUEVARA</div>
+                      <div class="job">Administrador Zonal</div>
+                    </div>
+                  </div>
+
+                  <!-- Ajustar márgenes para reducir espacio -->
+                  <div class="card-body" style="padding-top: 0;">
+                    <div class="user-details text-center">
+                      <p><b>DNI:</b> 12345678</p>
+                      <p><b>Dirección:</b> Av. Arica 1351, San Miguel</p>
+                      <p><b>Teléfono:</b> +51 924795123</p>
+                      <p><b>Correo de contacto:</b> alonso.guevara@correo.com</p>
+                    </div>
+                  </div>
+
+                  <div class="card-action text-center">
+                    <a href="/zonal" class="btn btn-primary me-2">Ir a inicio</a>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Fin del contenido central -->
+
+        <!-- Pie de página -->
+        <div th:replace="~{zonal/fragments/piedepagina :: fragment}"></div>
+
+
+
+
+      </div>
+    </div>
+
+
+
+    <!--Core JS Files   -->
+    <script src="/assets/js/core/jquery-3.7.1.min.js"></script>
+    <script src="/assets/js/core/popper.min.js"></script>
+    <script src="/assets/js/core/bootstrap.min.js"></script>
+
+    <!-- jQuery Scrollbar -->
+    <script src="/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+    <!-- Datatables -->
+    <script src="/assets/js/plugin/datatables/datatables.min.js"></script>
+
+    <!-- jQuery Vector Maps -->
+    <script src="/assets/js/plugin/jsvectormap/jsvectormap.min.js"></script>
+    <script src="/assets/js/plugin/jsvectormap/world.js"></script>
+
+    <!-- Kaiadmin JS -->
+    <script src="/assets/js/kaiadmin.min.js"></script>
+
+  </body>
+</html>

@@ -45,12 +45,12 @@
   <body>
     <div class="wrapper">
       <!-- Reemplaza barra lateral con el fragmento de Thymeleaf -->
-      <div th:replace="~{admin/fragments/barralateraladmin :: body(activePage='usuarios', activeSubPage='agentes')}"></div>
+      <div th:replace="~{zonal/fragments/barralateralzonal :: body(activePage='agentes')}"></div>
       <!-- Fin barra lateral -->
 
       <div class="main-panel">
         <!-- Reemplaza navbar con el fragmento de Thymeleaf -->
-        <div th:replace="~{admin/fragments/navbarheaderadmin :: fragment}"></div>
+        <div th:replace="~{zonal/fragments/navbarheaderzonal :: fragment}"></div>
         <!-- Fin Navbar -->
 
         <!-- Texto o contenido central -->
@@ -66,7 +66,7 @@
                 <div class="card">
 
                   <div class="card-body">
-                    <form class="needs-validation" style="width: 100%; margin-left: 0%; margin-top: 3%;" action="zagentes" method="POST" novalidate>
+                    <form class="needs-validation" style="width: 100%; margin-left: 0%; margin-top: 3%;" action="agentes" method="POST" novalidate>
                       <div class="container">
                         <div class="row">
                           <div class="col">

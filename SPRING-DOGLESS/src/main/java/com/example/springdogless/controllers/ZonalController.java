@@ -24,10 +24,32 @@ public class ZonalController {
     UsuarioRepository usuarioRepository;
     @Autowired
     ReposicionRepository reposicionRepository;
+
+    @GetMapping({""})
+    public String PaginaPrincipal(Model model) {
+        return "zonal/paginaprincipal";
+    }
+
+    @GetMapping("/perfil_zonal")
+    public String verperfilzonal(Model model) {
+        return "zonal/perfil_zonal"; // Esto renderiza la vista perfil_superadmin.html
+    }
+
+    @GetMapping("/dashboard")
+    public String elDashboardEstaTristeYAzul(Model model, @RequestParam(required = false) String zona) {
+        /*model.addAttribute("listaProveedores", proveedorRepository.findAll());
+        return "admin/dashboard";
+    }
+    */
+        /*model.addAttribute("listaProveedores", proveedorRepository.findAll());*/
+        return "zonal/dashboard";
+    }
+
+
     @GetMapping(value = "agentes")
     public String listaAgentes(Model model) {
         model.addAttribute("listaAgentes", usuarioRepository.findByRol_RolAndBorrado("Agente",1));
-        return "/zonal/zagentes";
+        return "/zonal/agentes";
     }
 
     @GetMapping("/veragente")
