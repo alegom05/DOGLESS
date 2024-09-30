@@ -86,7 +86,14 @@ public class AgenteController {
         return "/agente/usuariosAsignados";
     }
 
-    
+    @GetMapping(value = "usuariosBaneados")
+    public String usuariosBaneados(Model model) {
+        model.addAttribute("listaOrdenes", ordenRepository.findAll());
+
+        model.addAttribute("listaBaneados", usuarioRepository.findByRol_RolAndBorrado("Usuario",1));
+
+        return "/agente/usuariosBaneados";
+    }
 
 
 
