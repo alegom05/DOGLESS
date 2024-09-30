@@ -32,6 +32,8 @@ public class Orden {
     @Column
     private String metodopago;
 
+    private Integer borrado;
+
     @ManyToOne
     @JoinColumn(name = "usuariosid", nullable = false)
     private Usuario usuario;

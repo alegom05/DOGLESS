@@ -310,6 +310,7 @@ CREATE TABLE IF NOT EXISTS `dogless`.`ordenes` (
   `total` DECIMAL(10,2) NULL DEFAULT NULL,
   `metodopago` ENUM('tarjeta') NULL DEFAULT NULL,
   `usuariosid` INT NOT NULL,
+  `borrado` INT DEFAULT 1,
   PRIMARY KEY (`idordenes`),
   INDEX `usuariosid_idx` (`usuariosid` ASC) VISIBLE,
   CONSTRAINT `usuariosid`

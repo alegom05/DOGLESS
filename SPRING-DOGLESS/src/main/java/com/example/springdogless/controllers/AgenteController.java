@@ -42,7 +42,9 @@ public class AgenteController {
     @Autowired
     ReposicionRepository reposicionesRepository;
     @Autowired
-    private ProductRepository productRepository;
+    ProductRepository productRepository;
+    @Autowired
+    OrdenRepository ordenRepository;
 
 
     @GetMapping({""})
@@ -54,6 +56,13 @@ public class AgenteController {
     public String ElDashboard007(Model model) {
         return "/agente/dashboard";
     }
+
+    @GetMapping(value = "ordenes")
+    public String listaReposiciones(Model model) {
+        model.addAttribute("listaordenes", ordenRepository.findByBorrado(1));
+        return "/agente/ordenes";
+    }
+
     /*
     @GetMapping({"/lista", ""})
     public String listaUsuariosTotales(Model model, @RequestParam(required = false) String zona) {

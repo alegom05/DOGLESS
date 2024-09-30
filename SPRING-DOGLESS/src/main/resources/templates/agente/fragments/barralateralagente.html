@@ -146,19 +146,42 @@
             <ul class="nav nav-secondary">
               <!-- Barra de navegacion lateral-->
               <li class="nav-item" th:classappend="${activePage == 'home' ? 'active submenu' : ''}">
-                <a href="paginaprincipal.html">
+                <a th:href="@{/agente}">    <!-- Fonts and icons -->
+                  <script src="/assets/js/plugin/webfont/webfont.min.js"></script>
+                  <script>
+                    WebFont.load({
+                      google: { families: ["Public Sans:300,400,500,600,700"] },
+                      custom: {
+                        families: [
+                          "Font Awesome 5 Solid",
+                          "Font Awesome 5 Regular",
+                          "Font Awesome 5 Brands",
+                          "simple-line-icons",
+                        ],
+                        urls: ["/assets/css/fonts.min.css"],
+                      },
+                      active: function () {
+                        sessionStorage.fonts = true;
+                      },
+                    });
+                  </script>
+
+                  <!-- CSS Files -->
+                  <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
+                  <link rel="stylesheet" href="/assets/css/plugins.min.css" />
+                  <link rel="stylesheet" href="/assets/css/kaiadmin.min.css" />
                   <i class="fas fa-home"></i>
                   <p>Página principal</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="dashboard.html" th:classappend="${activePage == 'dashboard' ? 'active submenu' : ''}">
+                <a th:href="@{/agente/dashboard}" th:classappend="${activePage == 'dashboard' ? 'active submenu' : ''}">
                   <i class="fas fa-chart-bar"></i>
                   <p>Dashboard</p>
                 </a>
               </li>
               <li class="nav-item" th:classappend="${activePage == 'ordenes' ? 'active submenu' : ''}">
-                <a href="ordenes.html">
+                <a th:href="@{/agente/ordenes}">
                   <i class="fas fa-boxes"></i>
                   <p>Órdenes</p>
                 </a>
