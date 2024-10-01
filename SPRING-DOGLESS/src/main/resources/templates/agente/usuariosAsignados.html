@@ -52,8 +52,8 @@
     <!-- Reemplaza navbar con el fragmento de Thymeleaf -->
     <div th:replace="~{agente/fragments/navbarheaderagente :: fragment}"></div>
     <!-- Fin Navbar -->
+
         <!--  contenido central -->
-        <!-- contenido central -->
         <div class="container">
           <div class="page-inner">
             <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
@@ -114,7 +114,7 @@
                           </tr>
                         </thead>
                         <tbody class="text-center">
-                        <tr th:each="orden : ${listaOrdenesO}">
+                        <tr th:each="orden : ${listaOrdenes}">
                             <td th:text="${orden.id}"></td>
                             <td th:text="${orden.id}"></td>
                             <td th:text="${orden.usuario.dni}"></td>
