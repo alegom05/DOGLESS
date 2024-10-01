@@ -73,14 +73,13 @@
   </head>
   <body>
     <div class="wrapper">
-      <!-- Barra lateral -->
       <!-- Reemplaza barra lateral con el fragmento de Thymeleaf -->
-      <div th:replace="~{admin/fragments/barralateraladmin :: body(activePage='usuarios', activeSubPage='agentes')}"></div>
+      <div th:replace="~{zonal/fragments/barralateralzonal :: body(activePage='')}"></div>
       <!-- Fin barra lateral -->
 
       <div class="main-panel">
         <!-- Reemplaza navbar con el fragmento de Thymeleaf -->
-        <div th:replace="~{admin/fragments/navbarheaderadmin :: fragment}"></div>
+        <div th:replace="~{zonal/fragments/navbarheaderzonal :: fragment}"></div>
         <!-- Fin Navbar -->
 
 
