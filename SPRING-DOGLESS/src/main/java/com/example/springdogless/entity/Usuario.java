@@ -25,6 +25,8 @@ public class Usuario {
     private String contrasena;
     private Integer borrado;
     private Date fechabaneo;
+    private String motivobaneo;
+
 
     @ManyToOne
     @JoinColumn(name = "idroles")
