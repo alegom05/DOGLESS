@@ -84,11 +84,10 @@
                       <table id="basic-datatables" class="display table table-striped table-hover">
                         <thead>
                           <tr>
-                            <th>Nombre</th>
-                            <th>Apellido</th>
-                            <th>DNI</th>
-                            <th>Correo Electrónico</th>
-                            <th>Distrito</th>
+                            <th>Importaciones</th>
+                            <th>Fechas de arribo</th>
+                            <th>Código de aduanas</th>
+                            <th>RUC</th>
                             <th>Acciones</th>
                           </tr>
                         </thead>
@@ -98,7 +97,6 @@
                             <td th:text="${usuario.apellido}"></td>
                             <td th:text="${usuario.dni}"></td>
                             <td th:text="${usuario.correo}"></td>
-                            <td th:text="${usuario.distrito.distrito}"></td>
                             <td>
                               <!-- Dropdown con ícono -->
                               <div class="dropdown">
