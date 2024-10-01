@@ -46,6 +46,7 @@ public class AgenteController {
 
     @GetMapping({""})
     public String PaginaPrincipal(Model model) {
+
         return "/agente/paginaprincipal";
     }
 

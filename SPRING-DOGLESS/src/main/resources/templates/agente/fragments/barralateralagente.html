@@ -4,129 +4,132 @@
   </head>
   <body>
 
-      <!-- Barra lateral -->
-      <div class="sidebar sidebar-style-2" data-background-color="dark">
-        <div class="sidebar-logo">
-          <!-- Logo de cabecera -->
-          <div class="logo-header" data-background-color="dark">
-            <a href="paginaprincipal.html" class="logo">
-              <img src="/assets/img/kaiadmin/slogan_white_v3.png" alt="navbar brand" class="navbar-brand" height="50"/>
-            </a>
-            <div class="nav-toggle">
-              <button class="btn btn-toggle toggle-sidebar"><i class="gg-menu-right"></i></button>
-              <button class="btn btn-toggle sidenav-toggler"><i class="gg-menu-left"></i></button>
-            </div>
-            <button class="topbar-toggler more"><i class="gg-more-vertical-alt"></i></button>
+    <!-- Barra lateral -->
+    <div class="sidebar sidebar-style-2" data-background-color="dark">
+      <div class="sidebar-logo">
+        <!-- Logo de cabecera -->
+        <div class="logo-header" data-background-color="dark">
+          <a href="paginaprincipal.html" class="logo">
+            <img src="/assets/img/kaiadmin/slogan_white_v3.png" alt="navbar brand" class="navbar-brand" height="50"/>
+          </a>
+          <div class="nav-toggle">
+            <button class="btn btn-toggle toggle-sidebar"><i class="gg-menu-right"></i></button>
+            <button class="btn btn-toggle sidenav-toggler"><i class="gg-menu-left"></i></button>
           </div>
-          <!-- End Logo cabecera -->
+          <button class="topbar-toggler more"><i class="gg-more-vertical-alt"></i></button>
         </div>
-        <div class="sidebar-wrapper scrollbar scrollbar-inner">
-          <div class="sidebar-content">
-            <ul class="nav nav-secondary">
-              <!-- Barra de navegacion lateral-->
-              <li class="nav-item" th:classappend="${activePage == 'home' ? 'active submenu' : ''}">
-                <a th:href="@{/agente}">    <!-- Fonts and icons -->
-                  <script src="/assets/js/plugin/webfont/webfont.min.js"></script>
-                  <script>
-                    WebFont.load({
-                      google: { families: ["Public Sans:300,400,500,600,700"] },
-                      custom: {
-                        families: [
-                          "Font Awesome 5 Solid",
-                          "Font Awesome 5 Regular",
-                          "Font Awesome 5 Brands",
-                          "simple-line-icons",
-                        ],
-                        urls: ["/assets/css/fonts.min.css"],
-                      },
-                      active: function () {
-                        sessionStorage.fonts = true;
-                      },
-                    });
-                  </script>
+        <!-- End Logo cabecera -->
+      </div>
+      <div class="sidebar-wrapper scrollbar scrollbar-inner">
+        <div class="sidebar-content">
+          <ul class="nav nav-secondary">
+            <!-- Barra de navegación lateral-->
+            <li class="nav-item" th:classappend="${activePage == 'home' ? 'active submenu' : ''}">
+              <a th:href="@{/agente}">
+                <i class="fas fa-home"></i>
+                <p>Página principal</p>
+              </a>
+            </li>
+            <li class="nav-item" th:classappend="${activePage == 'dashboard' ? 'active submenu' : ''}">
+              <a href="/agente/dashboard" >
+                <i class="fas fa-chart-bar"></i>
+                <p>Dashboard</p>
+              </a>
+            </li>
+            <li class="nav-item" th:classappend="${activePage == 'ordenes' ? 'active submenu' : ''}">
+              <a href="/agente/orden">
+                <i class="fas fa-boxes"></i>
+                <p>Órdenes</p>
+              </a>
+            </li>
+            <li class="nav-item" th:classappend="${activePage == 'usuarios' ? 'active submenu' : ''}">
+              <a data-bs-toggle="collapse" href="#tables1" th:aria-expanded="${activePage == 'usuarios' ? 'true' : 'false'}">
+                <i class="fas fa-users"></i>
+                <p>Usuarios</p>
+                <span class="caret"></span>
+              </a>
+              <div class="collapse" id="tables1" th:classappend="${activePage == 'usuarios' ? 'show' : ''}">
+                <ul class="nav nav-collapse">
+                  <li th:classappend="${activeSubPage == 'asignados' ? 'active' : ''}">
+                    <a href="/agente/usuariosAsignados">
+                      <span class="sub-item">Asignados</span>
+                    </a>
+                  </li>
+                  <li th:classappend="${activeSubPage == 'baneados' ? 'active' : ''}">
+                    <a href="/agente/usuariosBaneados">
+                      <span class="sub-item">Baneados</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+            <li class="nav-item" th:classappend="${activePage == 'chat' ? 'active submenu' : ''}">
+              <a href="tables/chat">
+                <i class="fas fa-envelope"></i>
+                <p>Chats</p>
+                <span class="badge badge-success">5</span>
+              </a>
+            </li>
+            <!-- Reportes corregido con nuevo id 'tables2' -->
+            <li class="nav-item" th:classappend="${activePage == 'reportes' ? 'active submenu' : ''}">
+              <a data-bs-toggle="collapse" href="#tables2" th:aria-expanded="${activePage == 'reportes' ? 'true' : 'false'}">
+                <i class="fas fa-file"></i>
+                <p>Reportes</p>
+                <span class="caret"></span>
+              </a>
+              <div class="collapse" id="tables2" th:classappend="${activePage == 'reportes' ? 'show' : ''}">
+                <ul class="nav nav-collapse">
+                  <li th:classappend="${activeSubPage == 'guardados' ? 'active' : ''}">
+                    <a href="/agentes/reportesguardados">
+                      <span class="sub-item">Reportes guardados</span>
+                    </a>
+                  </li>
+                  <li th:classappend="${activeSubPage == 'ordenes' ? 'active' : ''}">
+                    <a href="agentes/reportesdeordenes">
+                      <span class="sub-item">Reportes de órdenes</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </li>
 
-                  <!-- CSS Files -->
-                  <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
-                  <link rel="stylesheet" href="/assets/css/plugins.min.css" />
-                  <link rel="stylesheet" href="/assets/css/kaiadmin.min.css" />
-                  <i class="fas fa-home"></i>
-                  <p>Página principal</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a th:href="@{/agente/dashboard}" th:classappend="${activePage == 'dashboard' ? 'active submenu' : ''}">
-                  <i class="fas fa-chart-bar"></i>
-                  <p>Dashboard</p>
-                </a>
-              </li>
-              <li class="nav-item" th:classappend="${activePage == 'ordenes' ? 'active submenu' : ''}">
-                <a th:href="@{/agente/ordenes}">
-                  <i class="fas fa-boxes"></i>
-                  <p>Órdenes</p>
-                </a>
-              </li>
-              <li class="nav-item" th:classappend="${activePage == 'usuarios' ? 'active submenu' : ''}">
-                <a data-bs-toggle="collapse" href="#tables1" th:aria-expanded="${activePage == 'usuarios' ? 'true' : 'false'}">
-                  <i class="fas fa-users"></i>
-                  <p>Usuarios</p>
-                  <span class="caret"></span>
-                </a>
-                <div class="collapse" id="tables1" th:classappend="${activePage == 'usuarios' ? 'show' : ''}">
-                  <ul class="nav nav-collapse">
-                    <li th:classappend="${activeSubPage == 'asignados' ? 'active' : ''}">
-                      <a th:href="@{/agente/usuariosAsignados}">
-                        <span class="sub-item">Asignados</span>
-                      </a>
-                    </li>
-                    <li th:classappend="${activeSubPage == 'baneados' ? 'active' : ''}">
-                      <a th:href="@{/agente/usuariosBaneados}">
-                        <span class="sub-item">Baneados</span>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </li>
-              <li class="nav-item" th:classappend="${activePage == 'chat' ? 'active submenu' : ''}">
-                <a href="tables/chat.html">
-                  <i class="fas fa-envelope"></i>
-                  <p>Chats</p>
-                  <span class="badge badge-success">5</span>
-                </a>
-              </li>
-              <li class="nav-item" th:classappend="${activePage == 'reportes' ? 'active submenu' : ''}">
-                <a data-bs-toggle="collapse" href="#tables2" th:aria-expanded="${activePage == 'reportes' ? 'true' : 'false'}">
-                  <i class="fas fa-file"></i>
-                  <p>Reportes</p>
-                  <span class="caret"></span>
-                </a>
-                <div class="collapse" id="tables2" th:classappend="${activePage == 'reportes' ? 'show' : ''}">
-                  <ul class="nav nav-collapse">
-                    <li th:classappend="${activeSubPage == 'guardados' ? 'active' : ''}">
-                      <a href="tables/reportesguardados.html">
-                        <span class="sub-item">Reportes guardados</span>
-                      </a>
-                    </li>
-                    <li th:classappend="${activeSubPage == 'ordenes' ? 'active' : ''}">
-                      <a href="tables/reportesdeordenes.html">
-                        <span class="sub-item">Reportes de órdenes</span>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </li>
+            <li class="nav-item" th:classappend="${activePage == 'notificaciones' ? 'active submenu' : ''}">
+              <a href="notificacionesagente.html">
+                <i class="fas fa-bell"></i>
+                <p>Notificaciones</p>
+                <span class="badge badge-secondary">6</span>
+              </a>
+            </li>
 
-              <li class="nav-item" th:classappend="${activePage == 'notificaciones' ? 'active submenu' : ''}">
-                <a href="notificacionesagente.html">
-                  <i class="fas fa-bell"></i>
-                  <p>Notificaciones</p>
-                  <span class="badge badge-secondary">6</span>
-                </a>
-              </li>
-
-            </ul>
-          </div>
+          </ul>
         </div>
       </div>
-      <!-- Fin barra lateral -->
+    </div>
+    <!-- Fin barra lateral -->
+
+    <!-- Scripts necesarios -->
+    <script src="/assets/js/plugin/webfont/webfont.min.js"></script>
+    <script>
+      WebFont.load({
+        google: { families: ["Public Sans:300,400,500,600,700"] },
+        custom: {
+          families: [
+            "Font Awesome 5 Solid",
+            "Font Awesome 5 Regular",
+            "Font Awesome 5 Brands",
+            "simple-line-icons",
+          ],
+          urls: ["/assets/css/fonts.min.css"],
+        },
+        active: function () {
+          sessionStorage.fonts = true;
+        },
+      });
+    </script>
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/assets/css/plugins.min.css" />
+    <link rel="stylesheet" href="/assets/css/kaiadmin.min.css" />
   </body>
 </html>
