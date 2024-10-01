@@ -74,12 +74,12 @@
                 <div class="collapse" id="tables1" th:classappend="${activePage == 'usuarios' ? 'show' : ''}">
                   <ul class="nav nav-collapse">
                     <li th:classappend="${activeSubPage == 'asignados' ? 'active' : ''}">
-                      <a href="usuarios_asignados.html">
+                      <a th:href="@{/agente/usuariosAsignados}">
                         <span class="sub-item">Asignados</span>
                       </a>
                     </li>
                     <li th:classappend="${activeSubPage == 'baneados' ? 'active' : ''}">
-                      <a href="usuarios_baneados.html">
+                      <a th:href="@{/agente/usuariosBaneados}">
                         <span class="sub-item">Baneados</span>
                       </a>
                     </li>

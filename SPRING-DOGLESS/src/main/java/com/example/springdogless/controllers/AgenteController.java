@@ -95,6 +95,15 @@ public class AgenteController {
         return "/agente/usuariosBaneados";
     }
 
+    @GetMapping(value = "reportesOrdenes")
+    public String reportesOrdenes(Model model) {
+        model.addAttribute("listaOrdenes", ordenRepository.findAll());
+
+        model.addAttribute("listaBaneados", usuarioRepository.findByRol_RolAndBorrado("Usuario",1));
+
+        return "/agente/reportesdeordenes";
+    }
+
 
 
     /*
