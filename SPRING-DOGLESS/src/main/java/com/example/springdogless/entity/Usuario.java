@@ -25,6 +25,7 @@ public class Usuario {
     private String contrasena;
     private Integer borrado;
     private Date fechabaneo;
+
     @ManyToOne
     @JoinColumn(name = "idroles")
     private Rol rol;

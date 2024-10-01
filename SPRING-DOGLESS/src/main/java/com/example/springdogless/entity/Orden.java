@@ -35,7 +35,7 @@ public class Orden {
     private Integer borrado;
 
     @ManyToOne
-    @JoinColumn(name = "usuariosid", nullable = false)
+    @JoinColumn(name = "idusuarios", nullable = false)
     private Usuario usuario;
 
 
