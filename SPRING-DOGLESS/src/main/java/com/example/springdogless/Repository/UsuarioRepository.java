@@ -17,6 +17,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer>{
 
     List<Usuario> findByRol_RolAndBorrado(String rol, Integer borrado);
 
-
+    @Query("SELECT o, COUNT(o) FROM Orden o WHERE o.usuario.id = :usuarioId GROUP BY o.usuario.id")
+    List<Object[]> findOrdenesAndCountByUsuarioId(@Param("usuarioId") Long usuarioId);
 }
 

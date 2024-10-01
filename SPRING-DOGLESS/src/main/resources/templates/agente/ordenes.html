@@ -142,11 +142,11 @@
                             <td th:text="${orden.usuario.nombre + ' ' + orden.usuario.apellido}"></td>
                             <td th:text="${orden.fecha}"></td>
                             <td>
-                            <span th:text="${orden.estado}"
-                                  th:classappend="${orden.estado == 'Recibido'} ? 'badge badge-success' :
-                                                  (${orden.estado == 'En proceso'} ? 'badge badge-primary' :
-                                                  (${orden.estado == 'En ruta'} ? 'badge badge-danger' : 'badge badge-secondary'))">
-                            </span>
+                              <span th:text="${orden.estado}"
+                                    th:classappend="${orden.estado == 'Recibido'} ? 'badge badge-success' :
+                                                    (${orden.estado == 'En proceso'} ? 'badge badge-primary' :
+                                                    (${orden.estado == 'En ruta'} ? 'badge badge-danger' : 'badge badge-secondary'))">
+                              </span>
                             </td>
 
                             <td>

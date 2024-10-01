@@ -161,6 +161,7 @@ CREATE TABLE IF NOT EXISTS `dogless`.`usuarios` (
   `codigojurisdiccion` VARCHAR(45) NULL,
   `idzonas` INT NOT NULL,
   `fechanacimiento` DATE NULL,
+  `fechabaneo` DATE NULL,
   `borrado` TINYINT DEFAULT 1,
   PRIMARY KEY (`idusuarios`),
   INDEX `idroles_idx` (`idroles` ASC) VISIBLE,
@@ -309,12 +310,12 @@ CREATE TABLE IF NOT EXISTS `dogless`.`ordenes` (
   `direccionenvio` VARCHAR(100) NULL DEFAULT NULL,
   `total` DECIMAL(10,2) NULL DEFAULT NULL,
   `metodopago` ENUM('tarjeta') NULL DEFAULT NULL,
-  `usuariosid` INT NOT NULL,
+  `idusuarios` INT NOT NULL,
   `borrado` INT DEFAULT 1,
   PRIMARY KEY (`idordenes`),
-  INDEX `usuariosid_idx` (`usuariosid` ASC) VISIBLE,
-  CONSTRAINT `usuariosid`
-    FOREIGN KEY (`usuariosid`)
+  INDEX `idusuarios_idx` (`idusuarios` ASC) VISIBLE,
+  CONSTRAINT `idusuarios`
+    FOREIGN KEY (`idusuarios`)
     REFERENCES `dogless`.`usuarios` (`idusuarios`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
@@ -322,7 +323,7 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
 -- Insertar datos en la tabla `ordenes`
 INSERT INTO `dogless`.`ordenes` 
-(`estado`, `fecha`, `direccionenvio`, `total`, `metodopago`, `usuariosid`)
+(`estado`, `fecha`, `direccionenvio`, `total`, `metodopago`, `idusuarios`)
 VALUES
 -- Orden 1 para el usuario 35
 ('Creado', '2024-09-01', 'Calle Norte 1, Lima', 1599.97, 'tarjeta', 35),
