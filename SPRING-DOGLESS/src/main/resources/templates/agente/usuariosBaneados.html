@@ -4,44 +4,74 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>Usuarios baneados</title>
-    <meta
-            content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
-            name="viewport"
-    />
-    <link
-            rel="icon"
-            href="/assets/img/kaiadmin/favicon.ico"
-            type="image/x-icon"
-    />
-    <link th:href="@{/assets/css/style-SuperAdmin.css}" rel="stylesheet">
+  <meta
+          content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
+          name="viewport"
+  />
+  <link
+          rel="icon"
+          href="/assets/img/kaiadmin/favicon.ico"
+          type="image/x-icon"
+  />
+  <link href="/assets/css/style-SuperAdmin.css" rel="stylesheet">
 
+  <!-- Fonts and icons -->
+  <script src="/assets/js/plugin/webfont/webfont.min.js"></script>
+  <script>
+    WebFont.load({
+      google: { families: ["Public Sans:300,400,500,600,700"] },
+      custom: {
+        families: [
+          "Font Awesome 5 Solid",
+          "Font Awesome 5 Regular",
+          "Font Awesome 5 Brands",
+          "simple-line-icons",
+        ],
+        urls: ["../assets/css/fonts.min.css"],
+      },
+      active: function () {
+        sessionStorage.fonts = true;
+      },
+    });
+  </script>
+  <script>
+    // JavaScript para actualizar los distritos según la zona seleccionada
+    function actualizarDistritos() {
+      const zona = document.getElementById("zona").value;
+      const distritoSelect = document.getElementById("distrito");
 
-    <!-- Fonts and icons -->
-    <script src="/assets/js/plugin/webfont/webfont.min.js"></script>
-    <script>
-      WebFont.load({
-        google: { families: ["Public Sans:300,400,500,600,700"] },
-        custom: {
-          families: [
-            "Font Awesome 5 Solid",
-            "Font Awesome 5 Regular",
-            "Font Awesome 5 Brands",
-            "simple-line-icons",
-          ],
-          urls: ["/assets/css/fonts.min.css"],
-        },
-        active: function () {
-          sessionStorage.fonts = true;
-        },
+      const distritosPorZona = {
+        "Norte": ["Ancon", "Santa Rosa", "Carabayllo", "Puente Piedra", "Comas", "Los Olivos", "San Martin de Porres", "Independencia"],
+        "Sur": ["San Juan de Miraflores", "Villa Maria del Triunfo", "Villa el Salvador", "Pachacamac", "Lurin", "Punta Hermosa", "Punta Negra", "San Bartolo", "Santa Maria del Mar", "Pucusana"],
+        "Este": ["San Juan de Lurigancho", "Lurigancho/Chosica", "Ate", "El Agustino", "Santa Anita", "La Molina", "Cieneguilla"],
+        "Oeste": ["Rimac", "Cercado de Lima", "Breña", "Pueblo Libre", "Magdalena", "Jesus Maria", "La Victoria", "Lince", "San Isidro", "San Miguel", "Surquillo", "San Borja", "Santiago de Surco", "Barranco", "Chorrillos", "San Luis", "Miraflores"]
+      };
+
+      // Limpiar las opciones anteriores
+      distritoSelect.innerHTML = "";
+
+      // Añadir los distritos correspondientes a la zona seleccionada
+      distritosPorZona[zona].forEach(function(distrito) {
+        const option = document.createElement("option");
+        option.value = distrito;
+        option.text = distrito;
+        distritoSelect.appendChild(option);
       });
-    </script>
 
-    <!-- CSS Files -->
-    <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="/assets/css/plugins.min.css" />
-    <link rel="stylesheet" href="/assets/css/kaiadmin.min.css" />
+      // Habilitar el campo de selección de distritos
+      distritoSelect.disabled = false;
+    }
+  </script>
 
-  </head>
+
+  <!-- CSS Files -->
+  <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="/assets/css/plugins.min.css" />
+  <link rel="stylesheet" href="/assets/css/kaiadmin.min.css" />
+
+  <!-- CSS Just for demo purpose, don't include it in your project -->
+  <link rel="stylesheet" href="/assets/css/demo.css" />
+</head>
   <div class="wrapper">
     <!-- Reemplaza barra lateral con el fragmento de Thymeleaf -->
     <div th:replace="~{agente/fragments/barralateralagente :: body(activePage='usuarios', activeSubPage='adminzonal')}"></div>
