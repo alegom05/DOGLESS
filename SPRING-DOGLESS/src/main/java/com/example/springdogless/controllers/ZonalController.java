@@ -124,6 +124,27 @@ public class ZonalController {
         }
     }
 
+    @GetMapping("/nuevaReposicion")
+    public String nuevoAdminZonalFrm(Model model) {
+        model.addAttribute("listaReposiciones", reposicionRepository.findAll());
+        return "zonal/agregarReposicion";
+    }
+
+    @GetMapping("/editarReposicion")
+    public String editarReposicion(Model model, @RequestParam("id") int id) {
+
+        Optional<Reposicion> optReposicion = reposicionRepository.findById(id);
+
+        if (optReposicion.isPresent()) {
+            Reposicion reposicion = optReposicion.get();
+            model.addAttribute("reposicion", reposicion);
+            model.addAttribute("listaReposiciones", reposicionRepository.findAll());
+            return "zonal/editarReposicion";
+        } else {
+            return "redirect:/zonal/reposiciones";
+        }
+    }
+
     /*
     @GetMapping("/edit")
     public String editarTransportista(@ModelAttribute("product") Product product,

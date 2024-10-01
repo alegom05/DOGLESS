@@ -70,9 +70,9 @@
                 <div class="card">
 
                   <div class="card-body">
-                    <a class="btn btn-primary btn-round ms-auto" th:href="@{/templates/zonal/nuevaReposicion}">
+                    <a class="btn btn-primary btn-round ms-auto" th:href="@{/zonal/nuevaReposicion}">
                     <i class="fa fa-plus"></i>
-                      Agregar Producto
+                      Agregar Reposición
                     </a>
                     <div class="table-responsive">
                     <br>
@@ -116,6 +116,7 @@
 
                                 <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
                                   <li><a class="dropdown-item" th:href="@{'/zonal/verReposicion' + '?id=' + ${reposicion.id}}">Ver</a></li>
+                                  <li><a class="dropdown-item" th:href="@{'/zonal/editarReposicion' + '?id=' + ${reposicion.id}}">Editar</a></li>
 
                                   <!--
                                    <li><a class="dropdown-item" th:href="@{'/zonal/verReposicion' + '?id=' + ${reposicion.id}}">Ver</a></li>
