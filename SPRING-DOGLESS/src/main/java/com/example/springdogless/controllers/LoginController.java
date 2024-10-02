@@ -31,13 +31,13 @@ public class LoginController {
     }
 
 
-    @GetMapping("/crearnuevacontrasenha")
+    @GetMapping("/informacion-de-contacto")
     public String informaciondecontacto() {
         return "informacion-de-contacto"; // Esto renderiza la vista informacion-de-contacto.html
     }
 
 
-    @GetMapping("/crearnuevacontrasenha")
+    @GetMapping("/politica-de-privacidad")
     public String politicadeprivacidad() {
         return "politica-de-privacidad"; // Esto renderiza la vista politica-de-privacidad.html
     }
