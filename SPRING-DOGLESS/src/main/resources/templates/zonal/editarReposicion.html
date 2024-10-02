@@ -63,8 +63,9 @@
               </div>
             </div>
             <div class="row">
+              <!--
               <form method="post" th:action="@{/admin/guardarProducto}" th:object="${reposicion}">
-
+              -->
                 <div class="col-md-12">
                   <div class="card">
                     <div class="card-body">
@@ -73,11 +74,56 @@
                           <div class="row">
                             <div class="col-md-6">
                               <div class="mb-3">
-                                <label for="cantidad" class="form-label">Nombre del producto</label>
-                                <input type="text" class="form-control" id="cantidad" th:field="*{cantidad}"
-                                       th:classappend="${#fields.hasErrors('cantidad')?'is-invalid':''}">
-                                <div class="invalid-feedback" th:if="${#fields.hasErrors('cantidad')}"
-                                     th:errors="*{cantidad}" ></div>
+                                <label for="idproveedor" class="form-label">Proveedor: (*)</label>
+                                <select name="idproveedor" id="idproveedor" class="form-select" required>
+                                  <option value="" disabled selected>Escoja una opción</option>
+                                  <option th:each="proveedor : ${listaProveedores}"
+                                          th:text="${proveedor.tienda}"
+                                          th:value="${proveedor.id}">
+                                  </option>
+                                </select>
+                              <div class="invalid-feedback">Por favor seleccionar una zona.</div>
+                              <div class="mb-3">
+                                <label class="form-label">Nombre del producto</label>
+                                <input th:field="*{reposicion.producto.nombre}" type="text"
+                                       th:class="${#fields.hasErrors('reposicion.producto.nombre') ? 'form-control is-invalid' : 'form-control'}"/>
+                                <div class="invalid-feedback"
+                                     th:if="${#fields.hasErrors('reposicion.producto.nombre')}"
+                                     th:errors="*{reposicion.producto.nombre}">
+                                  Mensaje de error de nombre del producto
+                                </div>
+                              </div>
+
+                              <div class="mb-3">
+                                <label class="form-label">Cantidad</label>
+                                <input th:field="*{reposicion.cantidad}" type="text"
+                                       th:class="${#fields.hasErrors('reposicion.cantidad') ? 'form-control is-invalid' : 'form-control'}"/>
+                                <div class="invalid-feedback"
+                                     th:if="${#fields.hasErrors('reposicion.cantidad')}"
+                                     th:errors="*{reposicion.cantidad}">
+                                  Mensaje de error de nombre del producto
+                                </div>
+                              </div>
+                                <div class="mb-3">
+                                  <label class="form-label">Fecha de pedido</label>
+                                  <input th:field="*{reposicion.fecha_pedido}" type="text"
+                                         th:class="${#fields.hasErrors('reposicion.fecha_pedido') ? 'form-control is-invalid' : 'form-control'}"/>
+                                  <div class="invalid-feedback"
+                                       th:if="${#fields.hasErrors('reposicion.fecha_pedido')}"
+                                       th:errors="*{reposicion.fecha_pedido}">
+                                    Mensaje de error de nombre del producto
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="mb-3">
+                                <label class="form-label">Proveedor</label>
+                                <input th:field="*{reposicion.fecha_pedido}" type="text"
+                                       th:class="${#fields.hasErrors('reposicion.fecha_pedido') ? 'form-control is-invalid' : 'form-control'}"/>
+                                <div class="invalid-feedback"
+                                     th:if="${#fields.hasErrors('reposicion.fecha_pedido')}"
+                                     th:errors="*{reposicion.fecha_pedido}">
+                                  Mensaje de error de nombre del producto
+                                </div>
                               </div>
 
                               <!--
