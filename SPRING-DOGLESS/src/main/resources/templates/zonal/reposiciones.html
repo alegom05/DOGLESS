@@ -93,8 +93,8 @@
                           <tr>
                             <th>ID Reposición</th>
                             <th>Nombre</th>
-                            <th>Proveedor</th>
                             <th>Cantidad</th>
+                            <th>Fecha de pedido</th>
                             <th>Estado</th>
                           </tr>
                         </thead>
@@ -102,10 +102,13 @@
                           <tr th:each="reposicion : ${listaReposiciones}">
                             <td th:text="${reposicion.id}"></td>
                             <td th:text="${reposicion.producto.nombre}"></td>
-                            <td th:text="${reposicion.producto.proveedor.tienda}"></td>
                             <td th:text="${reposicion.cantidad}"></td>
-                            <td th:text="${reposicion.aprobar}"></td>
+                            <td th:text="${reposicion.fecha_pedido}"></td>
+                            <td th:text="${reposicion.aprobar}" style="text-transform: capitalize;"></td>
+                            <!-- En Mayúsculas-->
                             <td>
+                              <!-- En ver: Descripcion y tienda -->
+
                               <!-- Dropdown con ícono -->
                               <div class="dropdown">
                                 <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">

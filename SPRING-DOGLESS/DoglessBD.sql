@@ -462,7 +462,7 @@ DEFAULT CHARACTER SET = utf8mb3;
 -- Table `dogless`.`importaciones`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `dogless`.`importaciones` (
-  `idimportaciones` INT NOT NULL,
+  `idimportaciones` INT NOT NULL AUTO_INCREMENT,
   `cantidad` VARCHAR(45) NULL,
   `fecha_pedido` DATE NULL,
   `aprobar` VARCHAR(20) NULL,
@@ -510,6 +510,20 @@ CREATE TABLE IF NOT EXISTS `dogless`.`reposicion` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
+
+INSERT INTO `dogless`.`importaciones` 
+(`cantidad`, `fecha_pedido`, `aprobar`, `borrado`, `idzonas`, `idproductos`) 
+VALUES 
+('32', '2024-09-05', 'aprobado', 1, 2, 7),
+('45', '2024-09-12', 'pendiente', 1, 1, 3),
+('28', '2024-09-18', 'pendiente', 1, 3, 11),
+('56', '2024-09-03', 'aprobado', 1, 4, 14),
+('37', '2024-09-22', 'pendiente', 1, 2, 5),
+('41', '2024-09-15', 'pendiente', 1, 1, 9),
+('33', '2024-09-08', 'pendiente', 1, 3, 2),
+('52', '2024-09-25', 'aprobado', 1, 4, 12),
+('39', '2024-09-10', 'pendiente', 1, 2, 6),
+('47', '2024-09-20', 'pendiente', 1, 1, 8);
 
 -- Insertar datos en la tabla `reposicion`
 INSERT INTO `dogless`.`reposicion` (`idreposicion`, `cantidad`, `fecha_pedido`, `aprobar`, `idproductos`, `idzonas`) VALUES ('4', '20', '2024-09-03', NULL, '1', '1');
