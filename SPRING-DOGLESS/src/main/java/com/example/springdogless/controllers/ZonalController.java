@@ -1,9 +1,7 @@
 package com.example.springdogless.controllers;
 
-import com.example.springdogless.Repository.ReposicionRepository;
-import com.example.springdogless.Repository.UsuarioRepository;
-import com.example.springdogless.entity.Reposicion;
-import com.example.springdogless.entity.Usuario;
+import com.example.springdogless.Repository.*;
+import com.example.springdogless.entity.*;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,6 +22,12 @@ public class ZonalController {
     UsuarioRepository usuarioRepository;
     @Autowired
     ReposicionRepository reposicionRepository;
+    @Autowired
+    ZonalRepository zonaRepository;
+    @Autowired
+    DistritoRepository distritoRepository;
+    @Autowired
+    RolRepository rolRepository;
 
     @GetMapping({""})
     public String PaginaPrincipal(Model model) {
@@ -39,6 +43,13 @@ public class ZonalController {
     public String elDashboardEstaTristeYAzul(Model model, @RequestParam(required = false) String zona) {
         /*model.addAttribute("listaProveedores", proveedorRepository.findAll());*/
         return "zonal/dashboard";
+    }
+
+    @GetMapping("/new")
+    public String nuevoAgenteFrm(Model model) {
+        model.addAttribute("listaZonas", zonaRepository.findAll());
+        model.addAttribute("listaDistritos", distritoRepository.findAll());
+        return "zonal/agregar_agente";
     }
 
 
@@ -66,6 +77,34 @@ public class ZonalController {
     public String nuevoAgente(Model model, @ModelAttribute("usuario") Usuario usuario) {
         model.addAttribute("listaUsuarios", usuarioRepository.findAll());
         return "zonal/editarAgente";
+    }
+    @PostMapping("/guardar")
+    public String crearAdminZonal(Usuario usuario, @RequestParam("idzonas") Integer idZona,
+                                  @RequestParam("iddistritos") Integer idDistrito,
+                                  RedirectAttributes attr) {
+
+        // Asignar el rol de Agente (id = 3)
+        Rol agenteRole = rolRepository.findById(3)
+                .orElseThrow(() -> new IllegalArgumentException("Rol no encontrado"));
+        usuario.setRol(agenteRole);
+
+        // Asignar la zona seleccionada
+        Zona zona = zonaRepository.findById(idZona)
+                .orElseThrow(() -> new IllegalArgumentException("Zona no encontrada"));
+        usuario.setZona(zona);
+
+        // Asignar el distrito seleccionado
+        Distrito distrito = distritoRepository.findById(idDistrito)
+                .orElseThrow(() -> new IllegalArgumentException("Distrito no encontrado"));
+        usuario.setDistrito(distrito);
+        usuario.setBorrado(1);
+        String contrasenaPorDefecto = "contraseñaPredeterminada";
+        usuario.setContrasena(contrasenaPorDefecto);
+        // Guardar el nuevo Adminzonal
+        usuarioRepository.save(usuario);
+        attr.addFlashAttribute("mensajeExito", "Agente creado correctamente");
+
+        return "redirect:/zonal/agentes";
     }
 
     @PostMapping("/guardarAgente")
