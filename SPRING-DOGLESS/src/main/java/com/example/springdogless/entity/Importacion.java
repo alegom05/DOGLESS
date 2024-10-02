@@ -6,7 +6,7 @@ import lombok.Setter;
 
 import java.sql.Date;
 
-@Entity
+@Entity (name="importaciones")
 @Getter
 @Setter
 public class Importacion {

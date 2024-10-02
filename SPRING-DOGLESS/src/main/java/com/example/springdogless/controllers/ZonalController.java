@@ -32,6 +32,8 @@ public class ZonalController {
     ProductRepository productRepository;
     @Autowired
     private ProveedorRepository proveedorRepository;
+    @Autowired
+    ImportacionRepository importacionRepository;
 
     @GetMapping({""})
     public String PaginaPrincipal(Model model) {
@@ -141,7 +143,7 @@ public class ZonalController {
     //Importaciones
     @GetMapping(value = "importaciones")
     public String listaImportaciones(Model model) {
-        model.addAttribute("listaImportaciones", usuarioRepository.findByRol_RolAndBorrado("Agente",1));
+        model.addAttribute("listaImportaciones", importacionRepository.findByBorrado(1));
         return "/zonal/importaciones";
     }
 
