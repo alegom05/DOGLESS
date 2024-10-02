@@ -63,7 +63,7 @@
               </div>
             </div>
             <div class="row">
-              <form method="post" th:action="@{/admin/guardarProducto}" th:object="${reposicion}">
+              <form method="post" th:action="@{/admin/guardarProducto}" th:object="${producto}">
 
                 <div class="col-md-12">
                   <div class="card">
@@ -73,21 +73,21 @@
                           <div class="row">
                             <div class="col-md-6">
                               <div class="mb-3">
-                                <label for="cantidad" class="form-label">Nombre del producto</label>
-                                <input type="text" class="form-control" id="cantidad" th:field="*{cantidad}"
-                                       th:classappend="${#fields.hasErrors('cantidad')?'is-invalid':''}">
-                                <div class="invalid-feedback" th:if="${#fields.hasErrors('cantidad')}"
-                                     th:errors="*{cantidad}" ></div>
+                                <label for="nombre" class="form-label">Nombre del producto</label>
+                                <input type="text" class="form-control" id="nombre" th:field="*{nombre}"
+                                       th:classappend="${#fields.hasErrors('nombre')?'is-invalid':''}">
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('nombre')}"
+                                     th:errors="*{nombre}" ></div>
                               </div>
 
-                              <!--
+
 
                               <div class="mb-3">
-                                <label for="cantidad" class="form-label">Cantidad</label>
-                                <input type="text" class="form-control" id="cantidad" th:field="*{cantidad}"
-                                       th:classappend="${#fields.hasErrors('cantidad')?'is-invalid':''}">
-                                <div class="invalid-feedback" th:if="${#fields.hasErrors('cantidad')}"
-                                     th:errors="*{cantidad}" ></div>
+                                <label for="categoria" class="form-label">Categoría</label>
+                                <input type="text" class="form-control" id="categoria" th:field="*{categoria}"
+                                       th:classappend="${#fields.hasErrors('categoria')?'is-invalid':''}">
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('categoria')}"
+                                     th:errors="*{categoria}" ></div>
                               </div>
 
                               <div class="col">
@@ -163,7 +163,6 @@
                             <button type="submit" class="btn btn-primary" style="width: 280px;">Crear</button>
                             <a th:href="@{/zonal/reposiciones}" class="btn btn-secondary" style="width: 280px;">Cancelar</a>
                           </div>
-                          -->
                         </div>
                       </form>
                     </div>

@@ -30,6 +30,9 @@ public class ZonalController {
     RolRepository rolRepository;
     @Autowired
     ProductRepository productRepository;
+    @Autowired
+    private ProveedorRepository proveedorRepository;
+
     @GetMapping({""})
     public String PaginaPrincipal(Model model) {
         return "zonal/paginaprincipal";
@@ -146,7 +149,7 @@ public class ZonalController {
     //Reposiciones
     @GetMapping(value = "reposiciones")
     public String listaReposiciones(Model model) {
-        model.addAttribute("listaReposiciones", reposicionRepository.findAll());
+        model.addAttribute("listaReposiciones", reposicionRepository.findByBorrado(1));
         return "/zonal/reposiciones";
     }
 
@@ -164,21 +167,58 @@ public class ZonalController {
         }
     }
 
+    @GetMapping("/nuevaReposicion")
+    public String nuevoProductoFrm(Model model, @ModelAttribute("producto") Producto product) {
+        model.addAttribute("listaReposiciones", zonaRepository.findAll());
+        model.addAttribute("listaProveedores", proveedorRepository.findAll());
+        model.addAttribute("listaProductos", productRepository.findAll());
+        return "zonal/editarReposicion";
+    }
+
     @GetMapping("/editarReposicion")
-    public String editarReposicion(@ModelAttribute("product") Producto producto, Model model,
+    public String editarReposicion(@ModelAttribute("reposicion") Reposicion reposicion,
+                                   Model model,
                                    @RequestParam("id") int id) {
 
-        Optional<Producto> optProducto = productRepository.findById(id);
+        Optional<Reposicion> optProducto = reposicionRepository.findById(id);
 
         if (optProducto.isPresent()) {
-            producto = optProducto.get();
-            model.addAttribute("producto", producto);
+            reposicion = optProducto.get();
+            model.addAttribute("reposicion", reposicion);
             model.addAttribute("listaReposiciones", zonaRepository.findAll());
+            model.addAttribute("listaProveedores", proveedorRepository.findAll());
             model.addAttribute("listaProductos", productRepository.findAll());
 
             return "zonal/editarReposicion";
         } else {
             return "redirect:/zonal/reposiciones";
+        }
+    }
+
+    @PostMapping("/save")
+    public String guardarProducto(RedirectAttributes attr, Model model,
+                                  @ModelAttribute("product") @Valid Producto producto, BindingResult bindingResult) {
+        if (!bindingResult.hasErrors()) { //si no hay errores, se realiza el flujo normal
+
+            if (producto.getNombre().equals("gaseosa")) {
+                model.addAttribute("msg", "Error al crear producto");
+                model.addAttribute("listaProductos", productRepository.findAll());
+                model.addAttribute("listaProveedores", proveedorRepository.findAll());
+                return "zonal/editarReposicion";
+            } else {
+                if (producto.getId() == 0) {
+                    attr.addFlashAttribute("msg", "Producto creado exitosamente");
+                } else {
+                    attr.addFlashAttribute("msg", "Producto actualizado exitosamente");
+                }
+                productRepository.save(producto);
+                return "redirect:/zonal/reposiciones";
+            }
+
+        } else { //hay al menos 1 error
+            model.addAttribute("listaProductos", productRepository.findAll());
+            model.addAttribute("listaProveedores", proveedorRepository.findAll());
+            return "product/editFrm";
         }
     }
 
@@ -188,11 +228,9 @@ public class ZonalController {
 
 
 
-    @GetMapping("/nuevaReposicion")
-    public String nuevoAdminZonalFrm(Model model) {
-        model.addAttribute("listaReposiciones", reposicionRepository.findAll());
-        return "zonal/agregarReposicion";
-    }
+
+
+
 
 
 
