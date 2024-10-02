@@ -42,6 +42,8 @@ public class AgenteController {
     ProductRepository productRepository;
     @Autowired
     OrdenRepository ordenRepository;
+    @Autowired
+    DetallesordenRepository detallesordenRepository;
 
 
     @GetMapping({""})
@@ -61,17 +63,31 @@ public class AgenteController {
         return "/agente/ordenes";
     }
 
-    @GetMapping("/verOrdenes")
-    public String verAdminZonal(Model model, @RequestParam("id") int id) {
+    @GetMapping("/detallesorden")
+    public String verDetallesOrden(Model model, @RequestParam("id") int id) {
 
         Optional<Orden> optOrden = ordenRepository.findById(id);
+        Optional<Orden> optOrden2 = ordenRepository.findByIdWithDetails(id);
 
-        if (optOrden.isPresent()) {
+        if (optOrden.isPresent() && optOrden2.isPresent()) {
             Orden orden = optOrden.get();
+            Orden orden2 = optOrden2.get();
             model.addAttribute("orden", orden);
-            return "admin/verOrdenes";
+            model.addAttribute("ordenDetalles", orden2); // Diferente nombre
+            return "agente/detalledeordenagente";
         } else {
             return "redirect:/admin/ordenes";
+        }
+    }
+
+    @GetMapping("/{id}")
+    public String getOrdenProductos(@PathVariable("id") int id, Model model) {
+        Optional<Orden> ordenOptional = ordenRepository.findByIdWithDetails(id);
+        if (ordenOptional.isPresent()) {
+            model.addAttribute("orden", ordenOptional.get());
+            return "detalle_orden"; // la vista que mostrará los productos
+        } else {
+            return "error"; // en caso de que no exista la orden
         }
     }
 
