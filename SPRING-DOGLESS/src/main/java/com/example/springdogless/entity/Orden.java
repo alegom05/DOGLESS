@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.util.List;
 
 @Entity (name="ordenes")
 @Getter
@@ -37,6 +38,9 @@ public class Orden {
     @ManyToOne
     @JoinColumn(name = "idusuarios", nullable = false)
     private Usuario usuario;
+
+    @OneToMany(mappedBy = "orden", cascade = CascadeType.ALL)
+    private List<Detalleorden> detalleOrden;
 
 
 
