@@ -31,6 +31,7 @@ public class LoginController {
     }
 
 
+
     @GetMapping("/informacion-de-contacto")
     public String informaciondecontacto() {
         return "informacion-de-contacto"; // Esto renderiza la vista informacion-de-contacto.html
