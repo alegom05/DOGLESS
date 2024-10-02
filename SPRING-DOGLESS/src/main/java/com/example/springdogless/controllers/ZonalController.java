@@ -28,7 +28,8 @@ public class ZonalController {
     DistritoRepository distritoRepository;
     @Autowired
     RolRepository rolRepository;
-
+    @Autowired
+    ProductRepository productRepository;
     @GetMapping({""})
     public String PaginaPrincipal(Model model) {
         return "zonal/paginaprincipal";
@@ -163,26 +164,37 @@ public class ZonalController {
         }
     }
 
+    @GetMapping("/editarReposicion")
+    public String editarReposicion(@ModelAttribute("product") Producto producto, Model model,
+                                   @RequestParam("id") int id) {
+
+        Optional<Producto> optProducto = productRepository.findById(id);
+
+        if (optProducto.isPresent()) {
+            producto = optProducto.get();
+            model.addAttribute("producto", producto);
+            model.addAttribute("listaReposiciones", zonaRepository.findAll());
+            model.addAttribute("listaProductos", productRepository.findAll());
+
+            return "zonal/editarReposicion";
+        } else {
+            return "redirect:/zonal/reposiciones";
+        }
+    }
+
+
+
+
+
+
+
     @GetMapping("/nuevaReposicion")
     public String nuevoAdminZonalFrm(Model model) {
         model.addAttribute("listaReposiciones", reposicionRepository.findAll());
         return "zonal/agregarReposicion";
     }
 
-    @GetMapping("/editarReposicion")
-    public String editarReposicion(Model model, @RequestParam("id") int id) {
 
-        Optional<Reposicion> optReposicion = reposicionRepository.findById(id);
-
-        if (optReposicion.isPresent()) {
-            Reposicion reposicion = optReposicion.get();
-            model.addAttribute("reposicion", reposicion);
-            model.addAttribute("listaReposiciones", reposicionRepository.findAll());
-            return "zonal/editarReposicion";
-        } else {
-            return "redirect:/zonal/reposiciones";
-        }
-    }
 
     /*
     @GetMapping("/edit")
