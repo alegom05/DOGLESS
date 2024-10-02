@@ -459,6 +459,32 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
 
 -- -----------------------------------------------------
+-- Table `dogless`.`importaciones`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `dogless`.`importaciones` (
+  `idimportaciones` INT NOT NULL,
+  `cantidad` VARCHAR(45) NULL,
+  `fecha_pedido` DATE NULL,
+  `aprobar` VARCHAR(20) NULL,
+  `borrado` INT NULL,
+  `idzonas` INT NOT NULL,
+  `idproductos` INT NOT NULL,
+  PRIMARY KEY (`idimportaciones`),
+  INDEX `fk_importaciones_zonas1_idx` (`idzonas` ASC) VISIBLE,
+  INDEX `fk_importaciones_productos1_idx` (`idproductos` ASC) VISIBLE,
+  CONSTRAINT `fk_importaciones_zonas1`
+    FOREIGN KEY (`idzonas`)
+    REFERENCES `dogless`.`zonas` (`idzonas`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_importaciones_productos1`
+    FOREIGN KEY (`idproductos`)
+    REFERENCES `dogless`.`productos` (`idproductos`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+-- -----------------------------------------------------
 -- Table `dogless`.`reposicion`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `dogless`.`reposicion` (

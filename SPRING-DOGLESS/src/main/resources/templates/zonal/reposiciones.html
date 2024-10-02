@@ -91,21 +91,20 @@
                       <table id="basic-datatables" class="display table table-striped table-hover">
                         <thead>
                           <tr>
+                            <th>ID Reposición</th>
                             <th>Nombre</th>
-                            <th>Descripción</th>
-                            <th>Precio</th>
                             <th>Proveedor</th>
+                            <th>Cantidad</th>
                             <th>Estado</th>
-                            <th>Acciones</th>
                           </tr>
                         </thead>
                         <tbody>
                           <tr th:each="reposicion : ${listaReposiciones}">
+                            <td th:text="${reposicion.id}"></td>
                             <td th:text="${reposicion.producto.nombre}"></td>
-                            <td th:text="${reposicion.producto.descripcion}"></td>
-                            <td th:text="${reposicion.producto.precio}"></td>
                             <td th:text="${reposicion.producto.proveedor.tienda}"></td>
-                            <td th:text="${reposicion.producto.estado}"></td>
+                            <td th:text="${reposicion.cantidad}"></td>
+                            <td th:text="${reposicion.aprobar}"></td>
                             <td>
                               <!-- Dropdown con ícono -->
                               <div class="dropdown">
