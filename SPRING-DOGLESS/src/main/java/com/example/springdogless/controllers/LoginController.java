@@ -29,5 +29,19 @@ public class LoginController {
     public String crearnuevacontrasenha() {
         return "crearnuevacontrasenha"; // Esto renderiza la vista crearnuevacontrasenha.html
     }
+
+
+    @GetMapping("/crearnuevacontrasenha")
+    public String informaciondecontacto() {
+        return "informacion-de-contacto"; // Esto renderiza la vista informacion-de-contacto.html
+    }
+
+
+    @GetMapping("/crearnuevacontrasenha")
+    public String politicadeprivacidad() {
+        return "politica-de-privacidad"; // Esto renderiza la vista politica-de-privacidad.html
+    }
+
+
 }
 
