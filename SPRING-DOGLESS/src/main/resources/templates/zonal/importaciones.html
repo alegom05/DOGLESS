@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Agentes</title>
+    <title>Importaciones</title>
     <meta
             content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
             name="viewport"
@@ -85,18 +85,20 @@
                         <thead>
                           <tr>
                             <th>Importaciones</th>
+                            <th>Cantidad</th>
                             <th>Fechas de arribo</th>
-                            <th>Código de aduanas</th>
-                            <th>RUC</th>
+
+                            <th>Estado</th>
                             <th>Acciones</th>
+
                           </tr>
                         </thead>
                         <tbody>
-                          <tr th:each="usuario : ${listaAgentes}">
-                            <td th:text="${usuario.nombre}"></td>
-                            <td th:text="${usuario.apellido}"></td>
-                            <td th:text="${usuario.dni}"></td>
-                            <td th:text="${usuario.correo}"></td>
+                          <tr th:each="importaciones : ${listaImportaciones}">
+                            <td th:text="${importaciones.idimportaciones}"></td>
+                            <td th:text="${importaciones.cantidad}"></td>
+                            <td th:text="${importaciones.fechaPedido}"></td>
+                            <td th:text="${importaciones.aprobar}"></td>
                             <td>
                               <!-- Dropdown con ícono -->
                               <div class="dropdown">
