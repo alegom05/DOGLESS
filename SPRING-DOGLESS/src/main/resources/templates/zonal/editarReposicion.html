@@ -117,11 +117,11 @@
                               </div>
                               <div class="mb-3">
                                 <label class="form-label">Proveedor</label>
-                                <input th:field="*{reposicion.fecha_pedido}" type="text"
-                                       th:class="${#fields.hasErrors('reposicion.fecha_pedido') ? 'form-control is-invalid' : 'form-control'}"/>
+                                <input th:field="*{reposicion.producto.proveedor.nombre}" type="text"
+                                       th:class="${#fields.hasErrors('reposicion.producto.proveedor.nombre') ? 'form-control is-invalid' : 'form-control'}"/>
                                 <div class="invalid-feedback"
-                                     th:if="${#fields.hasErrors('reposicion.fecha_pedido')}"
-                                     th:errors="*{reposicion.fecha_pedido}">
+                                     th:if="${#fields.hasErrors('reposicion.producto.proveedor.nombre')}"
+                                     th:errors="*{reposicion.producto.proveedor.nombre}">
                                   Mensaje de error de nombre del producto
                                 </div>
                               </div>
