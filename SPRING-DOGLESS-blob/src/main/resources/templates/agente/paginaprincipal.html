@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Agente - Página principal</title>
+    <meta
+      content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
+      name="viewport"
+    />
+    <link
+      rel="icon"
+      href="/assets/img/kaiadmin/favicon.ico"
+      type="image/x-icon"
+    />
+
+    <!-- Fonts and icons -->
+    <script src="/assets/js/plugin/webfont/webfont.min.js"></script>
+    <script>
+      WebFont.load({
+        google: { families: ["Public Sans:300,400,500,600,700"] },
+        custom: {
+          families: [
+            "Font Awesome 5 Solid",
+            "Font Awesome 5 Regular",
+            "Font Awesome 5 Brands",
+            "simple-line-icons",
+          ],
+          urls: ["/assets/css/fonts.min.css"],
+        },
+        active: function () {
+          sessionStorage.fonts = true;
+        },
+      });
+    </script>
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/assets/css/plugins.min.css" />
+    <link rel="stylesheet" href="/assets/css/kaiadmin.min.css" />
+
+
+  </head>
+  <body>
+  <div class="wrapper">
+      <!-- Reemplaza barra lateral con el fragmento de Thymeleaf -->
+      <div th:replace="~{agente/fragments/barralateralagente :: body(activePage='home')}"></div>
+      <!-- Fin barra lateral -->
+
+
+      <div class="main-panel">
+      <!-- Reemplaza navbar con el fragmento de Thymeleaf -->
+      <div th:replace="~{agente/fragments/navbarheaderagente :: fragment}"></div>
+      <!-- Fin Navbar -->
+
+        <!-- Texto o contenido central -->
+        <div class="container">
+          <div class="page-inner text-center">
+            <div class="d-flex flex-column align-items-center pt-2 pb-4">
+              <div>
+                <!-- Texto de bienvenida más grande y oscuro -->
+                <h3 class="fw-bold mb-3" style="font-size: 2.5rem; color: #333;">
+                  ¡Bienvenido a DOGLESS, Agente Nilo Cori!
+                </h3>
+                <!-- Texto adicional más grande y oscuro -->
+                <h6 class="op-7 mb-2" style="color: #000000; font-size: 1.2rem;">
+                  El agente aduanero gestiona la importación y exportación de mercancías, asegurando el cumplimiento de las normativas y facilitando la comunicación con proveedores y usuarios para coordinar la documentación y resolver consultas, garantizando un proceso eficiente y legal.
+                </h6>
+              </div>
+            </div>
+            
+            <!-- Imagen centrada inmediatamente después del texto -->
+            <div class="text-center mt-3">
+              <img src="/assets/img/imagen_adminzonal.jpg" class="img-fluid mx-auto d-block" alt="Imagen principal">
+            </div>
+          </div>
+        </div>
+        <!-- Fin del contenido central -->
+
+
+
+        <!-- Pie de página -->
+        <div th:replace="~{agente/fragments/piedepagina :: fragment}"></div>
+
+      </div>
+    </div>
+
+
+
+    <!--Core JS Files   -->
+    <script src="/assets/js/core/jquery-3.7.1.min.js"></script>
+    <script src="/assets/js/core/popper.min.js"></script>
+    <script src="/assets/js/core/bootstrap.min.js"></script>
+
+    <!-- jQuery Scrollbar -->
+    <script src="/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+    <!-- Datatables -->
+    <script src="/assets/js/plugin/datatables/datatables.min.js"></script>
+
+    <!-- jQuery Vector Maps -->
+    <script src="/assets/js/plugin/jsvectormap/jsvectormap.min.js"></script>
+    <script src="/assets/js/plugin/jsvectormap/world.js"></script>
+
+    <!-- Kaiadmin JS -->
+    <script src="/assets/js/kaiadmin.min.js"></script>
+  </body>
+</html>

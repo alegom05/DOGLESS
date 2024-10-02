@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+  </head>
+  <body>
+
+      <!-- Barra lateral -->
+      <div class="sidebar sidebar-style-2" data-background-color="dark">
+        <div class="sidebar-logo">
+          <div class="logo-header" data-background-color="dark">
+            <a href="/zonal/" class="logo">
+              <img src="/assets/img/kaiadmin/slogan_white_v3.png" alt="navbar brand" class="navbar-brand" height="50" />
+            </a>
+            <div class="nav-toggle">
+              <button class="btn btn-toggle toggle-sidebar"><i class="gg-menu-right"></i></button>
+              <button class="btn btn-toggle sidenav-toggler"><i class="gg-menu-left"></i></button>
+            </div>
+            <button class="topbar-toggler more"><i class="gg-more-vertical-alt"></i></button>
+          </div>
+        </div>
+        <div class="sidebar-wrapper scrollbar scrollbar-inner">
+          <div class="sidebar-content">
+            <ul class="nav nav-secondary">
+              <!-- Barra de navegación lateral-->
+              <li class="nav-item" th:classappend="${activePage == 'home' ? 'active submenu' : ''}">
+                <a href="/zonal">
+                  <i class="fas fa-home"></i>
+                  <p>Página principal</p>
+                </a>
+              </li>
+              <li class="nav-item" th:classappend="${activePage == 'dashboard' ? 'active submenu' : ''}">
+                <a href="/zonal/dashboard">
+                  <i class="fas fa-home"></i>
+                  <p>Dashboard</p>
+                </a>
+              </li>
+              <li class="nav-item" th:classappend="${activePage == 'agentes' ? 'active submenu' : ''}">
+                <a href="/zonal/agentes">
+                  <i class="fas fa-user-plus"></i>
+                  <p>Agentes</p>
+                </a>
+              </li>
+			  <li class="nav-item" th:classappend="${activePage == 'importaciones' ? 'active submenu' : ''}">
+                <a href="/zonal/importaciones">
+                  <i class="fas fa-home"></i>
+                  <p>Importaciones</p>
+                </a>
+              </li>
+			  <li class="nav-item" th:classappend="${activePage == 'reposiciones' ? 'active submenu' : ''}">
+                <a href="/zonal/reposiciones">
+                  <i class="fas fa-chart-bar"></i>
+                  <p>Reposiciones</p>
+                </a>
+              </li>
+
+
+
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!-- Fin barra lateral -->
+  </body>
+</html>

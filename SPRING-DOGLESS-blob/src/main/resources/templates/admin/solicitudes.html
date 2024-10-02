@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Superadmin - Solicitudes </title>
+  <meta
+          content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
+          name="viewport"
+  />
+  <link
+          rel="icon"
+          href="/assets/img/kaiadmin/favicon.ico"
+          type="image/x-icon"
+  />
+
+  <!-- Fonts and icons -->
+  <script src="/assets/js/plugin/webfont/webfont.min.js"></script>
+  <script>
+    WebFont.load({
+      google: { families: ["Public Sans:300,400,500,600,700"] },
+      custom: {
+        families: [
+          "Font Awesome 5 Solid",
+          "Font Awesome 5 Regular",
+          "Font Awesome 5 Brands",
+          "simple-line-icons",
+        ],
+        urls: ["/assets/css/fonts.min.css"],
+      },
+      active: function () {
+        sessionStorage.fonts = true;
+      },
+    });
+  </script>
+
+  <!-- CSS Files -->
+  <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="/assets/css/plugins.min.css" />
+  <link rel="stylesheet" href="/assets/css/kaiadmin.min.css" />
+
+
+
+</head>
+<body>
+<div class="wrapper">
+  <!-- Reemplaza barra lateral con el fragmento de Thymeleaf -->
+  <div th:replace="~{admin/fragments/barralateraladmin :: body(activePage='solicitudes')}"></div>
+  <!-- Fin barra lateral -->
+
+  <div class="main-panel">
+
+    <!-- Reemplaza navbar con el fragmento de Thymeleaf -->
+    <div th:replace="~{admin/fragments/navbarheaderadmin :: fragment}"></div>
+    <!-- Fin Navbar -->
+
+    <!-- Texto o contenido central -->
+    <div class="container">
+      <div class="page-inner">
+        <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
+          <div>
+            <h3 class="fw-bold mb-3">Solicitudes Usuario-Agente</h3>
+            <h6 class="op-7 mb-2">Aquí verás las solicitudes de usuarios para ser Agentes, verfifca la información correspondiente y acepta o deniega la solicitud.</h6>
+          </div>
+
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card">
+
+              <div class="card-body">
+                <div class="table-responsive">
+                  <div class="col-md-3 " >
+                    <input class="form-control mb-3" id="tableSearch" type="text" placeholder="Buscar">
+                  </div>
+                  <table class="display table table-striped table-hover">
+                    <thead>
+                    <tr>
+                      <th>Nombre</th>
+                      <th>Apellido</th>
+                      <th>Codigo despachador</th>
+                      <th>Codigo Jurídico</th>
+                      <th>Opciones</th>
+                    </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                    <!-- Iterar sobre cada solicitud -->
+                    <tr th:each="solicitud, info : ${listaSolicitudes}">
+                      <td th:text="${solicitud.usuario.nombre}"></td>
+                      <td th:text="${solicitud.usuario.apellido}"></td>
+                      <td th:text="${solicitud.usuario.codigojurisdiccion}"></td>
+                      <td th:text="${solicitud.usuario.codigoaduana}"></td>
+                      <td>
+                        <!-- Dropdown con ícono -->
+                        <div class="dropdown">
+                          <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-ellipsis-v"></i>
+                          </button>
+                          <!-- Dropdown oscuro -->
+                          <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
+                            <li><a class="dropdown-item"  data-bs-toggle="modal" data-bs-target="#aceptarModal${solicitud.id}">Aceptar</a></li>
+                            <li><a class="dropdown-item"  data-bs-toggle="modal" data-bs-target="#denegarModal${solicitud.id}">Denegar</a></li>
+                          </ul>
+                        </div>
+                      </td>
+
+                    </tr>
+
+                    </tbody>
+                  </table>
+                  <!-- Modal para Aceptar -->
+                  <div th:each="solicitud: ${listaSolicitudes}">
+                    <div class="modal fade" id="aceptarModal${solicitud.id}" tabindex="-1" role="dialog" aria-labelledby="acceptModalLabel" aria-hidden="true">
+                      <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="acceptModalLabel">Confirmacion</h5>
+                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body">
+                            <p>¿Estas seguro de realizar la aprobación del usuario a ser agente ?</p>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <a th:href="@{/solicitudes/{id}/aceptar(id=${solicitud.id})}" class="btn btn-dark">Aceptar</a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Modal para Denegar -->
+                  <div th:each="solicitud : ${listaSolicitudes}">
+                    <div class="modal fade" id="denegarModal${solicitud.id}" tabindex="-1" role="dialog" aria-labelledby="acceptModalLabel" aria-hidden="true">
+                      <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="denyModalLabel">Advertencia</h5>
+                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body">
+                            <p>¿Estas seguro de realizar la denegación del usuario a ser agente ?</p>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <a th:href="@{/solicitudes/{id}/denegar(id=${solicitud.id})}" class="btn btn-dark">Denegar</a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Mensaje de éxito -->
+                  <div th:if="${mensajeExito}" class="alert alert-success">
+                    <p th:text="${mensajeExito}"></p>
+                  </div>
+
+
+                </div>
+                <div class="modal" tabindex="-1" role="dialog">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title">Modal title</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                        <p>Modal body text goes here.</p>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <!-- Fin del contenido central -->
+    <!-- Pie de página -->
+    <div th:replace="~{admin/fragments/piedepagina :: fragment}"></div>
+
+
+
+  </div>
+</div>
+
+
+
+<!--Core JS Files   -->
+<script src="/assets/js/core/jquery-3.7.1.min.js"></script>
+<script src="/assets/js/core/popper.min.js"></script>
+<script src="/assets/js/core/bootstrap.min.js"></script>
+
+<!-- jQuery Scrollbar -->
+<script src="/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+<!-- Datatables -->
+<script src="/assets/js/plugin/datatables/datatables.min.js"></script>
+
+<!-- jQuery Vector Maps -->
+<script src="/assets/js/plugin/jsvectormap/jsvectormap.min.js"></script>
+<script src="/assets/js/plugin/jsvectormap/world.js"></script>
+
+<!-- Kaiadmin JS -->
+<script src="/assets/js/kaiadmin.min.js"></script>
+<script>
+  // Función de búsqueda
+  $(document).ready(function(){
+    $("#tableSearch").on("keyup", function() {
+      var value = $(this).val().toLowerCase();
+      $("#tableBody tr").filter(function() {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+      });
+    });
+  });
+</script>
+</body>
+</html>

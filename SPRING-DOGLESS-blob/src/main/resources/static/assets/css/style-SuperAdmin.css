@@ -1,0 +1,16 @@
+.btn-container{
+    display: flex;
+    width: 100%;
+    align-items: center;
+    flex-direction: column;
+}
+.fade-out {
+    transition: opacity 1s ease; /* La transición durará 1 segundo */
+}
+.hidden {
+    opacity: 0;
+    transition: opacity 1s ease; /* La transición durará 1 segundo */
+}
+.remove {
+    display: none; /* Ocultar completamente el elemento */
+}

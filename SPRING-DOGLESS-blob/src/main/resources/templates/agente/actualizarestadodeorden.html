@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Actualizar estado de orden</title>
+    <meta
+      content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
+      name="viewport"
+    />
+    <link
+      rel="icon"
+      href="assets/img/kaiadmin/logodogless.ico"
+      type="image/x-icon"
+    />
+
+    <!-- Fonts and icons -->
+    <script src="assets/js/plugin/webfont/webfont.min.js"></script>
+    <script>
+      WebFont.load({
+        google: { families: ["Public Sans:300,400,500,600,700"] },
+        custom: {
+          families: [
+            "Font Awesome 5 Solid",
+            "Font Awesome 5 Regular",
+            "Font Awesome 5 Brands",
+            "simple-line-icons",
+          ],
+          urls: ["assets/css/fonts.min.css"],
+        },
+        active: function () {
+          sessionStorage.fonts = true;
+        },
+      });
+    </script>
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="assets/css/plugins.min.css" />
+    <link rel="stylesheet" href="assets/css/kaiadmin.min.css" />
+
+    
+  </head>
+  <body>
+    <div class="wrapper">
+      <!-- Barra lateral -->
+      <div th:replace="~{agente/fragments/barralateralagente :: body(activePage='ordenes')}"></div>
+      <!-- Fin barra lateral -->
+
+      <div class="main-panel">
+        <!-- Reemplaza navbar con el fragmento de Thymeleaf -->
+        <div th:replace="~{agente/fragments/navbarheaderagente :: fragment}"></div>
+
+        <!-- Texto o contenido central -->
+        <div class="container">
+            <div class="page-inner">
+              <!-- Buttons for controlling order state -->
+              <div class="d-flex justify-content-end mb-3">
+                <form action="/agente/actualizarEstado" method="POST" style="display: inline;">
+                  <input name="id" th:value="${orden.id}" type="hidden"/>
+                  <button type="submit" id="next-state" class="btn btn-success me-2">Avanzar estado</button>
+                </form>
+                <button id="cancel-order" class="btn btn-danger">Cancelar orden</button>
+              </div>
+          
+              <!-- TimeLine -->
+              <h3 class="fw-bold mb-3">Estado de la Orden</h3>
+              <div class="row">
+                <div class="col-md-12">
+                  <ul class="timeline">
+                    <!-- Order received -->
+                    <li id="state-8" class="timeline-inverted" th:classappend="${orden.estado == 'Recibido'} ? 'active' : ''">
+                      <div class="timeline-badge"><i class="far fa-check-circle"></i></div>
+                      <div class="timeline-panel shadow">
+                        <div class="timeline-heading">
+                          <h4 class="timeline-title">Orden recibida</h4>
+                          <p><small class="text-muted" id="time-8"></small></p>
+                        </div>
+                      </div>
+                    </li>
+                    <!-- Reached destination -->
+                    <li id="state-7" th:classappend="${orden.estado == 'En Ruta'} ? 'active' : ''">
+                      <div class="timeline-badge"><i class="fas fa-home"></i></div>
+                      <div class="timeline-panel shadow">
+                        <div class="timeline-heading">
+                          <h4 class="timeline-title">Llegó al destino</h4>
+                          <p><small class="text-muted" id="time-7"></small></p>
+                        </div>
+                      </div>
+                    </li>
+                    <!-- Customs cleared -->
+                    <li id="state-6" class="timeline-inverted" th:classappend="${orden.estado == 'En Aduanas'} ? 'active' : ''">
+                      <div class="timeline-badge"><i class="fas fa-flag-checkered"></i></div>
+                      <div class="timeline-panel shadow">
+                        <div class="timeline-heading">
+                          <h4 class="timeline-title">Pasó aduanas</h4>
+                          <p><small class="text-muted" id="time-6"></small></p>
+                        </div>
+                      </div>
+                    </li>
+                    <!-- Arrived in country -->
+                    <li id="state-5" th:classappend="${orden.estado == 'Arribo al País'} ? 'active' : ''">
+                      <div class="timeline-badge"><i class="fas fa-map-marker-alt"></i></div>
+                      <div class="timeline-panel shadow">
+                        <div class="timeline-heading">
+                          <h4 class="timeline-title">Arribo al país</h4>
+                          <p><small class="text-muted" id="time-5"></small></p>
+                        </div>
+                      </div>
+                    </li>
+                    <!-- Order processed -->
+                    <li id="state-4" class="timeline-inverted" th:classappend="${orden.estado == 'Arribo al País'} ? 'active' : ''">
+                      <div class="timeline-badge"><i class="fas fa-cogs"></i></div>
+                      <div class="timeline-panel shadow">
+                        <div class="timeline-heading">
+                          <h4 class="timeline-title">Orden procesada</h4>
+                          <p><small class="text-muted" id="time-4"></small></p>
+                        </div>
+                      </div>
+                    </li>
+                    <!-- Order validated -->
+                    <li id="state-3" th:classappend="${orden.estado == 'En Proceso'} ? 'active' : ''">
+                      <div class="timeline-badge"><i class="fas fa-check-double"></i></div>
+                      <div class="timeline-panel shadow">
+                        <div class="timeline-heading">
+                          <h4 class="timeline-title">Orden validada</h4>
+                          <p><small class="text-muted" id="time-3"></small></p>
+                        </div>
+                      </div>
+                    </li>
+                    <!-- Order taken by agent -->
+                    <li id="state-2" class="timeline-inverted" th:classappend="${orden.estado == 'En Validación'} ? 'active' : ''">
+                      <div class="timeline-badge"><i class="fas fa-user-check"></i></div>
+                      <div class="timeline-panel shadow">
+                        <div class="timeline-heading">
+                          <h4 class="timeline-title">Orden tomada por el agente</h4>
+                          <p><small class="text-muted" id="time-2"></small></p>
+                        </div>
+                      </div>
+                    </li>
+                    <!-- Order created (Always enabled initially) -->
+                    <li id="state-1" th:classappend="${orden.estado == 'Creado'} ? 'active' : ''">
+                      <div class="timeline-badge bg-success"><i class="fas fa-cart-plus"></i></div>
+                      <div class="timeline-panel">
+                        <div class="timeline-heading">
+                          <h4 class="timeline-title">Orden creada</h4>
+                          <p><small class="text-muted" id="time-1">Actualizado: Inmediatamente</small></p>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+          
+              <!-- Return Button -->
+              <div class="card-action text-center mt-5">
+                <a href="/agente/ordenes" class="btn btn-primary">Regresar</a>
+              </div>
+            </div>
+          </div>
+          
+          
+          
+        <!-- Fin del contenido central -->
+
+
+
+        <!-- Pie de página -->
+        <footer class="footer">
+          <div class="container-fluid d-flex justify-content-center">
+            <nav class="pull-left">
+              <ul class="nav">
+              
+                <li class="nav-item">
+                  <a class="nav-link" href="ruta/a/informacion-de-contacto.html"> Contacto </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="ruta/a/politica-de-privacidad.html"> Política de privacidad </a>
+                </li>
+              </ul>
+            </nav>
+
+          </div>
+        </footer>
+      </div>
+    </div>
+
+
+
+    <!--Core JS Files   -->
+    <script src="assets/js/core/jquery-3.7.1.min.js"></script>
+    <script src="assets/js/core/popper.min.js"></script>
+    <script src="assets/js/core/bootstrap.min.js"></script>
+
+    <!-- jQuery Scrollbar -->
+    <script src="assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+    <!-- Datatables -->
+    <script src="assets/js/plugin/datatables/datatables.min.js"></script>
+
+    <!-- jQuery Vector Maps -->
+    <script src="assets/js/plugin/jsvectormap/jsvectormap.min.js"></script>
+    <script src="assets/js/plugin/jsvectormap/world.js"></script>
+
+    <!-- Kaiadmin JS -->
+    <script src="assets/js/kaiadmin.min.js"></script>
+
+    <script>
+        let currentState = 2; // Start at 2 since the first state (Orden creada) is always enabled
+        let isCanceled = false;
+
+        document.getElementById("next-state").addEventListener("click", function() {
+        if (currentState <= 8 && !isCanceled) {
+            const stateElement = document.getElementById(`state-${currentState}`);
+            const timeElement = document.getElementById(`time-${currentState}`);
+            const now = new Date();
+            const formattedTime = now.toLocaleString();
+
+            // Update panel and icon to color (celeste)
+            stateElement.querySelector('.timeline-panel').classList.remove('shadow');
+            stateElement.querySelector('.timeline-badge').style.backgroundColor = 'darkblue';
+            timeElement.textContent = `Actualizado: ${formattedTime}`;
+
+            // Advance to next state
+            currentState++;
+
+            // Disable button after last state
+            if (currentState > 8) {
+            document.getElementById("next-state").disabled = true;
+            }
+        }
+        });
+
+        document.getElementById("cancel-order").addEventListener("click", function() {
+        if (!isCanceled && currentState <= 8) {
+            const stateElement = document.getElementById(`state-${currentState}`);
+            const now = new Date();
+            const formattedTime = now.toLocaleString();
+
+            // Add cancel panel and badge
+            const cancelPanel = document.createElement('div');
+            cancelPanel.classList.add('timeline-panel', 'shadow', 'bg-danger', 'text-white');
+            cancelPanel.innerHTML = `
+            <div class="timeline-heading">
+                <h4 class="timeline-title">Orden cancelada</h4>
+                <p><small class="text-muted">Cancelado en: ${formattedTime}</small></p>
+            </div>
+            `;
+            
+            // Append the cancel panel next to the current state
+            stateElement.after(cancelPanel);
+
+            // Mark as canceled and disable buttons
+            isCanceled = true;
+            document.getElementById("next-state").disabled = true;
+            document.getElementById("cancel-order").disabled = true;
+        }
+        });
+
+    </script>
+  </body>
+</html>
