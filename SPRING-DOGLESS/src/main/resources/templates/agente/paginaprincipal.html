@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>Agente - Página principal</title>
@@ -9,12 +9,12 @@
     />
     <link
       rel="icon"
-      href="assets/img/kaiadmin/logodogless.ico"
+      href="/assets/img/kaiadmin/favicon.ico"
       type="image/x-icon"
     />
 
     <!-- Fonts and icons -->
-    <script src="assets/js/plugin/webfont/webfont.min.js"></script>
+    <script src="/assets/js/plugin/webfont/webfont.min.js"></script>
     <script>
       WebFont.load({
         google: { families: ["Public Sans:300,400,500,600,700"] },
@@ -25,7 +25,7 @@
             "Font Awesome 5 Brands",
             "simple-line-icons",
           ],
-          urls: ["assets/css/fonts.min.css"],
+          urls: ["/assets/css/fonts.min.css"],
         },
         active: function () {
           sessionStorage.fonts = true;
@@ -34,16 +34,16 @@
     </script>
 
     <!-- CSS Files -->
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="assets/css/plugins.min.css" />
-    <link rel="stylesheet" href="assets/css/kaiadmin.min.css" />
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/assets/css/plugins.min.css" />
+    <link rel="stylesheet" href="/assets/css/kaiadmin.min.css" />
 
-    
+
   </head>
   <body>
   <div class="wrapper">
       <!-- Reemplaza barra lateral con el fragmento de Thymeleaf -->
-      <div th:replace="~{agente/fragments/barralateralagente :: body(activePage='usuarios', activeSubPage='adminzonal')}"></div>
+      <div th:replace="~{agente/fragments/barralateralagente :: body(activePage='home')}"></div>
       <!-- Fin barra lateral -->
 
 
@@ -70,7 +70,7 @@
             
             <!-- Imagen centrada inmediatamente después del texto -->
             <div class="text-center mt-3">
-              <img src="imagen_adminzonal.jpg" class="img-fluid mx-auto d-block" alt="Imagen principal">
+              <img src="/assets/img/imagen_adminzonal.jpg" class="img-fluid mx-auto d-block" alt="Imagen principal">
             </div>
           </div>
         </div>
@@ -79,42 +79,28 @@
 
 
         <!-- Pie de página -->
-        <footer class="footer">
-          <div class="container-fluid d-flex justify-content-center">
-            <nav class="pull-left">
-              <ul class="nav">
-              
-                <li class="nav-item">
-                  <a class="nav-link" href="ruta/a/informacion-de-contacto.html"> Contacto </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="ruta/a/politica-de-privacidad.html"> Política de privacidad </a>
-                </li>
-              </ul>
-            </nav>
+        <div th:replace="~{agente/fragments/piedepagina :: fragment}"></div>
 
-          </div>
-        </footer>
       </div>
     </div>
 
 
 
     <!--Core JS Files   -->
-    <script src="assets/js/core/jquery-3.7.1.min.js"></script>
-    <script src="assets/js/core/popper.min.js"></script>
-    <script src="assets/js/core/bootstrap.min.js"></script>
+    <script src="/assets/js/core/jquery-3.7.1.min.js"></script>
+    <script src="/assets/js/core/popper.min.js"></script>
+    <script src="/assets/js/core/bootstrap.min.js"></script>
 
     <!-- jQuery Scrollbar -->
-    <script src="assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+    <script src="/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
     <!-- Datatables -->
-    <script src="assets/js/plugin/datatables/datatables.min.js"></script>
+    <script src="/assets/js/plugin/datatables/datatables.min.js"></script>
 
     <!-- jQuery Vector Maps -->
-    <script src="assets/js/plugin/jsvectormap/jsvectormap.min.js"></script>
-    <script src="assets/js/plugin/jsvectormap/world.js"></script>
+    <script src="/assets/js/plugin/jsvectormap/jsvectormap.min.js"></script>
+    <script src="/assets/js/plugin/jsvectormap/world.js"></script>
 
     <!-- Kaiadmin JS -->
-    <script src="assets/js/kaiadmin.min.js"></script>
+    <script src="/assets/js/kaiadmin.min.js"></script>
   </body>
 </html>
