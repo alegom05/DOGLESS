@@ -31,7 +31,7 @@ public class LoginController {
     }
 
 
-    @GetMapping("/crearnuevacontrasenha")
+    @GetMapping("/crearnuevacontrasenha1")
     public String informaciondecontacto() {
         return "informacion-de-contacto"; // Esto renderiza la vista informacion-de-contacto.html
     }
