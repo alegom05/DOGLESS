@@ -8,8 +8,13 @@
         <div class="main-header-logo">
           <!-- Logo Header -->
           <div class="logo-header" data-background-color="dark">
-            <a href="paginaprincipal.html" class="logo">
-              <img src="assets/img/kaiadmin/logodogless.svg" alt="navbar brand" class="navbar-brand" height="20"/>
+            <a href="/admin/" class="logo">
+              <img
+                      src="/assets/img/kaiadmin/logodogless.svg"
+                      alt="navbar brand"
+                      class="navbar-brand"
+                      height="20"
+              />
             </a>
             <div class="nav-toggle">
               <button class="btn btn-toggle toggle-sidebar">
@@ -26,15 +31,10 @@
           <!-- End Logo Header -->
         </div>
         <!-- Navbar superior -->
-        <nav
-                class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom"
+        <nav class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom"
                 data-background-color="dark">
           <div class="container-fluid">
-            <nav
-                    class="navbar navbar-header-left navbar-expand-lg navbar-form nav-search p-0 d-none d-lg-flex"
-            >
-            </nav>
-
+            <nav class="navbar navbar-header-left navbar-expand-lg navbar-form nav-search p-0 d-none d-lg-flex"></nav>
             <ul class="navbar-nav topbar-nav ms-md-auto align-items-center">
               <li class="nav-item topbar-icon dropdown hidden-caret">
                 <a
@@ -121,7 +121,7 @@
                     </div>
                   </li>
                   <li>
-                    <a class="see-all" href="tables/chatsagente.html"
+                    <a class="see-all" href="agente/chat"
                     >ver todos los mensajes<i class="fa fa-angle-right"></i>
                     </a>
                   </li>
@@ -203,7 +203,7 @@
                   </li>
                   <li>
                     <a class="see-all" href="notificacionesagente.html"
-                    >Ver todas las notificaciones<i class="fa fa-angle-right"></i>
+                    >Ver notificaciones anteriores<i class="fa fa-angle-right"></i>
                     </a>
                   </li>
                 </ul>
@@ -219,7 +219,7 @@
                 >
                   <div class="avatar-sm">
                     <img
-                            src="assets/img/perfil_nilo.jpg"
+                            src="/assets/img/profile.jpg"
                             alt="..."
                             class="avatar-img rounded-circle"
                     />
@@ -235,7 +235,7 @@
                       <div class="user-box">
                         <div class="avatar-lg">
                           <img
-                                  src="assets/img/perfil_nilo.jpg"
+                                  src="/assets/img/profile.jpg"
                                   alt="image profile"
                                   class="avatar-img rounded"
                           />
@@ -250,9 +250,9 @@
                     </li>
                     <li>
                       <div class="dropdown-divider"></div>
-                      <a class="dropdown-item" href="#">Ajustes</a>
+                      <a class="dropdown-item" href="#">Cambiar contraseña</a>
                       <div class="dropdown-divider"></div>
-                      <a class="dropdown-item" href="#">Cerrar Sesion</a>
+                      <a class="dropdown-item" href="/login">Cerrar Sesión</a>
                     </li>
                   </div>
                 </ul>
@@ -260,7 +260,8 @@
             </ul>
           </div>
         </nav>
-        <!-- Fin Navbar -->      </div>
+        <!-- Fin Navbar -->
+      </div>
     </div>
   </body>
 </html>

@@ -9,7 +9,7 @@
       <div class="sidebar-logo">
         <!-- Logo de cabecera -->
         <div class="logo-header" data-background-color="dark">
-          <a href="paginaprincipal.html" class="logo">
+          <a href="/agente/" class="logo">
             <img src="/assets/img/kaiadmin/slogan_white_v3.png" alt="navbar brand" class="navbar-brand" height="50"/>
           </a>
           <div class="nav-toggle">
@@ -25,7 +25,7 @@
           <ul class="nav nav-secondary">
             <!-- Barra de navegación lateral-->
             <li class="nav-item" th:classappend="${activePage == 'home' ? 'active submenu' : ''}">
-              <a th:href="@{/agente}">
+              <a href="/agente">
                 <i class="fas fa-home"></i>
                 <p>Página principal</p>
               </a>
@@ -91,14 +91,6 @@
                   </li>
                 </ul>
               </div>
-            </li>
-
-            <li class="nav-item" th:classappend="${activePage == 'notificaciones' ? 'active submenu' : ''}">
-              <a href="notificacionesagente.html">
-                <i class="fas fa-bell"></i>
-                <p>Notificaciones</p>
-                <span class="badge badge-secondary">6</span>
-              </a>
             </li>
 
           </ul>
