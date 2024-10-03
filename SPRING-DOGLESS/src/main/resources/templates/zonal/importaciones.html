@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Agentes</title>
+    <title>Importaciones</title>
     <meta
             content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
             name="viewport"
@@ -58,8 +58,8 @@
           <div class="page-inner">
             <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
               <div>
-                <h3 class="fw-bold mb-3">Lista de Agentes</h3>
-                <h6 class="op-7 mb-2">En las tablas encontrarás las identidades de los Agentes. Navega entre las páginas para explorar más información de cada uno.</h6>
+                <h3 class="fw-bold mb-3">Lista de Importaciones</h3>
+                <h6 class="op-7 mb-2">En las tablas encontrarás las importaciones. Puedes editar el campo Fecha de importaciones según desees.</h6>
               </div>
             </div>
             <div th:if="${mensajeExito}" id="mensajeExito" class="alert alert-success fade-out" role="alert">
@@ -85,18 +85,20 @@
                         <thead>
                           <tr>
                             <th>Importaciones</th>
+                            <th>Cantidad</th>
                             <th>Fechas de arribo</th>
-                            <th>Código de aduanas</th>
-                            <th>RUC</th>
+
+                            <th>Estado</th>
                             <th>Acciones</th>
+
                           </tr>
                         </thead>
                         <tbody>
-                          <tr th:each="usuario : ${listaAgentes}">
-                            <td th:text="${usuario.nombre}"></td>
-                            <td th:text="${usuario.apellido}"></td>
-                            <td th:text="${usuario.dni}"></td>
-                            <td th:text="${usuario.correo}"></td>
+                          <tr th:each="importaciones : ${listaImportaciones}">
+                            <td th:text="${importaciones.id}"></td>
+                            <td th:text="${importaciones.cantidad}"></td>
+                            <td th:text="${importaciones.fechaPedido}"></td>
+                            <td th:text="${importaciones.aprobar}"></td>
                             <td>
                               <!-- Dropdown con ícono -->
                               <div class="dropdown">
@@ -104,12 +106,14 @@
                                   <i class="fas fa-ellipsis-v"></i>
                                 </button>
                                 <!-- Dropdown oscuro -->
+                                <!--
                                 <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
                                   <li><a class="dropdown-item" th:href="@{'/zonal/veragente' + '?id=' + ${usuario.id}}">Ver</a></li>
                                   <li><a class="dropdown-item" th:href="@{'/admin/editagente' + '?id=' + ${usuario.id}}">Editar</a></li>
                                   <li><a href="#" class="dropdown-item" data-toggle="modal"  data-target="#confirmDeleteModal" th:data-id="${usuario.id}">Eliminar</a></li>
 
-                                  <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#aceptarModal">Espiar</a></li>
+                                -->
+                                <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#aceptarModal">Espiar</a></li>
                                 </ul>
                               </div>
                             </td>

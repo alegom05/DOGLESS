@@ -30,6 +30,11 @@ public class ZonalController {
     RolRepository rolRepository;
     @Autowired
     ProductRepository productRepository;
+    @Autowired
+    private ProveedorRepository proveedorRepository;
+    @Autowired
+    ImportacionRepository importacionRepository;
+
     @GetMapping({""})
     public String PaginaPrincipal(Model model) {
         return "zonal/paginaprincipal";
@@ -43,6 +48,8 @@ public class ZonalController {
     @GetMapping("/dashboard")
     public String elDashboardEstaTristeYAzul(Model model, @RequestParam(required = false) String zona) {
         /*model.addAttribute("listaProveedores", proveedorRepository.findAll());*/
+        model.addAttribute("listaProductos", productRepository.findByBorrado(1));
+
         return "zonal/dashboard";
     }
 
@@ -107,6 +114,81 @@ public class ZonalController {
 
         return "redirect:/zonal/agentes";
     }
+    @GetMapping("/editagente")
+    public String editarAgente(Model model, @RequestParam("id") int id) {
+
+        Optional<Usuario> optUsuario = usuarioRepository.findById(id);
+
+        if (optUsuario.isPresent()) {
+            Usuario usuario = optUsuario.get();
+            model.addAttribute("usuario", usuario);
+            model.addAttribute("listaZonas", zonaRepository.findAll());
+            model.addAttribute("listaDistritos", distritoRepository.findAll());
+            return "zonal/editarAgente";
+        } else {
+            return "redirect:/zonal/agentes";
+        }
+    }
+
+    @PostMapping("/saveagente")
+    public String guardarAgente(@RequestParam("id") int id,
+                                @RequestParam("nombre") String nombre,
+                                @RequestParam("apellido") String apellido,
+                                @RequestParam("correo") String correo,
+                                @RequestParam("telefono") String telefono,
+                                @RequestParam("ruc") String ruc,
+                                @RequestParam("codigoAduana") String codigoaduana,
+                                @RequestParam("razonsocial") String razonsocial,
+                                @RequestParam int zona,
+                                @RequestParam int distrito,
+                                RedirectAttributes attr) {
+        // Obtener el usuario existente
+        Optional<Usuario> optUsuario = usuarioRepository.findById(id);
+
+        if (optUsuario.isPresent()) {
+            Usuario usuario = optUsuario.get();
+
+            // Actualizar solo los campos editables
+            usuario.setNombre(nombre);
+            usuario.setApellido(apellido);
+            usuario.setCorreo(correo);
+            usuario.setTelefono(telefono);
+            usuario.setRuc(ruc);
+            usuario.setCodigoaduana(codigoaduana);
+            usuario.setRazonsocial(razonsocial);
+
+            // Buscar las entidades relacionadas por sus IDs
+            Zona zonaEntity = zonaRepository.findById(zona).orElse(null); // Se maneja si no existe
+            Distrito distritoEntity = distritoRepository.findById(distrito).orElse(null); // Se maneja si no existe
+
+            // Asignar las entidades encontradas al usuario
+            usuario.setZona(zonaEntity);
+            usuario.setDistrito(distritoEntity);
+
+            // Guardar el usuario actualizado
+            usuarioRepository.save(usuario);
+            attr.addFlashAttribute("mensajeExito", "Cambios guardados correctamente");
+        } else {
+            attr.addFlashAttribute("error", "Usuario no encontrado");
+        }
+
+        return "redirect:/zonal/agentes";
+    }
+    @PostMapping("/deleteagente")
+    public String borrarAgente(@RequestParam("id") Integer id, RedirectAttributes attr) {
+        Optional<Usuario> optUsuario = usuarioRepository.findById(id);
+
+        if (optUsuario.isPresent()) {
+            Usuario usuario = optUsuario.get();
+            usuario.setBorrado(0);
+            usuarioRepository.save(usuario);
+            attr.addFlashAttribute("msg", "Agente borrado exitosamente");
+        } else {
+            attr.addFlashAttribute("error", "Agente no encontrado");
+        }
+
+        return "redirect:/zonal/agentes";
+    }
 
     @PostMapping("/guardarAgente")
     public String guardarAgente(RedirectAttributes attr, Model model,
@@ -138,7 +220,7 @@ public class ZonalController {
     //Importaciones
     @GetMapping(value = "importaciones")
     public String listaImportaciones(Model model) {
-        model.addAttribute("listaImportaciones", usuarioRepository.findByRol_RolAndBorrado("Agente",1));
+        model.addAttribute("listaImportaciones", importacionRepository.findByBorrado(1));
         return "/zonal/importaciones";
     }
 
@@ -146,7 +228,7 @@ public class ZonalController {
     //Reposiciones
     @GetMapping(value = "reposiciones")
     public String listaReposiciones(Model model) {
-        model.addAttribute("listaReposiciones", reposicionRepository.findAll());
+        model.addAttribute("listaReposiciones", reposicionRepository.findByBorrado(1));
         return "/zonal/reposiciones";
     }
 
@@ -164,16 +246,26 @@ public class ZonalController {
         }
     }
 
+    @GetMapping("/nuevaReposicion")
+    public String nuevaReposicion(Model model, @ModelAttribute("reposicion") Reposicion reposicion) {
+        model.addAttribute("listaReposiciones", reposicionRepository.findAll());
+        model.addAttribute("listaProveedores", proveedorRepository.findAll());
+        model.addAttribute("listaProductos", productRepository.findAll());
+        return "zonal/editarReposicion";
+    }
+
     @GetMapping("/editarReposicion")
-    public String editarReposicion(@ModelAttribute("product") Producto producto, Model model,
-                                   @RequestParam("id") int id) {
+    public String editarReposicion(@ModelAttribute("reposicion") Reposicion reposicion,
+                                   Model model,
+                                   @RequestParam(value="id", required = false) int id) {
 
-        Optional<Producto> optProducto = productRepository.findById(id);
+        Optional<Reposicion> optReposicion = reposicionRepository.findById(id);
 
-        if (optProducto.isPresent()) {
-            producto = optProducto.get();
-            model.addAttribute("producto", producto);
-            model.addAttribute("listaReposiciones", zonaRepository.findAll());
+        if (optReposicion.isPresent()) {
+            reposicion = optReposicion.get();
+            model.addAttribute("reposicion", reposicion);
+            model.addAttribute("listaReposiciones", reposicionRepository.findAll());
+            model.addAttribute("listaProveedores", proveedorRepository.findAll());
             model.addAttribute("listaProductos", productRepository.findAll());
 
             return "zonal/editarReposicion";
@@ -182,17 +274,65 @@ public class ZonalController {
         }
     }
 
+    @PostMapping("/guardarReposicion")
+    public String guardarReposicion(RedirectAttributes attr, Model model,
+                                  @ModelAttribute("reposicion") @Valid Reposicion reposicion, BindingResult bindingResult) {
+        if (!bindingResult.hasErrors()) { //si no hay errores, se realiza el flujo normal
 
+            if (reposicion.getCantidad()==8) {
+                model.addAttribute("msg", "Error al crear producto");
+                model.addAttribute("listaProductos", productRepository.findAll());
+                model.addAttribute("listaReposiciones", reposicionRepository.findAll());
 
+                return "zonal/editarReposicion";
+            } else {
+                if (reposicion.getId() == null) {
+                    attr.addFlashAttribute("msg", "Reposición creada exitosamente");
+                } else {
+                    attr.addFlashAttribute("msg", "Reposición actualizada exitosamente");
+                }
+                if (reposicion.getProducto() != null && reposicion.getProducto().getId() == null) {
+                    productRepository.save(reposicion.getProducto());
+                }
+                if (reposicion.getProducto() != null && reposicion.getProducto().getProveedor() != null
+                        && reposicion.getProducto().getProveedor().getId() == null) {
+                    proveedorRepository.save(reposicion.getProducto().getProveedor());
+                }
+                reposicion.setBorrado(1);
+                reposicionRepository.save(reposicion);
+                return "redirect:/zonal/reposiciones";
+            }
 
-
-
-
-    @GetMapping("/nuevaReposicion")
-    public String nuevoAdminZonalFrm(Model model) {
-        model.addAttribute("listaReposiciones", reposicionRepository.findAll());
-        return "zonal/agregarReposicion";
+        } else { //hay al menos 1 error
+            model.addAttribute("listaProductos", productRepository.findAll());
+            model.addAttribute("listaReposiciones", reposicionRepository.findAll());
+            return "zonal/editarReposicion";
+        }
     }
+
+
+    @PostMapping("/borrarReposicion")
+    public String borrarAdminZonal(@RequestParam("id") Integer id, RedirectAttributes attr) {
+        Optional<Reposicion> optReposicion = reposicionRepository.findById(id);
+
+        if (optReposicion.isPresent()) {
+            Reposicion reposicion = optReposicion.get();
+            reposicion.setBorrado(0);
+            reposicionRepository.save(reposicion);
+            attr.addFlashAttribute("msg", "Reposición borrada exitosamente");
+        } else {
+            attr.addFlashAttribute("error", "Reposición no encontrada");
+        }
+
+        return "redirect:/zonal/reposiciones";
+    }
+
+
+
+
+
+
+
 
 
 

@@ -44,6 +44,8 @@
   </head>
   <body>
     <div class="wrapper">
+      <input type="hidden" name="id" id="id">
+
       <!-- Reemplaza barra lateral con el fragmento de Thymeleaf -->
       <div th:replace="~{zonal/fragments/barralateralzonal :: body(activePage='reposiciones')}"></div>
       <!-- Fin barra lateral -->
@@ -59,11 +61,12 @@
             <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
               <div>
                 <h3 class="fw-bold mb-3">Lista de Reposiciones</h3>
+
                 <h6 class="op-7 mb-2">En las tablas encontrarás los detalles de las reposiciones.</h6>
               </div>
             </div>
-            <div th:if="${mensajeExito}" id="mensajeExito" class="alert alert-success fade-out" role="alert">
-              <p th:text="${mensajeExito}"></p>
+            <div th:if="${msg}" id="msg" class="alert alert-success fade-out" role="alert">
+              <p th:text="${msg}"></p>
             </div>
             <div class="row">
               <div class="col-md-12">
@@ -71,7 +74,9 @@
 
                   <div class="card-body">
                     <a class="btn btn-primary btn-round ms-auto" th:href="@{/zonal/nuevaReposicion}">
-                    <i class="fa fa-plus"></i>
+
+
+                      <i class="fa fa-plus"></i>
                       Agregar Reposición
                     </a>
                     <div class="table-responsive">
@@ -91,22 +96,24 @@
                       <table id="basic-datatables" class="display table table-striped table-hover">
                         <thead>
                           <tr>
+                            <th>ID Reposición</th>
                             <th>Nombre</th>
-                            <th>Descripción</th>
-                            <th>Precio</th>
-                            <th>Proveedor</th>
+                            <th>Cantidad</th>
+                            <th>Fecha de pedido</th>
                             <th>Estado</th>
-                            <th>Acciones</th>
                           </tr>
                         </thead>
                         <tbody>
                           <tr th:each="reposicion : ${listaReposiciones}">
+                            <td th:text="${reposicion.id}"></td>
                             <td th:text="${reposicion.producto.nombre}"></td>
-                            <td th:text="${reposicion.producto.descripcion}"></td>
-                            <td th:text="${reposicion.producto.precio}"></td>
-                            <td th:text="${reposicion.producto.proveedor.tienda}"></td>
-                            <td th:text="${reposicion.producto.estado}"></td>
+                            <td th:text="${reposicion.cantidad}"></td>
+                            <td th:text="${reposicion.fecha_pedido}"></td>
+                            <td th:text="${reposicion.aprobar}" style="text-transform: capitalize;"></td>
+                            <!-- En Mayúsculas-->
                             <td>
+                              <!-- En ver: Descripcion y tienda -->
+
                               <!-- Dropdown con ícono -->
                               <div class="dropdown">
                                 <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -117,6 +124,7 @@
                                 <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
                                   <li><a class="dropdown-item" th:href="@{'/zonal/verReposicion' + '?id=' + ${reposicion.id}}">Ver</a></li>
                                   <li><a class="dropdown-item" th:href="@{'/zonal/editarReposicion' + '?id=' + ${reposicion.id}}">Editar</a></li>
+                                    <li><a class="dropdown-item" href="#" data-toggle="modal" data-target="#confirmDeleteModal" th:data-id="${reposicion.id}">Eliminar</a></li>
 
                                   <!--
                                    <li><a class="dropdown-item" th:href="@{'/zonal/verReposicion' + '?id=' + ${reposicion.id}}">Ver</a></li>
@@ -157,7 +165,7 @@
                          </div>
                        </div>
 
-                       <!-- Modal para Aceptar -->
+                       Modal para Aceptar -->
                       <div class="modal fade" id="aceptarModal" tabindex="-1" role="dialog" aria-labelledby="acceptModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                           <div class="modal-content">
@@ -225,6 +233,31 @@
         modal.find('#userId').val(userId); // Asigna el ID al campo oculto
       });
     </script>
+
+    <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmar Eliminación</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            ¿Estás seguro de que deseas eliminar esta reposición?
+
+          </div>
+          <div class="modal-footer">
+            <form id="reposicion.getProducto().getProveedor().getId()" method="post" th:action="@{'/zonal/borrarReposicion'}" novalidate>
+              <input type="hidden" name="id" id="id">
+              <button type="submit" class="btn btn-dark">Eliminar</button>
+            </form>
+            <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancelar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <script>
       $(document).ready(function () {
 
@@ -278,9 +311,16 @@
           },
         });
 
+        //Asignación del id
+      $('#confirmDeleteModal').on('show.bs.modal', function (event) {
+          var button = $(event.relatedTarget); // Botón que abrió el modal
+          var reposicionId = button.data('id'); // Extraer el ID de reposición desde el atributo data-id
+          var modal = $(this);
+          modal.find('#id').val(reposicionId); // Asigna el ID al campo oculto en el formulario
+      });
 
 
-        // Add Row
+          // Add Row
         $("#add-row").DataTable({
           pageLength: 5,
         });
@@ -300,6 +340,20 @@
           $("#addRowModal").modal("hide");
         });
       });
+    </script>
+    <script>
+      // Espera 3 segundos (3000 milisegundos) antes de empezar a ocultar el mensaje
+      setTimeout(function() {
+        var alert = document.getElementById('mensajeExito');
+        if (alert) {
+          alert.classList.add('hidden'); // Añadir la clase que reduce la opacidad gradualmente
+
+          // Después de 1 segundo (duración de la transición), ocultar completamente
+          setTimeout(function() {
+            alert.classList.add('remove'); // Ocultar completamente el mensaje y el espacio
+          }, 1000); // 1000 ms coincide con la duración de la transición de opacidad
+        }
+      }, 3000); // Cambia 3000 por el tiempo en milisegundos que desees (3 segundos en este caso)
     </script>
   </body>
 </html>

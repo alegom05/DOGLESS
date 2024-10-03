@@ -3,6 +3,7 @@ package com.example.springdogless.Repository;
 import com.example.springdogless.entity.Orden;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -19,4 +20,8 @@ public interface OrdenRepository extends JpaRepository<Orden, Integer> {
 
     @Query(value="SELECT o.*, p.idproductos,p.nombre,p.precio,p.costoenvio,d.cantidad, d.subtotal FROM ordenes o JOIN detallesorden d ON o.idordenes = d.idorden JOIN productos p ON d.idproducto = p.idproductos WHERE o.idordenes = :id", nativeQuery = true)
     Optional<Orden> findByIdWithDetails(@Param("id") Integer id);
+
+    @Modifying
+    @Query(value="UPDATE ordenes SET estado = :nuevoEstado WHERE idordenes = :idOrden", nativeQuery = true)
+    int actualizarEstado(@Param("idOrden") int idOrden, @Param("nuevoEstado") String nuevoEstado);
 }

@@ -4,11 +4,15 @@ import com.example.springdogless.Repository.*;
 
 import com.example.springdogless.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -557,8 +561,9 @@ public class AdminController {
                                     @RequestParam("precio") Double precio,
                                     @RequestParam("costoenvio") Double costoenvio,
                                     @RequestParam("colores") String colores,
+                                    @RequestParam("imagen") MultipartFile imagen,
                                     @RequestParam int proveedor,
-                                    RedirectAttributes attr) {
+                                    RedirectAttributes attr) throws IOException {
         // Obtener el usuario existente
         Optional<Producto> optProducto = productRepository.findById(id);
 
@@ -572,6 +577,14 @@ public class AdminController {
             producto.setPrecio(precio);
             producto.setCostoenvio(costoenvio);
             producto.setColores(colores);
+
+
+            // Si se sube una nueva imagen, convertirla a byte[] y guardarla
+            if (!imagen.isEmpty()) {
+                byte[] imagenBytes = imagen.getBytes();
+                producto.setImagenprod(imagenBytes);
+            }
+
 
             // Buscar las entidades relacionadas por sus IDs
             Proveedor proveedorEntity = proveedorRepository.findById(proveedor).orElse(null); // Se maneja si no existe
@@ -598,6 +611,8 @@ public class AdminController {
         } else {
             attr.addFlashAttribute("error", "Proveedor no encontrado");
             return "redirect:/admin/productos";
+
+
         }
         producto.setBorrado(1);
         productRepository.save(producto);
@@ -663,7 +678,7 @@ public class AdminController {
                 if (cantidadExistente != 0) {
                     // Si el producto existe, actualiza el stock
                     stockRepository.actualizarStock(
-                            Integer.parseInt(reposicion.getCantidad()),
+                            reposicion.getCantidad(),
                             reposicion.getProducto().getId(),
                             reposicion.getZona().getIdzonas());
                 } else {
@@ -671,7 +686,7 @@ public class AdminController {
                     stockRepository.insertarNuevoStock(
                             reposicion.getProducto().getId(),
                             reposicion.getZona().getIdzonas(),
-                            Integer.parseInt(reposicion.getCantidad()));
+                            reposicion.getCantidad());
                 }
                 // Actualiza el atributo 'aprobado' de la reposición
                 reposicion.setAprobar("aprobado");
@@ -876,6 +891,27 @@ public class AdminController {
 
     */
 
+    @GetMapping("/producto/imagen/{id}")
+    @ResponseBody
+    public ResponseEntity<byte[]> getImage(@PathVariable("id") Integer id) {
+        System.out.println("Llamando a getImage con ID: " + id); // Agrega este log
+        Optional<Producto> productoOptional = productRepository.findById(id);
 
+        if (productoOptional.isPresent()) {
+            Producto producto = productoOptional.get();
+            byte[] imagenBytes = producto.getImagenprod();
+
+            // Log para verificar la longitud de la imagen
+            System.out.println("Imagen encontrada para ID: " + id + ", longitud de imagen en bytes: " + imagenBytes.length);
+
+            // Configuración de tipo de contenido
+            return ResponseEntity.ok()
+                    .contentType(MediaType.IMAGE_JPEG) // o MediaType.IMAGE_PNG según sea el caso
+                    .body(imagenBytes);
+        }
+
+        System.out.println("No se encontró producto con ID: " + id); // Agrega este log
+        return ResponseEntity.notFound().build();
+    }
 
 }

@@ -73,7 +73,7 @@
                                         <div class="card-title">Top 10 productos más importados en su zona</div>
                                     </div>
                                     <div class="card-body">
-                                        <div class="chart-container">
+                                        <div class="chart-container" th:each="nombre, íter : ${listaProductos}">
                                             <canvas id="productosMasImportadosZona"></canvas>
                                         </div>
                                     </div>

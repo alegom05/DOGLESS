@@ -73,9 +73,9 @@
                                    name="discontinued">
                             <label class="form-check-label">¿Descontinuado?</label>
                         </div>
-                        <a th:href="@{'/product'}" class="btn btn-danger">Cancelar</a>
+                        <a th:href="@{'/zonal/reposiciones'}" class="btn btn-danger">Cancelar</a>
                         <button type="submit" class="btn btn-primary"
-                                th:text="${product.id==0? 'Guardar':'Actualizar'}">Actualizar
+                                th:text="${reposicion.id==null? 'Guardar':'Actualizar'}">Actualizar
                         </button>
                     </form>
                 </div>

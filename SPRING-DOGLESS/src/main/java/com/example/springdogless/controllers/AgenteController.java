@@ -4,9 +4,11 @@ import com.example.springdogless.Repository.*;
 
 import com.example.springdogless.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Optional;
 import java.time.LocalDate;
@@ -46,6 +48,8 @@ public class AgenteController {
     OrdenRepository ordenRepository;
     @Autowired
     DetallesordenRepository detallesordenRepository;
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
 
 
     @GetMapping({""})
@@ -64,6 +68,10 @@ public class AgenteController {
         model.addAttribute("listaOrdenes", ordenRepository.findByBorrado(1));
         return "/agente/ordenes";
     }
+    @GetMapping({"chat"})
+    public String Chat(Model model) {
+        return "/agente/chat";
+    }
 
     @GetMapping("/detallesorden")
     public String verDetallesOrden(Model model, @RequestParam("id") int id) {
@@ -78,20 +86,59 @@ public class AgenteController {
             model.addAttribute("ordenDetalles", orden2); // Diferente nombre
             return "agente/detalledeordenagente";
         } else {
-            return "redirect:/admin/ordenes";
+            return "redirect:/agente/ordenes";
         }
+    }
+    @GetMapping( "/updaterorden")
+    public String VistaEstadoOrden(Model model, @RequestParam("id") int id) {
+        Optional<Orden> optOrden = ordenRepository.findById(id);
+        if (optOrden.isPresent()) {
+            Orden orden = optOrden.get();
+            model.addAttribute("orden", orden);
+            return "agente/actualizarestadodeorden";
+        } else {
+            return "redirect:/agente/ordenes";
+        }
+    }
+    @PostMapping("/actualizarEstado")
+    public String avanzarEstado(@RequestParam(value = "id", required = false) Integer id) {
+        Orden orden = ordenRepository.findById(id).orElse(null);
+
+        if (orden != null) {
+            String estadoActual = orden.getEstado();
+            // Lógica para avanzar el estado
+            switch (estadoActual) {
+                case "Creado":
+                    orden.setEstado("En Validación");
+                    break;
+                case "En Validación":
+                    orden.setEstado("En Proceso");
+                    break;
+                case "En Proceso":
+                    orden.setEstado("Arribo al País");
+                    break;
+                case "Arribo al País":
+                    orden.setEstado("En Aduanas");
+                    break;
+                case "En Aduanas":
+                    orden.setEstado("En ruta");
+                    break;
+                case "En Ruta":
+                    orden.setEstado("Recibido");
+                    break;
+                case "Recibido":
+                    // En este caso podrías devolver a otra ruta si lo deseas
+                    return "redirect:/agente/ordenes"; // O cualquier otra acción
+                default:
+                    return "redirect:/agente/updaterorden?id=" + id; // Retorna a la misma vista
+            }
+
+            ordenRepository.save(orden);
+            return "redirect:/agente/updaterorden?id=" + id; // Redirige de vuelta a la vista de la orden
+        }
+        return "redirect:/agente/ordenes"; // Redirige si no se encuentra la orden
     }
 
-    @GetMapping("/{id}")
-    public String getOrdenProductos(@PathVariable("id") int id, Model model) {
-        Optional<Orden> ordenOptional = ordenRepository.findByIdWithDetails(id);
-        if (ordenOptional.isPresent()) {
-            model.addAttribute("orden", ordenOptional.get());
-            return "detalle_orden"; // la vista que mostrará los productos
-        } else {
-            return "error"; // en caso de que no exista la orden
-        }
-    }
 
     @GetMapping(value = "usuariosAsignados")
     public String usuariosAsignados(Model model) {
