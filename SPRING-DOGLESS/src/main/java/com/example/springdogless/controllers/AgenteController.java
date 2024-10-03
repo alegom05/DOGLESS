@@ -69,6 +69,17 @@ public class AgenteController {
         model.addAttribute("listaOrdenes", ordenRepository.findByBorrado(1));
         return "/agente/ordenes";
     }
+    @GetMapping( "/updaterorden")
+    public String VistaEstadoOrden(Model model, @RequestParam("id") int id) {
+        Optional<Orden> optOrden = ordenRepository.findById(id);
+        if (optOrden.isPresent()) {
+            Orden orden = optOrden.get();
+            model.addAttribute("orden", orden);
+            return "agente/actualizarestadodeorden";
+        } else {
+            return "redirect:/agente/ordenes";
+        }
+    }
 
     @PostMapping("/actualizarEstado")
     public String avanzarEstado(@RequestParam(value = "id", required = false) Integer id) {
@@ -128,6 +139,25 @@ public class AgenteController {
             return "redirect:/agente/updaterorden?id=" + id; // Redirige de vuelta a la vista de la orden
         }
         return "redirect:/agente/ordenes"; // Redirige si no se encuentra la orden
+    }
+
+
+
+    @GetMapping("/detallesorden")
+    public String verDetallesOrden(Model model, @RequestParam("id") int id) {
+
+        Optional<Orden> optOrden = ordenRepository.findById(id);
+        Optional<Orden> optOrden2 = ordenRepository.findByIdWithDetails(id);
+
+        if (optOrden.isPresent() && optOrden2.isPresent()) {
+            Orden orden = optOrden.get();
+            Orden orden2 = optOrden2.get();
+            model.addAttribute("orden", orden);
+            model.addAttribute("ordenDetalles", orden2); // Diferente nombre
+            return "agente/detalledeordenagente";
+        } else {
+            return "redirect:/admin/ordenes";
+        }
     }
 
 
