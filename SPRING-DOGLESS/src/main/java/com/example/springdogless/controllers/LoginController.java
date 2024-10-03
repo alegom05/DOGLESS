@@ -4,12 +4,16 @@ import com.example.springdogless.Repository.UsuarioRepository;
 import com.example.springdogless.entity.Producto;
 import com.example.springdogless.entity.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
+
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -73,10 +77,10 @@ public class LoginController {
             if (imagenBytes != null) {
                 return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(imagenBytes);
             } else {
-                // Carga aquí la imagen por defecto desde el sistema de archivos
+                // Carga la imagen por defecto desde el classpath
                 try {
-                    Path path = Paths.get("static/assets/img/default.jpg"); // Ajusta la ruta según la ubicación real
-                    byte[] defaultImage = Files.readAllBytes(path);
+                    ClassPathResource imgFile = new ClassPathResource("static/assets/img/default.jpg");
+                    byte[] defaultImage = Files.readAllBytes(imgFile.getFile().toPath());
                     return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(defaultImage);
                 } catch (IOException e) {
                     // Manejo de errores al cargar la imagen
