@@ -60,13 +60,14 @@
             <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
               <div>
                 <h3 class="fw-bold mb-3" th:text="${reposicion.id==null? 'Nueva Reposición':'Editar Reposición'}">Editar Reposición</h3>
+
               </div>
             </div>
             <div class="row">
               <div class="col-md-12">
                 <div class="card">
                   <div class="card-body">
-                    <form class="needs-validation" style="width: 100%; margin-left: 0%; margin-top: 3%;" th:action="@{'/admin/saveproducto'}" method="POST" novalidate>
+                    <form class="needs-validation" style="width: 100%; margin-left: 0%; margin-top: 3%;" th:action="@{'/zonal/guardarReposicion'}" method="POST">
                       <div class="container">
                         <div class="row">
                           <!-- Columna izquierda -->
@@ -123,7 +124,9 @@
                         </div>
 
                         <div class="btn-container" style="text-align: center; margin-top: 20px;">
-                          <button type="submit" class="btn btn-primary" style="width: 280px;">Crear</button>
+                          <button type="submit" class="btn btn-primary" style="width: 280px"
+                                  th:text="${reposicion.id==null? 'Crear':'Actualizar'}">Actualizar
+                          </button>
                           <a th:href="@{/zonal/reposiciones}" class="btn btn-secondary" style="width: 280px;">Cancelar</a>
                         </div>
                       </div>

@@ -95,7 +95,7 @@
                         </thead>
                         <tbody>
                           <tr th:each="importaciones : ${listaImportaciones}">
-                            <td th:text="${importaciones.idimportaciones}"></td>
+                            <td th:text="${importaciones.id}"></td>
                             <td th:text="${importaciones.cantidad}"></td>
                             <td th:text="${importaciones.fechaPedido}"></td>
                             <td th:text="${importaciones.aprobar}"></td>
@@ -106,12 +106,14 @@
                                   <i class="fas fa-ellipsis-v"></i>
                                 </button>
                                 <!-- Dropdown oscuro -->
+                                <!--
                                 <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
                                   <li><a class="dropdown-item" th:href="@{'/zonal/veragente' + '?id=' + ${usuario.id}}">Ver</a></li>
                                   <li><a class="dropdown-item" th:href="@{'/admin/editagente' + '?id=' + ${usuario.id}}">Editar</a></li>
                                   <li><a href="#" class="dropdown-item" data-toggle="modal"  data-target="#confirmDeleteModal" th:data-id="${usuario.id}">Eliminar</a></li>
 
-                                  <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#aceptarModal">Espiar</a></li>
+                                -->
+                                <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#aceptarModal">Espiar</a></li>
                                 </ul>
                               </div>
                             </td>
