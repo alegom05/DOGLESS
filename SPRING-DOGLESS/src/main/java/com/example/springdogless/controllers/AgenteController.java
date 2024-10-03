@@ -193,6 +193,18 @@ public class AgenteController {
         return usuarioRepository.findActivos();  // Devuelve la lista de usuarios activos
     }
 
+    @GetMapping("/verDetallesUsuario")
+    public String verDetallesUsuario(Model model, @RequestParam("id") int id) {
+        // Obtiene el usuario por ID
+        Optional<Usuario> optionalUsuario = usuarioRepository.findById(id);
+
+        // Verifica si el usuario existe
+        if (optionalUsuario.isPresent()) {
+            // Agrega el usuario al modelo
+            model.addAttribute("usuario", optionalUsuario.get());
+        }
+        return "/agente/detallesperfil"; // Retorna el nombre de la vista
+    }
 
 
     /*

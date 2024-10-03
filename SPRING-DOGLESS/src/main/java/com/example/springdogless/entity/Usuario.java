@@ -48,5 +48,8 @@ public class Usuario {
     private Zona zona;
     private String fechanacimiento;
 
+    @Lob
+    @Column(name = "fotoperfil", columnDefinition = "BLOB")
+    private byte[] fotoperfil;  // Cambiado a byte[] para el campo BLOB
 
 }
