@@ -65,7 +65,7 @@
               <div class="card-header" style="background-image: url('/assets/img/blogpost.jpg')">
                 <div class="profile-picture">
                   <div class="avatar avatar-xl">
-                    <img src="/assets/img/profile2.jpg" alt="..." class="avatar-img rounded-circle" />
+                    <img th:src="@{'http://localhost:8080/imagen/' + ${usuario.id}}" alt="..." class="avatar-img rounded-circle" />
                   </div>
                 </div>
               </div>
