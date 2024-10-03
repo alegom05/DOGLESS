@@ -278,6 +278,20 @@ public class ZonalController {
 
         return "redirect:/zonal/importaciones";
     }
+    //Puede ser innecesario
+    @GetMapping("/verImportacion")
+    public String verImportacion(Model model, @RequestParam("id") int id) {
+
+        Optional<Importacion> optionalImportacion = importacionRepository.findById(id);
+
+        if (optionalImportacion.isPresent()) {
+            Importacion importacion = optionalImportacion.get();
+            model.addAttribute("importacion", importacion);
+            return "/zonal/verImportacion";
+        } else {
+            return "redirect:zonal/importaciones";
+        }
+    }
 
 
     //Reposiciones

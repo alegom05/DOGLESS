@@ -109,7 +109,9 @@
                                 <!-- Dropdown oscuro -->
 
                                 <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
+                                  <!--
                                   <li><a class="dropdown-item" th:href="@{'/zonal/verimportaciones' + '?id=' + ${importaciones.id}}">Ver</a></li>
+                                  -->
                                   <li><a class="dropdown-item" th:href="@{'/zonal/editimportaciones' + '?id=' + ${importaciones.id}}">Editar</a></li>
                                   <li><a href="#" class="dropdown-item" data-toggle="modal"  data-target="#confirmDeleteModal" th:data-id="${importaciones.id}">Eliminar</a></li>
                                 </ul>
