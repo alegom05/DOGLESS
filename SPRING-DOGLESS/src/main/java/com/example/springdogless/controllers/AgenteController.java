@@ -140,28 +140,6 @@ public class AgenteController {
         }
         return "redirect:/agente/ordenes"; // Redirige si no se encuentra la orden
     }
-
-
-
-    @GetMapping("/detallesorden")
-    public String verDetallesOrden(Model model, @RequestParam("id") int id) {
-
-        Optional<Orden> optOrden = ordenRepository.findById(id);
-        Optional<Orden> optOrden2 = ordenRepository.findByIdWithDetails(id);
-
-        if (optOrden.isPresent() && optOrden2.isPresent()) {
-            Orden orden = optOrden.get();
-            Orden orden2 = optOrden2.get();
-            model.addAttribute("orden", orden);
-            model.addAttribute("ordenDetalles", orden2); // Diferente nombre
-            return "agente/detalledeordenagente";
-        } else {
-            return "redirect:/admin/ordenes";
-        }
-    }
-
-
-
     @GetMapping("/detallesorden")
     public String verDetallesOrden(Model model, @RequestParam("id") int id) {
 
