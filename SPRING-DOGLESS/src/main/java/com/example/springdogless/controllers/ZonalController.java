@@ -114,6 +114,81 @@ public class ZonalController {
 
         return "redirect:/zonal/agentes";
     }
+    @GetMapping("/editagente")
+    public String editarAgente(Model model, @RequestParam("id") int id) {
+
+        Optional<Usuario> optUsuario = usuarioRepository.findById(id);
+
+        if (optUsuario.isPresent()) {
+            Usuario usuario = optUsuario.get();
+            model.addAttribute("usuario", usuario);
+            model.addAttribute("listaZonas", zonaRepository.findAll());
+            model.addAttribute("listaDistritos", distritoRepository.findAll());
+            return "zonal/editarAgente";
+        } else {
+            return "redirect:/zonal/agentes";
+        }
+    }
+
+    @PostMapping("/saveagente")
+    public String guardarAgente(@RequestParam("id") int id,
+                                @RequestParam("nombre") String nombre,
+                                @RequestParam("apellido") String apellido,
+                                @RequestParam("correo") String correo,
+                                @RequestParam("telefono") String telefono,
+                                @RequestParam("ruc") String ruc,
+                                @RequestParam("codigoAduana") String codigoaduana,
+                                @RequestParam("razonsocial") String razonsocial,
+                                @RequestParam int zona,
+                                @RequestParam int distrito,
+                                RedirectAttributes attr) {
+        // Obtener el usuario existente
+        Optional<Usuario> optUsuario = usuarioRepository.findById(id);
+
+        if (optUsuario.isPresent()) {
+            Usuario usuario = optUsuario.get();
+
+            // Actualizar solo los campos editables
+            usuario.setNombre(nombre);
+            usuario.setApellido(apellido);
+            usuario.setCorreo(correo);
+            usuario.setTelefono(telefono);
+            usuario.setRuc(ruc);
+            usuario.setCodigoaduana(codigoaduana);
+            usuario.setRazonsocial(razonsocial);
+
+            // Buscar las entidades relacionadas por sus IDs
+            Zona zonaEntity = zonaRepository.findById(zona).orElse(null); // Se maneja si no existe
+            Distrito distritoEntity = distritoRepository.findById(distrito).orElse(null); // Se maneja si no existe
+
+            // Asignar las entidades encontradas al usuario
+            usuario.setZona(zonaEntity);
+            usuario.setDistrito(distritoEntity);
+
+            // Guardar el usuario actualizado
+            usuarioRepository.save(usuario);
+            attr.addFlashAttribute("mensajeExito", "Cambios guardados correctamente");
+        } else {
+            attr.addFlashAttribute("error", "Usuario no encontrado");
+        }
+
+        return "redirect:/zonal/agentes";
+    }
+    @PostMapping("/deleteagente")
+    public String borrarAgente(@RequestParam("id") Integer id, RedirectAttributes attr) {
+        Optional<Usuario> optUsuario = usuarioRepository.findById(id);
+
+        if (optUsuario.isPresent()) {
+            Usuario usuario = optUsuario.get();
+            usuario.setBorrado(0);
+            usuarioRepository.save(usuario);
+            attr.addFlashAttribute("msg", "Agente borrado exitosamente");
+        } else {
+            attr.addFlashAttribute("error", "Agente no encontrado");
+        }
+
+        return "redirect:/zonal/agentes";
+    }
 
     @PostMapping("/guardarAgente")
     public String guardarAgente(RedirectAttributes attr, Model model,
