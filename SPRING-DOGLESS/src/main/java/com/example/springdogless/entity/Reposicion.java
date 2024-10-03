@@ -1,6 +1,8 @@
 package com.example.springdogless.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,6 +18,10 @@ public class Reposicion {
     private Integer id;
 
     @Column(name = "cantidad")
+    /*
+    @Min(value= 25, message="No puede tener un valor a 25")
+    */
+    
     private Integer cantidad;
 
     @Column(name = "fecha_pedido")
