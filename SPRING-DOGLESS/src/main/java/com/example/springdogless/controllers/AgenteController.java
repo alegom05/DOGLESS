@@ -9,6 +9,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
+import java.time.LocalDate;
+import java.util.List;
 
 @Controller
 @RequestMapping({"agente", "agente/"})
@@ -126,6 +128,56 @@ public class AgenteController {
         model.addAttribute("listaUsuarios", usuarioRepository.findByRol_RolAndBorrado("Usuario",1));
 
         return "/agente/reportePorUsuario";
+    }
+
+    // Metodo para banear a un usuario
+    @PostMapping("/banear/{id}")
+    public String banearUsuario(@PathVariable Integer id, @RequestParam String motivoBaneo) {
+        Usuario usuario = usuarioRepository.findById(id).orElse(null);
+        if (usuario != null) {
+            if (!usuario.getEstado().equals("baneado")) {  // Verificar que el usuario no esté ya baneado
+                usuario.setEstado("baneado");  // Cambiar el estado a 'baneado'
+                usuario.setFechabaneo(LocalDate.now());  // Registrar la fecha de baneo
+                usuario.setMotivobaneo(motivoBaneo);  // Registrar el motivo de baneo
+                usuarioRepository.save(usuario);  // Guardar los cambios en la base de datos
+                return "Usuario baneado con éxito.";
+            } else {
+                return "El usuario ya está baneado.";
+            }
+        } else {
+            return "Usuario no encontrado.";
+        }
+    }
+
+    // Metodo para desbanear a un usuario
+    @PostMapping("/desbanear/{id}")
+    public String desbanearUsuario(@PathVariable Integer id) {
+        Usuario usuario = usuarioRepository.findById(id).orElse(null);
+        if (usuario != null) {
+            if (usuario.getEstado().equals("baneado")) {  // Verificar que el usuario esté baneado
+                usuario.setEstado("activo");  // Cambiar el estado a 'activo'
+                usuario.setFechabaneo(null);  // Limpiar la fecha de baneo
+                usuario.setMotivobaneo(null);  // Limpiar el motivo de baneo
+                usuarioRepository.save(usuario);  // Guardar los cambios en la base de datos
+                return "Usuario desbaneado con éxito.";
+            } else {
+                return "El usuario no está baneado.";
+            }
+        } else {
+            return "Usuario no encontrado.";
+        }
+    }
+
+    // Metodo para obtener la lista de usuarios baneados
+    @GetMapping("/baneados")
+    public List<Usuario> obtenerUsuariosBaneados() {
+        return usuarioRepository.findBaneados();  // Devuelve la lista de usuarios baneados
+    }
+
+    // Metodo para obtener la lista de usuarios activos
+    @GetMapping("/activos")
+    public List<Usuario> obtenerUsuariosActivos() {
+        return usuarioRepository.findActivos();  // Devuelve la lista de usuarios activos
     }
 
 

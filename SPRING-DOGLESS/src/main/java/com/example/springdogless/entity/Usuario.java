@@ -47,4 +47,7 @@ public class Usuario {
     @JoinColumn(name = "idzonas")
     private Zona zona;
     private String fechanacimiento;
+
+    public void setFechabaneo(LocalDate now) {
+    }
 }

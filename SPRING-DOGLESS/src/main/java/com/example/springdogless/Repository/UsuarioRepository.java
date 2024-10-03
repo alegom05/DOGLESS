@@ -22,5 +22,15 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer>{
             "LEFT JOIN ordenes o ON u.idusuarios = o.idusuarios\n" +
             "GROUP BY u.idusuarios;")
     List<Usuario> findNumberOfOrders(Integer ordenes);
+    // Metodo para buscar usuarios por estado (activo, inactivo, baneado)
+    List<Usuario> findByEstado(String estado);
+
+    // Metodo para buscar usuarios baneados
+    @Query(nativeQuery = true, value = "SELECT * FROM usuarios WHERE estado = 'baneado' AND borrado = 1")
+    List<Usuario> findBaneados();
+
+    // Metodo para buscar usuarios activos
+    @Query(nativeQuery = true, value = "SELECT * FROM usuarios WHERE estado = 'activo' AND borrado = 1")
+    List<Usuario> findActivos();
 }
 
