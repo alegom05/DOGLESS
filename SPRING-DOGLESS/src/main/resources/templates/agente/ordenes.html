@@ -143,8 +143,11 @@
                             <td>
                               <span th:text="${orden.estado}"
                                     th:classappend="${orden.estado == 'Recibido'} ? 'badge badge-success' :
-                                                    (${orden.estado == 'En proceso'} ? 'badge badge-primary' :
-                                                    (${orden.estado == 'En ruta'} ? 'badge badge-danger' : 'badge badge-secondary'))">
+                                                    (${orden.estado == 'En Ruta'} ? 'badge badge-primary' :
+                                                    (${orden.estado == 'En Aduanas'} ? 'badge badge-warning' :
+                                                    (${orden.estado == 'Arribo al País'} ? 'badge badge-info' :
+                                                    (${orden.estado == 'En Proceso'} ? 'badge badge-black' :
+                                                    (${orden.estado == 'En Validación'} ? 'badge badge-secondary' : 'badge badge-count')))))">
                               </span>
                             </td>
 
@@ -219,66 +222,45 @@
     <script src="/assets/js/kaiadmin.min.js"></script>
 
     <script>
-      $(document).ready(function() {
-        // Initialize DataTable
-        var table = $('#multi-filter-select').DataTable({
-          paging: true,
-          pageLength: 5,
-          lengthChange: false,
-          info: true,
-          dom: 'tip',
-          initComplete: function() {
-            // Apply the search for all the existing filters
-            this.api().columns().every(function() {
-              var that = this;
-              $('input, select', this.header()).on('keyup change', function() {
-                if (that.search() !== this.value) {
-                  that.search(this.value).draw();
-                }
-              });
-            });
-          }
-        });
+      document.getElementById("searchBtn").addEventListener("click", function() {
+        // Obtener los valores de los filtros
+        const orderNumber = document.getElementById("filterOrderNumber").value.toLowerCase();
+        const userName = document.getElementById("filterUserName").value.toLowerCase();
 
-        // Search button functionality
-        $('#searchBtn').on('click', function() {
-          // Apply the existing filters
-          table.columns(0).search($('#filterOrderNumber').val());
-          table.columns(1).search($('#filterItemCount').val());
-          table.columns(2).search($('#filterUserName').val());
-          table.columns(3).search($('#filterDate').val());
-          table.columns(4).search($('#filterOrderStatus').val());
+        // Obtener todas las filas de la tabla
+        const tableRows = document.querySelectorAll("#multi-filter-select tbody tr");
 
-          // Apply filter by "Ordenar por"
-          var orderBy = $('#filterOrderBy').val();
-          if (orderBy === 'sinAsignar') {
-            table.columns(4).search('Generado');
-          } else if (orderBy === 'pendientes') {
-            table.columns(4).search('En validación');
-          } else if (orderBy === 'resueltas') {
-            table.columns(4).search('Recibido|Cancelado', true, false);
-          } else if (orderBy === 'enProgreso') {
-            table.columns(4).search('En proceso|Arribo al país|En aduanas|En ruta', true, false);
+        // Recorrer las filas de la tabla
+        tableRows.forEach(row => {
+          // Obtener los valores de la fila
+          const orderCell = row.cells[0].textContent.toLowerCase();
+          const userCell = row.cells[2].textContent.toLowerCase(); // Asegúrate de que el índice sea correcto
+
+          // Verificar si la fila coincide con los filtros
+          const matchesOrderNumber = orderCell.includes(orderNumber);
+          const matchesUserName = userCell.includes(userName);
+
+          // Mostrar u ocultar la fila según los filtros
+          if (matchesOrderNumber && matchesUserName) {
+            row.style.display = ""; // Mostrar fila
           } else {
-            table.columns(4).search('');
+            row.style.display = "none"; // Ocultar fila
           }
-
-          table.draw();
-        });
-
-        // Clear filters button functionality
-        $('#clearBtn').on('click', function() {
-          $('#filterOrderNumber').val('');
-          $('#filterItemCount').val('');
-          $('#filterUserName').val('');
-          $('#filterDate').val('');
-          $('#filterOrderStatus').val('');
-          $('#filterOrderBy').val('');
-          table.search('').columns().search('').draw();
         });
       });
 
+      // Evento para el botón "Limpiar filtros"
+      document.getElementById("clearBtn").addEventListener("click", function() {
+        // Limpiar los campos de entrada
+        document.getElementById("filterOrderNumber").value = "";
+        document.getElementById("filterUserName").value = "";
 
+        // Mostrar todas las filas
+        const tableRows = document.querySelectorAll("#multi-filter-select tbody tr");
+        tableRows.forEach(row => {
+          row.style.display = ""; // Mostrar todas las filas
+        });
+      });
     </script>
   </body>
 </html>
