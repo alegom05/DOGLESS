@@ -41,4 +41,9 @@ public class Producto {
     @JoinColumn(name = "idproveedores", nullable = false)
     private Proveedor proveedor;
 
+    @Lob
+    @Column(name = "imagenprod", columnDefinition = "BLOB")
+    private byte[] imagenprod;  // Cambiado a byte[] para el campo BLOB
+
+
 }
