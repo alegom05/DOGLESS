@@ -32,5 +32,10 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer>{
     // Metodo para buscar usuarios activos
     @Query(nativeQuery = true, value = "SELECT * FROM usuarios WHERE estado = 'activo' AND borrado = 1")
     List<Usuario> findActivos();
+
+    @Query(nativeQuery = true, value = "SELECT * FROM usuarios WHERE idroles = ?1 AND borrado = 1 AND estado <> 'baneado'")
+    List<Usuario> findByRolAndNotBaneado(Integer idRol);
+
+
 }
 

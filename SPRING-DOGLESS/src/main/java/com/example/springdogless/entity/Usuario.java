@@ -48,6 +48,5 @@ public class Usuario {
     private Zona zona;
     private String fechanacimiento;
 
-    public void setFechabaneo(LocalDate now) {
-    }
+
 }

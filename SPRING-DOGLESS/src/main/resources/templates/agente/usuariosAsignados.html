@@ -115,26 +115,39 @@
                         </thead>
                         <tbody class="text-center">
                           <tr th:each="orden, iterStat : ${listaOrdenes}">
-                            <td th:text="${iterStat.index + 1}"></td> <!-- Esto mostrará el número de la fila -->
-                            <td th:text="${orden.usuario.nombre + ' ' + orden.usuario.apellido}"></td>
-                            <td th:text="${orden.usuario.dni}"></td>
-                            <td th:text="${orden.id}"></td> <!-- Aquí podrías mostrar la cantidad de órdenes si es necesario -->
-                            <td th:text="${orden.fecha}"></td>
+                            <td th:text="${iterStat.index + 1}"></td> <!-- Número de fila -->
+                            <td th:text="${orden.usuario.nombre + ' ' + orden.usuario.apellido}"></td> <!-- Nombre y apellido del usuario -->
+                            <td th:text="${orden.usuario.dni}"></td> <!-- DNI del usuario -->
+                            <td th:text="${orden.id}"></td> <!-- ID de la orden (si necesitas cambiarlo, ajusta aquí) -->
+                            <td th:text="${orden.fecha}"></td> <!-- Fecha de asignación -->
                             <td>
                               <div class="dropdown">
                                 <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                   <i class="fas fa-ellipsis-v"></i>
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
-                                  <li><a class="dropdown-item" href="#">Ver detalles del perfil</a></li>
-                                  <li><a class="dropdown-item" href="/agente/formdebaneo">Banear usuario</a></li>
+                                  <!-- Enlace para ver detalles del perfil del usuario, pasando el ID del usuario -->
+                                  <li>
+                                    <a class="dropdown-item"
+                                       th:href="@{/perfildeusuario/{id}(id=${orden.usuario.id})}">
+                                      Ver detalles del perfil
+                                    </a>
+                                  </li>
+
+                                  <!-- Enlace para redirigir al formulario de baneo, pasando el ID del usuario -->
+                                  <li>
+                                    <a class="dropdown-item"
+                                       th:href="@{'/agente/formulariodebaneo' + '?id=' + ${orden.usuario.id}}">
+                                      Banear usuario
+                                    </a>
+                                  </li>
                                 </ul>
                               </div>
                             </td>
                           </tr>
                         </tbody>
-
                       </table>
+
                     </div>
                   </div>
                 </div>
