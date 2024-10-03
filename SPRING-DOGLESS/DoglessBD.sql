@@ -22,7 +22,7 @@ USE `dogless` ;
 -- Table `dogless`.`zonas`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `dogless`.`zonas` (
-  `idzonas` INT NOT NULL AUTO_INCREMENT,
+  `idzonas` INT NOT NULL,
   `nombre` VARCHAR(45) NULL DEFAULT NULL,
   PRIMARY KEY (`idzonas`))
 ENGINE = InnoDB
@@ -307,7 +307,7 @@ VALUES
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `dogless`.`ordenes` (
   `idordenes` INT NOT NULL AUTO_INCREMENT,
-  `estado` ENUM('Creado', 'En Validación', 'En Proceso', 'Arribo al País', 'En Aduanas', 'En Ruta', 'Recibido') NULL DEFAULT NULL,
+  `estado` ENUM('Creado', 'En Validación', 'En Proceso', 'Arribo al País', 'En Aduanas', 'En Ruta', 'Recibido','Cancelado') NULL DEFAULT NULL,
   `fecha` DATE NULL DEFAULT NULL,
   `direccionenvio` VARCHAR(100) NULL DEFAULT NULL,
   `total` DECIMAL(10,2) NULL DEFAULT NULL,
@@ -529,17 +529,17 @@ VALUES
 
 -- Insertar datos en la tabla `reposicion`
 INSERT INTO `dogless`.`reposicion` (`idreposicion`, `cantidad`, `fecha_pedido`, `aprobar`, `idproductos`, `idzonas`) VALUES ('4', '20', '2024-09-03', NULL, '1', '1');
-INSERT INTO `dogless`.`reposicion` (`idreposicion`, `cantidad`, `fecha_pedido`, `aprobar`, `idproductos`, `idzonas`) VALUES ('5', '26', '2024-09-04', 'aprobado', '2', '2');
+INSERT INTO `dogless`.`reposicion` (`idreposicion`, `cantidad`, `fecha_pedido`, `aprobar`, `idproductos`, `idzonas`) VALUES ('5', '15', '2024-09-04', 'aprobado', '2', '2');
 INSERT INTO `dogless`.`reposicion` (`idreposicion`, `cantidad`, `fecha_pedido`, `aprobar`, `idproductos`, `idzonas`) VALUES ('6', '30', '2024-09-05', NULL, '3', '3');
-INSERT INTO `dogless`.`reposicion` (`idreposicion`, `cantidad`, `fecha_pedido`, `aprobar`, `idproductos`, `idzonas`) VALUES ('7', '26', '2024-09-06', 'rechazado', '4', '1');
+INSERT INTO `dogless`.`reposicion` (`idreposicion`, `cantidad`, `fecha_pedido`, `aprobar`, `idproductos`, `idzonas`) VALUES ('7', '10', '2024-09-06', 'rechazado', '4', '1');
 INSERT INTO `dogless`.`reposicion` (`idreposicion`, `cantidad`, `fecha_pedido`, `aprobar`, `idproductos`, `idzonas`) VALUES ('8', '25', '2024-09-07', NULL, '5', '2');
 INSERT INTO `dogless`.`reposicion` (`idreposicion`, `cantidad`, `fecha_pedido`, `aprobar`, `idproductos`, `idzonas`) VALUES ('9', '40', '2024-09-08', 'aprobado', '6', '3');
 INSERT INTO `dogless`.`reposicion` (`idreposicion`, `cantidad`, `fecha_pedido`, `aprobar`, `idproductos`, `idzonas`) VALUES ('10', '60', '2024-09-09', 'rechazado', '7', '1');
 INSERT INTO `dogless`.`reposicion` (`idreposicion`, `cantidad`, `fecha_pedido`, `aprobar`, `idproductos`, `idzonas`) VALUES ('11', '50', '2024-09-10', NULL, '8', '2');
-INSERT INTO `dogless`.`reposicion` (`idreposicion`, `cantidad`, `fecha_pedido`, `aprobar`, `idproductos`, `idzonas`) VALUES ('12', '30', '2024-09-11', 'aprobado', '9', '3');
+INSERT INTO `dogless`.`reposicion` (`idreposicion`, `cantidad`, `fecha_pedido`, `aprobar`, `idproductos`, `idzonas`) VALUES ('12', '20', '2024-09-11', 'aprobado', '9', '3');
 INSERT INTO `dogless`.`reposicion` (`idreposicion`, `cantidad`, `fecha_pedido`, `aprobar`, `idproductos`, `idzonas`) VALUES ('13', '35', '2024-09-12', NULL, '10', '4');
 INSERT INTO `dogless`.`reposicion` (`idreposicion`, `cantidad`, `fecha_pedido`, `aprobar`, `idproductos`, `idzonas`) VALUES ('14', '45', '2024-09-13', 'rechazado', '11', '1');
-INSERT INTO `dogless`.`reposicion` (`idreposicion`, `cantidad`, `fecha_pedido`, `aprobar`, `idproductos`, `idzonas`) VALUES ('15', '26', '2024-09-14', NULL, '12', '2');
+INSERT INTO `dogless`.`reposicion` (`idreposicion`, `cantidad`, `fecha_pedido`, `aprobar`, `idproductos`, `idzonas`) VALUES ('15', '15', '2024-09-14', NULL, '12', '2');
 INSERT INTO `dogless`.`reposicion` (`idreposicion`, `cantidad`, `fecha_pedido`, `aprobar`, `idproductos`, `idzonas`) VALUES ('16', '55', '2024-09-15', 'aprobado', '13', '3');
 INSERT INTO `dogless`.`reposicion` (`idreposicion`, `cantidad`, `fecha_pedido`, `aprobar`, `idproductos`, `idzonas`) VALUES ('17', '30', '2024-09-16', NULL, '14', '4');
 
