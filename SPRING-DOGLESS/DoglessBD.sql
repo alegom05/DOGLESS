@@ -164,6 +164,7 @@ CREATE TABLE IF NOT EXISTS `dogless`.`usuarios` (
   `fechabaneo` DATE NULL,
   `motivobaneo` VARCHAR(45) NULL,
   `borrado` TINYINT DEFAULT 1,
+  `fotoperfil` MEDIUMBLOB NULL DEFAULT NULL,
   PRIMARY KEY (`idusuarios`),
   INDEX `idroles_idx` (`idroles` ASC) VISIBLE,
   INDEX `iddistritos_idx` (`iddistritos` ASC) VISIBLE,
@@ -409,6 +410,7 @@ CREATE TABLE IF NOT EXISTS `dogless`.`productos` (
   `aprobado` VARCHAR(10) NULL DEFAULT NULL,
   `borrado` INT DEFAULT 1,
   `estado` VARCHAR(20) NULL DEFAULT NULL,
+  `imagenprod` MEDIUMBLOB NULL DEFAULT NULL,
   PRIMARY KEY (`idproductos`),
   INDEX `proveedor_id_idx_productos` (`idproveedores` ASC) VISIBLE,
   CONSTRAINT `fk_proveedor_id_productos`
