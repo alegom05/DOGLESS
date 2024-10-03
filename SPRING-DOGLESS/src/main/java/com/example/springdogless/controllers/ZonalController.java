@@ -11,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.sql.Date;
 import java.util.Optional;
 
 @Controller
@@ -222,6 +223,60 @@ public class ZonalController {
     public String listaImportaciones(Model model) {
         model.addAttribute("listaImportaciones", importacionRepository.findByBorrado(1));
         return "/zonal/importaciones";
+    }
+    @GetMapping("/editimportaciones")
+    public String editarImportaciones(Model model, @RequestParam("id") int id) {
+
+        Optional<Importacion> optImportacion = importacionRepository.findById(id);
+
+        if (optImportacion.isPresent()) {
+            Importacion importacion = optImportacion.get();
+            model.addAttribute("importacion", importacion);
+            model.addAttribute("listaZonas", zonaRepository.findAll());
+            model.addAttribute("listaDistritos", distritoRepository.findAll());
+            return "zonal/editarImportacion";
+        } else {
+            return "redirect:/zonal/importaciones";
+        }
+    }
+    @PostMapping("/deleteimportacion")
+    public String borrarImportacion(@RequestParam("id") Integer id, RedirectAttributes attr) {
+        Optional<Importacion> optImportacion = importacionRepository.findById(id);
+
+        if (optImportacion.isPresent()) {
+            Importacion importacion = optImportacion.get();
+            importacion.setBorrado(0);
+            importacionRepository.save(importacion);
+            attr.addFlashAttribute("mensajeExito", "Importacion borrada exitosamente");
+        } else {
+            attr.addFlashAttribute("error", "Agente no encontrado");
+        }
+
+        return "redirect:/zonal/importaciones";
+    }
+    @PostMapping("/saveimportacion")
+    public String guardarImportacion(@RequestParam("id") int id,
+                                     @RequestParam("fechaPedido") Date fechaPedido,
+
+                                     RedirectAttributes attr) {
+        // Obtener el usuario existente
+        Optional<Importacion> optImportacion = importacionRepository.findById(id);
+
+        if (optImportacion.isPresent()) {
+            Importacion importacion = optImportacion.get();
+
+            // Actualizar solo los campos editables
+            importacion.setFechaPedido(fechaPedido);
+
+
+            // Guardar el usuario actualizado
+            importacionRepository.save(importacion);
+            attr.addFlashAttribute("mensajeExito", "Cambios guardados correctamente");
+        } else {
+            attr.addFlashAttribute("error", "Usuario no encontrado");
+        }
+
+        return "redirect:/zonal/importaciones";
     }
 
 
