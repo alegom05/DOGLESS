@@ -59,8 +59,7 @@
           <div class="page-inner">
             <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
               <div>
-                <h3 class="fw-bold mb-3">Agregar producto para reposición</h3>
-
+                <h3 class="fw-bold mb-3" th:text="${reposicion.id==null? 'Nueva Reposición':'Editar Reposición'}">Editar Reposición</h3>
               </div>
             </div>
             <div class="row">
@@ -102,8 +101,8 @@
 
                             <div class="mb-3">
                               <label class="form-label">Proveedor</label>
-                              <input th:field="*{reposicion.producto.proveedor.nombre}" type="text" class="form-control"/>
-                              <div class="invalid-feedback" th:if="${#fields.hasErrors('reposicion.producto.proveedor.nombre')}" th:errors="*{reposicion.producto.proveedor.nombre}"></div>
+                              <input th:field="*{reposicion.producto.proveedor.tienda}" type="text" class="form-control"/>
+                              <div class="invalid-feedback" th:if="${#fields.hasErrors('reposicion.producto.proveedor.tienda')}" th:errors="*{reposicion.producto.proveedor.nombre}"></div>
                             </div>
                           </div>
 
