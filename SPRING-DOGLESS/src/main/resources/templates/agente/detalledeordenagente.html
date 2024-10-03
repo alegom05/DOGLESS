@@ -1,220 +1,211 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Detalle de orden</title>
-    <meta
-      content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
-      name="viewport"
-    />
-      <link
-              rel="icon"
-              href="/assets/img/kaiadmin/favicon.ico"
-              type="image/x-icon"
-      />
+    <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <title>Detalle de orden</title>
+        <meta
+                content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
+                name="viewport"
+        />
+        <link
+                rel="icon"
+                href="/assets/img/kaiadmin/favicon.ico"
+                type="image/x-icon"
+        />
 
-    <!-- Fonts and icons -->
-    <script src="/assets/js/plugin/webfont/webfont.min.js"></script>
-      <style>
-          .imagecheck-image {
-              width: 170px; /* Tamaño fijo de la imagen */
-              height: 120px; /* Tamaño fijo de la imagen */
-              transition: transform 0.5s ease; /* Efecto suave para la transformación */
+        <!-- Fonts and icons -->
+        <script src="/assets/js/plugin/webfont/webfont.min.js"></script>
+        <script>
+            WebFont.load({
+                google: { families: ["Public Sans:300,400,500,600,700"] },
+                custom: {
+                    families: [
+                        "Font Awesome 5 Solid",
+                        "Font Awesome 5 Regular",
+                        "Font Awesome 5 Brands",
+                        "simple-line-icons",
+                    ],
+                    urls: ["assets/css/fonts.min.css"],
+                },
+                active: function () {
+                    sessionStorage.fonts = true;
+                },
+            });
+        </script>
 
-          }
+        <!-- CSS Files -->
+        <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="/assets/css/plugins.min.css" />
+        <link rel="stylesheet" href="/assets/css/kaiadmin.min.css" />
 
-          .imagecheck-image:hover {
-              transform: scale(1.5); /* Aumenta el tamaño al pasar el mouse */
-          }
 
-      </style>
-    <script>
-      WebFont.load({
-        google: { families: ["Public Sans:300,400,500,600,700"] },
-        custom: {
-          families: [
-            "Font Awesome 5 Solid",
-            "Font Awesome 5 Regular",
-            "Font Awesome 5 Brands",
-            "simple-line-icons",
-          ],
-          urls: ["assets/css/fonts.min.css"],
-        },
-        active: function () {
-          sessionStorage.fonts = true;
-        },
-      });
-    </script>
+    </head>
+    <body>
+        <div class="wrapper">
+            <!-- Barra lateral -->
+            <div th:replace="~{agente/fragments/barralateralagente :: body(activePage='ordenes')}"></div>
+            <!-- Fin barra lateral -->
 
-    <!-- CSS Files -->
-    <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="/assets/css/plugins.min.css" />
-    <link rel="stylesheet" href="/assets/css/kaiadmin.min.css" />
-
-    
-  </head>
-  <body>
-    <div class="wrapper">
-      <!-- Barra lateral -->
-      <div th:replace="~{agente/fragments/barralateralagente :: body(activePage='ordenes')}"></div>
-      <!-- Fin barra lateral -->
-
-      <div class="main-panel">
-        <div th:replace="~{agente/fragments/navbarheaderagente :: fragment}"></div>
-        <div class="container">
-            <div class="page-inner">
-                <div class="row d-flex-center">
-                    <div class="col-md-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <div class="card-title">Detalle de órden - #56</div>
-                            </div>
-                            <div class="card-body">
-                                <div class="row">
-                                    <!-- Columna de Datos de Envío -->
-                                    <div class="col-md-6 col-lg-6">
-                                        <label class="mb-3"><b>Datos de envío</b></label>
-                                        <div class="form-group">
-                                            <label>Nombre de usuario:</label>
-                                            <p th:text="${orden.usuario.nombre}"></p>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Zona:</label>
-                                            <p th:text="${orden.usuario.zona.nombre}"></p>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Distrito:</label>
-                                            <p th:text="${orden.usuario.distrito.distrito}"></p>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Dirección:</label>
-                                            <p th:text="${orden.usuario.direccion}"></p>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Teléfono:</label>
-                                            <p th:text="${orden.usuario.telefono}"></p>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Correo:</label>
-                                            <p th:text="${orden.usuario.correo}"></p>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Comentario adicional:</label>
-                                            <p>La dirección está cerca del parque Kennedy, frente a la tienda Ripley.</p> <!-- Información de referencia -->
-                                        </div>
+            <div class="main-panel">
+                <div th:replace="~{agente/fragments/navbarheaderagente :: fragment}"></div>
+                <div class="container">
+                    <div class="page-inner">
+                        <div class="row d-flex-center">
+                            <div class="col-md-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <div class="card-title">Detalle de órden - <span th:text="'#' + ${orden.id}"></span></div>
                                     </div>
-        
-                                    <!-- Columna de Resumen de Compra -->
-                                    <div class="col-md-6 col-lg-6">
-                                        <label class="mb-3"><b>Resumen de compra</b></label>
-                                        <div class="summary-section table-responsive">
-                                            <table class="table table-borderless">
-                                                <thead>
-                                                    <tr>
-                                                        <th></th>
-                                                        <th>Productos</th>
-                                                        <th>Cantidad</th>
-                                                        <th>Total</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr th:each="detalle : ${ordenDetalles.detalleOrden}">
-                                                        <td style="display: flex; justify-content: center; align-items: center;">
-                                                        <label class="imagecheck">
-                                                                <figure class="imagecheck-figure">
-                                                                    <img th:src="@{'http://localhost:8080/admin/producto/imagen/' + ${detalle.producto.id}}"
-                                                                         th:alt="'Imagen de ' + ${detalle.producto.nombre}"
-                                                                         class="imagecheck-image"/> <!-- Aplica la clase aquí -->
-                                                                </figure>
-                                                            </label>
-                                                        </td>
-                                                        <td th:text="${detalle.producto.nombre}"></td>
-                                                        <td th:text="${detalle.cantidad}"></td>
-                                                        <td th:text="${detalle.subtotal}"></td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                            <hr>
-                                            <div class="d-flex justify-content-between">
-                                                <p><strong>Subtotal</strong></p>
-                                                <p th:text="'S/. ' + ${orden.total}"></p>
-                                            </div>
-                                            <div class="d-flex justify-content-between">
-                                                <p><strong>Total</strong></p>
-                                                <p th:text="'S/. ' +${orden.total}">S/.</p>
-                                            </div>
-                                            <hr>
-                                            <div class="d-flex justify-content-start align-items-center">
-                                                <strong class="mr-2">Método de pago:</strong>
-                                                <span>Por Tarjeta</span>
-                                            </div>
-                                        </div>
-        
-                                        <!-- Imágenes de productos
-                                        <div class="form-group">
-                                            <label class="form-label">Imágenes de los productos</label>
-                                            <div class="row" th:each="detalle : ${ordenDetalles.detalleOrden}">
-                                                <div class="col-6 col-sm-4">
-                                                    <label class="imagecheck mb-4">
-                                                        <figure class="imagecheck-figure">
-                                                            <img th:src="@{'http://localhost:8080/admin/producto/imagen/' + ${detalle.producto.id}}" th:alt="'Imagen de ' + ${detalle.producto.nombre}" class="imagecheck-image"/>
-                                                        </figure>
-                                                    </label>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <!-- Columna de Datos de Envío -->
+                                            <div class="col-md-6 col-lg-6">
+                                                <div class="mb-3 card-title"><b>Datos de envío:</b></div>
+                                                <div class="form-group">
+                                                    <p class="font-weight-bold"><strong>Nombre de usuario:</strong></p>
+                                                    <p th:text="${orden.usuario.nombre}"></p>
+                                                </div>
+                                                <div class="form-group">
+                                                    <p class="font-weight-bold"><strong>Zona:</strong></p>
+                                                    <p th:text="${orden.usuario.zona.nombre}"></p>
+                                                </div>
+                                                <div class="form-group">
+                                                    <p class="font-weight-bold"><strong>Distrito:</strong></p>
+                                                    <p th:text="${orden.usuario.distrito.distrito}"></p>
+                                                </div>
+                                                <div class="form-group">
+                                                    <p class="font-weight-bold"><strong>Dirección:</strong></p>
+                                                    <p th:text="${orden.usuario.direccion}"></p>
+                                                </div>
+                                                <div class="form-group">
+                                                    <p class="font-weight-bold"><strong>Teléfono:</strong></p>
+                                                    <p th:text="${orden.usuario.telefono}"></p>
+                                                </div>
+                                                <div class="form-group">
+                                                    <p class="font-weight-bold"><strong>Correo:</strong></p>
+                                                    <p th:text="${orden.usuario.correo}"></p>
+                                                </div>
+                                                <div class="form-group">
+                                                    <p class="font-weight-bold"><strong>Indicación adicional:</strong></p>
+                                                    <p>La dirección está cerca del parque Kennedy, frente a la tienda Ripley.</p> <!-- Información de referencia -->
                                                 </div>
                                             </div>
-                                        </div>-->
+
+                                            <!-- Columna de Resumen de Compra -->
+                                            <div class="col-md-6 col-lg-6">
+                                                <div class="mb-3 card-title"><b>Resumen de compra:</b></div>
+                                                <div class="summary-section table-responsive">
+                                                    <table class="table table-borderless">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Productos</th>
+                                                                <th>Cantidad</th>
+                                                                <th>Total</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr th:each="detalle : ${ordenDetalles.detalleOrden}">
+                                                                <td th:text="${detalle.producto.nombre}"></td>
+                                                                <td th:text="${detalle.cantidad}"></td>
+                                                                <td th:text="${detalle.subtotal}"></td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    <hr>
+                                                    <div class="d-flex justify-content-between">
+                                                        <p><strong>Subtotal</strong></p>
+                                                        <p th:text="'S/. ' + ${orden.total}"></p>
+                                                    </div>
+                                                    <div class="d-flex justify-content-between">
+                                                        <p><strong>Total</strong></p>
+                                                        <p th:text="'S/. ' +${orden.total}">S/.</p>
+                                                    </div>
+                                                    <hr>
+                                                    <div class="text-center">
+                                                        <p><strong>Método de pago:</strong></p>
+                                                        <p th:text="${orden.metodopago}"></p>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Imágenes de productos -->
+                                                <div class="form-group">
+                                                    <label class="form-label">Imágenes de los productos</label>
+                                                    <div class="row">
+                                                        <div class="col-6 col-sm-4">
+                                                            <label class="imagecheck mb-4">
+                                                                <figure class="imagecheck-figure">
+                                                                    <img src="/assets/img/examples/product1.jpg" alt="Producto 1" class="imagecheck-image"/>
+                                                                </figure>
+                                                            </label>
+                                                        </div>
+                                                        <div class="col-6 col-sm-4">
+                                                            <label class="imagecheck mb-4">
+                                                                <figure class="imagecheck-figure">
+                                                                    <img src="/assets/img/examples/product2.jpg" alt="Producto 2" class="imagecheck-image"/>
+                                                                </figure>
+                                                            </label>
+                                                        </div>
+                                                        <div class="col-6 col-sm-4">
+                                                            <label class="imagecheck mb-4">
+                                                                <figure class="imagecheck-figure">
+                                                                    <img src="/assets/img/examples/product3.jpg" alt="Producto 3" class="imagecheck-image"/>
+                                                                </figure>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-action text-center">
+                                        <a href="/agente/ordenes" class="btn btn-primary">Regresar</a>
                                     </div>
                                 </div>
                             </div>
-                            <div class="card-action text-center">
-                                <a href="/agente/ordenes" class="btn btn-primary">Regresar</a>
-                            </div>                            
                         </div>
                     </div>
                 </div>
+
+
+
+
+                <!-- Pie de página -->
+                <footer class="footer">
+                    <div class="container-fluid d-flex justify-content-center">
+                        <nav class="pull-left">
+                            <ul class="nav">
+
+                                <li class="nav-item">
+                                    <a class="nav-link" href="ruta/a/informacion-de-contacto.html"> Contacto </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="ruta/a/politica-de-privacidad.html"> Política de privacidad </a>
+                                </li>
+                            </ul>
+                        </nav>
+
+                    </div>
+                </footer>
             </div>
         </div>
-        
-        
-
-
-        <!-- Pie de página -->
-        <footer class="footer">
-          <div class="container-fluid d-flex justify-content-center">
-            <nav class="pull-left">
-              <ul class="nav">
-              
-                <li class="nav-item">
-                  <a class="nav-link" href="ruta/a/informacion-de-contacto.html"> Contacto </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="ruta/a/politica-de-privacidad.html"> Política de privacidad </a>
-                </li>
-              </ul>
-            </nav>
-
-          </div>
-        </footer>
-      </div>
-    </div>
 
 
 
-    <!--Core JS Files   -->
-    <script src="/assets/js/core/jquery-3.7.1.min.js"></script>
-    <script src="/assets/js/core/popper.min.js"></script>
-    <script src="/assets/js/core/bootstrap.min.js"></script>
+        <!--Core JS Files   -->
+        <script src="/assets/js/core/jquery-3.7.1.min.js"></script>
+        <script src="/assets/js/core/popper.min.js"></script>
+        <script src="/assets/js/core/bootstrap.min.js"></script>
 
-    <!-- jQuery Scrollbar -->
-    <script src="/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
-    <!-- Datatables -->
-    <script src="/assets/js/plugin/datatables/datatables.min.js"></script>
+        <!-- jQuery Scrollbar -->
+        <script src="/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+        <!-- Datatables -->
+        <script src="/assets/js/plugin/datatables/datatables.min.js"></script>
 
-    <!-- jQuery Vector Maps -->
-    <script src="/assets/js/plugin/jsvectormap/jsvectormap.min.js"></script>
-    <script src="/assets/js/plugin/jsvectormap/world.js"></script>
+        <!-- jQuery Vector Maps -->
+        <script src="/assets/js/plugin/jsvectormap/jsvectormap.min.js"></script>
+        <script src="/assets/js/plugin/jsvectormap/world.js"></script>
 
-    <!-- Kaiadmin JS -->
-    <script src="/assets/js/kaiadmin.min.js"></script>
-  </body>
+        <!-- Kaiadmin JS -->
+        <script src="/assets/js/kaiadmin.min.js"></script>
+    </body>
 </html>

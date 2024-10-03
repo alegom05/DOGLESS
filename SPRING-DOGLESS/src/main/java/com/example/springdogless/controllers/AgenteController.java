@@ -59,12 +59,78 @@ public class AgenteController {
     public String ElDashboard007(Model model) {
         return "/agente/dashboard";
     }
+    @GetMapping("chat")
+    public String Chat(Model model) {
+        return "/agente/chat";
+    }
 
     @GetMapping(value = "ordenes")
     public String listaReposiciones(Model model) {
         model.addAttribute("listaOrdenes", ordenRepository.findByBorrado(1));
         return "/agente/ordenes";
     }
+
+    @PostMapping("/actualizarEstado")
+    public String avanzarEstado(@RequestParam(value = "id", required = false) Integer id) {
+        Orden orden = ordenRepository.findById(id).orElse(null);
+
+        if (orden != null) {
+            String estadoActual = orden.getEstado();
+            // Lógica para avanzar el estado
+            switch (estadoActual) {
+                case "Creado":
+                    orden.setEstado("En Validación");
+                    break;
+                case "En Validación":
+                    orden.setEstado("En Proceso");
+                    break;
+                case "En Proceso":
+                    orden.setEstado("Arribo al País");
+                    break;
+                case "Arribo al País":
+                    orden.setEstado("En Aduanas");
+                    break;
+                case "En Aduanas":
+                    orden.setEstado("En ruta");
+                    break;
+                case "En Ruta":
+                    orden.setEstado("Recibido");
+                    break;
+                case "Recibido":
+                    // En este caso podrías devolver a otra ruta si lo deseas
+                    return "redirect:/agente/ordenes"; // O cualquier otra acción
+                default:
+                    return "redirect:/agente/updaterorden?id=" + id; // Retorna a la misma vista
+            }
+            // Obtener la fecha actual y actualizar el campo de fecha en la orden
+            Date fechaActualUtil = new Date();
+            java.sql.Date fechaActualSql = new java.sql.Date(fechaActualUtil.getTime());
+            orden.setFecha(fechaActualSql); // Asegúrate de que este campo exista en la entidad Orden
+
+            ordenRepository.save(orden);
+            return "redirect:/agente/updaterorden?id=" + id; // Redirige de vuelta a la vista de la orden
+        }
+        return "redirect:/agente/ordenes"; // Redirige si no se encuentra la orden
+    }
+
+    @PostMapping("/cancelarorden")
+    public String cancelarOrden(@RequestParam(value = "id", required = false) Integer id) {
+        Orden orden = ordenRepository.findById(id).orElse(null);
+        if (orden != null) {
+            // Lógica para avanzar el estado
+            orden.setEstado("Cancelado");
+            // Obtener la fecha actual y actualizar el campo de fecha en la orden
+            Date fechaActualUtil = new Date();
+            java.sql.Date fechaActualSql = new java.sql.Date(fechaActualUtil.getTime());
+            orden.setFecha(fechaActualSql); // Asegúrate de que este campo exista en la entidad Orden
+
+            ordenRepository.save(orden);
+            return "redirect:/agente/updaterorden?id=" + id; // Redirige de vuelta a la vista de la orden
+        }
+        return "redirect:/agente/ordenes"; // Redirige si no se encuentra la orden
+    }
+
+
 
     @GetMapping("/detallesorden")
     public String verDetallesOrden(Model model, @RequestParam("id") int id) {

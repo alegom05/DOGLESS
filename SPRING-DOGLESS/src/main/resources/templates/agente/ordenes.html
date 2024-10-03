@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>Agente - Tabla órdenes</title>
     <meta
             content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
@@ -15,45 +15,45 @@
     />
     <link th:href="@{/assets/css/style-SuperAdmin.css}" rel="stylesheet">
 
-  <!-- Fonts and icons -->
-  <script src="/assets/js/plugin/webfont/webfont.min.js"></script>
-  <script>
-    WebFont.load({
-      google: { families: ["Public Sans:300,400,500,600,700"] },
-      custom: {
-        families: [
-          "Font Awesome 5 Solid",
-          "Font Awesome 5 Regular",
-          "Font Awesome 5 Brands",
-          "simple-line-icons",
-        ],
-        urls: ["/assets/css/fonts.min.css"],
-      },
-      active: function () {
-        sessionStorage.fonts = true;
-      },
-    });
-  </script>
+    <!-- Fonts and icons -->
+    <script src="/assets/js/plugin/webfont/webfont.min.js"></script>
+    <script>
+      WebFont.load({
+        google: { families: ["Public Sans:300,400,500,600,700"] },
+        custom: {
+          families: [
+            "Font Awesome 5 Solid",
+            "Font Awesome 5 Regular",
+            "Font Awesome 5 Brands",
+            "simple-line-icons",
+          ],
+          urls: ["/assets/css/fonts.min.css"],
+        },
+        active: function () {
+          sessionStorage.fonts = true;
+        },
+      });
+    </script>
 
-  <!-- CSS Files -->
-  <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
-  <link rel="stylesheet" href="/assets/css/plugins.min.css" />
-  <link rel="stylesheet" href="/assets/css/kaiadmin.min.css" />
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/assets/css/plugins.min.css" />
+    <link rel="stylesheet" href="/assets/css/kaiadmin.min.css" />
 
-    
+
   </head>
   <body>
     <div class="wrapper">
-    <!-- Reemplaza barra lateral con el fragmento de Thymeleaf -->
-    <div th:replace="~{agente/fragments/barralateralagente :: body(activePage='ordenes')}"></div>
-    <!-- Fin barra lateral -->
+      <!-- Reemplaza barra lateral con el fragmento de Thymeleaf -->
+      <div th:replace="~{agente/fragments/barralateralagente :: body(activePage='ordenes')}"></div>
+      <!-- Fin barra lateral -->
 
 
-    <div class="main-panel">
+      <div class="main-panel">
 
-      <!-- Reemplaza navbar con el fragmento de Thymeleaf -->
-      <div th:replace="~{agente/fragments/navbarheaderagente :: fragment}"></div>
-      <!-- Fin Navbar -->
+        <!-- Reemplaza navbar con el fragmento de Thymeleaf -->
+        <div th:replace="~{agente/fragments/navbarheaderagente :: fragment}"></div>
+        <!-- Fin Navbar -->
         <!-- Texto o contenido central -->
         <div class="container">
           <div class="page-inner">
@@ -73,7 +73,6 @@
                   <div class="form-group me-2">
                     <input type="text" id="filterOrderNumber" class="form-control" placeholder="Número de orden">
                   </div>
-
                   <div class="form-group me-2">
                     <input type="text" id="filterUserName" class="form-control" placeholder="Nombre del usuario">
                   </div>
@@ -96,15 +95,8 @@
                     </select>
                   </div>
 
-                  <!-- Filtro de Ordenar por -->
                   <div class="form-group me-2">
-                    <select id="filterOrderBy" class="form-control">
-                      <option value="">Ordenar por</option>
-                      <option value="sinAsignar">Sin asignar</option>
-                      <option value="pendientes">Pendientes</option>
-                      <option value="resueltas">Resueltas</option>
-                      <option value="enProgreso">En progreso</option>
-                    </select>
+
                   </div>
                   <!-- Botones de acciones para filtros -->
                   <div class="d-flex">
@@ -147,7 +139,8 @@
                                                     (${orden.estado == 'En Aduanas'} ? 'badge badge-warning' :
                                                     (${orden.estado == 'Arribo al País'} ? 'badge badge-info' :
                                                     (${orden.estado == 'En Proceso'} ? 'badge badge-black' :
-                                                    (${orden.estado == 'En Validación'} ? 'badge badge-secondary' : 'badge badge-count')))))">
+                                                    (${orden.estado == 'En Validación'} ? 'badge badge-secondary' :
+                                                    (${orden.estado == 'Cancelado'} ? 'badge badge-danger' : 'badge badge-count'))))))">
                               </span>
                             </td>
 
@@ -175,9 +168,9 @@
           </div>
         </div>
 
-        
-        
-        
+
+
+
         <!-- Fin del contenido central -->
 
 
@@ -187,7 +180,7 @@
           <div class="container-fluid d-flex justify-content-center">
             <nav class="pull-left">
               <ul class="nav">
-              
+
                 <li class="nav-item">
                   <a class="nav-link" href="ruta/a/informacion-de-contacto.html"> Contacto </a>
                 </li>
@@ -214,53 +207,65 @@
     <!-- Datatables -->
     <script src="/assets/js/plugin/datatables/datatables.min.js"></script>
 
-    <!-- jQuery Vector Maps -->
-    <script src="/assets/js/plugin/jsvectormap/jsvectormap.min.js"></script>
-    <script src="/assets/js/plugin/jsvectormap/world.js"></script>
-
     <!-- Kaiadmin JS -->
     <script src="/assets/js/kaiadmin.min.js"></script>
 
     <script>
-      document.getElementById("searchBtn").addEventListener("click", function() {
+      // Función para filtrar la tabla
+      function filterTable() {
         // Obtener los valores de los filtros
         const orderNumber = document.getElementById("filterOrderNumber").value.toLowerCase();
         const userName = document.getElementById("filterUserName").value.toLowerCase();
+        const filterValue = document.getElementById('filterOrderStatus').value.toLowerCase();
+        const filterDateValue = document.getElementById('filterDate').value; // Obtener el valor de la fecha
 
-        // Obtener todas las filas de la tabla
-        const tableRows = document.querySelectorAll("#multi-filter-select tbody tr");
+        const table = document.getElementById('multi-filter-select');
+        const rows = table.getElementsByTagName('tr');
 
-        // Recorrer las filas de la tabla
-        tableRows.forEach(row => {
-          // Obtener los valores de la fila
-          const orderCell = row.cells[0].textContent.toLowerCase();
-          const userCell = row.cells[2].textContent.toLowerCase(); // Asegúrate de que el índice sea correcto
+        for (let i = 1; i < rows.length; i++) { // Comenzar en 1 para omitir el encabezado
+          const orderCell = rows[i].cells[0].textContent.toLowerCase();
+          const userCell = rows[i].cells[2].textContent.toLowerCase(); // Asegúrate de que el índice sea correcto
+          const statusCell = rows[i].getElementsByTagName('td')[4]; // La columna de "Estado del Pedido"
+          const dateCell = rows[i].getElementsByTagName('td')[3]; // Columna de "Fecha de Última Actualización"
 
-          // Verificar si la fila coincide con los filtros
-          const matchesOrderNumber = orderCell.includes(orderNumber);
-          const matchesUserName = userCell.includes(userName);
+          if (statusCell && dateCell) {
+            const cellValue = statusCell.textContent.toLowerCase();
+            const dateValue = dateCell.textContent;
 
-          // Mostrar u ocultar la fila según los filtros
-          if (matchesOrderNumber && matchesUserName) {
-            row.style.display = ""; // Mostrar fila
-          } else {
-            row.style.display = "none"; // Ocultar fila
+            // Verificar si la fila coincide con los filtros
+            const matchesOrderNumber = orderCell.includes(orderNumber);
+            const matchesUserName = userCell.includes(userName);
+            const statusMatch = filterValue === "" || cellValue.includes(filterValue);
+            const dateMatch = filterDateValue === "" || dateValue === filterDateValue;
+
+            // Mostrar u ocultar la fila según las coincidencias
+            if (matchesOrderNumber && matchesUserName && statusMatch && dateMatch) {
+              rows[i].style.display = ""; // Mostrar fila
+            } else {
+              rows[i].style.display = "none"; // Ocultar fila
+            }
           }
-        });
-      });
+        }
+      }
 
-      // Evento para el botón "Limpiar filtros"
-      document.getElementById("clearBtn").addEventListener("click", function() {
+      // Función para limpiar los filtros
+      function clearFilters() {
         // Limpiar los campos de entrada
         document.getElementById("filterOrderNumber").value = "";
         document.getElementById("filterUserName").value = "";
+        document.getElementById('filterOrderStatus').value = ""; // Reiniciar el select
+        document.getElementById('filterDate').value = ""; // Reiniciar el input de fecha
 
         // Mostrar todas las filas
         const tableRows = document.querySelectorAll("#multi-filter-select tbody tr");
         tableRows.forEach(row => {
           row.style.display = ""; // Mostrar todas las filas
         });
-      });
+      }
+
+      // Asignar eventos a los botones
+      document.getElementById("searchBtn").addEventListener("click", filterTable);
+      document.getElementById("clearBtn").addEventListener("click", clearFilters);
     </script>
   </body>
 </html>
