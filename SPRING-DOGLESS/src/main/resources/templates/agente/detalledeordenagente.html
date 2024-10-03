@@ -7,14 +7,14 @@
       content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
       name="viewport"
     />
-    <link
-      rel="icon"
-      href="assets/img/kaiadmin/logodogless.ico"
-      type="image/x-icon"
-    />
+      <link
+              rel="icon"
+              href="/assets/img/kaiadmin/favicon.ico"
+              type="image/x-icon"
+      />
 
     <!-- Fonts and icons -->
-    <script src="assets/js/plugin/webfont/webfont.min.js"></script>
+    <script src="/assets/js/plugin/webfont/webfont.min.js"></script>
     <script>
       WebFont.load({
         google: { families: ["Public Sans:300,400,500,600,700"] },
@@ -34,9 +34,9 @@
     </script>
 
     <!-- CSS Files -->
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="assets/css/plugins.min.css" />
-    <link rel="stylesheet" href="assets/css/kaiadmin.min.css" />
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/assets/css/plugins.min.css" />
+    <link rel="stylesheet" href="/assets/css/kaiadmin.min.css" />
 
     
   </head>
@@ -192,82 +192,20 @@
 
 
     <!--Core JS Files   -->
-    <script src="assets/js/core/jquery-3.7.1.min.js"></script>
-    <script src="assets/js/core/popper.min.js"></script>
-    <script src="assets/js/core/bootstrap.min.js"></script>
+    <script src="/assets/js/core/jquery-3.7.1.min.js"></script>
+    <script src="/assets/js/core/popper.min.js"></script>
+    <script src="/assets/js/core/bootstrap.min.js"></script>
 
     <!-- jQuery Scrollbar -->
-    <script src="assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+    <script src="/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
     <!-- Datatables -->
-    <script src="assets/js/plugin/datatables/datatables.min.js"></script>
+    <script src="/assets/js/plugin/datatables/datatables.min.js"></script>
 
     <!-- jQuery Vector Maps -->
-    <script src="assets/js/plugin/jsvectormap/jsvectormap.min.js"></script>
-    <script src="assets/js/plugin/jsvectormap/world.js"></script>
+    <script src="/assets/js/plugin/jsvectormap/jsvectormap.min.js"></script>
+    <script src="/assets/js/plugin/jsvectormap/world.js"></script>
 
     <!-- Kaiadmin JS -->
-    <script src="assets/js/kaiadmin.min.js"></script>
-    <script>
-        $(document).ready(function() {
-          // Initialize DataTable
-          var table = $('#multi-filter-select').DataTable({
-            paging: true,
-            pageLength: 5,
-            lengthChange: false,
-            info: true,
-            dom: 'tip',
-            initComplete: function() {
-              // Apply the search for all the existing filters
-              this.api().columns().every(function() {
-                var that = this;
-                $('input, select', this.header()).on('keyup change', function() {
-                  if (that.search() !== this.value) {
-                    that.search(this.value).draw();
-                  }
-                });
-              });
-            }
-          });
-  
-          // Search button functionality
-          $('#searchBtn').on('click', function() {
-            // Apply the existing filters
-            table.columns(0).search($('#filterOrderNumber').val());
-            table.columns(1).search($('#filterItemCount').val());
-            table.columns(2).search($('#filterUserName').val());
-            table.columns(3).search($('#filterDate').val());
-            table.columns(4).search($('#filterOrderStatus').val());
-  
-            // Apply filter by "Ordenar por"
-            var orderBy = $('#filterOrderBy').val();
-            if (orderBy === 'sinAsignar') {
-              table.columns(4).search('Generado');
-            } else if (orderBy === 'pendientes') {
-              table.columns(4).search('En validación');
-            } else if (orderBy === 'resueltas') {
-              table.columns(4).search('Recibido|Cancelado', true, false);
-            } else if (orderBy === 'enProgreso') {
-              table.columns(4).search('En proceso|Arribo al país|En aduanas|En ruta', true, false);
-            } else {
-              table.columns(4).search('');
-            }
-  
-            table.draw();
-          });
-  
-          // Clear filters button functionality
-          $('#clearBtn').on('click', function() {
-            $('#filterOrderNumber').val('');
-            $('#filterItemCount').val('');
-            $('#filterUserName').val('');
-            $('#filterDate').val('');
-            $('#filterOrderStatus').val('');
-            $('#filterOrderBy').val('');
-            table.search('').columns().search('').draw();
-          });
-        });
-  
-  
-      </script>
+    <script src="/assets/js/kaiadmin.min.js"></script>
   </body>
 </html>

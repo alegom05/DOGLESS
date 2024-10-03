@@ -66,6 +66,10 @@ public class AgenteController {
         model.addAttribute("listaOrdenes", ordenRepository.findByBorrado(1));
         return "/agente/ordenes";
     }
+    @GetMapping({"chat"})
+    public String Chat(Model model) {
+        return "/agente/chat";
+    }
 
     @GetMapping("/detallesorden")
     public String verDetallesOrden(Model model, @RequestParam("id") int id) {
