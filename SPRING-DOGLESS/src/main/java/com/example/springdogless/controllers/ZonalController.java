@@ -48,6 +48,8 @@ public class ZonalController {
     @GetMapping("/dashboard")
     public String elDashboardEstaTristeYAzul(Model model, @RequestParam(required = false) String zona) {
         /*model.addAttribute("listaProveedores", proveedorRepository.findAll());*/
+        model.addAttribute("listaProductos", productRepository.findByBorrado(1));
+
         return "zonal/dashboard";
     }
 
