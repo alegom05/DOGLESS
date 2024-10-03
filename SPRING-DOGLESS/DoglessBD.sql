@@ -22,7 +22,7 @@ USE `dogless` ;
 -- Table `dogless`.`zonas`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `dogless`.`zonas` (
-  `idzonas` INT NOT NULL,
+  `idzonas` INT NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(45) NULL DEFAULT NULL,
   PRIMARY KEY (`idzonas`))
 ENGINE = InnoDB

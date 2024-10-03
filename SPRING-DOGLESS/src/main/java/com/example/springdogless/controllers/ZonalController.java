@@ -378,7 +378,7 @@ public class ZonalController {
             return "zonal/editarReposicion";
         }
     }
-
+    
 
     @PostMapping("/borrarReposicion")
     public String borrarAdminZonal(@RequestParam("id") Integer id, RedirectAttributes attr) {
@@ -386,7 +386,7 @@ public class ZonalController {
 
         if (optReposicion.isPresent()) {
             Reposicion reposicion = optReposicion.get();
-            reposicion.setBorrado(0);
+            reposicion.setBorrado(2);
             reposicionRepository.save(reposicion);
             attr.addFlashAttribute("msg", "Reposición borrada exitosamente");
         } else {
