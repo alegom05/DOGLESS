@@ -13,6 +13,20 @@
                 type="image/x-icon"
         />
 
+        <style>
+            .imagecheck-image {
+                width: 170px; /* Tamaño fijo de la imagen */
+                height: 120px; /* Tamaño fijo de la imagen */
+                transition: transform 0.5s ease; /* Efecto suave para la transformación */
+
+            }
+
+            .imagecheck-image:hover {
+                transform: scale(1.5); /* Aumenta el tamaño al pasar el mouse */
+            }
+
+        </style>
+
         <!-- Fonts and icons -->
         <script src="/assets/js/plugin/webfont/webfont.min.js"></script>
         <script>
@@ -98,6 +112,7 @@
                                                     <table class="table table-borderless">
                                                         <thead>
                                                             <tr>
+                                                                <th></th>
                                                                 <th>Productos</th>
                                                                 <th>Cantidad</th>
                                                                 <th>Total</th>
@@ -105,6 +120,16 @@
                                                         </thead>
                                                         <tbody>
                                                             <tr th:each="detalle : ${ordenDetalles.detalleOrden}">
+                                                                <td style="display: flex; justify-content: center; align-items: center;">
+                                                                    <label class="imagecheck">
+                                                                        <figure class="imagecheck-figure">
+                                                                            <img th:src="@{'http://localhost:8080/admin/producto/imagen/' + ${detalle.producto.id}}"
+                                                                                 th:alt="'Imagen de ' + ${detalle.producto.nombre}"
+                                                                                 class="imagecheck-image"/> <!-- Aplica la clase aquí -->
+                                                                        </figure>
+                                                                        </figure>
+                                                                    </label>
+                                                                </td>
                                                                 <td th:text="${detalle.producto.nombre}"></td>
                                                                 <td th:text="${detalle.cantidad}"></td>
                                                                 <td th:text="${detalle.subtotal}"></td>
@@ -121,39 +146,12 @@
                                                         <p th:text="'S/. ' +${orden.total}">S/.</p>
                                                     </div>
                                                     <hr>
-                                                    <div class="text-center">
-                                                        <p><strong>Método de pago:</strong></p>
-                                                        <p th:text="${orden.metodopago}"></p>
+                                                        <div class="d-flex justify-content-start align-items-center">
+                                                            <strong class="mr-2">Método de pago:</strong>
+                                                            <span>Por Tarjeta</span>
                                                     </div>
                                                 </div>
 
-                                                <!-- Imágenes de productos -->
-                                                <div class="form-group">
-                                                    <label class="form-label">Imágenes de los productos</label>
-                                                    <div class="row">
-                                                        <div class="col-6 col-sm-4">
-                                                            <label class="imagecheck mb-4">
-                                                                <figure class="imagecheck-figure">
-                                                                    <img src="/assets/img/examples/product1.jpg" alt="Producto 1" class="imagecheck-image"/>
-                                                                </figure>
-                                                            </label>
-                                                        </div>
-                                                        <div class="col-6 col-sm-4">
-                                                            <label class="imagecheck mb-4">
-                                                                <figure class="imagecheck-figure">
-                                                                    <img src="/assets/img/examples/product2.jpg" alt="Producto 2" class="imagecheck-image"/>
-                                                                </figure>
-                                                            </label>
-                                                        </div>
-                                                        <div class="col-6 col-sm-4">
-                                                            <label class="imagecheck mb-4">
-                                                                <figure class="imagecheck-figure">
-                                                                    <img src="/assets/img/examples/product3.jpg" alt="Producto 3" class="imagecheck-image"/>
-                                                                </figure>
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                </div>
                                             </div>
                                         </div>
                                     </div>
