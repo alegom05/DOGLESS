@@ -53,7 +53,7 @@
         <div th:replace="~{zonal/fragments/navbarheaderzonal :: fragment}"></div>
         <!-- Fin Navbar -->
 
-        <input th:field="*{reposicion.id}" type="hidden"/>
+
         <!-- Texto o contenido central -->
         <div class="container">
           <div class="page-inner">
@@ -67,7 +67,8 @@
               <div class="col-md-12">
                 <div class="card">
                   <div class="card-body">
-                    <form class="needs-validation" style="width: 100%; margin-left: 0%; margin-top: 3%;" th:action="@{'/zonal/guardarReposicion'}" method="POST">
+                    <form class="needs-validation" th:object="${reposicion}" th:action="@{/zonal/guardarReposicion}" method="POST">
+                    <input th:field="*{id}" type="hidden"/>
                       <div class="container">
                         <div class="row">
                           <!-- Columna izquierda -->
@@ -84,26 +85,32 @@
                              -->
                             <div class="mb-3">
                               <label class="form-label">Nombre del producto</label>
-                              <input th:field="*{reposicion.producto.nombre}" type="text" class="form-control"/>
-                              <div class="invalid-feedback" th:if="${#fields.hasErrors('reposicion.producto.nombre')}" th:errors="*{reposicion.producto.nombre}"></div>
+                              <input th:field="*{producto.nombre}" type="text" class="form-control"/>
+                              <div class="invalid-feedback" th:if="${#fields.hasErrors('producto.nombre')}" th:errors="*{producto.nombre}"></div>
                             </div>
 
                             <div class="mb-3">
                               <label class="form-label">Cantidad</label>
-                              <input th:field="*{reposicion.cantidad}" type="text" class="form-control"/>
-                              <div class="invalid-feedback" th:if="${#fields.hasErrors('reposicion.cantidad')}" th:errors="*{reposicion.cantidad}"></div>
+                              <input th:field="*{cantidad}" type="number" class="form-control"/>
+                              <div class="invalid-feedback" th:if="${#fields.hasErrors('cantidad')}" th:errors="*{cantidad}"></div>
                             </div>
 
                             <div class="mb-3">
                               <label class="form-label">Fecha de pedido</label>
-                              <input th:field="*{reposicion.fecha_pedido}" type="text" class="form-control"/>
-                              <div class="invalid-feedback" th:if="${#fields.hasErrors('reposicion.fecha_pedido')}" th:errors="*{reposicion.fecha_pedido}"></div>
+                              <input th:field="*{fecha_pedido}" type="text" class="form-control"/>
+                              <div class="invalid-feedback" th:if="${#fields.hasErrors('fecha_pedido')}" th:errors="*{fecha_pedido}"></div>
                             </div>
 
                             <div class="mb-3">
                               <label class="form-label">Proveedor</label>
-                              <input th:field="*{reposicion.producto.proveedor.tienda}" type="text" class="form-control"/>
-                              <div class="invalid-feedback" th:if="${#fields.hasErrors('reposicion.producto.proveedor.tienda')}" th:errors="*{reposicion.producto.proveedor.nombre}"></div>
+                              <input th:field="*{producto.proveedor.tienda}" type="text" class="form-control"/>
+                              <div class="invalid-feedback" th:if="${#fields.hasErrors('producto.proveedor.tienda')}" th:errors="*{producto.proveedor.tienda}"></div>
+                            </div>
+
+                            <div class="mb-3">
+                              <label class="form-label">Zona</label>
+                              <input th:field="*{zona.nombre}" type="text" class="form-control"/>
+                              <div class="invalid-feedback" th:if="${#fields.hasErrors('zona.nombre')}" th:errors="*{'zona.nombre'}"></div>
                             </div>
                           </div>
 
@@ -111,15 +118,15 @@
                           <div class="col-md-6">
                             <div class="mb-3">
                               <label class="form-label">Estado</label>
-                              <input th:field="*{reposicion.aprobar}" type="text" class="form-control"/>
-                              <div class="invalid-feedback" th:if="${#fields.hasErrors('reposicion.aprobar')}" th:errors="*{reposicion.aprobar}"></div>
+                              <input th:field="*{aprobar}" type="text" class="form-control"/>
+                              <div class="invalid-feedback" th:if="${#fields.hasErrors('aprobar')}" th:errors="*{aprobar}"></div>
                             </div>
 
                             <div class="mb-3">
                               <label class="form-label">Descripción:</label>
                               <textarea name="descripcion" id="descripcion" class="form-control" rows="9" placeholder="Ej: El iPhone 14 Pro es el último modelo de la serie de teléfonos móviles premium..."
-                                        th:field="*{reposicion.producto.descripcion}" required></textarea>
-                              <div class="invalid-feedback" th:if="${#fields.hasErrors('reposicion.aprobar')}" th:errors="*{reposicion.aprobar}"></div>
+                                        th:field="*{producto.descripcion}" required></textarea>
+                              <div class="invalid-feedback" th:if="${#fields.hasErrors('producto.descripcion')}" th:errors="*{producto.descripcion}"></div>
                             </div>
                         </div>
 

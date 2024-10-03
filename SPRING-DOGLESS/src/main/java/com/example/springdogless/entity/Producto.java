@@ -37,7 +37,7 @@ public class Producto {
     private String aprobado;
 
 
-    @ManyToOne
+    @ManyToOne (cascade = CascadeType.PERSIST)
     @JoinColumn(name = "idproveedores", nullable = false)
     private Proveedor proveedor;
 

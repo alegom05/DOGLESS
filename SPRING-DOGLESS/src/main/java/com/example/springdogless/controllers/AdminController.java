@@ -663,7 +663,7 @@ public class AdminController {
                 if (cantidadExistente != 0) {
                     // Si el producto existe, actualiza el stock
                     stockRepository.actualizarStock(
-                            Integer.parseInt(reposicion.getCantidad()),
+                            reposicion.getCantidad(),
                             reposicion.getProducto().getId(),
                             reposicion.getZona().getIdzonas());
                 } else {
@@ -671,7 +671,7 @@ public class AdminController {
                     stockRepository.insertarNuevoStock(
                             reposicion.getProducto().getId(),
                             reposicion.getZona().getIdzonas(),
-                            Integer.parseInt(reposicion.getCantidad()));
+                            reposicion.getCantidad());
                 }
                 // Actualiza el atributo 'aprobado' de la reposición
                 reposicion.setAprobar("aprobado");

@@ -279,10 +279,11 @@ public class ZonalController {
                                   @ModelAttribute("reposicion") @Valid Reposicion reposicion, BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) { //si no hay errores, se realiza el flujo normal
 
-            if (reposicion.getCantidad().equals("gaseosa")) {
+            if (reposicion.getCantidad()==8) {
                 model.addAttribute("msg", "Error al crear producto");
                 model.addAttribute("listaProductos", productRepository.findAll());
                 model.addAttribute("listaReposiciones", reposicionRepository.findAll());
+
                 return "zonal/editarReposicion";
             } else {
                 if (reposicion.getId() == null) {
@@ -290,8 +291,15 @@ public class ZonalController {
                 } else {
                     attr.addFlashAttribute("msg", "Reposición actualizada exitosamente");
                 }
-                reposicionRepository.save(reposicion);
+                if (reposicion.getProducto() != null && reposicion.getProducto().getId() == null) {
+                    productRepository.save(reposicion.getProducto());
+                }
+                if (reposicion.getProducto() != null && reposicion.getProducto().getProveedor() != null
+                        && reposicion.getProducto().getProveedor().getId() == null) {
+                    proveedorRepository.save(reposicion.getProducto().getProveedor());
+                }
                 reposicion.setBorrado(1);
+                reposicionRepository.save(reposicion);
                 return "redirect:/zonal/reposiciones";
             }
 

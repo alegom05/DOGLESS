@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Date;
+import java.sql.Date;
 
 @Entity(name="reposicion")
 @Getter
@@ -15,8 +15,8 @@ public class Reposicion {
     @Column(name = "idreposicion")
     private Integer id;
 
-    @Column(name = "cantidad", length = 45)
-    private String cantidad;
+    @Column(name = "cantidad")
+    private Integer cantidad;
 
     @Column(name = "fecha_pedido")
     private Date fecha_pedido;
@@ -28,8 +28,8 @@ public class Reposicion {
     @JoinColumn(name = "idproductos", nullable = false)
     private Producto producto;
 
-    @ManyToOne
-    @JoinColumn(name = "idzonas", nullable = false)
+    @ManyToOne (cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "idzonas")
     private Zona zona;
 
     private Integer borrado;
