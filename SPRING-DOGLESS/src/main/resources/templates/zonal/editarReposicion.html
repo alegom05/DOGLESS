@@ -53,6 +53,7 @@
         <div th:replace="~{zonal/fragments/navbarheaderzonal :: fragment}"></div>
         <!-- Fin Navbar -->
 
+        <input th:field="*{reposicion.id}" type="hidden"/>
         <!-- Texto o contenido central -->
         <div class="container">
           <div class="page-inner">
@@ -66,7 +67,7 @@
               <div class="col-md-12">
                 <div class="card">
                   <div class="card-body">
-                    <form class="needs-validation" style="width: 100%; margin-left: 0%; margin-top: 3%;" action="productos.html" method="POST" novalidate>
+                    <form class="needs-validation" style="width: 100%; margin-left: 0%; margin-top: 3%;" th:action="@{'/admin/saveproducto'}" method="POST" novalidate>
                       <div class="container">
                         <div class="row">
                           <!-- Columna izquierda -->
@@ -119,13 +120,14 @@
                               <textarea name="descripcion" id="descripcion" class="form-control" rows="9" placeholder="Ej: El iPhone 14 Pro es el último modelo de la serie de teléfonos móviles premium..."
                                         th:field="*{reposicion.producto.descripcion}" required></textarea>
                               <div class="invalid-feedback" th:if="${#fields.hasErrors('reposicion.aprobar')}" th:errors="*{reposicion.aprobar}"></div>
-                          </div>
-                      </div>
+                            </div>
+                        </div>
 
-                          <div class="btn-container" style="text-align: center; margin-top: 20px;">
-                            <button type="submit" class="btn btn-primary" style="width: 280px;">Crear</button>
-                            <a th:href="@{/zonal/reposiciones}" class="btn btn-secondary" style="width: 280px;">Cancelar</a>
-                          </div>
+                        <div class="btn-container" style="text-align: center; margin-top: 20px;">
+                          <button type="submit" class="btn btn-primary" style="width: 280px;">Crear</button>
+                          <a th:href="@{/zonal/reposiciones}" class="btn btn-secondary" style="width: 280px;">Cancelar</a>
+                        </div>
+                      </div>
                     </form>
                   </div>
                 </div>
@@ -133,7 +135,7 @@
             </div>
           </div>
         </div>
-                             
+
 
       <!--Core JS Files   -->
       <script src="/assets/js/core/jquery-3.7.1.min.js"></script>

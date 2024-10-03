@@ -172,7 +172,7 @@ public class ZonalController {
     }
 
     @GetMapping("/nuevaReposicion")
-    public String nuevoProductoFrm(Model model, @ModelAttribute("producto") Producto product) {
+    public String nuevaReposicion(Model model, @ModelAttribute("reposicion") Reposicion reposicion) {
         model.addAttribute("listaReposiciones", zonaRepository.findAll());
         model.addAttribute("listaProveedores", proveedorRepository.findAll());
         model.addAttribute("listaProductos", productRepository.findAll());
@@ -199,30 +199,31 @@ public class ZonalController {
         }
     }
 
-    @PostMapping("/save")
-    public String guardarProducto(RedirectAttributes attr, Model model,
-                                  @ModelAttribute("product") @Valid Producto producto, BindingResult bindingResult) {
+    @PostMapping("/guardarReposicion")
+    public String guardarReposicion(RedirectAttributes attr, Model model,
+                                  @ModelAttribute("reposicion") @Valid Reposicion reposicion, BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) { //si no hay errores, se realiza el flujo normal
 
-            if (producto.getNombre().equals("gaseosa")) {
+            if (reposicion.getCantidad().equals("gaseosa")) {
                 model.addAttribute("msg", "Error al crear producto");
                 model.addAttribute("listaProductos", productRepository.findAll());
                 model.addAttribute("listaProveedores", proveedorRepository.findAll());
                 return "zonal/editarReposicion";
             } else {
-                if (producto.getId() == 0) {
+                if (reposicion.getId() == 0) {
                     attr.addFlashAttribute("msg", "Producto creado exitosamente");
                 } else {
                     attr.addFlashAttribute("msg", "Producto actualizado exitosamente");
                 }
-                productRepository.save(producto);
+                reposicionRepository.save(reposicion);
+                reposicion.setBorrado(1);
                 return "redirect:/zonal/reposiciones";
             }
 
         } else { //hay al menos 1 error
             model.addAttribute("listaProductos", productRepository.findAll());
             model.addAttribute("listaProveedores", proveedorRepository.findAll());
-            return "product/editFrm";
+            return "zonal/editarReposicion";
         }
     }
 

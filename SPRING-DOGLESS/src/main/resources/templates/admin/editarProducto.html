@@ -59,7 +59,7 @@
           <div class="page-inner">
             <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
               <div>
-                <h3 class="fw-bold mb-3">Editar Producto</h3>
+                <h3 class="fw-bold mb-3" th:text="${id==0? 'Nueva Reposición':'Editar Reposición'}">Editar Reposición</h3>
               </div>
             </div>
             <div class="row">
@@ -67,8 +67,8 @@
                 <div class="card">
 
                   <div class="card-body">
-                    <form class="needs-validation" style="width: 100%; margin-left: 0%; margin-top: 3%;" th:action="@{'/admin/saveproducto'}" method="POST" novalidate>
-                      <input  name="id"  th:value="${producto.id}" type="hidden"/>
+                    <form class="needs-validation" style="width: 100%; margin-left: 0%; margin-top: 3%;" th:action="@{'/zonal/guardarReposicion'}" method="POST" novalidate>
+                      <!--<input  name="id"  th:value="${producto.id}" type="hidden"/>-->
                       <div class="container">
                         <div class="row">
                           <!-- Columna izquierda -->
