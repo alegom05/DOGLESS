@@ -121,6 +121,7 @@
                                 <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
                                   <li><a class="dropdown-item" th:href="@{'/zonal/verReposicion' + '?id=' + ${reposicion.id}}">Ver</a></li>
                                   <li><a class="dropdown-item" th:href="@{'/zonal/editarReposicion' + '?id=' + ${reposicion.id}}">Editar</a></li>
+                                  <li><a href="#" class="dropdown-item" data-toggle="modal"  data-target="#confirmDeleteModal" th:data-id="${reposicion.id}">Eliminar</a></li>
 
                                   <!--
                                    <li><a class="dropdown-item" th:href="@{'/zonal/verReposicion' + '?id=' + ${reposicion.id}}">Ver</a></li>
@@ -161,7 +162,7 @@
                          </div>
                        </div>
 
-                       <!-- Modal para Aceptar -->
+                       Modal para Aceptar -->
                       <div class="modal fade" id="aceptarModal" tabindex="-1" role="dialog" aria-labelledby="acceptModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                           <div class="modal-content">
@@ -229,6 +230,31 @@
         modal.find('#userId').val(userId); // Asigna el ID al campo oculto
       });
     </script>
+
+    <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmar Eliminación</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            ¿Estás seguro de que deseas eliminar este usuario?
+
+          </div>
+          <div class="modal-footer">
+            <form id="deleteForm" method="post" th:action="@{'/zonal/borrarReposicion'}" novalidate>
+              <input type="hidden" name="id" id="userId">
+              <button type="submit" class="btn btn-dark">Eliminar</button>
+            </form>
+            <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancelar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <script>
       $(document).ready(function () {
 
