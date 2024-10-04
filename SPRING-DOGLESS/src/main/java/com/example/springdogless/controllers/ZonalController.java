@@ -65,7 +65,7 @@ public class ZonalController {
     @GetMapping(value = "agentes")
     public String listaAgentes(Model model) {
         model.addAttribute("listaAgentes", usuarioRepository.findByRol_RolAndBorrado("Agente",1));
-        return "/zonal/agentes";
+        return "zonal/agentes";
     }
 
     @GetMapping("/veragente")
@@ -222,7 +222,7 @@ public class ZonalController {
     @GetMapping(value = "importaciones")
     public String listaImportaciones(Model model) {
         model.addAttribute("listaImportaciones", importacionRepository.findByBorrado(1));
-        return "/zonal/importaciones";
+        return "zonal/importaciones";
     }
     @GetMapping("/editimportaciones")
     public String editarImportaciones(Model model, @RequestParam("id") int id) {
@@ -287,7 +287,7 @@ public class ZonalController {
         if (optionalImportacion.isPresent()) {
             Importacion importacion = optionalImportacion.get();
             model.addAttribute("importacion", importacion);
-            return "/zonal/verImportacion";
+            return "zonal/verImportacion";
         } else {
             return "redirect:zonal/importaciones";
         }
@@ -298,7 +298,7 @@ public class ZonalController {
     @GetMapping(value = "reposiciones")
     public String listaReposiciones(Model model) {
         model.addAttribute("listaReposiciones", reposicionRepository.findByBorrado(1));
-        return "/zonal/reposiciones";
+        return "zonal/reposiciones";
     }
 
     @GetMapping("/verReposicion")
@@ -309,7 +309,7 @@ public class ZonalController {
         if (optReposicion.isPresent()) {
             Reposicion reposicion = optReposicion.get();
             model.addAttribute("reposicion", reposicion);
-            return "/zonal/verReposicion";
+            return "zonal/verReposicion";
         } else {
             return "redirect:zonal/reposiciones";
         }
