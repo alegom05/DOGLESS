@@ -309,120 +309,153 @@
 
         </div>
 
+        <!-- Texto o contenido central -->
         <div class="container">
           <div class="page-inner">
-            <div class="page-header">
-              <h3 class="fw-bold mb-3">Detalles de reclamación</h3>
-              <ul class="breadcrumbs mb-3">
-                <li class="nav-home">
-                  <a href="#">
-                    <i class="icon-home"></i>
-                  </a>
-                </li>
-                <li class="separator">
-                  <i class="icon-arrow-right"></i>
-                </li>
-                <li class="nav-item">
-                  <a href="#">Libro de reclamaciones</a>
-                </li>
-                
-              </ul>
+            <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
+              <div>
+                <h3 class="fw-bold mb-3">Agregar Agente</h3>
+              </div>
             </div>
-            
             <div class="row">
               <div class="col-md-12">
                 <div class="card">
+
                   <div class="card-body">
-                    <form class="needs-validation" style="width: 100%; margin-left: 0%; margin-top: 3%;" method="POST" onsubmit="handleSubmit(event)" novalidate>
+                    <form class="needs-validation" style="width: 100%; margin-left: 0%; margin-top: 3%;" th:action="@{/zonal/guardar}" method="POST" novalidate>
                       <div class="container">
                         <div class="row">
-                          <div class="col-md-4">
-                            <div class="mb-4">
-                              <label for="nombre" class="form-label">Nombre:</label>
-                              <input type="text" name="nombre" id="nombre" class="form-control" pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]+(\s[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]+){0,4}"
-                                     placeholder="" required>
-                              <div class="invalid-feedback"></div>
-                            </div>
-                          </div>
-                          <div class="col-md-4">
-                            <div class="mb-4">
-                              <label for="apellido" class="form-label">Apellido:</label>
-                              <input type="text" name="apellido" id="apellido" class="form-control" pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]+(\s[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]+){0,4}"
-                                     placeholder="" required>
-                              <div class="invalid-feedback"></div>
-                            </div>
-                          </div>
-                          
-                          
-                        </div>
 
-                        <div class="row">
-                          
-                          <div class="col-md-4">
-                            <div class="mb-4">
-                              <label for="dni" class="form-label">DNI:</label>
-                              <input type="text" name="dni" id="dni" class="form-control" pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]+(\s[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]+){0,4}"
-                                     placeholder="" required>
-                              <div class="invalid-feedback"></div>
+                          <div class="col">
+                            <div class="mb-3">
+                              <label for="nombre" class="form-label">Nombre (*)</label>
+                              <input type="text" class="form-control" name="nombre" id="nombre" maxlength="8" minlength="8" placeholder="Ej: 87654321" pattern="[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]" title="ingrese su DNI" required>
+                              <div class="invalid-feedback">Ingrese su nombre</div>
                             </div>
                           </div>
-                          <div class="col-md-4">
-                            <div class="mb-4">
-                              <label for="correo" class="form-label">Correo:</label>
-                              <input type="text" name="correo" id="correo" class="form-control" pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]+(\s[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]+){0,4}"
-                                     placeholder="" required>
-                              <div class="invalid-feedback"></div>
+
+                          <div class="col">
+                            <div class="mb-3">
+                              <label for="apellido" class="form-label">Apellido (*)</label>
+                              <input type="text" class="form-control" name="apellido" id="apellido" maxlength="9" minlength="9" placeholder="Ej: 987654321" pattern="[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]" title="ingrese su número de teléfono" required>
+                              <div class="invalid-feedback">Ingrese su apellido.</div>
                             </div>
                           </div>
-                          
-                        </div>
-                        
-                        <div class="row">
-                          <!-- Columna izquierda -->
-                          <div class="col-md-8">
-                            <div class="mb-8">
-                              <label for="correo" class="form-label">Direccion:</label>
-                              <input type="text" name="correo" id="correo" class="form-control" pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]+(\s[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]+){0,4}"
-                                     placeholder="" required>
-                              <div class="invalid-feedback"></div>
-                            </div>
-                          
-                          </div>
-                        </div>
-                        <div class="row">
-                          <!-- Columna derecha -->
-                          <div class="col-md-8">
-                            <div class="mb-8">
-                              <label for="imagen" class="form-label">Imagen: (*)</label>
-                              <input type="file" name="imagen" id="imagen" class="form-control" accept="image/*" onchange="previewImage(event)" required>
-                              <div class="invalid-feedback">Por favor seleccione una imagen.</div>
-                              <div class="mt-3">
-                                <img id="imagePreview" src="#" alt="Vista previa de la imagen" style="display:none; max-width: 100%; max-height: 200px;">
+
+                          <div class="row">
+                            <div class="col">
+                              <div class="mb-3">
+                                <label for="dni" class="form-label">DNI: (*)</label>
+                                <input type="text" class="form-control" name="dni" id="dni" maxlength="9" minlength="9" placeholder="Ej: 987654321" pattern="[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]" title="ingrese su número de teléfono" required>
+                                <div class="invalid-feedback">Por favor ingresar nombre(s).</div>
                               </div>
                             </div>
-                            
+
+                            <div class="col">
+                              <div class="mb-3">
+                                <label for="correo" class="form-label">Correo: (*)</label>
+                                <input type="correo" class="form-control" name="correo" id="correo" maxlength="9" minlength="9" placeholder="Ej: 987654321" pattern="[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]" title="ingrese su número de teléfono" required>
+                                <div class="invalid-feedback">Por favor ingresar apellido(s).</div>
+                              </div>
+                            </div>
                           </div>
-                        </div>
+                        <!--
                         <div class="row">
-                          <!-- Columna derecha -->
-                          <div class="col-md-8">
-                            
-                            <div class="mb-8">
-                              <label for="descripcion" class="form-label">Descripción: (*)</label>
-                              <textarea name="descripcion" id="descripcion" class="form-control" rows="10" placeholder="Ej: Mi pedido llego en muy mal estado" required></textarea>
-                              <div class="invalid-feedback">Por favor ingresa una descripción.</div>
-                              <h6 class="obligatory-fields">(*)Campos obligatorios</h6>
+                          <div class="col">
+                            <div class="mb-3">
+                              <label for="correo" class="form-label">Correo: (*)</label>
+                              <input type="email" name="correo" id="correo" placeholder="Ej: ejemplo@gmail.com" class="form-control" aria-describedby="emailHelp" required>
+                              <div class="invalid-feedback">Por favor ingresar un correo válido.</div>
+                            </div>
+                          </div>
+                          <div class="col">
+                            <div class="mb-3">
+                              <label for="codigoaduana" class="form-label">Codigo aduana: (*)</label>
+                              <input type="text" name="codigoaduana" id="codigoaduana" placeholder="ADU006" class="form-control" required>
+                              <div class="invalid-feedback">Por favor ingresar el código de despachador de aduana.</div>
                             </div>
                           </div>
                         </div>
 
                         <div class="row">
-                          <div class="button-group">
-                            <button type="submit" class="btn btn-primary">Enviar reclamacion</button>
-                            <button class="btn btn-secondary" type="button" class="btn-back" onclick="window.history.back()">Volver</button>
+                          <div class="col">
+                            <div class="mb-3">
+                              <label for="ruc" class="form-label">RUC: (*)</label>
+                              <input type="tel" name="ruc" id="ruc" placeholder="10987654325" class="form-control" required>
+                              <div class="invalid-feedback">Por favor ingresar RUC.</div>
+                            </div>
+                          </div>
+                          <div class="col">
+                            <div class="mb-3">
+                              <label for="razonsocial" class="form-label">Razón social: (*)</label>
+                              <input type="text" name="razonsocial" id="razonsocial" placeholder="Agente Norte" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ]+(\s[a-zA-ZáéíóúÁÉÍÓÚñÑ]+)?" class="form-control" required>
+                              <div class="invalid-feedback">Por favor ingresar razón social.</div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="row">
+                          <div class="col">
+                            <div class="mb-3">
+                              <label for="codigojurisdiccion" class="form-label">Código de Jurisdicción: (*)</label>
+                              <input type="tel" name="codigojurisdiccion" id="codigojurisdiccion" placeholder="10987654325" class="form-control" required>
+                              <div class="invalid-feedback">Por favor ingresar código de jurisdicción.</div>
+                            </div>
+                          </div>
+                          <div class="col">
+                            <div class="mb-3">
+                              <label for="direccion" class="form-label">Dirección: (*)</label>
+                              <input type="text" name="direccion" id="direccion" placeholder="Calle Norte 123" pattern="[a-zA-Z0-9#áéíóúÁÉÍÓÚñÑ.]+\s[a-zA-Z0-9#ZáéíóúÁÉÍÓÚñÑ.]+(\s[a-zA-Z0-9#ZáéíóúÁÉÍÓÚñÑ.]+)?+(\s[a-zA-Z0-9#ZáéíóúÁÉÍÓÚñÑ.]+)?" class="form-control" required>
+                              <div class="invalid-feedback">Por favor ingresar dirección.</div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="row">
+                          <div class="col">
+                            <div class="mb-3">
+                              <label for="idzonas" class="form-label">Zona: (*)</label>
+                              <select name="idzonas" id="idzonas" class="form-select" required>
+                                <option value="" disabled selected>Escoja una opción</option>
+                                <option th:each="zonas: ${listaZonas}"
+                                        th:text="${zonas.nombre}" th:value="${zonas.idzonas}">Elegir una zona</option>
+                              </select>
+                              <div class="invalid-feedback">Por favor seleccionar una zona.</div>
+                            </div>
+                          </div>
+                          <div class="col">
+                            <div class="mb-3">
+                              <label for="iddistritos" class="form-label">Distrito: (*)</label>
+                              <select name="iddistritos" id="iddistritos" class="form-select" required>
+                                <option value="" disabled selected>Escoja una opción</option>
+                                <option th:each="distrito: ${listaDistritos}"
+                                        th:text="${distrito.distrito}" th:value="${distrito.iddistritos}">Elegir un distrito</option>
+                              </select>
+                              <div class="invalid-feedback">Por favor selecciona un distrito.</div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="row">
+                          <div class="col">
+                            <div class="mb-3">
+                            </div>
+                          </div>
+                          <div class="col">
+                            <div class="mb-3">
+                              <h6 class="obligatory-fields">(*) Campos obligatorios</h6>
+                            </div>
+                          </div>
+                        </div>
+                        -->
+
+                        <!-- Botón para guardar cambios -->
+                          <div style="text-align: center;">
+                            <button type="submit" class="btn btn-primary" style="width: 280px;">
+                              Enviar
+                            </button>
                           </div>
 
-                        </div>
                       </div>
                     </form>
                   </div>
@@ -431,6 +464,8 @@
 
             </div>
           </div>
+        </div>
+        <!-- Fin del contenido central -->
           
           <!--/ Advanced footer -->
         </div>

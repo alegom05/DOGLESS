@@ -149,6 +149,7 @@ CREATE TABLE IF NOT EXISTS `dogless`.`usuarios` (
   `dni` VARCHAR(45) NULL,
   `correo` VARCHAR(45) NULL,
   `contrasena` VARCHAR(45) NULL,
+  `pwd` VARCHAR(45) NULL,
   `telefono` VARCHAR(45) NULL,
   `direccion` VARCHAR(45) NULL,
   `idroles` INT NOT NULL,

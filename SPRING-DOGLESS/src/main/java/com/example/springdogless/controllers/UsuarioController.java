@@ -5,7 +5,6 @@ import com.example.springdogless.entity.*;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -15,9 +14,9 @@ import java.sql.Date;
 import java.util.Optional;
 
 @Controller
-@RequestMapping({"zonal", "zonal/"})
+@RequestMapping({"usuario", "usuario/"})
 
-public class ZonalController {
+public class UsuarioController {
 
     @Autowired
     UsuarioRepository usuarioRepository;
@@ -41,51 +40,36 @@ public class ZonalController {
         return "zonal/paginaprincipal";
     }
 
-    @GetMapping("/perfil_zonal")
-    public String verperfilzonal(Model model) {
-        return "zonal/perfil_zonal"; // Esto renderiza la vista perfil_superadmin.html
-    }
-
-    @GetMapping("/dashboard")
-    public String elDashboardEstaTristeYAzul(Model model, @RequestParam(required = false) String zona) {
-        /*model.addAttribute("listaProveedores", proveedorRepository.findAll());*/
-        model.addAttribute("listaProductos", productRepository.findByBorrado(1));
-
-        return "zonal/dashboard";
-    }
-
     @GetMapping("/new")
     public String nuevoAgenteFrm(Model model) {
         model.addAttribute("listaZonas", zonaRepository.findAll());
         model.addAttribute("listaDistritos", distritoRepository.findAll());
-        return "zonal/agregar_agente";
+        return "usuario/agregar_agente";
     }
 
+    //Libro de reclamaciones
+    @GetMapping("/libro")
+    public String nuevaReclamacion(Model model, @ModelAttribute("usuario") Usuario usuario) {
+        model.addAttribute("listaUsuarios", usuarioRepository.findAll());
+        return "usuario/libro";
+    }
 
-    @GetMapping(value = "/agentes")
+    //El resto no está hecho
+
+    /*
+
+    @GetMapping(value = "agentes")
     public String listaAgentes(Model model) {
         model.addAttribute("listaAgentes", usuarioRepository.findByRol_RolAndBorrado("Agente",1));
-        return "zonal/agentes";
+        return "usuario/agentes";
     }
 
-    @GetMapping("/veragente")
-    public String verAgente(Model model, @RequestParam("id") int id) {
 
-        Optional<Usuario> optUsuario = usuarioRepository.findById(id);
-
-        if (optUsuario.isPresent()) {
-            Usuario usuario = optUsuario.get();
-            model.addAttribute("usuario", usuario);
-            return "zonal/verAgente";
-        } else {
-            return "redirect:/zonal/agentes";
-        }
-    }
 
     @GetMapping("/nuevoAgente")
     public String nuevoAgente(Model model, @ModelAttribute("usuario") Usuario usuario) {
         model.addAttribute("listaUsuarios", usuarioRepository.findAll());
-        return "zonal/editarAgente";
+        return "usuario/editarAgente";
     }
     @PostMapping("/guardar")
     public String crearAdminZonal(Usuario usuario, @RequestParam("idzonas") Integer idZona,
@@ -113,7 +97,7 @@ public class ZonalController {
         usuarioRepository.save(usuario);
         attr.addFlashAttribute("mensajeExito", "Agente creado correctamente");
 
-        return "redirect:/zonal/agentes";
+        return "redirect:/usuario/agentes";
     }
     @GetMapping("/editagente")
     public String editarAgente(Model model, @RequestParam("id") int id) {
@@ -125,9 +109,9 @@ public class ZonalController {
             model.addAttribute("usuario", usuario);
             model.addAttribute("listaZonas", zonaRepository.findAll());
             model.addAttribute("listaDistritos", distritoRepository.findAll());
-            return "zonal/editarAgente";
+            return "usuario/editarAgente";
         } else {
-            return "redirect:/zonal/agentes";
+            return "redirect:/usuario/agentes";
         }
     }
 
@@ -173,7 +157,7 @@ public class ZonalController {
             attr.addFlashAttribute("error", "Usuario no encontrado");
         }
 
-        return "redirect:/zonal/agentes";
+        return "redirect:/usuario/agentes";
     }
     @PostMapping("/deleteagente")
     public String borrarAgente(@RequestParam("id") Integer id, RedirectAttributes attr) {
@@ -188,7 +172,7 @@ public class ZonalController {
             attr.addFlashAttribute("error", "Agente no encontrado");
         }
 
-        return "redirect:/zonal/agentes";
+        return "redirect:/usuario/agentes";
     }
 
     @PostMapping("/guardarAgente")
@@ -199,7 +183,7 @@ public class ZonalController {
             if (usuario.getNombre().equals("gaseosa")) {
                 model.addAttribute("msg", "Error al crear producto");
                 model.addAttribute("listaUsuarios", usuarioRepository.findAll());
-                return "zonal/editarZonal";
+                return "usuario/editarZonal";
             } else {
                 if (usuario.getId() == 0) {
                     attr.addFlashAttribute("msg", "Usuario creado exitosamente");
@@ -209,7 +193,7 @@ public class ZonalController {
                 usuario.setBorrado(1);
                 usuarioRepository.save(usuario);
 
-                return "redirect:/zonal/agentes";
+                return "redirect:/usuario/agentes";
             }
 
         } else { //hay al menos 1 error
@@ -218,12 +202,7 @@ public class ZonalController {
         }
     }
 
-    //Importaciones
-    @GetMapping(value = "importaciones")
-    public String listaImportaciones(Model model) {
-        model.addAttribute("listaImportaciones", importacionRepository.findByBorrado(1));
-        return "zonal/importaciones";
-    }
+
     @GetMapping("/editimportaciones")
     public String editarImportaciones(Model model, @RequestParam("id") int id) {
 
@@ -234,9 +213,9 @@ public class ZonalController {
             model.addAttribute("importacion", importacion);
             model.addAttribute("listaZonas", zonaRepository.findAll());
             model.addAttribute("listaDistritos", distritoRepository.findAll());
-            return "zonal/editarImportacion";
+            return "usuario/editarImportacion";
         } else {
-            return "redirect:/zonal/importaciones";
+            return "redirect:/usuario/importaciones";
         }
     }
     @PostMapping("/deleteimportacion")
@@ -252,7 +231,7 @@ public class ZonalController {
             attr.addFlashAttribute("error", "Agente no encontrado");
         }
 
-        return "redirect:/zonal/importaciones";
+        return "redirect:/usuario/importaciones";
     }
     @PostMapping("/saveimportacion")
     public String guardarImportacion(@RequestParam("id") int id,
@@ -276,7 +255,7 @@ public class ZonalController {
             attr.addFlashAttribute("error", "Usuario no encontrado");
         }
 
-        return "redirect:/zonal/importaciones";
+        return "redirect:/usuario/importaciones";
     }
     //Puede ser innecesario
     @GetMapping("/verImportacion")
@@ -287,9 +266,9 @@ public class ZonalController {
         if (optionalImportacion.isPresent()) {
             Importacion importacion = optionalImportacion.get();
             model.addAttribute("importacion", importacion);
-            return "zonal/verImportacion";
+            return "usuario/verImportacion";
         } else {
-            return "redirect:zonal/importaciones";
+            return "redirect:usuario/importaciones";
         }
     }
 
@@ -298,7 +277,7 @@ public class ZonalController {
     @GetMapping(value = "reposiciones")
     public String listaReposiciones(Model model) {
         model.addAttribute("listaReposiciones", reposicionRepository.findByBorrado(1));
-        return "zonal/reposiciones";
+        return "usuario/reposiciones";
     }
 
     @GetMapping("/verReposicion")
@@ -309,9 +288,9 @@ public class ZonalController {
         if (optReposicion.isPresent()) {
             Reposicion reposicion = optReposicion.get();
             model.addAttribute("reposicion", reposicion);
-            return "zonal/verReposicion";
+            return "usuario/verReposicion";
         } else {
-            return "redirect:zonal/reposiciones";
+            return "redirect:usuario/reposiciones";
         }
     }
 
@@ -320,7 +299,7 @@ public class ZonalController {
         model.addAttribute("listaReposiciones", reposicionRepository.findAll());
         model.addAttribute("listaProveedores", proveedorRepository.findAll());
         model.addAttribute("listaProductos", productRepository.findAll());
-        return "zonal/editarReposicion";
+        return "usuario/editarReposicion";
     }
 
     @GetMapping("/editarReposicion")
@@ -337,9 +316,9 @@ public class ZonalController {
             model.addAttribute("listaProveedores", proveedorRepository.findAll());
             model.addAttribute("listaProductos", productRepository.findAll());
 
-            return "zonal/editarReposicion";
+            return "usuario/editarReposicion";
         } else {
-            return "redirect:/zonal/reposiciones";
+            return "redirect:/usuario/reposiciones";
         }
     }
 
@@ -353,7 +332,7 @@ public class ZonalController {
                 model.addAttribute("listaProductos", productRepository.findAll());
                 model.addAttribute("listaReposiciones", reposicionRepository.findAll());
 
-                return "zonal/editarReposicion";
+                return "usuario/editarReposicion";
             } else {
                 if (reposicion.getId() == null) {
                     attr.addFlashAttribute("msg", "Reposición creada exitosamente");
@@ -369,19 +348,19 @@ public class ZonalController {
                 }
                 reposicion.setBorrado(1);
                 reposicionRepository.save(reposicion);
-                return "redirect:/zonal/reposiciones";
+                return "redirect:/usuario/reposiciones";
             }
 
         } else { //hay al menos 1 error
             model.addAttribute("listaProductos", productRepository.findAll());
             model.addAttribute("listaReposiciones", reposicionRepository.findAll());
-            return "zonal/editarReposicion";
+            return "usuario/editarReposicion";
         }
     }
     
 
     @PostMapping("/borrarReposicion")
-    public String borrarAdminZonal(@RequestParam("id") Integer id, RedirectAttributes attr) {
+    public String borrarAdminusuario(@RequestParam("id") Integer id, RedirectAttributes attr) {
         Optional<Reposicion> optReposicion = reposicionRepository.findById(id);
 
         if (optReposicion.isPresent()) {
@@ -393,10 +372,10 @@ public class ZonalController {
             attr.addFlashAttribute("error", "Reposición no encontrada");
         }
 
-        return "redirect:/zonal/reposiciones";
+        return "redirect:/usuario/reposiciones";
     }
 
-
+    */
 
 
 
@@ -436,7 +415,7 @@ public class ZonalController {
         } else {
             attr.addFlashAttribute("error", "Producto no encontrado");
         }
-        return "redirect:/zonal/reposiciones";
+        return "redirect:/usuario/reposiciones";
 
     }
 
