@@ -18,7 +18,9 @@ Y en el application properties
 spring.session.store-type=jdbc
 spring.session.jdbc.initialize-schema=always
 
-Una vez añadidas, se configurará el logueo en el inicio
+Una vez añadidas, se configurará el logueo en el inicio, pero es recomendable
+hacerlo al final del crud al 100%
+Atte. Alejandro
  */
 @Controller
 public class LoginControllerModelo {
