@@ -52,7 +52,7 @@ public class AgenteController {
     @GetMapping({""})
     public String PaginaPrincipal(Model model) {
 
-        return "/agente/paginaprincipal";
+        return "agente/paginaprincipal";
     }
 
     @GetMapping({"dashboard"})
@@ -67,7 +67,7 @@ public class AgenteController {
     @GetMapping(value = "ordenes")
     public String listaReposiciones(Model model) {
         model.addAttribute("listaOrdenes", ordenRepository.findByBorrado(1));
-        return "/agente/ordenes";
+        return "agente/ordenes";
     }
     @GetMapping( "/updaterorden")
     public String VistaEstadoOrden(Model model, @RequestParam("id") int id) {
@@ -177,35 +177,35 @@ public class AgenteController {
         model.addAttribute("listaAsignados", usuarioRepository.findActivos());
 
         // Redirigir a la vista
-        return "/agente/usuariosAsignados";
+        return "agente/usuariosAsignados";
     }
 
-    @GetMapping(value = "usuariosBaneados")
+    @GetMapping(value = "/usuariosBaneados")
     public String usuariosBaneados(Model model) {
         model.addAttribute("listaOrdenes", ordenRepository.findAll());
 
         model.addAttribute("listaBaneados", usuarioRepository.findByRol_RolAndBorrado("Usuario",1));
 
-        return "/agente/usuariosBaneados";
+        return "agente/usuariosBaneados";
     }
 
-    @GetMapping(value = "reportesOrdenes")
+    @GetMapping(value = "/reportesOrdenes")
     public String reportesOrdenes(Model model) {
         model.addAttribute("listaOrdenes", ordenRepository.findAll());
 
         model.addAttribute("listaBaneados", usuarioRepository.findByRol_RolAndBorrado("Usuario",1));
 
-        return "/agente/reportesOrdenes";
+        return "agente/reportesOrdenes";
     }
 
     //Lista de órdenes por usuario
-    @GetMapping(value = "reportePorUsuario")
+    @GetMapping(value = "/reportePorUsuario")
     public String ordenesPorUsuario(Model model) {
         model.addAttribute("listaOrdenes", ordenRepository.findAll());
 
         model.addAttribute("listaUsuarios", usuarioRepository.findByRol_RolAndBorrado("Usuario",1));
 
-        return "/agente/reportePorUsuario";
+        return "agente/reportePorUsuario";
     }
 
     // Metodo para redirigir al formulario de baneo
@@ -277,7 +277,7 @@ public class AgenteController {
             // Agrega el usuario al modelo
             model.addAttribute("usuario", optionalUsuario.get());
         }
-        return "/agente/detallesperfil"; // Retorna el nombre de la vista
+        return "agente/detallesperfil"; // Retorna el nombre de la vista
     }
 
 

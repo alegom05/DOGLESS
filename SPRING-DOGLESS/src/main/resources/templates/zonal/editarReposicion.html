@@ -85,7 +85,7 @@
                              -->
                             <div class="mb-3">
                               <label class="form-label">Nombre del producto</label>
-                              <input th:field="*{producto.nombre}" type="text" class="form-control"/>
+                              <input th:field="*{producto.nombre}" type="text" class="form-control" disabled/>
                               <div class="invalid-feedback" th:if="${#fields.hasErrors('producto.nombre')}" th:errors="*{producto.nombre}"></div>
                             </div>
 
