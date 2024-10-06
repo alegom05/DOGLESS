@@ -147,9 +147,8 @@ CREATE TABLE IF NOT EXISTS `dogless`.`usuarios` (
   `nombre` VARCHAR(45) NULL,
   `apellido` VARCHAR(45) NULL,
   `dni` VARCHAR(45) NULL,
-  `correo` VARCHAR(45) NULL,
-  `contrasena` VARCHAR(45) NULL,
-  `pwd` VARCHAR(45) NULL,
+  `email` VARCHAR(45) NULL,
+  `pwd` VARCHAR(100) NULL,
   `telefono` VARCHAR(45) NULL,
   `direccion` VARCHAR(45) NULL,
   `idroles` INT NOT NULL,
@@ -212,33 +211,33 @@ CREATE TABLE IF NOT EXISTS `dogless`.`solicitudes` (
 ENGINE = InnoDB;
 
 -- 1. Super Administradores (ID rol = 1)
-INSERT INTO `dogless`.`usuarios` (`idusuarios`, `nombre`, `apellido`, `dni`, `correo`, `contrasena`, `telefono`, `direccion`, `idroles`, `iddistritos`, `idadminzonales`, `estado`, `ruc`, `codigoaduana`, `razonsocial`, `codigojurisdiccion`, `idzonas`)
+INSERT INTO `dogless`.`usuarios` (`idusuarios`, `nombre`, `apellido`, `dni`, `email`, `pwd`, `telefono`, `direccion`, `idroles`, `iddistritos`, `idadminzonales`, `estado`, `ruc`, `codigoaduana`, `razonsocial`, `codigojurisdiccion`, `idzonas`)
 VALUES 
-(1, 'Fernando', 'Pérez', '11223344', 'fernando.perez@dogless.com', 'adminpass123', '987654321', NULL, 1, 1, 0, 'activo', NULL, NULL, NULL, NULL, 1),
-(2, 'Luisa', 'Gómez', '22334455', 'luisa.gomez@dogless.com', 'jefepass456', '987654322', NULL, 1, 1, 0, 'activo', NULL, NULL, NULL, NULL, 1);
+(1, 'Christopher', 'Terrones', '87623344', 'cterrones@gmail.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654321', 'Av. Segura 123', 1, 1, 0, 'activo', NULL, NULL, NULL, NULL, 1),
+(2, 'Pedro', 'Bustamante', '12834455', 'pbustamante@gmail.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654322', 'Av. Universitaria 377', 1, 1, 0, 'activo', NULL, NULL, NULL, NULL, 1);
 
-INSERT INTO `dogless`.`usuarios` (`idusuarios`, `nombre`, `apellido`, `dni`, `correo`, `contrasena`, `telefono`, `direccion`, `idroles`, `iddistritos`, `idadminzonales`, `estado`, `ruc`, `codigoaduana`, `razonsocial`, `codigojurisdiccion`, `idzonas`)
+INSERT INTO `dogless`.`usuarios` (`idusuarios`, `nombre`, `apellido`, `dni`, `email`, `pwd`, `telefono`, `direccion`, `idroles`, `iddistritos`, `idadminzonales`, `estado`, `ruc`, `codigoaduana`, `razonsocial`, `codigojurisdiccion`, `idzonas`)
 VALUES
 -- zonas Norte (Administradores zonales ID 1 y 2)
-(3, 'Juan', 'Pérez', '12345678', 'juan.perez@norte.com', 'password123', '987654321', 'Calle Norte 101', 2, 1, 1, 'activo', NULL, NULL, NULL, NULL, 1),
-(4, 'María', 'Gómez', '23456789', 'maria.gomez@norte.com', 'password456', '987654322', 'Calle Norte 102', 2, 2, 2, 'activo', NULL, NULL, NULL, NULL, 1),
+(3, 'Brighit', 'Egusquiza', '89345678', 'begusquiza@gmail.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654321', 'Calle Norte 101', 2, 1, 1, 'activo', NULL, NULL, NULL, NULL, 1),
+(4, 'Luisa', 'Fernández', '18256789', 'luisa.fernandez@sur.com', 'creativepassword', '987654322', 'Calle Norte 102', 2, 2, 2, 'activo', NULL, NULL, NULL, NULL, 1),
 
 -- zonas Sur (Administradores zonales ID 3 y 4)
 (5, 'Carlos', 'Ramírez', '34567890', 'carlos.ramirez@sur.com', 'password789', '987654323', 'Av. Sur 101', 2, 9, 3, 'activo', NULL, NULL, NULL, NULL, 2),
-(6, 'Luisa', 'Fernández', '45678901', 'luisa.fernandez@sur.com', 'password101', '987654324', 'Av. Sur 102', 2, 10, 4, 'activo', NULL, NULL, NULL, NULL, 2),
+(6, 'Alejandro', 'Gómez', '45678901', 'agomez@gmail.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654324', 'Av. Sur 102', 2, 10, 4, 'activo', NULL, NULL, NULL, NULL, 2),
 
 -- zonas Este (Administradores zonales ID 5 y 6)
 (7, 'Ricardo', 'López', '56789012', 'ricardo.lopez@este.com', 'password202', '987654325', 'Calle Este 101', 2, 19, 5, 'activo', NULL, NULL, NULL, NULL, 3),
 (8, 'Ana', 'Martínez', '67890123', 'ana.martinez@este.com', 'password303', '987654326', 'Av. Este 102', 2, 20, 6, 'activo', NULL, NULL, NULL, NULL, 3),
 
 -- zonas Oeste (Administradores zonales ID 7 y 8)
-(9, 'Pedro', 'Sánchez', '78901234', 'pedro.sanchez@oeste.com', 'password404', '987654327', 'Calle Oeste 101', 2, 26, 7, 'activo', NULL, NULL, NULL, NULL, 4),
+(9, 'Estefany', 'Fuentes', '78901234', 'efuentes@gmail.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654327', 'Calle Oeste 101', 2, 26, 7, 'activo', NULL, NULL, NULL, NULL, 4),
 (10, 'Gabriela', 'Navarro', '89012345', 'gabriela.navarro@oeste.com', 'password1112', '987654328', 'Av. Oeste 102', 2, 27, 8, 'activo', NULL, NULL, NULL, NULL, 4);
 
 -- Agentes zonas Norte (Admin zonas 1Y 2)
-INSERT INTO `dogless`.`usuarios` (`idusuarios`, `nombre`, `apellido`, `dni`, `correo`, `contrasena`, `telefono`, `direccion`, `idroles`, `iddistritos`, `idadminzonales`, `estado`, `ruc`, `codigoaduana`, `razonsocial`, `codigojurisdiccion`, `idzonas`)
+INSERT INTO `dogless`.`usuarios` (`idusuarios`, `nombre`, `apellido`, `dni`, `email`, `pwd`, `telefono`, `direccion`, `idroles`, `iddistritos`, `idadminzonales`, `estado`, `ruc`, `codigoaduana`, `razonsocial`, `codigojurisdiccion`, `idzonas`)
 VALUES
-(11, 'Jorge', 'Ramírez', '33445566', 'jorge.ramirez@norte.com', 'agenteNpass123', '987654323', 'Calle Norte 123', 3, 1, 1, 'activo', '12345678901', 'ADU001', 'Agente Norte', 'JUR001', 1),
+(11, 'Nilo', 'Cori', '14565566', 'ncori@gmail.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654323', 'Calle Norte 123', 3, 1, 1, 'activo', '12345678901', 'ADU001', 'Agente Norte', 'JUR001', 1),
 (12, 'Rosa', 'Soto', '44556677', 'rosa.soto@norte.com', 'agenteNpass456', '987654324', 'Av. Norte 456', 3, 2, 1, 'activo', '10987654321', 'ADU002', 'Agente Norte', 'JUR002', 1),
 (13, 'Luis', 'Gómez', '55667788', 'luis.gomez@norte.com', 'agenteNpass789', '987654325', 'Calle Norte 789', 3, 3, 1, 'activo', '10987654322', 'ADU003', 'Agente Norte', 'JUR003', 1),
 (14, 'María', 'López', '66778899', 'maria.lopez@norte.com', 'agenteNpass012', '987654326', 'Av. Norte 012', 3, 4, 2, 'activo', '10987654323', 'ADU004', 'Agente Norte', 'JUR004', 1),
@@ -246,7 +245,7 @@ VALUES
 (16, 'Patricia', 'Flores', '88990011', 'patricia.flores@norte.com', 'agenteNpass678', '987654328', 'Av. Norte 678', 3, 6, 2, 'activo', '10987654325', 'ADU006', 'Agente Norte', 'JUR006', 1);
 
 -- Agentes zonas Sur (Admin zonas 3 Y 4)
-INSERT INTO `dogless`.`usuarios` (`idusuarios`, `nombre`, `apellido`, `dni`, `correo`, `contrasena`, `telefono`, `direccion`, `idroles`, `iddistritos`, `idadminzonales`, `estado`, `ruc`, `codigoaduana`, `razonsocial`, `codigojurisdiccion`, `idzonas`)
+INSERT INTO `dogless`.`usuarios` (`idusuarios`, `nombre`, `apellido`, `dni`, `email`, `pwd`, `telefono`, `direccion`, `idroles`, `iddistritos`, `idadminzonales`, `estado`, `ruc`, `codigoaduana`, `razonsocial`, `codigojurisdiccion`, `idzonas`)
 VALUES
 (17, 'Laura', 'Martínez', '99001122', 'laura.martinez@sur.com', 'agenteSpass123', '987654329', 'Calle Sur 123', 3, 9, 3, 'activo', '12345678902', 'ADU007', 'Agente Sur', 'JUR007', 2),
 (18, 'Andrés', 'Pérez', '11002233', 'andres.perez@sur.com', 'agenteSpass456', '987654330', 'Av. Sur 456', 3, 10, 3, 'activo', '10987654326', 'ADU008', 'Agente Sur', 'JUR008', 2),
@@ -257,7 +256,7 @@ VALUES
 
 
 -- Agentes zonas Este (Admin zonas 5 y 6)
-INSERT INTO `dogless`.`usuarios` (`idusuarios`, `nombre`, `apellido`, `dni`, `correo`, `contrasena`, `telefono`, `direccion`, `idroles`, `iddistritos`, `idadminzonales`, `estado`, `ruc`, `codigoaduana`, `razonsocial`, `codigojurisdiccion`, `idzonas`)
+INSERT INTO `dogless`.`usuarios` (`idusuarios`, `nombre`, `apellido`, `dni`, `email`, `pwd`, `telefono`, `direccion`, `idroles`, `iddistritos`, `idadminzonales`, `estado`, `ruc`, `codigoaduana`, `razonsocial`, `codigojurisdiccion`, `idzonas`)
 VALUES
 (23, 'Martín', 'Hernández', '66007788', 'martin.hernandez@este.com', 'agenteEpass123', '987654335', 'Calle Este 123', 3, 19, 5, 'activo', '12345678903', 'ADU013', 'Agente Este', 'JUR013', 3),
 (24, 'Verónica', 'Díaz', '77008899', 'veronica.diaz@este.com', 'agenteEpass456', '987654336', 'Av. Este 456', 3, 20, 5, 'activo', '10987654331', 'ADU014', 'Agente Este', 'JUR014', 3),
@@ -267,7 +266,7 @@ VALUES
 (28, 'Raquel', 'Paredes', '12003344', 'raquel.paredes@este.com', 'agenteEpass678', '987654340', 'Av. Este 678', 3, 24, 6, 'activo', '10987654335', 'ADU018', 'Agente Este', 'JUR018', 3);
 
 -- Agentes zonas Oeste (Admin zonas 7  y 8)
-INSERT INTO `dogless`.`usuarios` (`idusuarios`, `nombre`, `apellido`, `dni`, `correo`, `contrasena`, `telefono`, `direccion`, `idroles`, `iddistritos`, `idadminzonales`, `estado`, `ruc`, `codigoaduana`, `razonsocial`, `codigojurisdiccion`, `idzonas`)
+INSERT INTO `dogless`.`usuarios` (`idusuarios`, `nombre`, `apellido`, `dni`, `email`, `pwd`, `telefono`, `direccion`, `idroles`, `iddistritos`, `idadminzonales`, `estado`, `ruc`, `codigoaduana`, `razonsocial`, `codigojurisdiccion`, `idzonas`)
 VALUES
 (29, 'Raúl', 'González', '13004455', 'raul.gonzalez@oeste.com', 'agenteWpass123', '987654341', 'Calle Oeste 123', 3, 26, 7, 'activo', '12345678904', 'ADU019', 'Agente Oeste', 'JUR019', 4),
 (30, 'Diana', 'Campos', '14005566', 'diana.campos@oeste.com', 'agenteWpass456', '987654342', 'Av. Oeste 456', 3, 27, 7, 'activo', '10987654336', 'ADU020', 'Agente Oeste', 'JUR020', 4),
@@ -277,10 +276,10 @@ VALUES
 (34, 'Alejandra', 'Ramos', '18009900', 'alejandra.ramos@oeste.com', 'agenteWpass678', '987654346', 'Av. Oeste 678', 3, 31, 8, 'activo', '10987654340', 'ADU024', 'Agente Oeste', 'JUR024', 4);
 
 -- Usuarios Finales 
-INSERT INTO `dogless`.`usuarios` (`idusuarios`, `nombre`, `apellido`, `dni`, `correo`, `contrasena`, `telefono`, `direccion`, `idroles`, `iddistritos`, `idadminzonales`, `estado`, `ruc`, `codigoaduana`, `razonsocial`, `codigojurisdiccion`, `idzonas`)
+INSERT INTO `dogless`.`usuarios` (`idusuarios`, `nombre`, `apellido`, `dni`, `email`, `pwd`, `telefono`, `direccion`, `idroles`, `iddistritos`, `idadminzonales`, `estado`, `ruc`, `codigoaduana`, `razonsocial`, `codigojurisdiccion`, `idzonas`)
 VALUES
-(35, 'Laura', 'Suárez', '22334455', 'laura.suarez@norte.com', 'userFpass1!', '987654347', 'Calle Norte 1', 4, 1, NULL, 'activo', NULL, NULL, NULL, NULL, 1),
-(36, 'Javier', 'Ortiz', '33445566', 'javier.ortiz@norte.com', 'userFpass2#$', '987654348', 'Calle Norte 2', 4, 2, NULL, 'activo', NULL, NULL, NULL, NULL, 1),
+(35, 'Adrián', 'Tipo', '18874455', 'laura.suarez@norte.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654347', 'Calle Norte 1', 4, 1, NULL, 'activo', NULL, NULL, NULL, NULL, 1),
+(36, 'Fabricio', 'Estrada', '19045566', 'javier.ortiz@norte.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654348', 'Calle Norte 2', 4, 2, NULL, 'activo', NULL, NULL, NULL, NULL, 1),
 (37, 'María', 'Santos', '44556677', 'maria.santos@norte.com', 'userFpass3&*', '987654349', 'Av. Norte 3', 4, 3, NULL, 'activo', NULL, NULL, NULL, NULL, 1),
 (38, 'Raúl', 'Pérez', '55667788', 'raul.perez@norte.com', 'userFpass4@!', '987654350', 'Calle Norte 4', 4, 4, NULL, 'activo', NULL, NULL, NULL, NULL, 1),
 (39, 'Carla', 'Mendoza', '66778899', 'carla.mendoza@norte.com', 'userFpass5^&', '987654351', 'Av. Norte 5', 4, 5, NULL, 'activo', NULL, NULL, NULL, NULL, 1),

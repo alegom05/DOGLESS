@@ -19,10 +19,11 @@ public class Usuario {
     private String nombre;
     private String apellido;
     private String dni;
-    private String correo;
+    private String email;
     private String telefono;
     private String direccion;
-    private String contrasena;
+
+    private String pwd;
     private Integer borrado;
     private Date fechabaneo;
     private String motivobaneo;

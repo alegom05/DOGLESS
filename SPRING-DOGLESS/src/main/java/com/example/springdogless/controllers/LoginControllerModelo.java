@@ -25,7 +25,7 @@ Atte. Alejandro
 @Controller
 public class LoginControllerModelo {
 
-    @GetMapping("/loginForm")
+    @GetMapping("/loginForm2")
     public String loginForm(){
         return "login/loginForm";
     }

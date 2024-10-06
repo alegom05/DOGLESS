@@ -1,4 +1,4 @@
-/*
+
 
 package com.example.springdogless.config;
 
@@ -30,17 +30,17 @@ public class WebSecurityConfig {
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder(){
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
     @Bean
-    public UserDetailsManager users(DataSource dataSource){
+    public UserDetailsManager users(DataSource dataSource) {
         JdbcUserDetailsManager users = new JdbcUserDetailsManager(dataSource);
-        String sql1 = "SELECT email, pwd, activo FROM usuario WHERE email = ?";
-        String sql2 = "SELECT u.email, r.nombre FROM usuario u "
-                + "INNER JOIN rol r ON (u.idrol = r.idrol) "
-                + "WHERE u.email = ? and u.activo = 1";
+        String sql1 = "SELECT email, pwd, borrado FROM usuarios WHERE email = ?";
+        String sql2 = "SELECT u.email, r.nombre FROM usuarios u "
+                + "INNER JOIN roles r ON (u.idroles = r.idroles) "
+                + "WHERE u.email = ? and u.borrado = 1";
 
         users.setUsersByUsernameQuery(sql1);
         users.setAuthoritiesByUsernameQuery(sql2);
@@ -51,11 +51,25 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
+        http.formLogin();
+
+        http.authorizeHttpRequests()
+                .requestMatchers("/admin", "/admin/**").authenticated()
+                .requestMatchers("/zonal", "/zonal/**").authenticated()
+                .anyRequest().permitAll();
+
+
+    /*
+
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+
         http.formLogin()
                     .loginPage("/loginForm")
                     .loginProcessingUrl("/processLogin")
-                    .usernameParameter("email") //Si no vas a usar password
-                    .passwordParameter("contrasenia") //Si no vas a usar username
+                    //.usernameParameter("email") //Si no vas a usar password
+                    //.passwordParameter("contrasenia") //Si no vas a usar username
+
                     .successHandler((request, response, authentication) -> {
 
                         DefaultSavedRequest defaultSavedRequest =
@@ -65,34 +79,39 @@ public class WebSecurityConfig {
                             String targetURL = defaultSavedRequest.getRedirectUrl();
                             redirectStrategy.sendRedirect(request, response, targetURL);
                         } else {
-                            String rol = "";
+                            String roles = "";
                             for (GrantedAuthority role : authentication.getAuthorities()) {
-                                rol = role.getAuthority();
+                                roles = role.getAuthority();
                                 break;
                             }
-                            if (rol.equals("admin")) {
-                                response.sendRedirect("/shipper");
+                            if (roles.equals("Superadmin")) {
+                                response.sendRedirect("/admin");
                             } else {
-                                response.sendRedirect("/employee");
+                                response.sendRedirect("/zonal");
                             }
                         }
                     });
 
         http.logout();
 
-        //Pass: 1234, Alejandro: 1111
-
+        //Dogless: usuario:agomez@gmail.com, Pass=1111 y los demás de manera análoga
         http.authorizeHttpRequests()
-                .requestMatchers("/employee", "/employee/**").hasAnyAuthority("admin", "logistica")
-                .requestMatchers("/shipper", "/shipper/**").hasAuthority("admin")
-                .requestMatchers("/product", "/product/**").hasAuthority("hr")
+                .requestMatchers("/usuario", "/usuario/**").hasAnyAuthority("Superadmin", "Adminzonal","Agente","Usuario")
+                .requestMatchers("/agente", "/agente/**").hasAnyAuthority("Superadmin", "Adminzonal","Agente")
+                .requestMatchers("/zonal", "/zonal/**").hasAnyAuthority("Superadmin", "Adminzonal")
+                .requestMatchers("/admin", "/admin/**").hasAuthority("Superadmin")
+                //Ejemplos
+                //.requestMatchers("/zonal", "/zonal/**").hasAuthority("admin")//El admin
+                //.requestMatchers("/product", "/product/**").hasAuthority("hr")//El hr
 
                 .anyRequest().permitAll();
 
         return http.build();
+
     }
 
+     */
+        return http.build();
 
+    }
 }
-
-*/

@@ -108,7 +108,7 @@ public class ZonalController {
         usuario.setDistrito(distrito);
         usuario.setBorrado(1);
         String contrasenaPorDefecto = "contraseñaPredeterminada";
-        usuario.setContrasena(contrasenaPorDefecto);
+        usuario.setPwd(contrasenaPorDefecto);
         // Guardar el nuevo Adminzonal
         usuarioRepository.save(usuario);
         attr.addFlashAttribute("mensajeExito", "Agente creado correctamente");
@@ -152,7 +152,7 @@ public class ZonalController {
             // Actualizar solo los campos editables
             usuario.setNombre(nombre);
             usuario.setApellido(apellido);
-            usuario.setCorreo(correo);
+            usuario.setEmail(correo);
             usuario.setTelefono(telefono);
             usuario.setRuc(ruc);
             usuario.setCodigoaduana(codigoaduana);

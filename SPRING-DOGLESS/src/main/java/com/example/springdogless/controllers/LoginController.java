@@ -28,9 +28,9 @@ public class LoginController {
     UsuarioRepository usuarioRepository;
 
     // Mapea la vista del login
-    @GetMapping("/login")
+    @GetMapping("/loginForm")
     public String login() {
-        return "login"; // Esto renderiza la vista login.html
+        return "login/loginForm"; // Esto renderiza la vista login.html
     }
 
     // Mapea la vista de registro

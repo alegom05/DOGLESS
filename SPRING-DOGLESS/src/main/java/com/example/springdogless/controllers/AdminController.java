@@ -165,7 +165,7 @@ public class AdminController {
             // Actualizar solo los campos editables
             usuario.setNombre(nombre);
             usuario.setApellido(apellido);
-            usuario.setCorreo(correo);
+            usuario.setEmail(correo);
             usuario.setTelefono(telefono);
 
             // Buscar las entidades relacionadas por sus IDs
@@ -206,7 +206,7 @@ public class AdminController {
             // Actualizar solo los campos editables
             usuario.setNombre(nombre);
             usuario.setApellido(apellido);
-            usuario.setCorreo(correo);
+            usuario.setEmail(correo);
             usuario.setTelefono(telefono);
             usuario.setRuc(ruc);
             usuario.setCodigoaduana(codidoaduana);
@@ -248,7 +248,7 @@ public class AdminController {
             // Actualizar solo los campos editables
             usuario.setNombre(nombre);
             usuario.setApellido(apellido);
-            usuario.setCorreo(correo);
+            usuario.setEmail(correo);
             usuario.setTelefono(telefono);
 
             // Buscar las entidades relacionadas por sus IDs
@@ -384,7 +384,7 @@ public class AdminController {
         usuario.setDistrito(distrito);
         usuario.setBorrado(1);
         String contrasenaPorDefecto = "contraseñaPredeterminada";
-        usuario.setContrasena(contrasenaPorDefecto);
+        usuario.setPwd(contrasenaPorDefecto);
         // Guardar el nuevo Adminzonal
         usuarioRepository.save(usuario);
         attr.addFlashAttribute("mensajeExito", "Administrador zonal creado correctamente");
