@@ -214,7 +214,7 @@ ENGINE = InnoDB;
 INSERT INTO `dogless`.`usuarios` (`idusuarios`, `nombre`, `apellido`, `dni`, `email`, `pwd`, `telefono`, `direccion`, `idroles`, `iddistritos`, `idadminzonales`, `estado`, `ruc`, `codigoaduana`, `razonsocial`, `codigojurisdiccion`, `idzonas`)
 VALUES 
 (1, 'Christopher', 'Terrones', '87623344', 'cterrones@gmail.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654321', 'Av. Segura 123', 1, 1, 0, 'activo', NULL, NULL, NULL, NULL, 1),
-(2, 'Pedro', 'Bustamante', '12834455', 'pbustamante@gmail.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654322', 'Av. Universitaria 377', 1, 1, 0, 'activo', NULL, NULL, NULL, NULL, 1);
+(2, 'Pedro', 'Bustamante', '12834455', 'agm@gmail.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654322', 'Av. Universitaria 377', 1, 1, 0, 'activo', NULL, NULL, NULL, NULL, 1);
 
 INSERT INTO `dogless`.`usuarios` (`idusuarios`, `nombre`, `apellido`, `dni`, `email`, `pwd`, `telefono`, `direccion`, `idroles`, `iddistritos`, `idadminzonales`, `estado`, `ruc`, `codigoaduana`, `razonsocial`, `codigojurisdiccion`, `idzonas`)
 VALUES
