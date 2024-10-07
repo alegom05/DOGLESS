@@ -35,18 +35,7 @@ public class WebSecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean
-    public UserDetailsManager users(DataSource dataSource) {
-        JdbcUserDetailsManager users = new JdbcUserDetailsManager(dataSource);
-        String sql1 = "SELECT email, pwd, borrado FROM usuarios WHERE email = ?";
-        String sql2 = "SELECT u.email, r.nombre FROM usuarios u "
-                + "INNER JOIN roles r ON (u.idroles = r.idroles) "
-                + "WHERE u.email = ? and u.borrado = 1";
 
-        users.setUsersByUsernameQuery(sql1);
-        users.setAuthoritiesByUsernameQuery(sql2);
-        return users;
-    }
 
 
 
@@ -55,7 +44,7 @@ public class WebSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
             http.formLogin()
-                    //.loginPage("/openLoginWindow")
+                    //.loginPage("/loginForm")
                     //.loginProcessingUrl("/submitLoginForm")
                     //.usernameParameter("correo")
                     //.passwordParameter("contrasenia")
@@ -99,9 +88,6 @@ public class WebSecurityConfig {
                         }
                     });
 
-
-        http.logout();
-
         //Dogless: usuario:agomez@gmail.com, Pass=1111 y los demás de manera análoga
         http.authorizeHttpRequests()
                 .requestMatchers("/usuario", "/usuario/**").hasAnyAuthority("Superadmin", "Usuario")
@@ -114,8 +100,23 @@ public class WebSecurityConfig {
 
                 .anyRequest().permitAll();
 
+        http.logout();
+
         return http.build();
 
+    }
+
+    @Bean
+    public UserDetailsManager users(DataSource dataSource) {
+        JdbcUserDetailsManager users = new JdbcUserDetailsManager(dataSource);
+        String sql1 = "SELECT email, pwd, borrado FROM usuarios WHERE email = ?";
+        String sql2 = "SELECT u.email, r.nombre FROM usuarios u "
+                + "INNER JOIN roles r ON (u.idroles = r.idroles) "
+                + "WHERE u.email = ? and u.borrado = 1";
+
+        users.setUsersByUsernameQuery(sql1);
+        users.setAuthoritiesByUsernameQuery(sql2);
+        return users;
     }
 
 
