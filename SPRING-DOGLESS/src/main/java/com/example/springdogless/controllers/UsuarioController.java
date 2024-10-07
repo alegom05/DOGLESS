@@ -37,7 +37,7 @@ public class UsuarioController {
 
     @GetMapping({""})
     public String PaginaPrincipal(Model model) {
-        return "zonal/paginaprincipal";
+        return "usuario/paginaprincipal";
     }
 
     @GetMapping({"/guia"})
