@@ -45,7 +45,7 @@ public class WebSecurityConfig {
 
             http.formLogin()
                     //.loginPage("/loginForm")
-                    //.loginProcessingUrl("/submitLoginForm")
+                    //.loginProcessingUrl("/processLogin")
                     //.usernameParameter("correo")
                     //.passwordParameter("contrasenia")
                     .successHandler((request, response, authentication) -> {
