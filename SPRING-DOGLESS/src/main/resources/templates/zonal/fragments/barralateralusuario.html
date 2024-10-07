@@ -8,7 +8,7 @@
       <div class="sidebar sidebar-style-2" data-background-color="dark">
         <div class="sidebar-logo">
           <div class="logo-header" data-background-color="dark">
-            <a href="/zonal/" class="logo">
+            <a href="/usuario/" class="logo">
               <img src="/assets/img/kaiadmin/slogan_white_v3.png" alt="navbar brand" class="navbar-brand" height="50" />
             </a>
             <div class="nav-toggle">
@@ -23,33 +23,33 @@
             <ul class="nav nav-secondary">
               <!-- Barra de navegación lateral-->
               <li class="nav-item" th:classappend="${activePage == 'home' ? 'active submenu' : ''}">
-                <a href="/zonal">
+                <a href="/usuario">
                   <i class="fas fa-home"></i>
                   <p>Página principal</p>
                 </a>
               </li>
-              <li class="nav-item" th:classappend="${activePage == 'dashboard' ? 'active submenu' : ''}">
-                <a href="/zonal/dashboard">
-                  <i class="fas fa-home"></i>
-                  <p>Dashboard</p>
+              <li class="nav-item" th:classappend="${activePage == 'tienda' ? 'active submenu' : ''}">
+                <a href="/usuario/tienda">
+                  <i class="fas fa-shopping-cart"></i>
+                  <p>Tienda</p>
                 </a>
               </li>
-              <li class="nav-item" th:classappend="${activePage == 'agentes' ? 'active submenu' : ''}">
-                <a href="/zonal/agentes">
-                  <i class="fas fa-user-plus"></i>
-                  <p>Agentes</p>
+              <li class="nav-item" th:classappend="${activePage == 'compras' ? 'active submenu' : ''}">
+                <a href="/usuario/compras">
+                  <i class="fas fa-shopping-bag"></i>
+                  <p>Mis compras</p>
                 </a>
               </li>
-			  <li class="nav-item" th:classappend="${activePage == 'importaciones' ? 'active submenu' : ''}">
-                <a href="/zonal/importaciones">
-                  <i class="fas fa-home"></i>
-                  <p>Importaciones</p>
+			  <li class="nav-item" th:classappend="${activePage == 'guia' ? 'active submenu' : ''}">
+                <a href="/usuario/guia">
+                  <i class="fas fa-question-circle"></i>
+                  <p>Guía de usuario</p>
                 </a>
               </li>
-			  <li class="nav-item" th:classappend="${activePage == 'reposiciones' ? 'active submenu' : ''}">
-                <a href="/zonal/reposiciones">
-                  <i class="fas fa-chart-bar"></i>
-                  <p>Reposiciones</p>
+			  <li class="nav-item" th:classappend="${activePage == 'libro' ? 'active submenu' : ''}">
+                <a href="/usuario/libro">
+                  <i class="fas fa-book"></i>
+                  <p>Libro de reclamaciones</p>
                 </a>
               </li>
 
