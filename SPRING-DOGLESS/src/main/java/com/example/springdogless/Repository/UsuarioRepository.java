@@ -36,6 +36,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer>{
     @Query(nativeQuery = true, value = "SELECT * FROM usuarios WHERE idroles = ?1 AND borrado = 1 AND estado <> 'baneado'")
     List<Usuario> findByRolAndNotBaneado(Integer idRol);
 
+    public Usuario findByEmail(String email);
 
 }
 

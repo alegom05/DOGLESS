@@ -1,7 +1,6 @@
 package com.example.springdogless.controllers;
 
 import com.example.springdogless.Repository.UsuarioRepository;
-import com.example.springdogless.entity.Producto;
 import com.example.springdogless.entity.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
@@ -11,14 +10,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.ResourceLoader;
 
 
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Optional;
 
 @Controller
@@ -30,7 +25,7 @@ public class LoginController {
     // Mapea la vista del login
     @GetMapping("/loginForm")
     public String login() {
-        return "login/loginForm"; // Esto renderiza la vista login.html
+        return "loginForm"; // Esto renderiza la vista login.html
     }
 
     // Mapea la vista de registro

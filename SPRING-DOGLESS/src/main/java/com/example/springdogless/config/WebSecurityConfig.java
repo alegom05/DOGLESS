@@ -2,6 +2,8 @@
 
 package com.example.springdogless.config;
 
+import com.example.springdogless.Repository.UsuarioRepository;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -20,13 +22,12 @@ import javax.sql.DataSource;
 @Configuration
 public class WebSecurityConfig {
 
+    final UsuarioRepository usuarioRepository;
     final DataSource dataSource;
 
-    private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
-
-
-    public WebSecurityConfig(DataSource dataSource) {
+    public WebSecurityConfig(DataSource dataSource, UsuarioRepository usuarioRepository) {
         this.dataSource = dataSource;
+        this.usuarioRepository = usuarioRepository;
     }
 
     @Bean
@@ -48,56 +49,63 @@ public class WebSecurityConfig {
     }
 
 
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-        http.formLogin();
-
-        http.authorizeHttpRequests()
-                .requestMatchers("/admin", "/admin/**").authenticated()
-                .requestMatchers("/zonal", "/zonal/**").authenticated()
-                .anyRequest().permitAll();
-
-
-    /*
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-        http.formLogin()
-                    .loginPage("/loginForm")
-                    .loginProcessingUrl("/processLogin")
-                    //.usernameParameter("email") //Si no vas a usar password
-                    //.passwordParameter("contrasenia") //Si no vas a usar username
-
+            http.formLogin()
+                    //.loginPage("/openLoginWindow")
+                    //.loginProcessingUrl("/submitLoginForm")
+                    //.usernameParameter("correo")
+                    //.passwordParameter("contrasenia")
                     .successHandler((request, response, authentication) -> {
 
                         DefaultSavedRequest defaultSavedRequest =
                                 (DefaultSavedRequest) request.getSession().getAttribute("SPRING_SECURITY_SAVED_REQUEST");
 
+                        HttpSession session = request.getSession();
+                        session.setAttribute("usuario", usuarioRepository.findByEmail(authentication.getName()));
+
+                        //Para el parcial
+                        //si vengo por url -> defaultSR existe
                         if (defaultSavedRequest != null) {
-                            String targetURL = defaultSavedRequest.getRedirectUrl();
-                            redirectStrategy.sendRedirect(request, response, targetURL);
-                        } else {
-                            String roles = "";
+                            String targetURl = defaultSavedRequest.getRequestURL();
+                            new DefaultRedirectStrategy().sendRedirect(request, response, targetURl);
+                        } else { //estoy viniendo del botón de login
+                            String rol = "";
                             for (GrantedAuthority role : authentication.getAuthorities()) {
-                                roles = role.getAuthority();
+                                rol = role.getAuthority();
                                 break;
                             }
-                            if (roles.equals("Superadmin")) {
-                                response.sendRedirect("/admin");
-                            } else {
-                                response.sendRedirect("/zonal");
+
+                            switch (rol) {
+                                case "Superadmin":
+                                    response.sendRedirect("/admin");
+                                    break;
+                                case "Adminzonal":
+                                    response.sendRedirect("/zonal");
+                                    break;
+                                case "Agente":
+                                    response.sendRedirect("/agente");
+                                    break;
+                                case "Usuario":
+                                    response.sendRedirect("/usuario");
+                                    break;
+                                default:
+                                    response.sendRedirect("/default"); // Puedes cambiar esto según lo que necesites
+                                    break;
                             }
                         }
                     });
+
 
         http.logout();
 
         //Dogless: usuario:agomez@gmail.com, Pass=1111 y los demás de manera análoga
         http.authorizeHttpRequests()
-                .requestMatchers("/usuario", "/usuario/**").hasAnyAuthority("Superadmin", "Adminzonal","Agente","Usuario")
-                .requestMatchers("/agente", "/agente/**").hasAnyAuthority("Superadmin", "Adminzonal","Agente")
+                .requestMatchers("/usuario", "/usuario/**").hasAnyAuthority("Superadmin", "Usuario")
+                .requestMatchers("/agente", "/agente/**").hasAnyAuthority("Superadmin", "Agente")
                 .requestMatchers("/zonal", "/zonal/**").hasAnyAuthority("Superadmin", "Adminzonal")
                 .requestMatchers("/admin", "/admin/**").hasAuthority("Superadmin")
                 //Ejemplos
@@ -110,8 +118,5 @@ public class WebSecurityConfig {
 
     }
 
-     */
-        return http.build();
 
-    }
 }
