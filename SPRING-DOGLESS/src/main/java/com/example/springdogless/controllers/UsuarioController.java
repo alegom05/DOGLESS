@@ -40,6 +40,11 @@ public class UsuarioController {
         return "zonal/paginaprincipal";
     }
 
+    @GetMapping({"/guia"})
+    public String GuiaDeUsuario(Model model) {
+        return "usuario/guia";
+    }
+
     @GetMapping("/new")
     public String nuevoAgenteFrm(Model model) {
         model.addAttribute("listaZonas", zonaRepository.findAll());

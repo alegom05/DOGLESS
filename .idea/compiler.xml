@@ -7,9 +7,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="holamundo" />
         <module name="SPRING-DOGLESS" />
-        <module name="holamundo (1)" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
