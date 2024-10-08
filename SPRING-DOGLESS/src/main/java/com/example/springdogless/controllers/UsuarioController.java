@@ -59,6 +59,13 @@ public class UsuarioController {
         return "usuario/libro";
     }
 
+    @GetMapping("/tienda")
+    public String TiendaProductos(Model model) {
+        //model.addAttribute("listaproductos", productRepository.ProductosCompleto());
+        //listaproductos
+        return "usuario/tienda";
+    }
+
     //El resto no está hecho
 
     /*
