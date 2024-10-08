@@ -135,8 +135,8 @@
                         <div class="row">
                           <div class="col">
                             <div class="mb-3">
-                              <label for="email" class="form-label">Correo:</label>
-                              <input type="email" name="email" id="email" class="form-control" th:value="${usuario.email}" placeholder="Ej: pedro.bustamante@gmail.com">
+                              <label for="correo" class="form-label">Correo:</label>
+                              <input type="email" name="correo" id="correo" class="form-control" th:value="${usuario.correo}" placeholder="Ej: pedro.bustamante@gmail.com">
                               <div class="invalid-feedback">Por favor ingresar un correo válido.</div>
                             </div>
                           </div>
@@ -313,7 +313,7 @@
           }
         });
         document.addEventListener("input", function(event) {
-          if (event.target && event.target.id === "email") {
+          if (event.target && event.target.id === "correo") {
             let pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Patrón de correo
             if (!pattern.test(event.target.value)) {
               event.target.setCustomValidity("Por favor, ingrese un correo válido.");
