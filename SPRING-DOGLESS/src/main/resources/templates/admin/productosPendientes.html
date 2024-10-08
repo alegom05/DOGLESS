@@ -125,7 +125,7 @@
                         <tr th:each="reposicion : ${listaReposiciones}">
                           <td th:text="${reposicion.producto.getId()}"></td>
                           <td th:text="${reposicion.producto.getNombre()}"></td>
-                          <td th:text="${reposicion.cantidad}"></td>
+                          <td th:text="${reposicion.getCantidad()}"></td>
                           <td th:text="${reposicion.zona.getNombre()}"></td>
                           <!-- Formateo de la fecha con Thymeleaf -->
                           <td th:text="${#dates.format(reposicion.fecha_pedido, 'dd/MM/yyyy')}"></td>
@@ -139,7 +139,8 @@
                                    <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
                                     <li>    <a class="dropdown-item" th:href="@{/admin/aprobar/{id}(id=${reposicion.idreposicion})}">Aprobar</a>
                                     </li>
-                                     <li><a class="dropdown-item" th:href="@{/admin/rechazar/{id}(id=${reposicion.idreposicion})}" >Rechazar</a></li>                                  </ul>
+                                    <li><a class="dropdown-item" th:href="@{/admin/rechazar/{id}(id=${reposicion.idreposicion})}" >Rechazar</a></li>
+                                   </ul>
                               </div>
                           </td>
                           </tr>

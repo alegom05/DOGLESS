@@ -135,7 +135,7 @@ public class ZonalController {
     public String guardarAgente(@RequestParam("id") int id,
                                 @RequestParam("nombre") String nombre,
                                 @RequestParam("apellido") String apellido,
-                                @RequestParam("correo") String correo,
+                                @RequestParam("email") String email,
                                 @RequestParam("telefono") String telefono,
                                 @RequestParam("ruc") String ruc,
                                 @RequestParam("codigoAduana") String codigoaduana,
@@ -152,7 +152,7 @@ public class ZonalController {
             // Actualizar solo los campos editables
             usuario.setNombre(nombre);
             usuario.setApellido(apellido);
-            usuario.setEmail(correo);
+            usuario.setEmail(email);
             usuario.setTelefono(telefono);
             usuario.setRuc(ruc);
             usuario.setCodigoaduana(codigoaduana);
@@ -395,13 +395,6 @@ public class ZonalController {
 
         return "redirect:/zonal/reposiciones";
     }
-
-
-
-
-
-
-
 
 
 
