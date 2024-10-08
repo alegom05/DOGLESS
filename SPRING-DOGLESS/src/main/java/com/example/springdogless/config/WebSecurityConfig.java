@@ -44,8 +44,8 @@ public class WebSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
             http.formLogin()
-                    //.loginPage("/loginForm")
-                    //.loginProcessingUrl("/processLogin")
+                    .loginPage("/loginForm")
+                    .loginProcessingUrl("/processLogin")
                     //.usernameParameter("correo")
                     //.passwordParameter("contrasenia")
                     .successHandler((request, response, authentication) -> {

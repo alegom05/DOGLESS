@@ -56,43 +56,32 @@
     </body>
 
         <!-- JavaScript para validaciones -->
-        <script>
-            document.getElementById('loginButton').addEventListener('click', function(event) {
-                event.preventDefault(); // Previene el envío del formulario hasta que se validen los campos
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            var usernameField = document.getElementById('username');
+            var passwordField = document.getElementById('password');
+            var username = usernameField.value;
+            var password = passwordField.value;
 
-                var emailField = document.getElementById('email');
-                var passwordField = document.getElementById('password');
-                var email = emailField.value;
-                var password = passwordField.value;
-
-                // Validación de campos vacíos
-                if (email === '') {
-                    alert("Por favor, ingrese su correo electrónico.");
-                    return;
-                }
-
-                if (password === '') {
-                    alert("Por favor, ingrese su contraseña.");
-                    return;
-                }
-
-                // Validación de formato de correo electrónico
-                if (!validarCorreo(email)) {
-                    alert("Por favor, ingrese un correo electrónico válido.");
-                    return;
-                }
-
-                // Si todo está correcto
-                alert("Inicio de sesión exitoso.");
-                // Aquí puedes agregar la lógica para el envío de los datos o autenticación.
-            });
-
-            // Función para validar el formato de correo electrónico
-            function validarCorreo(email) {
-                var expReg = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
-                return expReg.test(email);
+            // Validación básica
+            if (!username || !password) {
+                event.preventDefault();
+                alert("Por favor, complete todos los campos.");
+                return;
             }
-        </script>
 
+            // Validación de formato de correo electrónico
+            if (!validarCorreo(username)) {
+                event.preventDefault();
+                alert("Por favor, ingrese un correo electrónico válido.");
+                return;
+            }
+        });
+
+        function validarCorreo(email) {
+            var expReg = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            return expReg.test(email);
+        }
+    </script>
     </body>
 </html>
