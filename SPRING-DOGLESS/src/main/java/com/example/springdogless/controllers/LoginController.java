@@ -22,6 +22,7 @@ import java.util.UUID;
 @Slf4j  // Agregar esta anotación para logging
 
 @Controller
+@RequestMapping({"", "/"})
 public class LoginController {
 
     @Autowired
@@ -30,7 +31,7 @@ public class LoginController {
     private JavaMailSender emailSender;
 
     // Mapea la vista del login
-    @GetMapping("/loginForm")
+    @GetMapping({"", "/loginForm"})
     public String login() {
         return "login/loginForm"; // Esto renderiza la vista login.html
     }
