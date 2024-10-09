@@ -55,5 +55,35 @@ public interface ProductRepository extends JpaRepository<Producto, Integer>{
             nativeQuery = true)
     Page<ProductoDTO> findProductosByZona(Integer idzona, Pageable pageable);
 
+    @Query(value = "SELECT COUNT(p.idproductos) FROM dogless.productos p " +
+            "JOIN dogless.stockproductos s ON p.idproductos = s.idproductos " +
+            "WHERE s.idzonas = ?1 AND p.categoria = ?2", nativeQuery = true)
+    Integer countProductosByZonaAndCategoria(Integer idzona, String categoria);
+
+    @Query(value = "SELECT p.idproductos, p.nombre, p.descripcion, p.categoria, p.precio, p.costoenvio, " +
+            "p.idproveedores, prov.nombre AS proveedorNombre, prov.apellido AS proveedorApellido, " +
+            "p.modelos, p.colores, p.aprobado, p.borrado, p.estado, " +
+            "s.cantidad, z.nombre AS nombreZona " +
+            "FROM dogless.productos p " +
+            "LEFT JOIN dogless.stockproductos s ON p.idproductos = s.idproductos " +
+            "LEFT JOIN dogless.zonas z ON s.idzonas = z.idzonas " +
+            "JOIN dogless.proveedores prov ON p.idproveedores = prov.idproveedores " +
+            "WHERE s.idzonas = ?1 " +
+            "AND p.categoria = ?2 " + // Filtrar por categoría
+            "LIMIT ?#{#pageable.pageSize} OFFSET ?#{#pageable.offset}",
+            countQuery = "SELECT COUNT(*) FROM dogless.productos p " +
+                    "LEFT JOIN dogless.stockproductos s ON p.idproductos = s.idproductos " +
+                    "WHERE s.idzonas = ?1 " +
+                    "AND p.categoria = ?2", // Filtrar en el conteo por categoría
+            nativeQuery = true)
+    Page<ProductoDTO> findProductosByZonaAndCategoria(Integer idzona, String categoria, Pageable pageable);
+
+    // Método para contar productos por zona
+    @Query(value = "SELECT COUNT(*) FROM dogless.productos p " +
+            "LEFT JOIN dogless.stockproductos s ON p.idproductos = s.idproductos " +
+            "WHERE s.idzonas = ?1",
+            nativeQuery = true)
+    Integer countProductosByZona(Integer idzona);
+
 }
 
