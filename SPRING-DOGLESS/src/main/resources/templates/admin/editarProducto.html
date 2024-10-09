@@ -14,6 +14,17 @@
             type="image/x-icon"
     />
 
+    <style>
+      #image-preview {
+        transition: transform 0.3s; /* Transición suave */
+      }
+
+      #image-preview:hover {
+        transform: scale(1.1); /* Aumenta el tamaño al 110% */
+      }
+    </style>
+
+
     <!-- Fonts and icons -->
     <script src="/assets/js/plugin/webfont/webfont.min.js"></script>
     <script>
@@ -59,7 +70,7 @@
           <div class="page-inner">
             <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
               <div>
-                <h3 class="fw-bold mb-3">Editar Producto</h3>
+                <h3 class="fw-bold mb-3" th:text="${id==0? 'Nueva Reposición':'Editar Reposición'}">Editar Reposición</h3>
               </div>
             </div>
             <div class="row">
@@ -67,7 +78,7 @@
                 <div class="card">
 
                   <div class="card-body">
-                    <form class="needs-validation" style="width: 100%; margin-left: 0%; margin-top: 3%;" th:action="@{'/admin/saveproducto'}" method="POST" novalidate>
+                    <form class="needs-validation" style="width: 100%; margin-left: 0%; margin-top: 3%;" th:action="@{'/admin/saveproducto'}" method="POST" enctype="multipart/form-data" novalidate>
                       <input  name="id"  th:value="${producto.id}" type="hidden"/>
                       <div class="container">
                         <div class="row">
@@ -120,10 +131,14 @@
                           <div class="col-md-6">
                             <div class="mb-3">
                               <label for="imagen" class="form-label">Imagen: (*)</label>
-                              <input type="file" name="imagen" id="imagen" class="form-control" accept="image/*" onchange="previewImage(event)" >
+                              <input type="file" name="imagen" id="imagen" class="form-control" accept="image/*" onchange="previewImage(event)" required>
                               <div class="invalid-feedback">Por favor seleccione una imagen.</div>
-                              <div class="mt-3">
-                                <img id="imagePreview" src="/assets/img/productos/ZephyrusG16.png" alt="Vista previa de la imagen" style="max-width: 100%; max-height: 200px;">
+                              <!-- Contenedor para la imagen -->
+                              <div class="text-center mt-2" th:if="${producto.id != null}">
+                                <img id="image-preview" th:src="@{'http://localhost:8080/admin/producto/imagen/' + ${producto.id}}"
+                                     alt="Imagen del producto"
+                                     class="mx-auto d-block"
+                                     style="max-width: 100%; max-height: 200px; transition: transform 0.3s;"/>
                               </div>
                             </div>
                             <div class="mb-3">
@@ -176,6 +191,17 @@
     <!-- Kaiadmin JS -->
     <script src="/assets/js/kaiadmin.min.js"></script>
       <script>
+        function previewImage(event) {
+          const reader = new FileReader();
+          const imageField = document.getElementById('image-preview');
+
+          reader.onload = function() {
+            if (reader.readyState === 2) {
+              imageField.src = reader.result;
+            }
+          };
+          reader.readAsDataURL(event.target.files[0]);
+        }
         $(document).ready(function () {
           $("#basic-datatables").DataTable({
             language: {

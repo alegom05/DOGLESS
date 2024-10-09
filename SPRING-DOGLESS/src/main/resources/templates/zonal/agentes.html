@@ -105,7 +105,7 @@
                         <td th:text="${usuario.nombre}"></td>
                         <td th:text="${usuario.apellido}"></td>
                         <td th:text="${usuario.dni}"></td>
-                        <td th:text="${usuario.correo}"></td>
+                        <td th:text="${usuario.email}"></td>
                         <td th:text="${usuario.distrito.distrito}"></td>
                         <td>
                           <!-- Dropdown con ícono -->
@@ -116,6 +116,8 @@
                             <!-- Dropdown oscuro -->
                             <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
                               <li><a class="dropdown-item" th:href="@{'/zonal/veragente' + '?id=' + ${usuario.id}}">Ver</a></li>
+                              <li><a class="dropdown-item" th:href="@{'/zonal/editagente' + '?id=' + ${usuario.id}}">Editar</a></li>
+                              <li><a href="#" class="dropdown-item" data-toggle="modal"  data-target="#confirmDeleteModal" th:data-id="${usuario.id}">Eliminar</a></li>
                             </ul>
                           </div>
                         </td>
@@ -138,7 +140,7 @@
 
                           </div>
                           <div class="modal-footer">
-                            <form id="deleteForm" method="post" th:action="@{'/admin/deleteagente'}" novalidate>
+                            <form id="deleteForm" method="post" th:action="@{'/zonal/deleteagente'}" novalidate>
                               <input type="hidden" name="id" id="userId">
                               <button type="submit" class="btn btn-dark">Eliminar</button>
                             </form>

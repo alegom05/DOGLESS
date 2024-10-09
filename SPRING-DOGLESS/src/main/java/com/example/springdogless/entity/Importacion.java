@@ -6,15 +6,20 @@ import lombok.Setter;
 
 import java.sql.Date;
 
-@Entity
+@Entity (name="importaciones")
 @Getter
 @Setter
 public class Importacion {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idimportaciones;
+    @Column(name = "idimportaciones")
+    private Integer id;
+    /*
 
+    <button type="submit" class="btn btn-primary" style="width: 280px" th:text="${reposicion.id==0? 'Crear':'Actualizar'>Crear</button>
+
+     */
     private String cantidad;
 
     @Column(name = "fecha_pedido")

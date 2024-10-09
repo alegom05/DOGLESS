@@ -1,15 +1,38 @@
 package com.example.springdogless.controllers;
 
+import com.example.springdogless.Repository.UsuarioRepository;
+import com.example.springdogless.entity.Usuario;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.util.Optional;
+import java.util.UUID;
+
+@Slf4j  // Agregar esta anotación para logging
 
 @Controller
 public class LoginController {
 
+    @Autowired
+    UsuarioRepository usuarioRepository;
+    @Autowired
+    private JavaMailSender emailSender;
+
     // Mapea la vista del login
-    @GetMapping("/login")
+    @GetMapping("/loginForm")
     public String login() {
-        return "login"; // Esto renderiza la vista login.html
+        return "login/loginForm"; // Esto renderiza la vista login.html
     }
 
     // Mapea la vista de registro
@@ -18,10 +41,38 @@ public class LoginController {
         return "register"; // Esto renderiza la vista register.html
     }
 
-    // Mapea la vista de recuperación de contraseña
+    // Add this method to handle GET requests
     @GetMapping("/olvidastecontasenha")
-    public String olvidastecontasenha() {
-        return "olvidastecontasenha"; // Esto renderiza la vista olvidastecontasenha.html
+    public String showForgotPasswordForm() {
+        return "login/olvidastecontasenha";
+    }
+
+    // Mapea la vista de recuperación de contraseña
+    @PostMapping("/olvidastecontasenha")
+    public String handleForgotPassword(@RequestParam("email") String email, Model model) {
+        log.info("Iniciando proceso de recuperación de contraseña para email: {}", email);
+
+        try {
+            String resetToken = UUID.randomUUID().toString();
+            String resetLink = "http://localhost:8080/crearnuevacontrasenha?token=" + resetToken;
+
+            SimpleMailMessage message = new SimpleMailMessage();
+            message.setFrom("asanmiguel2024@gmail.com");
+            message.setTo(email);
+            message.setSubject("Restablecimiento de contraseña");
+            message.setText("Para restablecer tu contraseña, haz clic en el siguiente enlace:\n\n" + resetLink);
+
+            log.debug("Intentando enviar email a: {}", email);
+            emailSender.send(message);
+            log.info("Email enviado exitosamente a: {}", email);
+
+            model.addAttribute("mensaje", "Se ha enviado un correo con instrucciones para restablecer tu contraseña.");
+            return "login/olvidastecontasenha";
+        } catch (Exception e) {
+            log.error("Error al enviar email de recuperación de contraseña", e);
+            model.addAttribute("error", "Ocurrió un error al enviar el correo. Por favor, inténtalo de nuevo.");
+            return "login/olvidastecontasenha";
+        }
     }
 
     // Mapea la vista de crear nueva contraseña (en caso se quiera cambiar después de la recuperación)
@@ -29,7 +80,6 @@ public class LoginController {
     public String crearnuevacontrasenha() {
         return "crearnuevacontrasenha"; // Esto renderiza la vista crearnuevacontrasenha.html
     }
-
 
 
     @GetMapping("/informacion-de-contacto")
@@ -43,6 +93,34 @@ public class LoginController {
         return "politica-de-privacidad"; // Esto renderiza la vista politica-de-privacidad.html
     }
 
+    @GetMapping("/imagen/{id}")
+    @ResponseBody
+    public ResponseEntity<byte[]> getImage(@PathVariable("id") Integer id) {
+        System.out.println("Llamando a getImage con ID: " + id); // Agrega este log
+        Optional<Usuario> usuarioOptional = usuarioRepository.findById(id);
+
+        if (usuarioOptional.isPresent()) {
+            Usuario usuario = usuarioOptional.get();
+            byte[] imagenBytes = usuario.getFotoperfil();
+
+            if (imagenBytes != null) {
+                return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(imagenBytes);
+            } else {
+                // Carga la imagen por defecto desde el classpath
+                try {
+                    ClassPathResource imgFile = new ClassPathResource("static/assets/img/default.jpg");
+                    byte[] defaultImage = Files.readAllBytes(imgFile.getFile().toPath());
+                    return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(defaultImage);
+                } catch (IOException e) {
+                    // Manejo de errores al cargar la imagen
+                    return ResponseEntity.internalServerError().build();
+                }
+            }
+        }
+
+        System.out.println("No se encontró producto con ID: " + id); // Agrega este log
+        return ResponseEntity.notFound().build();
+    }
 
 }
 

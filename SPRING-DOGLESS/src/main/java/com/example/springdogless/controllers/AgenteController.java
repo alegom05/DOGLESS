@@ -4,13 +4,14 @@ import com.example.springdogless.Repository.*;
 
 import com.example.springdogless.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Optional;
+import java.time.LocalDate;
+import java.util.Date;
+import java.util.List;
 
 @Controller
 @RequestMapping({"agente", "agente/"})
@@ -46,42 +47,27 @@ public class AgenteController {
     OrdenRepository ordenRepository;
     @Autowired
     DetallesordenRepository detallesordenRepository;
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
 
 
     @GetMapping({""})
     public String PaginaPrincipal(Model model) {
 
-        return "/agente/paginaprincipal";
+        return "agente/paginaprincipal";
     }
 
     @GetMapping({"dashboard"})
     public String ElDashboard007(Model model) {
         return "/agente/dashboard";
     }
+    @GetMapping("chat")
+    public String Chat(Model model) {
+        return "/agente/chat";
+    }
 
     @GetMapping(value = "ordenes")
     public String listaReposiciones(Model model) {
         model.addAttribute("listaOrdenes", ordenRepository.findByBorrado(1));
-        return "/agente/ordenes";
-    }
-
-    @GetMapping("/detallesorden")
-    public String verDetallesOrden(Model model, @RequestParam("id") int id) {
-
-        Optional<Orden> optOrden = ordenRepository.findById(id);
-        Optional<Orden> optOrden2 = ordenRepository.findByIdWithDetails(id);
-
-        if (optOrden.isPresent() && optOrden2.isPresent()) {
-            Orden orden = optOrden.get();
-            Orden orden2 = optOrden2.get();
-            model.addAttribute("orden", orden);
-            model.addAttribute("ordenDetalles", orden2); // Diferente nombre
-            return "agente/detalledeordenagente";
-        } else {
-            return "redirect:/agente/ordenes";
-        }
+        return "agente/ordenes";
     }
     @GetMapping( "/updaterorden")
     public String VistaEstadoOrden(Model model, @RequestParam("id") int id) {
@@ -94,6 +80,7 @@ public class AgenteController {
             return "redirect:/agente/ordenes";
         }
     }
+
     @PostMapping("/actualizarEstado")
     public String avanzarEstado(@RequestParam(value = "id", required = false) Integer id) {
         Orden orden = ordenRepository.findById(id).orElse(null);
@@ -126,6 +113,10 @@ public class AgenteController {
                 default:
                     return "redirect:/agente/updaterorden?id=" + id; // Retorna a la misma vista
             }
+            // Obtener la fecha actual y actualizar el campo de fecha en la orden
+            Date fechaActualUtil = new Date();
+            java.sql.Date fechaActualSql = new java.sql.Date(fechaActualUtil.getTime());
+            orden.setFecha(fechaActualSql); // Asegúrate de que este campo exista en la entidad Orden
 
             ordenRepository.save(orden);
             return "redirect:/agente/updaterorden?id=" + id; // Redirige de vuelta a la vista de la orden
@@ -133,44 +124,161 @@ public class AgenteController {
         return "redirect:/agente/ordenes"; // Redirige si no se encuentra la orden
     }
 
+    @PostMapping("/cancelarorden")
+    public String cancelarOrden(@RequestParam(value = "id", required = false) Integer id) {
+        Orden orden = ordenRepository.findById(id).orElse(null);
+        if (orden != null) {
+            // Lógica para avanzar el estado
+            orden.setEstado("Cancelado");
+            // Obtener la fecha actual y actualizar el campo de fecha en la orden
+            Date fechaActualUtil = new Date();
+            java.sql.Date fechaActualSql = new java.sql.Date(fechaActualUtil.getTime());
+            orden.setFecha(fechaActualSql); // Asegúrate de que este campo exista en la entidad Orden
 
-    @GetMapping(value = "usuariosAsignados")
-    public String usuariosAsignados(Model model) {
-        model.addAttribute("listaOrdenes", ordenRepository.findAll());
+            ordenRepository.save(orden);
+            return "redirect:/agente/updaterorden?id=" + id; // Redirige de vuelta a la vista de la orden
+        }
+        return "redirect:/agente/ordenes"; // Redirige si no se encuentra la orden
+    }
+    @GetMapping("/detallesorden")
+    public String verDetallesOrden(Model model, @RequestParam("id") int id) {
 
-        model.addAttribute("listaAsignados", usuarioRepository.findByRol_RolAndBorrado("Usuario",1));
+        Optional<Orden> optOrden = ordenRepository.findById(id);
+        Optional<Orden> optOrden2 = ordenRepository.findByIdWithDetails(id);
 
-        return "/agente/usuariosAsignados";
+        if (optOrden.isPresent() && optOrden2.isPresent()) {
+            Orden orden = optOrden.get();
+            Orden orden2 = optOrden2.get();
+            model.addAttribute("orden", orden);
+            model.addAttribute("ordenDetalles", orden2); // Diferente nombre
+            return "agente/detalledeordenagente";
+        } else {
+            return "redirect:/admin/ordenes";
+        }
     }
 
-    @GetMapping(value = "usuariosBaneados")
+    @GetMapping("/{id}")
+    public String getOrdenProductos(@PathVariable("id") int id, Model model) {
+        Optional<Orden> ordenOptional = ordenRepository.findByIdWithDetails(id);
+        if (ordenOptional.isPresent()) {
+            model.addAttribute("orden", ordenOptional.get());
+            return "detalle_orden"; // la vista que mostrará los productos
+        } else {
+            return "error"; // en caso de que no exista la orden
+        }
+    }
+
+    @GetMapping("/usuariosAsignados")
+    public String usuariosAsignados(Model model) {
+        // Lista de órdenes (sin cambios)
+        model.addAttribute("listaOrdenes", ordenRepository.findAll());
+
+        // Obtener usuarios activos (sin filtro de rol)
+        model.addAttribute("listaAsignados", usuarioRepository.findActivos());
+
+        // Redirigir a la vista
+        return "agente/usuariosAsignados";
+    }
+
+    @GetMapping(value = "/usuariosBaneados")
     public String usuariosBaneados(Model model) {
         model.addAttribute("listaOrdenes", ordenRepository.findAll());
 
         model.addAttribute("listaBaneados", usuarioRepository.findByRol_RolAndBorrado("Usuario",1));
 
-        return "/agente/usuariosBaneados";
+        return "agente/usuariosBaneados";
     }
 
-    @GetMapping(value = "reportesOrdenes")
+    @GetMapping(value = "/reportesOrdenes")
     public String reportesOrdenes(Model model) {
         model.addAttribute("listaOrdenes", ordenRepository.findAll());
 
         model.addAttribute("listaBaneados", usuarioRepository.findByRol_RolAndBorrado("Usuario",1));
 
-        return "/agente/reportesOrdenes";
+        return "agente/reportesOrdenes";
     }
 
     //Lista de órdenes por usuario
-    @GetMapping(value = "reportePorUsuario")
+    @GetMapping(value = "/reportePorUsuario")
     public String ordenesPorUsuario(Model model) {
         model.addAttribute("listaOrdenes", ordenRepository.findAll());
 
         model.addAttribute("listaUsuarios", usuarioRepository.findByRol_RolAndBorrado("Usuario",1));
 
-        return "/agente/reportePorUsuario";
+        return "agente/reportePorUsuario";
     }
 
+    // Metodo para redirigir al formulario de baneo
+    @GetMapping("/formulariodebaneo")
+    public String mostrarFormularioBaneo(Model model, @RequestParam("id") int id) {
+        Optional<Usuario> optUsuario = usuarioRepository.findById(id);
+        if (optUsuario.isPresent()) {
+            Usuario usuario = optUsuario.get();
+            model.addAttribute("usuario", usuario);
+            return "agente/formdebaneo";  // Renderiza el formulario correctamente
+        } else {
+            return "redirect:/agente/usuariosAsignados";  // Redirige si el usuario no se encuentra
+        }
+    }
+
+    // Metodo para banear a un usuario (luego de presionar el botón banear en el formulario)
+
+
+    // Metodo para desbanear a un usuario
+    @PostMapping("/banear")
+    public String banearUsuario(Model model, @RequestParam("id") int id, @RequestParam("motivoBaneo") String motivoBaneo) {
+
+        // Buscar el usuario por su ID
+        Optional<Usuario> optUsuario = usuarioRepository.findById(id);
+
+        // Verificar si el usuario existe
+        if (optUsuario.isPresent()) {
+            Usuario usuario = optUsuario.get();
+
+            // Verificar si el usuario ya está baneado
+            if (!usuario.getEstado().equals("baneado")) {
+                usuario.setEstado("baneado");  // Cambiar el estado a 'baneado'
+                usuario.setFechabaneo(new java.sql.Date(new Date().getTime()));  // Registrar la fecha de baneo
+                usuario.setMotivobaneo(motivoBaneo);  // Registrar el motivo de baneo
+                usuarioRepository.save(usuario);  // Guardar los cambios en la base de datos
+
+                // Redirigir a la lista de usuarios después de banear
+                return "redirect:/agente/usuariosAsignados";
+            } else {
+                model.addAttribute("error", "El usuario ya está baneado.");
+                return "agente/formdebaneo";
+            }
+        } else {
+            model.addAttribute("error", "Usuario no encontrado.");
+            return "agente/formdebaneo";
+        }
+    }
+
+
+    // Metodo para obtener la lista de usuarios baneados
+    @GetMapping("/baneados")
+    public List<Usuario> obtenerUsuariosBaneados() {
+        return usuarioRepository.findBaneados();  // Devuelve la lista de usuarios baneados
+    }
+
+    // Metodo para obtener la lista de usuarios activos
+    @GetMapping("/activos")
+    public List<Usuario> obtenerUsuariosActivos() {
+        return usuarioRepository.findActivos();  // Devuelve la lista de usuarios activos
+    }
+
+    @GetMapping("/verDetallesUsuario")
+    public String verDetallesUsuario(Model model, @RequestParam("id") int id) {
+        // Obtiene el usuario por ID
+        Optional<Usuario> optionalUsuario = usuarioRepository.findById(id);
+
+        // Verifica si el usuario existe
+        if (optionalUsuario.isPresent()) {
+            // Agrega el usuario al modelo
+            model.addAttribute("usuario", optionalUsuario.get());
+        }
+        return "agente/detallesperfil"; // Retorna el nombre de la vista
+    }
 
 
     /*

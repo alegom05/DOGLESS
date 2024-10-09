@@ -74,7 +74,7 @@
 </head>
   <div class="wrapper">
     <!-- Reemplaza barra lateral con el fragmento de Thymeleaf -->
-    <div th:replace="~{agente/fragments/barralateralagente :: body(activePage='usuarios', activeSubPage='adminzonal')}"></div>
+    <div th:replace="~{agente/fragments/barralateralagente :: body(activePage='usuarios', activeSubPage='baneados')}"></div>
     <!-- Fin barra lateral -->
 
 
@@ -173,86 +173,7 @@
                                 </div>
                               </td>
                             </tr>
-                            <tr class="text-center">
-                              <td>2</td>
-                              <td>87654321</td>
-                              <td>3</td>
-                              <td>María Rojas</td>
-                              <td>2024-08-30</td>
-                              <td><span class="badge badge-success">Uso inadecuado de la plataforma</span></td>
-                              <td>
-                                <div class="dropdown">
-                                  <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fas fa-ellipsis-v"></i>
-                                  </button>
-                                  <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2">
-                                    <li><a class="dropdown-item" href="#">Ver detalles del perfil</a></li>
-                                    <li><a class="dropdown-item" href="detallebaneo.html">Ver detalles de baneo</a></li>
-                                    <li><a class="dropdown-item" href="#">Desbanear usuario</a></li>
-                                  </ul>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr class="text-center">
-                              <td>3</td>
-                              <td>56789012</td>
-                              <td>8</td>
-                              <td>Carlos Fernández</td>
-                              <td>2024-08-28</td>
-                              <td><span class="badge badge-warning">Comportamiento ofensivo</span></td>
-                              <td>
-                                <div class="dropdown">
-                                  <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton3" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fas fa-ellipsis-v"></i>
-                                  </button>
-                                  <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton3">
-                                    <li><a class="dropdown-item" href="#">Ver detalles del perfil</a></li>
-                                    <li><a class="dropdown-item" href="detallebaneo.html">Ver detalles de baneo</a></li>
-                                    <li><a class="dropdown-item" href="#">Desbanear usuario</a></li>
-                                  </ul>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr class="text-center">
-                              <td>4</td>
-                              <td>65432109</td>
-                              <td>2</td>
-                              <td>Lucía Ramírez</td>
-                              <td>2024-08-27</td>
-                              <td><span class="badge badge-success">Uso inadecuado de la plataforma</span></td>
-                              <td>
-                                <div class="dropdown">
-                                  <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton4" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fas fa-ellipsis-v"></i>
-                                  </button>
-                                  <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton4">
-                                    <li><a class="dropdown-item" href="#">Ver detalles del perfil</a></li>
-                                    <li><a class="dropdown-item" href="detallebaneo.html">Ver detalles de baneo</a></li>
-                                    <li><a class="dropdown-item" href="#">Desbanear usuario</a></li>
-                                  </ul>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr class="text-center">
-                              <td>5</td>
-                              <td>09876543</td>
-                              <td>6</td>
-                              <td>Jorge Vargas</td>
-                              <td>2024-08-25</td>
-                              <td><span class="badge badge-warning">Suplantación de identidad</span></td>
-                              <td>
-                                <div class="dropdown">
-                                  <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton5" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fas fa-ellipsis-v"></i>
-                                  </button>
-                                  <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton5">
-                                    <li><a class="dropdown-item" href="#">Ver detalles del perfil</a></li>
-                                    <li><a class="dropdown-item" href="detallebaneo.html">Ver detalles de baneo</a></li>
-                                    <li><a class="dropdown-item" href="#">Desbanear usuario</a></li>
-                                  </ul>
-                                </div>
-                              </td>
-                            </tr>
+
                           </tbody>
                         </table>
                       </div>
@@ -267,43 +188,29 @@
 
 
         <!-- Pie de página -->
-        <footer class="footer">
-          <div class="container-fluid d-flex justify-content-center">
-            <nav class="pull-left">
-              <ul class="nav">
-              
-                <li class="nav-item">
-                  <a class="nav-link" href="ruta/a/informacion-de-contacto.html"> Contacto </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="ruta/a/politica-de-privacidad.html"> Política de privacidad </a>
-                </li>
-              </ul>
-            </nav>
-
-          </div>
-        </footer>
+      <!-- Pie de página -->
+      <div th:replace="~{agente/fragments/piedepagina :: fragment}"></div>
       </div>
     </div>
 
 
 
     <!--Core JS Files   -->
-    <script src="assets/js/core/jquery-3.7.1.min.js"></script>
-    <script src="assets/js/core/popper.min.js"></script>
-    <script src="assets/js/core/bootstrap.min.js"></script>
+    <script src="/assets/js/core/jquery-3.7.1.min.js"></script>
+    <script src="/assets/js/core/popper.min.js"></script>
+    <script src="/assets/js/core/bootstrap.min.js"></script>
 
     <!-- jQuery Scrollbar -->
-    <script src="assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+    <script src="/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
     <!-- Datatables -->
-    <script src="assets/js/plugin/datatables/datatables.min.js"></script>
+    <script src="/assets/js/plugin/datatables/datatables.min.js"></script>
 
     <!-- jQuery Vector Maps -->
-    <script src="assets/js/plugin/jsvectormap/jsvectormap.min.js"></script>
-    <script src="assets/js/plugin/jsvectormap/world.js"></script>
+    <script src="/assets/js/plugin/jsvectormap/jsvectormap.min.js"></script>
+    <script src="/assets/js/plugin/jsvectormap/world.js"></script>
 
     <!-- Kaiadmin JS -->
-    <script src="assets/js/kaiadmin.min.js"></script>
+    <script src="/assets/js/kaiadmin.min.js"></script>
     <script>
       $(document).ready(function() {
         // Initialize DataTable

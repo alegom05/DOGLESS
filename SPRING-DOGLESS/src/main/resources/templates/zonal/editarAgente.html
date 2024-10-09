@@ -95,7 +95,7 @@
               <div class="col-md-12">
                 <div class="card">
                   <div class="card-body">
-                    <form class="needs-validation" style="width: 100%; margin-left: 0%; margin-top: 3%;" th:action="@{'/admin/saveagente'}" method="POST" novalidate>
+                    <form class="needs-validation" style="width: 100%; margin-left: 0%; margin-top: 3%;" th:action="@{'/zonal/saveagente'}" method="POST" novalidate>
                       <input  name="id"  th:value="${usuario.id}" type="hidden"/>
                       <div class="container">
                         <div class="row">
@@ -135,8 +135,8 @@
                         <div class="row">
                           <div class="col">
                             <div class="mb-3">
-                              <label for="correo" class="form-label">Correo:</label>
-                              <input type="email" name="correo" id="correo" class="form-control" th:value="${usuario.correo}" placeholder="Ej: pedro.bustamante@gmail.com">
+                              <label for="email" class="form-label">Correo:</label>
+                              <input type="email" name="email" id="email" class="form-control" th:value="${usuario.email}" placeholder="Ej: pedro.bustamante@gmail.com">
                               <div class="invalid-feedback">Por favor ingresar un correo válido.</div>
                             </div>
                           </div>
@@ -145,7 +145,8 @@
                               <label for="zona" class="form-label">Zona:</label>
                               <select name="zona" id="zona" class="form-control">
                                 <option th:each="zonas: ${listaZonas}"
-                                        th:text="${zonas.nombre}" th:value="${zonas.idzonas}">Elegir una zona</option>
+                                        th:text="${zonas.nombre}" th:value="${zonas.idzonas}"
+                                        th:selected="${usuario.zona.idzonas == zonas.idzonas}">Elegir una zona</option>
                               </select>
                               <div class="invalid-feedback">Por favor seleccionar una zona.</div>
                             </div>
@@ -165,7 +166,8 @@
                               <label for="distrito" class="form-label">Distrito: (*)</label>
                               <select name="distrito" id="distrito" class="form-control">
                                 <option th:each="distrito: ${listaDistritos}"
-                                        th:text="${distrito.distrito}" th:value="${distrito.iddistritos}">Elegir un distrito</option>
+                                        th:text="${distrito.distrito}" th:value="${distrito.iddistritos}"
+                                        th:selected="${usuario.distrito.iddistritos == distrito.iddistritos}">Elegir un distrito</option>
                               </select>
                               <div class="invalid-feedback">Por favor selecciona un distrito.</div>
                             </div>
@@ -207,7 +209,7 @@
                           <div class="col text-center"> <!-- Añadido text-center para centrar el contenido -->
                             <div class="button-group d-flex justify-content-center"> <!-- Clases de Bootstrap -->
                               <button class="btn btn-primary btn-lg" type="submit">Guardar cambios</button>
-                              <a href="/admin/agentes" class="btn btn-secondary ms-2 btn-lg">Regresar</a> <!-- ms-2 para margen a la izquierda -->
+                              <a href="zonal/agentes" class="btn btn-secondary ms-2 btn-lg">Regresar</a> <!-- ms-2 para margen a la izquierda -->
                             </div>
                           </div>
                         </div>
@@ -311,7 +313,7 @@
           }
         });
         document.addEventListener("input", function(event) {
-          if (event.target && event.target.id === "correo") {
+          if (event.target && event.target.id === "email") {
             let pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Patrón de correo
             if (!pattern.test(event.target.value)) {
               event.target.setCustomValidity("Por favor, ingrese un correo válido.");

@@ -106,106 +106,48 @@
                         <thead>
                           <tr class="text-center">
                             <th>#</th>
+                            <th>Nombre del Usuario</th>
                             <th>DNI</th>
                             <th>Cantidad de órdenes</th>
-                            <th>Nombre del Usuario</th>
                             <th>Fecha de asignación</th>
                             <th>Acciones</th>
                           </tr>
                         </thead>
                         <tbody class="text-center">
-                        <tr th:each="orden : ${listaOrdenes}">
-                            <td th:text="${orden.id}"></td>
-                            <td th:text="${orden.id}"></td>
-                            <td th:text="${orden.usuario.dni}"></td>
-                            <td th:text="${orden.usuario.nombre + ' ' + orden.usuario.apellido}"></td>
-                            <td th:text="${orden.fecha}"></td>
+                          <tr th:each="orden, iterStat : ${listaOrdenes}">
+                            <td th:text="${iterStat.index + 1}"></td> <!-- Número de fila -->
+                            <td th:text="${orden.usuario.nombre + ' ' + orden.usuario.apellido}"></td> <!-- Nombre y apellido del usuario -->
+                            <td th:text="${orden.usuario.dni}"></td> <!-- DNI del usuario -->
+                            <td th:text="${orden.id}"></td> <!-- ID de la orden (si necesitas cambiarlo, ajusta aquí) -->
+                            <td th:text="${orden.fecha}"></td> <!-- Fecha de asignación -->
                             <td>
                               <div class="dropdown">
                                 <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                   <i class="fas fa-ellipsis-v"></i>
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
-                                  <li><a class="dropdown-item" href="#">Ver detalles del perfil</a></li>
-                                  <li><a class="dropdown-item" href="formdebaneo.html">Banear usuario</a></li>
-                                </ul>
-                              </div>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>2</td>
-                            <td>87654321</td>
-                            <td>3</td>
-                            <td>María Rojas</td>
-                            <td>2024-08-30</td>
-                            <td>
-                              <div class="dropdown">
-                                <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
-                                  <i class="fas fa-ellipsis-v"></i>
-                                </button>
-                                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2">
-                                  <li><a class="dropdown-item" href="#">Ver detalles del perfil</a></li>
-                                  <li><a class="dropdown-item" href="formdebaneo.html">Banear usuario</a></li>
-                                </ul>
-                              </div>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>3</td>
-                            <td>56789012</td>
-                            <td>8</td>
-                            <td>Carlos Fernández</td>
-                            <td>2024-08-28</td>
-                            <td>
-                              <div class="dropdown">
-                                <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton3" data-bs-toggle="dropdown" aria-expanded="false">
-                                  <i class="fas fa-ellipsis-v"></i>
-                                </button>
-                                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton3">
-                                  <li><a class="dropdown-item" href="#">Ver detalles del perfil</a></li>
-                                  <li><a class="dropdown-item" href="formdebaneo.html">Banear usuario</a></li>
-                                </ul>
-                              </div>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>4</td>
-                            <td>65432109</td>
-                            <td>2</td>
-                            <td>Lucía Ramírez</td>
-                            <td>2024-08-27</td>
-                            <td>
-                              <div class="dropdown">
-                                <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton4" data-bs-toggle="dropdown" aria-expanded="false">
-                                  <i class="fas fa-ellipsis-v"></i>
-                                </button>
-                                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton4">
-                                  <li><a class="dropdown-item" href="#">Ver detalles del perfil</a></li>
-                                  <li><a class="dropdown-item" href="formdebaneo.html">Banear usuario</a></li>
-                                </ul>
-                              </div>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>5</td>
-                            <td>09876543</td>
-                            <td>6</td>
-                            <td>Jorge Vargas</td>
-                            <td>2024-08-25</td>
-                            <td>
-                              <div class="dropdown">
-                                <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton5" data-bs-toggle="dropdown" aria-expanded="false">
-                                  <i class="fas fa-ellipsis-v"></i>
-                                </button>
-                                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton5">
-                                  <li><a class="dropdown-item" href="#">Ver detalles del perfil</a></li>
-                                  <li><a class="dropdown-item" href="formdebaneo.html">Banear usuario</a></li>
+                                  <!-- Enlace para ver detalles del perfil del usuario, pasando el ID del usuario -->
+                                  <li>
+                                    <a class="dropdown-item" th:href="@{/agente/verDetallesUsuario(id=${orden.usuario.id})}">
+
+                                    Ver detalles del perfil
+                                    </a>
+                                  </li>
+
+                                  <!-- Enlace para redirigir al formulario de baneo, pasando el ID del usuario -->
+                                  <li>
+                                    <a class="dropdown-item"
+                                       th:href="@{'/agente/formulariodebaneo' + '?id=' + ${orden.usuario.id}}">
+                                      Banear usuario
+                                    </a>
+                                  </li>
                                 </ul>
                               </div>
                             </td>
                           </tr>
                         </tbody>
                       </table>
+
                     </div>
                   </div>
                 </div>
@@ -218,43 +160,29 @@
 
 
         <!-- Pie de página -->
-        <footer class="footer">
-          <div class="container-fluid d-flex justify-content-center">
-            <nav class="pull-left">
-              <ul class="nav">
-              
-                <li class="nav-item">
-                  <a class="nav-link" href="ruta/a/informacion-de-contacto.html"> Contacto </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="ruta/a/politica-de-privacidad.html"> Política de privacidad </a>
-                </li>
-              </ul>
-            </nav>
-
-          </div>
-        </footer>
+      <!-- Pie de página -->
+      <div th:replace="~{agente/fragments/piedepagina :: fragment}"></div>
       </div>
     </div>
 
 
 
     <!--Core JS Files   -->
-    <script src="assets/js/core/jquery-3.7.1.min.js"></script>
-    <script src="assets/js/core/popper.min.js"></script>
-    <script src="assets/js/core/bootstrap.min.js"></script>
+    <script src="/assets/js/core/jquery-3.7.1.min.js"></script>
+    <script src="/assets/js/core/popper.min.js"></script>
+    <script src="/assets/js/core/bootstrap.min.js"></script>
 
     <!-- jQuery Scrollbar -->
-    <script src="assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+    <script src="/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
     <!-- Datatables -->
-    <script src="assets/js/plugin/datatables/datatables.min.js"></script>
+    <script src="/assets/js/plugin/datatables/datatables.min.js"></script>
 
     <!-- jQuery Vector Maps -->
-    <script src="assets/js/plugin/jsvectormap/jsvectormap.min.js"></script>
-    <script src="assets/js/plugin/jsvectormap/world.js"></script>
+    <script src="/assets/js/plugin/jsvectormap/jsvectormap.min.js"></script>
+    <script src="/assets/js/plugin/jsvectormap/world.js"></script>
 
     <!-- Kaiadmin JS -->
-    <script src="assets/js/kaiadmin.min.js"></script>
+    <script src="/assets/js/kaiadmin.min.js"></script>
     <script>
       $(document).ready(function() {
         // Initialize DataTable

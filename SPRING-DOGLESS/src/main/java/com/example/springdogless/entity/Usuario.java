@@ -19,10 +19,11 @@ public class Usuario {
     private String nombre;
     private String apellido;
     private String dni;
-    private String correo;
+    private String email;
     private String telefono;
     private String direccion;
-    private String contrasena;
+
+    private String pwd;
     private Integer borrado;
     private Date fechabaneo;
     private String motivobaneo;
@@ -47,4 +48,9 @@ public class Usuario {
     @JoinColumn(name = "idzonas")
     private Zona zona;
     private String fechanacimiento;
+
+    @Lob
+    @Column(name = "fotoperfil", columnDefinition = "BLOB")
+    private byte[] fotoperfil;  // Cambiado a byte[] para el campo BLOB
+
 }

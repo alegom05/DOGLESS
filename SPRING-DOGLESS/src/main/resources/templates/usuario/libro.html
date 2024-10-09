@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Libro de reclamaciones</title>
+    <meta
+      content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
+      name="viewport"
+    />
+    <link
+      rel="icon"
+      href="../assets/img/kaiadmin/favicon.ico"
+      type="image/x-icon"
+    />
+    <link href="../assets/css/style-SuperAdmin.css" rel="stylesheet">
+
+    <!-- Fonts and icons -->
+    <script src="../assets/js/plugin/webfont/webfont.min.js"></script>
+    <script>
+      WebFont.load({
+        google: { families: ["Public Sans:300,400,500,600,700"] },
+        custom: {
+          families: [
+            "Font Awesome 5 Solid",
+            "Font Awesome 5 Regular",
+            "Font Awesome 5 Brands",
+            "simple-line-icons",
+          ],
+          urls: ["../assets/css/fonts.min.css"],
+        },
+        active: function () {
+          sessionStorage.fonts = true;
+        },
+      });
+    </script>
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../assets/css/plugins.min.css" />
+    <link rel="stylesheet" href="../assets/css/kaiadmin.min.css" />
+
+    <!-- CSS Just for demo purpose, don't include it in your project -->
+    <link rel="stylesheet" href="../assets/css/demo.css" />
+  </head>
+  <body>
+    <div class="wrapper">
+      <!-- Sidebar -->
+      <div th:replace="~{usuario/fragments/barralateralusuario :: body(activePage='libro')}"></div>
+      <!-- End Sidebar -->
+
+      <div class="main-panel">
+        <div th:replace="~{usuario/fragments/navbarheaderusuario :: fragment}"></div>
+
+        <!-- Texto o contenido central -->
+        <div class="container">
+          <div class="page-inner">
+            <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
+              <div>
+                <h3 class="fw-bold mb-3">Agregar Agente</h3>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="card">
+
+                  <div class="card-body">
+                    <form class="needs-validation" style="width: 100%; margin-left: 0%; margin-top: 3%;" th:action="@{/zonal/guardar}" method="POST" novalidate>
+                      <div class="container">
+                        <div class="row">
+
+                          <div class="col">
+                            <div class="mb-3">
+                              <label for="nombre" class="form-label">Nombre (*)</label>
+                              <input type="text" class="form-control" name="nombre" id="nombre" maxlength="8" minlength="8" placeholder="Ej: 87654321" pattern="[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]" title="ingrese su DNI" required>
+                              <div class="invalid-feedback">Ingrese su nombre</div>
+                            </div>
+                          </div>
+
+                          <div class="col">
+                            <div class="mb-3">
+                              <label for="apellido" class="form-label">Apellido (*)</label>
+                              <input type="text" class="form-control" name="apellido" id="apellido" maxlength="9" minlength="9" placeholder="Ej: 987654321" pattern="[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]" title="ingrese su número de teléfono" required>
+                              <div class="invalid-feedback">Ingrese su apellido.</div>
+                            </div>
+                          </div>
+
+                          <div class="row">
+                            <div class="col">
+                              <div class="mb-3">
+                                <label for="dni" class="form-label">DNI: (*)</label>
+                                <input type="text" class="form-control" name="dni" id="dni" maxlength="9" minlength="9" placeholder="Ej: 987654321" pattern="[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]" title="ingrese su número de teléfono" required>
+                                <div class="invalid-feedback">Por favor ingresar nombre(s).</div>
+                              </div>
+                            </div>
+
+                            <div class="col">
+                              <div class="mb-3">
+                                <label for="correo" class="form-label">Correo: (*)</label>
+                                <input type="correo" class="form-control" name="correo" id="correo" maxlength="9" minlength="9" placeholder="Ej: 987654321" pattern="[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]" title="ingrese su número de teléfono" required>
+                                <div class="invalid-feedback">Por favor ingresar apellido(s).</div>
+                              </div>
+                            </div>
+                          </div>
+                        <!--
+                        <div class="row">
+                          <div class="col">
+                            <div class="mb-3">
+                              <label for="correo" class="form-label">Correo: (*)</label>
+                              <input type="email" name="correo" id="correo" placeholder="Ej: ejemplo@gmail.com" class="form-control" aria-describedby="emailHelp" required>
+                              <div class="invalid-feedback">Por favor ingresar un correo válido.</div>
+                            </div>
+                          </div>
+                          <div class="col">
+                            <div class="mb-3">
+                              <label for="codigoaduana" class="form-label">Codigo aduana: (*)</label>
+                              <input type="text" name="codigoaduana" id="codigoaduana" placeholder="ADU006" class="form-control" required>
+                              <div class="invalid-feedback">Por favor ingresar el código de despachador de aduana.</div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="row">
+                          <div class="col">
+                            <div class="mb-3">
+                              <label for="ruc" class="form-label">RUC: (*)</label>
+                              <input type="tel" name="ruc" id="ruc" placeholder="10987654325" class="form-control" required>
+                              <div class="invalid-feedback">Por favor ingresar RUC.</div>
+                            </div>
+                          </div>
+                          <div class="col">
+                            <div class="mb-3">
+                              <label for="razonsocial" class="form-label">Razón social: (*)</label>
+                              <input type="text" name="razonsocial" id="razonsocial" placeholder="Agente Norte" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ]+(\s[a-zA-ZáéíóúÁÉÍÓÚñÑ]+)?" class="form-control" required>
+                              <div class="invalid-feedback">Por favor ingresar razón social.</div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="row">
+                          <div class="col">
+                            <div class="mb-3">
+                              <label for="codigojurisdiccion" class="form-label">Código de Jurisdicción: (*)</label>
+                              <input type="tel" name="codigojurisdiccion" id="codigojurisdiccion" placeholder="10987654325" class="form-control" required>
+                              <div class="invalid-feedback">Por favor ingresar código de jurisdicción.</div>
+                            </div>
+                          </div>
+                          <div class="col">
+                            <div class="mb-3">
+                              <label for="direccion" class="form-label">Dirección: (*)</label>
+                              <input type="text" name="direccion" id="direccion" placeholder="Calle Norte 123" pattern="[a-zA-Z0-9#áéíóúÁÉÍÓÚñÑ.]+\s[a-zA-Z0-9#ZáéíóúÁÉÍÓÚñÑ.]+(\s[a-zA-Z0-9#ZáéíóúÁÉÍÓÚñÑ.]+)?+(\s[a-zA-Z0-9#ZáéíóúÁÉÍÓÚñÑ.]+)?" class="form-control" required>
+                              <div class="invalid-feedback">Por favor ingresar dirección.</div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="row">
+                          <div class="col">
+                            <div class="mb-3">
+                              <label for="idzonas" class="form-label">Zona: (*)</label>
+                              <select name="idzonas" id="idzonas" class="form-select" required>
+                                <option value="" disabled selected>Escoja una opción</option>
+                                <option th:each="zonas: ${listaZonas}"
+                                        th:text="${zonas.nombre}" th:value="${zonas.idzonas}">Elegir una zona</option>
+                              </select>
+                              <div class="invalid-feedback">Por favor seleccionar una zona.</div>
+                            </div>
+                          </div>
+                          <div class="col">
+                            <div class="mb-3">
+                              <label for="iddistritos" class="form-label">Distrito: (*)</label>
+                              <select name="iddistritos" id="iddistritos" class="form-select" required>
+                                <option value="" disabled selected>Escoja una opción</option>
+                                <option th:each="distrito: ${listaDistritos}"
+                                        th:text="${distrito.distrito}" th:value="${distrito.iddistritos}">Elegir un distrito</option>
+                              </select>
+                              <div class="invalid-feedback">Por favor selecciona un distrito.</div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="row">
+                          <div class="col">
+                            <div class="mb-3">
+                            </div>
+                          </div>
+                          <div class="col">
+                            <div class="mb-3">
+                              <h6 class="obligatory-fields">(*) Campos obligatorios</h6>
+                            </div>
+                          </div>
+                        </div>
+                        -->
+
+                        <!-- Botón para guardar cambios -->
+                          <div style="text-align: center;">
+                            <button type="submit" class="btn btn-primary" style="width: 280px;">
+                              Enviar
+                            </button>
+                          </div>
+
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        <!-- Fin del contenido central -->
+          
+          <!--/ Advanced footer -->
+        </div>
+
+     
+        
+        
+        <footer class="footer">
+          <div>
+            <div class="row align-items-center">
+              <div class="col-md-4">
+                <h2>DOGLESS</h2>
+              </div>
+              <div class="col-md-4 offset-md-4 d-flex justify-content-center">
+                <button type="button" class="btn btn-icon btn-round btn-primary mx-1">
+                  <i class="fab fa-facebook-f"></i>
+                </button>
+                <button type="button" class="btn btn-icon btn-round btn-info mx-1">
+                  <i class="fab fa-twitter"></i>
+                </button>
+                <button type="button" class="btn btn-icon btn-round btn-secondary mx-1">
+                  <i class="fab fa-linkedin-in"></i>
+                </button>
+                <button type="button" class="btn btn-icon btn-round btn-danger mx-1">
+                  <i class="fab fa-youtube"></i>
+                </button>
+                  
+              </div>
+            </div>
+          </div>
+          <hr class="my-2">
+            
+              <div class="row">
+                <div class="col-md-3">
+                  <h5>Sobre nosotros</h5>
+                  <ul class="list-unstyled">
+                    <li><a href="javascript:void(0)" class="footer-link d-block pb-2">Acerca de dogless</a></li>
+                    <li><a href="javascript:void(0)" class="footer-link d-block pb-2">TyC</a></li>
+                    <li><a href="javascript:void(0)" class="footer-link d-block pb-2">Numero de RUC</a></li>
+                    <li><a href="javascript:void(0)" class="footer-link d-block pb-2">licenciamiento</a></li>
+                  </ul>
+                </div>
+                <div class="col-md-3">
+                  <h5>Cuenta</h5>
+                  <ul class="list-unstyled">
+                    <li><a href="javascript:void(0)" class="footer-link d-block pb-2">Crear cuenta</a></li>
+                    <li><a href="javascript:void(0)" class="footer-link d-block pb-2">Pago</a></li>
+                    <li><a href="javascript:void(0)" class="footer-link d-block pb-2">Envio</a></li>
+                    <li><a href="javascript:void(0)" class="footer-link d-block pb-2">Soporte</a></li>
+                  </ul>
+                </div>
+                <div class="col-md-3">
+                  <h5>Guia de compra</h5>
+                  <ul class="list-unstyled">
+                    <li><a href="javascript:void(0)" class="footer-link d-block pb-2">Mi cuenta</a></li>
+                    <li><a href="javascript:void(0)" class="footer-link d-block pb-2">Mis pedidos</a></li>
+                    <li><a href="javascript:void(0)" class="footer-link d-block pb-2">Favoritos</a></li>
+                    <li><a href="javascript:void(0)" class="footer-link d-block pb-2">Devoluciones</a></li>
+                  </ul>
+                </div>
+                <div class="col-md-3">
+                  <h5>Métodos de pago</h5>
+                  <div class="payment-methods">
+                    <img src="../assets/img/logo-visa.png" alt="Visa" class="img-fluid w-25 mx-2">
+                    <img src="../assets/img/logo-mastercard.png" alt="Mastercard" class="img-fluid w-25 mx-2">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <h7>@2024-2090 Dogless.com, todos los derechos reservados</h7>
+              </div>
+            
+          </footer>
+        </section>
+
+        
+      </div>
+
+      
+      
+    </div>
+    <!--   Core JS Files   -->
+    <script src="../assets/js/core/jquery-3.7.1.min.js"></script>
+    <script src="../assets/js/core/popper.min.js"></script>
+    <script src="../assets/js/core/bootstrap.min.js"></script>
+
+    <!-- jQuery Scrollbar -->
+    <script src="../assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+    <!-- Datatables -->
+    <script src="../assets/js/plugin/datatables/datatables.min.js"></script>
+    <!-- Kaiadmin JS -->
+    <script src="../assets/js/kaiadmin.min.js"></script>
+    <!-- Kaiadmin DEMO methods, don't include it in your project! -->
+    <script src="../assets/js/setting-demo2.js"></script>
+    <script>
+      $(document).ready(function () {
+        var forms = document.querySelectorAll('.needs-validation');
+
+        Array.prototype.slice.call(forms).forEach(function (form) {
+          form.addEventListener('submit', function (event) {
+            if (!form.checkValidity()) {
+              event.preventDefault();
+              event.stopPropagation();
+            }
+
+            form.classList.add('was-validated');
+          }, false);
+        });
+        // Validar que solo se ingresen letras en los campos de nombre y apellidos
+        document.addEventListener("input", function(event) {
+          if (event.target && event.target.id === "nombre") {
+            event.target.value = event.target.value.replace(/[^a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ\s]/g, "");
+          } else if (event.target && event.target.id === "apellidos") {
+            event.target.value = event.target.value.replace(/[^a-zA-ZñÑáéíóúÁÉÍÓÚ\s]/g, "");
+          }
+        });
+        // Validar que solo se ingresen letras en los campos de color
+        document.addEventListener("input", function(event) {
+          if (event.target && event.target.id === "color") {
+            event.target.value = event.target.value.replace(/[^a-zA-ZñÑáéíóúÁÉÍÓÚ\s]/g, "");
+          }
+        });
+
+        //Validar que se ingresen letras y números
+        document.addEventListener("input", function(event) {
+          if (event.target && event.target.id === "modelo") {
+            // Permitir letras, números, espacios y caracteres especiales de acentuación
+            event.target.value = event.target.value.replace(/[^a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ\s]/g, "");
+          }
+        });
+
+
+
+
+        // Validar que solo se ingresen números en el campo de DNI
+        document.addEventListener("input", function(event) {
+          if (event.target && event.target.id === "dni") {
+            let value = event.target.value.replace(/\D/g, ""); // Eliminar caracteres no numéricos
+            if (value.length > 8) {
+              value = value.slice(0, 8); // Limitar a 8 dígitos
+            }
+            event.target.value = value;
+          }
+        });
+
+        // Validar que solo se ingresen números en el campo de RUC
+        document.addEventListener("input", function(event) {
+          if (event.target && event.target.id === "ruc") {
+            let value = event.target.value.replace(/\D/g, ""); // Eliminar caracteres no numéricos
+            if (value.length > 11) {
+              value = value.slice(0, 11); // Limitar a 11 dígitos
+            }
+            event.target.value = value;
+          }
+        });
+        // Validar que solo se ingresen números en el campo de teléfono
+        document.addEventListener("input", function(event) {
+          if (event.target && event.target.id === "telefono") {
+            let value = event.target.value.replace(/\D/g, ""); // Eliminar caracteres no numéricos
+            if (value.length > 9) {
+              value = value.slice(0, 9); // Limitar a 9 dígitos
+            }
+            event.target.value = value;
+          }
+        });
+        document.addEventListener("input", function(event) {
+          if (event.target && event.target.id === "direccion") {
+            let pattern = /^[a-zA-Z0-9#áéíóúÁÉÍÓÚñÑ.]+\s[a-zA-Z0-9#áéíóúÁÉÍÓÚñÑ.]+(\s[a-zA-Z0-9#áéíóúÁÉÍÓÚñÑ.]+)?(\s[a-zA-Z0-9#áéíóúÁÉÍÓÚñÑ.]+)?$/;
+            let value = event.target.value;
+            if (!pattern.test(value)) {
+              event.target.setCustomValidity("La dirección no cumple con el formato requerido.");
+            } else {
+              event.target.setCustomValidity("");
+            }
+          }
+        });
+        document.addEventListener("input", function(event) {
+          if (event.target && event.target.id === "correo") {
+            let pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Patrón de correo
+            if (!pattern.test(event.target.value)) {
+              event.target.setCustomValidity("Por favor, ingrese un correo válido.");
+            } else {
+              event.target.setCustomValidity("");
+            }
+          }
+        });
+
+        document.addEventListener("input", function(event) {
+          if (event.target && event.target.id === "contrasenia") {
+            // Permitir letras, números y caracteres especiales específicos
+            event.target.value = event.target.value.replace(/[^a-zA-Z0-9!@#$%^&*]/g, "");
+          }
+        });
+      });
+    </script>
+    <!-- Script para vista previa de imagen -->
+    <script>
+
+      function previewImage(event) {
+        var input = event.target;
+        var reader = new FileReader();
+        reader.onload = function() {
+          var preview = document.getElementById('imagePreview');
+          preview.src = reader.result;
+          preview.style.display = 'block';
+        }
+        reader.readAsDataURL(input.files[0]);
+      }
+    </script>
+    <script>
+      function handleSubmit(event) {
+          event.preventDefault(); // Evita el envío del formulario
+          // Aquí puedes agregar validaciones o acciones necesarias
+          window.location.href = '../paginaprincipal.html'; // Redirige a la URL deseada
+      }
+  </script>
+
+  </body>
+</html>

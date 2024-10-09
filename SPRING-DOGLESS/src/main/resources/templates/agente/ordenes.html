@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>Agente - Tabla órdenes</title>
     <meta
             content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
@@ -15,45 +15,45 @@
     />
     <link th:href="@{/assets/css/style-SuperAdmin.css}" rel="stylesheet">
 
-  <!-- Fonts and icons -->
-  <script src="/assets/js/plugin/webfont/webfont.min.js"></script>
-  <script>
-    WebFont.load({
-      google: { families: ["Public Sans:300,400,500,600,700"] },
-      custom: {
-        families: [
-          "Font Awesome 5 Solid",
-          "Font Awesome 5 Regular",
-          "Font Awesome 5 Brands",
-          "simple-line-icons",
-        ],
-        urls: ["/assets/css/fonts.min.css"],
-      },
-      active: function () {
-        sessionStorage.fonts = true;
-      },
-    });
-  </script>
+    <!-- Fonts and icons -->
+    <script src="/assets/js/plugin/webfont/webfont.min.js"></script>
+    <script>
+      WebFont.load({
+        google: { families: ["Public Sans:300,400,500,600,700"] },
+        custom: {
+          families: [
+            "Font Awesome 5 Solid",
+            "Font Awesome 5 Regular",
+            "Font Awesome 5 Brands",
+            "simple-line-icons",
+          ],
+          urls: ["/assets/css/fonts.min.css"],
+        },
+        active: function () {
+          sessionStorage.fonts = true;
+        },
+      });
+    </script>
 
-  <!-- CSS Files -->
-  <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
-  <link rel="stylesheet" href="/assets/css/plugins.min.css" />
-  <link rel="stylesheet" href="/assets/css/kaiadmin.min.css" />
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/assets/css/plugins.min.css" />
+    <link rel="stylesheet" href="/assets/css/kaiadmin.min.css" />
 
-    
+
   </head>
   <body>
     <div class="wrapper">
-    <!-- Reemplaza barra lateral con el fragmento de Thymeleaf -->
-    <div th:replace="~{agente/fragments/barralateralagente :: body(activePage='ordenes')}"></div>
-    <!-- Fin barra lateral -->
+      <!-- Reemplaza barra lateral con el fragmento de Thymeleaf -->
+      <div th:replace="~{agente/fragments/barralateralagente :: body(activePage='ordenes')}"></div>
+      <!-- Fin barra lateral -->
 
 
-    <div class="main-panel">
+      <div class="main-panel">
 
-      <!-- Reemplaza navbar con el fragmento de Thymeleaf -->
-      <div th:replace="~{agente/fragments/navbarheaderagente :: fragment}"></div>
-      <!-- Fin Navbar -->
+        <!-- Reemplaza navbar con el fragmento de Thymeleaf -->
+        <div th:replace="~{agente/fragments/navbarheaderagente :: fragment}"></div>
+        <!-- Fin Navbar -->
         <!-- Texto o contenido central -->
         <div class="container">
           <div class="page-inner">
@@ -73,7 +73,6 @@
                   <div class="form-group me-2">
                     <input type="text" id="filterOrderNumber" class="form-control" placeholder="Número de orden">
                   </div>
-                  
                   <div class="form-group me-2">
                     <input type="text" id="filterUserName" class="form-control" placeholder="Nombre del usuario">
                   </div>
@@ -96,17 +95,9 @@
                     </select>
                   </div>
 
-                  <!-- Filtro de Ordenar por -->
                   <div class="form-group me-2">
-                    <select id="filterOrderBy" class="form-control">
-                      <option value="">Ordenar por</option>
-                      <option value="sinAsignar">Sin asignar</option>
-                      <option value="pendientes">Pendientes</option>
-                      <option value="resueltas">Resueltas</option>
-                      <option value="enProgreso">En progreso</option>
-                    </select>
-                  </div>
 
+                  </div>
                   <!-- Botones de acciones para filtros -->
                   <div class="d-flex">
                     <button id="searchBtn" class="btn btn-primary me-2">Buscar</button>
@@ -144,8 +135,12 @@
                             <td>
                               <span th:text="${orden.estado}"
                                     th:classappend="${orden.estado == 'Recibido'} ? 'badge badge-success' :
-                                                    (${orden.estado == 'En proceso'} ? 'badge badge-primary' :
-                                                    (${orden.estado == 'En ruta'} ? 'badge badge-danger' : 'badge badge-secondary'))">
+                                                    (${orden.estado == 'En Ruta'} ? 'badge badge-primary' :
+                                                    (${orden.estado == 'En Aduanas'} ? 'badge badge-warning' :
+                                                    (${orden.estado == 'Arribo al País'} ? 'badge badge-info' :
+                                                    (${orden.estado == 'En Proceso'} ? 'badge badge-black' :
+                                                    (${orden.estado == 'En Validación'} ? 'badge badge-secondary' :
+                                                    (${orden.estado == 'Cancelado'} ? 'badge badge-danger' : 'badge badge-count'))))))">
                               </span>
                             </td>
 
@@ -173,9 +168,9 @@
           </div>
         </div>
 
-        
-        
-        
+
+
+
         <!-- Fin del contenido central -->
 
 
@@ -185,7 +180,7 @@
           <div class="container-fluid d-flex justify-content-center">
             <nav class="pull-left">
               <ul class="nav">
-              
+
                 <li class="nav-item">
                   <a class="nav-link" href="ruta/a/informacion-de-contacto.html"> Contacto </a>
                 </li>
@@ -203,83 +198,74 @@
 
 
     <!--Core JS Files   -->
-    <script src="assets/js/core/jquery-3.7.1.min.js"></script>
-    <script src="assets/js/core/popper.min.js"></script>
-    <script src="assets/js/core/bootstrap.min.js"></script>
+    <script src="/assets/js/core/jquery-3.7.1.min.js"></script>
+    <script src="/assets/js/core/popper.min.js"></script>
+    <script src="/assets/js/core/bootstrap.min.js"></script>
 
     <!-- jQuery Scrollbar -->
-    <script src="assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+    <script src="/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
     <!-- Datatables -->
-    <script src="assets/js/plugin/datatables/datatables.min.js"></script>
-
-    <!-- jQuery Vector Maps -->
-    <script src="assets/js/plugin/jsvectormap/jsvectormap.min.js"></script>
-    <script src="assets/js/plugin/jsvectormap/world.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/assets/js/plugin/datatables/datatables.min.js"></script>
 
     <!-- Kaiadmin JS -->
-    <script src="assets/js/kaiadmin.min.js"></script>
+    <script src="/assets/js/kaiadmin.min.js"></script>
+
     <script>
-      $(document).ready(function() {
-        // Initialize DataTable
-        var table = $('#multi-filter-select').DataTable({
-          paging: true,
-          pageLength: 5,
-          lengthChange: false,
-          info: true,
-          dom: 'tip',
-          initComplete: function() {
-            // Apply the search for all the existing filters
-            this.api().columns().every(function() {
-              var that = this;
-              $('input, select', this.header()).on('keyup change', function() {
-                if (that.search() !== this.value) {
-                  that.search(this.value).draw();
-                }
-              });
-            });
+      // Función para filtrar la tabla
+      function filterTable() {
+        // Obtener los valores de los filtros
+        const orderNumber = document.getElementById("filterOrderNumber").value.toLowerCase();
+        const userName = document.getElementById("filterUserName").value.toLowerCase();
+        const filterValue = document.getElementById('filterOrderStatus').value.toLowerCase();
+        const filterDateValue = document.getElementById('filterDate').value; // Obtener el valor de la fecha
+
+        const table = document.getElementById('multi-filter-select');
+        const rows = table.getElementsByTagName('tr');
+
+        for (let i = 1; i < rows.length; i++) { // Comenzar en 1 para omitir el encabezado
+          const orderCell = rows[i].cells[0].textContent.toLowerCase();
+          const userCell = rows[i].cells[2].textContent.toLowerCase(); // Asegúrate de que el índice sea correcto
+          const statusCell = rows[i].getElementsByTagName('td')[4]; // La columna de "Estado del Pedido"
+          const dateCell = rows[i].getElementsByTagName('td')[3]; // Columna de "Fecha de Última Actualización"
+
+          if (statusCell && dateCell) {
+            const cellValue = statusCell.textContent.toLowerCase();
+            const dateValue = dateCell.textContent;
+
+            // Verificar si la fila coincide con los filtros
+            const matchesOrderNumber = orderCell.includes(orderNumber);
+            const matchesUserName = userCell.includes(userName);
+            const statusMatch = filterValue === "" || cellValue.includes(filterValue);
+            const dateMatch = filterDateValue === "" || dateValue === filterDateValue;
+
+            // Mostrar u ocultar la fila según las coincidencias
+            if (matchesOrderNumber && matchesUserName && statusMatch && dateMatch) {
+              rows[i].style.display = ""; // Mostrar fila
+            } else {
+              rows[i].style.display = "none"; // Ocultar fila
+            }
           }
+        }
+      }
+
+      // Función para limpiar los filtros
+      function clearFilters() {
+        // Limpiar los campos de entrada
+        document.getElementById("filterOrderNumber").value = "";
+        document.getElementById("filterUserName").value = "";
+        document.getElementById('filterOrderStatus').value = ""; // Reiniciar el select
+        document.getElementById('filterDate').value = ""; // Reiniciar el input de fecha
+
+        // Mostrar todas las filas
+        const tableRows = document.querySelectorAll("#multi-filter-select tbody tr");
+        tableRows.forEach(row => {
+          row.style.display = ""; // Mostrar todas las filas
         });
+      }
 
-        // Search button functionality
-        $('#searchBtn').on('click', function() {
-          // Apply the existing filters
-          table.columns(0).search($('#filterOrderNumber').val());
-          table.columns(1).search($('#filterItemCount').val());
-          table.columns(2).search($('#filterUserName').val());
-          table.columns(3).search($('#filterDate').val());
-          table.columns(4).search($('#filterOrderStatus').val());
-
-          // Apply filter by "Ordenar por"
-          var orderBy = $('#filterOrderBy').val();
-          if (orderBy === 'sinAsignar') {
-            table.columns(4).search('Generado');
-          } else if (orderBy === 'pendientes') {
-            table.columns(4).search('En validación');
-          } else if (orderBy === 'resueltas') {
-            table.columns(4).search('Recibido|Cancelado', true, false);
-          } else if (orderBy === 'enProgreso') {
-            table.columns(4).search('En proceso|Arribo al país|En aduanas|En ruta', true, false);
-          } else {
-            table.columns(4).search('');
-          }
-
-          table.draw();
-        });
-
-        // Clear filters button functionality
-        $('#clearBtn').on('click', function() {
-          $('#filterOrderNumber').val('');
-          $('#filterItemCount').val('');
-          $('#filterUserName').val('');
-          $('#filterDate').val('');
-          $('#filterOrderStatus').val('');
-          $('#filterOrderBy').val('');
-          table.search('').columns().search('').draw();
-        });
-      });
-
-
+      // Asignar eventos a los botones
+      document.getElementById("searchBtn").addEventListener("click", filterTable);
+      document.getElementById("clearBtn").addEventListener("click", clearFilters);
     </script>
   </body>
 </html>
