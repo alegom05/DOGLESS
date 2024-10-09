@@ -44,14 +44,6 @@
     <!-- Tu archivo CSS personalizado -->
     <link rel="stylesheet" href="/assets/css/style-SuperAdmin.css" />
     <style>
-        .table-card {
-            background-color: #ffffff; /* Fondo blanco */
-            border-radius: 8px; /* Bordes redondeados */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para efecto de profundidad */
-            overflow: hidden; /* Para que el borde redondeado se aplique a todo el contenido */
-            margin: 20px 0; /* Margen alrededor de la tabla */
-            padding: 20px; /* Espaciado interno */
-        }
         .summary-card {
             background-color: #ffffff; /* Fondo blanco */
             border-radius: 8px; /* Bordes redondeados */
@@ -80,7 +72,7 @@
         .btn-checkout {
             transition: background-color 0.3s, transform 0.3s;
         }
-            
+
         .btn-checkout:hover {
             background-color: #0056b3; /* Cambia el color de fondo al pasar el mouse */
             transform: scale(1.05); /* Aumenta ligeramente el tamaño del botón */
@@ -89,7 +81,7 @@
             transition: background-color 0.3s, color 0.3s;
             color: rgb(245, 45, 45);
         }
-        
+
         .btn-remove:hover {
             background-color: #dc3546be; /* Cambia el color de fondo al pasar el mouse */
             color: #fff; /* Cambia el color del texto al pasar el mouse */
@@ -99,7 +91,7 @@
         .btn-plus, .btn-minus {
             transition: background-color 0.3s, transform 0.3s;
         }
-        
+
         .btn-plus:hover, .btn-minus:hover {
             background-color: #007bffd5; /* Cambia el color de fondo al pasar el mouse */
             transform: scale(1.1); /* Aumenta el tamaño del botón */
@@ -121,161 +113,156 @@
         <!-- Cart Page Start -->
         <div class="container-fluid py-5">
             <div class="container py-5 d-flex flex-column min-vh-100">
-                <h1 class="mb-3 mt-4 text-center">Carrito de compras</h1>
-                <div class="table-responsive d-flex justify-content-center align-items-center flex-grow-1">
-                    <table class="table text-center table-card">
-                        <thead>
-                          <tr>
-                            <th scope="col">Productos</th>
-                            <th scope="col">Nombre</th>
-                            <th scope="col">Precio</th>
-                            <th scope="col">Cantidad</th>
-                            <th scope="col">Total</th>
-                            <th scope="col">Eliminar</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <th scope="row">
-                                    <div class="d-flex align-items-center">
-                                        <img src="/assetsUsuario/img/productos/celular_samsung_a15.jpg" class="img-fluid me-5 rounded-circle" style="width: 80px; height: 80px;" alt="">
-                                    </div>
-                                </th>
-                                <td>
-                                    <p class="mb-0">Samsung Galaxy A15</p>
-                                </td>
-                                <td>
-                                    <p class="mb-0">S/.849.99</p>
-                                </td>
-                                <td>
-                                    <div class="d-flex justify-content-center align-items-center">
-                                        <div class="input-group quantity" style="width: 120px;">
-                                            <div class="input-group-btn">
-                                                <button class="btn btn-sm btn-minus rounded-circle border">
-                                                    <i class="fa fa-minus"></i>
-                                                </button>
+
+                <div class="row">
+                    <div class="col-lg-9">
+                        <h1 class="mb-3 mt-4 "></h1>
+                        <div class="table-responsive d-flex justify-content-center align-items-center flex-grow-1">
+                            <table class="table text-center table-card">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Productos</th>
+                                        <th scope="col">Nombre</th>
+                                        <th scope="col">Precio</th>
+                                        <th scope="col">Cantidad</th>
+                                        <th scope="col">Total</th>
+                                        <th scope="col">Eliminar</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row">
+                                            <div class="d-flex align-items-center">
+                                                <img src="/assetsUsuario/img/productos/celular_samsung_a15.jpg" class="img-fluid me-5 rounded-circle" style="width: 80px; height: 80px;" alt="">
                                             </div>
-                                            <input type="text" class="form-control form-control-sm text-center border-0" value="2" style="max-width: 40px;">
-                                            <div class="input-group-btn">
-                                                <button class="btn btn-sm btn-plus rounded-circle border">
-                                                    <i class="fa fa-plus"></i>
-                                                </button>
+                                        </th>
+                                        <td>
+                                            <p class="mb-0">Samsung Galaxy A15</p>
+                                        </td>
+                                        <td>
+                                            <p class="mb-0">S/.849.99</p>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex justify-content-center align-items-center">
+                                                <div class="input-group quantity" style="width: 120px;">
+                                                    <div class="input-group-btn">
+                                                        <button class="btn btn-sm btn-minus rounded-circle border">
+                                                            <i class="fa fa-minus"></i>
+                                                        </button>
+                                                    </div>
+                                                    <input type="text" class="form-control form-control-sm text-center border-0 qty-input" value="1" style="max-width: 40px;">
+                                                    <div class="input-group-btn">
+                                                        <button class="btn btn-sm btn-plus rounded-circle border">
+                                                            <i class="fa fa-plus"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <p class="mb-0">S/.1699.98</p>
-                                </td>
-                                <td>
-                                    <button class="btn btn-md rounded-circle border btn-remove">
-                                        <i class="fa fa-times"></i>
-                                    </button>
-                                </td>
-                            
-                            </tr>
-                            <tr>
-                                <th scope="row">
-                                    <div class="d-flex align-items-center">
-                                        <img src="/assetsUsuario/img/productos/MacBook-Pro-A2780-6922-1.jpg" class="img-fluid me-5 rounded-circle" style="width: 80px; height: 80px;" alt="">
-                                    </div>
-                                </th>
-                                <td>
-                                    <p class="mb-0">MacBook Pro A2780 Chip M2</p>
-                                </td>
-                                <td>
-                                    <p class="mb-0">S/.3500.00</p>
-                                </td>
-                                <td>
-                                    <div class="d-flex justify-content-center align-items-center">
-                                        <div class="input-group quantity" style="width: 120px;">
-                                            <div class="input-group-btn">
-                                                <button class="btn btn-sm btn-minus rounded-circle border">
-                                                    <i class="fa fa-minus"></i>
-                                                </button>
+                                        </td>
+                                        <td>
+                                            <p class="mb-0">S/.1699.98</p>
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-md rounded-circle border btn-remove">
+                                                <i class="fa fa-times"></i>
+                                            </button>
+                                        </td>
+
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">
+                                            <div class="d-flex align-items-center">
+                                                <img src="/assetsUsuario/img/productos/MacBook-Pro-A2780-6922-1.jpg" class="img-fluid me-5 rounded-circle" style="width: 80px; height: 80px;" alt="">
                                             </div>
-                                            <input type="text" class="form-control form-control-sm text-center border-0" value="1" style="max-width: 40px;">
-                                            <div class="input-group-btn">
-                                                <button class="btn btn-sm btn-plus rounded-circle border">
-                                                    <i class="fa fa-plus"></i>
-                                                </button>
+                                        </th>
+                                        <td>
+                                            <p class="mb-0">MacBook Pro A2780 Chip M2</p>
+                                        </td>
+                                        <td>
+                                            <p class="mb-0">S/.3500.00</p>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex justify-content-center align-items-center">
+                                                <div class="input-group quantity" style="width: 120px;">
+                                                    <div class="input-group-btn">
+                                                        <button class="btn btn-sm btn-minus rounded-circle border">
+                                                            <i class="fa fa-minus"></i>
+                                                        </button>
+                                                    </div>
+                                                    <input type="text" class="form-control form-control-sm text-center border-0 qty-input" value="1" style="max-width: 40px;">
+                                                    <div class="input-group-btn">
+                                                        <button class="btn btn-sm btn-plus rounded-circle border">
+                                                            <i class="fa fa-plus"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <p class="mb-0">S/.3500.00</p>
-                                </td>
-                                <td>
-                                    <button class="btn btn-md rounded-circle border btn-remove" >
-                                        <i class="fa fa-times"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row">
-                                    <div class="d-flex align-items-center">
-                                        <img src="/assetsUsuario/img/productos/laptop_asus_vivobook.jpg" class="img-fluid me-5 rounded-circle" style="width: 80px; height: 80px;" alt="">
-                                    </div>
-                                </th>
-                                <td>
-                                    <p class="mb-0">Laptop Asus Vivobook 15</p>
-                                </td>
-                                <td>
-                                    <p class="mb-0">S/.1999.99</p>
-                                </td>
-                                <td>
-                                    <div class="d-flex justify-content-center align-items-center">
-                                        <div class="input-group quantity" style="width: 120px;">
-                                            <div class="input-group-btn">
-                                                <button class="btn btn-sm btn-minus rounded-circle border">
-                                                    <i class="fa fa-minus"></i>
-                                                </button>
+                                        </td>
+                                        <td>
+                                            <p class="mb-0">S/.3500.00</p>
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-md rounded-circle border btn-remove" >
+                                                <i class="fa fa-times"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">
+                                            <div class="d-flex align-items-center">
+                                                <img src="/assetsUsuario/img/productos/laptop_asus_vivobook.jpg" class="img-fluid me-5 rounded-circle" style="width: 80px; height: 80px;" alt="">
                                             </div>
-                                            <input type="text" class="form-control form-control-sm text-center border-0" value="1" style="max-width: 40px;">
-                                            <div class="input-group-btn">
-                                                <button class="btn btn-sm btn-plus rounded-circle border">
-                                                    <i class="fa fa-plus"></i>
-                                                </button>
+                                        </th>
+                                        <td>
+                                            <p class="mb-0">Laptop Asus Vivobook 15</p>
+                                        </td>
+                                        <td>
+                                            <p class="mb-0">S/.1999.99</p>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex justify-content-center align-items-center">
+                                                <div class="input-group quantity" style="width: 120px;">
+                                                    <div class="input-group-btn">
+                                                        <button class="btn btn-sm btn-minus rounded-circle border">
+                                                            <i class="fa fa-minus"></i>
+                                                        </button>
+                                                    </div>
+                                                    <input type="text" class="form-control form-control-sm text-center border-0 qty-input" value="1" style="max-width: 40px;">
+                                                    <div class="input-group-btn">
+                                                        <button class="btn btn-sm btn-plus rounded-circle border">
+                                                            <i class="fa fa-plus"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <p class="mb-0">S/.1999.99</p>
-                                </td>
-                                <td>
-                                    <button class="btn btn-md rounded-circle border btn-remove" >
-                                        <i class="fa fa-times"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="row g-4 justify-content-end">
-                    <div class="col-8"></div>
-                    <div class="col-sm-8 col-md-7 col-lg-6 col-xl-4">
-                        <div class="summary-card">
-                            <h2 class="display-6 mb-4">Total de compra</h2>
-                            <div class="total-row d-flex justify-content-between">
-                                <h5 class="mb-0">Subtotal:</h5>
-                                <p class="mb-0">S/. 7199.97</p>
-                            </div>
-                            <div class="total-row d-flex justify-content-between">
-                                <h5 class="mb-0">Envío</h5>
-                                <p class="mb-0">Costo de envío: S/.25</p>
-                            </div>
-                            <p class="mb-1 text-end">Envío a Perú</p>
-                            <div class="total-row d-flex justify-content-between">
-                                <h5 class="mb-0">Total</h5>
-                                <p class="mb-0">S/. 7224.97</p>
-                            </div>
-                            <a class="btn-checkout" type="button" href="">Proceder a pagar</a>
+                                        </td>
+                                        <td>
+                                            <p class="mb-0">S/.1999.99</p>
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-md rounded-circle border btn-remove" >
+                                                <i class="fa fa-times"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Resumen de compra -->
+                    <div class="col-lg-3">
+                        <h1 class="mb-3 mt-4 "></h1>
+                        <div class="card p-3">
+                            <h5>Resumen de compra</h5>
+                            <p>Productos (2)</p>
+                            <p>Envíos (1): <strong>Gratis</strong></p>
+                            <p>Total: <strong id="totalPrice">S/887</strong></p>
+                            <button class="btn btn-primary btn-lg btn-block">Continuar compra</button>
                         </div>
                     </div>
                 </div>
-                
+
             </div>
 
             <!-- Pie de página -->
@@ -300,30 +287,78 @@
     <script src="/assets/js/kaiadmin.min.js"></script>
     <!-- Kaiadmin DEMO methods, don't include it in your project! -->
     <script src="/assets/js/setting-demo2.js"></script>
-      <script>
+      <script >
           document.addEventListener('DOMContentLoaded', function () {
-              // Funcionalidad para el botón de reducir cantidad
-              document.querySelectorAll('.btn-minus').forEach(function(button) {
+              // Función para actualizar el total de un producto
+              function updateProductTotal(row) {
+                  const priceElement = row.querySelector('td:nth-child(3) p'); // Seleccionar el precio del producto
+                  const quantityElement = row.querySelector('.qty-input');     // Seleccionar el input de cantidad
+                  const totalElement = row.querySelector('td:nth-child(5) p'); // Seleccionar el total del producto
+
+                  // Convertir precio y cantidad a números
+                  const price = parseFloat(priceElement.textContent.replace('S/.', '').replace(',', ''));
+                  const quantity = parseInt(quantityElement.value);
+
+                  if (!isNaN(price) && !isNaN(quantity)) {
+                      const productTotal = price * quantity;
+                      totalElement.textContent = `S/.${productTotal.toFixed(2)}`; // Actualizar el total del producto
+                  }
+
+                  updateTotalPrice(); // Actualizar el total general
+              }
+
+              // Función para actualizar el total general
+              function updateTotalPrice() {
+                  let totalPrice = 0;
+
+                  // Recorremos todos los productos para sumar sus totales
+                  document.querySelectorAll('tbody tr').forEach(row => {
+                      const totalElement = row.querySelector('td:nth-child(5) p');
+                      const productTotal = parseFloat(totalElement.textContent.replace('S/.', '').replace(',', ''));
+                      if (!isNaN(productTotal)) {
+                          totalPrice += productTotal;
+                      }
+                  });
+
+                  // Actualizamos el total en el resumen
+                  document.getElementById('totalPrice').textContent = `S/.${totalPrice.toFixed(2)}`;
+              }
+
+              // Evento para aumentar la cantidad
+              document.querySelectorAll('.btn-plus').forEach(button => {
                   button.addEventListener('click', function () {
-                      var input = this.closest('.quantity').querySelector('input');
-                      var value = parseInt(input.value);
-                      if (value > 1) {  // Limitar a un mínimo de 1
-                          input.value = value - 1;
+                      const row = this.closest('tr');
+                      const input = row.querySelector('.qty-input');
+                      input.value = parseInt(input.value) + 1;
+                      updateProductTotal(row); // Actualizar el total del producto y el total general
+                  });
+              });
+
+              // Evento para disminuir la cantidad
+              document.querySelectorAll('.btn-minus').forEach(button => {
+                  button.addEventListener('click', function () {
+                      const row = this.closest('tr');
+                      const input = row.querySelector('.qty-input');
+                      if (parseInt(input.value) > 1) { // No permitimos que la cantidad sea menor que 1
+                          input.value = parseInt(input.value) - 1;
+                          updateProductTotal(row); // Actualizar el total del producto y el total general
                       }
                   });
               });
 
-              // Funcionalidad para el botón de aumentar cantidad
-              document.querySelectorAll('.btn-plus').forEach(function(button) {
+              // Evento para eliminar un producto del carrito
+              document.querySelectorAll('.btn-remove').forEach(button => {
                   button.addEventListener('click', function () {
-                      var input = this.closest('.quantity').querySelector('input');
-                      var value = parseInt(input.value);
-                      if (value < 10) {  // Limitar a un máximo de 10
-                          input.value = value + 1;
-                      }
+                      const row = this.closest('tr');
+                      row.remove(); // Eliminamos la fila del producto
+                      updateTotalPrice(); // Actualizamos el total general
                   });
               });
+
+              // Llamamos a updateTotalPrice() inicialmente para calcular el total cuando la página carga
+              updateTotalPrice();
           });
+
       </script>
 
   </body>
