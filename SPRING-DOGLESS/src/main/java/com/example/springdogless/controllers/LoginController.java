@@ -50,26 +50,25 @@ public class LoginController {
     // Mapea la vista de recuperación de contraseña
     @PostMapping("/olvidastecontasenha")
     public String handleForgotPassword(@RequestParam("email") String email, Model model) {
-        log.info("Iniciando proceso de recuperación de contraseña para email: {}", email);
-
         try {
+            // Generate a unique token (you might want to store this in your database)
             String resetToken = UUID.randomUUID().toString();
-            String resetLink = "http://localhost:8080/crearnuevacontrasenha?token=" + resetToken;
 
+            // Create the reset link
+            String resetLink = "http://yourdomain.com/crearnuevacontrasenha?token=" + resetToken;
+
+            // Create and send email
             SimpleMailMessage message = new SimpleMailMessage();
             message.setFrom("asanmiguel2024@gmail.com");
             message.setTo(email);
             message.setSubject("Restablecimiento de contraseña");
             message.setText("Para restablecer tu contraseña, haz clic en el siguiente enlace:\n\n" + resetLink);
 
-            log.debug("Intentando enviar email a: {}", email);
             emailSender.send(message);
-            log.info("Email enviado exitosamente a: {}", email);
 
             model.addAttribute("mensaje", "Se ha enviado un correo con instrucciones para restablecer tu contraseña.");
             return "login/olvidastecontasenha";
         } catch (Exception e) {
-            log.error("Error al enviar email de recuperación de contraseña", e);
             model.addAttribute("error", "Ocurrió un error al enviar el correo. Por favor, inténtalo de nuevo.");
             return "login/olvidastecontasenha";
         }
