@@ -3,6 +3,7 @@
 package com.example.springdogless.config;
 
 import com.example.springdogless.Repository.UsuarioRepository;
+import com.example.springdogless.entity.Usuario;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -54,7 +55,12 @@ public class WebSecurityConfig {
                                 (DefaultSavedRequest) request.getSession().getAttribute("SPRING_SECURITY_SAVED_REQUEST");
 
                         HttpSession session = request.getSession();
-                        session.setAttribute("usuario", usuarioRepository.findByEmail(authentication.getName()));
+
+                        Usuario usuario = usuarioRepository.findByEmail(authentication.getName());
+
+                        session.setAttribute("usuario", usuario);
+                        // Guardar el idzona en la sesión también
+                        session.setAttribute("idzona", usuario.getZona().getIdzonas());
 
                         //Para el parcial
                         //si vengo por url -> defaultSR existe

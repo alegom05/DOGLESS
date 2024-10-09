@@ -152,7 +152,35 @@
             border: none; /* Opcional: quita el borde del campo de texto */
       }
 
-  </style>
+      /* Efecto de sombra en la carta */
+      .fruite-item {
+          transition: box-shadow 0.3s ease-in-out;
+      }
+
+      /* Sombra cuando pasas el mouse sobre la tarjeta */
+      .fruite-item:hover {
+          box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.5); /* Aplica una sombra más oscura */
+      }
+
+      /* Imagen dentro de la fruite-item */
+      .fruite-img img {
+          transition: transform 0.3s ease-in-out; /* Transición suave para el zoom */
+          width: 100%; /* Mantiene el ancho de la imagen al 100% de su contenedor */
+          height: auto; /* Mantiene las proporciones de la imagen */
+      }
+
+      /* Efecto zoom en la imagen cuando pasas el mouse */
+      .fruite-item:hover .fruite-img img {
+          transform: scale(1.3); /* Aplica un zoom del 110% */
+      }
+
+      /* Evita que la imagen se salga del contenedor al hacer zoom */
+      .fruite-img {
+          overflow: hidden; /* Oculta cualquier parte de la imagen que se salga del contenedor */
+          border-radius: 0.5rem; /* Redondea las esquinas */
+      }
+
+    </style>
 
   </head>
   <body>
@@ -673,138 +701,70 @@
 
 
 
+
+
                           <div class="col-lg-9">
                               <div class="row g-4 justify-content-center">
-                                <div class="col-md-6 col-lg-6 col-xl-4">
-                                  <div class="rounded position-relative fruite-item" style="width: 278px; height: 500px; box-sizing: border-box; border: 1px solid #000;">
-                                      <div class="fruite-img">
-                                        <a href="/Plantilla_Usuario/detalles_producto.html" class="rounded me-4">
-                                          <img src="/assets/img/productos/celular_samsung_a15.jpg" class="img-fluid w-100 rounded-top" alt="">
-                                        </a>
-                                      </div>
-                                      <div class="text-white custom-bg px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">Tecnología</div>
-                                      <div class="p-4 border-top-0 rounded-bottom" style="height: auto; box-sizing: border-box;">
-                                        <h4 style="display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">Samsung Galaxy A15</h4>
-                                        <p style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">Smartphone con pantalla AMOLED de 6.5", procesador octa-core y cámara triple.</p>
-                                          <div class="d-flex justify-content-between flex-lg-wrap">
-                                              <p class="text-dark fs-5 fw-bold mb-0">S/.849.99</p>
-                                              <a href="/Plantilla_Usuario/carrito_compras.html" class="btn btn-normal-2 rounded-pill mt-2 px-3"><i class="fa fa-shopping-bag me-2"></i> Añade al carrito</a>
-                                          </div>
-                                      </div>
-                                  </div>
-                              </div>
-                                  <div class="col-md-6 col-lg-6 col-xl-4">
-                                    <div class="rounded position-relative fruite-item" style="width: 278px; height: 500px; box-sizing: border-box; border: 1px solid #000;">
-                                      <div class="fruite-img">
-                                        <a href="/Plantilla_Usuario/detalles_producto.html" class="rounded me-4">
-                                          <img src="/assets/img/productos/laptop_asus_vivobook.jpg" class="img-fluid w-100 rounded-top" alt="">
-                                        </a>
-                                          </div>
-                                          <div class="text-white custom-bg px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">Tecnología</div>
-                                          <div class="p-4 border-top-0 rounded-bottom" style="height: auto; box-sizing: border-box;">
-                                            <h4 style="display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">Laptop Asus Vivobook 15</h4>
-                                            <p style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">Portátil con pantalla Full HD de 15.6", procesador Intel Core i5 y 8GB de RAM.</p>
-                                              <div class="d-flex justify-content-between flex-lg-wrap">
-                                                  <p class="text-dark fs-5 fw-bold mb-0">S/.1999.99</p>
-                                                  <a href="/Plantilla_Usuario/carrito_compras.html" class="btn btn-normal-2 rounded-pill mt-2 px-3"><i class="fa fa-shopping-bag me-2"></i> Añade al carrito</a>
-                                                </div>
-                                          </div>
-                                      </div>
-                                  </div>
-                                  <div class="col-md-6 col-lg-6 col-xl-4">
-                                    <div class="rounded position-relative fruite-item" style="width: 278px; height: 500px; box-sizing: border-box; border: 1px solid #000;">
-                                      <div class="fruite-img">
-                                        <a href="/Plantilla_Usuario/detalles_producto.html" class="rounded me-4">
-                                          <img src="/assets/img/productos/MacBook-Pro-A2780-6922-1.jpg" class="img-fluid w-100 rounded-top" alt="">
-                                        </a>
-                                          </div>
-                                          <div class="text-white custom-bg px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">Tecnología</div>
-                                          <div class="p-4 border-top-0 rounded-bottom" style="height: auto; box-sizing: border-box;">
-                                            <h4 style="display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">MacBook Pro A2780 Chip M2</h4>
-                                              <p style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">Computadora portátil de alto rendimiento con el chip M2, pantalla Retina y 16GB de RAM.</p>
-                                              <div class="d-flex justify-content-between flex-lg-wrap">
-                                                  <p class="text-dark fs-5 fw-bold mb-0">S/.3500.00</p>
-                                                  <a href="/Plantilla_Usuario/carrito_compras.html" class="btn btn-normal-2 rounded-pill mt-2 px-3"><i class="fa fa-shopping-bag me-2"></i> Añade al carrito</a>
-                                                </div>
-                                          </div>
-                                      </div>
-                                  </div>
-                                  <div class="col-md-6 col-lg-6 col-xl-4">
-                                    <div class="rounded position-relative fruite-item" style="width: 278px; height: 500px; box-sizing: border-box; border: 1px solid #000;">
-                                      <div class="fruite-img">
-                                        <a href="/Plantilla_Usuario/detalles_producto.html" class="rounded me-4">
-                                          <img src="/assets/img/productos/tablet_lenovo_m10_plus.jpg" class="img-fluid w-100 rounded-top" alt="">
-                                        </a>
-                                          </div>
-                                          <div class="text-white custom-bg px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">Tecnología</div>
-                                          <div class="p-4 border-top-0 rounded-bottom" style="height: auto; box-sizing: border-box;">
-                                            <h4 style="display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">MTablet Lenovo M10 Plus</h4>
-                                              <p style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">Tablet de 10.3" con pantalla Full HD, procesador octa-core y 4GB de RAM.</p>
-                                              <div class="d-flex justify-content-between flex-lg-wrap">
-                                                  <p class="text-dark fs-5 fw-bold mb-0">S/.1999.99</p>
-                                                  <a href="/Plantilla_Usuario/carrito_compras.html" class="btn btn-normal-2 rounded-pill mt-2 px-3"><i class="fa fa-shopping-bag me-2"></i> Añade al carrito</a>
-                                                </div>
-                                          </div>
-                                      </div>
-                                  </div>
-                                  <div class="col-md-6 col-lg-6 col-xl-4">
-                                    <div class="rounded position-relative fruite-item" style="width: 278px; height: 500px; box-sizing: border-box; border: 1px solid #000;">
-                                      <div class="fruite-img">
-                                        <a href="/Plantilla_Usuario/detalles_producto.html" class="rounded me-4">
-                                          <img src="/assets/img/productos/monitor_asus_v279_gaming_27pulgadas.png" class="img-fluid w-100 rounded-top" alt="">
-                                        </a>
-                                          </div>
-                                          <div class="text-white custom-bg px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">Tecnología</div>
-                                          <div class="p-4 border-top-0 rounded-bottom" style="height: auto; box-sizing: border-box;">
-                                            <h4 style="display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">Monitor ASUS V279</h4>
-                                              <p style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">Monitor gaming de 27" con resolución 2K, 144Hz y tecnología Adaptive Sync.</p>
-                                              <div class="d-flex justify-content-between flex-lg-wrap">
-                                                  <p class="text-dark fs-5 fw-bold mb-0">S/.2699.99</p>
-                                                  <a href="/Plantilla_Usuario/carrito_compras.html" class="btn btn-normal-2 rounded-pill mt-2 px-3"><i class="fa fa-shopping-bag me-2"></i> Añade al carrito</a>
-                                                </div>
-                                          </div>
-                                      </div>
-                                  </div>
-
-                                  <div class="col-md-6 col-lg-6 col-xl-4">
-                                    <div class="rounded position-relative fruite-item" style="width: 278px; height: 500px; box-sizing: border-box; border: 1px solid #000;">
-                                      <div class="fruite-img">
-                                        <a href="/Plantilla_Usuario/detalles_producto.html" class="rounded me-4">
-                                          <img src="/assets/img/productos/Laptop_ACER_Nitro_5.jpg" class="img-fluid w-100 rounded-top" alt="">
-                                        </a>
-                                        </div>
-                                        <div class="text-white custom-bg px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">Tecnología</div>
-                                        <div class="p-4 border-top-0 rounded-bottom" style="height: auto; box-sizing: border-box;">
-                                          <h4 style="display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">Laptop Acer Nitro 5</h4>
-                                            <p style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">Portátil para gaming con pantalla de 15.6", procesador Intel Core i7 y 16GB de RAM.</p>
-                                            <div class="d-flex justify-content-between flex-lg-wrap">
-                                                <p class="text-dark fs-5 fw-bold mb-0">S/.3600.00</p>
-                                                <a href="/Plantilla_Usuario/carrito_compras.html" class="btn btn-normal-2 rounded-pill mt-2 px-3"><i class="fa fa-shopping-bag me-2"></i> Añade al carrito</a>
+                                  <!-- Itera sobre la lista de productos -->
+                                  <th:block th:each="producto : ${listaProductos}">
+                                      <div class="col-md-6 col-lg-6 col-xl-4">
+                                          <div class="rounded position-relative fruite-item" style="width: 278px; height: 500px; box-sizing: border-box; border: 1px solid #000;">
+                                              <div class="fruite-img">
+                                                  <a th:href="@{/Plantilla_Usuario/detalles_producto.html(id=${producto.idproductos})}" class="rounded me-4">
+                                                      <img th:src="@{'http://localhost:8080/usuario/producto/imagen/' + ${producto.idproductos}}" class="img-fluid w-100 rounded-top" alt="Imagen del producto">
+                                                  </a>
                                               </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-
-                                  <div class="col-12">
-                                    <div class="pagination d-flex justify-content-center mt-5">
-                                        <a href="#" class="rounded">&laquo;</a>
-                                        <a href="#" class="active rounded">1</a>
-                                        <a href="#" class="rounded">2</a>
-                                        <a href="#" class="rounded">3</a>
-                                        <a href="#" class="rounded">4</a>
-                                        <a href="#" class="rounded">5</a>
-                                        <a href="#" class="rounded">6</a>
-                                        <a href="#" class="rounded">&raquo;</a>
-                                    </div>
-                                </div>
-
-
-
-
+                                              <div class="text-white custom-bg px-3 py-1 rounded position-absolute"
+                                                   style="top: 10px; left: 10px;">
+                                                  <span th:text="${producto.categoria}"></span>
+                                              </div>
+                                              <div class="p-4 border-top-0 rounded-bottom" style="height: auto; box-sizing: border-box;">
+                                                  <!-- Nombre del producto -->
+                                                  <h4 style="display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical;
+                                                      overflow: hidden; text-overflow: ellipsis;"
+                                                      th:text="${producto.nombre}">
+                                                  </h4>
+                                                  <!-- Descripción del producto -->
+                                                  <p style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+                                                     overflow: hidden; text-overflow: ellipsis;"
+                                                     th:text="${producto.descripcion}">
+                                                  </p>
+                                                  <div class="d-flex justify-content-between flex-lg-wrap">
+                                                      <!-- Precio del producto -->
+                                                      <p class="text-dark fs-5 fw-bold mb-0">S/.<span th:text="${producto.precio}"></span></p>
+                                                      <!-- Botón de añadir al carrito -->
+                                                      <a href="/Plantilla_Usuario/carrito_compras.html"
+                                                         class="btn btn-normal-2 rounded-pill mt-2 px-3">
+                                                          <i class="fa fa-shopping-bag me-2"></i> Añade al carrito
+                                                      </a>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </th:block>
                               </div>
                           </div>
+
+                          <!-- Paginación (si es necesario) -->
+                          <div class="col-12">
+                              <div class="pagination d-flex justify-content-center mt-5">
+                                  <a href="#" class="rounded">&laquo;</a>
+                                  <a href="#" class="active rounded">1</a>
+                                  <a href="#" class="rounded">2</a>
+                                  <a href="#" class="rounded">3</a>
+                                  <a href="#" class="rounded">4</a>
+                                  <a href="#" class="rounded">5</a>
+                                  <a href="#" class="rounded">6</a>
+                                  <a href="#" class="rounded">&raquo;</a>
+                              </div>
+                          </div>
+
+
+
+
+
+
+
                       </div>
                   </div>
               </div>
@@ -903,28 +863,30 @@
     <!-- Kaiadmin DEMO methods, don't include it in your project! -->
     <script src="/assets/js/setting-demo2.js"></script>
     <script>
-      $(document).ready(function () {
-        $("#basic-datatables").DataTable({
-          language: {
-            search: "Buscar:",
-            lengthMenu: "Mostrar _MENU_ entradas por página",
-            info: "Mostrando _START_ a _END_ de _TOTAL_ entradas",
-            paginate: {
-              previous: "Anterior",
-              next: "Siguiente"
-            }
-          }
-        });
 
-        $("#multi-filter-select").DataTable({
-          pageLength: 5,
-          initComplete: function () {
-            this.api()
-              .columns()
-              .every(function () {
-                var column = this;
-                var select = $(
-                  '<select class="form-select"><option value=""></option></select>'
+    $(document).ready(function () {
+    $("#basic-datatables").DataTable({
+    language: {
+    search: "Buscar:",
+    lengthMenu: "Mostrar _MENU_ entradas por página",
+    info: "Mostrando _START_ a _END_ de _TOTAL_ entradas",
+    paginate: {
+    previous: "Anterior",
+    next: "Siguiente"
+    }
+    }
+    });
+
+    $("#multi-filter-select").DataTable({
+    pageLength: 5,
+    initComplete: function () {
+    this.api()
+    .columns()
+    .every(function () {
+    var column = this;
+    var select = $(
+    '<select class="form-select">
+        <option value=""></option></select>'
                 )
                   .appendTo($(column.footer()).empty())
                   .on("change", function () {

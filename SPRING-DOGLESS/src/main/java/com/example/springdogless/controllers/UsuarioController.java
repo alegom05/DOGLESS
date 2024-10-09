@@ -1,7 +1,9 @@
 package com.example.springdogless.controllers;
 
+import com.example.springdogless.DTO.ProductoDTO;
 import com.example.springdogless.Repository.*;
 import com.example.springdogless.entity.*;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.sql.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -60,9 +63,29 @@ public class UsuarioController {
     }
 
     @GetMapping("/tienda")
-    public String TiendaProductos(Model model) {
-        //model.addAttribute("listaproductos", productRepository.ProductosCompleto());
-        //listaproductos
+    public String TiendaProductos(HttpSession session, Model model) {
+        // Obtener idzona desde la sesión
+        Integer idzona = (Integer) session.getAttribute("idzona");
+        if (idzona != null) {
+            // Consultar productos por zona
+            List<ProductoDTO> productos = productRepository.findProductosByZona(idzona);
+            /*
+            // Imprimir los valores en la consola del servidor
+            if (productos != null && !productos.isEmpty()) {
+                System.out.println("Productos encontrados: " + productos.size());
+                for (ProductoDTO producto : productos) {
+                    System.out.println("ID: " + producto.getIdproductos() + ", Nombre: " + producto.getNombre() +
+                            ", Precio: " + producto.getPrecio());
+                }
+            } else {
+                System.out.println("No se encontraron productos para la zona: " + idzona);
+            }
+            */
+
+            model.addAttribute("listaProductos", productos);
+        } else {
+            model.addAttribute("error", "No se pudo obtener la zona del usuario.");
+        }
         return "usuario/tienda";
     }
 

@@ -24,6 +24,15 @@ public interface ProductRepository extends JpaRepository<Producto, Integer>{
             "JOIN dogless.proveedores prov ON p.idproveedores = prov.idproveedores", nativeQuery = true)
     List<ProductoDTO> ProductosCompleto();
     List<Producto> findByBorrado(Integer num);
-
+    @Query(value = "SELECT p.idproductos, p.nombre, p.descripcion, p.categoria, p.precio, p.costoenvio, " +
+            "p.idproveedores, prov.nombre AS proveedorNombre, prov.apellido AS proveedorApellido, " +
+            "p.modelos, p.colores, p.aprobado, p.borrado, p.estado, " +
+            "s.cantidad, z.nombre AS nombreZona " +
+            "FROM dogless.productos p " +
+            "LEFT JOIN dogless.stockproductos s ON p.idproductos = s.idproductos " +
+            "LEFT JOIN dogless.zonas z ON s.idzonas = z.idzonas " +
+            "JOIN dogless.proveedores prov ON p.idproveedores = prov.idproveedores " +
+            "WHERE s.idzonas = ?1", nativeQuery = true)
+    List<ProductoDTO> findProductosByZona(Integer idzona);
 }
 
