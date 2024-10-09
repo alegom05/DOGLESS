@@ -89,6 +89,11 @@ public class UsuarioController {
         return "usuario/tienda";
     }
 
+    @GetMapping(value = "compras")
+    public String listaCompras(Model model) {
+        return "usuario/carrito_compras";
+    }
+
     //El resto no está hecho
 
     /*
