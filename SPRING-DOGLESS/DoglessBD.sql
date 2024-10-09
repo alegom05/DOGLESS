@@ -675,6 +675,8 @@ VALUES
 (4, 15, 1), -- 15 unidades de Cámara Fotográfica en la zona Norte
 (5, 40, 1), -- 40 unidades de Tablet W en la zona Norte
 (6, 10, 1), -- 10 unidades de Impresora 3D en la zona Norte
+(8, 10, 1), -- 10 unidades 
+(9, 10, 1), -- 10 unidades 
 
 -- Stock para la zonas Sur (ID zonas 2)
 (1, 40, 2), -- 40 unidades de Smartphone X en la zona Sur

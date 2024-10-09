@@ -745,7 +745,11 @@
                               </div>
                           </div>
 
+
+
+
                           <!-- Paginación (si es necesario) -->
+                          <!--
                           <div class="col-12">
                               <div class="pagination d-flex justify-content-center mt-5">
                                   <a href="#" class="rounded">&laquo;</a>
@@ -758,8 +762,27 @@
                                   <a href="#" class="rounded">&raquo;</a>
                               </div>
                           </div>
+                          -->
+
+                          <div class="pagination d-flex justify-content-center mt-5">
+                              <!-- Flecha para ir a la página anterior (deshabilitada si está en la primera página) -->
+                              <a th:if="${(currentPage+1) > 1}" th:href="@{/usuario/tienda(page=${(currentPage)})}" class="rounded">&laquo;</a>
+                              <a th:unless="${(currentPage+1) > 1}" class="rounded disabled">&laquo;</a>
 
 
+                              <!-- Generar enlaces de paginación -->
+                              <th:block th:each="i : ${#numbers.sequence(1, totalPages)}">
+                                  <a th:href="@{/usuario/tienda(page=${i})}"
+                                     th:classappend="${i == (currentPage + 1)} ? 'active'"
+                                     class="rounded"
+                                     th:text="${i}"></a>
+                              </th:block>
+
+
+                              <!-- Flecha para ir a la página siguiente (deshabilitada si está en la última página) -->
+                              <a th:if="${(currentPage+1) < totalPages}" th:href="@{/usuario/tienda(page=${currentPage+2})}" class="rounded">&raquo;</a>
+                              <a th:unless="${(currentPage+1) < totalPages}" class="rounded disabled">&raquo;</a>
+                          </div>
 
 
 

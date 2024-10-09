@@ -3,6 +3,8 @@ package com.example.springdogless.Repository;
 
 import com.example.springdogless.DTO.ProductoDTO;
 import com.example.springdogless.entity.Producto;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -23,7 +25,9 @@ public interface ProductRepository extends JpaRepository<Producto, Integer>{
             " LEFT JOIN dogless.zonas z ON s.idzonas = z.idzonas " +
             "JOIN dogless.proveedores prov ON p.idproveedores = prov.idproveedores", nativeQuery = true)
     List<ProductoDTO> ProductosCompleto();
+
     List<Producto> findByBorrado(Integer num);
+    /*
     @Query(value = "SELECT p.idproductos, p.nombre, p.descripcion, p.categoria, p.precio, p.costoenvio, " +
             "p.idproveedores, prov.nombre AS proveedorNombre, prov.apellido AS proveedorApellido, " +
             "p.modelos, p.colores, p.aprobado, p.borrado, p.estado, " +
@@ -34,5 +38,22 @@ public interface ProductRepository extends JpaRepository<Producto, Integer>{
             "JOIN dogless.proveedores prov ON p.idproveedores = prov.idproveedores " +
             "WHERE s.idzonas = ?1", nativeQuery = true)
     List<ProductoDTO> findProductosByZona(Integer idzona);
+    */
+    @Query(value = "SELECT p.idproductos, p.nombre, p.descripcion, p.categoria, p.precio, p.costoenvio, " +
+            "p.idproveedores, prov.nombre AS proveedorNombre, prov.apellido AS proveedorApellido, " +
+            "p.modelos, p.colores, p.aprobado, p.borrado, p.estado, " +
+            "s.cantidad, z.nombre AS nombreZona " +
+            "FROM dogless.productos p " +
+            "LEFT JOIN dogless.stockproductos s ON p.idproductos = s.idproductos " +
+            "LEFT JOIN dogless.zonas z ON s.idzonas = z.idzonas " +
+            "JOIN dogless.proveedores prov ON p.idproveedores = prov.idproveedores " +
+            "WHERE s.idzonas = ?1 " +
+            "LIMIT ?#{#pageable.pageSize} OFFSET ?#{#pageable.offset}",
+            countQuery = "SELECT COUNT(*) FROM dogless.productos p " +
+                    "LEFT JOIN dogless.stockproductos s ON p.idproductos = s.idproductos " +
+                    "WHERE s.idzonas = ?1",
+            nativeQuery = true)
+    Page<ProductoDTO> findProductosByZona(Integer idzona, Pageable pageable);
+
 }
 

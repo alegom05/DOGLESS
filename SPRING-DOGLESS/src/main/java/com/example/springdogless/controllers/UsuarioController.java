@@ -6,6 +6,8 @@ import com.example.springdogless.entity.*;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -62,6 +64,7 @@ public class UsuarioController {
         return "usuario/libro";
     }
 
+    /*
     @GetMapping("/tienda")
     public String TiendaProductos(HttpSession session, Model model) {
         // Obtener idzona desde la sesión
@@ -69,7 +72,7 @@ public class UsuarioController {
         if (idzona != null) {
             // Consultar productos por zona
             List<ProductoDTO> productos = productRepository.findProductosByZona(idzona);
-            /*
+
             // Imprimir los valores en la consola del servidor
             if (productos != null && !productos.isEmpty()) {
                 System.out.println("Productos encontrados: " + productos.size());
@@ -80,7 +83,7 @@ public class UsuarioController {
             } else {
                 System.out.println("No se encontraron productos para la zona: " + idzona);
             }
-            */
+
 
             model.addAttribute("listaProductos", productos);
         } else {
@@ -88,6 +91,49 @@ public class UsuarioController {
         }
         return "usuario/tienda";
     }
+    */
+
+
+
+
+
+
+    @GetMapping("/tienda")
+    public String TiendaProductos(HttpSession session, Model model,
+                                  @RequestParam(value = "page", defaultValue = "1") int page) {
+        Integer idzona = (Integer) session.getAttribute("idzona");
+
+        if (idzona != null) {
+            int pageSize = 6;
+            page=page-1;
+            PageRequest pageRequest = PageRequest.of(page, pageSize);
+
+            // Utiliza el nuevo método con paginación
+            Page<ProductoDTO> productosPaginados = productRepository.findProductosByZona(idzona, pageRequest);
+
+            List<ProductoDTO> productos = productosPaginados.getContent();
+
+            model.addAttribute("listaProductos", productos);
+            model.addAttribute("totalPages", productosPaginados.getTotalPages());
+            model.addAttribute("currentPage", page);
+        } else {
+            model.addAttribute("error", "No se pudo obtener la zona del usuario.");
+        }
+
+        return "usuario/tienda";
+    }
+
+
+
+
+
+
+
+
+
+
+
+
 
     //El resto no está hecho
 
