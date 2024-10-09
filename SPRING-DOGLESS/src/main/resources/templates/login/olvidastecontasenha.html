@@ -14,34 +14,39 @@
         <title>Recuperar Contraseña</title>
     </head>
     <body>
-        <div class="wrapper">
-            <!-- Contenedor del logo -->
-            <div class="logo-container">
-                <img th:src="@{assets/images_index/slogan_white_v3.png}" alt="Icono Empresa" class="logo-icon">
-            </div>
+    <div class="wrapper">
+        <!-- Contenedor del logo -->
+        <div class="logo-container">
+            <img th:src="@{assets/images_index/slogan_white_v3.png}" alt="Icono Empresa" class="logo-icon">
+        </div>
 
-            <!----------------------------- Formulario para recuperar contraseña ----------------------------------->
-            <div class="form-box">
-                <div class="login-container" id="forgot-password">
-                    <div class="top">
-                        <span>Introduce tu correo electrónico para recuperar tu contraseña.</span>
-                        <header>Recuperar Contraseña</header>
-                    </div>
+        <!----------------------------- Formulario para recuperar contraseña ----------------------------------->
+        <div class="form-box">
+            <div class="login-container" id="forgot-password">
+                <div class="top">
+                    <span>Introduce tu correo electrónico para recuperar tu contraseña.</span>
+                    <header>Recuperar Contraseña</header>
+                </div>
+
+                <!-- Formulario para recuperar contraseña -->
+                <form th:action="@{/olvidastecontasenha}" method="post">
                     <div class="input-box">
-                        <input type="email" class="input-field" placeholder="Correo electrónico" id="email">
+                        <input type="email" name="email" class="input-field" placeholder="Correo electrónico" required>
                         <i class="bx bx-envelope"></i>
                     </div>
                     <div class="input-box">
-                        <input type="submit" class="submit" value="Enviar" id="send-button">
+                        <input type="submit" class="submit" value="Enviar correo de restablecimiento">
                     </div>
-                    <div class="two-col">
-                        <div class="one">
-                            <label><a th:href="@{/loginForm}">Volver a Iniciar Sesión</a></label>
-                        </div>
+                </form>
+
+                <div class="two-col">
+                    <div class="one">
+                        <label><a th:href="@{/loginForm}">Volver a Iniciar Sesión</a></label>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
         <!-- Validación básica de correo -->
         <script>
