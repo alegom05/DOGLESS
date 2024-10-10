@@ -4,11 +4,12 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serializable;
+
 @Entity (name="distritos")
 @Getter
 @Setter
-public class Distrito {
-
+public class Distrito implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer iddistritos;

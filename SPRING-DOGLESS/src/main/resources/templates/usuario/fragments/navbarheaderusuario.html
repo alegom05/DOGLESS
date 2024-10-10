@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+              xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
   <head>
   </head>
   <body>
@@ -40,13 +41,13 @@
               <a class="dropdown-toggle profile-pic" data-bs-toggle="dropdown" href="#" aria-expanded="false">
                 <div class="avatar-sm">
                   <img
-                          src="/assets/img/profile2.jpg"
+                          th:src="@{'http://localhost:8080/imagen/' + ${session.usuario.id}}"
                           alt="..."
                           class="avatar-img rounded-circle"
                   />
                 </div>
                 <span class="profile-username">
-              <span class="fw-bold">Gumercindo Bartra</span>
+              <span class="fw-bold" th:text="${session.usuario.nombre}+' '+${session.usuario.apellido}"></span>
               <div class="fw-bold">Usuario</div>
             </span>
               </a>
@@ -56,15 +57,15 @@
                     <div class="user-box">
                       <div class="avatar-lg">
                         <img
-                                src="/assets/img/profile2.jpg"
+                                th:src="@{'http://localhost:8080/imagen/' + ${session.usuario.id}}"
                                 alt="image profile"
                                 class="avatar-img rounded"
                         />
                       </div>
                       <div class="u-text" style="color: white;">
-                        <h4>Gumercindo</h4>
-                        <p class="text-info" style="color: white;">gumer.bartra@gmail.com</p>
-                        <a href="/zonal/perfil_zonal" class="btn btn-xs btn-secondary btn-sm">Ver perfil</a>
+                        <h4 th:text="${session.usuario.nombre}+' '+${session.usuario.apellido}"></h4>
+                        <p class="text-info" style="color: white;" th:text="${session.usuario.email}"></p>
+                        <a th:href="@{'/usuario/perfil' + '?id=' + ${session.usuario.id}}" class="btn btn-xs btn-secondary btn-sm">Ver perfil</a>
                       </div>
                     </div>
                   </li>
@@ -72,7 +73,7 @@
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="#">Cambiar contraseña</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="/login">Cerrar Sesion</a>
+                    <a class="dropdown-item" href="/loginForm">Cerrar Sesion</a>
                   </li>
                 </div>
               </ul>

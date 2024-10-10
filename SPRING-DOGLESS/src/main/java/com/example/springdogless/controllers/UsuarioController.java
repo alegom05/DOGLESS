@@ -406,6 +406,20 @@ public class UsuarioController {
         return "usuario/pagoExitoso";
     }
 
+    @GetMapping("/perfil")
+    public String verPerfil(Model model, @RequestParam("id") int id) {
+
+        Optional<Usuario> optUsuario = usuarioRepository.findById(id);
+
+        if (optUsuario.isPresent()) {
+            Usuario usuario = optUsuario.get();
+            model.addAttribute("usuario", usuario);
+            return "usuario/detallesperfil";
+        } else {
+            return "redirect:/usuario";
+        }
+    }
+
     //El resto no está hecho
 
     /*
