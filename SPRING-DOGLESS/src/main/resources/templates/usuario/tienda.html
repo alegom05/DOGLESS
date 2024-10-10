@@ -373,7 +373,7 @@
                                                       <!-- Enlace a los detalles del producto -->
                                                       <a th:href="@{'/usuario/producto/detalle/' + ${producto.idproductos}}">
                                                           <!-- Imagen del producto -->
-                                                          <img th:src="@{'http://localhost:8080/usuario/producto/imagen/' + ${producto.idproductos}}"
+                                                          <img th:src="@{'http://20.81.145.27:8080/producto/imagen/' + ${producto.idproductos}}"
                                                                class="img-fluid w-100 rounded-top"
                                                                alt="Imagen del producto">
                                                       </a>
@@ -446,7 +446,7 @@
                                           <div class="rounded position-relative fruite-item" style="width: 278px; height: 500px; box-sizing: border-box; border: 1px solid #000;">
                                               <div class="fruite-img">
                                                   <a th:href="@{/Plantilla_Usuario/detalles_producto.html(id=${producto.idproductos})}" class="rounded me-4">
-                                                      <img th:src="@{'http://localhost:8080/usuario/producto/imagen/' + ${producto.idproductos}}" class="img-fluid w-100 rounded-top" alt="Imagen del producto">
+                                                      <img th:src="@{'http://20.81.145.27:8080/producto/imagen/' + ${producto.idproductos}}" class="img-fluid w-100 rounded-top" alt="Imagen del producto">
                                                   </a>
                                               </div>
                                               <div class="text-white custom-bg px-3 py-1 rounded position-absolute"
