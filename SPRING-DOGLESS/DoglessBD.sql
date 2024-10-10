@@ -710,6 +710,22 @@ VALUES
 ('9', '1', '11', 'Estamos evaluando tu perfil. Te informaremos en los próximos días.'),
 ('10', '1', '12', 'Has sido aceptado. Pronto recibirás más información.');
 
+-- -----------------------------------------------------
+-- Table `dogless`.`reclamos`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `dogless`.`reclamos` (
+  `idreclamos` INT NOT NULL AUTO_INCREMENT,
+  `descripcion` VARCHAR(1000) NULL,
+  `idusuarios` INT NOT NULL,
+  PRIMARY KEY (`idreclamos`),
+  INDEX `fk_reclamos_usuarios1_idx` (`idusuarios` ASC) VISIBLE,
+  CONSTRAINT `fk_reclamos_usuarios1`
+    FOREIGN KEY (`idusuarios`)
+    REFERENCES `dogless`.`usuarios` (`idusuarios`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
