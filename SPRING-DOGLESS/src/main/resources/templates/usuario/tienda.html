@@ -716,7 +716,9 @@
                                           <input type="radio" name="priceRanges" value="5000-999999"> Desde S/ 5.000
                                         </label>
                                       </div>
-                                      <button type="submit">Aplicar Filtro</button>
+                                      <div class="text-center"> <!-- Añadido -->
+                                        <button type="submit" class="btn btn-primary mt-3">Aplicar Filtro</button>
+                                      </div> <!-- Añadido -->
                                     </form>
 
                                   </div>
@@ -897,27 +899,30 @@
 
 
 
+                        <div class="pagination d-flex justify-content-center mt-5">
+                          <!-- Flecha para ir a la página anterior -->
+                          <a th:if="${(currentPage + 1) > 1}"
+                             th:href="@{/usuario/tienda(page=${currentPage}, filter=${param.filter}, price=${param.price})}"
+                             class="rounded">&laquo;</a>
+                          <a th:unless="${(currentPage + 1) > 1}" class="rounded disabled">&laquo;</a>
 
-                          <div class="pagination d-flex justify-content-center mt-5">
-                              <!-- Flecha para ir a la página anterior (deshabilitada si está en la primera página) -->
-                              <a th:if="${(currentPage+1) > 1}" th:href="@{/usuario/tienda(page=${(currentPage)})}" class="rounded">&laquo;</a>
-                              <a th:unless="${(currentPage+1) > 1}" class="rounded disabled">&laquo;</a>
+                          <!-- Generar enlaces de paginación -->
+                          <th:block th:each="i : ${#numbers.sequence(1, totalPages)}">
+                            <a th:href="@{/usuario/tienda(page=${i}, filter=${param.filter}, price=${param.price})}"
+                               th:classappend="${i == (currentPage + 1)} ? 'active'"
+                               class="rounded"
+                               th:text="${i}"></a>
+                          </th:block>
+
+                          <!-- Flecha para ir a la página siguiente -->
+                          <a th:if="${(currentPage + 1) < totalPages}"
+                             th:href="@{/usuario/tienda(page=${currentPage + 2}, filter=${param.filter}, price=${param.price})}"
+                             class="rounded">&raquo;</a>
+                          <a th:unless="${(currentPage + 1) < totalPages}" class="rounded disabled">&raquo;</a>
+                        </div>
 
 
-                              <!-- Generar enlaces de paginación -->
-                              <th:block th:each="i : ${#numbers.sequence(1, totalPages)}">
-                                  <a th:href="@{/usuario/tienda(page=${i})}"
-                                     th:classappend="${i == (currentPage + 1)} ? 'active'"
-                                     class="rounded"
-                                     th:text="${i}"></a>
-                              </th:block>
 
-
-                              <!-- Flecha para ir a la página siguiente (deshabilitada si está en la última página) -->
-                              <a th:if="${(currentPage+1) < totalPages}" th:href="@{/usuario/tienda(page=${currentPage+2})}" class="rounded">&raquo;</a>
-                              <a th:unless="${(currentPage+1) < totalPages}" class="rounded disabled">&raquo;</a>
-                          </div>
-                        
 
                       </div>
                   </div>
@@ -1022,6 +1027,33 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-c54CjZRtDQl/LSJj2EWsJ3Wrxx9/HWgdG1M4HQBJcyRc+tbxOkhOFiF8m3hM8bQV" crossorigin="anonymous"></script>
 
     <script>
+
+      /*
+      function getUrlParams() {
+        const params = new URLSearchParams(window.location.search);
+        return {
+          filter: params.get('filter') || '', // Obtiene el parámetro filter
+          price: params.get('price') || ''   // Obtiene el parámetro price
+        };
+      }
+
+      function updatePage(page) {
+        const currentUrl = new URL(window.location.href);
+        const params = getUrlParams(); // Obtiene los parámetros de la URL
+
+        currentUrl.searchParams.set('page', page);
+        if (params.filter) {
+          currentUrl.searchParams.set('filter', params.filter); // Añade el filtro si existe
+        }
+        if (params.price) {
+          currentUrl.searchParams.set('price', params.price); // Añade el precio si existe
+        }
+        window.location.href = currentUrl.toString();
+      }
+      */
+
+
+
       // Función para aplicar el filtro y redirigir a la página 1
       function applyFilter() {
         const selectedFilter = document.getElementById("fruits").value;
