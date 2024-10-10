@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="es"> 
   <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -226,7 +226,7 @@
         background-color: #f9f9f9; /* Fondo suave */
         padding: 15px; /* Espaciado interno */
         border-radius: 8px; /* Bordes redondeados */
-        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.6); /* Sombra ligera */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra ligera */
         margin-bottom: 20px; /* Separación de otros elementos */
       }
 
@@ -248,12 +248,375 @@
   <body>
     <div class="wrapper">
       <!-- Sidebar -->
-      <div th:replace="~{usuario/fragments/barralateralusuario :: body(activePage='tienda')}"></div>
+      <div class="sidebar" data-background-color="light-blue2">
+        <div class="sidebar-logo">
+          <!-- Logo Header -->
+          <div class="logo-header d-flex align-items-center justify-content-between" data-background-color="light-blue2">
+            <a href=/admin class="logo d-flex align-items-center">
+              <img
+                src="/assets/img/kaiadmin/logo_dogless.png"
+                alt="navbar brand"
+                class="navbar-brand"
+                height="50"
+              />
+              <span class="ms-2 text-white fw-bold text-truncate">DOGLESS</span> <!-- Texto blanco y limitado -->
+            </a>
+            <div class="nav-toggle">
+              <button class="btn btn-toggle toggle-sidebar">
+                <i class="gg-menu-right"></i>
+              </button>
+              <button class="btn btn-toggle sidenav-toggler">
+                <i class="gg-menu-left"></i>
+              </button>
+            </div>
+            <button class="topbar-toggler more">
+              <i class="gg-more-vertical-alt"></i>
+            </button>
+          </div>
+          <!-- End Logo Header -->
+        </div>
+        <div class="sidebar-wrapper scrollbar scrollbar-inner">
+          <div class="sidebar-content">
+            <ul class="nav nav-secondary">
+              <!-- Barra de navegacion -->
+
+              <li class="nav-item">
+                <a href=/admin>
+                  <i class="fas fa-home"></i>
+                  <p>Pagina Principal</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="tienda.html">
+                  <i class="fas fa-shopping-cart"></i>
+                  <p>Tienda</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="carrito_compras.html">
+                  <i class="fas fa-shopping-bag"></i>
+                  <p>Mis compras</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="tables/guia.html">
+                  <i class="fas fa-question-circle"></i>
+                  <p>Guía de usuario</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="tables/libro.html">
+                  <i class="fas fa-book"></i>
+                  <p>Libro de reclamaciones</p>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
       <!-- End Sidebar -->
 
       <div class="main-panel">
-        <div th:replace="~{usuario/fragments/navbarheaderusuario :: fragment}"></div>
+        <div class="main-header">
+          <div class="main-header-logo">
+            <!-- Logo Header -->
+            <div class="logo-header" data-background-color="dark">
+              <a href=/admin class="logo">
+                <img
+                  src="/assets/img/kaiadmin/logo_light.svg"
+                  alt="navbar brand"
+                  class="navbar-brand"
+                  height="20"
+                />
+              </a>
+              <div class="nav-toggle">
+                <button class="btn btn-toggle toggle-sidebar">
+                  <i class="gg-menu-right"></i>
+                </button>
+                <button class="btn btn-toggle sidenav-toggler">
+                  <i class="gg-menu-left"></i>
+                </button>
+              </div>
+              <button class="topbar-toggler more">
+                <i class="gg-more-vertical-alt"></i>
+              </button>
+            </div>
+            <!-- End Logo Header -->
+          </div>
+          <!-- Navbar Header -->
+          <nav class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom" data-background-color="light-blue2">
+            <div class="container-fluid">
+              <nav
+                class="navbar navbar-header-left navbar-expand-lg navbar-form nav-search p-0 d-none d-lg-flex"
+              >
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <button type="submit" class="btn btn-search pe-1">
+                      <i class="fa fa-search search-icon"></i>
+                    </button>
+                  </div>
+                  <input
+                    type="text"
+                    placeholder="Search ..."
+                    class="form-control"
+                  />
+                </div>
+              </nav>
 
+              <ul class="navbar-nav topbar-nav ms-md-auto align-items-center">
+                <li
+                  class="nav-item topbar-icon dropdown hidden-caret d-flex d-lg-none"
+                >
+                  <a
+                    class="nav-link dropdown-toggle"
+                    data-bs-toggle="dropdown"
+                    href="#"
+                    role="button"
+                    aria-expanded="false"
+                    aria-haspopup="true"
+                  >
+                    <i class="fa fa-search"></i>
+                  </a>
+                  <ul class="dropdown-menu dropdown-search animated fadeIn">
+                    <form class="navbar-left navbar-form nav-search">
+                      <div class="input-group">
+                        <input
+                          type="text"
+                          placeholder="Search ..."
+                          class="form-control"
+                        />
+                      </div>
+                    </form>
+                  </ul>
+                </li>
+                <li class="nav-item topbar-icon dropdown hidden-caret">
+                  <a
+                    class="nav-link dropdown-toggle"
+                    href="#"
+                    id="messageDropdown"
+                    role="button"
+                    data-bs-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                  >
+                    <i class="fa fa-envelope"></i>
+                  </a>
+                  <ul
+                    class="dropdown-menu messages-notif-box animated fadeIn"
+                    aria-labelledby="messageDropdown"
+                  >
+                    <li>
+                      <div
+                        class="dropdown-title d-flex justify-content-between align-items-center"
+                      >
+                        Messages
+                        <a href="#" class="small">Mark all as read</a>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="message-notif-scroll scrollbar-outer">
+                        <div class="notif-center">
+                          <a href="#">
+                            <div class="notif-img">
+                              <img
+                                src="/assets/img/jm_denis.jpg"
+                                alt="Img Profile"
+                              />
+                            </div>
+                            <div class="notif-content">
+                              <span class="subject">Jimmy Denis</span>
+                              <span class="block"> How are you ? </span>
+                              <span class="time">5 minutes ago</span>
+                            </div>
+                          </a>
+                          <a href="#">
+                            <div class="notif-img">
+                              <img
+                                src="/assets/img/chadengle.jpg"
+                                alt="Img Profile"
+                              />
+                            </div>
+                            <div class="notif-content">
+                              <span class="subject">Chad</span>
+                              <span class="block"> Ok, Thanks ! </span>
+                              <span class="time">12 minutes ago</span>
+                            </div>
+                          </a>
+                          <a href="#">
+                            <div class="notif-img">
+                              <img
+                                src="/assets/img/mlane.jpg"
+                                alt="Img Profile"
+                              />
+                            </div>
+                            <div class="notif-content">
+                              <span class="subject">Jhon Doe</span>
+                              <span class="block">
+                                Ready for the meeting today...
+                              </span>
+                              <span class="time">12 minutes ago</span>
+                            </div>
+                          </a>
+                          <a href="#">
+                            <div class="notif-img">
+                              <img
+                                src="/assets/img/talha.jpg"
+                                alt="Img Profile"
+                              />
+                            </div>
+                            <div class="notif-content">
+                              <span class="subject">Talha</span>
+                              <span class="block"> Hola,Apa Kabar ? </span>
+                              <span class="time">17 minutes ago</span>
+                            </div>
+                          </a>
+                        </div>
+                      </div>
+                    </li>
+                    <li>
+                      <a class="see-all" href="javascript:void(0);"
+                        >See all messages<i class="fa fa-angle-right"></i>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+                <li class="nav-item topbar-icon dropdown hidden-caret">
+                  <a
+                    class="nav-link dropdown-toggle"
+                    href="#"
+                    id="notifDropdown"
+                    role="button"
+                    data-bs-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                  >
+                    <i class="fa fa-bell"></i>
+                    <span class="notification">4</span>
+                  </a>
+                  <ul
+                    class="dropdown-menu notif-box animated fadeIn"
+                    aria-labelledby="notifDropdown"
+                  >
+                    <li>
+                      <div class="dropdown-title">
+                        You have 4 new notification
+                      </div>
+                    </li>
+                    <li>
+                      <div class="notif-scroll scrollbar-outer">
+                        <div class="notif-center">
+                          <a href="#">
+                            <div class="notif-icon notif-primary">
+                              <i class="fa fa-user-plus"></i>
+                            </div>
+                            <div class="notif-content">
+                              <span class="block"> New user registered </span>
+                              <span class="time">5 minutes ago</span>
+                            </div>
+                          </a>
+                          <a href="#">
+                            <div class="notif-icon notif-success">
+                              <i class="fa fa-comment"></i>
+                            </div>
+                            <div class="notif-content">
+                              <span class="block">
+                                Rahmad commented on Admin
+                              </span>
+                              <span class="time">12 minutes ago</span>
+                            </div>
+                          </a>
+                          <a href="#">
+                            <div class="notif-img">
+                              <img
+                                src="../assets/img/profile2.jpg"
+                                alt="Img Profile"
+                              />
+                            </div>
+                            <div class="notif-content">
+                              <span class="block">
+                                Reza send messages to you
+                              </span>
+                              <span class="time">12 minutes ago</span>
+                            </div>
+                          </a>
+                          <a href="#">
+                            <div class="notif-icon notif-danger">
+                              <i class="fa fa-heart"></i>
+                            </div>
+                            <div class="notif-content">
+                              <span class="block"> Farrah liked Admin </span>
+                              <span class="time">17 minutes ago</span>
+                            </div>
+                          </a>
+                        </div>
+                      </div>
+                    </li>
+                    <li>
+                      <a class="see-all" href="javascript:void(0);"
+                        >See all notifications<i class="fa fa-angle-right"></i>
+                      </a>
+                    </li>
+                  </ul>
+
+                <li class="nav-item topbar-user dropdown hidden-caret">
+                  <a
+                    class="dropdown-toggle profile-pic"
+                    data-bs-toggle="dropdown"
+                    href="#"
+                    aria-expanded="false"
+                  >
+                    <div class="avatar-sm">
+                      <img
+                        src="/assets/img/profile.jpg"
+                        alt="..."
+                        class="avatar-img rounded-circle"
+                      />
+                    </div>
+                    <span class="profile-username">
+                      <span class="op-7">Hola,</span>
+                      <span class="fw-bold">Alonso Guevara</span>
+                    </span>
+                  </a>
+                  <ul class="dropdown-menu dropdown-user animated fadeIn">
+                    <div class="dropdown-user-scroll scrollbar-outer">
+                      <li>
+                        <div class="user-box">
+                          <div class="avatar-lg">
+                            <img
+                              src="/assets/img/profile.jpg"
+                              alt="image profile"
+                              class="avatar-img rounded"
+                            />
+                          </div>
+                          <div class="u-text">
+                            <h4>Alonso</h4>
+                            <p class="text-muted">alonso.guevara@gmail.com</p>
+                            <a
+                              href="profile.html"
+                              class="btn btn-xs btn-secondary btn-sm"
+                              >Ver perfil</a
+                            >
+                          </div>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Mi perfil</a>
+                        <a class="dropdown-item" href="#">My Balance</a>
+                        <a class="dropdown-item" href="#">Inbox</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Ajustes</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Cerrar Sesion</a>
+                      </li>
+                    </div>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </nav>
+          <!-- End Navbar -->
+        </div>
 
 
         <!-- Fruits Shop Start-->
@@ -362,70 +725,68 @@
                                 </div>
 
 
-
+                                 
                                   <div class="col-lg-12">
-                                      <div class="mb-3 categorias-container">
-                                          <h4 class="mb-3">Productos más rankeados</h4>
-                                          <!-- Itera sobre la lista de productos tres_productos_rankeados -->
-                                          <div th:each="producto : ${TresProductosRankeados}">
-                                              <div class="mb-2 d-flex align-items-center justify-content-start">
-                                                  <div class="rounded me-4" style="width: 100px; height: 100px;">
-                                                      <!-- Enlace a los detalles del producto -->
-                                                      <a th:href="@{'/usuario/producto/detalle/' + ${producto.idproductos}}">
-                                                          <!-- Imagen del producto -->
-                                                          <img th:src="@{'http://20.81.145.27:8080/producto/imagen/' + ${producto.idproductos}}"
-                                                               class="img-fluid w-100 rounded-top"
-                                                               alt="Imagen del producto">
-                                                      </a>
-                                                  </div>
-                                                  <div>
-                                                      <!-- Nombre del producto -->
-                                                      <h6 class="mb-2" style="display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;"
-                                                          th:text="${producto.nombre}"></h6>
-
-                                                      <div class="d-flex mb-2">
-                                                          <!-- Mostrar estrellas coloreadas según el promedio de satisfacción -->
-                                                          <span th:if="${producto.getPromedioSatisfaccion() >= 1}">
-                                                          <i class="fa fa-star star-colored"></i>
-                                                      </span>
-                                                          <span th:if="${producto.getPromedioSatisfaccion() >= 2}">
-                                                          <i class="fa fa-star star-colored"></i>
-                                                      </span>
-                                                          <span th:if="${producto.getPromedioSatisfaccion() >= 3}">
-                                                          <i class="fa fa-star star-colored"></i>
-                                                      </span>
-                                                          <span th:if="${producto.getPromedioSatisfaccion() >= 4}">
-                                                          <i class="fa fa-star star-colored"></i>
-                                                      </span>
-                                                          <span th:if="${producto.getPromedioSatisfaccion() >= 5}">
-                                                          <i class="fa fa-star star-colored"></i>
-                                                      </span>
-
-                                                          <!-- Aquí se rellenan las estrellas no coloreadas -->
-                                                          <span th:if="${producto.getPromedioSatisfaccion() < 5}">
-                                                          <i class="fa fa-star star-uncolored"></i>
-                                                      </span>
-                                                          <span th:if="${producto.getPromedioSatisfaccion() < 4}">
-                                                          <i class="fa fa-star star-uncolored"></i>
-                                                      </span>
-                                                          <span th:if="${producto.getPromedioSatisfaccion() < 3}">
-                                                          <i class="fa fa-star star-uncolored"></i>
-                                                      </span>
-                                                          <span th:if="${producto.getPromedioSatisfaccion() < 2}">
-                                                          <i class="fa fa-star star-uncolored"></i>
-                                                      </span>
-                                                          <span th:if="${producto.getPromedioSatisfaccion() < 1}">
-                                                          <i class="fa fa-star star-uncolored"></i>
-                                                      </span>
-                                                      </div>
-
-                                                      <!-- Precio del producto -->
-                                                      <div class="d-flex mb-2">
-                                                          <h5 class="fw-bold me-2" th:text="'S/.' + ${producto.precio}"></h5>
-                                                      </div>
-                                                  </div>
+                                      <h4 class="mb-3">Productos más rankeados</h4>
+                                      <div class="mb-2 d-flex align-items-center justify-content-start">
+                                          <div class="rounded me-4" style="width: 100px; height: 100px;">
+                                              <img src="/assets/img/productos/Laptop_ACER_Nitro_5.jpg" class="img-fluid rounded" alt="">
+                                          </div>
+                                          <div>
+                                            <h6 class="mb-2" style="display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">Laptop Acer Nitro 5</h6>
+                                              <div class="d-flex mb-2">
+                                                  <i class="fa fa-star star-colored"></i>
+                                                  <i class="fa fa-star star-colored"></i>
+                                                  <i class="fa fa-star star-colored"></i>
+                                                  <i class="fa fa-star star-colored"></i>
+                                                  <i class="fa fa-star star-uncolored"></i>
+                                              </div>
+                                              <div class="d-flex mb-2">
+                                                  <h5 class="fw-bold me-2">S/.3600.00</h5>
+                                                  <!--<h5 class="text-danger text-decoration-line-through">4.11 $</h5>-->
                                               </div>
                                           </div>
+                                      </div>
+                                      <div class="mb-2 d-flex align-items-center justify-content-start">
+                                          <div class="rounded me-4" style="width: 100px; height: 100px;">
+                                              <img src="img/laptop_asus_vivobook.jpg" class="img-fluid rounded" alt="">
+                                          </div>
+                                          <div>
+                                            <h6 class="mb-2" style="display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">Laptop Asus Vivobook 15</h6>
+                                              <div class="d-flex mb-2">
+                                                <i class="fa fa-star star-colored"></i>
+                                                <i class="fa fa-star star-colored"></i>
+                                                <i class="fa fa-star star-colored"></i>
+                                                <i class="fa fa-star star-colored"></i>
+                                                <i class="fa fa-star star-uncolored"></i>
+                                              </div>
+                                              <div class="d-flex mb-2">
+                                                  <h5 class="fw-bold me-2">S/.1999.99</h5>
+                                                  <!--<h5 class="text-danger text-decoration-line-through">4.11 $</h5>-->
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div class="mb-2 d-flex align-items-center justify-content-start">
+                                          <div class="rounded me-4" style="width: 100px; height: 100px;">
+                                              <img src="img/MacBook-Pro-A2780-6922-1.jpg" class="img-fluid rounded" alt="">
+                                          </div>
+                                          <div>
+                                            <h6 class="mb-2" style="display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">MacBook Pro A2780 Chip M2</h6>
+                                            <div class="d-flex mb-2">
+                                                <i class="fa fa-star star-colored"></i>
+                                                <i class="fa fa-star star-colored"></i>
+                                                <i class="fa fa-star star-colored"></i>
+                                                <i class="fa fa-star star-colored"></i>
+                                                <i class="fa fa-star star-uncolored"></i>
+                                              </div>
+                                              <div class="d-flex mb-2">
+                                                  <h5 class="fw-bold me-2">S/.3500.00</h5>
+                                                  <!--<h5 class="text-danger text-decoration-line-through">4.11 $</h5>-->
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div class="d-flex justify-content-center my-2">
+                                        <a href="#" class="btn btn-normal px-4 py-3 rounded-pill w-100">Vew More</a>
                                       </div>
                                   </div>
                                  
@@ -446,7 +807,7 @@
                                           <div class="rounded position-relative fruite-item" style="width: 278px; height: 500px; box-sizing: border-box; border: 1px solid #000;">
                                               <div class="fruite-img">
                                                   <a th:href="@{/Plantilla_Usuario/detalles_producto.html(id=${producto.idproductos})}" class="rounded me-4">
-                                                      <img th:src="@{'http://20.81.145.27:8080/producto/imagen/' + ${producto.idproductos}}" class="img-fluid w-100 rounded-top" alt="Imagen del producto">
+                                                      <img th:src="@{'http://localhost:8080/usuario/producto/imagen/' + ${producto.idproductos}}" class="img-fluid w-100 rounded-top" alt="Imagen del producto">
                                                   </a>
                                               </div>
                                               <div class="text-white custom-bg px-3 py-1 rounded position-absolute"
@@ -515,30 +876,8 @@
                                       </div>
                                   </th:block>
                               </div>
-
                           </div>
-                          <div class="col-lg-3"></div>
-                          <div class="col-lg-9 pagination d-flex justify-content-center">
-                              <!-- Flecha para ir a la página anterior -->
-                              <a th:if="${(currentPage + 1) > 1}"
-                                 th:href="@{/usuario/tienda(page=${currentPage}, filter=${param.filter}, price=${param.price})}"
-                                 class="rounded">&laquo;</a>
-                              <a th:unless="${(currentPage + 1) > 1}" class="rounded disabled">&laquo;</a>
 
-                              <!-- Generar enlaces de paginación -->
-                              <th:block th:each="i : ${#numbers.sequence(1, totalPages)}">
-                                  <a th:href="@{/usuario/tienda(page=${i}, filter=${param.filter}, price=${param.price})}"
-                                     th:classappend="${i == (currentPage + 1)} ? 'active'"
-                                     class="rounded"
-                                     th:text="${i}"></a>
-                              </th:block>
-
-                              <!-- Flecha para ir a la página siguiente -->
-                              <a th:if="${(currentPage + 1) < totalPages}"
-                                 th:href="@{/usuario/tienda(page=${currentPage + 2}, filter=${param.filter}, price=${param.price})}"
-                                 class="rounded">&raquo;</a>
-                              <a th:unless="${(currentPage + 1) < totalPages}" class="rounded disabled">&raquo;</a>
-                          </div>
 
 
 
@@ -560,7 +899,27 @@
 
 
 
+                        <div class="pagination d-flex justify-content-center mt-5">
+                          <!-- Flecha para ir a la página anterior -->
+                          <a th:if="${(currentPage + 1) > 1}"
+                             th:href="@{/usuario/tienda(page=${currentPage}, filter=${param.filter}, price=${param.price})}"
+                             class="rounded">&laquo;</a>
+                          <a th:unless="${(currentPage + 1) > 1}" class="rounded disabled">&laquo;</a>
 
+                          <!-- Generar enlaces de paginación -->
+                          <th:block th:each="i : ${#numbers.sequence(1, totalPages)}">
+                            <a th:href="@{/usuario/tienda(page=${i}, filter=${param.filter}, price=${param.price})}"
+                               th:classappend="${i == (currentPage + 1)} ? 'active'"
+                               class="rounded"
+                               th:text="${i}"></a>
+                          </th:block>
+
+                          <!-- Flecha para ir a la página siguiente -->
+                          <a th:if="${(currentPage + 1) < totalPages}"
+                             th:href="@{/usuario/tienda(page=${currentPage + 2}, filter=${param.filter}, price=${param.price})}"
+                             class="rounded">&raquo;</a>
+                          <a th:unless="${(currentPage + 1) < totalPages}" class="rounded disabled">&raquo;</a>
+                        </div>
 
 
 
@@ -570,8 +929,73 @@
               </div>
           </div>
         </div>
-          <!-- Pie de página -->
-          <div th:replace="~{usuario/fragments/piedepagina :: fragment}"></div>
+        <!-- Fruits Shop End-->
+        <footer class="footer">
+         
+          <div class="row align-items-center">
+            <div class="col-md-4">
+              <h2>DOGLESS</h2>
+            </div>
+            <div class="col-md-4 offset-md-4 d-flex justify-content-center">
+              <button type="button" class="btn btn-icon btn-round btn-primary mx-1">
+                <i class="fab fa-facebook-f"></i>
+              </button>
+              <button type="button" class="btn btn-icon btn-round btn-info mx-1">
+                <i class="fab fa-twitter"></i>
+              </button>
+              <button type="button" class="btn btn-icon btn-round btn-secondary mx-1">
+                <i class="fab fa-linkedin-in"></i>
+              </button>
+              <button type="button" class="btn btn-icon btn-round btn-danger mx-1">
+                <i class="fab fa-youtube"></i>
+              </button>
+                  
+            </div>
+          </div>
+        
+          <hr class="my-2">
+            
+              <div class="row">
+                <div class="col-md-3">
+                  <h5>Sobre nosotros</h5>
+                  <ul class="list-unstyled">
+                    <li><a href="javascript:void(0)" class="footer-link d-block pb-2">Acerca de dogless</a></li>
+                    <li><a href="javascript:void(0)" class="footer-link d-block pb-2">TyC</a></li>
+                    <li><a href="javascript:void(0)" class="footer-link d-block pb-2">Numero de RUC</a></li>
+                    <li><a href="javascript:void(0)" class="footer-link d-block pb-2">licenciamiento</a></li>
+                  </ul>
+                </div>
+                <div class="col-md-3">
+                  <h5>Cuenta</h5>
+                  <ul class="list-unstyled">
+                    <li><a href="javascript:void(0)" class="footer-link d-block pb-2">Crear cuenta</a></li>
+                    <li><a href="javascript:void(0)" class="footer-link d-block pb-2">Pago</a></li>
+                    <li><a href="javascript:void(0)" class="footer-link d-block pb-2">Envio</a></li>
+                    <li><a href="javascript:void(0)" class="footer-link d-block pb-2">Soporte</a></li>
+                  </ul>
+                </div>
+                <div class="col-md-3">
+                  <h5>Guia de compra</h5>
+                  <ul class="list-unstyled">
+                    <li><a href="javascript:void(0)" class="footer-link d-block pb-2">Mi cuenta</a></li>
+                    <li><a href="javascript:void(0)" class="footer-link d-block pb-2">Mis pedidos</a></li>
+                    <li><a href="javascript:void(0)" class="footer-link d-block pb-2">Favoritos</a></li>
+                    <li><a href="javascript:void(0)" class="footer-link d-block pb-2">Devoluciones</a></li>
+                  </ul>
+                </div>
+                <div class="col-md-3">
+                  <h5>Métodos de pago</h5>
+                  <div class="payment-methods">
+                    <img src="/assets/img/productos/logo-visa.png" alt="Visa" class="img-fluid w-25 mx-2">
+                    <img src="/assets/img/productos/logo-mastercard.png" alt="Mastercard" class="img-fluid w-25 mx-2">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <h7>@2024-2090 Dogless.com, todos los derechos reservados</h7>
+              </div>
+            
+        </footer>
       </div>
     </div>
     <!-- JavaScript Libraries -->

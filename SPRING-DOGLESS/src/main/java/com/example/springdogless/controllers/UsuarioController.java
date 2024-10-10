@@ -180,7 +180,27 @@ public class UsuarioController {
     @GetMapping("/libro")
     public String nuevaReclamacion(Model model, @ModelAttribute("usuario") Usuario usuario) {
         model.addAttribute("listaUsuarios", usuarioRepository.findAll());
+        model.addAttribute("listaDistritos", distritoRepository.findAll());
+
         return "usuario/libro";
+    }
+
+    @PostMapping("/guardarReclamo")
+    public String guardarReclamo(@RequestParam("idusuario") Integer idusuario, Usuario usuario, RedirectAttributes attr) {
+        Optional<Usuario> optionalUsuario = usuarioRepository.findById(idusuario);
+
+        if (optionalUsuario.isPresent()) {
+            usuario = optionalUsuario.get();
+            //usuario.setProveedor(usuario);  // Asignar el proveedor al producto
+        } else {
+            attr.addFlashAttribute("error", "Usuario no encontrado");
+            return "redirect:/usuario/libro";
+
+        }
+        usuarioRepository.save(usuario);
+
+        attr.addFlashAttribute("msg", "Reclamo creado exitosamente");
+        return "redirect:/usuario/libro";
     }
 
     /*
@@ -248,7 +268,7 @@ public class UsuarioController {
                     switch (filter) {
                         case "ranked":
                             // Obtener productos más rankeados
-                            //productosPaginados = productRepository.findProductosByZonaOrderByRanking(idzona, pageRequest);
+                            productosPaginados = productRepository.findProductosByZonaAndCategoriaOrderBySatisfaccionDesc(idzona, categoria, pageRequest);
                             break;
                         case "price_desc":
                             // Lógica para ordenar por precio de mayor a menor
@@ -276,7 +296,7 @@ public class UsuarioController {
                     switch (filter) {
                         case "ranked":
                             // Obtener productos más rankeados
-                            // productosPaginados = productRepository.findProductosByZonaOrderByRanking(idzona, pageRequest);
+                            productosPaginados = productRepository.findProductosByZonaOrderBySatisfaccionDesc(idzona, pageRequest);
                             break;
                         case "price_desc":
                             // Lógica para ordenar por precio de mayor a menor
@@ -337,6 +357,18 @@ public class UsuarioController {
             // Obtener el total de productos sin filtrar
             Integer totalProductos = productRepository.countProductosByZona(idzona);
             model.addAttribute("totalProductos", totalProductos); // Agrega el total de productos al modelo
+
+
+
+            List<ProductoDTO> tres_productos_rankeados = productRepository.findTop3ProductosByZona(idzona);
+            model.addAttribute("TresProductosRankeados", tres_productos_rankeados);
+
+
+
+
+
+
+
 
         } else {
             model.addAttribute("error", "No se pudo obtener la zona del usuario.");
