@@ -81,6 +81,11 @@ public class LoginController {
         return "crearnuevacontrasenha"; // Esto renderiza la vista crearnuevacontrasenha.html
     }
 
+    @GetMapping("/cambiarcontrasenha")
+    public String cambiarcontrasenha() {
+        return "login/cambiarcontrasenha"; // Esto renderiza la vista crearnuevacontrasenha.html
+    }
+
 
     @GetMapping("/informacion-de-contacto")
     public String informaciondecontacto() {
