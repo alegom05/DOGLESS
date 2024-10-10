@@ -37,6 +37,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer>{
     List<Usuario> findByRolAndNotBaneado(Integer idRol);
 
     public Usuario findByEmail(String email);
+    Usuario findByCodigoAduana(String codigoAduana);
 
 }
 
