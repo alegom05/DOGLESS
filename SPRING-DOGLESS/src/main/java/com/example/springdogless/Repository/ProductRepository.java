@@ -48,12 +48,18 @@ public interface ProductRepository extends JpaRepository<Producto, Integer>{
             "LEFT JOIN dogless.zonas z ON s.idzonas = z.idzonas " +
             "JOIN dogless.proveedores prov ON p.idproveedores = prov.idproveedores " +
             "WHERE s.idzonas = ?1 " +
+            "AND (?2 IS NULL OR p.precio BETWEEN ?2 AND ?3) " + // Filtrar por precio si se proporciona
             "LIMIT ?#{#pageable.pageSize} OFFSET ?#{#pageable.offset}",
             countQuery = "SELECT COUNT(*) FROM dogless.productos p " +
                     "LEFT JOIN dogless.stockproductos s ON p.idproductos = s.idproductos " +
-                    "WHERE s.idzonas = ?1",
+                    "WHERE s.idzonas = ?1 " +
+                    "AND (?2 IS NULL OR p.precio BETWEEN ?2 AND ?3)", // Filtrar en el conteo por precio si se proporciona
             nativeQuery = true)
-    Page<ProductoDTO> findProductosByZona(Integer idzona, Pageable pageable);
+    Page<ProductoDTO> findProductosByZonaAndPrecio(
+            Integer idzona,
+            Double precioMin,
+            Double precioMax,
+            Pageable pageable);
 
     @Query(value = "SELECT COUNT(p.idproductos) FROM dogless.productos p " +
             "JOIN dogless.stockproductos s ON p.idproductos = s.idproductos " +
@@ -69,15 +75,21 @@ public interface ProductRepository extends JpaRepository<Producto, Integer>{
             "LEFT JOIN dogless.zonas z ON s.idzonas = z.idzonas " +
             "JOIN dogless.proveedores prov ON p.idproveedores = prov.idproveedores " +
             "WHERE s.idzonas = ?1 " +
-            "AND p.categoria = ?2 " + // Filtrar por categoría
+            "AND p.categoria = ?2 " +
+            "AND (?3 IS NULL OR p.precio BETWEEN ?3 AND ?4) " + // Filtro opcional por precio
             "LIMIT ?#{#pageable.pageSize} OFFSET ?#{#pageable.offset}",
             countQuery = "SELECT COUNT(*) FROM dogless.productos p " +
                     "LEFT JOIN dogless.stockproductos s ON p.idproductos = s.idproductos " +
                     "WHERE s.idzonas = ?1 " +
-                    "AND p.categoria = ?2", // Filtrar en el conteo por categoría
+                    "AND p.categoria = ?2 " +
+                    "AND (?3 IS NULL OR p.precio BETWEEN ?3 AND ?4)", // Filtro en el conteo por precio
             nativeQuery = true)
-    Page<ProductoDTO> findProductosByZonaAndCategoria(Integer idzona, String categoria, Pageable pageable);
-
+    Page<ProductoDTO> findProductosByZonaAndCategoriaAndPrecio(
+            Integer idzona,
+            String categoria,
+            Double minPrecio,  // Parámetro para el precio mínimo
+            Double maxPrecio,  // Parámetro para el precio máximo
+            Pageable pageable);
     // Método para contar productos por zona
     @Query(value = "SELECT COUNT(*) FROM dogless.productos p " +
             "LEFT JOIN dogless.stockproductos s ON p.idproductos = s.idproductos " +

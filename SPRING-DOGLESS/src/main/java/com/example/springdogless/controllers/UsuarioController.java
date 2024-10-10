@@ -102,8 +102,19 @@ public class UsuarioController {
     public String TiendaProductos(HttpSession session, Model model,
                                   @RequestParam(value = "page", defaultValue = "1") int page,
                                   @RequestParam(required = false) String categoria,
-                                  @RequestParam(required = false) String filter) {
+                                  @RequestParam(required = false) String filter,
+                                  @RequestParam(required = false) List<String> priceRanges) {
         Integer idzona = (Integer) session.getAttribute("idzona");
+        double minPrice = 0;
+        double maxPrice = 0;
+
+        if (priceRanges != null) {
+            for (String range : priceRanges) {
+                String[] prices = range.split("-");
+                minPrice = Double.parseDouble(prices[0]);
+                maxPrice = Double.parseDouble(prices[1]);
+            }
+        }
 
         if (idzona != null) {
             // CAMBIAR
@@ -112,7 +123,6 @@ public class UsuarioController {
             int pageSize = 6;
             page=page-1;
             PageRequest pageRequest = PageRequest.of(page, pageSize);
-
 
             if (categoria != null) {
                 if (filter != null) {
@@ -131,12 +141,16 @@ public class UsuarioController {
                             break;
                         default:
                             // Filtrar productos por categoría con paginación si pasa un filtro que no es
-                            productosPaginados = productRepository.findProductosByZonaAndCategoria(idzona, categoria, pageRequest);
+                            productosPaginados = productRepository.findProductosByZonaAndCategoriaAndPrecio(idzona, categoria, null, null,pageRequest);
                             break;
                     }
                 } else{
-                    // Filtrar productos por categoría con paginación
-                    productosPaginados = productRepository.findProductosByZonaAndCategoria(idzona, categoria, pageRequest);
+                    if (priceRanges != null) {
+                        productosPaginados = productRepository.findProductosByZonaAndCategoriaAndPrecio(idzona, categoria, minPrice, maxPrice, pageRequest);
+                    }else{
+                        // Filtrar productos por categoría con paginación
+                        productosPaginados = productRepository.findProductosByZonaAndCategoriaAndPrecio(idzona, categoria, null, null,pageRequest);
+                    }
                 }
             } else {
                 if (filter != null) {
@@ -155,12 +169,17 @@ public class UsuarioController {
                             break;
                         default:
                             // Productos de la zona con paginación si pasa un filtro que no es
-                            productosPaginados = productRepository.findProductosByZona(idzona, pageRequest);
+                            productosPaginados = productRepository.findProductosByZonaAndPrecio(idzona,null,null, pageRequest);
                             break;
                     }
                 } else{
-                    // Productos de la zona con paginación
-                    productosPaginados = productRepository.findProductosByZona(idzona, pageRequest);
+                    if (priceRanges != null) {
+                        // Productos de la zona con paginación
+                        productosPaginados = productRepository.findProductosByZonaAndPrecio(idzona, minPrice, maxPrice, pageRequest);
+                    }else{
+                        // Filtrar productos por categoría con paginación
+                        productosPaginados = productRepository.findProductosByZonaAndPrecio(idzona,null, null,pageRequest);
+                    }
                 }
 
             }
