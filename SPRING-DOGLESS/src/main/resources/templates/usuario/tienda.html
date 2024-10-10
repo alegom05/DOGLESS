@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es"> 
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -226,7 +226,7 @@
         background-color: #f9f9f9; /* Fondo suave */
         padding: 15px; /* Espaciado interno */
         border-radius: 8px; /* Bordes redondeados */
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.6); /* Sombra ligera */
         margin-bottom: 20px; /* Separación de otros elementos */
       }
 
@@ -248,7 +248,7 @@
   <body>
     <div class="wrapper">
       <!-- Sidebar -->
-      <div th:replace="~{usuario/fragments/barralateralusuario :: body(activePage='guia')}"></div>
+      <div th:replace="~{usuario/fragments/barralateralusuario :: body(activePage='tienda')}"></div>
       <!-- End Sidebar -->
 
       <div class="main-panel">
@@ -362,68 +362,70 @@
                                 </div>
 
 
-                                 
+
                                   <div class="col-lg-12">
-                                      <h4 class="mb-3">Productos más rankeados</h4>
-                                      <div class="mb-2 d-flex align-items-center justify-content-start">
-                                          <div class="rounded me-4" style="width: 100px; height: 100px;">
-                                              <img src="/assets/img/productos/Laptop_ACER_Nitro_5.jpg" class="img-fluid rounded" alt="">
-                                          </div>
-                                          <div>
-                                            <h6 class="mb-2" style="display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">Laptop Acer Nitro 5</h6>
-                                              <div class="d-flex mb-2">
-                                                  <i class="fa fa-star star-colored"></i>
-                                                  <i class="fa fa-star star-colored"></i>
-                                                  <i class="fa fa-star star-colored"></i>
-                                                  <i class="fa fa-star star-colored"></i>
-                                                  <i class="fa fa-star star-uncolored"></i>
+                                      <div class="mb-3 categorias-container">
+                                          <h4 class="mb-3">Productos más rankeados</h4>
+                                          <!-- Itera sobre la lista de productos tres_productos_rankeados -->
+                                          <div th:each="producto : ${TresProductosRankeados}">
+                                              <div class="mb-2 d-flex align-items-center justify-content-start">
+                                                  <div class="rounded me-4" style="width: 100px; height: 100px;">
+                                                      <!-- Enlace a los detalles del producto -->
+                                                      <a th:href="@{'/usuario/producto/detalle/' + ${producto.idproductos}}">
+                                                          <!-- Imagen del producto -->
+                                                          <img th:src="@{'http://localhost:8080/usuario/producto/imagen/' + ${producto.idproductos}}"
+                                                               class="img-fluid w-100 rounded-top"
+                                                               alt="Imagen del producto">
+                                                      </a>
+                                                  </div>
+                                                  <div>
+                                                      <!-- Nombre del producto -->
+                                                      <h6 class="mb-2" style="display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;"
+                                                          th:text="${producto.nombre}"></h6>
+
+                                                      <div class="d-flex mb-2">
+                                                          <!-- Mostrar estrellas coloreadas según el promedio de satisfacción -->
+                                                          <span th:if="${producto.getPromedioSatisfaccion() >= 1}">
+                                                          <i class="fa fa-star star-colored"></i>
+                                                      </span>
+                                                          <span th:if="${producto.getPromedioSatisfaccion() >= 2}">
+                                                          <i class="fa fa-star star-colored"></i>
+                                                      </span>
+                                                          <span th:if="${producto.getPromedioSatisfaccion() >= 3}">
+                                                          <i class="fa fa-star star-colored"></i>
+                                                      </span>
+                                                          <span th:if="${producto.getPromedioSatisfaccion() >= 4}">
+                                                          <i class="fa fa-star star-colored"></i>
+                                                      </span>
+                                                          <span th:if="${producto.getPromedioSatisfaccion() >= 5}">
+                                                          <i class="fa fa-star star-colored"></i>
+                                                      </span>
+
+                                                          <!-- Aquí se rellenan las estrellas no coloreadas -->
+                                                          <span th:if="${producto.getPromedioSatisfaccion() < 5}">
+                                                          <i class="fa fa-star star-uncolored"></i>
+                                                      </span>
+                                                          <span th:if="${producto.getPromedioSatisfaccion() < 4}">
+                                                          <i class="fa fa-star star-uncolored"></i>
+                                                      </span>
+                                                          <span th:if="${producto.getPromedioSatisfaccion() < 3}">
+                                                          <i class="fa fa-star star-uncolored"></i>
+                                                      </span>
+                                                          <span th:if="${producto.getPromedioSatisfaccion() < 2}">
+                                                          <i class="fa fa-star star-uncolored"></i>
+                                                      </span>
+                                                          <span th:if="${producto.getPromedioSatisfaccion() < 1}">
+                                                          <i class="fa fa-star star-uncolored"></i>
+                                                      </span>
+                                                      </div>
+
+                                                      <!-- Precio del producto -->
+                                                      <div class="d-flex mb-2">
+                                                          <h5 class="fw-bold me-2" th:text="'S/.' + ${producto.precio}"></h5>
+                                                      </div>
+                                                  </div>
                                               </div>
-                                              <div class="d-flex mb-2">
-                                                  <h5 class="fw-bold me-2">S/.3600.00</h5>
-                                                  <!--<h5 class="text-danger text-decoration-line-through">4.11 $</h5>-->
-                                              </div>
                                           </div>
-                                      </div>
-                                      <div class="mb-2 d-flex align-items-center justify-content-start">
-                                          <div class="rounded me-4" style="width: 100px; height: 100px;">
-                                              <img src="img/laptop_asus_vivobook.jpg" class="img-fluid rounded" alt="">
-                                          </div>
-                                          <div>
-                                            <h6 class="mb-2" style="display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">Laptop Asus Vivobook 15</h6>
-                                              <div class="d-flex mb-2">
-                                                <i class="fa fa-star star-colored"></i>
-                                                <i class="fa fa-star star-colored"></i>
-                                                <i class="fa fa-star star-colored"></i>
-                                                <i class="fa fa-star star-colored"></i>
-                                                <i class="fa fa-star star-uncolored"></i>
-                                              </div>
-                                              <div class="d-flex mb-2">
-                                                  <h5 class="fw-bold me-2">S/.1999.99</h5>
-                                                  <!--<h5 class="text-danger text-decoration-line-through">4.11 $</h5>-->
-                                              </div>
-                                          </div>
-                                      </div>
-                                      <div class="mb-2 d-flex align-items-center justify-content-start">
-                                          <div class="rounded me-4" style="width: 100px; height: 100px;">
-                                              <img src="img/MacBook-Pro-A2780-6922-1.jpg" class="img-fluid rounded" alt="">
-                                          </div>
-                                          <div>
-                                            <h6 class="mb-2" style="display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">MacBook Pro A2780 Chip M2</h6>
-                                            <div class="d-flex mb-2">
-                                                <i class="fa fa-star star-colored"></i>
-                                                <i class="fa fa-star star-colored"></i>
-                                                <i class="fa fa-star star-colored"></i>
-                                                <i class="fa fa-star star-colored"></i>
-                                                <i class="fa fa-star star-uncolored"></i>
-                                              </div>
-                                              <div class="d-flex mb-2">
-                                                  <h5 class="fw-bold me-2">S/.3500.00</h5>
-                                                  <!--<h5 class="text-danger text-decoration-line-through">4.11 $</h5>-->
-                                              </div>
-                                          </div>
-                                      </div>
-                                      <div class="d-flex justify-content-center my-2">
-                                        <a href="#" class="btn btn-normal px-4 py-3 rounded-pill w-100">Vew More</a>
                                       </div>
                                   </div>
                                  
@@ -513,8 +515,30 @@
                                       </div>
                                   </th:block>
                               </div>
-                          </div>
 
+                          </div>
+                          <div class="col-lg-3"></div>
+                          <div class="col-lg-9 pagination d-flex justify-content-center">
+                              <!-- Flecha para ir a la página anterior -->
+                              <a th:if="${(currentPage + 1) > 1}"
+                                 th:href="@{/usuario/tienda(page=${currentPage}, filter=${param.filter}, price=${param.price})}"
+                                 class="rounded">&laquo;</a>
+                              <a th:unless="${(currentPage + 1) > 1}" class="rounded disabled">&laquo;</a>
+
+                              <!-- Generar enlaces de paginación -->
+                              <th:block th:each="i : ${#numbers.sequence(1, totalPages)}">
+                                  <a th:href="@{/usuario/tienda(page=${i}, filter=${param.filter}, price=${param.price})}"
+                                     th:classappend="${i == (currentPage + 1)} ? 'active'"
+                                     class="rounded"
+                                     th:text="${i}"></a>
+                              </th:block>
+
+                              <!-- Flecha para ir a la página siguiente -->
+                              <a th:if="${(currentPage + 1) < totalPages}"
+                                 th:href="@{/usuario/tienda(page=${currentPage + 2}, filter=${param.filter}, price=${param.price})}"
+                                 class="rounded">&raquo;</a>
+                              <a th:unless="${(currentPage + 1) < totalPages}" class="rounded disabled">&raquo;</a>
+                          </div>
 
 
 
@@ -536,27 +560,7 @@
 
 
 
-                        <div class="pagination d-flex justify-content-center mt-5">
-                          <!-- Flecha para ir a la página anterior -->
-                          <a th:if="${(currentPage + 1) > 1}"
-                             th:href="@{/usuario/tienda(page=${currentPage}, filter=${param.filter}, price=${param.price})}"
-                             class="rounded">&laquo;</a>
-                          <a th:unless="${(currentPage + 1) > 1}" class="rounded disabled">&laquo;</a>
 
-                          <!-- Generar enlaces de paginación -->
-                          <th:block th:each="i : ${#numbers.sequence(1, totalPages)}">
-                            <a th:href="@{/usuario/tienda(page=${i}, filter=${param.filter}, price=${param.price})}"
-                               th:classappend="${i == (currentPage + 1)} ? 'active'"
-                               class="rounded"
-                               th:text="${i}"></a>
-                          </th:block>
-
-                          <!-- Flecha para ir a la página siguiente -->
-                          <a th:if="${(currentPage + 1) < totalPages}"
-                             th:href="@{/usuario/tienda(page=${currentPage + 2}, filter=${param.filter}, price=${param.price})}"
-                             class="rounded">&raquo;</a>
-                          <a th:unless="${(currentPage + 1) < totalPages}" class="rounded disabled">&raquo;</a>
-                        </div>
 
 
 
@@ -566,73 +570,8 @@
               </div>
           </div>
         </div>
-        <!-- Fruits Shop End-->
-        <footer class="footer">
-         
-          <div class="row align-items-center">
-            <div class="col-md-4">
-              <h2>DOGLESS</h2>
-            </div>
-            <div class="col-md-4 offset-md-4 d-flex justify-content-center">
-              <button type="button" class="btn btn-icon btn-round btn-primary mx-1">
-                <i class="fab fa-facebook-f"></i>
-              </button>
-              <button type="button" class="btn btn-icon btn-round btn-info mx-1">
-                <i class="fab fa-twitter"></i>
-              </button>
-              <button type="button" class="btn btn-icon btn-round btn-secondary mx-1">
-                <i class="fab fa-linkedin-in"></i>
-              </button>
-              <button type="button" class="btn btn-icon btn-round btn-danger mx-1">
-                <i class="fab fa-youtube"></i>
-              </button>
-                  
-            </div>
-          </div>
-        
-          <hr class="my-2">
-            
-              <div class="row">
-                <div class="col-md-3">
-                  <h5>Sobre nosotros</h5>
-                  <ul class="list-unstyled">
-                    <li><a href="javascript:void(0)" class="footer-link d-block pb-2">Acerca de dogless</a></li>
-                    <li><a href="javascript:void(0)" class="footer-link d-block pb-2">TyC</a></li>
-                    <li><a href="javascript:void(0)" class="footer-link d-block pb-2">Numero de RUC</a></li>
-                    <li><a href="javascript:void(0)" class="footer-link d-block pb-2">licenciamiento</a></li>
-                  </ul>
-                </div>
-                <div class="col-md-3">
-                  <h5>Cuenta</h5>
-                  <ul class="list-unstyled">
-                    <li><a href="javascript:void(0)" class="footer-link d-block pb-2">Crear cuenta</a></li>
-                    <li><a href="javascript:void(0)" class="footer-link d-block pb-2">Pago</a></li>
-                    <li><a href="javascript:void(0)" class="footer-link d-block pb-2">Envio</a></li>
-                    <li><a href="javascript:void(0)" class="footer-link d-block pb-2">Soporte</a></li>
-                  </ul>
-                </div>
-                <div class="col-md-3">
-                  <h5>Guia de compra</h5>
-                  <ul class="list-unstyled">
-                    <li><a href="javascript:void(0)" class="footer-link d-block pb-2">Mi cuenta</a></li>
-                    <li><a href="javascript:void(0)" class="footer-link d-block pb-2">Mis pedidos</a></li>
-                    <li><a href="javascript:void(0)" class="footer-link d-block pb-2">Favoritos</a></li>
-                    <li><a href="javascript:void(0)" class="footer-link d-block pb-2">Devoluciones</a></li>
-                  </ul>
-                </div>
-                <div class="col-md-3">
-                  <h5>Métodos de pago</h5>
-                  <div class="payment-methods">
-                    <img src="/assets/img/productos/logo-visa.png" alt="Visa" class="img-fluid w-25 mx-2">
-                    <img src="/assets/img/productos/logo-mastercard.png" alt="Mastercard" class="img-fluid w-25 mx-2">
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <h7>@2024-2090 Dogless.com, todos los derechos reservados</h7>
-              </div>
-            
-        </footer>
+          <!-- Pie de página -->
+          <div th:replace="~{usuario/fragments/piedepagina :: fragment}"></div>
       </div>
     </div>
     <!-- JavaScript Libraries -->
