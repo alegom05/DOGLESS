@@ -101,35 +101,86 @@ public class UsuarioController {
     @GetMapping("/tienda")
     public String TiendaProductos(HttpSession session, Model model,
                                   @RequestParam(value = "page", defaultValue = "1") int page,
-                                  @RequestParam(required = false) String categoria) {
+                                  @RequestParam(required = false) String categoria,
+                                  @RequestParam(required = false) String filter) {
         Integer idzona = (Integer) session.getAttribute("idzona");
 
         if (idzona != null) {
-            Page<ProductoDTO> productosPaginados;
+            // CAMBIAR
+            Page<ProductoDTO> productosPaginados = null;
             List<ProductoDTO> productos;
             int pageSize = 6;
             page=page-1;
             PageRequest pageRequest = PageRequest.of(page, pageSize);
 
 
-
-
             if (categoria != null) {
-                // Filtrar productos por categoría con paginación
-                productosPaginados = productRepository.findProductosByZonaAndCategoria(idzona, categoria, pageRequest);
+                if (filter != null) {
+                    switch (filter) {
+                        case "ranked":
+                            // Obtener productos más rankeados
+                            //productosPaginados = productRepository.findProductosByZonaOrderByRanking(idzona, pageRequest);
+                            break;
+                        case "price_desc":
+                            // Lógica para ordenar por precio de mayor a menor
+                            productosPaginados = productRepository.findProductosByZonaAndCategoriaOrderByPrecioDescByCategoria(idzona, categoria, pageRequest);
+                            break;
+                        case "price_asc":
+                            // Lógica para ordenar por precio de menor a mayor
+                            productosPaginados = productRepository.findProductosByZonaAndCategoriaOrderByPrecioAscByCategoria(idzona, categoria, pageRequest);
+                            break;
+                        default:
+                            // Filtrar productos por categoría con paginación si pasa un filtro que no es
+                            productosPaginados = productRepository.findProductosByZonaAndCategoria(idzona, categoria, pageRequest);
+                            break;
+                    }
+                } else{
+                    // Filtrar productos por categoría con paginación
+                    productosPaginados = productRepository.findProductosByZonaAndCategoria(idzona, categoria, pageRequest);
+                }
             } else {
-                // Productos de la zona con paginación
-                productosPaginados = productRepository.findProductosByZona(idzona, pageRequest);
+                if (filter != null) {
+                    switch (filter) {
+                        case "ranked":
+                            // Obtener productos más rankeados
+                            // productosPaginados = productRepository.findProductosByZonaOrderByRanking(idzona, pageRequest);
+                            break;
+                        case "price_desc":
+                            // Lógica para ordenar por precio de mayor a menor
+                            productosPaginados = productRepository.findProductosByZonaOrderByPrecioDesc(idzona, pageRequest);
+                            break;
+                        case "price_asc":
+                            // Lógica para ordenar por precio de menor a mayor
+                            productosPaginados = productRepository.findProductosByZonaOrderByPrecioAsc(idzona, pageRequest);
+                            break;
+                        default:
+                            // Productos de la zona con paginación si pasa un filtro que no es
+                            productosPaginados = productRepository.findProductosByZona(idzona, pageRequest);
+                            break;
+                    }
+                } else{
+                    // Productos de la zona con paginación
+                    productosPaginados = productRepository.findProductosByZona(idzona, pageRequest);
+                }
+
             }
 
             productos = productosPaginados.getContent();
 
-            // Obtener las categorías únicas de los productos
-            Set<String> categorias = productos.stream()
-                    .map(ProductoDTO::getCategoria)
-                    .collect(Collectors.toSet());
-            model.addAttribute("categorias", categorias);
 
+
+            // Obtener las categorías únicas de los productos
+            //Set<String> categorias = productos.stream()
+            //        .map(ProductoDTO::getCategoria)
+            //        .collect(Collectors.toSet());
+            //model.addAttribute("categorias", categorias);
+
+
+
+            // Obtener todas las categorías disponibles
+            Set<String> todasLasCategorias = new HashSet<>(productRepository.findAllCategorias(idzona));
+
+            model.addAttribute("categorias", todasLasCategorias); // Mantiene todas las categorías
             model.addAttribute("listaProductos", productos);
             model.addAttribute("totalPages", productosPaginados.getTotalPages());
             model.addAttribute("currentPage", page);
@@ -139,7 +190,7 @@ public class UsuarioController {
 
             // Crea por asi decirlo una matriz q se colocara como, por ejemplo, Tecnologia, 4 (indicando la categoria
             // como string y la cantidad como int)
-            for (String categoriaz : categorias) {
+            for (String categoriaz : todasLasCategorias) {
                 Integer count = productRepository.countProductosByZonaAndCategoria(idzona, categoriaz);
                 conteoPorCategoria.put(categoriaz, count);
             }
