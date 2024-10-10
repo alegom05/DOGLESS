@@ -1,19 +1,25 @@
 package com.example.springdogless.controllers;
 
+import com.example.springdogless.DTO.OrdenDetalleDTO;
 import com.example.springdogless.DTO.ProductoDTO;
 import com.example.springdogless.Repository.*;
 import com.example.springdogless.entity.*;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -39,11 +45,124 @@ public class UsuarioController {
     private ProveedorRepository proveedorRepository;
     @Autowired
     ImportacionRepository importacionRepository;
+    @Autowired
+    Detallesorden2 detallesRepository;
+    @Autowired
+    private JavaMailSenderImpl mailSender;
 
-    @GetMapping({""})
-    public String PaginaPrincipal(Model model) {
-        return "usuario/paginaprincipal";
+    @GetMapping("")
+    public String listarOrdenesUsuario(HttpSession session, Model model) {
+        // Obtener el usuario de la sesión
+        Usuario usuarioLogueado = (Usuario) session.getAttribute("usuario");
+
+        // Validar si el usuario está en sesión
+        if (usuarioLogueado == null) {
+            return "redirect:/login"; // Redirigir al login si no hay sesión
+        }
+
+        // Ejecutar la consulta SQL nativa para obtener las órdenes del usuario
+        List<Object[]> ordenes = detallesRepository.findOrdersByUserId(usuarioLogueado.getId());
+
+        // Pasar la lista de órdenes a la vista
+        model.addAttribute("ordenes", ordenes);
+        return "usuario/paginaprincipal"; // Retornar la vista con las órdenes
     }
+    @PostMapping("/editorden")
+    public String editarOrden(@RequestParam("id") Integer id, Model model) {
+        // Aquí va la lógica de edición de la orden
+        // Por ejemplo, cargar la orden actual en un formulario
+        // Implementar si tienes una vista específica para editar órdenes
+        return "usuario/editarOrden";
+    }
+
+    /*@PostMapping("/eliminarorden")
+    public String eliminarOrden(@RequestParam("id") Integer id, HttpSession session, RedirectAttributes redirectAttributes) {
+        Usuario usuarioLogueado = (Usuario) session.getAttribute("usuario");
+
+        // Validar si el usuario está en sesión
+        if (usuarioLogueado == null) {
+            return "redirect:/login";
+        }
+
+        // Obtener la orden por ID
+        Detalleorden orden = detallesRepository.findById(id).orElse(null);
+
+        // Verificar si la orden existe y si el estado permite eliminarla
+        if (orden == null || !orden.getOrden().getUsuario().getId().equals(usuarioLogueado.getId())) {
+            redirectAttributes.addFlashAttribute("error", "Orden no encontrada o no tiene permiso para eliminarla.");
+            return "redirect:/usuario";
+        }
+
+        if (orden.getOrden().getEstado().equals("En Proceso")) {
+            redirectAttributes.addFlashAttribute("error", "No se puede eliminar una orden que está en proceso.");
+            return "redirect:/usuario";
+        }
+
+        // Eliminar la orden
+        detallesRepository.deleteById(id);
+
+        // Simulación del reembolso mediante correo
+        try {
+            enviarCorreoReembolso(usuarioLogueado.getEmail(), orden.getOrden().getTotal());
+        } catch (MessagingException e) {
+            e.printStackTrace();
+            redirectAttributes.addFlashAttribute("error", "No se pudo enviar el correo de reembolso.");
+            return "redirect:/usuario";
+        }
+
+        // Mensaje de éxito
+        redirectAttributes.addFlashAttribute("success", "Orden eliminada y reembolso realizado.");
+        return "redirect:/usuario";
+    }
+
+     */
+    @PostMapping("/eliminarorden")
+    public String borrarAdminZonal(@RequestParam("id") Integer id, RedirectAttributes attr) {
+        Optional<Detalleorden> optDetalleorden = detallesRepository.findById(id);
+
+        if (optDetalleorden.isPresent()) {
+            Detalleorden orden = optDetalleorden.get();
+            detallesRepository.deleteById(id);
+            attr.addFlashAttribute("msg", "Orden borrada exitosamente");
+        } else {
+            attr.addFlashAttribute("error", "Error al borrar el orden");
+        }
+
+        return "redirect:/usuario";
+    }
+
+    private void enviarCorreoReembolso(String correo, BigDecimal total) throws MessagingException {
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, true);
+
+        helper.setTo(correo);
+        helper.setSubject("Reembolso realizado");
+        helper.setText("Estimado cliente,\n\nSu reembolso de S/. " + total + " ha sido realizado exitosamente.\nGracias por su preferencia.\n\nSaludos cordiales.");
+
+        mailSender.send(message);
+    }
+    @PostMapping("/descargarboleta")
+    public String descargarBoleta(@RequestParam("id") Integer id, HttpSession session, RedirectAttributes redirectAttributes) {
+        Usuario usuarioLogueado = (Usuario) session.getAttribute("usuario");
+
+        if (usuarioLogueado == null) {
+            return "redirect:/login";
+        }
+
+        Detalleorden orden = detallesRepository.findById(id).orElse(null);
+
+        if (orden == null || !orden.getOrden().getUsuario().getId().equals(usuarioLogueado.getId())) {
+            redirectAttributes.addFlashAttribute("error", "Orden no encontrada o no tiene permiso para descargarla.");
+            return "redirect:/usuario";
+        }
+
+        // Lógica para generar y descargar la boleta (PDF o cualquier formato deseado)
+        // Ejemplo: retorno de archivo PDF
+
+        return "redirect:/usuario";  // O donde quieras redirigir después de la descarga
+    }
+
+
 
     @GetMapping({"/guia"})
     public String GuiaDeUsuario(Model model) {

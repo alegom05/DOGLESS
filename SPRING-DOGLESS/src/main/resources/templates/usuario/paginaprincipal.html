@@ -79,37 +79,41 @@
                         <thead>
                           <tr>
                             <th>N° orden</th>
-                            <th>Imagen</th>
                             <th>Producto</th>
+                            <th>Fecha de orden</th>
+                            <th>Dirección Envío</th>
                             <th>Precio (S/.)</th>
                             <th>Cantidad</th>
-                            <th>Fecha de orden</th>
-                            <th>Fecha de entrega</th>
                             <th>Estado</th>
                             <th>Acciones</th>
                           </tr>
                         </thead>
                         <tbody>
-                          <tr>
-                            <td>153449</td>
-                            <td><img src="../Plantilla_Admin/assets/img/productos/PS4.png" alt="Producto más vendido" style="width:50px; height:50px;"></td>
-                            <td>Sony PS4</td>
-                            <td>1499</td>
-                            <td>12</td>
-                            <td>12/08/24</td>
-                            <td>24/08/24</td>
-                            <td>En proceso</td>
+                          <tr th:each="orden : ${ordenes}">
+                            <!-- Asignar los valores de cada columna de la consulta SQL -->
+                            <td th:text="${orden[0]}"></td> <!-- idordenes -->
+                            <td th:text="${orden[6]}"></td> <!-- nombre_producto -->
+                            <td th:text="${orden[2]}"></td> <!-- fecha -->
+                            <td th:text="${orden[3]}"></td> <!-- direccionenvio -->
+                            <td th:text="${orden[8]}"></td> <!-- subtotal -->
+                            <td th:text="${orden[7]}"></td> <!-- cantidad -->
+                            <td th:text="${orden[1]}"></td> <!-- estado -->
                             <td>
                               <!-- Dropdown con ícono -->
                               <div class="dropdown">
-                                <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                   <i class="fas fa-ellipsis-v"></i>
                                 </button>
                                 <!-- Dropdown oscuro -->
-                                <ul class="dropdown-menu dropdown-menu-primary" aria-labelledby="dropdownMenuButton1">
-                                  <li><a class="dropdown-item" href="VerProducto.html">Solicitar reembolso</a></li>
-                                  <li><a class="dropdown-item" href="EditarProducto.html">Calificar producto</a></li>
-                                  <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#denegarModal">Descargar boleta</a></li>
+                                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
+                                  <!-- Opción de Editar -->
+                                  <li><a class="dropdown-item" th:href="@{'/usuario/editorden' + '?id=' + ${orden[0]}}">Editar</a></li>
+
+                                  <li><a href="#" class="dropdown-item" data-toggle="modal"  data-target="#confirmDeleteModal" th:data-id="${orden[0]}">Eliminar</a></li>
+                                  <!-- Descargar boleta -->
+                                  <li><button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#descargarBoletaModal"
+                                              th:data-id="${orden[0]}" onclick="setDescargarBoleta(${orden[0]})">Descargar boleta</button></li>
+
                                 </ul>
                               </div>
                             </td>
@@ -117,26 +121,56 @@
 
                         </tbody>
                       </table>
-                      
-                      <div class="modal fade" id="denegarModal" tabindex="-1" role="dialog" aria-labelledby="acceptModalLabel" aria-hidden="true">
+
+                      <!-- Modal para Confirmar Eliminación -->
+                      <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                           <div class="modal-content">
                             <div class="modal-header">
-                              <h5 class="modal-title" id="acceptModalLabel">Advertencia</h5>
+                              <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmar Eliminación</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                              ¿Estás seguro de que deseas eliminar este usuario?
+
+                            </div>
+                            <div class="modal-footer">
+                              <form id="deleteForm" method="post" th:action="@{'/usuario/eliminarorden'}" novalidate>
+                                <input type="hidden" name="id" id="userId">
+                                <button type="submit" class="btn btn-dark">Eliminar</button>
+                              </form>
+                              <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancelar</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+
+                      <!-- Modal para Confirmar Descarga de Boleta -->
+                      <div class="modal fade" id="descargarBoletaModal" tabindex="-1" role="dialog" aria-labelledby="descargarBoletaModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="descargarBoletaModalLabel">Advertencia</h5>
                               <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                               </button>
                             </div>
                             <div class="modal-body">
-                              <p>¿Estas seguro que deseas descargar la boleta?</p>
+                              <p>¿Estás seguro que deseas descargar la boleta?</p>
                             </div>
                             <div class="modal-footer">
-                              <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" >Cancelar</button>
-                              <button type="button" class="btn btn-dark"  onclick="eliminarRegistro()">Aceptar</button>
+                              <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+                              <!-- Aquí se llama al método que descarga la boleta con el ID correspondiente -->
+                              <button type="button" class="btn btn-dark" id="confirmDescargarBtn">Aceptar</button>
                             </div>
                           </div>
                         </div>
                       </div>
+
+
 
                       <script>
                         // Función para cerrar popups
@@ -361,6 +395,45 @@
                     "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json"  // Traducción al español
                 }
             });
+      });
+    </script>
+    <script>
+      let ordenIdEliminar = null;
+      let ordenIdBoleta = null;
+
+      // Función para establecer el ID de la orden que se va a eliminar
+      function setEliminarOrden(id) {
+        ordenIdEliminar = id;
+      }
+      function confirmarEliminar() {
+        if (ordenIdEliminar) {
+          // Redireccionar al controlador de eliminar orden pasando el ID capturado
+          window.location.href = "/usuario/eliminarorden?id=" + ordenIdEliminar;
+        }
+      }
+
+      // Función para establecer el ID de la orden para descargar boleta
+      function setDescargarBoleta(id) {
+        ordenIdBoleta = id;
+      }
+
+      // Función para confirmar la descarga de la boleta
+      document.getElementById("confirmDescargarBtn").addEventListener("click", function() {
+        if (ordenIdBoleta) {
+          // Lógica para descargar la boleta usando el ID capturado
+          // Redireccionar a la ruta correspondiente o hacer una solicitud AJAX
+          window.location.href = "/usuario/descargarboleta?id=" + ordenIdBoleta;
+        }
+      });
+
+    </script>
+    <script>
+      // Este script asigna el ID del usuario al modal antes de abrirlo
+      $('#confirmDeleteModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget); // Botón que abrió el modal
+        var userId = button.data('id'); // Extraer la información de atributos de datos
+        var modal = $(this);
+        modal.find('#userId').val(userId); // Asigna el ID al campo oculto
       });
     </script>
   </body>
