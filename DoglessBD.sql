@@ -448,6 +448,7 @@ CREATE TABLE IF NOT EXISTS `dogless`.`detallesorden` (
   `cantidad` INT NULL DEFAULT NULL,
   `preciounitario` DECIMAL(10,2) NULL DEFAULT NULL,
   `subtotal` DECIMAL(10,2) NULL DEFAULT NULL,
+  `borrado` INT DEFAULT 1,
   PRIMARY KEY (`iddetallesorden`),
   INDEX `id_orden_idx_detallesOrden` (`idorden` ASC) VISIBLE,
   INDEX `id_producto_idx_detallesOrden` (`idproducto` ASC) VISIBLE,

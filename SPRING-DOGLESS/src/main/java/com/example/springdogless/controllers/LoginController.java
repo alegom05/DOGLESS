@@ -2,6 +2,8 @@ package com.example.springdogless.controllers;
 
 import com.example.springdogless.Repository.UsuarioRepository;
 import com.example.springdogless.entity.Usuario;
+import com.example.springdogless.services.EmailService;
+import jakarta.mail.internet.MimeMessage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
@@ -9,6 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -29,6 +32,9 @@ public class LoginController {
     UsuarioRepository usuarioRepository;
     @Autowired
     private JavaMailSender emailSender;
+    @Autowired
+    EmailService emailService;
+
 
     // Mapea la vista del login
     @GetMapping({"", "/loginForm"})
@@ -49,23 +55,28 @@ public class LoginController {
     }
 
     // Mapea la vista de recuperación de contraseña
+
     @PostMapping("/olvidastecontasenha")
     public String handleForgotPassword(@RequestParam("email") String email, Model model) {
         try {
-            // Generate a unique token (you might want to store this in your database)
+            // Genera un token único (podrías almacenarlo en la base de datos)
             String resetToken = UUID.randomUUID().toString();
 
-            // Create the reset link
+            // Crea el enlace de restablecimiento
             String resetLink = "http://yourdomain.com/crearnuevacontrasenha?token=" + resetToken;
 
-            // Create and send email
-            SimpleMailMessage message = new SimpleMailMessage();
-            message.setFrom("asanmiguel2024@gmail.com");
-            message.setTo(email);
-            message.setSubject("Restablecimiento de contraseña");
-            message.setText("Para restablecer tu contraseña, haz clic en el siguiente enlace:\n\n" + resetLink);
+            // Crear y enviar correo con alias
+            MimeMessage mimeMessage = emailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
 
-            emailSender.send(message);
+            helper.setTo(email);
+            helper.setSubject("Restablecimiento de contraseña");
+            helper.setText("Para restablecer tu contraseña, haz clic en el siguiente enlace:\n\n" + resetLink, true);
+
+            // Aquí defines el alias y el remitente
+            helper.setFrom("admin@dogless.com", "Dogless Admin");
+
+            emailSender.send(mimeMessage);
 
             model.addAttribute("mensaje", "Se ha enviado un correo con instrucciones para restablecer tu contraseña.");
             return "login/olvidastecontasenha";
@@ -127,5 +138,15 @@ public class LoginController {
         return ResponseEntity.notFound().build();
     }
 
+
+    @PostMapping("/request-password-reset")
+    public ResponseEntity<String> requestPasswordReset(@RequestParam String email) {
+        // Lógica para generar el token de restablecimiento de contraseña
+
+        // Envío del correo
+        emailService.sendEmail(email, "Restablecimiento de contraseña", "Haga clic en el enlace para restablecer su contraseña.");
+
+        return ResponseEntity.ok("Correo enviado.");
+    }
 }
 
