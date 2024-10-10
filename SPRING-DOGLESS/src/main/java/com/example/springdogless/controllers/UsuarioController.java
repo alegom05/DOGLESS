@@ -242,6 +242,19 @@ public class UsuarioController {
         return "usuario/carrito_compras";
     }
 
+    @GetMapping(value = "checkout")
+    public String listaCheckout(Model model) {
+        return "usuario/checkout";
+    }
+    @GetMapping(value = "procesopago")
+    public String procesoPago(Model model) {
+        return "usuario/procesoDePago";
+    }
+    @GetMapping(value = "pagoexitoso")
+    public String pagoExitoso(Model model) {
+        return "usuario/pagoExitoso";
+    }
+
     //El resto no está hecho
 
     /*
