@@ -73,7 +73,7 @@
                             <div class="col">
                               <div class="mb-3">
                                 <label for="nombre" class="form-label">Nombre: (*)</label>
-                                <input type="text" class="form-control" name="nombre" id="nombre" maxlength="50" minlength="1" placeholder="" pattern="[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]" title="ingrese su número de teléfono" required>
+                                <input type="text" class="form-control" name="nombre" id="nombre" maxlength="50" minlength="1" placeholder="" title="ingrese su número de teléfono" required>
                                 <div class="invalid-feedback">Por favor ingresar nombre(s).</div>
                               </div>
                             </div>
@@ -81,7 +81,7 @@
                             <div class="col">
                               <div class="mb-3">
                                 <label for="apellido" class="form-label">Apellido: (*)</label>
-                                <input type="apellido" class="form-control" name="apellido" id="apellido" maxlength="50" minlength="1" placeholder="" pattern="[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]" title="ingrese su número de teléfono" required>
+                                <input type="apellido" class="form-control" name="apellido" id="apellido" maxlength="50" minlength="1" placeholder="" title="ingrese su número de teléfono" required>
                                 <div class="invalid-feedback">Por favor ingresar apellido(s).</div>
                               </div>
                             </div>
@@ -91,16 +91,16 @@
                             <div class="col">
                               <div class="mb-3">
                                 <label for="dni" class="form-label">DNI: (*)</label>
-                                <input type="text" class="form-control" name="dni" id="dni" maxlength="9" minlength="9" placeholder="" pattern="[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]" title="ingrese su número de teléfono" required>
+                                <input type="text" class="form-control" name="dni" id="dni" maxlength="9" minlength="9" placeholder="" title="ingrese su número de teléfono" required>
                                 <div class="invalid-feedback">Ingrese un número de DNI válido.</div>
                               </div>
                             </div>
 
                             <div class="col">
                               <div class="mb-3">
-                                <label for="correo" class="form-label">Correo: (*)</label>
-                                <input type="correo" class="form-control" name="correo" id="correo" maxlength="9" minlength="9" placeholder="" pattern="[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]" title="ingrese su número de teléfono" required>
-                                <div class="invalid-feedback">Por favor ingresar apellido(s).</div>
+                                <label for="email" class="form-label">Correo: (*)</label>
+                                <input type="text" class="form-control" name="email" id="email" maxlength="50" minlength="1" placeholder="" title="ingrese su número de teléfono" required>
+                                <div class="invalid-feedback">Ingrese un nombre de correo válido.</div>
                               </div>
                             </div>
                           </div>
@@ -109,17 +109,24 @@
                             <div class="col">
                               <div class="mb-3">
                                 <label for="direccion" class="form-label">Dirección: (*)</label>
-                                <input type="text" class="form-control" name="direccion" id="direccion" maxlength="9" minlength="9" placeholder="" pattern="[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]" title="ingrese su número de teléfono" required>
-                                <div class="invalid-feedback">Por favor ingresar nombre(s).</div>
+                                <input type="text" class="form-control" name="direccion" id="direccion" maxlength="50" minlength="1" placeholder="" title="ingrese su número de teléfono" required>
+                                <div class="invalid-feedback">Ingrese una dirección válida.</div>
                               </div>
                             </div>
+
                             <div class="col">
                               <div class="mb-3">
-                                <label for="distrito.nombre" class="form-label">Distrito: (*)</label>
-                                <input type="text" class="form-control" name="distrito.nombre" id="distrito.nombre" maxlength="9" minlength="9" placeholder="" pattern="[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]" title="ingrese su número de teléfono" required>
-                                <div class="invalid-feedback">Por favor ingresar nombre(s).</div>
+                                <label for="iddistritos" class="form-label">Distrito: (*)</label>
+                                <select name="usuario.distrito.iddistritos" id="iddistritos" class="form-select" required>
+                                  <option value="" disabled selected>Escoja una opción</option>
+                                  <option th:each="distrito : ${listaDistritos}"
+                                          th:text="${distrito.distrito}"
+                                          th:value="${distrito.iddistritos}">Elegir un distrito</option>
+                                </select>
+                                <div class="invalid-feedback">Por favor selecciona un distrito.</div>
                               </div>
                             </div>
+
                           </div>
 
                           <div class="row">

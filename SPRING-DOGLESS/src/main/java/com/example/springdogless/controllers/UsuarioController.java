@@ -61,7 +61,27 @@ public class UsuarioController {
     @GetMapping("/libro")
     public String nuevaReclamacion(Model model, @ModelAttribute("usuario") Usuario usuario) {
         model.addAttribute("listaUsuarios", usuarioRepository.findAll());
+        model.addAttribute("listaDistritos", distritoRepository.findAll());
+
         return "usuario/libro";
+    }
+
+    @PostMapping("/guardarReclamo")
+    public String guardarReclamo(@RequestParam("idusuario") Integer idusuario, Usuario usuario, RedirectAttributes attr) {
+        Optional<Usuario> optionalUsuario = usuarioRepository.findById(idusuario);
+
+        if (optionalUsuario.isPresent()) {
+            usuario = optionalUsuario.get();
+            //usuario.setProveedor(usuario);  // Asignar el proveedor al producto
+        } else {
+            attr.addFlashAttribute("error", "Usuario no encontrado");
+            return "redirect:/usuario/libro";
+
+        }
+        usuarioRepository.save(usuario);
+
+        attr.addFlashAttribute("msg", "Reclamo creado exitosamente");
+        return "redirect:/usuario/libro";
     }
 
     /*
