@@ -57,7 +57,7 @@
           <div class="page-inner">
             <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
               <div>
-                <h3 class="fw-bold mb-3">Agregar Agente</h3>
+                <h3 class="fw-bold mb-3">Libro de reclamaciones</h3>
               </div>
             </div>
             <div class="row">
@@ -69,19 +69,21 @@
                       <div class="container">
                         <div class="row">
 
-                          <div class="col">
-                            <div class="mb-3">
-                              <label for="nombre" class="form-label">Nombre (*)</label>
-                              <input type="text" class="form-control" name="nombre" id="nombre" maxlength="8" minlength="8" placeholder="Ej: 87654321" pattern="[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]" title="ingrese su DNI" required>
-                              <div class="invalid-feedback">Ingrese su nombre</div>
+                          <div class="row">
+                            <div class="col">
+                              <div class="mb-3">
+                                <label for="nombre" class="form-label">Nombre: (*)</label>
+                                <input type="text" class="form-control" name="nombre" id="nombre" maxlength="50" minlength="1" placeholder="" pattern="[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]" title="ingrese su número de teléfono" required>
+                                <div class="invalid-feedback">Por favor ingresar nombre(s).</div>
+                              </div>
                             </div>
-                          </div>
 
-                          <div class="col">
-                            <div class="mb-3">
-                              <label for="apellido" class="form-label">Apellido (*)</label>
-                              <input type="text" class="form-control" name="apellido" id="apellido" maxlength="9" minlength="9" placeholder="Ej: 987654321" pattern="[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]" title="ingrese su número de teléfono" required>
-                              <div class="invalid-feedback">Ingrese su apellido.</div>
+                            <div class="col">
+                              <div class="mb-3">
+                                <label for="apellido" class="form-label">Apellido: (*)</label>
+                                <input type="apellido" class="form-control" name="apellido" id="apellido" maxlength="50" minlength="1" placeholder="" pattern="[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]" title="ingrese su número de teléfono" required>
+                                <div class="invalid-feedback">Por favor ingresar apellido(s).</div>
+                              </div>
                             </div>
                           </div>
 
@@ -89,19 +91,48 @@
                             <div class="col">
                               <div class="mb-3">
                                 <label for="dni" class="form-label">DNI: (*)</label>
-                                <input type="text" class="form-control" name="dni" id="dni" maxlength="9" minlength="9" placeholder="Ej: 987654321" pattern="[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]" title="ingrese su número de teléfono" required>
-                                <div class="invalid-feedback">Por favor ingresar nombre(s).</div>
+                                <input type="text" class="form-control" name="dni" id="dni" maxlength="9" minlength="9" placeholder="" pattern="[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]" title="ingrese su número de teléfono" required>
+                                <div class="invalid-feedback">Ingrese un número de DNI válido.</div>
                               </div>
                             </div>
 
                             <div class="col">
                               <div class="mb-3">
                                 <label for="correo" class="form-label">Correo: (*)</label>
-                                <input type="correo" class="form-control" name="correo" id="correo" maxlength="9" minlength="9" placeholder="Ej: 987654321" pattern="[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]" title="ingrese su número de teléfono" required>
+                                <input type="correo" class="form-control" name="correo" id="correo" maxlength="9" minlength="9" placeholder="" pattern="[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]" title="ingrese su número de teléfono" required>
                                 <div class="invalid-feedback">Por favor ingresar apellido(s).</div>
                               </div>
                             </div>
                           </div>
+
+                          <div class="row">
+                            <div class="col">
+                              <div class="mb-3">
+                                <label for="direccion" class="form-label">Dirección: (*)</label>
+                                <input type="text" class="form-control" name="direccion" id="direccion" maxlength="9" minlength="9" placeholder="" pattern="[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]" title="ingrese su número de teléfono" required>
+                                <div class="invalid-feedback">Por favor ingresar nombre(s).</div>
+                              </div>
+                            </div>
+                            <div class="col">
+                              <div class="mb-3">
+                                <label for="distrito.nombre" class="form-label">Distrito: (*)</label>
+                                <input type="text" class="form-control" name="distrito.nombre" id="distrito.nombre" maxlength="9" minlength="9" placeholder="" pattern="[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]" title="ingrese su número de teléfono" required>
+                                <div class="invalid-feedback">Por favor ingresar nombre(s).</div>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="row">
+                            <div class="col">
+                              <div class="mb-3">
+                                <label for="descripcion" class="form-label">Descripción: (*)</label>
+                                <textarea name="descripcion" id="descripcion" class="form-control" rows="10" placeholder="" required></textarea>
+                                <div class="invalid-feedback">Por favor ingresar nombre(s).</div>
+                              </div>
+                            </div>
+                          </div>
+
+
                         <!--
                         <div class="row">
                           <div class="col">
