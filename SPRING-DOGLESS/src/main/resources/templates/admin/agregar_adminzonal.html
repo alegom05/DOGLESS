@@ -86,11 +86,19 @@
                         </div>
 
                         <div class="row">
+                          <!--
                           <div class="col">
                             <div class="mb-3">
                               <label for="nombre" class="form-label">Nombre: (*)</label>
                               <input type="text" name="nombre" id="nombre" placeholder="Ej: Tomas" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ]+(\s[a-zA-ZáéíóúÁÉÍÓÚñÑ]+)?" class="form-control" required>
                               <div class="invalid-feedback">Por favor ingresar nombre(s).</div>
+                            </div>
+                          </div>
+                        -->
+                          <div class="col">
+                            <div class="mb-3">
+                              <label for="dni" class="form-label">Nombre: (*)</label>
+                              <input type="text" name="nombre" id="nombre" class="form-control" th:value="${usuario.nombre}" readonly>
                             </div>
                           </div>
                           <div class="col">
