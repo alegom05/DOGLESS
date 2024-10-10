@@ -823,10 +823,47 @@
                                                      overflow: hidden; text-overflow: ellipsis;"
                                                      th:text="${producto.descripcion}">
                                                   </p>
+
+                                                <div class="d-flex mb-2">
+                                                  <!-- Aquí se usa el valor promedioSatisfaccion desde el modelo -->
+                                                  <span th:if="${producto.getPromedioSatisfaccion() >= 1}">
+                                                          <i class="fa fa-star star-colored"></i>
+                                                      </span>
+                                                  <span th:if="${producto.getPromedioSatisfaccion() >= 2}">
+                                                          <i class="fa fa-star star-colored"></i>
+                                                      </span>
+                                                  <span th:if="${producto.getPromedioSatisfaccion() >= 3}">
+                                                          <i class="fa fa-star star-colored"></i>
+                                                      </span>
+                                                  <span th:if="${producto.getPromedioSatisfaccion() >= 4}">
+                                                          <i class="fa fa-star star-colored"></i>
+                                                      </span>
+                                                  <span th:if="${producto.getPromedioSatisfaccion() >= 5}">
+                                                          <i class="fa fa-star star-colored"></i>
+                                                      </span>
+
+                                                  <!-- Aquí se rellenan las estrellas no coloreadas -->
+                                                  <span th:if="${producto.getPromedioSatisfaccion() < 5}">
+                                                          <i class="fa fa-star star-uncolored"></i>
+                                                      </span>
+                                                  <span th:if="${producto.getPromedioSatisfaccion() < 4}">
+                                                          <i class="fa fa-star star-uncolored"></i>
+                                                      </span>
+                                                  <span th:if="${producto.getPromedioSatisfaccion() < 3}">
+                                                          <i class="fa fa-star star-uncolored"></i>
+                                                      </span>
+                                                  <span th:if="${producto.getPromedioSatisfaccion() < 2}">
+                                                          <i class="fa fa-star star-uncolored"></i>
+                                                      </span>
+                                                  <span th:if="${producto.getPromedioSatisfaccion() < 1}">
+                                                          <i class="fa fa-star star-uncolored"></i>
+                                                      </span>
+                                                </div>
+
                                                   <div class="d-flex justify-content-between flex-lg-wrap">
                                                       <!-- Precio del producto -->
                                                       <p class="text-dark fs-5 fw-bold mb-0">S/.<span th:text="${producto.precio}"></span></p>
-                                                      <!-- Botón de añadir al carrito -->
+                                                    <!-- Botón de añadir al carrito -->
                                                       <a href="/Plantilla_Usuario/carrito_compras.html"
                                                          class="btn btn-normal-2 rounded-pill mt-2 px-3">
                                                           <i class="fa fa-shopping-bag me-2"></i> Añade al carrito
@@ -858,6 +895,9 @@
                           </div>
                           -->
 
+
+
+
                           <div class="pagination d-flex justify-content-center mt-5">
                               <!-- Flecha para ir a la página anterior (deshabilitada si está en la primera página) -->
                               <a th:if="${(currentPage+1) > 1}" th:href="@{/usuario/tienda(page=${(currentPage)})}" class="rounded">&laquo;</a>
@@ -877,10 +917,7 @@
                               <a th:if="${(currentPage+1) < totalPages}" th:href="@{/usuario/tienda(page=${currentPage+2})}" class="rounded">&raquo;</a>
                               <a th:unless="${(currentPage+1) < totalPages}" class="rounded disabled">&raquo;</a>
                           </div>
-
-
-
-
+                        
 
                       </div>
                   </div>

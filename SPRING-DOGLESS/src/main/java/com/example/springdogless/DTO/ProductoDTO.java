@@ -20,5 +20,6 @@ public interface ProductoDTO {
     String getProveedorNombre();
     String getProveedorApellido();
 
+    Integer getPromedioSatisfaccion();
 
 }
