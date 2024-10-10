@@ -412,6 +412,94 @@ public interface ProductRepository extends JpaRepository<Producto, Integer>{
 
 
 
+    @Query(value = "SELECT " +
+            "p.idproductos, p.nombre, p.descripcion, p.categoria, p.precio, p.costoenvio, " +
+            "p.idproveedores, prov.nombre AS proveedorNombre, prov.apellido AS proveedorApellido, " +
+            "p.modelos, p.colores, p.aprobado, p.borrado, p.estado, " +
+            "s.cantidad, z.nombre AS nombreZona, " +
+            "ROUND(COALESCE(avgSatisfaccion.promedio_satisfaccion, 0)) AS promedioSatisfaccion " + // Columna de satisfacción promedio
+            "FROM dogless.productos p " +
+            "LEFT JOIN dogless.stockproductos s ON p.idproductos = s.idproductos " +
+            "LEFT JOIN dogless.zonas z ON s.idzonas = z.idzonas " +
+            "JOIN dogless.proveedores prov ON p.idproveedores = prov.idproveedores " +
+            "LEFT JOIN ( " +
+            "    SELECT r.idproductos, AVG(r.satisfaccion) AS promedio_satisfaccion " +
+            "    FROM dogless.resenas r " +
+            "    JOIN dogless.usuarios u ON r.usuarioid = u.idusuarios " +
+            "    GROUP BY r.idproductos " +
+            ") avgSatisfaccion ON p.idproductos = avgSatisfaccion.idproductos " +
+            "WHERE s.idzonas = ?1 " + // Parámetro para el ID de zona
+            "ORDER BY promedioSatisfaccion DESC " + // Ordenar por satisfacción promedio descendente
+            "LIMIT 3", // Obtener solo los 3 primeros
+            nativeQuery = true)
+    List<ProductoDTO> findTop3ProductosByZona(Integer idzona);
+
+
+
+
+
+
+    @Query(value = "SELECT p.idproductos, p.nombre, p.descripcion, p.categoria, p.precio, p.costoenvio, " +
+            "p.idproveedores, prov.nombre AS proveedorNombre, prov.apellido AS proveedorApellido, " +
+            "p.modelos, p.colores, p.aprobado, p.borrado, p.estado, " +
+            "s.cantidad, z.nombre AS nombreZona, " +
+            "ROUND(COALESCE(avgSatisfaccion.promedio_satisfaccion, 0)) AS promedioSatisfaccion " + // Agrega la columna de satisfacción promedio
+            "FROM dogless.productos p " +
+            "LEFT JOIN dogless.stockproductos s ON p.idproductos = s.idproductos " +
+            "LEFT JOIN dogless.zonas z ON s.idzonas = z.idzonas " +
+            "JOIN dogless.proveedores prov ON p.idproveedores = prov.idproveedores " +
+            "LEFT JOIN ( " +
+            "    SELECT r.idproductos, " +
+            "           ROUND(COALESCE(AVG(r.satisfaccion), 0)) AS promedio_satisfaccion " +
+            "    FROM dogless.resenas r " +
+            "    JOIN dogless.usuarios u ON r.usuarioid = u.idusuarios " +
+            "    GROUP BY r.idproductos " +
+            ") avgSatisfaccion ON p.idproductos = avgSatisfaccion.idproductos " +
+            "WHERE s.idzonas = ?1 " +
+            "AND p.categoria = ?2 " + // Filtrar por categoría
+            "ORDER BY promedioSatisfaccion DESC " + // Ordenar por satisfacción de mayor a menor
+            "LIMIT ?#{#pageable.pageSize} OFFSET ?#{#pageable.offset}",
+            countQuery = "SELECT COUNT(*) FROM dogless.productos p " +
+                    "LEFT JOIN dogless.stockproductos s ON p.idproductos = s.idproductos " +
+                    "WHERE s.idzonas = ?1 " +
+                    "AND p.categoria = ?2", // Filtrar en el conteo por categoría
+            nativeQuery = true)
+    Page<ProductoDTO> findProductosByZonaAndCategoriaOrderBySatisfaccionDesc(
+            Integer idzona,
+            String categoria,
+            Pageable pageable);
+
+
+
+
+
+    @Query(value = "SELECT p.idproductos, p.nombre, p.descripcion, p.categoria, p.precio, p.costoenvio, " +
+            "p.idproveedores, prov.nombre AS proveedorNombre, prov.apellido AS proveedorApellido, " +
+            "p.modelos, p.colores, p.aprobado, p.borrado, p.estado, " +
+            "s.cantidad, z.nombre AS nombreZona, " +
+            "ROUND(COALESCE(avgSatisfaccion.promedio_satisfaccion, 0)) AS promedioSatisfaccion " + // Agrega la columna de satisfacción promedio
+            "FROM dogless.productos p " +
+            "LEFT JOIN dogless.stockproductos s ON p.idproductos = s.idproductos " +
+            "LEFT JOIN dogless.zonas z ON s.idzonas = z.idzonas " +
+            "JOIN dogless.proveedores prov ON p.idproveedores = prov.idproveedores " +
+            "LEFT JOIN ( " +
+            "    SELECT r.idproductos, " +
+            "           ROUND(COALESCE(AVG(r.satisfaccion), 0)) AS promedio_satisfaccion " +
+            "    FROM dogless.resenas r " +
+            "    JOIN dogless.usuarios u ON r.usuarioid = u.idusuarios " +
+            "    GROUP BY r.idproductos " +
+            ") avgSatisfaccion ON p.idproductos = avgSatisfaccion.idproductos " +
+            "WHERE s.idzonas = ?1 " + // Filtrar solo por zona
+            "ORDER BY promedioSatisfaccion DESC " + // Ordenar por satisfacción de mayor a menor
+            "LIMIT ?#{#pageable.pageSize} OFFSET ?#{#pageable.offset}",
+            countQuery = "SELECT COUNT(*) FROM dogless.productos p " +
+                    "LEFT JOIN dogless.stockproductos s ON p.idproductos = s.idproductos " +
+                    "WHERE s.idzonas = ?1", // Filtrar en el conteo solo por zona
+            nativeQuery = true)
+    Page<ProductoDTO> findProductosByZonaOrderBySatisfaccionDesc(
+            Integer idzona,
+            Pageable pageable);
+
 
 
 
