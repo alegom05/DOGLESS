@@ -109,7 +109,11 @@
                                   <!-- Opción de Editar -->
                                   <li><a class="dropdown-item" th:href="@{'/usuario/editorden' + '?id=' + ${orden[0]}}">Editar</a></li>
 
-                                  <li><a href="#" class="dropdown-item" data-toggle="modal"  data-target="#confirmDeleteModal" th:data-id="${orden[0]}">Eliminar</a></li>
+                                  <li th:if="${orden[1] != 'En Proceso'}">
+                                    <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal"
+                                            th:data-id="${orden[0]}" >Eliminar</button>
+                                  </li>
+
                                   <!-- Descargar boleta -->
                                   <li><button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#descargarBoletaModal"
                                               th:data-id="${orden[0]}" onclick="setDescargarBoleta(${orden[0]})">Descargar boleta</button></li>
@@ -121,8 +125,7 @@
 
                         </tbody>
                       </table>
-
-                      <!-- Modal para Confirmar Eliminación -->
+                      <!-- Modal de confirmación para eliminar orden -->
                       <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                           <div class="modal-content">
@@ -133,7 +136,7 @@
                               </button>
                             </div>
                             <div class="modal-body">
-                              ¿Estás seguro de que deseas eliminar este usuario?
+                              ¿Estás seguro de que deseas eliminar esta orden?
 
                             </div>
                             <div class="modal-footer">
@@ -146,6 +149,9 @@
                           </div>
                         </div>
                       </div>
+
+
+
 
 
                       <!-- Modal para Confirmar Descarga de Boleta -->
@@ -169,46 +175,6 @@
                           </div>
                         </div>
                       </div>
-
-
-
-                      <script>
-                        // Función para cerrar popups
-                        function cerrarPopup(id) {
-                          document.getElementById(id).style.display = 'none';
-                        }
-
-                        // Funciones para manejar la lógica de los botones
-                        function verRegistro(dni) {
-                          window.location.href = `VerProducto.html`; // Redirigir a la vista de ver
-                        }
-
-                        function editarRegistro(dni) {
-                          window.location.href = `EditarProducto.html`; // Redirigir a la vista de editar
-                        }
-
-                        function confirmarBorrado(dni) {
-                          document.getElementById('confirmarBorradoPopup').style.display = 'block';
-                          // Guardar el DNI del usuario a eliminar en algún lugar si es necesario
-                        }
-
-                        function eliminarRegistro() {
-                          alert('Registro eliminado.'); // Aquí se colocaría la lógica para eliminar el registro
-                          cerrarPopup('confirmarBorradoPopup');
-                        }
-
-                        function confirmarEspiar(dni) {
-                          document.getElementById('confirmarEspiarPopup').style.display = 'block';
-                          // Guardar el DNI del usuario a espiar si es necesario
-                        }
-
-                        function espiarCuenta() {
-                          window.location.href = '/espiarCuenta'; // Redirigir a la vista de espiar
-                          cerrarPopup('confirmarEspiarPopup');
-                        }
-                      </script>
-
-
 
                     </div>
 
@@ -396,36 +362,6 @@
                 }
             });
       });
-    </script>
-    <script>
-      let ordenIdEliminar = null;
-      let ordenIdBoleta = null;
-
-      // Función para establecer el ID de la orden que se va a eliminar
-      function setEliminarOrden(id) {
-        ordenIdEliminar = id;
-      }
-      function confirmarEliminar() {
-        if (ordenIdEliminar) {
-          // Redireccionar al controlador de eliminar orden pasando el ID capturado
-          window.location.href = "/usuario/eliminarorden?id=" + ordenIdEliminar;
-        }
-      }
-
-      // Función para establecer el ID de la orden para descargar boleta
-      function setDescargarBoleta(id) {
-        ordenIdBoleta = id;
-      }
-
-      // Función para confirmar la descarga de la boleta
-      document.getElementById("confirmDescargarBtn").addEventListener("click", function() {
-        if (ordenIdBoleta) {
-          // Lógica para descargar la boleta usando el ID capturado
-          // Redireccionar a la ruta correspondiente o hacer una solicitud AJAX
-          window.location.href = "/usuario/descargarboleta?id=" + ordenIdBoleta;
-        }
-      });
-
     </script>
     <script>
       // Este script asigna el ID del usuario al modal antes de abrirlo

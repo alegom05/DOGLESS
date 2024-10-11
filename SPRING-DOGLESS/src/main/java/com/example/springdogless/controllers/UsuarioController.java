@@ -117,19 +117,14 @@ public class UsuarioController {
 
      */
     @PostMapping("/eliminarorden")
-    public String borrarAdminZonal(@RequestParam("id") Integer id, RedirectAttributes attr) {
+    public String borrarOrden(@RequestParam("id") Integer id, RedirectAttributes attr) {
         Optional<Detalleorden> optDetalleorden = detallesRepository.findById(id);
-
         if (optDetalleorden.isPresent()) {
-            Detalleorden orden = optDetalleorden.get();
             detallesRepository.deleteById(id);
-            attr.addFlashAttribute("msg", "Orden borrada exitosamente");
-        } else {
-            attr.addFlashAttribute("error", "Error al borrar el orden");
         }
-
         return "redirect:/usuario";
     }
+
 
     private void enviarCorreoReembolso(String correo, BigDecimal total) throws MessagingException {
         MimeMessage message = mailSender.createMimeMessage();
