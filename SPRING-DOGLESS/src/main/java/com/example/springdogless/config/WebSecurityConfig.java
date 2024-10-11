@@ -102,11 +102,8 @@ public class WebSecurityConfig {
 
                 .anyRequest().permitAll();
 
-        http.logout();
 
-/*
         http.logout().logoutSuccessUrl("/");
-*/
 
         return http.build();
 

@@ -72,8 +72,10 @@
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="#">Cambiar contraseña</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="/login">Cerrar Sesion</a>
-                  </li>
+                    <a href="#" onclick="document.getElementById('logoutForm').submit();" class="dropdown-item">Cerrar Sesión</a>
+                    <form id="logoutForm" th:action="@{/logout}" method="post" style="display:none;">
+                      <input type="submit">
+                    </form>                  </li>
                 </div>
               </ul>
             </li>
