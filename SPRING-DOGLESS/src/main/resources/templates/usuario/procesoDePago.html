@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
   <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -121,7 +122,7 @@
 
                                               <div class="row py-2">
                                                   <div class="col">
-                                                    <a type="button" class="btn btn-primary btn-next me-sm-3 me-1" href="/usuario/pagoexitoso">Continuar</a>
+                                                    <a type="button" class="btn btn-primary btn-next me-sm-3 me-1" th:href="@{'/usuario/pagoexitoso' + '?id=' + ${session.usuario.id}}">Continuar</a>
                                                     <button type="reset" class="btn btn-label-secondary">Volver</button>
                                                   </div>
                                               </div>
@@ -136,6 +137,16 @@
                                                     <dt class="col-6 fw-normal">Play 5 x1</dt>
                                                     <dd class="col-6 text-end">$1198.00</dd>
                                                     
+                                                </dl>
+                                                <dl class="row mb-0">
+                                                    <dt class="col-6 fw-normal">Play 5 x1</dt>
+                                                    <dd class="col-6 text-end">$1198.00</dd>
+
+                                                </dl>
+                                                <dl class="row mb-0">
+                                                    <dt class="col-6 fw-normal">Play 5 x1</dt>
+                                                    <dd class="col-6 text-end">$1198.00</dd>
+
                                                 </dl>
                                                 <hr class="mx-n4">
                                                 <dl class="row mb-0">

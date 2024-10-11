@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="es"> 
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
   <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -130,18 +131,10 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <th scope="row">
-                                            <div class="d-flex align-items-center">
-                                                <img src="/assetsUsuario/img/productos/celular_samsung_a15.jpg" class="img-fluid me-5 rounded-circle" style="width: 80px; height: 80px;" alt="">
-                                            </div>
-                                        </th>
-                                        <td>
-                                            <p class="mb-0">Samsung Galaxy A15</p>
-                                        </td>
-                                        <td>
-                                            <p class="mb-0">S/.849.99</p>
-                                        </td>
+                                    <tr th:each="producto : ${listaProductos}">
+                                        <td th:text="${producto.imagenprod}"></td>
+                                        <td th:text="${producto.nombre}"></td>
+                                        <td th:text="${producto.precio}"></td>
                                         <td>
                                             <div class="d-flex justify-content-center align-items-center">
                                                 <div class="input-group quantity" style="width: 120px;">
@@ -160,90 +153,14 @@
                                             </div>
                                         </td>
                                         <td>
-                                            <p class="mb-0">S/.1699.98</p>
+                                            <p class="mb-0">S/.1999.99</p>
                                         </td>
                                         <td>
-                                            <button class="btn btn-md rounded-circle border btn-remove">
+                                            <button class="btn btn-md rounded-circle border btn-remove" >
                                                 <i class="fa fa-times"></i>
                                             </button>
                                         </td>
 
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">
-                                            <div class="d-flex align-items-center">
-                                                <img src="/assetsUsuario/img/productos/MacBook-Pro-A2780-6922-1.jpg" class="img-fluid me-5 rounded-circle" style="width: 80px; height: 80px;" alt="">
-                                            </div>
-                                        </th>
-                                        <td>
-                                            <p class="mb-0">MacBook Pro A2780 Chip M2</p>
-                                        </td>
-                                        <td>
-                                            <p class="mb-0">S/.3500.00</p>
-                                        </td>
-                                        <td>
-                                            <div class="d-flex justify-content-center align-items-center">
-                                                <div class="input-group quantity" style="width: 120px;">
-                                                    <div class="input-group-btn">
-                                                        <button class="btn btn-sm btn-minus rounded-circle border">
-                                                            <i class="fa fa-minus"></i>
-                                                        </button>
-                                                    </div>
-                                                    <input type="text" class="form-control form-control-sm text-center border-0 qty-input" value="1" style="max-width: 40px;">
-                                                    <div class="input-group-btn">
-                                                        <button class="btn btn-sm btn-plus rounded-circle border">
-                                                            <i class="fa fa-plus"></i>
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <p class="mb-0">S/.3500.00</p>
-                                        </td>
-                                        <td>
-                                            <button class="btn btn-md rounded-circle border btn-remove" >
-                                                <i class="fa fa-times"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">
-                                            <div class="d-flex align-items-center">
-                                                <img src="/assetsUsuario/img/productos/laptop_asus_vivobook.jpg" class="img-fluid me-5 rounded-circle" style="width: 80px; height: 80px;" alt="">
-                                            </div>
-                                        </th>
-                                        <td>
-                                            <p class="mb-0">Laptop Asus Vivobook 15</p>
-                                        </td>
-                                        <td>
-                                            <p class="mb-0">S/.1999.99</p>
-                                        </td>
-                                        <td>
-                                            <div class="d-flex justify-content-center align-items-center">
-                                                <div class="input-group quantity" style="width: 120px;">
-                                                    <div class="input-group-btn">
-                                                        <button class="btn btn-sm btn-minus rounded-circle border">
-                                                            <i class="fa fa-minus"></i>
-                                                        </button>
-                                                    </div>
-                                                    <input type="text" class="form-control form-control-sm text-center border-0 qty-input" value="1" style="max-width: 40px;">
-                                                    <div class="input-group-btn">
-                                                        <button class="btn btn-sm btn-plus rounded-circle border">
-                                                            <i class="fa fa-plus"></i>
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <p class="mb-0">S/.1999.99</p>
-                                        </td>
-                                        <td>
-                                            <button class="btn btn-md rounded-circle border btn-remove" >
-                                                <i class="fa fa-times"></i>
-                                            </button>
-                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -258,7 +175,7 @@
                             <p>Productos (2)</p>
                             <p>Envíos (1): <strong>Gratis</strong></p>
                             <p>Total: <strong id="totalPrice">S/887</strong></p>
-                            <a class="btn btn-primary btn-lg btn-block" href="/usuario/checkout">Continuar compra</a>
+                            <a class="btn btn-primary btn-lg btn-block" th:href="@{'/usuario/checkout' + '?id=' + ${session.usuario.id}}">Continuar compra</a>
                         </div>
                     </div>
                 </div>

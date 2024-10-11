@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
   <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -100,47 +101,49 @@
                                     <div id="checkout-cart" class="content">
                                         <div class="row">
                                             <!-- Cart left -->
-                                            <div class="col-md-5">
+                                          <div class="col-md-4">
+                                            <!-- Price Details -->
+                                            <h4>Total de compra</h4>
+                                            <hr class="mx-n4">
+                                            <table class="table">
+                                              <thead>
+                                                <tr>
+                                                  <th scope="col">Productos</th>
+                                                  <th scope="col">Cantidad</th>
+                                                  <th scope="col">Total</th>
+                                                </tr>
+                                              </thead>
+                                              <tbody>
+                                                <tr th:each="producto : ${listaProductos}">
+                                                  <td th:text="${producto.nombre}"></td>
+                                                  <td> 1</td>
+                                                  <td th:text="'S/.'+${producto.precio}"></td>
+                                                </tr>
 
-                                              <h4>Total de compra</h4>
-                                              <hr class="mx-n4">
-                                              <table class="table">
-                                                <thead>
-                                                  <tr>
-                                                    <th scope="col">Productos</th>
-                                                    <th scope="col">Cantidad</th>
-                                                    <th scope="col">Total</th>
-                                                  </tr>
-                                                </thead>
-                                                <tbody>
-                                                  <tr>
-                                                    <td>Celular Samsung S24+</td>
-                                                    <td>3</td>
-                                                    <td>S/.6000.00</td>
-                                                  </tr>
-                                                  <tr>
-                                                    <td>Costo de envio</td>
-                                                    <td></td>
-                                                    <td>S/.9.00</td>
-                                                  </tr>
+                                              </tbody>
+                                            </table>
+                                            <hr class="mx-n4">
+                                            <dl class="row mb-0">
+                                              <dt class="col-6">Subtotal</dt>
+                                              <dd class="col-6 fw-medium text-end mb-0">S/.1000.50</dd>
+                                            </dl>
+                                            <hr class="mx-n4">
+                                            <dl class="row mb-0">
+                                              <dt class="col-6">Costo de envio</dt>
+                                              <dd class="col-6 fw-medium text-end mb-0">S/.9.00</dd>
+                                            </dl>
+                                            <hr class="mx-n4">
+                                            <dl class="row mb-0">
+                                              <dt class="col-6">Total</dt>
+                                              <dd class="col-6 fw-medium text-end mb-0">S/.1009.50</dd>
+                                            </dl>
 
-                                                </tbody>
-                                              </table>
-                                              <hr class="mx-n4">
-                                              <dl class="row mb-0">
-                                                <dt class="col-6">Subtotal</dt>
-                                                <dd class="col-6 fw-medium text-end mb-0">S/.6000.00</dd>
-                                              </dl>
-                                              <hr class="mx-n4">
-                                              <dl class="row mb-0">
-                                                <dt class="col-6">Total</dt>
-                                                <dd class="col-6 fw-medium text-end mb-0">S/.6009.00</dd>
-                                              </dl>
-
-                                              <div class="btn-container py-4" style="text-align: center;">
-                                                <a href="/usuario/procesopago" class="btn btn-primary">Realizar el pedido</a>
-                                              </div>
+                                            <div class="btn-container py-4" style="text-align: center;">
+                                              <a href="/usuario/tienda" class="btn btn-primary">Finalizar</a>
                                             </div>
+
+
+                                          </div>
                                 
 
                                         </div>

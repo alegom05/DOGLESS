@@ -3,6 +3,7 @@ package com.example.springdogless.Repository;
 
 import com.example.springdogless.DTO.ProductoDTO;
 import com.example.springdogless.entity.Producto;
+import com.example.springdogless.entity.Usuario;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -183,7 +184,9 @@ public interface ProductRepository extends JpaRepository<Producto, Integer>{
 
 
 
-
+    //Para la lista de productos en base a las ordenes del usuario
+    @Query(value = "SELECT p.* FROM usuarios u JOIN ordenes o ON u.idusuarios = o.idusuarios JOIN detallesorden ohp ON o.idordenes = ohp.idorden JOIN productos p ON ohp.idproducto = p.idproductos WHERE u.idusuarios = ?", nativeQuery = true)
+    List<Producto> findProductosByUsuarioId(Integer id);
 
 
 

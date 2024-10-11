@@ -389,20 +389,24 @@ public class UsuarioController {
 
 
     @GetMapping(value = "compras")
-    public String listaCompras(Model model) {
+    public String listaCompras(Model model, @RequestParam("id") Integer id) {
+        model.addAttribute("listaProductos",productRepository.findProductosByUsuarioId(id));
         return "usuario/carrito_compras";
     }
 
     @GetMapping(value = "checkout")
-    public String listaCheckout(Model model) {
+    public String checkout(Model model, @RequestParam("id") Integer id) {
+        model.addAttribute("listaProductos",productRepository.findProductosByUsuarioId(id));
         return "usuario/checkout";
     }
     @GetMapping(value = "procesopago")
-    public String procesoPago(Model model) {
+    public String procesoPago(Model model,@RequestParam("id") Integer id) {
+        model.addAttribute("listaProductos",productRepository.findProductosByUsuarioId(id));
         return "usuario/procesoDePago";
     }
     @GetMapping(value = "pagoexitoso")
-    public String pagoExitoso(Model model) {
+    public String pagoExitoso(Model model,@RequestParam("id") Integer id) {
+        model.addAttribute("listaProductos",productRepository.findProductosByUsuarioId(id));
         return "usuario/pagoExitoso";
     }
 

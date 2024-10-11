@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
   <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -89,59 +90,39 @@
                                           <div class="col-md-6">
                                             <div class="row py-2">
                                                 <div class="col">
-                                                    <label for="nombre" class="form-label">Nombres: (*)</label>
-                                                    <input type="text" name="nombre" id="nombre" class="form-control" pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]+(\s[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]+){0,4}"
-                                                           placeholder="Jose" required>
-                                                    <div class="invalid-feedback">Por favor ingresar nombre(s).</div>
+                                                    <label for="nombre" class="form-label">Nombre: (*)</label>
+                                                    <input type="text" name="nombre" id="nombre" class="form-control" th:value="${session.usuario.nombre}" readonly>
                                                 </div>
                                                 <div class="col">
-                                                    <label for="apellido" class="form-label">Apellidos: (*)</label>
-                                                    <input type="text" name="apellido" id="apellido" class="form-control" pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]+(\s[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]+){0,4}"
-                                                           placeholder="Lopez" required>
-                                                    <div class="invalid-feedback">Por favor ingresar apellido(s).</div>
+                                                    <label for="apellido" class="form-label">Apellido: (*)</label>
+                                                    <input type="text" name="apellido" id="apellido" class="form-control" th:value="${session.usuario.apellido}" readonly>
                                                 </div>
                                             </div>
                                             <div class="row py-2">
                                                 <div class="col">
-                                                    <label for="departamento" class="form-label">Departamento: (*)</label>
-                                                    <input type="text" name="departamento" id="departamento" class="form-control" pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]+(\s[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]+){0,4}"
-                                                           placeholder="Lima" required>
+                                                    <label for="departamento" class="form-label">Zona: (*)</label>
+                                                    <input type="text" name="departamento" id="departamento" class="form-control" th:value="${session.usuario.zona.nombre}" readonly>
                                                 </div>
-                                                <div class="col">
-                                                    <label for="provincia" class="form-label">Provincia: (*)</label>
-                                                    <input type="text" name="provincia" id="provincia" class="form-control" pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]+(\s[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]+){0,4}"
-                                                           placeholder="Lima" required>
-                                                </div>
-                                            </div>
-                                            <div class="row py-2">
                                                 <div class="col">
                                                     <label for="distrito" class="form-label">Distrito: (*)</label>
-                                                    <input type="text" name="distrito" id="distrito" class="form-control" pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]+(\s[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]+){0,4}"
-                                                           placeholder="Lima" required>
-                                                </div>
-                                                <div class="col">
-                                                    <label for="codpostal" class="form-label">Código Postal: (*)</label>
-                                                    <input type="text" name="codpostal" id="codpostal" class="form-control" pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]+(\s[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]+){0,4}"
-                                                           placeholder="38011" required>
+                                                    <input type="text" name="distrito" id="distrito" class="form-control" th:value="${session.usuario.distrito.distrito}" readonly>
                                                 </div>
                                             </div>
                                             <div class="row py-2">
                                                 <div class="col">
-                                                    <label for="direccion" class="form-label">Dirección: (*)</label>
-                                                    <input type="text" name="direccion" id="direccion" class="form-control" pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]+(\s[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]+){0,4}"
-                                                           placeholder="Av. Universitaria 1838" required>
+                                                    <label for="direccion" class="form-label">Dirección: (Modificable)</label>
+                                                    <input type="text" name="direccion" id="direccion" class="form-control" th:value="${session.usuario.direccion}" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+" placeholder="Ej: Av Universitaria 2049">
+                                                    <div class="invalid-feedback">Ingresar direccion.</div>
                                                 </div>
                                             </div>
                                             <div class="row py-2">
                                                 <div class="col">
                                                     <label for="numtelefono" class="form-label">Número de teléfono: (*)</label>
-                                                    <input type="text" name="numtelefono" id="numtelefono" class="form-control" pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]+(\s[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]+){0,4}"
-                                                           placeholder="Lima" required>
+                                                    <input type="text" name="numtelefono" id="numtelefono" class="form-control" th:value="${session.usuario.telefono}" readonly>
                                                 </div>
                                                 <div class="col">
                                                     <label for="correo" class="form-label">Correo Electrónico: (*)</label>
-                                                    <input type="text" name="correo" id="correo" class="form-control" pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]+(\s[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]+){0,4}"
-                                                           placeholder="38011" required>
+                                                    <input type="text" name="correo" id="correo" class="form-control" th:value="${session.usuario.email}" readonly>
                                                 </div>
                                             </div>
                                           </div>
@@ -160,32 +141,32 @@
                                                       </tr>
                                                     </thead>
                                                     <tbody>
-                                                      <tr>
-                                                        <td>Celular Samsung S24+</td>
-                                                        <td>3</td>
-                                                        <td>S/.6000.00</td>
-                                                      </tr> 
-                                                      <tr>
-                                                        <td>Costo de envio</td>
-                                                        <td></td>
-                                                        <td>S/.9.00</td>
-                                                      </tr>
-                                              
+                                                        <tr th:each="producto : ${listaProductos}">
+                                                            <td th:text="${producto.nombre}"></td>
+                                                            <td> 1</td>
+                                                            <td th:text="'S/.'+${producto.precio}"></td>
+                                                        </tr>
+
                                                     </tbody>
                                                 </table>
                                                 <hr class="mx-n4">
                                                 <dl class="row mb-0">
                                                     <dt class="col-6">Subtotal</dt>
-                                                    <dd class="col-6 fw-medium text-end mb-0">S/.6000.00</dd>
+                                                    <dd class="col-6 fw-medium text-end mb-0">S/.1000.50</dd>
                                                 </dl>
+                                              <hr class="mx-n4">
+                                                  <dl class="row mb-0">
+                                                      <dt class="col-6">Costo de envio</dt>
+                                                      <dd class="col-6 fw-medium text-end mb-0">S/.9.00</dd>
+                                                  </dl>
                                                 <hr class="mx-n4">
                                                 <dl class="row mb-0">
                                                     <dt class="col-6">Total</dt>
-                                                    <dd class="col-6 fw-medium text-end mb-0">S/.6009.00</dd>
+                                                    <dd class="col-6 fw-medium text-end mb-0">S/.1009.50</dd>
                                                 </dl>
                                             
                                             <div class="btn-container py-4" style="text-align: center;">
-                                                <a href="/usuario/procesopago" class="btn btn-primary">Realizar el pedido</a>
+                                                <a th:href="@{'/usuario/procesopago' + '?id=' + ${session.usuario.id}}" class="btn btn-primary">Realizar el pedido</a>
                                             </div>
 
                                             
@@ -193,8 +174,9 @@
 
 
 
-                                        </div>
 
+
+                                        </div>
                                     </div>
                                 </form>
                             </div>
