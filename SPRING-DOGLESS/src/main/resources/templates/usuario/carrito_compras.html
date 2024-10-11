@@ -134,7 +134,7 @@
                                     <tr th:each="producto : ${listaProductos}">
                                         <td th:text="${producto.imagenprod}"></td>
                                         <td th:text="${producto.nombre}"></td>
-                                        <td th:text="${producto.precio}"></td>
+                                        <td class="price" th:text="'S/' + ${producto.precio}"></td>
                                         <td>
                                             <div class="d-flex justify-content-center align-items-center">
                                                 <div class="input-group quantity" style="width: 120px;">
@@ -152,15 +152,14 @@
                                                 </div>
                                             </div>
                                         </td>
-                                        <td>
-                                            <p class="mb-0">S/.1999.99</p>
+                                        <td class="total-price">
+                                            <p class="mb-0">S/0.00</p>
                                         </td>
                                         <td>
-                                            <button class="btn btn-md rounded-circle border btn-remove" >
+                                            <button class="btn btn-md rounded-circle border btn-remove">
                                                 <i class="fa fa-times"></i>
                                             </button>
                                         </td>
-
                                     </tr>
                                 </tbody>
                             </table>
@@ -172,8 +171,8 @@
                         <h1 class="mb-3 mt-4 "></h1>
                         <div class="card p-3">
                             <h5>Resumen de compra</h5>
-                            <p>Productos (2)</p>
-                            <p>Envíos (1): <strong>Gratis</strong></p>
+                            <p id="totalProductos">Productos (2)</p> <!-- Aquí se actualiza el total de productos -->
+                            <p>Costo de envio: <strong>S/ 9.00</strong></p>
                             <p>Total: <strong id="totalPrice">S/887</strong></p>
                             <a class="btn btn-primary btn-lg btn-block" th:href="@{'/usuario/checkout' + '?id=' + ${session.usuario.id}}">Continuar compra</a>
                         </div>
@@ -204,79 +203,60 @@
     <script src="/assets/js/kaiadmin.min.js"></script>
     <!-- Kaiadmin DEMO methods, don't include it in your project! -->
     <script src="/assets/js/setting-demo2.js"></script>
-      <script >
-          document.addEventListener('DOMContentLoaded', function () {
-              // Función para actualizar el total de un producto
-              function updateProductTotal(row) {
-                  const priceElement = row.querySelector('td:nth-child(3) p'); // Seleccionar el precio del producto
-                  const quantityElement = row.querySelector('.qty-input');     // Seleccionar el input de cantidad
-                  const totalElement = row.querySelector('td:nth-child(5) p'); // Seleccionar el total del producto
-
-                  // Convertir precio y cantidad a números
-                  const price = parseFloat(priceElement.textContent.replace('S/.', '').replace(',', ''));
-                  const quantity = parseInt(quantityElement.value);
-
-                  if (!isNaN(price) && !isNaN(quantity)) {
-                      const productTotal = price * quantity;
-                      totalElement.textContent = `S/.${productTotal.toFixed(2)}`; // Actualizar el total del producto
-                  }
-
-                  updateTotalPrice(); // Actualizar el total general
+      <script>
+          document.addEventListener('DOMContentLoaded', function() {
+              // Función para actualizar el total por producto
+              function updateTotal(row) {
+                  const price = parseFloat(row.querySelector('.price').innerText.replace('S/', ''));
+                  const quantity = parseInt(row.querySelector('.qty-input').value);
+                  const total = price * quantity;
+                  row.querySelector('.total-price').innerText = 'S/ ' + total.toFixed(2);
+                  updateCartTotal();
               }
 
-              // Función para actualizar el total general
-              function updateTotalPrice() {
-                  let totalPrice = 0;
-
-                  // Recorremos todos los productos para sumar sus totales
-                  document.querySelectorAll('tbody tr').forEach(row => {
-                      const totalElement = row.querySelector('td:nth-child(5) p');
-                      const productTotal = parseFloat(totalElement.textContent.replace('S/.', '').replace(',', ''));
-                      if (!isNaN(productTotal)) {
-                          totalPrice += productTotal;
-                      }
+              // Función para actualizar el total del carrito
+              function updateCartTotal() {
+                  let total = 9;
+                  let totalProductos = 0;
+                  document.querySelectorAll('tbody tr').forEach(function(row) {
+                      const quantity = parseInt(row.querySelector('.qty-input').value);
+                      total += parseFloat(row.querySelector('.total-price').innerText.replace('S/', ''));
+                      totalProductos += quantity;
                   });
-
-                  // Actualizamos el total en el resumen
-                  document.getElementById('totalPrice').textContent = `S/.${totalPrice.toFixed(2)}`;
+                  document.getElementById('totalPrice').innerText = 'S/ ' + total.toFixed(2);
+                  document.getElementById('totalProductos').innerText = 'Productos (' + totalProductos + ')';
               }
 
-              // Evento para aumentar la cantidad
-              document.querySelectorAll('.btn-plus').forEach(button => {
-                  button.addEventListener('click', function () {
+              // Manejador de los botones de incremento y decremento
+              document.querySelectorAll('.btn-minus').forEach(function(button) {
+                  button.addEventListener('click', function() {
                       const row = this.closest('tr');
                       const input = row.querySelector('.qty-input');
-                      input.value = parseInt(input.value) + 1;
-                      updateProductTotal(row); // Actualizar el total del producto y el total general
-                  });
-              });
-
-              // Evento para disminuir la cantidad
-              document.querySelectorAll('.btn-minus').forEach(button => {
-                  button.addEventListener('click', function () {
-                      const row = this.closest('tr');
-                      const input = row.querySelector('.qty-input');
-                      if (parseInt(input.value) > 1) { // No permitimos que la cantidad sea menor que 1
-                          input.value = parseInt(input.value) - 1;
-                          updateProductTotal(row); // Actualizar el total del producto y el total general
+                      let quantity = parseInt(input.value);
+                      if (quantity > 1) {
+                          input.value = quantity - 1;
+                          updateTotal(row);
                       }
                   });
               });
 
-              // Evento para eliminar un producto del carrito
-              document.querySelectorAll('.btn-remove').forEach(button => {
-                  button.addEventListener('click', function () {
+              document.querySelectorAll('.btn-plus').forEach(function(button) {
+                  button.addEventListener('click', function() {
                       const row = this.closest('tr');
-                      row.remove(); // Eliminamos la fila del producto
-                      updateTotalPrice(); // Actualizamos el total general
+                      const input = row.querySelector('.qty-input');
+                      let quantity = parseInt(input.value);
+                      input.value = quantity + 1;
+                      updateTotal(row);
                   });
               });
 
-              // Llamamos a updateTotalPrice() inicialmente para calcular el total cuando la página carga
-              updateTotalPrice();
+              // Inicializa el total al cargar la página
+              document.querySelectorAll('tbody tr').forEach(function(row) {
+                  updateTotal(row);
+              });
           });
-
       </script>
+
 
   </body>
 </html>

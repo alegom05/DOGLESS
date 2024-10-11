@@ -185,7 +185,7 @@ public interface ProductRepository extends JpaRepository<Producto, Integer>{
 
 
     //Para la lista de productos en base a las ordenes del usuario
-    @Query(value = "SELECT p.* FROM usuarios u JOIN ordenes o ON u.idusuarios = o.idusuarios JOIN detallesorden ohp ON o.idordenes = ohp.idorden JOIN productos p ON ohp.idproducto = p.idproductos WHERE u.idusuarios = ?", nativeQuery = true)
+    @Query(value = "SELECT p.* FROM usuarios u JOIN ordenes o ON u.idusuarios = o.idusuarios JOIN detallesorden ohp ON o.idordenes = ohp.idorden JOIN productos p ON ohp.idproducto = p.idproductos WHERE u.idusuarios = ? AND o.estado = 'CREADO'", nativeQuery = true)
     List<Producto> findProductosByUsuarioId(Integer id);
 
 
