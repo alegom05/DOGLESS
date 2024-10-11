@@ -46,7 +46,7 @@
                   />
                 </div>
                 <span class="profile-username">
-              <span class="fw-bold">Manuel Yarleque</span>
+              <span class="fw-bold" th:text="${session.usuario.nombre}+' '+${session.usuario.apellido}"></span>
               <div class="fw-bold">Superadmin</div>
             </span>
               </a>
