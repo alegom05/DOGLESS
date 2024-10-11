@@ -104,6 +104,10 @@ public class WebSecurityConfig {
 
         http.logout();
 
+/*
+        http.logout().logoutSuccessUrl("/");
+*/
+
         return http.build();
 
     }
