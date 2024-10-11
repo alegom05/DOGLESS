@@ -151,7 +151,7 @@ public class AdminController {
     public String guardarAdminZonal(@RequestParam("id") int id,
                                     @RequestParam("nombre") String nombre,
                                     @RequestParam("apellido") String apellido,
-                                    @RequestParam("correo") String correo,
+                                    @RequestParam("email") String email,
                                     @RequestParam("telefono") String telefono,
                                     @RequestParam int zona,
                                     @RequestParam int distrito,
@@ -165,7 +165,7 @@ public class AdminController {
             // Actualizar solo los campos editables
             usuario.setNombre(nombre);
             usuario.setApellido(apellido);
-            usuario.setEmail(correo);
+            usuario.setEmail(email);
             usuario.setTelefono(telefono);
 
             // Buscar las entidades relacionadas por sus IDs
@@ -189,7 +189,7 @@ public class AdminController {
     public String guardarAgente(@RequestParam("id") int id,
                                 @RequestParam("nombre") String nombre,
                                 @RequestParam("apellido") String apellido,
-                                @RequestParam("correo") String correo,
+                                @RequestParam("email") String email,
                                 @RequestParam("telefono") String telefono,
                                 @RequestParam("ruc") String ruc,
                                 @RequestParam("codigoAduana") String codidoaduana,
@@ -206,7 +206,7 @@ public class AdminController {
             // Actualizar solo los campos editables
             usuario.setNombre(nombre);
             usuario.setApellido(apellido);
-            usuario.setEmail(correo);
+            usuario.setEmail(email);
             usuario.setTelefono(telefono);
             usuario.setRuc(ruc);
             usuario.setCodigoaduana(codidoaduana);
@@ -234,7 +234,7 @@ public class AdminController {
     public String guardarUsuario(@RequestParam("id") int id,
                                  @RequestParam("nombre") String nombre,
                                  @RequestParam("apellido") String apellido,
-                                 @RequestParam("correo") String correo,
+                                 @RequestParam("email") String email,
                                  @RequestParam("telefono") String telefono,
                                  @RequestParam int zona,
                                  @RequestParam int distrito,
@@ -248,7 +248,7 @@ public class AdminController {
             // Actualizar solo los campos editables
             usuario.setNombre(nombre);
             usuario.setApellido(apellido);
-            usuario.setEmail(correo);
+            usuario.setEmail(email);
             usuario.setTelefono(telefono);
 
             // Buscar las entidades relacionadas por sus IDs

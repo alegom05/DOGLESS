@@ -48,7 +48,7 @@
                 </div>
                 <span class="profile-username">
               <span class="fw-bold" th:text="${session.usuario.nombre}+' '+${session.usuario.apellido}"></span>
-              <div class="fw-bold">Usuario</div>
+              <div class="fw-bold" th:text="${session.usuario.rol.rol}"></div>
             </span>
               </a>
               <ul class="dropdown-menu dropdown-user animated fadeIn">
