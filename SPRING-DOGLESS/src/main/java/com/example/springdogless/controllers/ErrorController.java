@@ -15,10 +15,10 @@ public class ErrorController implements org.springframework.boot.web.servlet.err
             Integer statusCode = Integer.valueOf(status.toString());
 
             if(statusCode == HttpStatus.NOT_FOUND.value()) {
-                return "error404";  // Esto buscará error404.html en templates
+                return "error";  // Esto buscará error.html en templates
             }
         }
-        return "error404";  // Página de error genérica
+        return "error";  // Página de error genérica
     }
 }
 
