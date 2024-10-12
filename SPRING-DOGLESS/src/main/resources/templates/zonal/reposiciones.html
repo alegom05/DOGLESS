@@ -109,7 +109,7 @@
                             <td th:text="${reposicion.producto.nombre}"></td>
                             <td th:text="${reposicion.cantidad}"></td>
                             <td th:text="${reposicion.fecha_pedido}"></td>
-                            <td th:text="${reposicion.aprobar}" style="text-transform: capitalize;"></td>
+                            <td th:text="${reposicion.aprobar != null ? #strings.capitalize(reposicion.aprobar) : 'Pendiente'}"></td>
                             <!-- En Mayúsculas-->
                             <td>
                               <!-- En ver: Descripcion y tienda -->
