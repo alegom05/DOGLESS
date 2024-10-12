@@ -85,18 +85,19 @@
                       <table id="basic-datatables" class="display table table-striped table-hover">
                         <thead>
                           <tr>
-                            <th>Importaciones</th>
+                            <th>#</th>
+                            <th>Producto</th>
                             <th>Cantidad</th>
                             <th>Fechas de arribo</th>
-
                             <th>Estado</th>
                             <th>Acciones</th>
 
                           </tr>
                         </thead>
                         <tbody>
-                          <tr th:each="importaciones : ${listaImportaciones}">
+                          <tr th:each="importaciones, info : ${listaImportaciones}">
                             <td th:text="${importaciones.id}"></td>
+                            <td th:text="${importaciones.producto.nombre}"></td>
                             <td th:text="${importaciones.cantidad}"></td>
                             <td th:text="${importaciones.fechaPedido}"></td>
                             <td th:text="${importaciones.aprobar}"></td>

@@ -38,6 +38,7 @@ public class Usuario implements Serializable {
     @JoinColumn(name = "iddistritos")
     private Distrito distrito;
 
+
     private Integer idadminzonales;
 
     private String estado;

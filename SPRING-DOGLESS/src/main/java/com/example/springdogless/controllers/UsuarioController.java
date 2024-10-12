@@ -173,7 +173,7 @@ public class UsuarioController {
 
     //Libro de reclamaciones
     @GetMapping("/libro")
-    public String nuevaReclamacion(Model model, @ModelAttribute("usuario") Usuario usuario) {
+    public String nuevaReclamacion(Model model, @ModelAttribute("usuario") Usuario usuario, @ModelAttribute("reclamo") Reclamo reclamo) {
         model.addAttribute("listaUsuarios", usuarioRepository.findAll());
         model.addAttribute("listaDistritos", distritoRepository.findAll());
 
@@ -181,11 +181,12 @@ public class UsuarioController {
     }
 
     @PostMapping("/guardarReclamo")
-    public String guardarReclamo(@RequestParam("idusuario") Integer idusuario, Usuario usuario, RedirectAttributes attr) {
+    public String guardarReclamo(@RequestParam("idusuario") Integer idusuario, Usuario usuario, Reclamo reclamo, RedirectAttributes attr) {
         Optional<Usuario> optionalUsuario = usuarioRepository.findById(idusuario);
 
         if (optionalUsuario.isPresent()) {
             usuario = optionalUsuario.get();
+            reclamo.setDescripcion(reclamo.getDescripcion());
             //usuario.setProveedor(usuario);  // Asignar el proveedor al producto
         } else {
             attr.addFlashAttribute("error", "Usuario no encontrado");

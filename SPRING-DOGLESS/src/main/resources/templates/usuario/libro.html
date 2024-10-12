@@ -65,7 +65,7 @@
                 <div class="card">
 
                   <div class="card-body">
-                    <form class="needs-validation" style="width: 100%; margin-left: 0%; margin-top: 3%;" th:action="@{/zonal/guardar}" method="POST" novalidate>
+                    <form class="needs-validation" style="width: 100%; margin-left: 0%; margin-top: 3%;" th:action="@{/usuario/guardarReclamo}" method="POST" novalidate>
                       <div class="container">
                         <div class="row">
 
@@ -109,7 +109,7 @@
                             <div class="col">
                               <div class="mb-3">
                                 <label for="direccion" class="form-label">Dirección: (*)</label>
-                                <input type="text" class="form-control" name="direccion" id="direccion" maxlength="50" minlength="1" placeholder="" title="ingrese su número de teléfono" required>
+                                <input type="text" class="form-control" name="reclamo.descripcion" id="direccion" maxlength="50" minlength="1" placeholder="" title="ingrese su número de teléfono" required>
                                 <div class="invalid-feedback">Ingrese una dirección válida.</div>
                               </div>
                             </div>
