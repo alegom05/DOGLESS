@@ -3,6 +3,7 @@ package com.example.springdogless.controllers;
 import com.example.springdogless.Repository.*;
 
 import com.example.springdogless.entity.*;
+import com.example.springdogless.services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -47,7 +48,8 @@ public class AgenteController {
     OrdenRepository ordenRepository;
     @Autowired
     DetallesordenRepository detallesordenRepository;
-
+    @Autowired
+    private UsuarioService usuarioService;
 
     @GetMapping({""})
     public String PaginaPrincipal(Model model) {
