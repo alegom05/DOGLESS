@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Perfil Superadmin</title>
+    <title>Perfil Admin Zonal</title>
     <meta
             content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
             name="viewport"
@@ -45,12 +45,12 @@
   <body>
     <div class="wrapper">
       <!-- Reemplaza barra lateral con el fragmento de Thymeleaf -->
-      <div th:replace="~{admin/fragments/barralateraladmin :: body(activePage='')}"></div>
+      <div th:replace="~{agente/fragments/barralateralagente :: body(activePage='')}"></div>
       <!-- Fin barra lateral -->
 
       <div class="main-panel">
         <!-- Reemplaza navbar con el fragmento de Thymeleaf -->
-        <div th:replace="~{admin/fragments/navbarheaderadmin :: fragment}"></div>
+        <div th:replace="~{agente/fragments/navbarheaderagente:: fragment}"></div>
         <!-- Fin Navbar -->
 
         <!-- Texto o contenido central -->
@@ -69,7 +69,7 @@
                   <div class="card-body">
                     <div class="user-profile">
                       <div class="name" th:text="${#strings.toUpperCase(session.usuario.nombre)} + ' ' + ${#strings.toUpperCase(session.usuario.apellido)}"></div>
-                      <div class="job">Superadmin Dogless</div>
+                      <div class="job">Agente</div>
                     </div>
                   </div>
 
@@ -77,14 +77,14 @@
                   <div class="card-body" style="padding-top: 0;">
                     <div class="user-details text-center">
                       <p><b>DNI:</b> 12345678</p>
-                      <p><b>Dirección:</b> Calle los geranios 123, San Miguel</p>
-                      <p><b>Teléfono:</b> +51 987654321</p>
-                      <p><b>Correo de contacto:</b> manuel.yarleque@correo.com</p>
+                      <p><b>Dirección:</b> Av. Arica 1351, San Miguel</p>
+                      <p><b>Teléfono:</b> +51 924795123</p>
+                      <p><b>Correo de contacto:</b> alonso.guevara@correo.com</p>
                     </div>
                   </div>
 
                   <div class="card-action text-center">
-                    <a href="/admin/" class="btn btn-primary me-2">Ir a inicio</a>
+                    <a href="/zonal" class="btn btn-primary me-2">Ir a inicio</a>
 
                   </div>
                 </div>
@@ -95,7 +95,7 @@
         <!-- Fin del contenido central -->
 
         <!-- Pie de página -->
-        <div th:replace="~{admin/fragments/piedepagina :: fragment}"></div>
+        <div th:replace="~{agente/fragments/piedepagina :: fragment}"></div>
 
 
 

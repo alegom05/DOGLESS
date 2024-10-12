@@ -68,7 +68,7 @@
                   </div>
                   <div class="card-body">
                     <div class="user-profile">
-                      <div class="name">ALONSO GUEVARA</div>
+                      <div class="name" th:text="${#strings.toUpperCase(session.usuario.nombre)} + ' ' + ${#strings.toUpperCase(session.usuario.apellido)}"></div>
                       <div class="job">Administrador Zonal</div>
                     </div>
                   </div>

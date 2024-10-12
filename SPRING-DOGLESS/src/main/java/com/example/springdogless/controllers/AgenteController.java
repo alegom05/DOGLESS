@@ -57,6 +57,11 @@ public class AgenteController {
         return "agente/paginaprincipal";
     }
 
+    @GetMapping("/perfil_agente")
+    public String verperfilzonal(Model model) {
+        return "agente/perfil_agente"; // Esto renderiza la vista perfil_superadmin.html
+    }
+
     @GetMapping({"dashboard"})
     public String ElDashboard007(Model model) {
         return "/agente/dashboard";
