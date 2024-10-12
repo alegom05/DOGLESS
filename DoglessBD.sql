@@ -1,5 +1,6 @@
 -- MySQL Workbench Forward Engineering
 -- The Awesome Dogless Database
+-- The Best Not-Real Website of Chinesse Importations
 
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
