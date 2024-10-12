@@ -109,7 +109,16 @@
                             <td th:text="${reposicion.producto.nombre}"></td>
                             <td th:text="${reposicion.cantidad}"></td>
                             <td th:text="${reposicion.fecha_pedido}"></td>
-                            <td th:text="${reposicion.aprobar != null ? #strings.capitalize(reposicion.aprobar) : 'Pendiente'}"></td>
+                            <td>
+                              <span th:text="${reposicion.aprobar != null ?
+                                    (reposicion.aprobar == 'pendiente' ? 'Pendiente' :
+                                    (reposicion.aprobar == 'rechazado' ? 'Rechazado' :
+                                    (reposicion.aprobar == 'aprobado' ? 'Aprobado' : reposicion.aprobar))) : 'Pendiente'}"
+                                    th:classappend="${reposicion.aprobar == null ? 'badge badge-success' :
+                                    (reposicion.aprobar == 'aprobado' ? 'badge badge-warning' :
+                                    (reposicion.aprobar == 'rechazado' ? 'badge badge-danger' : 'badge badge-secondary'))}">
+                              </span>
+                            </td>
                             <!-- En Mayúsculas-->
                             <td>
                               <!-- En ver: Descripcion y tienda -->
