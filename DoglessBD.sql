@@ -731,3 +731,36 @@ ENGINE = InnoDB;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+-- -----------------------------------------------------
+-- Table `dogless`.`reportes`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `dogless`.`reportes` (
+  `idreportes` INT NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(45) NULL,
+  `tipo` VARCHAR(45) NULL,
+  `fecha` DATETIME NULL,
+  `descripcion` VARCHAR(300) NULL,
+  `idusuarios` INT NOT NULL,
+  PRIMARY KEY (`idreportes`),
+  INDEX `fk_reportes_usuarios1_idx` (`idusuarios` ASC) VISIBLE,
+  CONSTRAINT `fk_reportes_usuarios1`
+    FOREIGN KEY (`idusuarios`)
+    REFERENCES `dogless`.`usuarios` (`idusuarios`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+-- Datos de Reportes
+
+INSERT INTO `dogless`.`reportes` (`nombre`, `tipo`, `fecha`, `descripcion`, `idusuarios`) VALUES
+('Reporte 1', 'Reporte Ordenes Totales', '2024-09-05 10:30:00', 'Resumen de órdenes de la primera semana de septiembre', 3),
+('Reporte 2', 'Reporte por Agente', '2024-09-12 14:45:00', 'Desempeño del agente Carlos Ruiz en la segunda semana', 1),
+('Reporte 3', 'Reporte por Fecha', '2024-09-18 09:15:00', 'Análisis de ventas de mediados de mes', 4),
+('Reporte 4', 'Reporte por Usuario', '2024-09-22 16:00:00', 'Actividad del usuario María González en la tercera semana', 2),
+('Reporte 5', 'Reporte Ordenes Totales', '2024-09-07 11:30:00', 'Resumen de órdenes del primer fin de semana', 5),
+('Reporte 6', 'Reporte por Agente', '2024-09-15 13:45:00', 'Evaluación quincenal del agente Ana Martínez', 3),
+('Reporte 7', 'Reporte por Fecha', '2024-09-25 10:00:00', 'Comparativa de ventas de la cuarta semana', 1),
+('Reporte 8', 'Reporte por Usuario', '2024-09-28 15:30:00', 'Resumen de actividades del usuario Juan Pérez', 4),
+('Reporte 9', 'Reporte Ordenes Totales', '2024-09-20 09:45:00', 'Análisis de órdenes canceladas a mitad de mes', 2),
+('Reporte 10', 'Reporte por Fecha', '2024-09-30 17:00:00', 'Reporte de cierre mensual de septiembre', 5);
