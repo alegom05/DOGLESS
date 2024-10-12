@@ -100,8 +100,12 @@
                             <td th:text="${importaciones.producto.nombre}"></td>
                             <td th:text="${importaciones.cantidad}"></td>
                             <td th:text="${importaciones.fechaPedido}"></td>
-                            <td th:text="${importaciones.aprobar}"></td>
                             <td>
+                              <span th:text="${importaciones.aprobar}"
+                                    th:classappend="${importaciones.aprobar == 'pendiente'} ? 'badge badge-success' :
+                                                    (${importaciones.aprobar == 'aprobado'} ? 'badge badge-warning' : 'badge badge-count')">
+                              </span>
+                            </td><td>
                               <!-- Dropdown con ícono -->
                               <div class="dropdown">
                                 <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
