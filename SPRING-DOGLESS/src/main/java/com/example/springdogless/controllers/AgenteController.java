@@ -205,6 +205,15 @@ public class AgenteController {
         return "agente/reportesOrdenes";
     }
 
+    @GetMapping(value = "/reportesguardados")
+    public String reportesGuardados(Model model) {
+        model.addAttribute("listaReportes", ordenRepository.findAll());
+
+        model.addAttribute("listaUsuarios", usuarioRepository.findByRol_RolAndBorrado("Usuario",1));
+
+        return "agente/reportesguardados";
+    }
+
     //Lista de órdenes por usuario
     @GetMapping(value = "/reportePorUsuario")
     public String ordenesPorUsuario(Model model) {
