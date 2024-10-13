@@ -50,6 +50,8 @@ public class AgenteController {
     DetallesordenRepository detallesordenRepository;
     @Autowired
     private UsuarioService usuarioService;
+    @Autowired
+    ReporteRepository reporteRepository;
 
     @GetMapping({""})
     public String PaginaPrincipal(Model model) {
@@ -205,19 +207,19 @@ public class AgenteController {
         return "agente/reportesOrdenes";
     }
 
-    @GetMapping(value = "/reportesguardados")
+    @GetMapping(value = "/reportesGuardados")
     public String reportesGuardados(Model model) {
-        model.addAttribute("listaReportes", ordenRepository.findAll());
+        model.addAttribute("listaReportes", reporteRepository.findAll());
 
         model.addAttribute("listaUsuarios", usuarioRepository.findByRol_RolAndBorrado("Usuario",1));
 
-        return "agente/reportesguardados";
+        return "agente/reportesGuardados";
     }
 
     //Lista de órdenes por usuario
     @GetMapping(value = "/reportePorUsuario")
     public String ordenesPorUsuario(Model model) {
-        model.addAttribute("listaOrdenes", ordenRepository.findAll());
+        model.addAttribute("listaReportes", ordenRepository.findAll());
 
         model.addAttribute("listaUsuarios", usuarioRepository.findByRol_RolAndBorrado("Usuario",1));
 
