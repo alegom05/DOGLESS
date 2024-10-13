@@ -121,8 +121,16 @@
                         <tbody class="text-center">
                         <tr th:each="rep : ${listaReportes}">
                             <td th:text="${rep.id}"></td>
-                            <td><span class="badge bg-primary">Órdenes Totales</span></td>
+                            <td>
+                              <span th:text="${rep.tipo}"
+                                    th:classappend="${rep.tipo == 'Reporte Ordenes Totales'} ? 'badge badge-success' :
+                                                    (${rep.tipo == 'Reporte por Agente'} ? 'badge badge-primary' :
+                                                    (${rep.tipo == 'Reporte por Fecha'} ? 'badge badge-warning' :
+                                                    (${rep.tipo == 'Reporte por Usuario'} ? 'badge badge-info')))">
+                              </span>
+                            </td>
                             <td th:text="${rep.fecha}"></td>
+
                             <!--
                             <td>
                                 <div class="dropdown">
