@@ -373,7 +373,13 @@ public class UsuarioController {
 
 
 
-
+    @GetMapping(value = "/detalles_producto")
+    public String DetallesProducto(HttpSession session, Model model, @RequestParam("id") Integer idProducto) {
+        Integer idzona = (Integer) session.getAttribute("idzona");
+        ProductoDTO productoDTO= productRepository.findProductoByIdByZonaCompleto(idProducto,idzona);
+        model.addAttribute("producto", productoDTO);
+        return "usuario/detalles_producto";
+    }
 
 
 
