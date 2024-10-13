@@ -1,13 +1,11 @@
 package com.example.springdogless.controllers;
 
-import com.example.springdogless.DTO.OrdenDetalleDTO;
 import com.example.springdogless.DTO.ProductoDTO;
 import com.example.springdogless.Repository.*;
 import com.example.springdogless.entity.*;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import jakarta.servlet.http.HttpSession;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -15,14 +13,11 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.math.BigDecimal;
-import java.sql.Date;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping({"usuario", "usuario/"})
@@ -385,19 +380,63 @@ public class UsuarioController {
 
 
 
-
+    /*
     @GetMapping(value = "compras")
     public String listaCompras(Model model, @RequestParam("id") Integer id) {
         List<Object[]> orden = detallesRepository.findOrderCreada(id);
         // Pasar la lista de órdenes a la vista
         model.addAttribute("orden", orden);
         return "usuario/carrito_compras";
+    }*/
+    @GetMapping(value = "compras")
+    public String listaProductos(Model model, @RequestParam("id") Integer id) {
+        model.addAttribute("orden", detallesRepository.findByOrdenCreado(id));
+        return "usuario/carrito_compras";
     }
     // Guardar la compra con las nuevas cantidades
+    @PostMapping("/actualizarCantidad")
+    public String actualizarCantidad(@RequestParam("id") Integer id,
+                                     @RequestParam("idDetallesOrden") List<Integer> idDetallesOrden,
+                                     @RequestParam("idOrdenes") List<Integer> idOrdenes,
+                                     @RequestParam("cantidades") List<Integer> cantidades,
+                                     @RequestParam("subtotales") List<BigDecimal> subtotales,
+                                     RedirectAttributes redirectAttributes) {
+        BigDecimal total= BigDecimal.valueOf(0);
+        // Itera sobre las listas para actualizar cada cantidad en la tabla detallesorden
+        for (int i = 0; i < idDetallesOrden.size(); i++) {
+            Integer idDetalle = idDetallesOrden.get(i);
+            Integer nuevaCantidad = cantidades.get(i);
+            BigDecimal subtotal = subtotales.get(i);
+
+
+            total=total.add(subtotal);
+
+            // Busca el detalle de la orden por idDetalle
+            Detalleorden detalle = detallesRepository.findById(idDetalle)
+                    .orElseThrow(() -> new RuntimeException("Detalle no encontrado: " + idDetalle));
+
+            // Actualiza la cantidad y el subtotal
+            detalle.setCantidad(nuevaCantidad);
+            detalle.setSubtotal(subtotal);
+
+            // Guarda los cambios
+            detallesRepository.save(detalle);
+        }
+        // Recalcular el subtotal (cantidad * precio unitario)
+        Optional<Orden> optOrden= ordenRepository.findById(idOrdenes.get(0));
+        if (optOrden.isPresent()) {
+            Orden orden = optOrden.get();
+            orden.setTotal(total);
+            ordenRepository.save(orden);
+        }
+
+
+        return "redirect:/usuario/checkout?id=" + id;
+    }
 
     @GetMapping(value = "checkout")
     public String checkout(Model model, @RequestParam("id") Integer id) {
-        model.addAttribute("listaProductos",productRepository.findProductosByUsuarioId(id));
+        model.addAttribute("listaProductos",detallesRepository.findByOrdenCreado(id));
         return "usuario/checkout";
     }
     @GetMapping(value = "procesopago")

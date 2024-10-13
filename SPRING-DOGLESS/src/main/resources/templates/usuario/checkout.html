@@ -141,10 +141,10 @@
                                                       </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr th:each="producto : ${listaProductos}">
-                                                            <td th:text="${producto.nombre}"></td>
-                                                            <td> 1</td>
-                                                            <td th:text="'S/.'+${producto.precio}"></td>
+                                                        <tr th:each="orden : ${listaProductos}">
+                                                            <td th:text="${orden.producto.nombre}"></td>
+                                                            <td th:text="${orden.cantidad}"> </td>
+                                                            <td th:text="'S/.'+${orden.subtotal}"></td>
                                                         </tr>
 
                                                     </tbody>
@@ -152,7 +152,7 @@
                                                 <hr class="mx-n4">
                                                 <dl class="row mb-0">
                                                     <dt class="col-6">Subtotal</dt>
-                                                    <dd class="col-6 fw-medium text-end mb-0">S/.1000.50</dd>
+                                                    <dd class="col-6 fw-medium text-end mb-0" th:text="${listaProductos.get(0).orden.total}">S/.1000.50</dd>
                                                 </dl>
                                               <hr class="mx-n4">
                                                   <dl class="row mb-0">

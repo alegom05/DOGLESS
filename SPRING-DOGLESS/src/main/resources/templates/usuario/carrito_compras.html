@@ -114,72 +114,79 @@
         <!-- Cart Page Start -->
         <div class="container-fluid py-5">
             <div class="container py-5 d-flex flex-column min-vh-100">
-
-                <div class="row">
-                    <div class="col-lg-9">
-                        <h1 class="mb-3 mt-4 "></h1>
-                        <div class="table-responsive d-flex justify-content-center align-items-center flex-grow-1">
-                            <table class="table text-center table-card">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Productos</th>
-                                        <th scope="col">Nombre</th>
-                                        <th scope="col">Precio</th>
-                                        <th scope="col">Cantidad</th>
-                                        <th scope="col">Total</th>
-                                        <th scope="col">Eliminar</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr th:each=" orden : ${orden}">
-                                        <td>
-                                            <img th:src="@{'http://20.81.145.27:8080/producto/imagen/' + ${orden[0]}}" class="img-fluid" alt="Imagen del producto">
-                                        </td>
-                                        <td th:text="${orden[2]}"></td>
-                                        <td class="price" th:text="'S/' + ${orden[4]}"></td>
-                                        <td>
-                                            <div class="d-flex justify-content-center align-items-center">
-                                                <div class="input-group quantity" style="width: 120px;">
-                                                    <div class="input-group-btn">
-                                                        <button class="btn btn-sm btn-minus rounded-circle border">
-                                                            <i class="fa fa-minus"></i>
-                                                        </button>
-                                                    </div>
-                                                    <input type="text" class="form-control form-control-sm text-center border-0 qty-input" th:value="${orden[6]}" style="max-width: 40px;">
-                                                    <div class="input-group-btn">
-                                                        <button class="btn btn-sm btn-plus rounded-circle border">
-                                                            <i class="fa fa-plus"></i>
-                                                        </button>
+                <form method="post" th:action="@{/usuario/actualizarCantidad}">
+                    <div class="row">
+                        <div class="col-lg-9">
+                            <h1 class="mb-3 mt-4 "></h1>
+                            <div class="table-responsive d-flex justify-content-center align-items-center flex-grow-1">
+                                <input name="id" th:value="${session.usuario.id}" type="hidden"/>
+                                <table class="table text-center table-card">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Productos</th>
+                                            <th scope="col">Nombre</th>
+                                            <th scope="col">Precio</th>
+                                            <th scope="col">Cantidad</th>
+                                            <th scope="col">Sub Total</th>
+                                            <th scope="col">Eliminar</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="orden : ${orden}">
+                                            <input type="hidden" name="idDetallesOrden" th:value="${orden.iddetallesorden}"/>
+                                            <input type="hidden" name="idOrdenes" th:value="${orden.orden.id}"/>
+                                            <input type="hidden" name="idProductos" th:value="${orden.producto.id}"/>
+                                            <td>
+                                                <img th:src="@{'http://20.81.145.27:8080/producto/imagen/' + ${orden.iddetallesorden}}" class="img-fluid" alt="Imagen del producto">
+                                            </td>
+                                            <td th:text="${orden.producto.nombre}"></td>
+                                            <td class="price" th:text="'S/' + ${orden.producto.precio}"></td>
+                                            <td>
+                                                <div class="d-flex justify-content-center align-items-center">
+                                                    <div class="input-group quantity" style="width: 120px;">
+                                                        <div class="input-group-btn">
+                                                            <button type="button" class="btn btn-sm btn-minus rounded-circle border" onclick="decrementQuantity(this)">
+                                                                <i class="fa fa-minus"></i>
+                                                            </button>
+                                                        </div>
+                                                        <input type="text" class="form-control form-control-sm text-center border-0 qty-input" name="cantidades" th:value="${orden.cantidad}" style="max-width: 40px;">
+                                                        <div class="input-group-btn">
+                                                            <button type="button" class="btn btn-sm btn-plus rounded-circle border" onclick="incrementQuantity(this)">
+                                                                <i class="fa fa-plus"></i>
+                                                            </button>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </td>
-                                        <td class="total-price">
-                                            <p class="mb-0">S/0.00</p>
-                                        </td>
-                                        <td>
-                                            <button class="btn btn-md rounded-circle border btn-remove">
-                                                <i class="fa fa-times"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                                            </td>
+                                            <td class="total-price">
+                                                <input type="hidden" name="subtotales"/> <!-- Solo el name está presente -->
+                                                <p class="mb-0">S/ <span class="subtotal">0.00</span></p>
+                                            </td>
+                                            <td>
+                                                <button type="button" class="btn btn-md rounded-circle border btn-remove">
+                                                    <i class="fa fa-times"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
-                    </div>
 
-                    <!-- Resumen de compra -->
-                    <div class="col-lg-3">
-                        <h1 class="mb-3 mt-4 "></h1>
-                        <div class="card p-3">
-                            <h5>Resumen de compra</h5>
-                            <p id="totalProductos">Productos (2)</p> <!-- Aquí se actualiza el total de productos -->
-                            <p>Costo de envio: <strong>S/ 9.00</strong></p>
-                            <p>Total: <strong id="totalPrice">S/887</strong></p>
-                            <a class="btn btn-primary btn-lg btn-block" th:href="@{'/usuario/checkout' + '?id=' + ${session.usuario.id}}">Continuar compra</a>
+                        <!-- Resumen de compra -->
+                        <div class="col-lg-3">
+                            <h1 class="mb-3 mt-4"></h1>
+                            <div class="card p-3">
+                                <h5>Resumen de compra</h5>
+                                <p id="totalProductos">Productos (2)</p>
+                                <p>Total: <strong id="totalPrice" name="total">S/887</strong></p>
+                                <input type="hidden" name="totalHidden" id="totalHidden" /> <!-- Campo oculto para el total -->
+                                <button class="btn btn-primary btn-lg btn-block" type="submit">Continuar compra</button>
+                            </div>
                         </div>
-                    </div>
+
                 </div>
+                </form>
 
             </div>
 
@@ -212,21 +219,33 @@
                   const price = parseFloat(row.querySelector('.price').innerText.replace('S/', ''));
                   const quantity = parseInt(row.querySelector('.qty-input').value);
                   const total = price * quantity;
-                  row.querySelector('.total-price').innerText = 'S/ ' + total.toFixed(2);
+
+                  // Actualiza el subtotal mostrado
+                  row.querySelector('.subtotal').innerText = total.toFixed(2);
+
+                  // Actualiza el valor del campo oculto
+                  row.querySelector('input[name="subtotales"]').value = total.toFixed(2);
+
                   updateCartTotal();
               }
 
               // Función para actualizar el total del carrito
               function updateCartTotal() {
-                  let total = 9;
+                  let total = 0; // Costo de envío
                   let totalProductos = 0;
+
                   document.querySelectorAll('tbody tr').forEach(function(row) {
                       const quantity = parseInt(row.querySelector('.qty-input').value);
                       total += parseFloat(row.querySelector('.total-price').innerText.replace('S/', ''));
                       totalProductos += quantity;
                   });
+
+                  // Actualiza el total mostrado
                   document.getElementById('totalPrice').innerText = 'S/ ' + total.toFixed(2);
                   document.getElementById('totalProductos').innerText = 'Productos (' + totalProductos + ')';
+
+                  // Actualiza el valor del campo oculto para el total
+                  document.getElementById('totalHidden').value = total.toFixed(2);
               }
 
               // Manejador de los botones de incremento y decremento
