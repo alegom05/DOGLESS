@@ -13,6 +13,7 @@
             href="/assets/img/kaiadmin/favicon.ico"
             type="image/x-icon"
     />
+    <link th:href="@{/assets/css/style-SuperAdmin.css}" rel="stylesheet">
 
     <!-- Fonts and icons -->
     <script src="/assets/js/plugin/webfont/webfont.min.js"></script>
@@ -86,7 +87,7 @@
                         </div>
 
                         <div class="row">
-                          <!--
+
                           <div class="col">
                             <div class="mb-3">
                               <label for="nombre" class="form-label">Nombre: (*)</label>
@@ -94,13 +95,8 @@
                               <div class="invalid-feedback">Por favor ingresar nombre(s).</div>
                             </div>
                           </div>
-                        -->
-                          <div class="col">
-                            <div class="mb-3">
-                              <label for="dni" class="form-label">Nombre: (*)</label>
-                              <input type="text" name="nombre" id="nombre" class="form-control" th:value="${usuario.nombre}" readonly>
-                            </div>
-                          </div>
+
+
                           <div class="col">
                             <div class="mb-3">
                               <label for="apellido" class="form-label">Apellido: (*)</label>
@@ -113,8 +109,8 @@
                         <div class="row">
                           <div class="col">
                             <div class="mb-3">
-                              <label for="correo" class="form-label">Correo: (*)</label>
-                              <input type="email" name="correo" id="correo" placeholder="Ej: ejemplo@gmail.com" class="form-control" aria-describedby="emailHelp" required>
+                              <label for="email" class="form-label">Correo: (*)</label>
+                              <input type="email" name="email" id="email" placeholder="Ej: ejemplo@gmail.com" class="form-control" aria-describedby="emailHelp" required>
                               <div class="invalid-feedback">Por favor ingresar un correo válido.</div>
                             </div>
                           </div>
