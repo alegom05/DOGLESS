@@ -3,6 +3,7 @@ package com.example.springdogless.Repository;
 import com.example.springdogless.DTO.OrdenDetalleDTO;
 import com.example.springdogless.entity.Detalleorden;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -17,5 +18,15 @@ public interface Detallesorden2 extends JpaRepository<Detalleorden, Integer> {
             "JOIN productos p ON do.idproducto = p.idproductos " +
             "WHERE o.idusuarios = :idUsuario", nativeQuery = true)
     List<Object[]> findOrdersByUserId(@Param("idUsuario") Integer idUsuario);
+
+
+    @Query(value = "SELECT o.idordenes, o.total, p.nombre AS nombre_producto," +
+            " p.idproductos,p.precio, p.costoenvio, do.cantidad, do.subtotal " +
+            "FROM ordenes o " +
+            "JOIN usuarios u ON o.idusuarios = u.idusuarios " +
+            "JOIN detallesorden do ON o.idordenes = do.idorden " +
+            "JOIN productos p ON do.idproducto = p.idproductos " +
+            "WHERE o.idusuarios = :id AND o.estado = 'CREADO'", nativeQuery = true)
+    List<Object[]> findOrderCreada(@Param("id") Integer id);
 
 }

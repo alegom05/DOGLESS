@@ -40,6 +40,8 @@ public class UsuarioController {
     @Autowired
     RolRepository rolRepository;
     @Autowired
+    OrdenRepository ordenRepository;
+    @Autowired
     ProductRepository productRepository;
     @Autowired
     private ProveedorRepository proveedorRepository;
@@ -386,9 +388,12 @@ public class UsuarioController {
 
     @GetMapping(value = "compras")
     public String listaCompras(Model model, @RequestParam("id") Integer id) {
-        model.addAttribute("listaProductos",productRepository.findProductosByUsuarioId(id));
+        List<Object[]> orden = detallesRepository.findOrderCreada(id);
+        // Pasar la lista de órdenes a la vista
+        model.addAttribute("orden", orden);
         return "usuario/carrito_compras";
     }
+    // Guardar la compra con las nuevas cantidades
 
     @GetMapping(value = "checkout")
     public String checkout(Model model, @RequestParam("id") Integer id) {

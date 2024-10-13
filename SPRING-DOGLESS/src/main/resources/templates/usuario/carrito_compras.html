@@ -131,10 +131,12 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr th:each="producto : ${listaProductos}">
-                                        <td th:text="${producto.imagenprod}"></td>
-                                        <td th:text="${producto.nombre}"></td>
-                                        <td class="price" th:text="'S/' + ${producto.precio}"></td>
+                                    <tr th:each=" orden : ${orden}">
+                                        <td>
+                                            <img th:src="@{'http://20.81.145.27:8080/producto/imagen/' + ${orden[0]}}" class="img-fluid" alt="Imagen del producto">
+                                        </td>
+                                        <td th:text="${orden[2]}"></td>
+                                        <td class="price" th:text="'S/' + ${orden[4]}"></td>
                                         <td>
                                             <div class="d-flex justify-content-center align-items-center">
                                                 <div class="input-group quantity" style="width: 120px;">
@@ -143,7 +145,7 @@
                                                             <i class="fa fa-minus"></i>
                                                         </button>
                                                     </div>
-                                                    <input type="text" class="form-control form-control-sm text-center border-0 qty-input" value="1" style="max-width: 40px;">
+                                                    <input type="text" class="form-control form-control-sm text-center border-0 qty-input" th:value="${orden[6]}" style="max-width: 40px;">
                                                     <div class="input-group-btn">
                                                         <button class="btn btn-sm btn-plus rounded-circle border">
                                                             <i class="fa fa-plus"></i>
