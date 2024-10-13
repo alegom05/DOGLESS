@@ -110,10 +110,12 @@
                         <table id="multi-filter-select" class="display table table-striped table-hover">
                         <thead>
                             <tr class="text-center">
-                            <th>Número de Reporte</th>
+                            <th>#</th>
                             <th>Tipo de Reporte</th>
                             <th>Fecha de Generación</th>
-                            <th>Acciones</th>
+                            <!--
+                                <th>Acciones</th>
+                            -->
                             </tr>
                         </thead>
                         <tbody class="text-center">
@@ -121,6 +123,7 @@
                             <td th:text="${rep.id}"></td>
                             <td><span class="badge bg-primary">Órdenes Totales</span></td>
                             <td th:text="${rep.fecha}"></td>
+                            <!--
                             <td>
                                 <div class="dropdown">
                                 <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -132,6 +135,7 @@
                                 </ul>
                                 </div>
                             </td>
+                            -->
                             </tr>
 
                             <!-- Add more rows as needed -->
