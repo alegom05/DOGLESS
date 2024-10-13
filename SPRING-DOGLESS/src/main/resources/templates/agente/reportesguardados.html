@@ -44,7 +44,7 @@
 <body>
 <div class="wrapper">
     <!-- Reemplaza barra lateral con el fragmento de Thymeleaf -->
-    <div th:replace="~{agente/fragments/barralateralagente :: body(activePage='ordenes')}"></div>
+    <div th:replace="~{agente/fragments/barralateralagente :: body(activePage='reportes', activeSubPage='guardados')}"></div>
     <!-- Fin barra lateral -->
 
 
@@ -133,7 +133,7 @@
                                 </div>
                             </td>
                             </tr>
-                           
+
                             <!-- Add more rows as needed -->
                         </tbody>
                         </table>
