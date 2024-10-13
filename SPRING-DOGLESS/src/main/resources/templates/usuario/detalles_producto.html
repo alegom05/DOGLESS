@@ -302,48 +302,48 @@
                                           <div th:each="resena : ${resenas}" class="review-card d-flex mb-3">
                                               <img th:src="@{'http://20.81.145.27:8080/imagen/' + ${resena.getIdUsuarios()}}" class="img-fluid rounded-circle p-3" style="width: 100px; height: 100px;" alt="">
                                               <div class="flex-grow-1">
-                                                  <p class="mb-2" style="font-size: 14px;" th:text="${resena.getFecha()}"></p>
+                                                  <p class=" mt-3 mb-0" style="font-size: 12px;" th:text="${resena.getFechaFormateada()}"></p>
                                                   <div class="d-flex justify-content-between">
-                                                      <h5 th:text="${resena.usuarioNombre} + ' ' + ${resena.usuarioApellido}"></h5>
+                                                      <p style="font-size: 15px;" class="mb-1" th:text="${resena.usuarioNombre} + ' ' + ${resena.usuarioApellido}"></p>
 
-                                                      <div class="d-flex mb-2">
+                                                      <div class="d-flex mb-1" style="margin-right: 28px;">
                                                           <!-- Mostrar estrellas coloreadas según el promedio de satisfacción -->
                                                           <span th:if="${resena.getSatisfaccion() >= 1}">
                                                           <i class="fa fa-star star-colored"></i>
-                                                      </span>
-                                                          <span th:if="${resena.getSatisfaccion() >= 2}">
-                                                          <i class="fa fa-star star-colored"></i>
-                                                      </span>
-                                                          <span th:if="${resena.getSatisfaccion() >= 3}">
-                                                          <i class="fa fa-star star-colored"></i>
-                                                      </span>
-                                                          <span th:if="${resena.getSatisfaccion() >= 4}">
-                                                          <i class="fa fa-star star-colored"></i>
-                                                      </span>
-                                                          <span th:if="${resena.getSatisfaccion() >= 5}">
-                                                          <i class="fa fa-star star-colored"></i>
-                                                      </span>
+                                                          </span>
+                                                              <span th:if="${resena.getSatisfaccion() >= 2}">
+                                                              <i class="fa fa-star star-colored"></i>
+                                                          </span>
+                                                              <span th:if="${resena.getSatisfaccion() >= 3}">
+                                                              <i class="fa fa-star star-colored"></i>
+                                                          </span>
+                                                              <span th:if="${resena.getSatisfaccion() >= 4}">
+                                                              <i class="fa fa-star star-colored"></i>
+                                                          </span>
+                                                              <span th:if="${resena.getSatisfaccion() >= 5}">
+                                                              <i class="fa fa-star star-colored"></i>
+                                                          </span>
 
-                                                          <!-- Aquí se rellenan las estrellas no coloreadas -->
-                                                          <span th:if="${resena.getSatisfaccion() < 5}">
-                                                          <i class="fa fa-star star-uncolored"></i>
-                                                      </span>
-                                                          <span th:if="${resena.getSatisfaccion() < 4}">
-                                                          <i class="fa fa-star star-uncolored"></i>
-                                                      </span>
-                                                          <span th:if="${resena.getSatisfaccion() < 3}">
-                                                          <i class="fa fa-star star-uncolored"></i>
-                                                      </span>
-                                                          <span th:if="${resena.getSatisfaccion() < 2}">
-                                                          <i class="fa fa-star star-uncolored"></i>
-                                                      </span>
-                                                          <span th:if="${resena.getSatisfaccion() < 1}">
-                                                          <i class="fa fa-star star-uncolored"></i>
-                                                      </span>
+                                                              <!-- Aquí se rellenan las estrellas no coloreadas -->
+                                                              <span th:if="${resena.getSatisfaccion() < 5}">
+                                                              <i class="fa fa-star star-uncolored"></i>
+                                                          </span>
+                                                              <span th:if="${resena.getSatisfaccion() < 4}">
+                                                              <i class="fa fa-star star-uncolored"></i>
+                                                          </span>
+                                                              <span th:if="${resena.getSatisfaccion() < 3}">
+                                                              <i class="fa fa-star star-uncolored"></i>
+                                                          </span>
+                                                              <span th:if="${resena.getSatisfaccion() < 2}">
+                                                              <i class="fa fa-star star-uncolored"></i>
+                                                          </span>
+                                                              <span th:if="${resena.getSatisfaccion() < 1}">
+                                                              <i class="fa fa-star star-uncolored"></i>
+                                                          </span>
                                                       </div>
 
                                                   </div>
-                                                  <p th:text="${resena.comentario}"></p>
+                                                  <p class="mb-1" style="font-size: 13px;" th:text="${resena.comentario}"></p>
                                               </div>
                                           </div>
                                       </div>
@@ -351,6 +351,9 @@
                                           <p>No hay reseñas disponibles para este producto.</p>
                                       </div>
                                   </div>
+
+
+
                               </div>
                           </div>
 

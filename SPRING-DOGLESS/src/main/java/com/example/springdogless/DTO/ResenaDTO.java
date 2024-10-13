@@ -17,4 +17,14 @@ public interface ResenaDTO {
     int getIdProductos();
     String getProductoNombre();
 
+    // Método para obtener la fecha formateada
+    default String getFechaFormateada() {
+        Date fecha = getFecha();
+        if (fecha != null) {
+            SimpleDateFormat formatter = new SimpleDateFormat("dd 'de' MMMM 'del' yyyy", new Locale("es", "ES"));
+            return formatter.format(fecha);
+        }
+        return "";
+    }
+
 }
