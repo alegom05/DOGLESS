@@ -67,12 +67,13 @@
                   <div class="card">
   
                     <div class="card-body">
-                      <button
+                      <a
                               class="btn btn-primary btn-round ms-auto"
-                              th:onclick="|window.location.href='@{/admin/nuevoProveedor}'|"
+                              th:href="@{/admin/nuevoProveedor}"
                       >
+                        <i class="fa fa-plus"></i>
                         Nuevo Proveedor
-                      </button>
+                      </a>
                       <br>
                       <br>
                       <div class="table-responsive">
@@ -95,6 +96,7 @@
                               <th>Teléfono</th>
                               <th>RUC</th>
                               <th>Tienda</th>
+                              <th>Acciones</th>
                             </tr>
                           </thead>
                           <tbody>
@@ -206,6 +208,8 @@
     <script src="/assets/js/core/jquery-3.7.1.min.js"></script>
     <script src="/assets/js/core/popper.min.js"></script>
     <script src="/assets/js/core/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
     <!-- jQuery Scrollbar -->
     <script src="/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
@@ -221,17 +225,23 @@
       <script>
         $(document).ready(function () {
           $("#basic-datatables").DataTable({
-            language: {
-              search: "Buscar:",
-              lengthMenu: "Mostrar _MENU_ entradas por página",
-              info: "Mostrando _START_ a _END_ de _TOTAL_ entradas",
-              paginate: {
-                previous: "Anterior",
-                next: "Siguiente"
-              }
+            "language": {
+              "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json",
+              "info": false,
+              "infoEmpty": "Mostrando 0 a 0 de 0 registros",
+              "infoFiltered": "(filtrado de _MAX_ registros en total)",
+              "lengthMenu": "Mostrar _MENU_ registros por página",
+              "zeroRecords": "No se encontraron registros coincidentes",
+              "paginate": {
+                "first": "Primero",
+                "last": "Último",
+                "next": "Siguiente",
+                "previous": "Anterior"
+              },
+              "search": "Buscar:"
             }
           });
-  
+
           $("#multi-filter-select").DataTable({
             pageLength: 5,
             initComplete: function () {
@@ -245,12 +255,12 @@
                     .appendTo($(column.footer()).empty())
                     .on("change", function () {
                       var val = $.fn.dataTable.util.escapeRegex($(this).val());
-  
+
                       column
                         .search(val ? "^" + val + "$" : "", true, false)
                         .draw();
                     });
-  
+
                   column
                     .data()
                     .unique()
