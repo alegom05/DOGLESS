@@ -6,6 +6,7 @@ import com.example.springdogless.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -13,9 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.util.*;
 
 @Controller
 @RequestMapping({"admin", "admin/"})
@@ -99,6 +98,115 @@ public class AdminController {
             return "redirect:/admin/adminzonal";
         }
     }
+    /*
+    @PostMapping("/cambiarContrasenia")
+    public String cambiarContrasenia(@RequestParam("id") int id,
+                                     @RequestParam("oldPassword") String oldPassword,
+                                     @RequestParam("newPassword") String newPassword,
+                                     RedirectAttributes redirectAttributes) {
+
+        Optional<Usuario> optUsuario = usuarioRepository.findById(id);
+
+        if (optUsuario.isPresent()) {
+            Usuario usuario = optUsuario.get();
+            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+            // Verifica si la contraseña antigua es correcta
+            if (!passwordEncoder.matches(oldPassword, usuario.getPwd())) {
+                redirectAttributes.addFlashAttribute("error", "La contraseña antigua es incorrecta.");
+                return "redirect:/admin/editadminzonal?id=" + id;
+            }
+
+            // Encripta la nueva contraseña antes de guardarla
+            String newPasswordEncrypted = passwordEncoder.encode(newPassword);
+            usuario.setPwd(newPasswordEncrypted);
+            usuarioRepository.save(usuario);
+
+            redirectAttributes.addFlashAttribute("mensajeExito", "Contraseña cambiada exitosamente.");
+            return "redirect:/admin/editadminzonal?id=" + id;
+        } else {
+            return "redirect:/admin/adminzonal";
+        }
+    }
+
+     */
+    @PostMapping("/cambiarContrasenia")
+    @ResponseBody
+    public ResponseEntity<Map<String, String>> cambiarContrasenia(
+            @RequestParam("id") int id,
+            @RequestParam("oldPassword") String oldPassword,
+            @RequestParam("newPassword") String newPassword,
+            @RequestParam("confirmNewPassword") String confirmNewPassword) {
+
+        Map<String, String> response = new HashMap<>();
+        Optional<Usuario> optUsuario = usuarioRepository.findById(id);
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+        if (optUsuario.isPresent()) {
+            Usuario usuario = optUsuario.get();
+
+            // Verificar si la contraseña antigua es correcta
+            if (!passwordEncoder.matches(oldPassword, usuario.getPwd())) {
+                response.put("status", "error");
+                response.put("message", "La contraseña antigua es incorrecta.");
+                return ResponseEntity.ok(response);
+            }
+
+            // Verificar si la nueva contraseña y la confirmación coinciden
+            if (!newPassword.equals(confirmNewPassword)) {
+                response.put("status", "error");
+                response.put("message", "La nueva contraseña y su confirmación no coinciden.");
+                return ResponseEntity.ok(response);
+            }
+
+            // Cambiar la contraseña si pasa todas las verificaciones
+            String newPasswordEncrypted = passwordEncoder.encode(newPassword);
+            usuario.setPwd(newPasswordEncrypted);
+            usuarioRepository.save(usuario);
+
+            response.put("status", "success");
+            response.put("message", "Contraseña cambiada exitosamente.");
+            return ResponseEntity.ok(response);
+        }
+
+        response.put("status", "error");
+        response.put("message", "Usuario no encontrado.");
+        return ResponseEntity.ok(response);
+    }
+
+    public ResponseEntity<Map<String, String>> cambiarContrasenia(
+            @RequestParam("id") int id,
+            @RequestParam("oldPassword") String oldPassword,
+            @RequestParam("newPassword") String newPassword) {
+
+        Optional<Usuario> optUsuario = usuarioRepository.findById(id);
+        Map<String, String> response = new HashMap<>();
+
+        if (optUsuario.isPresent()) {
+            Usuario usuario = optUsuario.get();
+            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+            // Verificar si la contraseña antigua es correcta
+            if (!passwordEncoder.matches(oldPassword, usuario.getPwd())) {
+                response.put("status", "error");
+                response.put("message", "La contraseña antigua es incorrecta.");
+                return ResponseEntity.ok(response); // Devuelve error
+            }
+
+            // Encriptar la nueva contraseña
+            String newPasswordEncrypted = passwordEncoder.encode(newPassword);
+            usuario.setPwd(newPasswordEncrypted);
+            usuarioRepository.save(usuario);
+
+            response.put("status", "success");
+            response.put("message", "Contraseña cambiada exitosamente.");
+            return ResponseEntity.ok(response); // Devuelve éxito
+        }
+
+        response.put("status", "error");
+        response.put("message", "Usuario no encontrado.");
+        return ResponseEntity.ok(response); // Devuelve error si no encuentra usuario
+    }
+
 
     @GetMapping("/editagente")
     public String editarAgente(Model model, @RequestParam("id") int id) {
@@ -383,8 +491,11 @@ public class AdminController {
                 .orElseThrow(() -> new IllegalArgumentException("Distrito no encontrado"));
         usuario.setDistrito(distrito);
         usuario.setBorrado(1);
-        String contrasenaPorDefecto = "contraseñaPredeterminada";
-        usuario.setPwd(contrasenaPorDefecto);
+        String contrasenaPorDefecto = "123456";
+        // Encriptar la contraseña con BCrypt
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String contrasenaEncriptada = passwordEncoder.encode(contrasenaPorDefecto);
+        usuario.setPwd(contrasenaEncriptada);
         // Guardar el nuevo Adminzonal
         usuarioRepository.save(usuario);
         attr.addFlashAttribute("mensajeExito", "Administrador zonal creado correctamente");
