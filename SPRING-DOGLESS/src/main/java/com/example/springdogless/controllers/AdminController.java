@@ -856,6 +856,7 @@ public class AdminController {
 
         return "redirect:/admin/agentes";
     }
+
     //Lista Productos pendientes
     //Waiting for it...
     /*
@@ -1023,6 +1024,22 @@ public class AdminController {
 
         System.out.println("No se encontró producto con ID: " + id); // Agrega este log
         return ResponseEntity.notFound().build();
+    }
+
+    @GetMapping("/informacion-de-contacto")
+    public String informaciondecontacto() {
+        return "informacion-de-contacto"; // Esto renderiza la vista informacion-de-contacto.html
+    }
+
+
+    @GetMapping("/politica-de-privacidad")
+    public String politicadeprivacidad() {
+        return "politica-de-privacidad"; // Esto renderiza la vista politica-de-privacidad.html
+    }
+
+    @GetMapping("/terminosycondiciones")
+    public String terminosycondiciones() {
+        return "terminosycondiciones"; // Esto renderiza la vista politica-de-privacidad.html
     }
 
 }

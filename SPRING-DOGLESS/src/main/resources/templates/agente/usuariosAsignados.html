@@ -1,248 +1,225 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>Usuarios asignados</title>
-  <meta
-          content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
-          name="viewport"
-  />
-  <link
-          rel="icon"
-          href="/assets/img/kaiadmin/favicon.ico"
-          type="image/x-icon"
-  />
-  <link th:href="@{/assets/css/style-SuperAdmin.css}" rel="stylesheet">
+    <meta
+            content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
+            name="viewport"
+    />
+    <link
+            rel="icon"
+            href="/assets/img/kaiadmin/favicon.ico"
+            type="image/x-icon"
+    />
+    <link th:href="@{/assets/css/style-SuperAdmin.css}" rel="stylesheet">
 
 
-  <!-- Fonts and icons -->
-  <script src="/assets/js/plugin/webfont/webfont.min.js"></script>
-  <script>
-    WebFont.load({
-      google: { families: ["Public Sans:300,400,500,600,700"] },
-      custom: {
-        families: [
-          "Font Awesome 5 Solid",
-          "Font Awesome 5 Regular",
-          "Font Awesome 5 Brands",
-          "simple-line-icons",
-        ],
-        urls: ["/assets/css/fonts.min.css"],
-      },
-      active: function () {
-        sessionStorage.fonts = true;
-      },
-    });
-  </script>
+    <!-- Fonts and icons -->
+    <script src="/assets/js/plugin/webfont/webfont.min.js"></script>
+    <script>
+      WebFont.load({
+        google: { families: ["Public Sans:300,400,500,600,700"] },
+        custom: {
+          families: [
+            "Font Awesome 5 Solid",
+            "Font Awesome 5 Regular",
+            "Font Awesome 5 Brands",
+            "simple-line-icons",
+          ],
+          urls: ["/assets/css/fonts.min.css"],
+        },
+        active: function () {
+          sessionStorage.fonts = true;
+        },
+      });
+    </script>
 
-  <!-- CSS Files -->
-  <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
-  <link rel="stylesheet" href="/assets/css/plugins.min.css" />
-  <link rel="stylesheet" href="/assets/css/kaiadmin.min.css" />
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/assets/css/plugins.min.css" />
+    <link rel="stylesheet" href="/assets/css/kaiadmin.min.css" />
 
-</head>
-<div class="wrapper">
+  </head>
+  <div class="wrapper">
     <!-- Reemplaza barra lateral con el fragmento de Thymeleaf -->
     <div th:replace="~{agente/fragments/barralateralagente :: body(activePage='usuarios', activeSubPage='asignados')}"></div>
     <!-- Fin barra lateral -->
 
 
     <div class="main-panel">
-    <!-- Reemplaza navbar con el fragmento de Thymeleaf -->
-    <div th:replace="~{agente/fragments/navbarheaderagente :: fragment}"></div>
-    <!-- Fin Navbar -->
+      <!-- Reemplaza navbar con el fragmento de Thymeleaf -->
+      <div th:replace="~{agente/fragments/navbarheaderagente :: fragment}"></div>
+      <!-- Fin Navbar -->
 
-        <!--  contenido central -->
-        <div class="container">
-          <div class="page-inner">
-            <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
-              <div>
-                <h3 class="fw-bold mb-3">Usuarios asignados</h3>
-                <h6 class="op-7 mb-2">
-                  Utiliza los filtros para buscar y gestionar los usuarios asignados.
-                </h6>
-              </div>
+      <!--  contenido central -->
+      <div class="container">
+        <div class="page-inner">
+          <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
+            <div>
+              <h3 class="fw-bold mb-3">Usuarios asignados</h3>
+              <h6 class="op-7 mb-2">
+                Utiliza los filtros para buscar y gestionar los usuarios asignados.
+              </h6>
             </div>
+          </div>
 
-            <!-- Filtros -->
-            <div class="row">
-              <div class="col-md-12">
-                <div class="d-flex justify-content-between align-items-center flex-wrap">
-                  <!-- Filtros ya existentes -->
-                  <div class="form-group me-2">
-                    <input type="text" id="filterUserName" class="form-control" placeholder="Nombre del comprador">
-                  </div>
-                  <div class="form-group me-2">
-                    <input type="number" id="filterItemCount" class="form-control" placeholder="Cantidad de ordenes">
-                  </div>
-                  <div class="form-group me-2">
-                    <input type="date" id="filterDate" class="form-control" placeholder="Fecha de actualización">
-                  </div>
+          <!-- Filtros -->
+          <div class="row">
+            <div class="col-md-12">
+              <div class="d-flex justify-content-between align-items-center flex-wrap">
+                <!-- Filtro por nombre del comprador -->
+                <div class="form-group me-2">
+                  <label for="filterUserName">Nombre del Usuario</label>
+                  <input type="text" id="filterUserName" class="form-control" placeholder="Ej. Raul Perez">
+                </div>
 
-                  <!-- Filtro de DNI -->
-                  <div class="form-group me-2">
-                    <input type="text" id="filterDNI" class="form-control" placeholder="DNI">
-                  </div>
+                <!-- Filtro por fecha de actualización -->
+                <div class="form-group me-2">
+                  <label for="filterDate">Fecha de Asignación</label>
+                  <input type="date" id="filterDate" class="form-control" placeholder="Fecha de actualización">
+                </div>
 
-                  
+                <!-- Filtro por DNI -->
+                <div class="form-group me-2">
+                  <label for="filterDNI">DNI</label>
+                  <input type="text" id="filterDNI" class="form-control" placeholder="Ej. 75184956">
+                </div>
 
-                  <!-- Botones de acciones para filtros -->
-                  <div class="d-flex">
-                    <button id="searchBtn" class="btn btn-primary me-2">Buscar</button>
-                    <button id="clearBtn" class="btn btn-secondary">Limpiar filtros</button>
-                  </div>
+                <!-- Botones de acciones para filtros -->
+                <div class="d-flex">
+                  <button id="searchBtn" class="btn btn-primary me-2">Buscar</button>
+                  <button id="clearBtn" class="btn btn-secondary">Limpiar filtros</button>
                 </div>
               </div>
             </div>
+          </div>
 
-            <!-- Tabla -->
-            <div class="row mt-4">
-              <div class="col-md-12">
-                <div class="card">
-                  <div class="card-body">
-                    <div class="table-responsive">
-                      <table id="multi-filter-select" class="display table table-striped table-hover">
-                        <thead>
-                          <tr class="text-center">
-                            <th>#</th>
-                            <th>Nombre del Usuario</th>
-                            <th>DNI</th>
-                            <th>Cantidad de órdenes</th>
-                            <th>Fecha de asignación</th>
-                            <th>Acciones</th>
-                          </tr>
-                        </thead>
-                        <tbody class="text-center">
-                          <tr th:each="orden, iterStat : ${listaOrdenes}">
-                            <td th:text="${iterStat.index + 1}"></td> <!-- Número de fila -->
-                            <td th:text="${orden.usuario.nombre + ' ' + orden.usuario.apellido}"></td> <!-- Nombre y apellido del usuario -->
-                            <td th:text="${orden.usuario.dni}"></td> <!-- DNI del usuario -->
-                            <td th:text="${orden.id}"></td> <!-- ID de la orden (si necesitas cambiarlo, ajusta aquí) -->
-                            <td th:text="${orden.fecha}"></td> <!-- Fecha de asignación -->
-                            <td>
-                              <div class="dropdown">
-                                <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                  <i class="fas fa-ellipsis-v"></i>
-                                </button>
-                                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
-                                  <!-- Enlace para ver detalles del perfil del usuario, pasando el ID del usuario -->
-                                  <li>
-                                    <a class="dropdown-item" th:href="@{/agente/verDetallesUsuario(id=${orden.usuario.id})}">
+          <!-- Tabla -->
+          <div class="row mt-4">
+            <div class="col-md-12">
+              <div class="card">
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table id="multi-filter-select" class="display table table-striped table-hover">
+                      <thead>
+                        <tr class="text-center">
+                          <th>#</th>
+                          <th>Nombre del Usuario</th>
+                          <th>DNI</th>
+                          <th>Fecha de asignación</th>
+                          <th>Acciones</th>
+                        </tr>
+                      </thead>
+                      <tbody class="text-center">
+                        <tr th:each="orden, iterStat : ${listaOrdenes}" th:if ="${orden.usuario.estado == 'activo'}">
+                          <td th:text="${iterStat.index + 1}"></td> <!-- Número de fila -->
+                          <td th:text="${orden.usuario.nombre + ' ' + orden.usuario.apellido}"></td> <!-- Nombre y apellido del usuario -->
+                          <td th:text="${orden.usuario.dni}"></td> <!-- DNI del usuario -->
+                          <td th:text="${orden.fecha}"></td> <!-- Fecha de asignación -->
+                          <td>
+                            <div class="dropdown">
+                              <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-ellipsis-v"></i>
+                              </button>
+                              <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
+                                <!-- Enlace para ver detalles del perfil del usuario, pasando el ID del usuario -->
+                                <li>
+                                  <a class="dropdown-item" th:href="@{/agente/verDetallesUsuario(id=${orden.usuario.id})}">
 
                                     Ver detalles del perfil
-                                    </a>
-                                  </li>
+                                  </a>
+                                </li>
 
-                                  <!-- Enlace para redirigir al formulario de baneo, pasando el ID del usuario -->
-                                  <li>
-                                    <a class="dropdown-item"
-                                       th:href="@{'/agente/formulariodebaneo' + '?id=' + ${orden.usuario.id}}">
-                                      Banear usuario
-                                    </a>
-                                  </li>
-                                </ul>
-                              </div>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
+                                <!-- Enlace para redirigir al formulario de baneo, pasando el ID del usuario -->
+                                <li>
+                                  <a class="dropdown-item"
+                                     th:href="@{'/agente/formulariodebaneo' + '?id=' + ${orden.usuario.id}}">
+                                    Banear usuario
+                                  </a>
+                                </li>
+                              </ul>
+                            </div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
 
-                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
+      </div>
 
 
 
 
-        <!-- Pie de página -->
+      <!-- Pie de página -->
       <!-- Pie de página -->
       <div th:replace="~{agente/fragments/piedepagina :: fragment}"></div>
-      </div>
     </div>
+  </div>
 
 
 
-    <!--Core JS Files   -->
-    <script src="/assets/js/core/jquery-3.7.1.min.js"></script>
-    <script src="/assets/js/core/popper.min.js"></script>
-    <script src="/assets/js/core/bootstrap.min.js"></script>
+  <!--Core JS Files   -->
+  <script src="/assets/js/core/jquery-3.7.1.min.js"></script>
+  <script src="/assets/js/core/popper.min.js"></script>
+  <script src="/assets/js/core/bootstrap.min.js"></script>
 
-    <!-- jQuery Scrollbar -->
-    <script src="/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
-    <!-- Datatables -->
-    <script src="/assets/js/plugin/datatables/datatables.min.js"></script>
+  <!-- jQuery Scrollbar -->
+  <script src="/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+  <!-- Datatables -->
+  <script src="/assets/js/plugin/datatables/datatables.min.js"></script>
 
-    <!-- jQuery Vector Maps -->
-    <script src="/assets/js/plugin/jsvectormap/jsvectormap.min.js"></script>
-    <script src="/assets/js/plugin/jsvectormap/world.js"></script>
+  <!-- jQuery Vector Maps -->
+  <script src="/assets/js/plugin/jsvectormap/jsvectormap.min.js"></script>
+  <script src="/assets/js/plugin/jsvectormap/world.js"></script>
 
-    <!-- Kaiadmin JS -->
-    <script src="/assets/js/kaiadmin.min.js"></script>
-    <script>
-      $(document).ready(function() {
-        // Initialize DataTable
-        var table = $('#multi-filter-select').DataTable({
-          paging: true,
-          pageLength: 5,
-          lengthChange: false,
-          info: true,
-          dom: 'tip',
-          initComplete: function() {
-            // Apply the search for all the existing filters
-            this.api().columns().every(function() {
-              var that = this;
-              $('input, select', this.header()).on('keyup change', function() {
-                if (that.search() !== this.value) {
-                  that.search(this.value).draw();
-                }
-              });
-            });
-          }
-        });
+  <!-- Kaiadmin JS -->
+  <script src="/assets/js/kaiadmin.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      // Inicializa DataTable
+      var table = $('#multi-filter-select').DataTable({
+        paging: true,
+        pageLength: 5,
+        lengthChange: false,
+        info: true,
+        dom: 'tip',
 
-        // Search button functionality
-        $('#searchBtn').on('click', function() {
-          // Apply the existing filters
-          table.columns(0).search($('#filterUserName').val());
-          table.columns(1).search($('#filterItemCount').val());
-          table.columns(3).search($('#filterDate').val());
-          table.columns(4).search($('#filterUserStatus').val());
-
-          // Apply filter by "Ordenar por"
-          var orderBy = $('#filterOrderBy').val();
-          if (orderBy === 'sinAsignar') {
-            table.columns(4).search('Motivo de baneo');
-          } else if (orderBy === 'mal_comportamiento') {
-            table.columns(4).search('Mal comportamiento');
-          } else if (orderBy === 'spam') {
-            table.columns(4).search('Spam');
-          } else if (orderBy === 'otro') {
-            table.columns(4).search('Otro');
-          } else {
-            table.columns(4).search('');
-          }
-
-          table.draw();
-        });
-
-        // Clear filters button functionality
-        $('#clearBtn').on('click', function() {
-          $('#filterOrderNumber').val('');
-          $('#filterItemCount').val('');
-          $('#filterUserName').val('');
-          $('#filterDate').val('');
-          $('#filterOrderStatus').val('');
-          $('#filterOrderBy').val('');
-          table.search('').columns().search('').draw();
-        });
       });
 
+      // Funcionalidad del botón de búsqueda
+      $('#searchBtn').on('click', function() {
+        // Filtra por nombre de usuario (Columna 1)
+        table.column(1).search($('#filterUserName').val());
 
-    </script>
+        // Filtra por DNI (Columna 2)
+        table.column(2).search($('#filterDNI').val());
+
+        // Filtra por fecha de asignación (Columna 3)
+        table.column(3).search($('#filterDate').val());
+
+        // Aplica los filtros
+        table.draw();
+      });
+
+      // Funcionalidad del botón para limpiar los filtros
+      $('#clearBtn').on('click', function() {
+        // Limpia los valores de los campos de entrada
+        $('#filterUserName').val('');
+        $('#filterDNI').val('');
+        $('#filterDate').val('');
+
+        // Reinicia la búsqueda en todas las columnas
+        table.search('').columns().search('').draw();
+      });
+    });
+  </script>
+
   </body>
 </html>

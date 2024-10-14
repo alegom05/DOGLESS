@@ -1,17 +1,17 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>formulario de Baneo</title>
     <meta
-      content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
-      name="viewport"
+            content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
+            name="viewport"
     />
     <link
-      rel="icon"
-      href="/assets/img/kaiadmin/logodogless.ico"
-      type="image/x-icon"
+            rel="icon"
+            href="/assets/img/kaiadmin/logodogless.ico"
+            type="image/x-icon"
     />
 
     <!-- Fonts and icons -->
@@ -39,7 +39,7 @@
     <link rel="stylesheet" href="/assets/css/plugins.min.css" />
     <link rel="stylesheet" href="/assets/css/kaiadmin.min.css" />
 
-    
+
   </head>
   <body>
     <div class="wrapper">
@@ -65,7 +65,7 @@
                   <div class="card-body">
                     <form class="needs-validation" style="width: 100%; margin-left: 0%; margin-top: 3%;" th:action="@{/agente/banear}" method="POST" novalidate>
                       <!-- Campo oculto con el ID del usuario -->
-                      <input type="hidden" name="id" th:value="${usuario.id}" />
+                      <input type="hidden" th:name="id" th:value="${usuario.id}" />
 
                       <div class="container">
                         <!-- Fila para el nombre de usuario y DNI -->
@@ -141,6 +141,6 @@
 
     <!-- Kaiadmin JS -->
     <script src="/assets/js/kaiadmin.min.js"></script>
-    
+
   </body>
 </html>

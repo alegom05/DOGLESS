@@ -1,77 +1,77 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>Usuarios baneados</title>
-  <meta
-          content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
-          name="viewport"
-  />
-  <link
-          rel="icon"
-          href="/assets/img/kaiadmin/favicon.ico"
-          type="image/x-icon"
-  />
-  <link href="/assets/css/style-SuperAdmin.css" rel="stylesheet">
+    <meta
+            content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
+            name="viewport"
+    />
+    <link
+            rel="icon"
+            href="/assets/img/kaiadmin/favicon.ico"
+            type="image/x-icon"
+    />
+    <link href="/assets/css/style-SuperAdmin.css" rel="stylesheet">
 
-  <!-- Fonts and icons -->
-  <script src="/assets/js/plugin/webfont/webfont.min.js"></script>
-  <script>
-    WebFont.load({
-      google: { families: ["Public Sans:300,400,500,600,700"] },
-      custom: {
-        families: [
-          "Font Awesome 5 Solid",
-          "Font Awesome 5 Regular",
-          "Font Awesome 5 Brands",
-          "simple-line-icons",
-        ],
-        urls: ["../assets/css/fonts.min.css"],
-      },
-      active: function () {
-        sessionStorage.fonts = true;
-      },
-    });
-  </script>
-  <script>
-    // JavaScript para actualizar los distritos según la zona seleccionada
-    function actualizarDistritos() {
-      const zona = document.getElementById("zona").value;
-      const distritoSelect = document.getElementById("distrito");
-
-      const distritosPorZona = {
-        "Norte": ["Ancon", "Santa Rosa", "Carabayllo", "Puente Piedra", "Comas", "Los Olivos", "San Martin de Porres", "Independencia"],
-        "Sur": ["San Juan de Miraflores", "Villa Maria del Triunfo", "Villa el Salvador", "Pachacamac", "Lurin", "Punta Hermosa", "Punta Negra", "San Bartolo", "Santa Maria del Mar", "Pucusana"],
-        "Este": ["San Juan de Lurigancho", "Lurigancho/Chosica", "Ate", "El Agustino", "Santa Anita", "La Molina", "Cieneguilla"],
-        "Oeste": ["Rimac", "Cercado de Lima", "Breña", "Pueblo Libre", "Magdalena", "Jesus Maria", "La Victoria", "Lince", "San Isidro", "San Miguel", "Surquillo", "San Borja", "Santiago de Surco", "Barranco", "Chorrillos", "San Luis", "Miraflores"]
-      };
-
-      // Limpiar las opciones anteriores
-      distritoSelect.innerHTML = "";
-
-      // Añadir los distritos correspondientes a la zona seleccionada
-      distritosPorZona[zona].forEach(function(distrito) {
-        const option = document.createElement("option");
-        option.value = distrito;
-        option.text = distrito;
-        distritoSelect.appendChild(option);
+    <!-- Fonts and icons -->
+    <script src="/assets/js/plugin/webfont/webfont.min.js"></script>
+    <script>
+      WebFont.load({
+        google: { families: ["Public Sans:300,400,500,600,700"] },
+        custom: {
+          families: [
+            "Font Awesome 5 Solid",
+            "Font Awesome 5 Regular",
+            "Font Awesome 5 Brands",
+            "simple-line-icons",
+          ],
+          urls: ["../assets/css/fonts.min.css"],
+        },
+        active: function () {
+          sessionStorage.fonts = true;
+        },
       });
+    </script>
+    <script>
+      // JavaScript para actualizar los distritos según la zona seleccionada
+      function actualizarDistritos() {
+        const zona = document.getElementById("zona").value;
+        const distritoSelect = document.getElementById("distrito");
 
-      // Habilitar el campo de selección de distritos
-      distritoSelect.disabled = false;
-    }
-  </script>
+        const distritosPorZona = {
+          "Norte": ["Ancon", "Santa Rosa", "Carabayllo", "Puente Piedra", "Comas", "Los Olivos", "San Martin de Porres", "Independencia"],
+          "Sur": ["San Juan de Miraflores", "Villa Maria del Triunfo", "Villa el Salvador", "Pachacamac", "Lurin", "Punta Hermosa", "Punta Negra", "San Bartolo", "Santa Maria del Mar", "Pucusana"],
+          "Este": ["San Juan de Lurigancho", "Lurigancho/Chosica", "Ate", "El Agustino", "Santa Anita", "La Molina", "Cieneguilla"],
+          "Oeste": ["Rimac", "Cercado de Lima", "Breña", "Pueblo Libre", "Magdalena", "Jesus Maria", "La Victoria", "Lince", "San Isidro", "San Miguel", "Surquillo", "San Borja", "Santiago de Surco", "Barranco", "Chorrillos", "San Luis", "Miraflores"]
+        };
+
+        // Limpiar las opciones anteriores
+        distritoSelect.innerHTML = "";
+
+        // Añadir los distritos correspondientes a la zona seleccionada
+        distritosPorZona[zona].forEach(function(distrito) {
+          const option = document.createElement("option");
+          option.value = distrito;
+          option.text = distrito;
+          distritoSelect.appendChild(option);
+        });
+
+        // Habilitar el campo de selección de distritos
+        distritoSelect.disabled = false;
+      }
+    </script>
 
 
-  <!-- CSS Files -->
-  <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
-  <link rel="stylesheet" href="/assets/css/plugins.min.css" />
-  <link rel="stylesheet" href="/assets/css/kaiadmin.min.css" />
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/assets/css/plugins.min.css" />
+    <link rel="stylesheet" href="/assets/css/kaiadmin.min.css" />
 
-  <!-- CSS Just for demo purpose, don't include it in your project -->
-  <link rel="stylesheet" href="/assets/css/demo.css" />
-</head>
+    <!-- CSS Just for demo purpose, don't include it in your project -->
+    <link rel="stylesheet" href="/assets/css/demo.css" />
+  </head>
   <div class="wrapper">
     <!-- Reemplaza barra lateral con el fragmento de Thymeleaf -->
     <div th:replace="~{agente/fragments/barralateralagente :: body(activePage='usuarios', activeSubPage='baneados')}"></div>
@@ -83,194 +83,187 @@
       <div th:replace="~{agente/fragments/navbarheaderagente :: fragment}"></div>
       <!-- Fin Navbar -->
 
-         <!-- contenido central -->
-          <div class="container">
-            <div class="page-inner">
-              <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
-                <div>
-                  <h3 class="fw-bold mb-3">Usuarios baneados</h3>
-                  <h6 class="op-7 mb-2">
-                    Utiliza los filtros para buscar y gestionar los usuarios baneados.
-                  </h6>
+      <!-- contenido central -->
+      <div class="container">
+        <div class="page-inner">
+          <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
+            <div>
+              <h3 class="fw-bold mb-3">Usuarios baneados</h3>
+              <h6 class="op-7 mb-2">
+                Utiliza los filtros para buscar y gestionar los usuarios baneados.
+              </h6>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12">
+              <div class="d-flex justify-content-between align-items-center flex-wrap">
+
+                <!-- Filtro por Nombre del Usuario -->
+                <div class="form-group me-2">
+                  <label for="filterUserName" class="form-label">Nombre del Usuario:</label>
+                  <input type="text" id="filterUserName" class="form-control" placeholder="Ej. Raul Perez">
+                </div>
+
+                <!-- Filtro por Fecha de Baneo -->
+                <div class="form-group me-2">
+                  <label for="filterDate" class="form-label">Fecha de Baneo:</label>
+                  <input type="date" id="filterDate" class="form-control" placeholder="Fecha de baneo">
+                </div>
+
+                <!-- Filtro por DNI -->
+                <div class="form-group me-2">
+                  <label for="filterDNI" class="form-label">DNI:</label>
+                  <input type="text" id="filterDNI" class="form-control" placeholder="Ej. 75184956">
+                </div>
+
+                <!-- Filtro por Motivo de Baneo (Desplegable) -->
+                <div class="form-group me-2">
+                  <label for="filterUserStatus" class="form-label">Motivo de Baneo:</label>
+                  <select id="filterUserStatus" class="form-select">
+                    <option value="">Todos los motivos</option>
+                    <option value="Incumplimiento de políticas">Incumplimiento de políticas</option>
+                    <option value="Uso inapropiado de la plataforma">Uso inapropiado de la plataforma</option>
+                    <option value="Comportamiento ofensivo">Comportamiento ofensivo</option>
+                    <option value="Suplantación de identidad">Suplantación de identidad</option>
+                  </select>
+                </div>
+
+                <!-- Botones para buscar y limpiar filtros -->
+                <div class="d-flex">
+                  <button id="searchBtn" class="btn btn-primary me-2">Buscar</button>
+                  <button id="clearBtn" class="btn btn-secondary">Limpiar filtros</button>
                 </div>
               </div>
+            </div>
+          </div>
 
-              <!-- Filtros -->
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="d-flex justify-content-between align-items-center flex-wrap">
-                    <!-- Filtros ya existentes -->
-                    <div class="form-group me-2">
-                      <input type="text" id="filterUserName" class="form-control" placeholder="Nombre del comprador">
-                    </div>
-                    
-                    <div class="form-group me-2">
-                      <input type="date" id="filterDate" class="form-control" placeholder="Fecha de actualización">
-                    </div>
-
-                    <!-- Filtro de DNI -->
-                    <div class="form-group me-2">
-                      <input type="text" id="filterDNI" class="form-control" placeholder="DNI">
-                    </div>
-
-                    <!-- Filtro de Motivo de Baneo -->
-                    <div class="form-group me-2">
-                      <select id="filterUserStatus" class="form-control">
-                        <option value="">Motivo de baneo</option>
-                        <option value="Incumplimiento de políticas">Incumplimiento de políticas</option>
-                        <option value="Uso inadecuado de la plataforma">Uso inadecuado de la plataforma</option>
-                        <option value="Comportamiento ofensivo">Comportamiento ofensivo</option>
-                        <option value="Suplantación de identidad">Suplantación de identidad</option>
-                      </select>
-                    </div>
-
-                    <!-- Botones de acciones para filtros -->
-                    <div class="d-flex">
-                      <button id="searchBtn" class="btn btn-primary me-2">Buscar</button>
-                      <button id="clearBtn" class="btn btn-secondary">Limpiar filtros</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Tabla -->
-              <div class="row mt-4">
-                <div class="col-md-12">
-                  <div class="card">
-                    <div class="card-body">
-                      <div class="table-responsive">
-                        <table id="multi-filter-select" class="display table table-striped table-hover">
-                          <thead>
-                            <tr class="text-center">
-                              <th>#</th>
-                              <th>DNI</th>
-                              <th>Cantidad de órdenes</th>
-                              <th>Nombre del Usuario</th>
-                              <th>Fecha de baneo</th>
-                              <th>Motivo de baneo</th>
-                              <th>Acciones</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                          <tr th:each="usuario : ${listaBaneados}">
-                            <td th:text="${usuario.id}"></td>
-                            <td th:text="${usuario.dni}"></td>
-                              <td>5</td>
-                            <td th:text="${usuario.nombre + ' ' + usuario.apellido}"></td>
-                            <td th:text="${usuario.fechabaneo}"></td>
-                            <!--Aquí debe ir motivo de baneo, falta trabajar en eso-->
-                              <td><span class="badge badge-danger">Incumplimiento de políticas</span></td>
-                              <td>
-                                <div class="dropdown">
-                                  <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fas fa-ellipsis-v"></i>
-                                  </button>
-                                  <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
-                                    <li><a class="dropdown-item" href="#">Ver detalles del perfil</a></li>
-                                    <li><a class="dropdown-item" href="detallebaneo.html">Ver detalles de baneo</a></li>
-                                    <li><a class="dropdown-item" href="#">Desbanear usuario</a></li>
-                                  </ul>
-                                </div>
-                              </td>
-                            </tr>
-
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
+          <!-- Tabla -->
+          <div class="row mt-4">
+            <div class="col-md-12">
+              <div class="card">
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table id="multi-filter-select" class="display table table-striped table-hover">
+                      <thead>
+                        <tr class="text-center">
+                          <th>#</th>
+                          <th>Nombre del Usuario</th>
+                          <th>DNI</th>
+                          <th>Fecha de baneo</th>
+                          <th>Motivo de baneo</th>
+                          <th>Acciones</th>
+                        </tr>
+                      </thead>
+                      <tbody class="text-center">
+                        <!-- Muestra solo usuarios con estado "activo" -->
+                        <tr th:each="orden, iterStat : ${listaOrdenes}" th:if="${orden.usuario.estado == 'baneado'}">
+                          <td th:text="${iterStat.index + 1}"></td> <!-- Número de fila -->
+                          <td th:text="${orden.usuario.nombre + ' ' + orden.usuario.apellido}"></td> <!-- Nombre y apellido del usuario -->
+                          <td th:text="${orden.usuario.dni}"></td> <!-- DNI del usuario -->
+                          <td th:text="${orden.usuario.fechabaneo}"></td> <!-- Fecha de baneo -->
+                          <!-- Motivo de baneo, se resalta con una clase "badge-danger" -->
+                          <td><span th:text="${orden.usuario.motivobaneo}" class="badge badge-danger"></span></td> <!-- Motivo de baneo -->
+                          <td>
+                            <div class="dropdown">
+                              <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-ellipsis-v"></i>
+                              </button>
+                              <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
+                                <!-- Enlace para ver detalles del perfil del usuario -->
+                                <li><a class="dropdown-item" th:href="@{/agente/verDetallesUsuario(id=${orden.usuario.id})}">Ver detalles del perfil</a></li>
+                                <!-- Enlace para ver detalles del baneo -->
+                                <li><a class="dropdown-item" th:href="@{'/agente/detallebaneo' + '?id=' + ${orden.usuario.id}}">Ver detalles de baneo</a></li>
+                                <!-- Formulario para desbanear usuario -->
+                                <li>
+                                  <form th:action="@{/agente/desbanear}" method="POST" style="display: inline;">
+                                    <input type="hidden" name="id" th:value="${orden.usuario.id}" />
+                                    <button type="submit" class="dropdown-item">Desbanear usuario</button>
+                                  </form>
+                                </li>
+                              </ul>
+                            </div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
                   </div>
                 </div>
               </div>
             </div>
           </div>
- 
+        </div>
+      </div>
 
 
 
-        <!-- Pie de página -->
+
+      <!-- Pie de página -->
       <!-- Pie de página -->
       <div th:replace="~{agente/fragments/piedepagina :: fragment}"></div>
-      </div>
     </div>
+  </div>
 
 
 
-    <!--Core JS Files   -->
-    <script src="/assets/js/core/jquery-3.7.1.min.js"></script>
-    <script src="/assets/js/core/popper.min.js"></script>
-    <script src="/assets/js/core/bootstrap.min.js"></script>
+  <!--Core JS Files   -->
+  <script src="/assets/js/core/jquery-3.7.1.min.js"></script>
+  <script src="/assets/js/core/popper.min.js"></script>
+  <script src="/assets/js/core/bootstrap.min.js"></script>
 
-    <!-- jQuery Scrollbar -->
-    <script src="/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
-    <!-- Datatables -->
-    <script src="/assets/js/plugin/datatables/datatables.min.js"></script>
+  <!-- jQuery Scrollbar -->
+  <script src="/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+  <!-- Datatables -->
+  <script src="/assets/js/plugin/datatables/datatables.min.js"></script>
 
-    <!-- jQuery Vector Maps -->
-    <script src="/assets/js/plugin/jsvectormap/jsvectormap.min.js"></script>
-    <script src="/assets/js/plugin/jsvectormap/world.js"></script>
+  <!-- jQuery Vector Maps -->
+  <script src="/assets/js/plugin/jsvectormap/jsvectormap.min.js"></script>
+  <script src="/assets/js/plugin/jsvectormap/world.js"></script>
 
-    <!-- Kaiadmin JS -->
-    <script src="/assets/js/kaiadmin.min.js"></script>
-    <script>
-      $(document).ready(function() {
-        // Initialize DataTable
-        var table = $('#multi-filter-select').DataTable({
-          paging: true,
-          pageLength: 5,
-          lengthChange: false,
-          info: true,
-          dom: 'tip',
-          initComplete: function() {
-            // Apply the search for all the existing filters
-            this.api().columns().every(function() {
-              var that = this;
-              $('input, select', this.header()).on('keyup change', function() {
-                if (that.search() !== this.value) {
-                  that.search(this.value).draw();
-                }
-              });
-            });
-          }
-        });
-
-        // Search button functionality
-        $('#searchBtn').on('click', function() {
-          // Apply the existing filters
-          table.columns(0).search($('#filterUserName').val());
-          table.columns(1).search($('#filterItemCount').val());
-          table.columns(3).search($('#filterDate').val());
-          table.columns(4).search($('#filterUserStatus').val());
-
-          // Apply filter by "Ordenar por"
-          var orderBy = $('#filterOrderBy').val();
-          if (orderBy === 'sinAsignar') {
-            table.columns(4).search('Motivo de baneo');
-          } else if (orderBy === 'mal_comportamiento') {
-            table.columns(4).search('Mal comportamiento');
-          } else if (orderBy === 'spam') {
-            table.columns(4).search('Spam');
-          } else if (orderBy === 'otro') {
-            table.columns(4).search('Otro');
-          } else {
-            table.columns(4).search('');
-          }
-
-          table.draw();
-        });
-
-        // Clear filters button functionality
-        $('#clearBtn').on('click', function() {
-          $('#filterOrderNumber').val('');
-          $('#filterItemCount').val('');
-          $('#filterUserName').val('');
-          $('#filterDate').val('');
-          $('#filterOrderStatus').val('');
-          $('#filterOrderBy').val('');
-          table.search('').columns().search('').draw();
-        });
+  <!-- Kaiadmin JS -->
+  <script src="/assets/js/kaiadmin.min.js"></script>
+  <script>
+    $(document).ready(function () {
+      // Inicializar DataTable con numeración automática de filas
+      var table = $('#multi-filter-select').DataTable({
+        paging: true,
+        pageLength: 5,
+        lengthChange: false,
+        info: true,
+        dom: 'tip',
       });
 
+      // Funcionalidad del botón de búsqueda (filtros independientes)
+      $('#searchBtn').on('click', function () {
+        // Filtro por nombre del usuario (columna 1)
+        table.column(1).search($('#filterUserName').val());
 
-    </script>
+        // Filtro por DNI (columna 2)
+        table.column(2).search($('#filterDNI').val());
+
+        // Filtro por fecha de baneo (columna 3)
+        table.column(3).search($('#filterDate').val());
+
+        // Filtro por motivo de baneo (columna 4)
+        table.column(4).search($('#filterUserStatus').val());
+
+        // Aplicar los filtros
+        table.draw();
+      });
+
+      // Funcionalidad del botón de limpiar filtros
+      $('#clearBtn').on('click', function () {
+        // Limpiar todos los campos de búsqueda
+        $('#filterUserName').val('');
+        $('#filterDate').val('');
+        $('#filterDNI').val('');
+        $('#filterUserStatus').val('');
+
+        // Limpiar las búsquedas aplicadas en la tabla
+        table.search('').columns().search('').draw();
+      });
+    });
+  </script>
+
   </body>
 </html>
