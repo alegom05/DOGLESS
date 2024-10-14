@@ -4,7 +4,9 @@ package com.example.springdogless.Repository;
 import com.example.springdogless.DTO.ProductoDTO;
 import com.example.springdogless.entity.Rol;
 import com.example.springdogless.entity.Usuario;
+import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
@@ -38,6 +40,16 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer>{
 
     public Usuario findByEmail(String email);
     Usuario findByCodigoaduana(String codigoAduana);
+
+    @Transactional
+    @Modifying
+    @Query(nativeQuery = true,value = "update usuarios u set u.estado = 'baneado', u.motivobaneo = ?2 where u.idUsuarios = ?1")
+    void banear(Integer idUsuario,String motivoBaneo);
+
+    @Transactional
+    @Modifying
+    @Query(nativeQuery = true, value = "update usuarios u set u.estado = 'activo' where u.idUsuarios = ?1")
+    void desbanear(Integer idUsuario);
 
 }
 

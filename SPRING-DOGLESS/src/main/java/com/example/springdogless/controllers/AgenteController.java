@@ -197,6 +197,70 @@ public class AgenteController {
 
         return "agente/usuariosBaneados";
     }
+    // Metodo para redirigir al formulario de baneo
+    @GetMapping("/formulariodebaneo")
+    public String mostrarFormularioBaneo(Model model, @RequestParam("id") Integer id) {
+        Optional<Usuario> optUsuario = usuarioRepository.findById(id);
+        if (optUsuario.isPresent()) {
+            Usuario usuario = optUsuario.get();
+            model.addAttribute("usuario", usuario);
+            return "agente/formdebaneo";  // Renderiza el formulario correctamente
+        } else {
+            return "redirect:/agente/usuariosAsignados";  // Redirige si el usuario no se encuentra
+        }
+    }
+
+    // Metodo para redirigir a la vista de detalle de baneo
+    @GetMapping("/detallebaneo")
+    public String mostrarDetalledeBaneo(Model model, @RequestParam("id") Integer id) {
+        Optional<Usuario> optUsuario = usuarioRepository.findById(id);
+        if (optUsuario.isPresent()) {
+            Usuario usuario = optUsuario.get();
+            model.addAttribute("usuario", usuario);
+            return "agente/detallebaneo";  // Renderiza el formulario correctamente
+        } else {
+            return "redirect:/agente/usuariosBaneados";  // Redirige si el usuario no se encuentra
+        }
+    }
+
+
+
+    // Metodo para banear a un usuario
+    @PostMapping("/banear")
+    public String banearUsuario(Model model, @RequestParam("id") Integer id, @RequestParam("motivoBaneo") String motivoBaneo) {
+        // Buscar el usuario por su ID
+        Optional<Usuario> optUsuario = usuarioRepository.findById(id);
+
+        // Verificar si el usuario existe
+        if (optUsuario.isPresent()) {
+            Usuario usuario = optUsuario.get();
+            usuarioRepository.banear(id,motivoBaneo);
+            return "redirect:/agente/usuariosAsignados";
+
+        } else {
+            model.addAttribute("error", "Usuario no encontrado.");
+            return "agente/formdebaneo";
+        }
+    }
+
+    // Metodo para banear a un usuario
+    @PostMapping("/desbanear")
+    public String desbanearUsuario(Model model, @RequestParam("id") Integer id) {
+        // Buscar el usuario por su ID
+        Optional<Usuario> optUsuario = usuarioRepository.findById(id);
+
+        // Verificar si el usuario existe
+        if (optUsuario.isPresent()) {
+            Usuario usuario = optUsuario.get();
+            usuarioRepository.desbanear(id);
+            return "redirect:/agente/usuariosBaneados";
+
+        } else {
+            model.addAttribute("error", "Usuario no encontrado.");
+            return "agente/detallebaneo";
+        }
+    }
+
 
     @GetMapping(value = "/reportesOrdenes")
     public String reportesOrdenes(Model model) {
@@ -226,51 +290,6 @@ public class AgenteController {
         return "agente/reportePorUsuario";
     }
 
-    // Metodo para redirigir al formulario de baneo
-    @GetMapping("/formulariodebaneo")
-    public String mostrarFormularioBaneo(Model model, @RequestParam("id") int id) {
-        Optional<Usuario> optUsuario = usuarioRepository.findById(id);
-        if (optUsuario.isPresent()) {
-            Usuario usuario = optUsuario.get();
-            model.addAttribute("usuario", usuario);
-            return "agente/formdebaneo";  // Renderiza el formulario correctamente
-        } else {
-            return "redirect:/agente/usuariosAsignados";  // Redirige si el usuario no se encuentra
-        }
-    }
-
-    // Metodo para banear a un usuario (luego de presionar el botón banear en el formulario)
-
-
-    // Metodo para desbanear a un usuario
-    @PostMapping("/banear")
-    public String banearUsuario(Model model, @RequestParam("id") int id, @RequestParam("motivoBaneo") String motivoBaneo) {
-
-        // Buscar el usuario por su ID
-        Optional<Usuario> optUsuario = usuarioRepository.findById(id);
-
-        // Verificar si el usuario existe
-        if (optUsuario.isPresent()) {
-            Usuario usuario = optUsuario.get();
-
-            // Verificar si el usuario ya está baneado
-            if (!usuario.getEstado().equals("baneado")) {
-                usuario.setEstado("baneado");  // Cambiar el estado a 'baneado'
-                usuario.setFechabaneo(new java.sql.Date(new Date().getTime()));  // Registrar la fecha de baneo
-                usuario.setMotivobaneo(motivoBaneo);  // Registrar el motivo de baneo
-                usuarioRepository.save(usuario);  // Guardar los cambios en la base de datos
-
-                // Redirigir a la lista de usuarios después de banear
-                return "redirect:/agente/usuariosAsignados";
-            } else {
-                model.addAttribute("error", "El usuario ya está baneado.");
-                return "agente/formdebaneo";
-            }
-        } else {
-            model.addAttribute("error", "Usuario no encontrado.");
-            return "agente/formdebaneo";
-        }
-    }
 
 
     // Metodo para obtener la lista de usuarios baneados
