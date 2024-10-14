@@ -504,8 +504,27 @@ public interface ProductRepository extends JpaRepository<Producto, Integer>{
             Pageable pageable);
 
 
-
-
+    //Solo 1 producto
+    @Query(value = "SELECT " +
+            "p.idproductos, p.nombre, p.descripcion, p.categoria, p.precio, p.costoenvio, " +
+            "p.idproveedores, prov.nombre AS proveedorNombre, prov.apellido AS proveedorApellido, " +
+            "p.modelos, p.colores, p.aprobado, p.borrado, p.estado, " +
+            "z.nombre AS nombreZona, " +
+            "ROUND(COALESCE(avgSatisfaccion.promedio_satisfaccion, 0)) AS promedioSatisfaccion " + // Columna de satisfacción promedio
+            "FROM dogless.productos p " +
+            "LEFT JOIN dogless.stockproductos s ON p.idproductos = s.idproductos " +
+            "LEFT JOIN dogless.zonas z ON s.idzonas = z.idzonas " +
+            "JOIN dogless.proveedores prov ON p.idproveedores = prov.idproveedores " +
+            "LEFT JOIN ( " +
+            "    SELECT r.idproductos, AVG(r.satisfaccion) AS promedio_satisfaccion " +
+            "    FROM dogless.resenas r " +
+            "    JOIN dogless.usuarios u ON r.usuarioid = u.idusuarios " +
+            "    GROUP BY r.idproductos " +
+            ") avgSatisfaccion ON p.idproductos = avgSatisfaccion.idproductos " +
+            "WHERE p.idproductos = ?1 " + // Espacio añadido aquí
+            "AND s.idzonas = ?2", // Espacio añadido aquí
+            nativeQuery = true)
+    ProductoDTO findProductoByIdByZonaCompleto(Integer idProducto, Integer idZona);
 
 }
 

@@ -1,6 +1,7 @@
 package com.example.springdogless.controllers;
 
 import com.example.springdogless.DTO.ProductoDTO;
+import com.example.springdogless.DTO.ResenaDTO;
 import com.example.springdogless.Repository.*;
 import com.example.springdogless.entity.*;
 import jakarta.mail.MessagingException;
@@ -46,6 +47,8 @@ public class UsuarioController {
     Detallesorden2 detallesRepository;
     @Autowired
     private JavaMailSenderImpl mailSender;
+    @Autowired
+    ResenaRepository resenaRepository;
 
     @GetMapping("")
     public String listarOrdenesUsuario(HttpSession session, Model model) {
@@ -373,7 +376,31 @@ public class UsuarioController {
 
 
 
+    @GetMapping(value = "/detalles_producto")
+    public String DetallesProducto(HttpSession session, Model model, @RequestParam("id") Integer idProducto) {
+        Integer idzona = (Integer) session.getAttribute("idzona");
+        ProductoDTO productoDTO = productRepository.findProductoByIdByZonaCompleto(idProducto,idzona);
+        List<ResenaDTO> resenas = resenaRepository.findResenasByProductoId(idProducto);
+        model.addAttribute("producto", productoDTO);
+        model.addAttribute("resenas", resenas);
 
+        // Imprimir todas las reseñas
+        System.out.println("Reseñas:");
+        for (ResenaDTO resena : resenas) {
+            System.out.println("ID Reseña: " + resena.getIdResenas());
+            System.out.println("Comentario: " + resena.getComentario());
+            System.out.println("Satisfacción: " + resena.getSatisfaccion());
+            System.out.println("Fecha: " + resena.getFecha());
+            System.out.println("Nombre Usuario: " + resena.getUsuarioNombre());
+            System.out.println("Apellido Usuario: " + resena.getUsuarioApellido());
+            System.out.println("ID Producto: " + resena.getIdProductos());
+            System.out.println("Nombre Producto: " + resena.getProductoNombre());
+            System.out.println("-----------------------"); // Separador para claridad
+        }
+
+
+        return "usuario/detalles_producto";
+    }
 
 
 
