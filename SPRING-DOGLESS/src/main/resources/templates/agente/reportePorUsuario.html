@@ -45,7 +45,7 @@
 <body>
 <div class="wrapper">
     <!-- Reemplaza barra lateral con el fragmento de Thymeleaf -->
-    <div th:replace="~{agente/fragments/barralateralagente :: body(activePage='usuarios', activeSubPage='adminzonal')}"></div>
+    <div th:replace="~{agente/fragments/barralateralagente :: body(activePage='reportes', activeSubPage='ordenes')}"></div>
     <!-- Fin barra lateral -->
 
 
@@ -81,7 +81,7 @@
                   <!-- Generate report and back buttons -->
                   <div class="d-flex">
                       <button id="generateReportBtn" class="btn btn-secondary me-2">Generar reporte</button>
-                      <a href="reportes.html" class="btn btn-primary">Regresar</a>
+                      <a href="/agente/reportesOrdenes" class="btn btn-primary">Regresar</a>
                   </div>
               </div>
 
@@ -178,46 +178,30 @@
           </div>
         </div>
 
-
-
         <!-- Pie de página -->
-        <footer class="footer">
-          <div class="container-fluid d-flex justify-content-center">
-            <nav class="pull-left">
-              <ul class="nav">
-              
-                <li class="nav-item">
-                  <a class="nav-link" href="ruta/a/informacion-de-contacto.html"> Contacto </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="ruta/a/politica-de-privacidad.html"> Política de privacidad </a>
-                </li>
-              </ul>
-            </nav>
+        <div th:replace="~{agente/fragments/piedepagina :: fragment}"></div>
 
-          </div>
-        </footer>
       </div>
     </div>
 
 
 
     <!--Core JS Files   -->
-    <script src="assets/js/core/jquery-3.7.1.min.js"></script>
-    <script src="assets/js/core/popper.min.js"></script>
-    <script src="assets/js/core/bootstrap.min.js"></script>
+    <script src="/assets/js/core/jquery-3.7.1.min.js"></script>
+    <script src="/assets/js/core/popper.min.js"></script>
+    <script src="/assets/js/core/bootstrap.min.js"></script>
 
     <!-- jQuery Scrollbar -->
-    <script src="assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+    <script src="/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
     <!-- Datatables -->
-    <script src="assets/js/plugin/datatables/datatables.min.js"></script>
+    <script src="/assets/js/plugin/datatables/datatables.min.js"></script>
 
     <!-- jQuery Vector Maps -->
-    <script src="assets/js/plugin/jsvectormap/jsvectormap.min.js"></script>
-    <script src="assets/js/plugin/jsvectormap/world.js"></script>
+    <script src="/assets/js/plugin/jsvectormap/jsvectormap.min.js"></script>
+    <script src="/assets/js/plugin/jsvectormap/world.js"></script>
 
     <!-- Kaiadmin JS -->
-    <script src="assets/js/kaiadmin.min.js"></script>
+    <script src="/assets/js/kaiadmin.min.js"></script>
     <!-- JavaScript for refreshing the preview and updating the filters -->
 <script>
   // Function to update the filters in the subtitle and refresh the preview
