@@ -780,18 +780,33 @@ public class AdminController {
     }
 
     @PostMapping("/guardarProducto")
-    public String guardarProducto(@RequestParam("idproveedor") Integer idproveedor, Producto producto, RedirectAttributes attr) {
-        Optional<Proveedor> optProducto = proveedorRepository.findById(idproveedor);
-
+    public String guardarProducto(@ModelAttribute ProductoForm productoForm, RedirectAttributes attr) {
+        Producto producto = new Producto();
+        producto.setNombre(productoForm.getNombre());
+        producto.setCategoria(productoForm.getCategoria());
+        Optional<Proveedor> optProducto = proveedorRepository.findById(productoForm.getIdproveedor());
         if (optProducto.isPresent()) {
             Proveedor proveedor = optProducto.get();
             producto.setProveedor(proveedor);  // Asignar el proveedor al producto
         } else {
             attr.addFlashAttribute("error", "Proveedor no encontrado");
             return "redirect:/admin/productos";
-
-
         }
+
+        producto.setPrecio(productoForm.getPrecio());
+        producto.setModelos(productoForm.getModelos());
+        producto.setCostoenvio(productoForm.getCostoenvio());
+        producto.setColores(productoForm.getColores());
+        if (!productoForm.getImagenprod().isEmpty()) {
+            try {
+                byte[] imagenEnBytes = productoForm.getImagenprod().getBytes();
+                producto.setImagenprod(imagenEnBytes);
+            } catch (IOException e) {
+                e.printStackTrace(); // Manejar la excepción de manera adecuada
+            }
+        }
+        producto.setDescripcion(productoForm.getDescripcion());
+
         producto.setBorrado(1);
         productRepository.save(producto);
 

@@ -66,12 +66,13 @@
                   <div class="card">
   
                     <div class="card-body">
-                      <button
+                      <a
                               class="btn btn-primary btn-round ms-auto"
-                              th:onclick="|window.location.href='@{/admin/nuevoProducto}'|"
+                              th:href="@{/admin/nuevoProducto}"
                       >
+                        <i class="fa fa-plus"></i>
                         Nuevo Producto
-                      </button>
+                      </a>
                       <br>
                       <br>
                       <div class="table-responsive">

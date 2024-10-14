@@ -56,9 +56,6 @@
 
         <!-- Texto o contenido central -->
         <div class="container">
-          <form method="post" th:action="@{/admin/guardarProducto}" th:object="${producto}">
-            <div th:if="${msg != null}" th:text="${msg}" class="alert alert-success" role="alert"></div>
-
             <div class="page-inner">
                  <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
                    <div>
@@ -66,13 +63,11 @@
                    </div>
                  </div>
                  <div class="row">
-                   <form method="post" th:action="@{/admin/guardarProducto}" th:object="${producto}">
-
                      <div class="col-md-12">
                        <div class="card">
 
                          <div class="card-body">
-                           <form class="needs-validation" style="width: 100%; margin-left: 0%; margin-top: 3%;" action="productos.html" method="POST" novalidate>
+                           <form class="needs-validation" style="width: 100%; margin-left: 0%; margin-top: 3%;" th:action="@{/admin/guardarProducto}" th:object="${producto}" method="POST" enctype="multipart/form-data" novalidate>
                              <div class="container">
                                <div class="row">
                                  <!-- Columna izquierda -->
@@ -142,8 +137,8 @@
                                  <!-- Columna derecha -->
                                  <div class="col-md-6">
                                    <div class="mb-3">
-                                     <label for="imagen" class="form-label">Imagen: (*)</label>
-                                     <input type="file" name="imagen" id="imagen" class="form-control" accept="image/*" onchange="previewImage(event)" required>
+                                     <label for="imagenprod" class="form-label">Imagen: (*)</label>
+                                     <input type="file" name="imagenprod" id="imagenprod" class="form-control" accept="image/*" onchange="previewImage(event)" required>
                                      <div class="invalid-feedback">Por favor seleccione una imagen.</div>
                                      <div class="mt-3">
                                        <img id="imagePreview" src="#" alt="Vista previa de la imagen" style="display:none; max-width: 100%; max-height: 200px;">
@@ -171,10 +166,10 @@
                          </div>
                        </div>
                      </div>
-                   </form>
+
                  </div>
                </div>
-          </form>
+
         </div>
         <!-- Fin del contenido central -->
 
@@ -271,6 +266,19 @@
           });
         });
       </script>
+    <script>
+
+      function previewImage(event) {
+        var input = event.target;
+        var reader = new FileReader();
+        reader.onload = function() {
+          var preview = document.getElementById('imagePreview');
+          preview.src = reader.result;
+          preview.style.display = 'block';
+        }
+        reader.readAsDataURL(input.files[0]);
+      }
+    </script>
       
   </body>
 </html>

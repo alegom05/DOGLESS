@@ -13,6 +13,7 @@
             href="/assets/img/kaiadmin/favicon.ico"
             type="image/x-icon"
     />
+    <link th:href="@{/assets/css/style-SuperAdmin.css}" rel="stylesheet">
 
     <!-- Fonts and icons -->
     <script src="/assets/js/plugin/webfont/webfont.min.js"></script>
@@ -61,17 +62,21 @@
                         <h3 class="fw-bold mb-3">Lista de Productos</h3>
                     </div>
                 </div>
+                <div th:if="${mensajeExito}" id="mensajeExito" class="alert alert-success fade-out" role="alert">
+                    <p th:text="${mensajeExito}"></p>
+                </div>
                 <div class="row">
                     <div class="col-md-12">
                         <div class="card">
 
                             <div class="card-body">
-                                <button
+                                <a
                                         class="btn btn-primary btn-round ms-auto"
-                                        th:onclick="|window.location.href='@{/admin/nuevoProducto}'|"
+                                        th:href="@{/admin/nuevoProducto}"
                                 >
+                                    <i class="fa fa-plus"></i>
                                     Nuevo Producto
-                                </button>
+                                </a>
                                 <br>
                                 <br>
                                 <div class="table-responsive">
@@ -326,6 +331,20 @@
         });
     });
 </script>
+    <script>
+        // Espera 3 segundos (3000 milisegundos) antes de empezar a ocultar el mensaje
+        setTimeout(function() {
+            var alert = document.getElementById('mensajeExito');
+            if (alert) {
+                alert.classList.add('hidden'); // Añadir la clase que reduce la opacidad gradualmente
+
+                // Después de 1 segundo (duración de la transición), ocultar completamente
+                setTimeout(function() {
+                    alert.classList.add('remove'); // Ocultar completamente el mensaje y el espacio
+                }, 1000); // 1000 ms coincide con la duración de la transición de opacidad
+            }
+        }, 3000); // Cambia 3000 por el tiempo en milisegundos que desees (3 segundos en este caso)
+    </script>
 
 </body>
 </html>
