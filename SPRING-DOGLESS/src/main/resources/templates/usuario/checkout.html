@@ -66,13 +66,13 @@
                     <i class="icon-arrow-right"></i>
                 </li>
                 <li class="nav-item">
-                    <a href="/usuario/compras">Cesta de productos</a>
+                    <a th:href="@{'/usuario/compras' + '?id=' + ${session.usuario.id}}">Carrito de Compra</a>
                 </li>
                 <li class="separator">
                   <i class="icon-arrow-right"></i>
                 </li>
                 <li class="nav-item">
-                  <a href="/usuario/checkout">Checkout</a>
+                  <a th:href="@{'/usuario/checkout' + '?id=' + ${session.usuario.id}}">Checkout</a>
                 </li>
               </ul>
             </div>
@@ -83,7 +83,8 @@
                         <!-- Checkout Wizard -->
                         <div id="wizard-checkout" class="bs-stepper wizard-icons wizard-icons-example mb-5">
                             <div class="bs-stepper-content border-top">
-                                <form class="needs-validation" style="width: 100%; margin-left: 0%; margin-top: 3%;" method="POST" onsubmit="handleSubmit(event)" novalidate>
+                                <form class="needs-validation" style="width: 100%; margin-left: 0%; margin-top: 3%;" method="POST" th:action="@{/usuario/actualizarDireccion}" novalidate>
+                                    <input name="id" th:value="${session.usuario.id}" type="hidden"/>
                                     <div class="container">
                                         <div class="row">
                                           <!-- Columna izquierda -->
@@ -152,21 +153,21 @@
                                                 <hr class="mx-n4">
                                                 <dl class="row mb-0">
                                                     <dt class="col-6">Subtotal</dt>
-                                                    <dd class="col-6 fw-medium text-end mb-0" th:text="${listaProductos.get(0).orden.total}">S/.1000.50</dd>
+                                                    <dd class="col-6 fw-medium text-end mb-0" id="subtotal" th:text="${listaProductos.get(0).orden.total}">S/.1000.50</dd>
                                                 </dl>
                                               <hr class="mx-n4">
                                                   <dl class="row mb-0">
                                                       <dt class="col-6">Costo de envio</dt>
-                                                      <dd class="col-6 fw-medium text-end mb-0">S/.9.00</dd>
+                                                      <dd class="col-6 fw-medium text-end mb-0" id="costoEnvio">S/.12.00</dd>
                                                   </dl>
                                                 <hr class="mx-n4">
                                                 <dl class="row mb-0">
                                                     <dt class="col-6">Total</dt>
-                                                    <dd class="col-6 fw-medium text-end mb-0">S/.1009.50</dd>
+                                                    <dd class="col-6 fw-medium text-end mb-0" id="total">S/.1009.50</dd>
                                                 </dl>
                                             
                                             <div class="btn-container py-4" style="text-align: center;">
-                                                <a th:href="@{'/usuario/procesopago' + '?id=' + ${session.usuario.id}}" class="btn btn-primary">Realizar el pedido</a>
+                                                <button class="btn btn-primary" type="submit">Realizar el pedido</button>
                                             </div>
 
                                             
@@ -210,25 +211,17 @@
     <script src="/assets/js/kaiadmin.min.js"></script>
     <!-- Kaiadmin DEMO methods, don't include it in your project! -->
     <script src="/assets/js/setting-demo2.js"></script>
-   
-    <!-- Bootstrap JS and Popper.js -->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script>
-        document.getElementById('togglePassword').addEventListener('click', function() {
-          var passwordInput = document.getElementById('passwordInput');
-          var passwordIcon = this.querySelector('i');
-          
-          if (passwordInput.type === 'password') {
-            passwordInput.type = 'text';
-            passwordIcon.classList.remove('fa-eye');
-            passwordIcon.classList.add('fa-eye-slash');
-          } else {
-            passwordInput.type = 'password';
-            passwordIcon.classList.remove('fa-eye-slash');
-            passwordIcon.classList.add('fa-eye');
-          }
-        });
+
+      <script>
+          // Convertir el subtotal y costo de envío a números
+          let subtotal = parseFloat(document.getElementById("subtotal").innerText.replace('S/.', ''));
+          let costoEnvio = parseFloat(document.getElementById("costoEnvio").innerText.replace('S/.', ''));
+
+          // Calcular el total
+          let total = subtotal + costoEnvio;
+
+          // Mostrar el total
+          document.getElementById("total").innerText = "S/." + total.toFixed(2);
       </script>
     
   

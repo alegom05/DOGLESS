@@ -38,4 +38,10 @@ public interface Detallesorden2 extends JpaRepository<Detalleorden, Integer> {
             "WHERE o.idusuarios = :id AND o.estado = 'CREADO'",nativeQuery = true)
     List<Detalleorden> findByOrdenCreado(@Param("id") Integer id);
 
+    @Query(value = "SELECT do.*\n" +
+            "FROM detallesorden do\n" +
+            "JOIN ordenes o ON do.idorden = o.idordenes\n" +
+            "WHERE o.idusuarios = :id AND o.estado = 'En Validación'",nativeQuery = true)
+    List<Detalleorden> findByOrdenValidada(@Param("id") Integer id);
+
 }

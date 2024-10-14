@@ -114,12 +114,30 @@
         <!-- Cart Page Start -->
         <div class="container-fluid py-5">
             <div class="container py-5 d-flex flex-column min-vh-100">
+                <div class="page-header">
+                    <h3 class="fw-bold mb-2">Mis productos</h3>
+                    <ul class="breadcrumbs mb-1">
+                        <li class="nav-home">
+                            <a href="/usuario/">
+                                <i class="icon-home"></i>
+                            </a>
+                        </li>
+                        <li class="separator">
+                            <i class="icon-arrow-right"></i>
+                        </li>
+                        <li class="nav-item">
+                            <a th:href="@{'/usuario/compras' + '?id=' + ${session.usuario.id}}">Carrito de Compra</a>
+                        </li>
+                    </ul>
+                </div>
                 <form method="post" th:action="@{/usuario/actualizarCantidad}">
+
                     <div class="row">
                         <div class="col-lg-9">
                             <h1 class="mb-3 mt-4 "></h1>
                             <div class="table-responsive d-flex justify-content-center align-items-center flex-grow-1">
                                 <input name="id" th:value="${session.usuario.id}" type="hidden"/>
+                                <div th:if="${mensaje}" th:text="${mensaje}" class="alert alert-warning"></div>
                                 <table class="table text-center table-card">
                                     <thead>
                                         <tr>
@@ -178,10 +196,13 @@
                             <h1 class="mb-3 mt-4"></h1>
                             <div class="card p-3">
                                 <h5>Resumen de compra</h5>
-                                <p id="totalProductos">Productos (2)</p>
-                                <p>Total: <strong id="totalPrice" name="total">S/887</strong></p>
+                                <p id="totalProductos">Productos (0)</p>
+                                <p>Total: <strong id="totalPrice" name="total">S/0</strong></p>
                                 <input type="hidden" name="totalHidden" id="totalHidden" /> <!-- Campo oculto para el total -->
-                                <button class="btn btn-primary btn-lg btn-block" type="submit">Continuar compra</button>
+                                <!-- Botón de continuar compra -->
+                                <div th:if="${not #lists.isEmpty(orden)}">
+                                    <button type="submit" class="btn btn-primary">Continuar Compra</button>
+                                </div>
                             </div>
                         </div>
 

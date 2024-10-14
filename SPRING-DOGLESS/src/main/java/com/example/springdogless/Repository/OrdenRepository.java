@@ -24,4 +24,7 @@ public interface OrdenRepository extends JpaRepository<Orden, Integer> {
     @Modifying
     @Query(value="UPDATE ordenes SET estado = :nuevoEstado WHERE idordenes = :idOrden", nativeQuery = true)
     int actualizarEstado(@Param("idOrden") int idOrden, @Param("nuevoEstado") String nuevoEstado);
+
+    @Query(value="select * from ordenes where ordenes.estado='CREADO' and ordenes.idusuarios=:id",nativeQuery = true)
+    Optional<Orden> findOrdenCreado(@Param("id") Integer id);
 }
