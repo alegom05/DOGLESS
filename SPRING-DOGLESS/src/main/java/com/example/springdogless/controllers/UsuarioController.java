@@ -388,20 +388,25 @@ public class UsuarioController {
         model.addAttribute("producto", productoDTO);
         model.addAttribute("resenas", resenas);
 
-        // Imprimir todas las reseñas
-        System.out.println("Reseñas:");
-        for (ResenaDTO resena : resenas) {
-            System.out.println("ID Reseña: " + resena.getIdResenas());
-            System.out.println("Comentario: " + resena.getComentario());
-            System.out.println("Satisfacción: " + resena.getSatisfaccion());
-            System.out.println("Fecha: " + resena.getFecha());
-            System.out.println("Nombre Usuario: " + resena.getUsuarioNombre());
-            System.out.println("Apellido Usuario: " + resena.getUsuarioApellido());
-            System.out.println("ID Producto: " + resena.getIdProductos());
-            System.out.println("Nombre Producto: " + resena.getProductoNombre());
-            System.out.println("-----------------------"); // Separador para claridad
-        }
+        // Obtener la cantidad de productos por categoría
+        Map<String, Integer> conteoPorCategoria = new HashMap<>();
 
+        // Obtener todas las categorías disponibles
+        Set<String> todasLasCategorias = new HashSet<>(productRepository.findAllCategorias(idzona));
+        model.addAttribute("categorias", todasLasCategorias); // Mantiene todas las categorías
+        // Crea por asi decirlo una matriz q se colocara como, por ejemplo, Tecnologia, 4 (indicando la categoria
+        // como string y la cantidad como int)
+        for (String categoriaz : todasLasCategorias) {
+            Integer count = productRepository.countProductosByZonaAndCategoria(idzona, categoriaz);
+            conteoPorCategoria.put(categoriaz, count);
+        }
+        model.addAttribute("conteoPorCategoria", conteoPorCategoria);
+        // Obtener el total de productos sin filtrar
+        Integer totalProductos = productRepository.countProductosByZona(idzona);
+        model.addAttribute("totalProductos", totalProductos); // Agrega el total de productos al modelo
+
+        List<ProductoDTO> tres_productos_rankeados = productRepository.findTop3ProductosByZona(idzona);
+        model.addAttribute("TresProductosRankeados", tres_productos_rankeados);
 
         return "usuario/detalles_producto";
     }
