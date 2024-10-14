@@ -115,7 +115,7 @@
         <div class="container-fluid py-5">
             <div class="container py-5 d-flex flex-column min-vh-100">
                 <div class="page-header">
-                    <h3 class="fw-bold mb-2">Mis productos</h3>
+                    <h3 class="fw-bold mb-2">Mis compras</h3>
                     <ul class="breadcrumbs mb-1">
                         <li class="nav-home">
                             <a href="/usuario/">
@@ -166,7 +166,7 @@
                                                                 <i class="fa fa-minus"></i>
                                                             </button>
                                                         </div>
-                                                        <input type="text" class="form-control form-control-sm text-center border-0 qty-input" name="cantidades" th:value="${orden.cantidad}" style="max-width: 40px;">
+                                                        <input type="text" class="form-control form-control-sm text-center border-0 qty-input" name="cantidades" th:value="${orden.cantidad}" style="max-width: 40px;" readonly>
                                                         <div class="input-group-btn">
                                                             <button type="button" class="btn btn-sm btn-plus rounded-circle border" onclick="incrementQuantity(this)">
                                                                 <i class="fa fa-plus"></i>
@@ -285,8 +285,10 @@
                       const row = this.closest('tr');
                       const input = row.querySelector('.qty-input');
                       let quantity = parseInt(input.value);
-                      input.value = quantity + 1;
-                      updateTotal(row);
+                      if(quantity<10){
+                          input.value = quantity + 1;
+                          updateTotal(row);
+                      }
                   });
               });
 

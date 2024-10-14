@@ -54,11 +54,11 @@
           <div class="page-inner">
             <!-- Buttons for controlling order state -->
             <div class="d-flex justify-content-end mb-3">
-              <form action="/agente/actualizarEstado" method="POST" style="display: inline;">
+              <form th:action="@{/agente/actualizarEstado}" method="POST" style="display: inline;">
                 <input name="id" th:value="${orden.id}" type="hidden"/>
                 <button type="submit" id="next-state" class="btn btn-success me-2">Avanzar estado</button>
               </form>
-              <form action="/agente/cancelarorden" method="POST" style="display: inline;">
+              <form th:action="@{/agente/cancelarorden}" method="POST" style="display: inline;">
                 <input name="id" th:value="${orden.id}" type="hidden"/>
                 <button type="submit" id="next-state2" class="btn btn-danger me-2">Cancelar orden</button>
               </form>
@@ -156,7 +156,7 @@
 
             <!-- Return Button -->
             <div class="card-action text-center mt-5">
-              <a href="javascript:history.back()" class="btn btn-primary">Regresar</a>
+              <a th:href="@{/agente/ordenes}" class="btn btn-primary">Regresar</a>
             </div>
           </div>
         </div>
