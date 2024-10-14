@@ -444,9 +444,9 @@
                                   <th:block th:each="producto : ${listaProductos}">
                                       <div class="col-md-6 col-lg-6 col-xl-4">
                                           <div class="rounded position-relative fruite-item" style="width: 278px; height: 500px; box-sizing: border-box; border: 1px solid #000;">
-                                              <div class="fruite-img">
+                                              <div class="fruite-img" style="height: 250px; overflow: hidden;">
                                                   <a th:href="@{/usuario/detalles_producto(id=${producto.idproductos})}" class="rounded me-4">
-                                                      <img th:src="@{'http://20.81.145.27:8080/producto/imagen/' + ${producto.idproductos}}" class="img-fluid w-100 rounded-top" alt="Imagen del producto">
+                                                      <img th:src="@{'http://20.81.145.27:8080/producto/imagen/' + ${producto.idproductos}}" class="img-fluid w-100 rounded-top" style="height: 100%; object-fit: cover;" alt="Imagen del producto">
                                                   </a>
                                               </div>
                                               <div class="text-white custom-bg px-3 py-1 rounded position-absolute"
@@ -460,7 +460,7 @@
                                                       th:text="${producto.nombre}">
                                                   </h4>
                                                   <!-- Descripción del producto -->
-                                                  <p style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+                                                  <p style="display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical;
                                                      overflow: hidden; text-overflow: ellipsis;"
                                                      th:text="${producto.descripcion}">
                                                   </p>
@@ -501,10 +501,10 @@
                                                       </span>
                                                 </div>
 
-                                                  <div class="d-flex justify-content-between flex-lg-wrap">
+                                                  <div class="d-flex flex-column">
                                                       <!-- Precio del producto -->
                                                       <p class="text-dark fs-5 fw-bold mb-0">S/.<span th:text="${producto.precio}"></span></p>
-                                                    <!-- Botón de añadir al carrito -->
+                                                      <!-- Botón de añadir al carrito -->
                                                       <a href="/Plantilla_Usuario/carrito_compras.html"
                                                          class="btn btn-normal-2 rounded-pill mt-2 px-3">
                                                           <i class="fa fa-shopping-bag me-2"></i> Añade al carrito
