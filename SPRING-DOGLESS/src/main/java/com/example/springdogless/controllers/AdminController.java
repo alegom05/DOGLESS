@@ -518,7 +518,7 @@ public class AdminController {
 
     @GetMapping("solicitudes")
     public String listaSolicitudes(Model model, @RequestParam(required = false) String zona) {
-        model.addAttribute("listaSolicitudes", solicitudRepository.findAll());
+        model.addAttribute("listaSolicitudes", solicitudRepository.findSolicitudes());
         return "admin/solicitudes";
     }
     //Aceptar Solicitudes
@@ -530,6 +530,37 @@ public class AdminController {
         redirectAttributes.addFlashAttribute("mensajeExito","La solicitud ha sido aceptada"); // para enviar mensaje temporal
         return "redirect:admin/solicitudes";
     }
+    @PostMapping("/aprobar")
+    public String aprobarSolicitud(@RequestParam("id") Integer id, RedirectAttributes redirectAttributes) {
+        // Obtener la solicitud por su ID
+        Optional<Solicitud> solicitudOpt = solicitudRepository.findById(id);
+
+        // Verificar si la solicitud existe
+        if (solicitudOpt.isPresent()) {
+            Solicitud solicitud = solicitudOpt.get();
+
+            // Obtener el usuario asociado a la solicitud
+            Usuario usuario = solicitud.getUsuario();
+
+            Rol adminzonalRole = rolRepository.findById(3).orElseThrow(() -> new IllegalArgumentException("Rol no encontrado"));
+            usuario.setRol(adminzonalRole);
+
+            // Cambiar el veredicto de la solicitud a 1 (aprobado)
+            solicitud.setVeredicto((byte) 1);
+
+            // Guardar los cambios en la base de datos
+            solicitudRepository.save(solicitud);
+            usuarioRepository.save(usuario);
+
+            // Redirigir con un mensaje de éxito
+            redirectAttributes.addFlashAttribute("mensajeExito", "La solicitud ha sido aprobada.");
+        } else {
+            // En caso de que la solicitud no exista, agregar un mensaje de error
+            redirectAttributes.addFlashAttribute("mensajeError", "La solicitud no se encontró.");
+        }
+
+        return "redirect:/admin/solicitudes";
+    }
     //Denegar Solicitudes
     @GetMapping(value="{id}/denegar")
     public String denegarSolicitud(@PathVariable Integer id , RedirectAttributes redirectAttributes){
@@ -537,6 +568,31 @@ public class AdminController {
         solicitud.setVeredicto((byte)0);  //aceptada
         solicitudRepository.save(solicitud);
         redirectAttributes.addFlashAttribute("mensajeExito","La solicitud ha sido denegada"); // para enviar mensaje temporal
+        return "redirect:/admin/solicitudes";
+    }
+    @PostMapping("/denegar")
+    public String rechazarSolicitud(@RequestParam("id") Integer id, @RequestParam("comentario") String comentario, RedirectAttributes redirectAttributes) {
+        // Obtener la solicitud por su ID
+        Optional<Solicitud> solicitudOpt = solicitudRepository.findById(id);
+
+        // Verificar si la solicitud existe
+        if (solicitudOpt.isPresent()) {
+            Solicitud solicitud = solicitudOpt.get();
+
+            // Cambiar el veredicto de la solicitud a 1 (aprobado)
+            solicitud.setVeredicto((byte) 0);
+            solicitud.setComentario(comentario);
+
+            // Guardar los cambios en la base de datos
+            solicitudRepository.save(solicitud);
+
+            // Redirigir con un mensaje de éxito
+            redirectAttributes.addFlashAttribute("mensajeExito", "La solicitud ha sido denegada.");
+        } else {
+            // En caso de que la solicitud no exista, agregar un mensaje de error
+            redirectAttributes.addFlashAttribute("mensajeError", "La solicitud no se encontró.");
+        }
+
         return "redirect:/admin/solicitudes";
     }
 

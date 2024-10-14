@@ -11,7 +11,7 @@ import java.util.List;
 
 @Repository
 public interface SolicitudRepository extends JpaRepository<Solicitud, Integer>{
-
+    @Query(nativeQuery = true, value = "select * from solicitudes where veredicto IS NULL")
+    List<Solicitud> findSolicitudes();
 
 }
-
