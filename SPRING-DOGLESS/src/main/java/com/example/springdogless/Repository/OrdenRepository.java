@@ -16,7 +16,8 @@ public interface OrdenRepository extends JpaRepository<Orden, Integer> {
 
     List<Orden> findByBorrado(Integer borrado);
 
-    Optional<Orden> findById(Integer id);
+    @Query(value="select * from ordenes where ordenes.idordenes=:id",nativeQuery = true)
+    Orden findByIdOrden(@Param("id") Integer id);
 
     @Query(value="SELECT o.*, p.idproductos,p.nombre,p.precio,p.costoenvio,d.cantidad, d.subtotal FROM ordenes o JOIN detallesorden d ON o.idordenes = d.idorden JOIN productos p ON d.idproducto = p.idproductos WHERE o.idordenes = :id", nativeQuery = true)
     Optional<Orden> findByIdWithDetails(@Param("id") Integer id);

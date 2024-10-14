@@ -104,22 +104,41 @@
                                                     </div>
                                                   </div>
                                               </div>
-                                              <div class="row py-2">
-                                                  <div class="col-12 col-md-6">
-                                                    <label class="form-label" for="paymentCardName">Nombre del titular</label>
-                                                    <input type="text" id="paymentCardName" class="form-control" placeholder="Ej: Adrian Bala" />
-                                                  </div>
-                                                  <div class="col-6 col-md-3">
-                                                    <label class="form-label" for="paymentCardExpiryDate">Vencimiento</label>
-                                                    <input type="text" id="paymentCardExpiryDate" class="form-control expiry-date-mask" placeholder="MM/AA" />
-                                                  </div>
-                                                  <div class="col-6 col-md-3">
-                                                    <label class="form-label" for="paymentCardCvv">CVV</label>
-                                                    <div class="input-group input-group-merge">
-                                                      <input type="text" id="paymentCardCvv" class="form-control cvv-code-mask" maxlength="3" placeholder="123" />
+                                                <div class="row py-2">
+                                                    <!-- Nombre del titular -->
+                                                    <div class="col-12 col-md-6">
+                                                        <label class="form-label" for="paymentCardName">Nombre del titular</label>
+                                                        <input type="text" id="paymentCardName" class="form-control"
+                                                               placeholder="Ej: Adrian Bala"
+                                                               pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+"
+                                                               title="Solo se permiten letras y espacios"
+                                                               required />
                                                     </div>
-                                                  </div>
-                                              </div>
+
+                                                    <!-- Fecha de vencimiento (MM/AA) -->
+                                                    <div class="col-6 col-md-3">
+                                                        <label class="form-label" for="paymentCardExpiryDate">Vencimiento</label>
+                                                        <input type="text" id="paymentCardExpiryDate" class="form-control expiry-date-mask"
+                                                               placeholder="MM/AA"
+                                                               pattern="^(0[1-9]|1[0-2])\/\d{2}$"
+                                                               title="Formato de fecha MM/AA, por ejemplo: 12/25"
+                                                               maxlength="5"
+                                                               required />
+                                                    </div>
+
+                                                    <!-- CVV -->
+                                                    <div class="col-6 col-md-3">
+                                                        <label class="form-label" for="paymentCardCvv">CVV</label>
+                                                        <div class="input-group input-group-merge">
+                                                            <input type="text" id="paymentCardCvv" class="form-control cvv-code-mask"
+                                                                   maxlength="3"
+                                                                   pattern="\d{3}"
+                                                                   title="Debe tener exactamente 3 dígitos"
+                                                                   placeholder="123"
+                                                                   required />
+                                                        </div>
+                                                    </div>
+                                                </div>
 
                                               <div class="row py-2">
                                                   <div class="col">

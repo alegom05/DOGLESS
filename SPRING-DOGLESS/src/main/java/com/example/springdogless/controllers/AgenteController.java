@@ -121,10 +121,14 @@ public class AgenteController {
     }
 
     @PostMapping("/actualizarEstado")
-    public String avanzarEstado(@RequestParam(value = "id", required = false) Integer id) {
-        Orden orden = ordenRepository.findById(id).orElse(null);
+    public String avanzarEstado(@RequestParam("id") Integer id) {
+        Orden orden = ordenRepository.findByIdOrden(id);
+        if (orden!=null) {
+            // Obtener la fecha actual y actualizar el campo de fecha en la orden
+            Date fechaActualUtil = new Date();
+            java.sql.Date fechaActualSql = new java.sql.Date(fechaActualUtil.getTime());
+            orden.setFecha(fechaActualSql); // Asegúrate de que este campo exista en la entidad Orden
 
-        if (orden != null) {
             String estadoActual = orden.getEstado();
             // Lógica para avanzar el estado
             switch (estadoActual) {
@@ -148,19 +152,13 @@ public class AgenteController {
                     break;
                 case "Recibido":
                     // En este caso podrías devolver a otra ruta si lo deseas
-                    return "redirect:agente/ordenes"; // O cualquier otra acción
+                    return "redirect:/agente/ordenes"; // O cualquier otra acción
                 default:
-                    return "redirect:agente/updaterorden?id=" + id; // Retorna a la misma vista
+                    return "redirect:/agente/updaterorden?id=" + id; // Retorna a la misma vista
             }
-            // Obtener la fecha actual y actualizar el campo de fecha en la orden
-            Date fechaActualUtil = new Date();
-            java.sql.Date fechaActualSql = new java.sql.Date(fechaActualUtil.getTime());
-            orden.setFecha(fechaActualSql); // Asegúrate de que este campo exista en la entidad Orden
-
             ordenRepository.save(orden);
-            return "redirect:agente/updaterorden?id=" + id; // Redirige de vuelta a la vista de la orden
         }
-        return "redirect:agente/ordenes"; // Redirige si no se encuentra la orden
+        return "redirect:/agente/updaterorden?id=" + id; // Redirige si no se encuentra la orden
     }
 
     @PostMapping("/cancelarorden")
