@@ -18,7 +18,6 @@ public class Reposicion {
     private Integer id;
 
     @Column(name = "cantidad")
-    @Min(value= 25, message="No puede tener un valor a 25")
     private Integer cantidad;
 
     @Column(name = "fecha_pedido")
