@@ -109,35 +109,6 @@ public class LoginController {
         return "politica-de-privacidad"; // Esto renderiza la vista politica-de-privacidad.html
     }
 
-    @GetMapping("/imagen/{id}")
-    @ResponseBody
-    public ResponseEntity<byte[]> getImage(@PathVariable("id") Integer id) {
-        System.out.println("Llamando a getImage con ID: " + id); // Agrega este log
-        Optional<Usuario> usuarioOptional = usuarioRepository.findById(id);
-
-        if (usuarioOptional.isPresent()) {
-            Usuario usuario = usuarioOptional.get();
-            byte[] imagenBytes = usuario.getFotoperfil();
-
-            if (imagenBytes != null) {
-                return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(imagenBytes);
-            } else {
-                // Carga la imagen por defecto desde el classpath
-                try {
-                    ClassPathResource imgFile = new ClassPathResource("static/assets/img/default.jpg");
-                    byte[] defaultImage = Files.readAllBytes(imgFile.getFile().toPath());
-                    return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(defaultImage);
-                } catch (IOException e) {
-                    // Manejo de errores al cargar la imagen
-                    return ResponseEntity.internalServerError().build();
-                }
-            }
-        }
-
-        System.out.println("No se encontró producto con ID: " + id); // Agrega este log
-        return ResponseEntity.notFound().build();
-    }
-
 
     @PostMapping("/request-password-reset")
     public ResponseEntity<String> requestPasswordReset(@RequestParam String email) {
