@@ -44,7 +44,7 @@
 </head>
 <div class="wrapper">
   <!-- Reemplaza barra lateral con el fragmento de Thymeleaf -->
-  <div th:replace="~{agente/fragments/barralateralagente :: body(activePage='usuarios', activeSubPage='adminzonal')}"></div>
+  <div th:replace="~{agente/fragments/barralateralagente :: body(activePage='usuarios')}"></div>
   <!-- Fin barra lateral -->
 
 
@@ -87,7 +87,7 @@
               </div>
 
               <div class="card-action text-center">
-                <a href="/agente/" class="btn btn-primary me-2">Ir a inicio</a>
+                <a href="javascript:history.back()" class="btn btn-primary me-2">Regresar</a>
 
               </div>
             </div>
