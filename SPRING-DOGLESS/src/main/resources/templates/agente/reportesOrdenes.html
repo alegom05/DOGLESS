@@ -45,7 +45,7 @@
 <body>
   <div class="wrapper">
     <!-- Reemplaza barra lateral con el fragmento de Thymeleaf -->
-    <div th:replace="~{agente/fragments/barralateralagente :: body(activePage='reportes', activeSubPage='ordenes')}"></div>
+    <div th:replace="~{agente/fragments/barralateralagente :: body(activePage='usuarios', activeSubPage='adminzonal')}"></div>
     <!-- Fin barra lateral -->
 
 
@@ -68,7 +68,7 @@
                 <!-- Tabla -->
                 <div class="row">
                     <!-- Botón 1: Órdenes generadas por usuario -->
-                    <a href="/agente/reportesOrdenes/reportePorUsuario" class="col-12 btn btn-light text-start shadow-sm mb-3 py-3" role="button">
+                    <a href="reportePorUsuario.html" class="col-12 btn btn-light text-start shadow-sm mb-3 py-3" role="button">
                         <div class="d-flex align-items-center">
                             <div class="me-3">
                                 <i class="fas fa-user fa-2x"></i> <!-- Icono -->
@@ -81,7 +81,7 @@
                     </a>
 
                     <!-- Botón 2: Total de órdenes en el sistema -->
-                    <a href="/agente/reportesOrdenes/reporteOrdenesTotales" class="col-12 btn btn-light text-start shadow-sm mb-3 py-3" role="button">
+                    <a href="reporteordenestotales.html" class="col-12 btn btn-light text-start shadow-sm mb-3 py-3" role="button">
                         <div class="d-flex align-items-center">
                             <div class="me-3">
                                 <i class="fas fa-box fa-2x"></i> <!-- Icono -->
@@ -94,7 +94,7 @@
                     </a>
 
                     <!-- Botón 3: Órdenes por agente asignado en la zona -->
-                    <a href="/agente/reportesOrdenes/reportePorAgente" class="col-12 btn btn-light text-start shadow-sm mb-3 py-3" role="button">
+                    <a href="reporteporagente.html" class="col-12 btn btn-light text-start shadow-sm mb-3 py-3" role="button">
                         <div class="d-flex align-items-center">
                             <div class="me-3">
                                 <i class="fas fa-map-marker-alt fa-2x"></i> <!-- Icono -->
@@ -107,7 +107,7 @@
                     </a>
 
                     <!-- Botón 4: Total de órdenes (filtro de fecha) -->
-                    <a href="/agente/reportesOrdenes/reportePorFecha" class="col-12 btn btn-light text-start shadow-sm mb-3 py-3" role="button">
+                    <a href="reporteporfecha.html" class="col-12 btn btn-light text-start shadow-sm mb-3 py-3" role="button">
                         <div class="d-flex align-items-center">
                             <div class="me-3">
                                 <i class="fas fa-calendar-alt fa-2x"></i> <!-- Icono -->
@@ -121,35 +121,109 @@
                 </div>
             </div>
         </div>
-
-
+        
+  
 
 
 
         <!-- Pie de página -->
-        <div th:replace="~{agente/fragments/piedepagina :: fragment}"></div>
+        <footer class="footer">
+          <div class="container-fluid d-flex justify-content-center">
+            <nav class="pull-left">
+              <ul class="nav">
+              
+                <li class="nav-item">
+                  <a class="nav-link" href="ruta/a/informacion-de-contacto.html"> Contacto </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="ruta/a/politica-de-privacidad.html"> Política de privacidad </a>
+                </li>
+              </ul>
+            </nav>
 
-    </div>
+          </div>
+        </footer>
+      </div>
     </div>
 
 
 
     <!--Core JS Files   -->
-    <script src="/assets/js/core/jquery-3.7.1.min.js"></script>
-    <script src="/assets/js/core/popper.min.js"></script>
-    <script src="/assets/js/core/bootstrap.min.js"></script>
+    <script src="assets/js/core/jquery-3.7.1.min.js"></script>
+    <script src="assets/js/core/popper.min.js"></script>
+    <script src="assets/js/core/bootstrap.min.js"></script>
 
     <!-- jQuery Scrollbar -->
-    <script src="/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+    <script src="assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
     <!-- Datatables -->
-    <script src="/assets/js/plugin/datatables/datatables.min.js"></script>
+    <script src="assets/js/plugin/datatables/datatables.min.js"></script>
 
     <!-- jQuery Vector Maps -->
-    <script src="/assets/js/plugin/jsvectormap/jsvectormap.min.js"></script>
-    <script src="/assets/js/plugin/jsvectormap/world.js"></script>
+    <script src="assets/js/plugin/jsvectormap/jsvectormap.min.js"></script>
+    <script src="assets/js/plugin/jsvectormap/world.js"></script>
 
     <!-- Kaiadmin JS -->
-    <script src="/assets/js/kaiadmin.min.js"></script>
+    <script src="assets/js/kaiadmin.min.js"></script>
+    <script>
+      $(document).ready(function() {
+        // Initialize DataTable
+        var table = $('#multi-filter-select').DataTable({
+          paging: true,
+          pageLength: 5,
+          lengthChange: false,
+          info: true,
+          dom: 'tip',
+          initComplete: function() {
+            // Apply the search for all the existing filters
+            this.api().columns().every(function() {
+              var that = this;
+              $('input, select', this.header()).on('keyup change', function() {
+                if (that.search() !== this.value) {
+                  that.search(this.value).draw();
+                }
+              });
+            });
+          }
+        });
 
+        // Search button functionality
+        $('#searchBtn').on('click', function() {
+          // Apply the existing filters
+          table.columns(0).search($('#filterUserName').val());
+          table.columns(1).search($('#filterItemCount').val());
+          table.columns(3).search($('#filterDate').val());
+          table.columns(4).search($('#filterUserStatus').val());
+
+          // Apply filter by "Ordenar por"
+          var orderBy = $('#filterOrderBy').val();
+          if (orderBy === 'sinAsignar') {
+            table.columns(4).search('Motivo de baneo');
+          } else if (orderBy === 'mal_comportamiento') {
+            table.columns(4).search('Mal comportamiento');
+          } else if (orderBy === 'spam') {
+            table.columns(4).search('Spam');
+          } else if (orderBy === 'otro') {
+            table.columns(4).search('Otro');
+          } else {
+            table.columns(4).search('');
+          }
+
+          table.draw();
+        });
+
+        // Clear filters button functionality
+        $('#clearBtn').on('click', function() {
+          $('#filterOrderNumber').val('');
+          $('#filterItemCount').val('');
+          $('#filterUserName').val('');
+          $('#filterDate').val('');
+          $('#filterOrderStatus').val('');
+          $('#filterOrderBy').val('');
+          table.search('').columns().search('').draw();
+        });
+      });
+
+
+    </script>
   </body>
 </html>

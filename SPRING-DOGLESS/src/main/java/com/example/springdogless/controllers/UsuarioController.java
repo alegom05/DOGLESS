@@ -15,9 +15,11 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.condition.ProducesRequestCondition;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.*;
 
 @Controller
@@ -49,6 +51,8 @@ public class UsuarioController {
     private JavaMailSenderImpl mailSender;
     @Autowired
     ResenaRepository resenaRepository;
+    @Autowired
+    PreguntasProductoRepository preguntasProductoRepository;
 
     @GetMapping("")
     public String listarOrdenesUsuario(HttpSession session, Model model) {
@@ -384,20 +388,25 @@ public class UsuarioController {
         model.addAttribute("producto", productoDTO);
         model.addAttribute("resenas", resenas);
 
-        // Imprimir todas las reseñas
-        System.out.println("Reseñas:");
-        for (ResenaDTO resena : resenas) {
-            System.out.println("ID Reseña: " + resena.getIdResenas());
-            System.out.println("Comentario: " + resena.getComentario());
-            System.out.println("Satisfacción: " + resena.getSatisfaccion());
-            System.out.println("Fecha: " + resena.getFecha());
-            System.out.println("Nombre Usuario: " + resena.getUsuarioNombre());
-            System.out.println("Apellido Usuario: " + resena.getUsuarioApellido());
-            System.out.println("ID Producto: " + resena.getIdProductos());
-            System.out.println("Nombre Producto: " + resena.getProductoNombre());
-            System.out.println("-----------------------"); // Separador para claridad
-        }
+        // Obtener la cantidad de productos por categoría
+        Map<String, Integer> conteoPorCategoria = new HashMap<>();
 
+        // Obtener todas las categorías disponibles
+        Set<String> todasLasCategorias = new HashSet<>(productRepository.findAllCategorias(idzona));
+        model.addAttribute("categorias", todasLasCategorias); // Mantiene todas las categorías
+        // Crea por asi decirlo una matriz q se colocara como, por ejemplo, Tecnologia, 4 (indicando la categoria
+        // como string y la cantidad como int)
+        for (String categoriaz : todasLasCategorias) {
+            Integer count = productRepository.countProductosByZonaAndCategoria(idzona, categoriaz);
+            conteoPorCategoria.put(categoriaz, count);
+        }
+        model.addAttribute("conteoPorCategoria", conteoPorCategoria);
+        // Obtener el total de productos sin filtrar
+        Integer totalProductos = productRepository.countProductosByZona(idzona);
+        model.addAttribute("totalProductos", totalProductos); // Agrega el total de productos al modelo
+
+        List<ProductoDTO> tres_productos_rankeados = productRepository.findTop3ProductosByZona(idzona);
+        model.addAttribute("TresProductosRankeados", tres_productos_rankeados);
 
         return "usuario/detalles_producto";
     }
@@ -565,6 +574,61 @@ public class UsuarioController {
             return "redirect:/usuario";
         }
     }
+
+/*
+    @PostMapping("/preguntasguardar")
+    public String guardarPregunta(
+            @RequestParam("comentario") String comentario,
+            @RequestParam("idproducto") Integer idproducto,
+            HttpSession session,
+            RedirectAttributes redirectAttributes) {
+
+        // Obtener el usuario de la sesión
+        Integer idUsuario = (Integer) session.getAttribute("idUsuario");
+
+        // Validar si el usuario existe en la sesión
+        if (idUsuario == null) {
+            redirectAttributes.addFlashAttribute("error", "Debes iniciar sesión para enviar una pregunta.");
+            return "redirect:/login"; // Redirige a la página de inicio de sesión si no hay usuario en sesión
+        }
+
+        // Buscar el producto en la base de datos
+        Optional<Producto> optionalProducto = productRepository.findById(idproducto);
+
+        // Manejar el caso donde no se encuentre el producto
+        if (!optionalProducto.isPresent()) {
+            redirectAttributes.addFlashAttribute("error", "Producto no encontrado.");
+            return "redirect:/detallesProducto/" + idproducto; // Redirigir a una página de error si el producto no existe
+        }
+
+        Producto producto = optionalProducto.get(); // Obtener el producto
+
+        Optional<Usuario> optionalUsuario = usuarioRepository.findById(idUsuario);
+        if (!optionalUsuario.isPresent()) {
+            redirectAttributes.addFlashAttribute("error", "Usuario no encontrado.");
+            return "redirect:/login"; // Redirigir a una página de error si el producto no existe
+        }
+
+        Usuario usuario = optionalUsuario.get();
+
+        // Crear la entidad Preguntasproducto
+        Preguntasproducto pregunta = new Preguntasproducto();
+        pregunta.setComentario(comentario);
+        pregunta.setFecha(LocalDate.now()); // Asignar la fecha actual (sin hora)
+        pregunta.setProducto(producto);
+        pregunta.setUsuario(usuario);
+
+        // Guardar en la base de datos
+        preguntasProductoRepository.save(pregunta);
+        // Añadir un mensaje de éxito al modelo
+        redirectAttributes.addFlashAttribute("success", "Tu pregunta ha sido enviada con éxito.");
+
+        // Redirigir a la página de detalles del producto
+        return "redirect:/detallesProducto/" + idproducto; // Asegúrate de que esta URL coincida con la configuración de tu controlador
+    }
+*/
+
+
 
     //El resto no está hecho
 

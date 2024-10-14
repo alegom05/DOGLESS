@@ -1,8 +1,6 @@
 package com.example.springdogless.Repository;
 
 
-import com.example.springdogless.DTO.ProductoDTO;
-import com.example.springdogless.entity.Rol;
 import com.example.springdogless.entity.Usuario;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer>{
@@ -50,6 +49,8 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer>{
     @Modifying
     @Query(nativeQuery = true, value = "update usuarios u set u.estado = 'activo' where u.idUsuarios = ?1")
     void desbanear(Integer idUsuario);
+
+    Optional<Usuario> findById(Integer id); // Esto usa la implementación por defecto
 
 }
 

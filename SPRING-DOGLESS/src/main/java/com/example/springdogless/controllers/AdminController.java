@@ -426,7 +426,7 @@ public class AdminController {
             Usuario usuario = optUsuario.get();
             usuario.setBorrado(0);
             usuarioRepository.save(usuario);
-            attr.addFlashAttribute("msg", "Admin borrado exitosamente");
+            attr.addFlashAttribute("mensajeExito", "Admin zonal borrado exitosamente");
         } else {
             attr.addFlashAttribute("error", "Admin no encontrado");
         }
@@ -572,6 +572,16 @@ public class AdminController {
         //model.addAttribute("listaOrderDetails", listaOrderDetailsm);
         return "admin/nuevoProveedor";
     }
+    @PostMapping("/saveProveedor")
+    public String crearProveedor(Proveedor proveedor,
+                                  RedirectAttributes attr) {
+        proveedor.setBorrado(1);
+        // Guardar el nuevo Adminzonal
+        proveedorRepository.save(proveedor);
+        attr.addFlashAttribute("mensajeExito", "Proveedor creado correctamente");
+
+        return "redirect:/admin/proveedores";
+    }
 
 
     @GetMapping("/editarProveedor")
@@ -587,6 +597,7 @@ public class AdminController {
             return "redirect:/admin/proveedores";
         }
     }
+
 
 
 
