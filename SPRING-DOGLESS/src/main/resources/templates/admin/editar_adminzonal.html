@@ -198,12 +198,12 @@
                                                 </div>
 
                                                 <!-- Botón para guardar cambios -->
-                                                <div class="row">
-                                                    <div class="col text-center"> <!-- Añadido text-center para centrar el contenido -->
-                                                        <div class="btn-container" style="text-align: center; margin-top: 20px;">
-                                                            <button type="submit" class="btn btn-primary" style="width: 280px;">Editar</button>
-                                                            <a th:href="@{/admin/adminzonal}" class="btn btn-secondary" style="width: 280px;">Cancelar</a>
-                                                        </div>
+                                                <div class="row justify-content-center"> <!-- Centrar la fila -->
+                                                    <div class="col-auto"> <!-- Ajustar el ancho para que los botones no ocupen toda la columna -->
+                                                        <button type="submit" class="btn btn-primary" style="width: 280px;">Guardar Cambios</button>
+                                                    </div>
+                                                    <div class="col-auto"> <!-- Ajustar el ancho y centrar los botones -->
+                                                        <a th:href="@{/admin/adminzonal}" class="btn btn-secondary" style="width: 280px;">Cancelar</a>
                                                     </div>
                                                 </div>
                                             </div>
