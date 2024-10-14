@@ -148,9 +148,9 @@ public class AgenteController {
                     break;
                 case "Recibido":
                     // En este caso podrías devolver a otra ruta si lo deseas
-                    return "redirect:/agente/ordenes"; // O cualquier otra acción
+                    return "redirect:agente/ordenes"; // O cualquier otra acción
                 default:
-                    return "redirect:/agente/updaterorden?id=" + id; // Retorna a la misma vista
+                    return "redirect:agente/updaterorden?id=" + id; // Retorna a la misma vista
             }
             // Obtener la fecha actual y actualizar el campo de fecha en la orden
             Date fechaActualUtil = new Date();
@@ -158,9 +158,9 @@ public class AgenteController {
             orden.setFecha(fechaActualSql); // Asegúrate de que este campo exista en la entidad Orden
 
             ordenRepository.save(orden);
-            return "redirect:/agente/updaterorden?id=" + id; // Redirige de vuelta a la vista de la orden
+            return "redirect:agente/updaterorden?id=" + id; // Redirige de vuelta a la vista de la orden
         }
-        return "redirect:/agente/ordenes"; // Redirige si no se encuentra la orden
+        return "redirect:agente/ordenes"; // Redirige si no se encuentra la orden
     }
 
     @PostMapping("/cancelarorden")
