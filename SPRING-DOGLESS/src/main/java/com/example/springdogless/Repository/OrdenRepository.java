@@ -27,4 +27,23 @@ public interface OrdenRepository extends JpaRepository<Orden, Integer> {
 
     @Query(value="select * from ordenes where ordenes.estado='CREADO' and ordenes.idusuarios=:id",nativeQuery = true)
     Optional<Orden> findOrdenCreado(@Param("id") Integer id);
+
+    @Query(value = "SELECT * FROM ordenes WHERE estado = 'CREADO'", nativeQuery = true)
+    List<Orden> findOrdenesSinAsignar();
+
+    @Query(value = "SELECT * FROM ordenes WHERE estado = 'En Validación'", nativeQuery = true)
+    List<Orden> findOrdenesEnValidacion();
+
+    @Query(value = "SELECT * FROM ordenes WHERE estado IN ('En Proceso', 'Arribo al País', 'En Aduanas', 'En Ruta')", nativeQuery = true)
+    List<Orden> findOrdenesEnProgreso();
+
+    @Query(value = "SELECT * FROM ordenes WHERE estado IN ('Recibido', 'Cancelado')", nativeQuery = true)
+    List<Orden> ordenesResueltas();
+
+
+
+
+
+
+
 }
