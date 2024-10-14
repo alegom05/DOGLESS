@@ -158,8 +158,12 @@
                                                     <div class="col">
                                                         <div class="mb-3">
                                                             <label for="pwd" class="form-label">Contraseña:</label>
-                                                            <input type="password" name="pwd" id="pwd" class="form-control" th:value="${usuario.pwd}" disabled>
-                                                            <div class="invalid-feedback">Por favor ingresar contraseña.</div>
+                                                            <div class="input-group">
+                                                                <input type="text" class="form-control" placeholder="*************" aria-describedby="button-addon2"  disabled>
+                                                                <button th:data-pwd="${usuario.pwd}" class="btn btn-outline-secondary" type="button" id="button-addon2" data-bs-toggle="modal" data-bs-target="#passwordModal">
+                                                                    <img src="../assets/img/pencil.svg">
+                                                                </button>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                     <div class="col">
@@ -188,6 +192,38 @@
                                         </form>
                                     </div>
 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Modal -->
+                    <div class="modal fade" id="passwordModal" tabindex="-1" aria-labelledby="passwordModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="passwordModalLabel">Cambiar Contraseña</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form id="changePasswordForm" method="POST" th:action="@{/admin/cambiarContrasenia}">
+                                        <input type="hidden" name="id" id="id" th:value="${usuario.id}" />
+                                        <div class="mb-3">
+                                            <label for="oldPassword" class="form-label">Contraseña antigua</label>
+                                            <input type="password" class="form-control" id="oldPassword" name="oldPassword" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="newPassword" class="form-label">Nueva Contraseña</label>
+                                            <input type="password" class="form-control" id="newPassword" name="newPassword" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="confirmNewPassword" class="form-label">Confirmar Nueva Contraseña</label>
+                                            <input type="password" class="form-control" id="confirmNewPassword" name="confirmNewPassword" required>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                            <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -276,6 +312,79 @@
                 });
             });
         </script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                document.getElementById("changePasswordForm").addEventListener("submit", function(event) {
+                    event.preventDefault(); // Evita el envío del formulario por defecto
+
+                    const form = this;
+                    const formData = new FormData(form);
+
+                    const newPassword = formData.get('newPassword');
+                    const confirmNewPassword = formData.get('confirmNewPassword');
+
+                    // Verificar en el frontend si la nueva contraseña y su confirmación coinciden
+                    if (newPassword !== confirmNewPassword) {
+                        Swal.fire({
+                            title: 'Error',
+                            text: 'La nueva contraseña y la confirmación no coinciden.',
+                            icon: 'error',
+                            confirmButtonText: 'Aceptar',
+                            customClass: {
+                                confirmButton: 'btn btn-primary'
+                            }
+                        });
+                        return; // Detenemos el envío si no coinciden
+                    }
+
+                    // Enviar los datos al backend vía AJAX si todo está correcto
+                    fetch('/admin/cambiarContrasenia', {
+                        method: 'POST',
+                        body: formData
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.status === 'error') {
+                                Swal.fire({
+                                    title: 'Error',
+                                    text: data.message,
+                                    icon: 'error',
+                                    confirmButtonText: 'Aceptar',
+                                    customClass: {
+                                        confirmButton: 'btn btn-primary'
+                                    }
+                                });
+                            } else if (data.status === 'success') {
+                                Swal.fire({
+                                    title: 'Éxito',
+                                    text: data.message,
+                                    icon: 'success',
+                                    confirmButtonText: 'Aceptar',
+                                    customClass: {
+                                        confirmButton: 'btn btn-primary'
+                                    }
+                                }).then(() => {
+                                    // Recargar o redirigir tras el éxito
+                                    window.location.reload();
+                                });
+                            }
+                        })
+                        .catch(error => {
+                            Swal.fire({
+                                title: 'Error',
+                                text: 'Hubo un error en el servidor. Intenta nuevamente más tarde.',
+                                icon: 'error',
+                                confirmButtonText: 'Aceptar',
+                                customClass: {
+                                    confirmButton: 'btn btn-primary'
+                                }
+                            });
+                        });
+                });
+            });
+
+        </script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     </body>
 </html>
