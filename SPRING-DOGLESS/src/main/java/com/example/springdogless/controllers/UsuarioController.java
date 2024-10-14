@@ -15,9 +15,11 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.condition.ProducesRequestCondition;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.*;
 
 @Controller
@@ -49,6 +51,8 @@ public class UsuarioController {
     private JavaMailSenderImpl mailSender;
     @Autowired
     ResenaRepository resenaRepository;
+    @Autowired
+    PreguntasProductoRepository preguntasProductoRepository;
 
     @GetMapping("")
     public String listarOrdenesUsuario(HttpSession session, Model model) {
@@ -565,6 +569,61 @@ public class UsuarioController {
             return "redirect:/usuario";
         }
     }
+
+/*
+    @PostMapping("/preguntasguardar")
+    public String guardarPregunta(
+            @RequestParam("comentario") String comentario,
+            @RequestParam("idproducto") Integer idproducto,
+            HttpSession session,
+            RedirectAttributes redirectAttributes) {
+
+        // Obtener el usuario de la sesión
+        Integer idUsuario = (Integer) session.getAttribute("idUsuario");
+
+        // Validar si el usuario existe en la sesión
+        if (idUsuario == null) {
+            redirectAttributes.addFlashAttribute("error", "Debes iniciar sesión para enviar una pregunta.");
+            return "redirect:/login"; // Redirige a la página de inicio de sesión si no hay usuario en sesión
+        }
+
+        // Buscar el producto en la base de datos
+        Optional<Producto> optionalProducto = productRepository.findById(idproducto);
+
+        // Manejar el caso donde no se encuentre el producto
+        if (!optionalProducto.isPresent()) {
+            redirectAttributes.addFlashAttribute("error", "Producto no encontrado.");
+            return "redirect:/detallesProducto/" + idproducto; // Redirigir a una página de error si el producto no existe
+        }
+
+        Producto producto = optionalProducto.get(); // Obtener el producto
+
+        Optional<Usuario> optionalUsuario = usuarioRepository.findById(idUsuario);
+        if (!optionalUsuario.isPresent()) {
+            redirectAttributes.addFlashAttribute("error", "Usuario no encontrado.");
+            return "redirect:/login"; // Redirigir a una página de error si el producto no existe
+        }
+
+        Usuario usuario = optionalUsuario.get();
+
+        // Crear la entidad Preguntasproducto
+        Preguntasproducto pregunta = new Preguntasproducto();
+        pregunta.setComentario(comentario);
+        pregunta.setFecha(LocalDate.now()); // Asignar la fecha actual (sin hora)
+        pregunta.setProducto(producto);
+        pregunta.setUsuario(usuario);
+
+        // Guardar en la base de datos
+        preguntasProductoRepository.save(pregunta);
+        // Añadir un mensaje de éxito al modelo
+        redirectAttributes.addFlashAttribute("success", "Tu pregunta ha sido enviada con éxito.");
+
+        // Redirigir a la página de detalles del producto
+        return "redirect:/detallesProducto/" + idproducto; // Asegúrate de que esta URL coincida con la configuración de tu controlador
+    }
+*/
+
+
 
     //El resto no está hecho
 
