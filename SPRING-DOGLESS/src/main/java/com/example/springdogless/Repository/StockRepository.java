@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 public interface StockRepository extends JpaRepository<Reposicion, Integer> {
     @Modifying
     @Transactional
-    @Query(value = "UPDATE dogless.stockproductos SET cantidad = cantidad + :cantidad_reposi WHERE productoid = :idproducto AND idzonas = :idzonas", nativeQuery = true)
+    @Query(value = "UPDATE dogless.stockproductos SET cantidad = cantidad + :cantidad_reposi WHERE idproductos = :idproducto AND idzonas = :idzonas", nativeQuery = true)
     void actualizarStock(@Param("cantidad_reposi") int cantidadAprobada, @Param("idproducto") int idProducto, @Param("idzonas") int idZona);
 
     // Verifica si el producto ya existe en la tabla stockproductos para una zona específica
@@ -21,14 +21,14 @@ public interface StockRepository extends JpaRepository<Reposicion, Integer> {
             "    ELSE 0 \n" +
             "END AS existe \n" +
             "FROM dogless.stockproductos \n" +
-            "WHERE productoid = :productoid \n" +
+            "WHERE idproductos = :productoid \n" +
             "AND idzonas = :idzonas", nativeQuery = true)
     Integer existeProductoEnZona(@Param("productoid") Integer productoid, @Param("idzonas") Integer idzonas);
 
     // Inserta un nuevo registro en la tabla stockproductos
     @Modifying
     @Transactional
-    @Query(value = "INSERT INTO stockproductos (productoid, idzonas, cantidad) VALUES (:productoid, :idzonas, :cantidad)", nativeQuery = true)
+    @Query(value = "INSERT INTO stockproductos (idproductos, idzonas, cantidad) VALUES (:productoid, :idzonas, :cantidad)", nativeQuery = true)
     void insertarNuevoStock(@Param("productoid") Integer productoid, @Param("idzonas") Integer idzonas, @Param("cantidad") Integer cantidad);
 
 }
