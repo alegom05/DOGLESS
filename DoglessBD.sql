@@ -581,6 +581,7 @@ CREATE TABLE IF NOT EXISTS `dogless`.`resenas` (
   `serecibiorapido` INT NULL DEFAULT NULL,
   `usuarioid` INT NOT NULL,
   `aprobar` VARCHAR(45) NULL,
+  `tipo` INT NULL,
   PRIMARY KEY (`idresenas`),
   INDEX `producto_id_idx_resenas` (`idproductos` ASC) VISIBLE,
   INDEX `usuarioid_idx` (`usuarioid` ASC) VISIBLE,
