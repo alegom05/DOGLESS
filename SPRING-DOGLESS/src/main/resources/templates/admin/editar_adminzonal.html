@@ -160,7 +160,8 @@
                                                             <label for="zona" class="form-label">Zona:</label>
                                                             <select name="zona" id="zona" class="form-control">
                                                                 <option th:each="zonas: ${listaZonas}"
-                                                                        th:text="${zonas.nombre}" th:value="${zonas.idzonas}">Elegir una zona</option>
+                                                                        th:text="${zonas.nombre}" th:value="${zonas.idzonas}"
+                                                                        th:selected="${usuario.zona.idzonas == zonas.idzonas}">Elegir una zona</option>
                                                             </select>
                                                             <div class="invalid-feedback">Por favor seleccionar una zona.</div>
                                                         </div>
@@ -170,7 +171,8 @@
                                                             <label for="distrito" class="form-label">Distrito: (*)</label>
                                                             <select name="distrito" id="distrito" class="form-control">
                                                                 <option th:each="distrito: ${listaDistritos}"
-                                                                        th:text="${distrito.distrito}" th:value="${distrito.iddistritos}">Elegir un distrito</option>
+                                                                        th:text="${distrito.distrito}" th:value="${distrito.iddistritos}"
+                                                                        th:selected="${usuario.distrito.iddistritos == distrito.iddistritos}">Elegir un distrito</option>
                                                             </select>
                                                             <div class="invalid-feedback">Por favor selecciona un distrito.</div>
                                                         </div>
