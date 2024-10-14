@@ -156,7 +156,7 @@
                                         </div>
                                     </div>
                                     <div class="card-action text-center">
-                                        <a href="/agente/ordenes" class="btn btn-primary">Regresar</a>
+                                        <a href="javascript:history.back()" class="btn btn-primary">Regresar</a>
                                     </div>
                                 </div>
                             </div>
@@ -168,22 +168,7 @@
 
 
                 <!-- Pie de página -->
-                <footer class="footer">
-                    <div class="container-fluid d-flex justify-content-center">
-                        <nav class="pull-left">
-                            <ul class="nav">
-
-                                <li class="nav-item">
-                                    <a class="nav-link" href="ruta/a/informacion-de-contacto.html"> Contacto </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="ruta/a/politica-de-privacidad.html"> Política de privacidad </a>
-                                </li>
-                            </ul>
-                        </nav>
-
-                    </div>
-                </footer>
+                <div th:replace="~{agente/fragments/piedepagina :: fragment}"></div>
             </div>
         </div>
 

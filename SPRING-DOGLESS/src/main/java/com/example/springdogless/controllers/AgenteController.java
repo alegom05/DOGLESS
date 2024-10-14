@@ -72,12 +72,42 @@ public class AgenteController {
     public String Chat(Model model) {
         return "/agente/chat";
     }
-
+//-------------------secion ordenes--------------------------------------------------------------
     @GetMapping(value = "ordenes")
-    public String listaReposiciones(Model model) {
+    public String listadeOrdenes(Model model) {
         model.addAttribute("listaOrdenes", ordenRepository.findByBorrado(1));
         return "agente/ordenes";
     }
+
+    @GetMapping(value = "ordenes/sinAsignar")
+    public String listadeOrdenesSinAsignar(Model model) {
+
+        model.addAttribute("listaOrdenes", ordenRepository.findOrdenesSinAsignar());
+        return "agente/ordenesSinAsignar";
+    }
+
+    @GetMapping(value = "ordenes/Pendientes")
+    public String listadeOrdenesEnValidacion(Model model) {
+
+        model.addAttribute("listaOrdenes", ordenRepository.findOrdenesEnValidacion());
+        return "agente/ordenesPendientes";
+    }
+    @GetMapping(value = "ordenes/enProgreso")
+    public String listadeOrdenesEnProgreso(Model model) {
+        // Usar el metodo para obtener las órdenes con los estados 'En Proceso', 'Arribo al País', 'En Aduanas', 'En Ruta'
+        model.addAttribute("listaOrdenes", ordenRepository.findOrdenesEnProgreso());
+        return "agente/ordenesEnProgreso";
+    }
+
+    @GetMapping(value = "ordenes/resueltas")
+    public String listaDeOrdenesResueltas(Model model) {
+        // Usar el metodo para obtener las órdenes con los estados 'Recibido' y 'Cancelado'
+        model.addAttribute("listaOrdenes", ordenRepository.ordenesResueltas());
+        return "agente/ordenesResueltas";
+    }
+
+    //------------------------------------------------------------------------------
+
     @GetMapping( "/updaterorden")
     public String VistaEstadoOrden(Model model, @RequestParam("id") int id) {
         Optional<Orden> optOrden = ordenRepository.findById(id);
