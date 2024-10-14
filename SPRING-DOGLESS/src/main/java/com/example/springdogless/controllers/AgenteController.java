@@ -294,6 +294,7 @@ public class AgenteController {
 
     @GetMapping(value = "/reportesOrdenes")
     public String reportesOrdenes(Model model) {
+        model.addAttribute("listaUsuario", usuarioRepository.findByBorradoAndRol(1,4));
 
         return "agente/reportesOrdenes";
     }
@@ -316,16 +317,22 @@ public class AgenteController {
     //reporte órdenes totales
     @GetMapping(value = "/reportesOrdenes/reporteOrdenesTotales")
     public String reporteOrdenesTolaes(Model model) {
+        model.addAttribute("listaUsuarios", usuarioRepository.findByRol_RolAndBorrado("Usuario",1));
+        model.addAttribute("listaOrdenes", ordenRepository.findByBorrado(1));
+
         return "agente/reporteordenestotales";
     }
     //reporte órdenes de agentes por zona
     @GetMapping(value = "/reportesOrdenes/reportePorAgente")
     public String reporteOrdenesAgentesZona(Model model) {
+        model.addAttribute("listaUsuarios", usuarioRepository.findByRol_RolAndBorrado("Agente",1));
         return "agente/reporteporagente";
     }
     //reporte órdenes de agentes con filtro
     @GetMapping(value = "/reportesOrdenes/reportePorFecha")
     public String reporteOrdenesTotalesporFiltrofecha(Model model) {
+        model.addAttribute("listaUsuarios", usuarioRepository.findByRol_RolAndBorrado("Usuario",1));
+        model.addAttribute("listaOrdenes", ordenRepository.findByBorrado(1));
         return "agente/reporteporfecha";
     }
 

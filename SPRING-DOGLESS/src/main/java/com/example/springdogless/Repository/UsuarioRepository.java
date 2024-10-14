@@ -52,5 +52,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer>{
 
     Optional<Usuario> findById(Integer id); // Esto usa la implementación por defecto
 
+
+    List<Usuario> findByBorradoAndRol(Integer borrado, Integer rol);
 }
 
