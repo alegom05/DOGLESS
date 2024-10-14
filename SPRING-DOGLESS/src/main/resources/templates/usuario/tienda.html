@@ -371,7 +371,7 @@
                                               <div class="mb-2 d-flex align-items-center justify-content-start">
                                                   <div class="rounded me-4" style="width: 100px; height: 100px;">
                                                       <!-- Enlace a los detalles del producto -->
-                                                      <a th:href="@{'/usuario/producto/detalle/' + ${producto.idproductos}}">
+                                                      <a th:href="@{/usuario/detalles_producto(id=${producto.idproductos})}">
                                                           <!-- Imagen del producto -->
                                                           <img th:src="@{'http://20.81.145.27:8080/producto/imagen/' + ${producto.idproductos}}"
                                                                class="img-fluid w-100 rounded-top"
