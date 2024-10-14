@@ -141,6 +141,32 @@ INSERT INTO `dogless`.`distritos` (`iddistritos`, `nombre`, `idzonas`) VALUES
 
 
 -- -----------------------------------------------------
+-- Table `dogless`.`preguntasproducto`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `dogless`.`preguntasproducto` (
+  `idpreguntasproducto` INT NOT NULL,
+  `comentario` MEDIUMTEXT NOT NULL,
+  `fechapregunta` DATE NOT NULL,
+  `idusuarios` INT NOT NULL,
+  `idproductos` INT NOT NULL,
+  PRIMARY KEY (`idpreguntasproducto`),
+  INDEX `fk_preguntasproducto_usuarios1_idx` (`idusuarios` ASC) VISIBLE,
+  INDEX `fk_preguntasproducto_productos1_idx` (`idproductos` ASC) VISIBLE,
+  CONSTRAINT `fk_preguntasproducto_usuarios1`
+    FOREIGN KEY (`idusuarios`)
+    REFERENCES `dogless`.`usuarios` (`idusuarios`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_preguntasproducto_productos1`
+    FOREIGN KEY (`idproductos`)
+    REFERENCES `dogless`.`productos` (`idproductos`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb3;
+
+
+-- -----------------------------------------------------
 -- Table `dogless`.`usuarios`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `dogless`.`usuarios` (
