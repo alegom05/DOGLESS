@@ -93,19 +93,12 @@ body {
     transform: scale(0.8); /* Reduce el tamaño al 90% */
     transform-origin: top center;
 }
-.login-container{
-    position: absolute;
-    width: 500px;
-    display: flex;
-    flex-direction: column;
-    transition: .5s ease-in-out;
-}
-.register-container{
-    position: absolute;
-    width: 500px;
-    display: flex;
-    flex-direction: column;
-    transition: .5s ease-in-out;
+.login-container,
+.register-container {
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
 }
 .top span{
     color: #fff;
@@ -189,64 +182,33 @@ header{
 .two label a:hover{
     text-decoration: underline;
 }
-@media only screen and (max-width: 786px){
-    .nav-button{
-        display: none;
-    }
-    .nav-menu.responsive{
-        top: 100px;
-    }
-    .nav-menu{
-        position: absolute;
-        top: -800px;
-        display: flex;
-        justify-content: center;
-        background: rgba(255, 255, 255, 0.2);
-        width: 100%;
-        height: 90vh;
-        backdrop-filter: blur(20px);
-        transition: .3s;
-    }
-    .nav-menu ul{
-        flex-direction: column;
-        text-align: center;
-    }
-    .nav-menu-btn{
-        display: block;
-    }
-    .nav-menu-btn i{
-        font-size: 25px;
-        color: #fff;
+@media only screen and (max-width: 540px) {
+    .wrapper {
         padding: 10px;
-        background: rgba(255, 255, 255, 0.2);
-        border-radius: 50%;
-        cursor: pointer;
-        transition: .3s;
     }
-    .nav-menu-btn i:hover{
-        background: rgba(255, 255, 255, 0.15);
+    .form-box {
+        margin-top: 60px;
+        padding: 10px;
+    }
+    .logo-icon {
+        width: 150px;
+    }
+    .login-container,
+    .register-container {
+        padding: 0 10px;
+    }
+    header {
+        font-size: 30px;
+    }
+    .input-field {
+        font-size: 14px;
     }
 }
 @media only screen and (max-width: 540px) {
-    .wrapper{
-        min-height: 100vh;
+    .logo-container {
+        margin-top: 10px;
+        margin-bottom: 10px;
     }
-    .form-box{
-        width: 90%;
-        margin-top: 100px; /* Ajusta el espaciado del formulario debajo del logo */
-        height: auto;
-        padding: 20px;
-        overflow-y: auto; /* Permite el scroll vertical */
-    }
-    .register-container, .login-container{
-        width: 100%;
-        padding: 0 20px;
-    }
-    .register-container .two-forms{
-        flex-direction: column;
-        gap: 0;
-    }
-    
 }
 select.input-field {
     background: rgba(255, 255, 255, 0.2);
