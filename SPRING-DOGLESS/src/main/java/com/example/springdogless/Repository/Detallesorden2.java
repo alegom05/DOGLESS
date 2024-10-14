@@ -1,14 +1,13 @@
 package com.example.springdogless.Repository;
 
-import com.example.springdogless.DTO.OrdenDetalleDTO;
 import com.example.springdogless.entity.Detalleorden;
-import com.example.springdogless.entity.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface Detallesorden2 extends JpaRepository<Detalleorden, Integer> {
     @Query(value = "SELECT o.idordenes, o.estado, o.fecha, o.direccionenvio, o.total, o.metodopago, " +
@@ -44,4 +43,14 @@ public interface Detallesorden2 extends JpaRepository<Detalleorden, Integer> {
             "WHERE o.idusuarios = :id AND o.estado = 'En Validación'",nativeQuery = true)
     List<Detalleorden> findByOrdenValidada(@Param("id") Integer id);
 
+    @Query(value = "SELECT * FROM detallesorden WHERE idorden = :idOrden AND idproducto = :idProducto", nativeQuery = true)
+    Optional<Detalleorden> findByIdordenAndIdproducto(@Param("idOrden") Integer idOrden, @Param("idProducto") Integer idProducto);
+
+
+    @Modifying
+    @Query(value="DELETE FROM DetallesOrden d WHERE d.orden.id = :idOrden AND d.producto.id = :idProducto",nativeQuery = true)
+    Optional<Detalleorden>  deleteByOrdenIdAndProductoId(@Param("idOrden") Integer idOrden, @Param("idProducto") Integer idProducto);
+
+    @Query(value="SELECT * FROM detallesorden WHERE iddetallesorden = :idDetallesOrden", nativeQuery = true)
+    Optional<Detalleorden> findByIdDetalle(Integer idDetallesOrden);
 }

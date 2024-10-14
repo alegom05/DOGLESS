@@ -505,10 +505,14 @@
                                                       <!-- Precio del producto -->
                                                       <p class="text-dark fs-5 fw-bold mb-0">S/.<span th:text="${producto.precio}"></span></p>
                                                       <!-- Botón de añadir al carrito -->
-                                                      <a href="/Plantilla_Usuario/carrito_compras.html"
-                                                         class="btn btn-normal-2 rounded-pill mt-2 px-3">
-                                                          <i class="fa fa-shopping-bag me-2"></i> Añade al carrito
-                                                      </a>
+                                                      <form method="POST" th:action="@{/usuario/agregarProducto}" novalidate>
+                                                          <input name="idUsuario" th:value="${session.usuario.id}" type="hidden"/>
+                                                          <input  name="idProducto"  th:value="${producto.idproductos}" type="hidden"/>
+                                                          <button
+                                                                  class="btn btn-normal-2 rounded-pill mt-2 px-3" type="submit">
+                                                              <i class="fa fa-shopping-bag me-2"></i> Añade al carrito
+                                                          </button>
+                                                      </form>
                                                   </div>
                                               </div>
                                           </div>

@@ -165,13 +165,14 @@
                                                     <dt class="col-6">Total</dt>
                                                     <dd class="col-6 fw-medium text-end mb-0" id="total">S/.1009.50</dd>
                                                 </dl>
-                                            
-                                            <div class="btn-container py-4" style="text-align: center;">
-                                                <button class="btn btn-primary" type="submit">Realizar el pedido</button>
-                                            </div>
+
 
                                             
                                           </div>
+                                            <div class="btn-container py-4" style="text-align: center;">
+                                                <button class="btn btn-primary" type="submit" style="width: 200px;">Continuar con la compra</button>
+                                                <a class="btn btn-secondary" th:href="@{'/usuario/compras' + '?id=' + ${session.usuario.id}}" style="width: 200px;">Volver al carrito</a>
+                                            </div>
 
 
 

@@ -40,6 +40,9 @@ public interface OrdenRepository extends JpaRepository<Orden, Integer> {
     @Query(value = "SELECT * FROM ordenes WHERE estado IN ('Recibido', 'Cancelado')", nativeQuery = true)
     List<Orden> ordenesResueltas();
 
+    @Query(value="SELECT * FROM ordenes WHERE idusuarios = :id AND estado = 'Creado'",nativeQuery = true)
+    Orden findOrdenEstadoCreado(Integer id);
+
 
 
 

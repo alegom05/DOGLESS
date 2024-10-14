@@ -131,17 +131,16 @@
                     </ul>
                 </div>
                 <form method="post" th:action="@{/usuario/actualizarCantidad}">
-
+                    <div th:if="${mensaje}" th:text="${mensaje}" class="alert alert-success"></div>
                     <div class="row">
                         <div class="col-lg-9">
                             <h1 class="mb-3 mt-4 "></h1>
                             <div class="table-responsive d-flex justify-content-center align-items-center flex-grow-1">
                                 <input name="id" th:value="${session.usuario.id}" type="hidden"/>
-                                <div th:if="${mensaje}" th:text="${mensaje}" class="alert alert-warning"></div>
                                 <table class="table text-center table-card">
                                     <thead>
                                         <tr>
-                                            <th scope="col">Productos</th>
+                                            <th scope="col" style="width: 120px;">Productos</th>
                                             <th scope="col">Nombre</th>
                                             <th scope="col">Precio</th>
                                             <th scope="col">Cantidad</th>
@@ -155,7 +154,7 @@
                                             <input type="hidden" name="idOrdenes" th:value="${orden.orden.id}"/>
                                             <input type="hidden" name="idProductos" th:value="${orden.producto.id}"/>
                                             <td>
-                                                <img th:src="@{'http://20.81.145.27:8080/producto/imagen/' + ${orden.iddetallesorden}}" class="img-fluid" alt="Imagen del producto">
+                                                <img th:src="@{'http://20.81.145.27:8080/producto/imagen/' + ${orden.producto.id}}" class="img-fluid w-75" alt="Imagen del producto">
                                             </td>
                                             <td th:text="${orden.producto.nombre}"></td>
                                             <td class="price" th:text="'S/' + ${orden.producto.precio}"></td>
@@ -181,9 +180,9 @@
                                                 <p class="mb-0">S/ <span class="subtotal">0.00</span></p>
                                             </td>
                                             <td>
-                                                <button type="button" class="btn btn-md rounded-circle border btn-remove">
+                                                <a th:href="@{'/usuario/borrarproducto' + '?id=' + ${orden.iddetallesorden}}">
                                                     <i class="fa fa-times"></i>
-                                                </button>
+                                                </a>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -208,7 +207,6 @@
 
                 </div>
                 </form>
-
             </div>
 
             <!-- Pie de página -->
@@ -217,7 +215,6 @@
         </div>
       </div>
     </div>
-
 
 
     <!--   Core JS Files   -->
@@ -233,6 +230,7 @@
     <script src="/assets/js/kaiadmin.min.js"></script>
     <!-- Kaiadmin DEMO methods, don't include it in your project! -->
     <script src="/assets/js/setting-demo2.js"></script>
+
       <script>
           document.addEventListener('DOMContentLoaded', function() {
               // Función para actualizar el total por producto

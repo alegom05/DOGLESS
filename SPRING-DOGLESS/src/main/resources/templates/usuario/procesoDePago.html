@@ -123,8 +123,8 @@
 
                                               <div class="row py-2">
                                                   <div class="col">
-                                                      <button class="btn btn-primary btn-next me-sm-3 me-1" type="submit">Continuar</button>
-                                                    <button type="reset" class="btn btn-label-secondary">Volver</button>
+                                                      <button class="btn btn-primary btn-next me-sm-3 me-1" style="width: 100px;" type="submit">Pagar</button>
+                                                    <a th:href="@{'/usuario/checkout' + '?id=' + ${session.usuario.id}}" style="width: 100px;" class="btn btn-secondary">Volver</a>
                                                   </div>
                                               </div>
 
