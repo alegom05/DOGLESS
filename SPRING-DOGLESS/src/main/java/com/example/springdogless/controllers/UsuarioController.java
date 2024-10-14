@@ -428,54 +428,129 @@ public class UsuarioController {
                                      @RequestParam("cantidades") List<Integer> cantidades,
                                      @RequestParam("subtotales") List<BigDecimal> subtotales,
                                      RedirectAttributes redirectAttributes) {
-        BigDecimal total= BigDecimal.valueOf(0);
+        // Verifica si el id es 0 o si no hay detalles de orden
+        if (id == 0 || idDetallesOrden.isEmpty() || cantidades.isEmpty()) {
+            redirectAttributes.addFlashAttribute("mensaje", "No ha hecho compras.");
+            return "redirect:/usuario/";
+        }
+
+        BigDecimal total = BigDecimal.valueOf(0);
+
         // Itera sobre las listas para actualizar cada cantidad en la tabla detallesorden
         for (int i = 0; i < idDetallesOrden.size(); i++) {
             Integer idDetalle = idDetallesOrden.get(i);
             Integer nuevaCantidad = cantidades.get(i);
             BigDecimal subtotal = subtotales.get(i);
 
-
-            total=total.add(subtotal);
-
             // Busca el detalle de la orden por idDetalle
             Detalleorden detalle = detallesRepository.findById(idDetalle)
-                    .orElseThrow(() -> new RuntimeException("Detalle no encontrado: " + idDetalle));
+                    .orElse(null); // Cambiamos a null para verificar más adelante
+
+            // Verifica si se encontró el detalle
+            if (detalle == null) {
+                redirectAttributes.addFlashAttribute("mensaje", "Detalle no encontrado para ID: " + idDetalle);
+                return "redirect:/usuario/";
+            }
 
             // Actualiza la cantidad y el subtotal
             detalle.setCantidad(nuevaCantidad);
             detalle.setSubtotal(subtotal);
+            total = total.add(subtotal);
 
             // Guarda los cambios
             detallesRepository.save(detalle);
         }
+
         // Recalcular el subtotal (cantidad * precio unitario)
-        Optional<Orden> optOrden= ordenRepository.findById(idOrdenes.get(0));
+        Optional<Orden> optOrden = ordenRepository.findById(idOrdenes.get(0));
         if (optOrden.isPresent()) {
             Orden orden = optOrden.get();
             orden.setTotal(total);
             ordenRepository.save(orden);
         }
 
-
         return "redirect:/usuario/checkout?id=" + id;
     }
 
+
     @GetMapping(value = "checkout")
     public String checkout(Model model, @RequestParam("id") Integer id) {
-        model.addAttribute("listaProductos",detallesRepository.findByOrdenCreado(id));
+        // Obtiene la lista de productos
+        List<Detalleorden> listaProductos = detallesRepository.findByOrdenCreado(id);
+
+        // Verifica si la lista está vacía
+        if (listaProductos.isEmpty()) {
+            // Redirige a la vista de compras si no hay productos
+            return "redirect:/usuario/";
+        }
+
+        // Agrega la lista de productos al modelo
+        model.addAttribute("listaProductos", listaProductos);
         return "usuario/checkout";
+    }
+    //logica para actualizar la direccion
+    @PostMapping("/actualizarDireccion")
+    public String actualizarDireccion(Model model, @RequestParam("id") Integer id,
+                                      @RequestParam("direccion") String direccion){
+        Optional<Orden> optionalOrden= ordenRepository.findOrdenCreado(id);
+
+        if (optionalOrden.isPresent()) {
+            Orden orden = optionalOrden.get();
+            orden.setDireccionenvio(direccion);
+            ordenRepository.save(orden);
+        }
+        return "redirect:/usuario/procesopago?id=" + id;
     }
     @GetMapping(value = "procesopago")
     public String procesoPago(Model model,@RequestParam("id") Integer id) {
-        model.addAttribute("listaProductos",productRepository.findProductosByUsuarioId(id));
+        List<Detalleorden> detallesOrden = detallesRepository.findByOrdenCreado(id);
+        // Verifica si la lista está vacía
+        if (detallesOrden.isEmpty()) {
+            // Redirige a la vista de compras si no hay productos
+            return "redirect:/usuario/";
+        }
+        // Agrega la lista de productos al modelo
+        model.addAttribute("detallesOrden", detallesOrden);
         return "usuario/procesoDePago";
+    }
+    @PostMapping("/confirmarPedido")
+    public String actualizarPedido(Model model, @RequestParam("id") Integer id) {
+        Optional<Orden> optionalOrden = ordenRepository.findOrdenCreado(id);
+
+        BigDecimal costoenvio = BigDecimal.valueOf(12);
+
+        if (optionalOrden.isPresent()) {
+            Orden orden = optionalOrden.get();
+            BigDecimal total = orden.getTotal();
+            String estadoActual = orden.getEstado();
+
+            // Actualiza el estado solo si está en "Creado"
+            if (estadoActual.equals("Creado")) {
+                orden.setEstado("En Validación");
+            }
+
+            // Calcula el total sumando el costo de envío
+            BigDecimal nuevoTotal = total.add(costoenvio);
+            orden.setTotal(nuevoTotal);
+
+            // Actualiza la fecha actual
+            Date fechaActualUtil = new Date();
+            java.sql.Date fechaActualSql = new java.sql.Date(fechaActualUtil.getTime());
+            orden.setFecha(fechaActualSql);
+
+            // Guarda los cambios
+            ordenRepository.save(orden);
+        }
+
+        return "redirect:/usuario/pagoexitoso?id=" + id;
     }
     @GetMapping(value = "pagoexitoso")
     public String pagoExitoso(Model model,@RequestParam("id") Integer id) {
-        model.addAttribute("listaProductos",productRepository.findProductosByUsuarioId(id));
+        model.addAttribute("listaProductos",detallesRepository.findByOrdenValidada(id));
         return "usuario/pagoExitoso";
     }
+
+
 
     @GetMapping("/perfil")
     public String verPerfil(Model model, @RequestParam("id") int id) {
