@@ -97,7 +97,7 @@
 
                             <div class="mb-3">
                               <label class="form-label">Fecha de pedido</label>
-                              <input th:field="*{fecha_pedido}" type="text" class="form-control"/>
+                              <input type="date" th:field="*{fecha_pedido}" class="form-control"/>
                               <div class="invalid-feedback" th:if="${#fields.hasErrors('fecha_pedido')}" th:errors="*{fecha_pedido}"></div>
                             </div>
 
@@ -116,7 +116,11 @@
 
                             <div class="mb-3">
                               <label class="form-label">Estado</label>
-                              <input th:field="*{aprobar}" type="text" class="form-control"/>
+                              <select name="aprobar" id="aprobar" class="form-control">
+                                <option value="">Elegir un estado</option>
+                                <option value="Aprobado">Aprobado</option>
+                                <option value="Pendiente">Pendiente</option>
+                              </select>
                               <div class="invalid-feedback" th:if="${#fields.hasErrors('aprobar')}" th:errors="*{aprobar}"></div>
                             </div>
 
@@ -254,7 +258,7 @@
           });
   
           document.addEventListener("input", function(event) {
-            if (event.target && event.target.id === "contrasenia") {
+            if (event.target && event.target.id === "cantidad") {
               // Permitir letras, números y caracteres especiales específicos
               event.target.value = event.target.value.replace(/[^a-zA-Z0-9!@#$%^&*]/g, "");
             }
