@@ -1,6 +1,7 @@
 package com.example.springdogless.Repository;
 
 
+import com.example.springdogless.entity.Rol;
 import com.example.springdogless.entity.Usuario;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -53,6 +54,8 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer>{
     Optional<Usuario> findById(Integer id); // Esto usa la implementación por defecto
 
 
-    List<Usuario> findByBorradoAndRol(Integer borrado, Integer rol);
+    List<Usuario> findByBorradoAndRol_Rol(Integer borrado, String rol);
+
+
 }
 
