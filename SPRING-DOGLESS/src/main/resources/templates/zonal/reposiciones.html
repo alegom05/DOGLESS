@@ -13,6 +13,7 @@
             href="/assets/img/kaiadmin/favicon.ico"
             type="image/x-icon"
     />
+    <link th:href="@{/assets/css/style-SuperAdmin.css}" rel="stylesheet">
 
     <!-- Fonts and icons -->
     <script src="/assets/js/plugin/webfont/webfont.min.js"></script>
@@ -264,58 +265,58 @@
       </div>
     </div>
 
-    <script>
-      $(document).ready(function () {
+      <script>
+        $(document).ready(function () {
 
-        $("#basic-datatables").DataTable({
-          "language": {
-            "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json",
-            "info": false,
-            "infoEmpty": "Mostrando 0 a 0 de 0 registros",
-            "infoFiltered": "(filtrado de _MAX_ registros en total)",
-            "lengthMenu": "Mostrar _MENU_ registros por página",
-            "zeroRecords": "No se encontraron registros coincidentes",
-            "paginate": {
-              "first": "Primero",
-              "last": "Último",
-              "next": "Siguiente",
-              "previous": "Anterior"
+          $("#basic-datatables").DataTable({
+            "language": {
+              "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json",
+              "info": false,
+              "infoEmpty": "Mostrando 0 a 0 de 0 registros",
+              "infoFiltered": "(filtrado de _MAX_ registros en total)",
+              "lengthMenu": "Mostrar _MENU_ registros por página",
+              "zeroRecords": "No se encontraron registros coincidentes",
+              "paginate": {
+                "first": "Primero",
+                "last": "Último",
+                "next": "Siguiente",
+                "previous": "Anterior"
+              },
+              "search": "Buscar:"
+            }
+          });
+
+          $("#multi-filter-select").DataTable({
+            pageLength: 5,
+            initComplete: function () {
+              this.api()
+                      .columns()
+                      .every(function () {
+                        var column = this;
+                        var select = $(
+                                '<select class="form-select"><option value=""></option></select>'
+                        )
+                                .appendTo($(column.footer()).empty())
+                                .on("change", function () {
+                                  var val = $.fn.dataTable.util.escapeRegex($(this).val());
+
+                                  column
+                                          .search(val ? "^" + val + "$" : "", true, false)
+                                          .draw();
+                                });
+
+                        column
+                                .data()
+                                .unique()
+                                .sort()
+                                .each(function (d, j) {
+                                  select.append(
+                                          '<option value="' + d + '">' + d + "</option>"
+                                  );
+                                });
+                      });
             },
-            "search": "Buscar:"
-          }
-        });
-
-        $("#multi-filter-select").DataTable({
-          pageLength: 5,
-          initComplete: function () {
-            this.api()
-                    .columns()
-                    .every(function () {
-                      var column = this;
-                      var select = $(
-                              '<select class="form-select"><option value=""></option></select>'
-                      )
-                              .appendTo($(column.footer()).empty())
-                              .on("change", function () {
-                                var val = $.fn.dataTable.util.escapeRegex($(this).val());
-
-                                column
-                                        .search(val ? "^" + val + "$" : "", true, false)
-                                        .draw();
-                              });
-
-                      column
-                              .data()
-                              .unique()
-                              .sort()
-                              .each(function (d, j) {
-                                select.append(
-                                        '<option value="' + d + '">' + d + "</option>"
-                                );
-                              });
-                    });
-          },
-        });
+          });
 
         //Asignación del id
       $('#confirmDeleteModal').on('show.bs.modal', function (event) {

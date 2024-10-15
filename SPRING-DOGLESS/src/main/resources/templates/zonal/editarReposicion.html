@@ -107,15 +107,13 @@
                               <div class="invalid-feedback" th:if="${#fields.hasErrors('producto.proveedor.tienda')}" th:errors="*{producto.proveedor.tienda}"></div>
                             </div>
 
-                            <div class="mb-3">
-                              <label class="form-label">Zona</label>
-                              <input th:field="*{zona.nombre}" type="text" class="form-control"/>
-                              <div class="invalid-feedback" th:if="${#fields.hasErrors('zona.nombre')}" th:errors="*{'zona.nombre'}"></div>
-                            </div>
+
                           </div>
 
                           <!-- Columna derecha -->
                           <div class="col-md-6">
+
+
                             <div class="mb-3">
                               <label class="form-label">Estado</label>
                               <input th:field="*{aprobar}" type="text" class="form-control"/>
