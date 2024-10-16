@@ -7,6 +7,7 @@ import lombok.Setter;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 
 @Entity (name="usuarios")
 @Getter
@@ -50,6 +51,9 @@ public class Usuario implements Serializable {
     @JoinColumn(name = "idzonas")
     private Zona zona;
     private String fechanacimiento;
+
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Orden> orden;
 
     @Lob
     @Column(name = "fotoperfil", columnDefinition = "BLOB")

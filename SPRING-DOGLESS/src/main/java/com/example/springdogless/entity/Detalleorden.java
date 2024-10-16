@@ -7,14 +7,14 @@ import lombok.Setter;
 import java.math.BigDecimal;
 import java.sql.Date;
 
-@Entity
+@Entity (name = "detallesorden")
 @Getter
 @Setter
-@Table(name = "detallesorden")
 public class Detalleorden {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer iddetallesorden;
+    @Column (name="iddetallesorden")
+    private Integer id;
 
     private Integer cantidad;
     private BigDecimal preciounitario;

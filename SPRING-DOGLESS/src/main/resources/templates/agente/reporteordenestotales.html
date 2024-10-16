@@ -77,8 +77,8 @@
                             <h4 class="fw-bold mb-3">Previsualización:</h4>
                         </div>
                         <div class="card mt-4" style="width: 90%; margin: 0 auto;">
-                            <div class="card-header bg-info text-white">
-                                <h4 class="card-title text-center">Órdenes Totales en el Sistema</h4>
+                            <div class="card-header bg-dark text-white" >
+                                <h4 class="card-title text-center text-white">Órdenes Totales en el Sistema</h4>
                                 <h6 class="text-center">(Zona Norte)</h6>
                             </div>
                             <div class="card-body">
@@ -88,68 +88,33 @@
                                             <tr>
                                                 <th>#</th>
                                                 <th>Número de items</th>
+                                                <th>Producto</th>
                                                 <th>Usuario</th>
                                                 <th>Fecha de generación</th>
                                                 <th>Estado de orden</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>1499</td>
-                                                <td>3</td>
-                                                <td>Javier Perez</td>
-                                                <td>14/11/2024</td>
-                                                <td class="text-warning">EN VALIDACIÓN</td>
+                                            <tr th:each="orden : ${listaOrdenes}">
+                                                <td th:text="${orden.id}"></td>
+                                                <td th:text="${orden.id}"></td>
+
+                                                <td th:text="${orden.id}"></td>
+                                                <td th:text="${orden.usuario.nombre}"></td>
+                                                <td th:text="${#dates.format(orden.fecha, 'dd-MM-yyyy')}"></td>
+                                                <td>
+                                                      <span th:text="${orden.estado}"
+                                                            th:classappend="${orden.estado == 'Recibido'} ? 'badge badge-success' :
+                                                                            (${orden.estado == 'En Ruta'} ? 'badge badge-primary' :
+                                                                            (${orden.estado == 'En Aduanas'} ? 'badge badge-warning' :
+                                                                            (${orden.estado == 'Arribo al País'} ? 'badge badge-info' :
+                                                                            (${orden.estado == 'En Proceso'} ? 'badge badge-black' :
+                                                                            (${orden.estado == 'En Validación'} ? 'badge badge-secondary' :
+                                                                            (${orden.estado == 'Cancelado'} ? 'badge badge-danger' : 'badge badge-count'))))))">
+                                                      </span>
+                                                </td>
                                             </tr>
-                                            <tr>
-                                                <td>1236</td>
-                                                <td>1</td>
-                                                <td>Red Richards</td>
-                                                <td>14/11/2024</td>
-                                                <td class="text-warning">EN VALIDACIÓN</td>
-                                            </tr>
-                                            <tr>
-                                                <td>545</td>
-                                                <td>8</td>
-                                                <td>Peter Pan</td>
-                                                <td>14/11/2024</td>
-                                                <td class="text-success">EN PROCESO</td>
-                                            </tr>
-                                            <tr>
-                                                <td>569</td>
-                                                <td>9</td>
-                                                <td>Peter Parker</td>
-                                                <td>14/11/2024</td>
-                                                <td class="text-info">ARRIBO AL PAÍS</td>
-                                            </tr>
-                                            <tr>
-                                                <td>1456</td>
-                                                <td>2</td>
-                                                <td>Misterio Rey</td>
-                                                <td>14/11/2024</td>
-                                                <td class="text-primary">EN ADUANAS</td>
-                                            </tr>
-                                            <tr>
-                                                <td>1499</td>
-                                                <td>1</td>
-                                                <td>Melania Reyes</td>
-                                                <td>14/11/2024</td>
-                                                <td class="text-success">RECIBIDO</td>
-                                            </tr>
-                                            <tr>
-                                                <td>478</td>
-                                                <td>6</td>
-                                                <td>Jairo Rocop</td>
-                                                <td>14/11/2024</td>
-                                                <td class="text-danger">CANCELADO</td>
-                                            </tr>
-                                            <tr>
-                                                <td>459</td>
-                                                <td>2</td>
-                                                <td>Yani Yoru</td>
-                                                <td>14/11/2024</td>
-                                                <td class="text-success">RECIBIDO</td>
-                                            </tr>
+
                                         </tbody>
                                     </table>
                                 </div>

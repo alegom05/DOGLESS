@@ -99,34 +99,38 @@
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
-                                    <table class="table table-bordered text-center">
-                                        <thead>
+
+                                        <table class="table table-bordered text-center">
+                                            <thead>
                                             <tr>
                                                 <th>#</th>
-                                                <th>Número de items</th>
-                                                <th>Fecha de generación</th>
-                                                <th>Estado de orden</th>
+                                                <th>Usuario</th>
+                                                <th>ID Orden</th>
+                                                <th>Fecha de Generación</th>
+                                                <th>Estado de Orden</th>
                                             </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr th:each="orden : ${listaOrdenes}">
-                                                <td th:text="${orden.id}"></td>
-                                                <td>3</td>
-                                                <td th:text="${#dates.format(orden.fecha, 'dd-MM-yyyy')}"></td>
-
-                                                <td>
-                                                  <span th:text="${orden.estado}"
-                                                        th:classappend="${orden.estado == 'Recibido'} ? 'badge badge-success' :
-                                                                        (${orden.estado == 'En Ruta'} ? 'badge badge-primary' :
-                                                                        (${orden.estado == 'En Aduanas'} ? 'badge badge-warning' :
-                                                                        (${orden.estado == 'Arribo al País'} ? 'badge badge-info' :
-                                                                        (${orden.estado == 'En Proceso'} ? 'badge badge-black' :
-                                                                        (${orden.estado == 'En Validación'} ? 'badge badge-secondary' :
-                                                                        (${orden.estado == 'Cancelado'} ? 'badge badge-danger' : 'badge badge-count'))))))">
-                                                  </span>
-                                                </td>
-
+                                            </thead>
+                                            <tbody>
+                                            <tr th:each="usuario : ${listaUsuarios}">
+                                                <td th:text="${usuario.id}" th:rowspan="${#lists.size(usuario.orden) > 0 ? #lists.size(usuario.orden) : 1}"></td>
+                                                <td th:text="${usuario.nombre}" th:rowspan="${#lists.size(usuario.orden) > 0 ? #lists.size(usuario.orden) : 1}"></td>
+                                                <td th:if="${#lists.isEmpty(usuario.orden)}" colspan="3">Sin órdenes</td>
+                                                <th:block th:if="${not #lists.isEmpty(usuario.orden)}">
+                                                    <td th:text="${usuario.orden[0].id}"></td>
+                                                    <td th:text="${#dates.format(usuario.orden[0].fecha, 'dd-MM-yyyy')}"></td>
+                                                    <td th:text="${usuario.orden[0].estado}"></td>
+                                                </th:block>
                                             </tr>
+                                            <tr th:each="usuario : ${listaUsuarios}" th:each-status="status">
+                                                <th:block th:each="orden, ordenStatus : ${usuario.orden}" th:if="${ordenStatus.index > 0}">
+                                                    <td th:text="${orden.id}"></td>
+                                                    <td th:text="${#dates.format(orden.fecha, 'dd-MM-yyyy')}"></td>
+                                                    <td th:text="${orden.estado}"></td>
+                                                </th:block>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+
 
 
                                         </tbody>

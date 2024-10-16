@@ -76,7 +76,7 @@
                                 </div>
                             </div>
                             <!-- Generate report and back buttons -->
-                            <div class="d-flex">
+                            <div class="d-flex align-items-center justify-content-center">
                                 <button id="generateReportBtn" class="btn btn-secondary me-2">Generar reporte</button>
                                 <a href="/agente/reportesOrdenes" class="btn btn-primary">Regresar</a>
                             </div>
@@ -87,8 +87,8 @@
                             <h4 class="fw-bold mb-3">Previsualización:</h4>
                         </div>
                         <div class="card mt-4" style="width: 90%; margin: 0 auto;">
-                            <div class="card-header bg-info text-white">
-                                <h4 class="card-title text-center">Reporte de Órdenes Gestionadas por Fecha</h4>
+                            <div class="card-header bg-dark text-white">
+                                <h4 class="card-title text-center text-white">Reporte de Órdenes Gestionadas por Fecha</h4>
                                 <h6 id="dateRangeSubtitle" class="text-center">(Selecciona un rango de fechas)</h6>
                             </div>
                             <div class="card-body">
@@ -104,11 +104,11 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>1499</td>
+                                        <tr th:each="orden : ${listaOrdenes}">
+                                            <td th:text="${orden.id}"></td>
                                                 <td>3</td>
                                                 <td>Javier Perez</td>
-                                                <td>14/11/2024</td>
+                                            <td th:text="${#dates.format(orden.fecha, 'dd-MM-yyyy')}"></td>
                                                 <td class="text-warning">EN VALIDACIÓN</td>
                                             </tr>
                                             <tr>

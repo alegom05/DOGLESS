@@ -77,8 +77,8 @@
                             <h4 class="fw-bold mb-3">Previsualización:</h4>
                         </div>
                         <div class="card mt-4" style="width: 90%; margin: 0 auto;">
-                            <div class="card-header bg-info text-white">
-                                <h4 class="card-title text-center">Órdenes Gestionadas por agente</h4>
+                            <div class="card-header bg-dark text-white">
+                                <h4 class="card-title text-center text-white">Órdenes Gestionadas por agente</h4>
                                 <h6 class="text-center">(Agente Nilo Cori - Zona Norte)</h6>
                             </div>
                             <div class="card-body">
@@ -94,62 +94,23 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>1499</td>
-                                                <td>3</td>
-                                                <td>Javier Perez</td>
-                                                <td>14/11/2024</td>
-                                                <td class="text-warning">EN VALIDACIÓN</td>
-                                            </tr>
-                                            <tr>
-                                                <td>1236</td>
-                                                <td>1</td>
-                                                <td>Red Richards</td>
-                                                <td>14/11/2024</td>
-                                                <td class="text-warning">EN VALIDACIÓN</td>
-                                            </tr>
-                                            <tr>
-                                                <td>545</td>
-                                                <td>8</td>
-                                                <td>Peter Pan</td>
-                                                <td>14/11/2024</td>
-                                                <td class="text-success">EN PROCESO</td>
-                                            </tr>
-                                            <tr>
-                                                <td>569</td>
-                                                <td>9</td>
-                                                <td>Peter Parker</td>
-                                                <td>14/11/2024</td>
-                                                <td class="text-info">ARRIBO AL PAÍS</td>
-                                            </tr>
-                                            <tr>
-                                                <td>1456</td>
-                                                <td>2</td>
-                                                <td>Misterio Rey</td>
-                                                <td>14/11/2024</td>
-                                                <td class="text-primary">EN ADUANAS</td>
-                                            </tr>
-                                            <tr>
-                                                <td>1499</td>
-                                                <td>1</td>
-                                                <td>Melania Reyes</td>
-                                                <td>14/11/2024</td>
-                                                <td class="text-success">RECIBIDO</td>
-                                            </tr>
-                                            <tr>
-                                                <td>478</td>
-                                                <td>6</td>
-                                                <td>Jairo Rocop</td>
-                                                <td>14/11/2024</td>
-                                                <td class="text-danger">CANCELADO</td>
-                                            </tr>
-                                            <tr>
-                                                <td>459</td>
-                                                <td>2</td>
-                                                <td>Yani Yoru</td>
-                                                <td>14/11/2024</td>
-                                                <td class="text-success">RECIBIDO</td>
-                                            </tr>
+                                        <tr th:each="usuario : ${listaUsuarios}">
+                                            <td th:text="${usuario.id}" th:rowspan="${#lists.size(usuario.orden) > 0 ? #lists.size(usuario.orden) : 1}"></td>
+                                            <td th:text="${usuario.nombre}" th:rowspan="${#lists.size(usuario.orden) > 0 ? #lists.size(usuario.orden) : 1}"></td>
+                                            <td th:if="${#lists.isEmpty(usuario.orden)}" colspan="3">Sin órdenes</td>
+                                            <th:block th:if="${not #lists.isEmpty(usuario.orden)}">
+                                                <td th:text="${usuario.orden[0].id}"></td>
+                                                <td th:text="${#dates.format(usuario.orden[0].fecha, 'dd-MM-yyyy')}"></td>
+                                                <td th:text="${usuario.orden[0].estado}"></td>
+                                            </th:block>
+                                        </tr>
+                                        <tr th:each="usuario : ${listaUsuarios}" th:each-status="status">
+                                            <th:block th:each="orden, ordenStatus : ${usuario.orden}" th:if="${ordenStatus.index > 0}">
+                                                <td th:text="${orden.id}"></td>
+                                                <td th:text="${#dates.format(orden.fecha, 'dd-MM-yyyy')}"></td>
+                                                <td th:text="${orden.estado}"></td>
+                                            </th:block>
+                                        </tr>
                                         </tbody>
                                     </table>
                                 </div>
