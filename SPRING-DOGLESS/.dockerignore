@@ -1,32 +1,33 @@
-# Ignorar archivos y directorios temporales o de compilación
-dist/
-build/
-tmp/
-*.tmp
+# IDE files
+.idea/
+*.iml
+.settings/
+.classpath
+.project
+.vscode/
 
-# Ignorar archivos de sistema
+# Logs
+*.log
+
+# OS files
 .DS_Store
 Thumbs.db
 
-# Ignorar carpetas de dependencias y compilación
-node_modules/
-coverage/
-bin/
-obj/
-
-# Ignorar IDEs y configuraciones de editores de texto
-.vscode/
-.idea/
-*.iml
-
-# Ignorar archivos de logs
-logs/
-*.log
-
-# Ignorar archivos de configuración de desarrollo
-*.env
-*.local
-
-# Ignorar control de versiones
-.git
+# Version control
+.git/
 .gitignore
+
+# Assets source files that aren't needed for build
+*.psd
+*.ai
+*.eps
+
+# Documentation
+README.md
+CHANGELOG.md
+LICENSE
+*.md
+
+# Development specific
+.env
+.env.local
