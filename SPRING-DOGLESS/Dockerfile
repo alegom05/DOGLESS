@@ -1,6 +1,7 @@
-FROM openjdk:23-ea-17-jdk
+FROM eclipse-temurin:17-jre-alpine
 VOLUME /tmp
 EXPOSE 8080
-ADD ./target/SPRING-DOGLESS-0.0.1-SNAPSHOT.jar dogless.jar
+COPY ./target/SPRING-DOGLESS-0.0.1-SNAPSHOT.jar dogless.jar
 ENTRYPOINT ["java", "-jar", "dogless.jar"]
+
 
