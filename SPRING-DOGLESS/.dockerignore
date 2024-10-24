@@ -1,0 +1,32 @@
+# Ignorar archivos y directorios temporales o de compilación
+dist/
+build/
+tmp/
+*.tmp
+
+# Ignorar archivos de sistema
+.DS_Store
+Thumbs.db
+
+# Ignorar carpetas de dependencias y compilación
+node_modules/
+coverage/
+bin/
+obj/
+
+# Ignorar IDEs y configuraciones de editores de texto
+.vscode/
+.idea/
+*.iml
+
+# Ignorar archivos de logs
+logs/
+*.log
+
+# Ignorar archivos de configuración de desarrollo
+*.env
+*.local
+
+# Ignorar control de versiones
+.git
+.gitignore
