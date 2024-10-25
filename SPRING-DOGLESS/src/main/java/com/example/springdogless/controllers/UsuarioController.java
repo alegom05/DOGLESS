@@ -540,9 +540,9 @@ public class UsuarioController {
         model.addAttribute("orden", orden);
         return "usuario/carrito_compras";
     }*/
-    @GetMapping(value = "compras")
+    @GetMapping( "/compras")
     public String listaProductos(Model model, @RequestParam("id") Integer id) {
-        model.addAttribute("orden", detallesRepository.findByOrdenCreado(id));
+        model.addAttribute("listadetalles", detallesRepository.findByOrdenCreado(id));
         return "usuario/carrito_compras";
     }
     // Guardar la compra con las nuevas cantidades

@@ -149,15 +149,15 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr th:each="orden : ${orden}">
-                                            <input type="hidden" name="idDetallesOrden" th:value="${orden.iddetallesorden}"/>
-                                            <input type="hidden" name="idOrdenes" th:value="${orden.orden.id}"/>
-                                            <input type="hidden" name="idProductos" th:value="${orden.producto.id}"/>
+                                        <tr th:each="detallesorden : ${listadetalles}">
+                                            <input type="hidden" name="idDetallesOrden" th:value="${detallesorden.id}"/>
+                                            <input type="hidden" name="idOrdenes" th:value="${detallesorden.orden.id}"/>
+                                            <input type="hidden" name="idProductos" th:value="${detallesorden.producto.id}"/>
                                             <td>
-                                                <img th:src="@{'http://20.81.145.27:8080/producto/imagen/' + ${orden.producto.id}}" class="img-fluid w-75" alt="Imagen del producto">
+                                                <img th:src="@{'http://20.81.145.27:8080/producto/imagen/' + ${detallesorden.producto.id}}" class="img-fluid w-75" alt="Imagen del producto">
                                             </td>
-                                            <td th:text="${orden.producto.nombre}"></td>
-                                            <td class="price" th:text="'S/' + ${orden.producto.precio}"></td>
+                                            <td th:text="${detallesorden.producto.nombre}"></td>
+                                            <td class="price" th:text="'S/' + ${detallesorden.producto.precio}"></td>
                                             <td>
                                                 <div class="d-flex justify-content-center align-items-center">
                                                     <div class="input-group quantity" style="width: 120px;">
@@ -166,7 +166,7 @@
                                                                 <i class="fa fa-minus"></i>
                                                             </button>
                                                         </div>
-                                                        <input type="text" class="form-control form-control-sm text-center border-0 qty-input" name="cantidades" th:value="${orden.cantidad}" style="max-width: 40px;" readonly>
+                                                        <input type="text" class="form-control form-control-sm text-center border-0 qty-input" name="cantidades" th:value="${detallesorden.cantidad}" style="max-width: 40px;" readonly>
                                                         <div class="input-group-btn">
                                                             <button type="button" class="btn btn-sm btn-plus rounded-circle border" onclick="incrementQuantity(this)">
                                                                 <i class="fa fa-plus"></i>
@@ -180,7 +180,7 @@
                                                 <p class="mb-0">S/ <span class="subtotal">0.00</span></p>
                                             </td>
                                             <td>
-                                                <a th:href="@{'/usuario/borrarproducto' + '?id=' + ${orden.iddetallesorden}}">
+                                                <a th:href="@{'/usuario/borrarproducto' + '?id=' + ${detallesorden.id}}">
                                                     <i class="fa fa-times"></i>
                                                 </a>
                                             </td>
@@ -199,7 +199,7 @@
                                 <p>Total: <strong id="totalPrice" name="total">S/0</strong></p>
                                 <input type="hidden" name="totalHidden" id="totalHidden" /> <!-- Campo oculto para el total -->
                                 <!-- Botón de continuar compra -->
-                                <div th:if="${not #lists.isEmpty(orden)}">
+                                <div th:if="${not #lists.isEmpty(listadetalles)}">
                                     <button type="submit" class="btn btn-primary">Continuar Compra</button>
                                 </div>
                             </div>
