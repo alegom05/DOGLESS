@@ -6,8 +6,8 @@ public interface ProductoDTO {
     String getNombre();
     String getDescripcion();
     String getCategoria();
-    double getPrecio();
-    double getCostoenvio();
+    Double getPrecio();
+    Double getCostoenvio();
     String getModelos();
     String getColores();
     String getAprobado();

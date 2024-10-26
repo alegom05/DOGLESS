@@ -100,7 +100,7 @@
                               <label for="proveedor" class="form-label">Proveedor: (*)</label>
                               <select name="proveedor" id="proveedor" class="form-control">
                                 <option th:each="proveedor: ${listaProveedores}"
-                                        th:text="${proveedor.nombre}" th:value="${proveedor.id}">Elegir proveedor</option>
+                                        th:text="${proveedor.tienda}" th:value="${proveedor.id}">Elegir proveedor</option>
                               </select>
                               <div class="invalid-feedback">Por favor selecciona un proveedor.</div>
                             </div>
