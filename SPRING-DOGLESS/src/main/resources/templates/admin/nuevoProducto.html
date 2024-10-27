@@ -97,7 +97,7 @@
                                                  th:value="${proveedor.id}">
                                          </option>
                                        </select>
-                                       <div class="invalid-feedback">Por favor seleccionar una zona.</div>
+                                       <div class="invalid-feedback">Por favor seleccionar un proveedor.</div>
                                      </div>
                                    </div>
 
@@ -105,9 +105,11 @@
                                    <div class="mb-3">
                                      <label for="precio" class="form-label">Precio</label>
                                      <input type="number" class="form-control" id="precio" th:field="*{precio}"
-                                            th:classappend="${#fields.hasErrors('precio')?'is-invalid':''}">
-                                     <div class="invalid-feedback" th:if="${#fields.hasErrors('precio')}"
-                                          th:errors="*{precio}" ></div>
+                                            min="0" step="0.01" placeholder=""
+                                            th:classappend="${#fields.hasErrors('precio') ? 'is-invalid' : ''}">
+                                     <div class="invalid-feedback" id="precioError" th:if="${#fields.hasErrors('precio')}">
+                                       <span th:errors="*{precio}">El precio no puede ser negativo.</span>
+                                     </div>
                                    </div>
 
                                    <div class="mb-3">
@@ -120,13 +122,15 @@
                                    <div class="mb-3">
                                      <label for="costoenvio" class="form-label">Costo de envío</label>
                                      <input type="number" class="form-control" id="costoenvio" th:field="*{costoenvio}"
+                                            min="0" step="0.01" placeholder=""
                                             th:classappend="${#fields.hasErrors('costoenvio')?'is-invalid':''}">
                                      <div class="invalid-feedback" th:if="${#fields.hasErrors('costoenvio')}"
                                           th:errors="*{costoenvio}" ></div>
                                    </div>
+
                                    <div class="mb-3">
                                      <label for="colores" class="form-label">Color</label>
-                                     <input type="text" class="form-control" id="color" th:field="*{colores}"
+                                     <input type="text" class="form-control" id="colores" th:field="*{colores}"
                                             th:classappend="${#fields.hasErrors('colores')?'is-invalid':''}">
                                      <div class="invalid-feedback" th:if="${#fields.hasErrors('colores')}"
                                           th:errors="*{colores}" ></div>
@@ -264,8 +268,48 @@
               ]);
             $("#addRowModal").modal("hide");
           });
+
+
         });
+
       </script>
+    <script>
+      $(document).ready(function () {
+        var forms = document.querySelectorAll('.needs-validation');
+
+        Array.prototype.slice.call(forms).forEach(function (form) {
+          form.addEventListener('submit', function (event) {
+            if (!form.checkValidity()) {
+              event.preventDefault();
+              event.stopPropagation();
+            }
+            form.classList.add('was-validated');
+          }, false);
+        });
+
+        // Validar que solo se ingresen valores positivos en el campo de precio
+        document.addEventListener("input", function(event) {
+          if (event.target && event.target.id === "precio") {
+            // Asegurar que solo se ingresen valores numéricos positivos
+            if (event.target.value < 0) {
+              event.target.value = ''; // Borra el valor si es negativo
+            }
+          }
+        });
+
+        document.addEventListener("input", function(event) {
+          if (event.target && event.target.id === "costoenvio") {
+            // Asegurar que solo se ingresen valores numéricos positivos
+            if (event.target.value < 0) {
+              event.target.value = ''; // Borra el valor si es negativo
+            }
+          }
+        });
+
+      });
+
+    </script>
+
     <script>
 
       function previewImage(event) {
@@ -278,6 +322,8 @@
         }
         reader.readAsDataURL(input.files[0]);
       }
+
+
     </script>
       
   </body>
