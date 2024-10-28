@@ -13,6 +13,7 @@
             href="/assets/img/kaiadmin/favicon.ico"
             type="image/x-icon"
     />
+    <link th:href="@{/assets/css/style-SuperAdmin.css}" rel="stylesheet">
 
     <!-- Fonts and icons -->
     <script src="/assets/js/plugin/webfont/webfont.min.js"></script>
@@ -61,6 +62,9 @@
                 <div>
                   <h3 class="fw-bold mb-3">Lista de Proveedores</h3>
                 </div>
+              </div>
+              <div th:if="${mensajeExito}" id="mensajeExito" class="alert alert-success fade-out" role="alert">
+                <p th:text="${mensajeExito}"></p>
               </div>
               <div class="row">
                 <div class="col-md-12">
@@ -117,7 +121,7 @@
                                   <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
                                     <li><a class="dropdown-item" th:href="@{'/admin/verProveedor' + '?id=' + ${proveedor.id}}">Ver</a></li>
                                     <li><a class="dropdown-item" th:href="@{'/admin/editarProveedor' + '?id=' + ${proveedor.id}}">Editar</a></li>
-                                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#denegarModal">Eliminar</a></li>
+                                    <li><a href="#" class="dropdown-item" data-toggle="modal"  data-target="#confirmDeleteModal" th:data-id="${proveedor.id}">Eliminar</a></li>
                                   </ul>
                                 </div>
                               </td>
@@ -126,21 +130,25 @@
 
                           </tbody>
                         </table>
-                        <div class="modal fade" id="denegarModal" tabindex="-1" role="dialog" aria-labelledby="acceptModalLabel" aria-hidden="true">
+                        <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
                           <div class="modal-dialog" role="document">
                             <div class="modal-content">
                               <div class="modal-header">
-                                <h5 class="modal-title" id="acceptModalLabel">Advertencia</h5>
-                                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmar Eliminación</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                   <span aria-hidden="true">&times;</span>
                                 </button>
                               </div>
                               <div class="modal-body">
-                                <p>¿Estas seguro que deseas eliminar este producto?</p>
+                                ¿Estás seguro de que deseas eliminar este usuario?
+
                               </div>
                               <div class="modal-footer">
-                                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" >Cancelar</button>
-                                <button type="button" class="btn btn-dark"  onclick="eliminarRegistro()">Aceptar</button>
+                                <form id="deleteForm" method="post" th:action="@{'/admin/deleteproveedor'}" novalidate>
+                                  <input type="hidden" name="id" id="userId">
+                                  <button type="submit" class="btn btn-dark">Eliminar</button>
+                                </form>
+                                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancelar</button>
                               </div>
                             </div>
                           </div>
@@ -222,6 +230,15 @@
 
     <!-- Kaiadmin JS -->
     <script src="/assets/js/kaiadmin.min.js"></script>
+    <script>
+      // Este script asigna el ID del usuario al modal antes de abrirlo
+      $('#confirmDeleteModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget); // Botón que abrió el modal
+        var userId = button.data('id'); // Extraer la información de atributos de datos
+        var modal = $(this);
+        modal.find('#userId').val(userId); // Asigna el ID al campo oculto
+      });
+    </script>
       <script>
         $(document).ready(function () {
           $("#basic-datatables").DataTable({
@@ -296,6 +313,20 @@
           });
         });
       </script>
+    <script>
+      // Espera 3 segundos (3000 milisegundos) antes de empezar a ocultar el mensaje
+      setTimeout(function() {
+        var alert = document.getElementById('mensajeExito');
+        if (alert) {
+          alert.classList.add('hidden'); // Añadir la clase que reduce la opacidad gradualmente
+
+          // Después de 1 segundo (duración de la transición), ocultar completamente
+          setTimeout(function() {
+            alert.classList.add('remove'); // Ocultar completamente el mensaje y el espacio
+          }, 1000); // 1000 ms coincide con la duración de la transición de opacidad
+        }
+      }, 3000); // Cambia 3000 por el tiempo en milisegundos que desees (3 segundos en este caso)
+    </script>
       
   </body>
 </html>
