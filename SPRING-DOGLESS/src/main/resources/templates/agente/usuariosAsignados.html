@@ -4,17 +4,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>Usuarios asignados</title>
-    <meta
-            content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
-            name="viewport"
-    />
-    <link
-            rel="icon"
-            href="/assets/img/kaiadmin/favicon.ico"
-            type="image/x-icon"
-    />
+    <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport" />
+    <link rel="icon" href="/assets/img/kaiadmin/favicon.ico" type="image/x-icon" />
     <link th:href="@{/assets/css/style-SuperAdmin.css}" rel="stylesheet">
-
 
     <!-- Fonts and icons -->
     <script src="/assets/js/plugin/webfont/webfont.min.js"></script>
@@ -22,12 +14,7 @@
       WebFont.load({
         google: { families: ["Public Sans:300,400,500,600,700"] },
         custom: {
-          families: [
-            "Font Awesome 5 Solid",
-            "Font Awesome 5 Regular",
-            "Font Awesome 5 Brands",
-            "simple-line-icons",
-          ],
+          families: ["Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands", "simple-line-icons"],
           urls: ["/assets/css/fonts.min.css"],
         },
         active: function () {
@@ -43,17 +30,11 @@
 
   </head>
   <div class="wrapper">
-    <!-- Reemplaza barra lateral con el fragmento de Thymeleaf -->
     <div th:replace="~{agente/fragments/barralateralagente :: body(activePage='usuarios', activeSubPage='asignados')}"></div>
-    <!-- Fin barra lateral -->
-
 
     <div class="main-panel">
-      <!-- Reemplaza navbar con el fragmento de Thymeleaf -->
       <div th:replace="~{agente/fragments/navbarheaderagente :: fragment}"></div>
-      <!-- Fin Navbar -->
 
-      <!--  contenido central -->
       <div class="container">
         <div class="page-inner">
           <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
@@ -65,37 +46,6 @@
             </div>
           </div>
 
-          <!-- Filtros -->
-          <div class="row">
-            <div class="col-md-12">
-              <div class="d-flex justify-content-between align-items-center flex-wrap">
-                <!-- Filtro por nombre del comprador -->
-                <div class="form-group me-2">
-                  <label for="filterUserName">Nombre del Usuario</label>
-                  <input type="text" id="filterUserName" class="form-control" placeholder="Ej. Raul Perez">
-                </div>
-
-                <!-- Filtro por fecha de actualización -->
-                <div class="form-group me-2">
-                  <label for="filterDate">Fecha de Asignación</label>
-                  <input type="date" id="filterDate" class="form-control" placeholder="Fecha de actualización">
-                </div>
-
-                <!-- Filtro por DNI -->
-                <div class="form-group me-2">
-                  <label for="filterDNI">DNI</label>
-                  <input type="text" id="filterDNI" class="form-control" placeholder="Ej. 75184956">
-                </div>
-
-                <!-- Botones de acciones para filtros -->
-                <div class="d-flex">
-                  <button id="searchBtn" class="btn btn-primary me-2">Buscar</button>
-                  <button id="clearBtn" class="btn btn-secondary">Limpiar filtros</button>
-                </div>
-              </div>
-            </div>
-          </div>
-
           <!-- Tabla -->
           <div class="row mt-4">
             <div class="col-md-12">
@@ -103,8 +53,8 @@
                 <div class="card-body">
                   <div class="table-responsive">
                     <table id="multi-filter-select" class="display table table-striped table-hover">
-                      <thead>
-                        <tr class="text-center">
+                      <thead class="text-center">
+                        <tr>
                           <th>#</th>
                           <th>Nombre del Usuario</th>
                           <th>DNI</th>
@@ -114,28 +64,23 @@
                       </thead>
                       <tbody class="text-center">
                         <tr th:each="orden, iterStat : ${listaOrdenes}" th:if ="${orden.usuario.estado == 'activo'}">
-                          <td th:text="${iterStat.index + 1}"></td> <!-- Número de fila -->
-                          <td th:text="${orden.usuario.nombre + ' ' + orden.usuario.apellido}"></td> <!-- Nombre y apellido del usuario -->
-                          <td th:text="${orden.usuario.dni}"></td> <!-- DNI del usuario -->
-                          <td th:text="${orden.fecha}"></td> <!-- Fecha de asignación -->
+                          <td th:text="${iterStat.index + 1}"></td>
+                          <td th:text="${orden.usuario.nombre + ' ' + orden.usuario.apellido}"></td>
+                          <td th:text="${orden.usuario.dni}"></td>
+                          <td th:text="${orden.fecha}"></td>
                           <td>
                             <div class="dropdown">
                               <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="fas fa-ellipsis-v"></i>
                               </button>
                               <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
-                                <!-- Enlace para ver detalles del perfil del usuario, pasando el ID del usuario -->
                                 <li>
                                   <a class="dropdown-item" th:href="@{/agente/verDetallesUsuario(id=${orden.usuario.id})}">
-
                                     Ver detalles del perfil
                                   </a>
                                 </li>
-
-                                <!-- Enlace para redirigir al formulario de baneo, pasando el ID del usuario -->
                                 <li>
-                                  <a class="dropdown-item"
-                                     th:href="@{'/agente/formulariodebaneo' + '?id=' + ${orden.usuario.id}}">
+                                  <a class="dropdown-item" th:href="@{'/agente/formulariodebaneo' + '?id=' + ${orden.usuario.id}}">
                                     Banear usuario
                                   </a>
                                 </li>
@@ -145,7 +90,6 @@
                         </tr>
                       </tbody>
                     </table>
-
                   </div>
                 </div>
               </div>
@@ -154,18 +98,11 @@
         </div>
       </div>
 
-
-
-
-      <!-- Pie de página -->
-      <!-- Pie de página -->
       <div th:replace="~{agente/fragments/piedepagina :: fragment}"></div>
     </div>
   </div>
 
-
-
-  <!--Core JS Files   -->
+  <!-- Core JS Files -->
   <script src="/assets/js/core/jquery-3.7.1.min.js"></script>
   <script src="/assets/js/core/popper.min.js"></script>
   <script src="/assets/js/core/bootstrap.min.js"></script>
@@ -183,40 +120,13 @@
   <script src="/assets/js/kaiadmin.min.js"></script>
   <script>
     $(document).ready(function() {
-      // Inicializa DataTable
-      var table = $('#multi-filter-select').DataTable({
+      // Inicializa DataTable con solo el campo de búsqueda global y paginación centrada
+      $('#multi-filter-select').DataTable({
         paging: true,
         pageLength: 5,
         lengthChange: false,
         info: true,
-        dom: '<"top"i>rt<"bottom d-flex justify-content-center"p><"clear">', // Centra solo la paginación
-
-      });
-
-      // Funcionalidad del botón de búsqueda
-      $('#searchBtn').on('click', function() {
-        // Filtra por nombre de usuario (Columna 1)
-        table.column(1).search($('#filterUserName').val());
-
-        // Filtra por DNI (Columna 2)
-        table.column(2).search($('#filterDNI').val());
-
-        // Filtra por fecha de asignación (Columna 3)
-        table.column(3).search($('#filterDate').val());
-
-        // Aplica los filtros
-        table.draw();
-      });
-
-      // Funcionalidad del botón para limpiar los filtros
-      $('#clearBtn').on('click', function() {
-        // Limpia los valores de los campos de entrada
-        $('#filterUserName').val('');
-        $('#filterDNI').val('');
-        $('#filterDate').val('');
-
-        // Reinicia la búsqueda en todas las columnas
-        table.search('').columns().search('').draw();
+        dom: '<"top"f>rt<"bottom d-flex justify-content-center"p><"clear">'
       });
     });
   </script>
