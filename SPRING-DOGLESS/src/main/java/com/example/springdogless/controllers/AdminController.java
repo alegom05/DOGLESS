@@ -3,6 +3,7 @@ package com.example.springdogless.controllers;
 import com.example.springdogless.Repository.*;
 
 import com.example.springdogless.entity.*;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -42,6 +43,8 @@ public class AdminController {
     ProveedorRepository proveedorRepository;
     @Autowired
     StockRepository stockRepository;
+    @Autowired
+    StockProductoRepository stockProductoRepository;
     @Autowired
     ReposicionRepository reposicionesRepository;
     @Autowired
@@ -479,6 +482,49 @@ public class AdminController {
         return "redirect:/admin/proveedores";
     }
 
+    @PostMapping("/impersonate")
+    public String impersonateUser(@RequestParam("id") Integer userId, HttpSession session, RedirectAttributes attr) {
+        Optional<Usuario> optUsuario = usuarioRepository.findById(userId);
+
+        if (optUsuario.isPresent()) {
+            Usuario usuario = optUsuario.get();
+
+            // Guardar temporalmente el usuario actual (SuperAdmin) en la sesión para revertir
+            session.setAttribute("originalUserId", session.getAttribute("userId"));
+
+            // Cambiar el usuario actual en la sesión por el usuario seleccionado
+            session.setAttribute("userId", usuario.getId());
+            session.setAttribute("userRole", usuario.getRol());
+
+            attr.addFlashAttribute("mensajeExito", "Ahora estás logueado como " + usuario.getNombre());
+
+            // Redirigir al usuario a su vista correspondiente
+            return "redirect:/zonal";  // Cambia la ruta según la vista inicial del usuario
+        } else {
+            attr.addFlashAttribute("error", "Usuario no encontrado");
+            return "redirect:/admin/adminzonal";
+        }
+    }
+    @GetMapping("/admin/stopImpersonation")
+    public String stopImpersonation(HttpSession session, RedirectAttributes attr) {
+        Integer originalUserId = (Integer) session.getAttribute("originalUserId");
+
+        if (originalUserId != null) {
+            session.setAttribute("userId", originalUserId);
+            session.removeAttribute("originalUserId");
+            session.setAttribute("userRole", 1); // Asignar el rol de SuperAdmin (según tu lógica de roles)
+
+            attr.addFlashAttribute("mensajeExito", "Has vuelto a tu cuenta de SuperAdmin.");
+        } else {
+            attr.addFlashAttribute("error", "No estás en modo de suplantación.");
+        }
+
+        return "redirect:/admin";
+    }
+
+
+
+
     @GetMapping("/new")
     public String nuevoAdminZonalFrm(Model model) {
         model.addAttribute("listaZonas", zonaRepository.findAll());
@@ -701,10 +747,10 @@ public class AdminController {
     //Vista de productos
     @GetMapping("/productos")
     public String listaProductos(Model model, @RequestParam(required = false) String zona) {
-        //model.addAttribute("listaProductosCompleto", productRepository.ProductosCompleto());
-        model.addAttribute("listaProductos", productRepository.findByBorrado(1));
-        return "admin/productos";
-        //return "admin/productogod";
+        model.addAttribute("listaProductosCompleto", productRepository.ProductosCompleto());
+        //model.addAttribute("listaProductos", productRepository.findByBorrado(1));
+        //return "admin/productos";
+        return "admin/productogod";
     }
 
 
@@ -828,21 +874,42 @@ public class AdminController {
         attr.addFlashAttribute("msg", "Producto creado exitosamente");
         return "redirect:/admin/productos";
     }
-    @PostMapping("/deleteproducto")
-    public String borrarProducto(@RequestParam("id") Integer id, RedirectAttributes attr) {
-        Optional<Producto> optProducto = productRepository.findById(id);
+    /*@PostMapping("/deleteproducto")
+    public String borrarProducto(@RequestParam("id") Integer id, @RequestParam("idZona") Integer idZona, RedirectAttributes attr) {
+        Optional<Stockproducto> optStockProducto = stockProductoRepository.findByIdproductosAndIdzonas(id, idZona);
 
-        if (optProducto.isPresent()) {
-            Producto producto = optProducto.get();
-            producto.setBorrado(0);
-            productRepository.save(producto);
-            attr.addFlashAttribute("mensajeExito", "Producto borrado exitosamente");
+        if (optStockProducto.isPresent()) {
+            Stockproducto stockProducto = optStockProducto.get();
+            stockProducto.setBorrado(0);  // Cambia el borrado a 0 para hacer el borrado lógico
+            stockProductoRepository.save(stockProducto);
+            attr.addFlashAttribute("mensajeExito", "Producto borrado exitosamente para la zona seleccionada.");
         } else {
-            attr.addFlashAttribute("error", "Admin no encontrado");
+            attr.addFlashAttribute("error", "Producto no encontrado en la zona seleccionada.");
         }
 
         return "redirect:/admin/productos";
     }
+
+     */
+    @PostMapping("/deleteproducto")
+    public String borrarProducto(@RequestParam("id") Integer id, @RequestParam("idZona") Integer idZona, RedirectAttributes attr) {
+        Optional<ProductoZona> optProductoZona = stockProductoRepository.findByStockproductoIdproductosAndStockproductoIdzonas(id, idZona);
+
+        if (optProductoZona.isPresent()) {
+            ProductoZona productoZona = optProductoZona.get();
+            productoZona.setBorrado(0);  // Cambia el campo borrado a 0 para hacer el borrado lógico
+            stockProductoRepository.save(productoZona);
+            attr.addFlashAttribute("mensajeExito", "Producto borrado exitosamente para la zona seleccionada.");
+        } else {
+            attr.addFlashAttribute("error", "Producto no encontrado en la zona seleccionada.");
+        }
+
+        return "redirect:/admin/productos";
+    }
+
+
+
+
 
     @PostMapping("/borrarProducto")
     public String borrarProducto(@RequestParam("id") int id, RedirectAttributes attr) {

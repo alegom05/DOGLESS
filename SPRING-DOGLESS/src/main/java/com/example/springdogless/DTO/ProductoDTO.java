@@ -15,6 +15,7 @@ public interface ProductoDTO {
     String getEstado();
     Integer getCantidad();
     String getNombreZona();
+    Integer getIdzonas();
 
     // Nuevos métodos para proveedor
     String getProveedorNombre();
