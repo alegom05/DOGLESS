@@ -169,58 +169,55 @@ DEFAULT CHARACTER SET = utf8mb3;
 -- -----------------------------------------------------
 -- Table `dogless`.`usuarios`
 -- -----------------------------------------------------
--- A ver si soporta la relación a sí misma O:
--- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `dogless`.`usuarios` (
   `idusuarios` INT NOT NULL AUTO_INCREMENT,
-  `nombre` VARCHAR(45) NULL DEFAULT NULL,
-  `apellido` VARCHAR(45) NULL DEFAULT NULL,
-  `dni` VARCHAR(45) NULL DEFAULT NULL,
-  `email` VARCHAR(45) NULL DEFAULT NULL,
-  `pwd` VARCHAR(100) NULL DEFAULT NULL,
-  `telefono` VARCHAR(45) NULL DEFAULT NULL,
-  `direccion` VARCHAR(45) NULL DEFAULT NULL,
+  `nombre` VARCHAR(45) NULL,
+  `apellido` VARCHAR(45) NULL,
+  `dni` VARCHAR(45) NULL,
+  `email` VARCHAR(45) NULL,
+  `pwd` VARCHAR(100) NULL,
+  `telefono` VARCHAR(45) NULL,
+  `direccion` VARCHAR(45) NULL,
   `idroles` INT NOT NULL,
   `iddistritos` INT NOT NULL,
-  `idadminzonales` INT NULL DEFAULT NULL,
-  `estado` ENUM('activo', 'inactivo', 'baneado') NULL DEFAULT NULL,
-  `ruc` VARCHAR(11) NULL DEFAULT NULL,
-  `codigoaduana` VARCHAR(45) NULL DEFAULT NULL,
-  `razonsocial` VARCHAR(45) NULL DEFAULT NULL,
-  `codigojurisdiccion` VARCHAR(45) NULL DEFAULT NULL,
+  `idadminzonales` INT NULL,
+  `estado` ENUM('activo', 'inactivo', 'baneado') NULL,
+  `ruc` VARCHAR(11) NULL,
+  `codigoaduana` VARCHAR(45) NULL,
+  `razonsocial` VARCHAR(45) NULL,
+  `codigojurisdiccion` VARCHAR(45) NULL,
   `idzonas` INT NOT NULL,
-  `fechanacimiento` DATE NULL DEFAULT NULL,
-  `fechabaneo` DATE NULL DEFAULT NULL,
-  `motivobaneo` VARCHAR(45) NULL DEFAULT NULL,
-  `borrado` TINYINT NULL DEFAULT '1',
+  `fechanacimiento` DATE NULL,
+  `fechabaneo` DATE NULL,
+  `motivobaneo` VARCHAR(45) NULL,
+  `borrado` TINYINT DEFAULT 1,
   `fotoperfil` MEDIUMBLOB NULL DEFAULT NULL,
-  `usuarios_idusuarios` INT NULL,
   PRIMARY KEY (`idusuarios`),
   INDEX `idroles_idx` (`idroles` ASC) VISIBLE,
   INDEX `iddistritos_idx` (`iddistritos` ASC) VISIBLE,
   INDEX `idadminzonales_idx` (`idadminzonales` ASC) VISIBLE,
   INDEX `fk_usuarios_zonas1_idx` (`idzonas` ASC) VISIBLE,
-  INDEX `fk_usuarios_usuarios1_idx` (`usuarios_idusuarios` ASC) VISIBLE,
-  CONSTRAINT `fk_usuarios_zonas1`
-    FOREIGN KEY (`idzonas`)
-    REFERENCES `dogless`.`zonas` (`idzonas`),
-  CONSTRAINT `idadminzonales`
-    FOREIGN KEY (`idadminzonales`)
-    REFERENCES `dogless`.`adminzonales` (`idadminzonaleses`),
-  CONSTRAINT `iddistritos`
-    FOREIGN KEY (`iddistritos`)
-    REFERENCES `dogless`.`distritos` (`iddistritos`),
   CONSTRAINT `idroles`
     FOREIGN KEY (`idroles`)
-    REFERENCES `dogless`.`roles` (`idroles`),
-  CONSTRAINT `fk_usuarios_usuarios1`
-    FOREIGN KEY (`usuarios_idusuarios`)
-    REFERENCES `dogless`.`usuarios` (`idusuarios`)
+    REFERENCES `dogless`.`roles` (`idroles`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `iddistritos`
+    FOREIGN KEY (`iddistritos`)
+    REFERENCES `dogless`.`distritos` (`iddistritos`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `idadminzonales`
+    FOREIGN KEY (`idadminzonales`)
+    REFERENCES `dogless`.`adminzonales` (`idadminzonaleses`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_usuarios_zonas1`
+    FOREIGN KEY (`idzonas`)
+    REFERENCES `dogless`.`zonas` (`idzonas`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB
-AUTO_INCREMENT = 59
-DEFAULT CHARACTER SET = utf8;
+ENGINE = InnoDB;
 
 -- -----------------------------------------------------
 -- Table `dogless`.`solicitudes`
@@ -243,7 +240,7 @@ ENGINE = InnoDB;
 INSERT INTO `dogless`.`usuarios` (`idusuarios`, `nombre`, `apellido`, `dni`, `email`, `pwd`, `telefono`, `direccion`, `idroles`, `iddistritos`, `idadminzonales`, `estado`, `ruc`, `codigoaduana`, `razonsocial`, `codigojurisdiccion`, `idzonas`, `fechanacimiento`)
 VALUES 
 (1, 'Christopher', 'Terrones', '87623344', 'cterrones@gmail.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654321', 'Av. Segura 123', 1, 1, 0, 'activo', NULL, NULL, NULL, NULL, 1, '2000-05-15'),
-(2, 'Pedro', 'Bustamante', '12834455', 'pbustamante@gmail.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654322', 'Av. Universitaria 377', 1, 1, 0, 'activo', NULL, NULL, NULL, NULL, 1, '2001-09-22');
+(2, 'Pedro', 'Bustamante', '12834455', 'agm@gmail.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654322', 'Av. Universitaria 377', 1, 1, 0, 'activo', NULL, NULL, NULL, NULL, 1, '2001-09-22');
 
 INSERT INTO `dogless`.`usuarios` (`idusuarios`, `nombre`, `apellido`, `dni`, `email`, `pwd`, `telefono`, `direccion`, `idroles`, `iddistritos`, `idadminzonales`, `estado`, `ruc`, `codigoaduana`, `razonsocial`, `codigojurisdiccion`, `idzonas`, `fechanacimiento`)
 VALUES
@@ -260,74 +257,74 @@ VALUES
 (9, 'Estefany', 'Fuentes', '78901234', 'efuentes@gmail.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654327', 'Calle Oeste 101', 2, 26, 7, 'activo', NULL, NULL, NULL, NULL, 4, '2002-10-22'),
 (10, 'Gabriela', 'Navarro', '89012345', 'gnavarro@gmail.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654328', 'Av. Oeste 102', 2, 27, 8, 'activo', NULL, NULL, NULL, NULL, 4, '2003-04-25');
 
-
 -- Agentes zonas Norte (Admin zonas 1Y 2)
-INSERT INTO `dogless`.`usuarios` (`idusuarios`, `nombre`, `apellido`, `dni`, `email`, `pwd`, `telefono`, `direccion`, `idroles`, `iddistritos`, `idadminzonales`, `estado`, `ruc`, `codigoaduana`, `razonsocial`, `codigojurisdiccion`, `idzonas`, `fechanacimiento`) 
+INSERT INTO `dogless`.`usuarios` (`idusuarios`, `nombre`, `apellido`, `dni`, `email`, `pwd`, `telefono`, `direccion`, `idroles`, `iddistritos`, `idadminzonales`, `estado`, `ruc`, `codigoaduana`, `razonsocial`, `codigojurisdiccion`, `idzonas`)
 VALUES
-(11, 'Nilo', 'Cori', '14565566', 'ncori@gmail.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654323', 'Calle Norte 123', 3, 1, 1, 'activo', '12345678901', 'ADU001', 'Agente Norte', 'JUR001', 1, '2003-03-15'),
-(12, 'Rosa', 'Soto', '44556677', 'rsoto@norte.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654324', 'Av. Norte 456', 3, 2, 1, 'activo', '10987654321', 'ADU002', 'Agente Norte', 'JUR002', 1, '2004-07-22'),
-(13, 'Luis', 'Gómez', '55667788', 'lgomez@norte.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654325', 'Calle Norte 789', 3, 3, 1, 'activo', '10987654322', 'ADU003', 'Agente Norte', 'JUR003', 1, '2002-11-30'),
-(14, 'María', 'López', '66778899', 'mlopez@norte.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654326', 'Av. Norte 012', 3, 4, 2, 'activo', '10987654323', 'ADU004', 'Agente Norte', 'JUR004', 1, '2005-01-18'),
-(15, 'Carlos', 'Rivas', '77889900', 'crivas@norte.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654327', 'Calle Norte 345', 3, 5, 2, 'activo', '10987654324', 'ADU005', 'Agente Norte', 'JUR005', 1, '2003-09-05'),
-(16, 'Patricia', 'Flores', '88990011', 'pflores@norte.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654328', 'Av. Norte 678', 3, 6, 2, 'activo', '10987654325', 'ADU006', 'Agente Norte', 'JUR006', 1, '2004-04-12');
+(11, 'Nilo', 'Cori', '14565566', 'ncori@gmail.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654323', 'Calle Norte 123', 3, 1, 1, 'activo', '12345678901', 'ADU001', 'Agente Norte', 'JUR001', 1),
+(12, 'Rosa', 'Soto', '44556677', 'rsoto@norte.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654324', 'Av. Norte 456', 3, 2, 1, 'activo', '10987654321', 'ADU002', 'Agente Norte', 'JUR002', 1),
+(13, 'Luis', 'Gómez', '55667788', 'lgomez@norte.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654325', 'Calle Norte 789', 3, 3, 1, 'activo', '10987654322', 'ADU003', 'Agente Norte', 'JUR003', 1),
+(14, 'María', 'López', '66778899', 'mlopez@norte.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654326', 'Av. Norte 012', 3, 4, 2, 'activo', '10987654323', 'ADU004', 'Agente Norte', 'JUR004', 1),
+(15, 'Carlos', 'Rivas', '77889900', 'crivas@norte.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654327', 'Calle Norte 345', 3, 5, 2, 'activo', '10987654324', 'ADU005', 'Agente Norte', 'JUR005', 1),
+(16, 'Patricia', 'Flores', '88990011', 'pflores@norte.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654328', 'Av. Norte 678', 3, 6, 2, 'activo', '10987654325', 'ADU006', 'Agente Norte', 'JUR006', 1);
 
 -- Agentes zonas Sur (Admin zonas 3 Y 4)
-INSERT INTO `dogless`.`usuarios` (`idusuarios`, `nombre`, `apellido`, `dni`, `email`, `pwd`, `telefono`, `direccion`, `idroles`, `iddistritos`, `idadminzonales`, `estado`, `ruc`, `codigoaduana`, `razonsocial`, `codigojurisdiccion`, `idzonas`, `fechanacimiento`) 
+INSERT INTO `dogless`.`usuarios` (`idusuarios`, `nombre`, `apellido`, `dni`, `email`, `pwd`, `telefono`, `direccion`, `idroles`, `iddistritos`, `idadminzonales`, `estado`, `ruc`, `codigoaduana`, `razonsocial`, `codigojurisdiccion`, `idzonas`)
 VALUES
-(17, 'Damian', 'López', '99001122', 'dlopez@sur.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654329', 'Calle Sur 123', 3, 9, 3, 'activo', '12345678902', 'ADU007', 'Agente Sur', 'JUR007', 2, '2002-06-25'),
-(18, 'Andrés', 'Pérez', '11002233', 'aperez@sur.com', 'agenteSpass456', '987654330', 'Av. Sur 456', 3, 10, 3, 'activo', '10987654326', 'ADU008', 'Agente Sur', 'JUR008', 2, '2005-02-14'),
-(19, 'Claudia', 'Vega', '22003344', 'cvega@sur.com', 'agenteSpass789', '987654331', 'Calle Sur 789', 3, 11, 3, 'activo', '10987654327', 'ADU009', 'Agente Sur', 'JUR009', 2, '2003-12-08'),
-(20, 'Roberto', 'Ramos', '33004455', 'rramos@sur.com', 'agenteSpass012', '987654332', 'Av. Sur 012', 3, 12, 4, 'activo', '10987654328', 'ADU010', 'Agente Sur', 'JUR010', 2, '2004-08-30'),
-(21, 'Sofía', 'Torres', '44005566', 'storres@sur.com', 'agenteSpass345', '987654333', 'Calle Sur 345', 3, 13, 4, 'activo', '10987654329', 'ADU011', 'Agente Sur', 'JUR011', 2, '2002-05-17'),
-(22, 'Pablo', 'Cruz', '55006677', 'pcruz@sur.com', 'agenteSpass678', '987654334', 'Av. Sur 678', 3, 14, 4, 'activo', '10987654330', 'ADU012', 'Agente Sur', 'JUR012', 2, '2003-10-21');
+(17, 'Damian', 'López', '99001122', 'dlopez@sur.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654329', 'Calle Sur 123', 3, 9, 3, 'activo', '12345678902', 'ADU007', 'Agente Sur', 'JUR007', 2),
+(18, 'Andrés', 'Pérez', '11002233', 'aperez@sur.com', 'agenteSpass456', '987654330', 'Av. Sur 456', 3, 10, 3, 'activo', '10987654326', 'ADU008', 'Agente Sur', 'JUR008', 2),
+(19, 'Claudia', 'Vega', '22003344', 'cvega@sur.com', 'agenteSpass789', '987654331', 'Calle Sur 789', 3, 11, 3, 'activo', '10987654327', 'ADU009', 'Agente Sur', 'JUR009', 2),
+(20, 'Roberto', 'Ramos', '33004455', 'rramos@sur.com', 'agenteSpass012', '987654332', 'Av. Sur 012', 3, 12, 4, 'activo', '10987654328', 'ADU010', 'Agente Sur', 'JUR010', 2),
+(21, 'Sofía', 'Torres', '44005566', 'storres@sur.com', 'agenteSpass345', '987654333', 'Calle Sur 345', 3, 13, 4, 'activo', '10987654329', 'ADU011', 'Agente Sur', 'JUR011', 2),
+(22, 'Pablo', 'Cruz', '55006677', 'pcruz@sur.com', 'agenteSpass678', '987654334', 'Av. Sur 678', 3, 14, 4, 'activo', '10987654330', 'ADU012', 'Agente Sur', 'JUR012', 2);
+
 
 -- Agentes zonas Este (Admin zonas 5 y 6)
-INSERT INTO `dogless`.`usuarios` (`idusuarios`, `nombre`, `apellido`, `dni`, `email`, `pwd`, `telefono`, `direccion`, `idroles`, `iddistritos`, `idadminzonales`, `estado`, `ruc`, `codigoaduana`, `razonsocial`, `codigojurisdiccion`, `idzonas`, `fechanacimiento`)
+INSERT INTO `dogless`.`usuarios` (`idusuarios`, `nombre`, `apellido`, `dni`, `email`, `pwd`, `telefono`, `direccion`, `idroles`, `iddistritos`, `idadminzonales`, `estado`, `ruc`, `codigoaduana`, `razonsocial`, `codigojurisdiccion`, `idzonas`)
 VALUES
-(23, 'James', 'Bond', '66007788', 'jbond@gmail.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654335', 'Calle Este 123', 3, 19, 5, 'activo', '12345678903', 'ADU013', 'Agente Este', 'JUR013', 3, '2002-06-15'),
-(24, 'Verónica', 'Díaz', '77008899', 'vdiaz@gmail.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654336', 'Av. Este 456', 3, 20, 5, 'activo', '10987654331', 'ADU014', 'Agente Este', 'JUR014', 3, '2003-09-22'),
-(25, 'Alberto', 'Cabrera', '88009900', 'acabrera@gmail.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654337', 'Calle Este 789', 3, 21, 5, 'activo', '10987654332', 'ADU015', 'Agente Este', 'JUR015', 3, '2004-03-10'),
-(26, 'Lucía', 'Ortiz', '99001122', 'lortiz@gmail.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654338', 'Av. Este 012', 3, 22, 6, 'activo', '10987654333', 'ADU016', 'Agente Este', 'JUR016', 3, '2002-11-30'),
-(27, 'Tomás', 'Fernández', '11002233', 'tfernandez@gmail.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654339', 'Calle Este 345', 3, 23, 6, 'activo', '10987654334', 'ADU017', 'Agente Este', 'JUR017', 3, '2005-04-25'),
-(28, 'Raquel', 'Paredes', '12003344', 'rparedes@gmail.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654340', 'Av. Este 678', 3, 24, 6, 'activo', '10987654335', 'ADU018', 'Agente Este', 'JUR018', 3, '2003-08-18');
+(23, 'James', 'Bond', '66007788', 'jbond@gmail.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654335', 'Calle Este 123', 3, 19, 5, 'activo', '12345678903', 'ADU013', 'Agente Este', 'JUR013', 3),
+(24, 'Verónica', 'Díaz', '77008899', 'vdiaz@gmail.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654336', 'Av. Este 456', 3, 20, 5, 'activo', '10987654331', 'ADU014', 'Agente Este', 'JUR014', 3),
+(25, 'Alberto', 'Cabrera', '88009900', 'acabrera@gmail.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654337', 'Calle Este 789', 3, 21, 5, 'activo', '10987654332', 'ADU015', 'Agente Este', 'JUR015', 3),
+(26, 'Lucía', 'Ortiz', '99001122', 'lortiz@gmail.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654338', 'Av. Este 012', 3, 22, 6, 'activo', '10987654333', 'ADU016', 'Agente Este', 'JUR016', 3),
+(27, 'Tomás', 'Fernández', '11002233', 'tfernandez@gmail.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654339', 'Calle Este 345', 3, 23, 6, 'activo', '10987654334', 'ADU017', 'Agente Este', 'JUR017', 3),
+(28, 'Raquel', 'Paredes', '12003344', 'rparedes@gmail.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654340', 'Av. Este 678', 3, 24, 6, 'activo', '10987654335', 'ADU018', 'Agente Este', 'JUR018', 3);
 
 -- Agentes zonas Oeste (Admin zonas 7  y 8)
-INSERT INTO `dogless`.`usuarios` (`idusuarios`, `nombre`, `apellido`, `dni`, `email`, `pwd`, `telefono`, `direccion`, `idroles`, `iddistritos`, `idadminzonales`, `estado`, `ruc`, `codigoaduana`, `razonsocial`, `codigojurisdiccion`, `idzonas`, `fechanacimiento`)
+INSERT INTO `dogless`.`usuarios` (`idusuarios`, `nombre`, `apellido`, `dni`, `email`, `pwd`, `telefono`, `direccion`, `idroles`, `iddistritos`, `idadminzonales`, `estado`, `ruc`, `codigoaduana`, `razonsocial`, `codigojurisdiccion`, `idzonas`)
 VALUES
-(29, 'Raúl', 'González', '13004455', 'rgonzalez@oeste.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654341', 'Calle Oeste 123', 3, 26, 7, 'activo', '12345678904', 'ADU019', 'Agente Oeste', 'JUR019', 4, '2004-07-12'),
-(30, 'Diana', 'Campos', '14005566', 'dcampos@oeste.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654342', 'Av. Oeste 456', 3, 27, 7, 'activo', '10987654336', 'ADU020', 'Agente Oeste', 'JUR020', 4, '2002-05-08'),
-(31, 'Emilio', 'Méndez', '15006677', 'emendez@oeste.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654343', 'Calle Oeste 789', 3, 28, 7, 'activo', '10987654337', 'ADU021', 'Agente Oeste', 'JUR021', 4, '2005-01-19'),
-(32, 'Paola', 'Moreno', '16007788', 'pmoreno@oeste.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654344', 'Av. Oeste 012', 3, 29, 8, 'activo', '10987654338', 'ADU022', 'Agente Oeste', 'JUR022', 4, '2003-12-03'),
-(33, 'Felipe', 'Santos', '17008899', 'fsantos@oeste.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654345', 'Calle Oeste 345', 3, 30, 8, 'activo', '10987654339', 'ADU023', 'Agente Oeste', 'JUR023', 4, '2004-10-28'),
-(34, 'Alejandra', 'Ramos', '18009900', 'aramos@oeste.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654346', 'Av. Oeste 678', 3, 31, 8, 'activo', '10987654340', 'ADU024', 'Agente Oeste', 'JUR024', 4, '2002-02-14');
+(29, 'Raúl', 'González', '13004455', 'rgonzalez@oeste.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654341', 'Calle Oeste 123', 3, 26, 7, 'activo', '12345678904', 'ADU019', 'Agente Oeste', 'JUR019', 4),
+(30, 'Diana', 'Campos', '14005566', 'dcampos@oeste.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654342', 'Av. Oeste 456', 3, 27, 7, 'activo', '10987654336', 'ADU020', 'Agente Oeste', 'JUR020', 4),
+(31, 'Emilio', 'Méndez', '15006677', 'emendez@oeste.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654343', 'Calle Oeste 789', 3, 28, 7, 'activo', '10987654337', 'ADU021', 'Agente Oeste', 'JUR021', 4),
+(32, 'Paola', 'Moreno', '16007788', 'pmoreno@oeste.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654344', 'Av. Oeste 012', 3, 29, 8, 'activo', '10987654338', 'ADU022', 'Agente Oeste', 'JUR022', 4),
+(33, 'Felipe', 'Santos', '17008899', 'fsantos@oeste.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654345', 'Calle Oeste 345', 3, 30, 8, 'activo', '10987654339', 'ADU023', 'Agente Oeste', 'JUR023', 4),
+(34, 'Alejandra', 'Ramos', '18009900', 'aramos@oeste.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654346', 'Av. Oeste 678', 3, 31, 8, 'activo', '10987654340', 'ADU024', 'Agente Oeste', 'JUR024', 4);
 
 -- Usuarios Finales 
-INSERT INTO dogless.usuarios (idusuarios, nombre, apellido, dni, email, pwd, telefono, direccion, idroles, iddistritos, idadminzonales, estado, ruc, codigoaduana, razonsocial, codigojurisdiccion, idzonas, fechanacimiento)
+INSERT INTO `dogless`.`usuarios` (`idusuarios`, `nombre`, `apellido`, `dni`, `email`, `pwd`, `telefono`, `direccion`, `idroles`, `iddistritos`, `idadminzonales`, `estado`, `ruc`, `codigoaduana`, `razonsocial`, `codigojurisdiccion`, `idzonas`)
 VALUES
-(35, 'Adrián', 'Tipo', '18874455', 'atipo@gmail.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654347', 'Calle Norte 1', 4, 1, NULL, 'activo', NULL, NULL, NULL, NULL, 1, '2003-05-15'),
-(36, 'Fabricio', 'Estrada', '19045566', 'festrada@gmail.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654348', 'Calle Norte 2', 4, 2, NULL, 'activo', NULL, NULL, NULL, NULL, 1, '2004-08-22'),
-(37, 'María', 'Santos', '44556677', 'maria.santos@norte.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654349', 'Av. Norte 3', 4, 3, NULL, 'activo', NULL, NULL, NULL, NULL, 1, '2002-03-10'),
-(38, 'Raúl', 'Pérez', '55667788', 'raul.perez@norte.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654350', 'Calle Norte 4', 4, 4, NULL, 'activo', NULL, NULL, NULL, NULL, 1, '2005-11-30'),
-(39, 'Carla', 'Mendoza', '66778899', 'carla.mendoza@norte.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654351', 'Av. Norte 5', 4, 5, NULL, 'activo', NULL, NULL, NULL, NULL, 1, '2003-12-05'),
-(40, 'Luis', 'García', '77889900', 'luis.garcia@norte.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654352', 'Calle Norte 6', 4, 6, NULL, 'baneado', NULL, NULL, NULL, NULL, 1, '2004-06-18'),
-(41, 'Sofía', 'Rodríguez', '88990011', 'sofia.rodriguez@sur.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654353', 'Calle Sur 1', 4, 9, NULL, 'activo', NULL, NULL, NULL, NULL, 2, '2002-09-25'),
-(42, 'Juan', 'Morales', '99001122', 'juan.morales@sur.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654354', 'Av. Sur 2', 4, 10, NULL, 'baneado', NULL, NULL, NULL, NULL, 2, '2005-04-14'),
-(43, 'Mónica', 'Ruiz', '11002233', 'monica.ruiz@sur.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654355', 'Calle Sur 3', 4, 11, NULL, 'activo', NULL, NULL, NULL, NULL, 2, '2003-07-29'),
-(44, 'Carlos', 'Martínez', '12003344', 'carlos.martinez@sur.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654356', 'Av. Sur 4', 4, 12, NULL, 'activo', NULL, NULL, NULL, NULL, 2, '2004-02-08'),
-(45, 'Julia', 'Castro', '13004455', 'julia.castro@sur.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654357', 'Calle Sur 5', 4, 13, NULL, 'inactivo', NULL, NULL, NULL, NULL, 2, '2002-10-17'),
-(46, 'Pablo', 'Fernández', '14005566', 'pablo.fernandez@sur.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654358', 'Av. Sur 6', 4, 14, NULL, 'activo', NULL, NULL, NULL, NULL, 2, '2005-01-23'),
-(47, 'Andrés', 'Silva', '15006677', 'andres.silva@este.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654359', 'Calle Este 1', 4, 19, NULL, 'activo', NULL, NULL, NULL, NULL, 3, '2003-08-12'),
-(48, 'Elena', 'Reyes', '16007788', 'elena.reyes@este.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654360', 'Av. Este 2', 4, 20, NULL, 'activo', NULL, NULL, NULL, NULL, 3, '2004-11-05'),
-(49, 'Hugo', 'Cano', '17008899', 'hugo.cano@este.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654361', 'Calle Este 3', 4, 21, NULL, 'activo', NULL, NULL, NULL, NULL, 3, '2002-04-28'),
-(50, 'Ana', 'Ramírez', '18009900', 'ana.ramirez@este.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654362', 'Av. Este 4', 4, 22, NULL, 'baneado', NULL, NULL, NULL, NULL, 3, '2005-09-16'),
-(51, 'David', 'Paredes', '19001111', 'david.paredes@este.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654363', 'Calle Este 5', 4, 23, NULL, 'inactivo', NULL, NULL, NULL, NULL, 3, '2003-06-21'),
-(52, 'Carolina', 'Gómez', '20002222', 'carolina.gomez@este.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654364', 'Av. Este 6', 4, 24, NULL, 'activo', NULL, NULL, NULL, NULL, 3, '2004-03-15'),
-(53, 'Carmen', 'López', '21003333', 'carmen.lopez@oeste.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654365', 'Calle Oeste 1', 4, 26, NULL, 'activo', NULL, NULL, NULL, NULL, 4, '2002-07-09'),
-(54, 'Sergio', 'Castillo', '22004444', 'sergio.castillo@oeste.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654366', 'Av. Oeste 2', 4, 27, NULL, 'activo', NULL, NULL, NULL, NULL, 4, '2005-12-30'),
-(55, 'Isabel', 'Mendoza', '23005555', 'isabel.mendoza@oeste.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654367', 'Calle Oeste 3', 4, 28, NULL, 'activo', NULL, NULL, NULL, NULL, 4, '2003-02-14'),
-(56, 'Jorge', 'Vega', '24006666', 'jorge.vega@oeste.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654368', 'Av. Oeste 4', 4, 29, NULL, 'inactivo', NULL, NULL, NULL, NULL, 4, '2004-10-03'),
-(57, 'Lucía', 'Carrillo', '25007777', 'lucia.carrillo@oeste.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654369', 'Calle Oeste 5', 4, 30, NULL, 'activo', NULL, NULL, NULL, NULL, 4, '2002-01-19'),
-(58, 'Emilio', 'Vargas', '26008888', 'emilio.vargas@oeste.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654370', 'Av. Oeste 6', 4, 31, NULL, 'activo', NULL, NULL, NULL, NULL, 4, '2005-05-27');
+(35, 'Adrián', 'Tipo', '18874455', 'atipo@gmail.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654347', 'Calle Norte 1', 4, 1, NULL, 'activo', NULL, NULL, NULL, NULL, 1),
+(36, 'Fabricio', 'Estrada', '19045566', 'festrada@gmail.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654348', 'Calle Norte 2', 4, 2, NULL, 'activo', NULL, NULL, NULL, NULL, 1),
+(37, 'María', 'Santos', '44556677', 'maria.santos@norte.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654349', 'Av. Norte 3', 4, 3, NULL, 'activo', NULL, NULL, NULL, NULL, 1),
+(38, 'Raúl', 'Pérez', '55667788', 'raul.perez@norte.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654350', 'Calle Norte 4', 4, 4, NULL, 'activo', NULL, NULL, NULL, NULL, 1),
+(39, 'Carla', 'Mendoza', '66778899', 'carla.mendoza@norte.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654351', 'Av. Norte 5', 4, 5, NULL, 'activo', NULL, NULL, NULL, NULL, 1),
+(40, 'Luis', 'García', '77889900', 'luis.garcia@norte.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654352', 'Calle Norte 6', 4, 6, NULL, 'baneado', NULL, NULL, NULL, NULL, 1),
+(41, 'Sofía', 'Rodríguez', '88990011', 'sofia.rodriguez@sur.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654353', 'Calle Sur 1', 4, 9, NULL, 'activo', NULL, NULL, NULL, NULL, 2),
+(42, 'Juan', 'Morales', '99001122', 'juan.morales@sur.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654354', 'Av. Sur 2', 4, 10, NULL, 'baneado', NULL, NULL, NULL, NULL, 2),
+(43, 'Mónica', 'Ruiz', '11002233', 'monica.ruiz@sur.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654355', 'Calle Sur 3', 4, 11, NULL, 'activo', NULL, NULL, NULL, NULL, 2),
+(44, 'Carlos', 'Martínez', '12003344', 'carlos.martinez@sur.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654356', 'Av. Sur 4', 4, 12, NULL, 'activo', NULL, NULL, NULL, NULL, 2),
+(45, 'Julia', 'Castro', '13004455', 'julia.castro@sur.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654357', 'Calle Sur 5', 4, 13, NULL, 'inactivo', NULL, NULL, NULL, NULL, 2),
+(46, 'Pablo', 'Fernández', '14005566', 'pablo.fernandez@sur.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654358', 'Av. Sur 6', 4, 14, NULL, 'activo', NULL, NULL, NULL, NULL, 2),
+(47, 'Andrés', 'Silva', '15006677', 'andres.silva@este.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654359', 'Calle Este 1', 4, 19, NULL, 'activo', NULL, NULL, NULL, NULL, 3),
+(48, 'Elena', 'Reyes', '16007788', 'elena.reyes@este.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654360', 'Av. Este 2', 4, 20, NULL, 'activo', NULL, NULL, NULL, NULL, 3),
+(49, 'Hugo', 'Cano', '17008899', 'hugo.cano@este.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654361', 'Calle Este 3', 4, 21, NULL, 'activo', NULL, NULL, NULL, NULL, 3),
+(50, 'Ana', 'Ramírez', '18009900', 'ana.ramirez@este.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654362', 'Av. Este 4', 4, 22, NULL, 'baneado', NULL, NULL, NULL, NULL, 3),
+(51, 'David', 'Paredes', '19001111', 'david.paredes@este.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654363', 'Calle Este 5', 4, 23, NULL, 'inactivo', NULL, NULL, NULL, NULL, 3),
+(52, 'Carolina', 'Gómez', '20002222', 'carolina.gomez@este.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654364', 'Av. Este 6', 4, 24, NULL, 'activo', NULL, NULL, NULL, NULL, 3),
+(53, 'Carmen', 'López', '21003333', 'carmen.lopez@oeste.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654365', 'Calle Oeste 1', 4, 26, NULL, 'activo', NULL, NULL, NULL, NULL, 4),
+(54, 'Sergio', 'Castillo', '22004444', 'sergio.castillo@oeste.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654366', 'Av. Oeste 2', 4, 27, NULL, 'activo', NULL, NULL, NULL, NULL, 4),
+(55, 'Isabel', 'Mendoza', '23005555', 'isabel.mendoza@oeste.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654367', 'Calle Oeste 3', 4, 28, NULL, 'activo', NULL, NULL, NULL, NULL, 4),
+(56, 'Jorge', 'Vega', '24006666', 'jorge.vega@oeste.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654368', 'Av. Oeste 4', 4, 29, NULL, 'inactivo', NULL, NULL, NULL, NULL, 4),
+(57, 'Lucía', 'Carrillo', '25007777', 'lucia.carrillo@oeste.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654369', 'Calle Oeste 5', 4, 30, NULL, 'activo', NULL, NULL, NULL, NULL, 4),
+(58, 'Emilio', 'Vargas', '26008888', 'emilio.vargas@oeste.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654370', 'Av. Oeste 6', 4, 31, NULL, 'activo', NULL, NULL, NULL, NULL, 4);
 -- -----------------------------------------------------
 -- Table `dogless`.`ordenes`
 -- -----------------------------------------------------
