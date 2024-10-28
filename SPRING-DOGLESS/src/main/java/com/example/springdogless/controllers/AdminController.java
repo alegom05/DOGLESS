@@ -701,10 +701,10 @@ public class AdminController {
     //Vista de productos
     @GetMapping("/productos")
     public String listaProductos(Model model, @RequestParam(required = false) String zona) {
-        model.addAttribute("listaProductosCompleto", productRepository.ProductosCompleto());
-        //model.addAttribute("listaProductos", productRepository.findByBorrado(1));
-        //return "/admin/productos";
-        return "admin/productogod";
+        //model.addAttribute("listaProductosCompleto", productRepository.ProductosCompleto());
+        model.addAttribute("listaProductos", productRepository.findByBorrado(1));
+        return "admin/productos";
+        //return "admin/productogod";
     }
 
 
@@ -826,6 +826,21 @@ public class AdminController {
         productRepository.save(producto);
 
         attr.addFlashAttribute("msg", "Producto creado exitosamente");
+        return "redirect:/admin/productos";
+    }
+    @PostMapping("/deleteproducto")
+    public String borrarProducto(@RequestParam("id") Integer id, RedirectAttributes attr) {
+        Optional<Producto> optProducto = productRepository.findById(id);
+
+        if (optProducto.isPresent()) {
+            Producto producto = optProducto.get();
+            producto.setBorrado(0);
+            productRepository.save(producto);
+            attr.addFlashAttribute("mensajeExito", "Producto borrado exitosamente");
+        } else {
+            attr.addFlashAttribute("error", "Admin no encontrado");
+        }
+
         return "redirect:/admin/productos";
     }
 
