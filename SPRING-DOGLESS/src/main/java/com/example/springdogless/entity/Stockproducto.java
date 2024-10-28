@@ -17,6 +17,8 @@ public class Stockproducto implements Serializable{
 
     private Integer cantidad;
 
+    private Integer borrado;
+
     public Integer getIdproductos() {
         return idproductos;
     }
@@ -39,5 +41,13 @@ public class Stockproducto implements Serializable{
 
     public void setCantidad(Integer cantidad) {
         this.cantidad = cantidad;
+    }
+
+    public Integer getBorrado() {
+        return borrado;
+    }
+
+    public void setBorrado(Integer borrado) {
+        this.borrado = borrado;
     }
 }

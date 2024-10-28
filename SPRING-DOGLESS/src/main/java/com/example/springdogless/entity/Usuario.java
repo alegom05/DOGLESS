@@ -47,6 +47,11 @@ public class Usuario implements Serializable {
     private String codigoaduana;
     private String razonsocial;
     private String codigojurisdiccion;
+
+    @ManyToOne
+    @JoinColumn(name = "usuarios_idusuarios")
+    private Usuario usuario;
+
     @ManyToOne
     @JoinColumn(name = "idzonas")
     private Zona zona;
