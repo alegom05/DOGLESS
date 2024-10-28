@@ -16,6 +16,8 @@ public interface ProveedorRepository extends JpaRepository<Proveedor, Integer>{
     /*
     public List<Proveedor> findByCategory(Proveedor proveedor);
     */
+    @Query(nativeQuery = true, value = "select * from proveedores where borrado = 1")
+    List<Proveedor> findByProveedoresActivos();
 
     Optional<Proveedor> findByNombre(String productName);
 
