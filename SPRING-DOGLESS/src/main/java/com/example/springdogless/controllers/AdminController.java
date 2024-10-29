@@ -44,7 +44,7 @@ public class AdminController {
     @Autowired
     StockRepository stockRepository;
     @Autowired
-    StockProductoRepository stockProductoRepository;
+    StockRepository stockProductoRepository;
     @Autowired
     ReposicionRepository reposicionesRepository;
     @Autowired
@@ -892,16 +892,16 @@ public class AdminController {
 
      */
     @PostMapping("/deleteproducto")
-    public String borrarProducto(@RequestParam("id") Integer id, @RequestParam("idZona") Integer idZona, RedirectAttributes attr) {
-        Optional<ProductoZona> optProductoZona = stockProductoRepository.findByStockproductoIdproductosAndStockproductoIdzonas(id, idZona);
+    public String borrarProducto(@RequestParam("id") Integer id, RedirectAttributes attr) {
+        Optional<Producto> optProducto = productRepository.findById(id);
 
-        if (optProductoZona.isPresent()) {
-            ProductoZona productoZona = optProductoZona.get();
-            productoZona.setBorrado(0);  // Cambia el campo borrado a 0 para hacer el borrado lógico
-            stockProductoRepository.save(productoZona);
-            attr.addFlashAttribute("mensajeExito", "Producto borrado exitosamente para la zona seleccionada.");
+        if (optProducto.isPresent()) {
+            Producto producto = optProducto.get();
+            producto.setBorrado(0);
+            productRepository.save(producto);
+            attr.addFlashAttribute("mensajeExito", "Producto borrado exitosamente");
         } else {
-            attr.addFlashAttribute("error", "Producto no encontrado en la zona seleccionada.");
+            attr.addFlashAttribute("error", "Admin no encontrado");
         }
 
         return "redirect:/admin/productos";
