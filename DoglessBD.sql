@@ -797,10 +797,22 @@ INSERT INTO `dogless`.`reportes` (`nombre`, `tipo`, `fecha`, `descripcion`, `idu
 -- Table `dogless`.`tarjetas`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `dogless`.`tarjetas` (
-  `idtarjetas` INT NOT NULL,
+  `idtarjetas` INT NOT NULL AUTO_INCREMENT,
   `numero` VARCHAR(45) NULL,
   `tipo` VARCHAR(45) NULL,
   `cvv` VARCHAR(45) NULL,
-  `fecha` DATETIME NULL,
+  `fecha` DATE NULL,
   PRIMARY KEY (`idtarjetas`))
 ENGINE = InnoDB;
+
+INSERT INTO `dogless`.`tarjetas` (`numero`, `tipo`, `cvv`, `fecha`) VALUES
+('4532856974125896', 'BCP', '453', '2024-08-15'),
+('4785123698547412', 'BBVA', '789', '2025-03-22'),
+('5632147896321458', 'Interbank', '321', '2024-12-01'),
+('4589632587413698', 'Scotiabank', '147', '2026-01-30'),
+('4752136987456321', 'BCP', '963', '2025-07-14'),
+('5478963214589632', 'BBVA', '258', '2024-09-28'),
+('4589632514789632', 'Interbank', '741', '2025-11-05'),
+('5632147896325874', 'Scotiabank', '852', '2026-04-17'),
+('4785236987451236', 'BCP', '369', '2024-06-23'),
+('5478963215478963', 'BBVA', '159', '2025-05-09');
