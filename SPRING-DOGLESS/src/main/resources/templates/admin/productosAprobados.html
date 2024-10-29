@@ -309,13 +309,14 @@
           searchInput.addEventListener('input', filtrar);
           zonaFiltro.addEventListener('change', filtrar);
           estadoFiltro.addEventListener('change', filtrar);
-        
+
           function limpiarFiltro() {
             searchInput.value = '';
             zonaFiltro.selectedIndex = 0;
             estadoFiltro.selectedIndex = 0;
-            filtrar();
+            filtrar(); // Aplicar el filtro vacío para mostrar todas las filas
           }
+
         </script>
 
 
