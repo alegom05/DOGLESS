@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.sql.Date;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Controller
@@ -50,7 +52,17 @@ public class ZonalController {
     public String elDashboardEstaTristeYAzul(Model model, @RequestParam(required = false) String zona) {
         /*model.addAttribute("listaProveedores", proveedorRepository.findAll());*/
         model.addAttribute("listaProductos", productRepository.findByBorrado(1));
+        /*
+        List<Map<String, Object>> productosTop10 = productRepository.obtenerTop10Productos();
+        model.addAttribute("productosTop10", productosTop10);
+        */
 
+        // Contar usuarios por estado
+        int activos = productRepository.contarPorEstado("activo");
+        int inactivos = productRepository.contarPorEstado("inactivo");
+
+        model.addAttribute("activos", activos);
+        model.addAttribute("inactivos", inactivos);
         return "zonal/dashboard";
     }
 

@@ -227,7 +227,12 @@
             <script src="assets/js/setting-demo.js"></script>
             <script src="assets/js/demo.js"></script>
 
-
+            <script th:inline="javascript">
+                /*<![CDATA[*/
+                var activos = [[${activos}]];
+                var inactivos = [[${inactivos}]];
+                /*]]>*/
+            </script>
             <script>
                 //Seccion de dashboards:
                 /*1.Top 10 producto mas importados
@@ -250,6 +255,7 @@
                         borderWidth: 1
                     }]
                 };
+
                 var verticalChartOptions = {
                     scales: {
                         y: {
@@ -263,48 +269,48 @@
                     options: verticalChartOptions
                 });
 
+                var activos = /*[[${activos}]]*/ 0;
+                var inactivos = /*[[${inactivos}]]*/ 0;
 
-                //Distribucion de usuarios registrados:
-                var pieChart = document.getElementById("pieChart").getContext("2d");
-                var myPieChart = new Chart(pieChart, {
-                    type: "pie",
-                    data: {
-                        datasets: [
-                            {
-                                data: [55, 45],
-                                backgroundColor: ["#1d7af3", "#f3545d", "#fdaf4b"],
-                                borderWidth: 0,
-                            },
-                        ],
-                        labels: ["Activos", "Inactivos"],
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        legend: {
-                            position: "bottom",
-                            labels: {
-                                fontColor: "rgb(154, 154, 154)",
-                                fontSize: 11,
-                                usePointStyle: true,
-                                padding: 20,
-                            },
+                // Distribución de usuarios registrados:
+                document.addEventListener('DOMContentLoaded', function() {
+                    var pieChart = document.getElementById("pieChart").getContext("2d");
+                    var myPieChart = new Chart(pieChart, {
+                        type: "pie",
+                        data: {
+                            datasets: [{
+                                data: [activos, inactivos],
+                                backgroundColor: ["#1d7af3", "#f3545d"],
+                                borderWidth: 0
+                            }],
+                            labels: ["Activos", "Inactivos"]
                         },
-                        pieceLabel: {
-                            render: "percentage",
-                            fontColor: "white",
-                            fontSize: 14,
-                        },
-                        tooltips: false,
-                        layout: {
-                            padding: {
-                                left: 20,
-                                right: 20,
-                                top: 20,
-                                bottom: 20,
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                legend: {
+                                    position: "bottom",
+                                    labels: {
+                                        color: "rgb(154, 154, 154)",
+                                        font: {
+                                            size: 11
+                                        },
+                                        usePointStyle: true,
+                                        padding: 20
+                                    }
+                                }
                             },
-                        },
-                    },
+                            layout: {
+                                padding: {
+                                    left: 20,
+                                    right: 20,
+                                    top: 20,
+                                    bottom: 20
+                                }
+                            }
+                        }
+                    });
                 });
 
 

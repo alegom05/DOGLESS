@@ -11,6 +11,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Repository
@@ -526,5 +527,18 @@ public interface ProductRepository extends JpaRepository<Producto, Integer>{
             nativeQuery = true)
     ProductoDTO findProductoByIdByZonaCompleto(Integer idProducto, Integer idZona);
 
+    //Querys del Dashboard
+
+    /*
+    @Query("SELECT new map(p.nombre as nombre, COUNT(p) as cantidad) " +
+            "FROM productos p " +
+            "GROUP BY p.nombre " +
+            "ORDER BY cantidad DESC " +
+            "LIMIT 10")
+    List<Map<String, Object>> obtenerTop10Productos();
+    */
+
+    @Query("SELECT COUNT(u) FROM usuarios u WHERE u.estado = :estado")
+    int contarPorEstado(String estado);
 }
 
