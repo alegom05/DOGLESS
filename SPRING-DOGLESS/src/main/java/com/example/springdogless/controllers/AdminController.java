@@ -2,6 +2,7 @@ package com.example.springdogless.controllers;
 
 import com.example.springdogless.Repository.*;
 
+import com.example.springdogless.dao.UsuarioDao;
 import com.example.springdogless.entity.*;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +50,8 @@ public class AdminController {
     ReposicionRepository reposicionesRepository;
     @Autowired
     private ProductRepository productRepository;
+    @Autowired
+    UsuarioDao usuarioDao;
 
 
     @GetMapping("/perfil_superadmin")
@@ -64,7 +67,7 @@ public class AdminController {
 
         return "admin/paginaprincipal";
     }
-    /*seccion de usuarios */
+    /* seccion de usuarios */
     @GetMapping("/adminzonal")
     public String listaAdminZonal(Model model, @RequestParam(required = false) String zona) {
         model.addAttribute("listaZonales", usuarioRepository.findByRol(2));
