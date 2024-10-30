@@ -2,7 +2,7 @@ package com.example.springdogless.controllers;
 
 import com.example.springdogless.Repository.*;
 
-import com.example.springdogless.dao.UsuarioDao;
+//import com.example.springdogless.dao.UsuarioDao;
 import com.example.springdogless.entity.*;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,13 +45,13 @@ public class AdminController {
     @Autowired
     StockRepository stockRepository;
     @Autowired
-    StockRepository stockProductoRepository;
+    StockProductoRepository stockProductoRepository;
     @Autowired
     ReposicionRepository reposicionesRepository;
     @Autowired
     private ProductRepository productRepository;
-    @Autowired
-    UsuarioDao usuarioDao;
+    //@Autowired
+    //UsuarioDao usuarioDao;
 
 
     @GetMapping("/perfil_superadmin")
@@ -895,16 +895,16 @@ public class AdminController {
 
      */
     @PostMapping("/deleteproducto")
-    public String borrarProducto(@RequestParam("id") Integer id, RedirectAttributes attr) {
-        Optional<Producto> optProducto = productRepository.findById(id);
+    public String borrarProducto(@RequestParam("id") Integer id, @RequestParam("idZona") Integer idZona, RedirectAttributes attr) {
+        Optional<ProductoZona> optProductoZona = stockProductoRepository.findByStockproductoIdproductosAndStockproductoIdzonas(id, idZona);
 
-        if (optProducto.isPresent()) {
-            Producto producto = optProducto.get();
-            producto.setBorrado(0);
-            productRepository.save(producto);
-            attr.addFlashAttribute("mensajeExito", "Producto borrado exitosamente");
+        if (optProductoZona.isPresent()) {
+            ProductoZona productoZona = optProductoZona.get();
+            productoZona.setBorrado(0);  // Cambia el campo borrado a 0 para hacer el borrado lógico
+            stockProductoRepository.save(productoZona);
+            attr.addFlashAttribute("mensajeExito", "Producto borrado exitosamente para la zona seleccionada.");
         } else {
-            attr.addFlashAttribute("error", "Admin no encontrado");
+            attr.addFlashAttribute("error", "Producto no encontrado en la zona seleccionada.");
         }
 
         return "redirect:/admin/productos";
