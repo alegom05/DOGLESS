@@ -181,19 +181,38 @@
     <script src="/assets/js/demo.js"></script>
     
 
-    <script>
-      // Multiple Line Chart - Órdenes Procesadas vs Órdenes Canceladas por Mes
+    <script th:inline="javascript">
+      // Suponiendo que 'ordenesProcesadasYCancelada' es una lista de OrdenEstadoDTO
+      var ordersData = /*[[${ordenesProcesadasYCancelada}]]*/ [];
+      var labels = [];
+      var processedOrdersData = [];
+      var canceledOrdersData = [];
+
+      // Procesar los datos para el gráfico
+      ordersData.forEach(function(order) {
+        labels.push(order.mes); // Agrega el mes a las etiquetas
+
+        // Aquí asumimos que cada order tiene cantidad_procesadas y cantidad_canceladas
+        processedOrdersData.push(order.cantidad_procesadas || 0); // Agregar cantidad procesadas
+        canceledOrdersData.push(order.cantidad_canceladas || 0); // Agregar cantidad canceladas
+      });
+
+      console.log("Labels: ", labels);
+      console.log("Órdenes Procesadas: ", processedOrdersData);
+      console.log("Órdenes Canceladas: ", canceledOrdersData);
+
+      // Crear el gráfico
       var multipleLineChartOrders = document.getElementById("multipleLineChartOrders").getContext("2d");
       var myMultipleLineChartOrders = new Chart(multipleLineChartOrders, {
         type: "line",
         data: {
-          labels: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
+          labels: labels,
           datasets: [
             {
               label: "Órdenes Procesadas",
               borderColor: "#1d7af3",
               pointBackgroundColor: "#1d7af3",
-              data: [100, 120, 150, 170, 200, 220, 250, 280, 300, 320, 350, 400],
+              data: processedOrdersData,
               fill: false,
               borderWidth: 2
             },
@@ -201,7 +220,7 @@
               label: "Órdenes Canceladas",
               borderColor: "#f3545d",
               pointBackgroundColor: "#f3545d",
-              data: [10, 20, 15, 30, 25, 35, 20, 40, 30, 50, 40, 60],
+              data: canceledOrdersData,
               fill: false,
               borderWidth: 2
             }
@@ -225,15 +244,17 @@
         }
       });
 
-
+      // Obtener los datos desde el modelo
+      var enProceso = [[${enProceso}]]; // Recibe el valor desde el modelo
+      var sinProcesar = [[${sinProcesar}]]; // Recibe el valor desde el modelo
       // Doughnut Chart - Órdenes en Proceso vs Sin Procesar (Naranja y Verde)
       var doughnutChartOrders = document.getElementById("doughnutChartOrders").getContext("2d");
       var myDoughnutChartOrders = new Chart(doughnutChartOrders, {
         type: "doughnut",
         data: {
-          labels: ["Órdenes en Proceso", "Órdenes Sin Procesar"],
+          labels: ["Órdenes En Proceso", "Órdenes Sin Procesar"],
           datasets: [{
-            data: [200, 100],
+            data: [enProceso, sinProcesar], // Datos desde el modelo
             backgroundColor: ["#FFA500", "#32CD32"], // Naranja y Verde
           }]
         },
@@ -246,14 +267,24 @@
         }
       });
 
+      // Llenar las listas desde el modelo
+      var Creado = [[${Creado}]]; // Recibe el valor desde el modelo}
+      var enValidacion = [[${enValidacion}]]; // Recibe el valor desde el modelo
+      var enProcesoEstado = [[${enProcesoEstado}]]; // Recibe el valor desde el modelo}
+      var enRuta = [[${enRuta}]]; // Recibe el valor desde el modelo}
+      var enAduanas = [[${enAduanas}]]; // Recibe el valor desde el modelo}
+      var ArriboAlPais = [[${ArriboAlPais}]]; // Recibe el valor desde el modelo}
+      var Recibido = [[${Recibido}]]; // Recibe el valor desde el modelo}
+      var Cancelado = [[${Cancelado}]]; // Recibe el valor desde el modelo}
+
       // Pie Chart - Cantidad de Órdenes por Estado de Proceso (leyenda a la izquierda)
       var pieChartOrdersState = document.getElementById("pieChartOrdersState").getContext("2d");
       var myPieChartOrdersState = new Chart(pieChartOrdersState, {
         type: "pie",
         data: {
-          labels: ["Estado 1", "Estado 2", "Estado 3", "Estado 4", "Estado 5", "Estado 6", "Estado 7"],
+          labels: ["Creado", "En Validación", "En Proceso", "En Ruta", "En Aduanas", "Arribo al País", "Recibido", "Cancelado"],
           datasets: [{
-            data: [10, 15, 25, 30, 20, 50, 40],
+            data: [Creado, enValidacion, enProcesoEstado, enRuta, enAduanas, ArriboAlPais, Recibido, Cancelado],
             backgroundColor: ["#1d7af3", "#f3545d", "#fdaf4b", "#59d05d", "#716aca", "#ff6384", "#36a2eb"]
           }]
         },

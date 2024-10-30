@@ -58,8 +58,8 @@ public class ZonalController {
         */
 
         // Contar usuarios por estado
-        int activos = productRepository.contarPorEstado("activo");
-        int inactivos = productRepository.contarPorEstado("inactivo");
+        Integer activos = productRepository.contarPorEstado("activo");
+        Integer inactivos = productRepository.contarPorEstado("inactivo");
 
         model.addAttribute("activos", activos);
         model.addAttribute("inactivos", inactivos);
