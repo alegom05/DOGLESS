@@ -1,5 +1,6 @@
 package com.example.springdogless.Repository;
 
+import com.example.springdogless.DTO.OrdenEstadoDTO;
 import com.example.springdogless.entity.Orden;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -9,6 +10,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Repository
@@ -46,7 +48,24 @@ public interface OrdenRepository extends JpaRepository<Orden, Integer> {
 
 
 
+    @Query(value = "SELECT " +
+            "CASE " +
+            "WHEN o.estado IN ('En Proceso', 'Arribo al País', 'En Aduanas', 'En Ruta', 'Recibido') THEN 'Procesando' " +
+            "WHEN o.estado IN ('Creado', 'En Validación') THEN 'No procesadas' " +
+            "END AS categoria, " +
+            "COUNT(*) AS cantidad " +
+            "FROM Ordenes o " +
+            "WHERE o.estado IN ('En Proceso', 'Arribo al País', 'En Aduanas', 'En Ruta', 'Recibido', 'Creado', 'En Validación') " +
+            "GROUP BY categoria", nativeQuery = true)
+    List<OrdenEstadoDTO> contarOrdenesPorProceso();
 
+
+
+
+    @Query(value = "SELECT o.estado AS estado, COUNT(o.estado) AS cantidad " +
+            "FROM ordenes o " +
+            "GROUP BY o.estado", nativeQuery = true)
+    List<OrdenEstadoDTO> contarOrdenesPorEstado();
 
 
 

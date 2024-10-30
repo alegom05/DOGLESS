@@ -1,5 +1,6 @@
 package com.example.springdogless.controllers;
 
+import com.example.springdogless.DTO.OrdenEstadoDTO;
 import com.example.springdogless.Repository.*;
 
 import com.example.springdogless.entity.*;
@@ -9,10 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
+import java.util.*;
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.List;
 
 @Controller
 @RequestMapping({"agente", "agente/"})
@@ -65,7 +64,81 @@ public class AgenteController {
     }
 
     @GetMapping({"dashboard"})
-    public String ElDashboard007(Model model) {
+    public String ElDashboard007(Model model){
+        List<OrdenEstadoDTO> ordenCategorias = ordenRepository.contarOrdenesPorProceso();
+        List<OrdenEstadoDTO> cantidadPorEstado = ordenRepository.contarOrdenesPorEstado();
+
+        int enProceso = 0;
+        int sinProcesar = 0;
+
+        // Contar las cantidades
+        for (OrdenEstadoDTO orden : ordenCategorias) {
+            if ("Procesando".equals(orden.getcategoria())) {
+                enProceso += orden.getcantidad();
+            } else if ("No procesadas".equals(orden.getcategoria())) {
+                sinProcesar += orden.getcantidad();
+            }
+        }
+
+        // Inicializar las variables para cada estado
+        int Creado = 0;
+        int enValidacion = 0;
+        int enRuta = 0;
+        int enAduanas = 0;
+        int ArriboAlPais = 0;
+        int Recibido = 0;
+        int Cancelado = 0;
+        int enProcesoEstado = 0;
+
+        // Llenar las listas desde cantidadPorEstado
+        for (OrdenEstadoDTO estadistica : cantidadPorEstado) {
+            String estado_cache = estadistica.getestado();
+
+            // Usar un switch para asignar cantidades
+            switch (estado_cache) {
+                case "En Proceso":
+                    enProcesoEstado += estadistica.getcantidad();
+                    break; // Termina el caso actual
+                case "Creado":
+                    Creado += estadistica.getcantidad();
+                    break;
+                case "En Validación":
+                    enValidacion += estadistica.getcantidad();
+                    break;
+                case "En Ruta":
+                    enRuta += estadistica.getcantidad();
+                    break;
+                case "En Aduanas":
+                    enAduanas += estadistica.getcantidad();
+                    break;
+                case "Arribo al País":
+                    ArriboAlPais += estadistica.getcantidad();
+                    break;
+                case "Recibido":
+                    Recibido += estadistica.getcantidad();
+                    break;
+                case "Cancelado":
+                    Cancelado += estadistica.getcantidad();
+                    break;
+                default:
+                    // Manejar casos no esperados si es necesario
+                    break;
+            }
+        }
+
+        model.addAttribute("enProceso", enProceso);
+        model.addAttribute("sinProcesar", sinProcesar);
+        model.addAttribute("enProcesoEstado", enProcesoEstado);
+        model.addAttribute("Creado", Creado);
+        model.addAttribute("enValidacion", enValidacion);
+        model.addAttribute("enProceso", enProceso);
+        model.addAttribute("enRuta", enRuta);
+        model.addAttribute("enAduanas", enAduanas);
+        model.addAttribute("ArriboAlPais", ArriboAlPais);
+        model.addAttribute("Recibido", Recibido);
+        model.addAttribute("Cancelado", Cancelado);
+
+
         return "/agente/dashboard";
     }
     @GetMapping("chat")

@@ -225,15 +225,17 @@
         }
       });
 
-
+      // Obtener los datos desde el modelo
+      var enProceso = [[${enProceso}]]; // Recibe el valor desde el modelo
+      var sinProcesar = [[${sinProcesar}]]; // Recibe el valor desde el modelo
       // Doughnut Chart - Órdenes en Proceso vs Sin Procesar (Naranja y Verde)
       var doughnutChartOrders = document.getElementById("doughnutChartOrders").getContext("2d");
       var myDoughnutChartOrders = new Chart(doughnutChartOrders, {
         type: "doughnut",
         data: {
-          labels: ["Órdenes en Proceso", "Órdenes Sin Procesar"],
+          labels: ["Órdenes En Proceso", "Órdenes Sin Procesar"],
           datasets: [{
-            data: [200, 100],
+            data: [enProceso, sinProcesar], // Datos desde el modelo
             backgroundColor: ["#FFA500", "#32CD32"], // Naranja y Verde
           }]
         },
@@ -246,14 +248,24 @@
         }
       });
 
+      // Llenar las listas desde el modelo
+      var Creado = [[${Creado}]]; // Recibe el valor desde el modelo}
+      var enValidacion = [[${enValidacion}]]; // Recibe el valor desde el modelo
+      var enProcesoEstado = [[${enProcesoEstado}]]; // Recibe el valor desde el modelo}
+      var enRuta = [[${enRuta}]]; // Recibe el valor desde el modelo}
+      var enAduanas = [[${enAduanas}]]; // Recibe el valor desde el modelo}
+      var ArriboAlPais = [[${ArriboAlPais}]]; // Recibe el valor desde el modelo}
+      var Recibido = [[${Recibido}]]; // Recibe el valor desde el modelo}
+      var Cancelado = [[${Cancelado}]]; // Recibe el valor desde el modelo}
+
       // Pie Chart - Cantidad de Órdenes por Estado de Proceso (leyenda a la izquierda)
       var pieChartOrdersState = document.getElementById("pieChartOrdersState").getContext("2d");
       var myPieChartOrdersState = new Chart(pieChartOrdersState, {
         type: "pie",
         data: {
-          labels: ["Estado 1", "Estado 2", "Estado 3", "Estado 4", "Estado 5", "Estado 6", "Estado 7"],
+          labels: ["Creado", "En Validación", "En Proceso", "En Ruta", "En Aduanas", "Arribo al País", "Recibido", "Cancelado"],
           datasets: [{
-            data: [10, 15, 25, 30, 20, 50, 40],
+            data: [Creado, enValidacion, enProcesoEstado, enRuta, enAduanas, ArriboAlPais, Recibido, Cancelado],
             backgroundColor: ["#1d7af3", "#f3545d", "#fdaf4b", "#59d05d", "#716aca", "#ff6384", "#36a2eb"]
           }]
         },

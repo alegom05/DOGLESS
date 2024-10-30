@@ -2,7 +2,7 @@ package com.example.springdogless.controllers;
 
 import com.example.springdogless.Repository.*;
 
-import com.example.springdogless.dao.UsuarioDao;
+//import com.example.springdogless.dao.UsuarioDao;
 import com.example.springdogless.entity.*;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,8 +50,8 @@ public class AdminController {
     ReposicionRepository reposicionesRepository;
     @Autowired
     private ProductRepository productRepository;
-    @Autowired
-    UsuarioDao usuarioDao;
+    //@Autowired
+    //UsuarioDao usuarioDao;
 
 
     @GetMapping("/perfil_superadmin")
