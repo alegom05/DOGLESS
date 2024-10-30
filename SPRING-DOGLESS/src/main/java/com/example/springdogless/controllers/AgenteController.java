@@ -67,6 +67,7 @@ public class AgenteController {
     public String ElDashboard007(Model model){
         List<OrdenEstadoDTO> ordenCategorias = ordenRepository.contarOrdenesPorProceso();
         List<OrdenEstadoDTO> cantidadPorEstado = ordenRepository.contarOrdenesPorEstado();
+        List<OrdenEstadoDTO> ordenesProcesadasYCancelada = ordenRepository.contarOrdenesProcesadasYCanceladasPorMes();
 
         int enProceso = 0;
         int sinProcesar = 0;
@@ -126,6 +127,7 @@ public class AgenteController {
             }
         }
 
+        model.addAttribute("ordenesProcesadasYCancelada", ordenesProcesadasYCancelada);
         model.addAttribute("enProceso", enProceso);
         model.addAttribute("sinProcesar", sinProcesar);
         model.addAttribute("enProcesoEstado", enProcesoEstado);

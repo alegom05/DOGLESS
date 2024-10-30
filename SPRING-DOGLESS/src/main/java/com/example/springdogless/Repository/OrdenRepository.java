@@ -69,4 +69,42 @@ public interface OrdenRepository extends JpaRepository<Orden, Integer> {
 
 
 
+
+    @Query(value =
+            "WITH Meses AS ( " +
+                    "    SELECT 1 AS mes_numero, 'Enero' AS mes " +
+                    "    UNION ALL SELECT 2, 'Febrero' " +
+                    "    UNION ALL SELECT 3, 'Marzo' " +
+                    "    UNION ALL SELECT 4, 'Abril' " +
+                    "    UNION ALL SELECT 5, 'Mayo' " +
+                    "    UNION ALL SELECT 6, 'Junio' " +
+                    "    UNION ALL SELECT 7, 'Julio' " +
+                    "    UNION ALL SELECT 8, 'Agosto' " +
+                    "    UNION ALL SELECT 9, 'Septiembre' " +
+                    "    UNION ALL SELECT 10, 'Octubre' " +
+                    "    UNION ALL SELECT 11, 'Noviembre' " +
+                    "    UNION ALL SELECT 12, 'Diciembre' " +
+                    ") " +
+                    "SELECT " +
+                    "    m.mes, " +
+                    "    COALESCE(SUM(CASE WHEN o.categoria = 'Órdenes Procesadas' THEN o.cantidad END), 0) AS cantidad_procesadas, " +
+                    "    COALESCE(SUM(CASE WHEN o.categoria = 'Órdenes Canceladas' THEN o.cantidad END), 0) AS cantidad_canceladas " +
+                    "FROM Meses m " +
+                    "LEFT JOIN ( " +
+                    "    SELECT " +
+                    "        CASE " +
+                    "            WHEN o.estado = 'Recibido' THEN 'Órdenes Procesadas' " +
+                    "            WHEN o.estado = 'Cancelado' THEN 'Órdenes Canceladas' " +
+                    "        END AS categoria, " +
+                    "        MONTH(o.fecha) AS mes_numero, " +
+                    "        COUNT(*) AS cantidad " +
+                    "    FROM Ordenes o " +
+                    "    WHERE o.estado IN ('Recibido', 'Cancelado') " +
+                    "    GROUP BY categoria, mes_numero " +
+                    ") o ON m.mes_numero = o.mes_numero " +
+                    "GROUP BY m.mes_numero, m.mes " +
+                    "ORDER BY m.mes_numero;", nativeQuery = true)
+    List<OrdenEstadoDTO> contarOrdenesProcesadasYCanceladasPorMes();
+
+
 }
