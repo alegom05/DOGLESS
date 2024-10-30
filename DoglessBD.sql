@@ -732,12 +732,17 @@ VALUES
 -- Solicitudes
 INSERT INTO `dogless`.`solicitudes` (`idsolicitudes`, `veredicto`, `idusuarios`, `comentario`) 
 VALUES 
-('5', '1', '16', 'Gracias por tu interés. Hemos recibido tu solicitud y está en proceso.'),
-('6', '1', '15', 'Enhorabuena, tu solicitud ha sido aceptada. Nos pondremos en contacto contigo.'),
-('7', '0', '14', 'No has sido seleccionado en esta ocasión. Te invitamos a postular nuevamente en el futuro.'),
-('8', '1', '13', 'Tu solicitud ha sido aprobada condicionalmente, faltan documentos.'),
-('9', '1', '11', 'Estamos evaluando tu perfil. Te informaremos en los próximos días.'),
-('10', '1', '12', 'Has sido aceptado. Pronto recibirás más información.');
+(1, NULL, '40', NULL),
+(2, NULL, '41', NULL),
+(3, NULL, '42', NULL),
+(4, NULL, '43', NULL),
+(5, NULL, '44', NULL),
+(6, '1', '16', 'Gracias por tu interés. Hemos recibido tu solicitud y está en proceso.'),
+(7, '1', '15', 'Enhorabuena, tu solicitud ha sido aceptada. Nos pondremos en contacto contigo.'),
+(8, '0', '14', 'No has sido seleccionado en esta ocasión. Te invitamos a postular nuevamente en el futuro.'),
+(9, '1', '13', 'Tu solicitud ha sido aprobada condicionalmente, faltan documentos.'),
+(10, '1', '11', 'Estamos evaluando tu perfil. Te informaremos en los próximos días.'),
+(11, '1', '12', 'Has sido aceptado. Pronto recibirás más información.');
 
 -- -----------------------------------------------------
 -- Table `dogless`.`reclamos`
