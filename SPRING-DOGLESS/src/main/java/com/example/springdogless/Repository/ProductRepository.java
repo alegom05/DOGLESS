@@ -541,5 +541,25 @@ public interface ProductRepository extends JpaRepository<Producto, Integer>{
 
     @Query("SELECT COUNT(u) FROM usuarios u WHERE u.estado = :estado")
     int contarPorEstado(String estado);
+
+    // de agentes D:
+
+    @Query(value = "SELECT " +
+            "    p.idproductos, " +
+            "    p.nombre AS nombre, " +
+            "    SUM(d.cantidad) AS total_vendido " +
+            "FROM " +
+            "    detallesorden d " +
+            "JOIN " +
+            "    productos p ON d.idproducto = p.idproductos " +
+            "WHERE " +
+            "    d.borrado = 1 " +
+            "GROUP BY " +
+            "    p.idproductos " +
+            "ORDER BY " +
+            "    total_vendido DESC " +
+            "LIMIT 10", nativeQuery = true)
+    List<ProductoDTO> contarTotalVendidosPorProducto();
+
 }
 

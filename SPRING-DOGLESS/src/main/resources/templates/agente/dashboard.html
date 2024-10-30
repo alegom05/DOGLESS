@@ -320,18 +320,26 @@
 
 
       // Bar Chart - Productos Más Vendidos (Colores Diferentes por Barra)
+      var productosMasVendidos = /*[[${productosMasVendidos}]]*/ [];
+      var labels = productosMasVendidos.map(function(producto) {
+        return producto.nombre; // Obtener el nombre del producto
+      });
+      var data = productosMasVendidos.map(function(producto) {
+        return producto.total_vendido; // Obtener la cantidad vendida
+      });
+
       var barChartTopProducts = document.getElementById("barChartTopProducts").getContext("2d");
       var myBarChartTopProducts = new Chart(barChartTopProducts, {
         type: "bar",
         data: {
-          labels: ["Laptop", "Smartphone", "Tablet", "Teclado", "Mouse", "Monitor", "Impresora", "Auriculares", "Cámara", "Smartwatch"],
+          labels: labels, // Usar las etiquetas obtenidas
           datasets: [{
-            label: "cantidad de órdenes",
+            label: "Cantidad de Órdenes",
             backgroundColor: [
-              "#FF6384", "#36A2EB", "#FFCE56", "#4BC0C0", "#9966FF", 
+              "#FF6384", "#36A2EB", "#FFCE56", "#4BC0C0", "#9966FF",
               "#FF9F40", "#FFCD56", "#4D5360", "#C9CBCF", "#76D7C4"
             ], // Colores diferentes para cada barra
-            data: [350, 400, 300, 150, 200, 250, 180, 170, 220, 190]
+            data: data // Usar los datos obtenidos
           }]
         },
         options: {

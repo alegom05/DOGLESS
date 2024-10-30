@@ -23,4 +23,5 @@ public interface ProductoDTO {
 
     Integer getPromedioSatisfaccion();
 
+    Integer getTotal_vendido();
 }

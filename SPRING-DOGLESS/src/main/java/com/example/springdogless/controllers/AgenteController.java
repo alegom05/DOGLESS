@@ -1,6 +1,7 @@
 package com.example.springdogless.controllers;
 
 import com.example.springdogless.DTO.OrdenEstadoDTO;
+import com.example.springdogless.DTO.ProductoDTO;
 import com.example.springdogless.Repository.*;
 
 import com.example.springdogless.entity.*;
@@ -127,6 +128,9 @@ public class AgenteController {
             }
         }
 
+        List<ProductoDTO> productosMasVendidos = productRepository.contarTotalVendidosPorProducto();
+
+        model.addAttribute("productosMasVendidos", productosMasVendidos);
         model.addAttribute("ordenesProcesadasYCancelada", ordenesProcesadasYCancelada);
         model.addAttribute("enProceso", enProceso);
         model.addAttribute("sinProcesar", sinProcesar);

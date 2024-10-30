@@ -46,8 +46,6 @@ public interface OrdenRepository extends JpaRepository<Orden, Integer> {
     @Query(value="SELECT * FROM ordenes WHERE idusuarios = :id AND estado = 'Creado'",nativeQuery = true)
     Orden findOrdenEstadoCreado(Integer id);
 
-
-
     @Query(value = "SELECT " +
             "CASE " +
             "WHEN o.estado IN ('En Proceso', 'Arribo al País', 'En Aduanas', 'En Ruta', 'Recibido') THEN 'Procesando' " +
@@ -59,16 +57,10 @@ public interface OrdenRepository extends JpaRepository<Orden, Integer> {
             "GROUP BY categoria", nativeQuery = true)
     List<OrdenEstadoDTO> contarOrdenesPorProceso();
 
-
-
-
     @Query(value = "SELECT o.estado AS estado, COUNT(o.estado) AS cantidad " +
             "FROM ordenes o " +
             "GROUP BY o.estado", nativeQuery = true)
     List<OrdenEstadoDTO> contarOrdenesPorEstado();
-
-
-
 
     @Query(value =
             "WITH Meses AS ( " +
@@ -105,6 +97,5 @@ public interface OrdenRepository extends JpaRepository<Orden, Integer> {
                     "GROUP BY m.mes_numero, m.mes " +
                     "ORDER BY m.mes_numero;", nativeQuery = true)
     List<OrdenEstadoDTO> contarOrdenesProcesadasYCanceladasPorMes();
-
 
 }
