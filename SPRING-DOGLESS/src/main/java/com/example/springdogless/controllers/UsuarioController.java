@@ -53,6 +53,8 @@ public class UsuarioController {
     ResenaRepository resenaRepository;
     @Autowired
     PreguntasProductoRepository preguntasProductoRepository;
+    @Autowired
+    ReclamoRepository reclamoRepository;
 
     @GetMapping("")
     public String listarOrdenesUsuario(HttpSession session, Model model) {
@@ -179,29 +181,35 @@ public class UsuarioController {
     @GetMapping("/libro")
     public String nuevaReclamacion(Model model, @ModelAttribute("usuario") Usuario usuario, @ModelAttribute("reclamo") Reclamo reclamo) {
         model.addAttribute("listaUsuarios", usuarioRepository.findAll());
-        model.addAttribute("listaDistritos", distritoRepository.findAll());
-
         return "usuario/libro";
     }
 
     @PostMapping("/guardarReclamo")
-    public String guardarReclamo(@RequestParam("idusuario") Integer idusuario, Usuario usuario, Reclamo reclamo, RedirectAttributes attr) {
+    public String guardarReclamo(@RequestParam("idusuario") Integer idusuario,
+                                 @RequestParam("descripcion") String descripcion,
+                                 RedirectAttributes attr) {
+        // Intentar obtener el usuario por ID
         Optional<Usuario> optionalUsuario = usuarioRepository.findById(idusuario);
 
         if (optionalUsuario.isPresent()) {
-            usuario = optionalUsuario.get();
-            reclamo.setDescripcion(reclamo.getDescripcion());
-            //usuario.setProveedor(usuario);  // Asignar el proveedor al producto
+            // Si el usuario existe, crear y guardar el reclamo
+            Reclamo reclamo = new Reclamo();
+            Usuario usuario = optionalUsuario.get();
+            reclamo.setUsuario(usuario);
+            reclamo.setDescripcion(descripcion);
+
+            reclamoRepository.save(reclamo);
+
+            // Agregar mensaje de éxito
+            attr.addFlashAttribute("msg", "Reclamo creado exitosamente");
         } else {
-            attr.addFlashAttribute("error", "Usuario no encontrado");
-            return "redirect:/usuario/libro";
-
+            // Manejar el caso de usuario no encontrado
+            attr.addFlashAttribute("error", "Usuario no encontrado. No se pudo crear el reclamo.");
         }
-        usuarioRepository.save(usuario);
 
-        attr.addFlashAttribute("msg", "Reclamo creado exitosamente");
         return "redirect:/usuario/libro";
     }
+
 
     /*
     @GetMapping("/tienda")

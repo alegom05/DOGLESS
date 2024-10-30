@@ -10,13 +10,13 @@
     />
     <link
       rel="icon"
-      href="../assets/img/kaiadmin/favicon.ico"
+      href="/assets/img/kaiadmin/favicon.ico"
       type="image/x-icon"
     />
-    <link href="../assets/css/style-SuperAdmin.css" rel="stylesheet">
+    <link href="/assets/css/style-SuperAdmin.css" rel="stylesheet">
 
     <!-- Fonts and icons -->
-    <script src="../assets/js/plugin/webfont/webfont.min.js"></script>
+    <script src="/assets/js/plugin/webfont/webfont.min.js"></script>
     <script>
       WebFont.load({
         google: { families: ["Public Sans:300,400,500,600,700"] },
@@ -27,7 +27,7 @@
             "Font Awesome 5 Brands",
             "simple-line-icons",
           ],
-          urls: ["../assets/css/fonts.min.css"],
+          urls: ["/assets/css/fonts.min.css"],
         },
         active: function () {
           sessionStorage.fonts = true;
@@ -36,12 +36,12 @@
     </script>
 
     <!-- CSS Files -->
-    <link rel="stylesheet" href="../assets/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="../assets/css/plugins.min.css" />
-    <link rel="stylesheet" href="../assets/css/kaiadmin.min.css" />
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/assets/css/plugins.min.css" />
+    <link rel="stylesheet" href="/assets/css/kaiadmin.min.css" />
 
     <!-- CSS Just for demo purpose, don't include it in your project -->
-    <link rel="stylesheet" href="../assets/css/demo.css" />
+    <link rel="stylesheet" href="/assets/css/demo.css" />
   </head>
   <body>
     <div class="wrapper">
@@ -54,6 +54,13 @@
 
         <!-- Texto o contenido central -->
         <div class="container">
+          <!-- Verifica si existe algún mensaje de flash y muéstralo -->
+          <div th:if="${msg != null}" class="alert alert-success" role="alert">
+            <p th:text="${msg}"></p>
+          </div>
+          <div th:if="${error != null}" class="alert alert-danger" role="alert">
+            <p th:text="${error}"></p>
+          </div>
           <div class="page-inner">
             <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
               <div>
@@ -63,179 +70,70 @@
             <div class="row">
               <div class="col-md-12">
                 <div class="card">
-
                   <div class="card-body">
                     <form class="needs-validation" style="width: 100%; margin-left: 0%; margin-top: 3%;" th:action="@{/usuario/guardarReclamo}" method="POST" novalidate>
+                      <input  name="idusuario"  th:value="${session.usuario.id}" type="hidden"/>
                       <div class="container">
-                        <div class="row">
 
-                          <div class="row">
+                        <div class="row">
                             <div class="col">
                               <div class="mb-3">
                                 <label for="nombre" class="form-label">Nombre: (*)</label>
-                                <input type="text" class="form-control" name="nombre" id="nombre" maxlength="50" minlength="1" placeholder="" title="ingrese su número de teléfono" required>
-                                <div class="invalid-feedback">Por favor ingresar nombre(s).</div>
+                                <input type="text" class="form-control" name="nombre" id="nombre" th:value="${session.usuario.nombre}" readonly>
                               </div>
                             </div>
 
                             <div class="col">
                               <div class="mb-3">
                                 <label for="apellido" class="form-label">Apellido: (*)</label>
-                                <input type="apellido" class="form-control" name="apellido" id="apellido" maxlength="50" minlength="1" placeholder="" title="ingrese su número de teléfono" required>
-                                <div class="invalid-feedback">Por favor ingresar apellido(s).</div>
+                                <input type="text" class="form-control" name="apellido" id="apellido" th:value="${session.usuario.apellido}" readonly>
                               </div>
                             </div>
                           </div>
-
-                          <div class="row">
+                        <div class="row">
                             <div class="col">
                               <div class="mb-3">
                                 <label for="dni" class="form-label">DNI: (*)</label>
-                                <input type="text" class="form-control" name="dni" id="dni" maxlength="9" minlength="9" placeholder="" title="ingrese su número de teléfono" required>
-                                <div class="invalid-feedback">Ingrese un número de DNI válido.</div>
+                                <input type="text" class="form-control" name="dni" id="dni" th:value="${session.usuario.dni}" readonly>
                               </div>
                             </div>
 
                             <div class="col">
                               <div class="mb-3">
                                 <label for="email" class="form-label">Correo: (*)</label>
-                                <input type="text" class="form-control" name="email" id="email" maxlength="50" minlength="1" placeholder="" title="ingrese su número de teléfono" required>
-                                <div class="invalid-feedback">Ingrese un nombre de correo válido.</div>
+                                <input type="text" class="form-control" name="email" id="email" th:value="${session.usuario.email}" readonly>
                               </div>
                             </div>
                           </div>
-
-                          <div class="row">
+                        <div class="row">
                             <div class="col">
                               <div class="mb-3">
                                 <label for="direccion" class="form-label">Dirección: (*)</label>
-                                <input type="text" class="form-control" name="reclamo.descripcion" id="direccion" maxlength="50" minlength="1" placeholder="" title="ingrese su número de teléfono" required>
-                                <div class="invalid-feedback">Ingrese una dirección válida.</div>
+                                <input type="text" class="form-control" name="direccion" id="direccion" th:value="${session.usuario.direccion}" readonly>
                               </div>
                             </div>
 
                             <div class="col">
                               <div class="mb-3">
-                                <label for="iddistritos" class="form-label">Distrito: (*)</label>
-                                <select name="usuario.distrito.iddistritos" id="iddistritos" class="form-select" required>
-                                  <option value="" disabled selected>Escoja una opción</option>
-                                  <option th:each="distrito : ${listaDistritos}"
-                                          th:text="${distrito.distrito}"
-                                          th:value="${distrito.iddistritos}">Elegir un distrito</option>
-                                </select>
-                                <div class="invalid-feedback">Por favor selecciona un distrito.</div>
+                                <label for="distritos" class="form-label">Distrito: (*)</label>
+                                <input type="text" class="form-control" name="distritos" id="distritos" th:value="${session.usuario.distrito.distrito}" readonly>
                               </div>
                             </div>
 
                           </div>
-
-                          <div class="row">
+                        <div class="row">
                             <div class="col">
                               <div class="mb-3">
                                 <label for="descripcion" class="form-label">Descripción: (*)</label>
                                 <textarea name="descripcion" id="descripcion" class="form-control" rows="10" placeholder="" required></textarea>
-                                <div class="invalid-feedback">Por favor ingresar nombre(s).</div>
+                                <div class="invalid-feedback">Por favor ingrese su reclamo.</div>
                               </div>
                             </div>
                           </div>
-
-
-                        <!--
-                        <div class="row">
-                          <div class="col">
-                            <div class="mb-3">
-                              <label for="correo" class="form-label">Correo: (*)</label>
-                              <input type="email" name="correo" id="correo" placeholder="Ej: ejemplo@gmail.com" class="form-control" aria-describedby="emailHelp" required>
-                              <div class="invalid-feedback">Por favor ingresar un correo válido.</div>
-                            </div>
-                          </div>
-                          <div class="col">
-                            <div class="mb-3">
-                              <label for="codigoaduana" class="form-label">Codigo aduana: (*)</label>
-                              <input type="text" name="codigoaduana" id="codigoaduana" placeholder="ADU006" class="form-control" required>
-                              <div class="invalid-feedback">Por favor ingresar el código de despachador de aduana.</div>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div class="row">
-                          <div class="col">
-                            <div class="mb-3">
-                              <label for="ruc" class="form-label">RUC: (*)</label>
-                              <input type="tel" name="ruc" id="ruc" placeholder="10987654325" class="form-control" required>
-                              <div class="invalid-feedback">Por favor ingresar RUC.</div>
-                            </div>
-                          </div>
-                          <div class="col">
-                            <div class="mb-3">
-                              <label for="razonsocial" class="form-label">Razón social: (*)</label>
-                              <input type="text" name="razonsocial" id="razonsocial" placeholder="Agente Norte" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ]+(\s[a-zA-ZáéíóúÁÉÍÓÚñÑ]+)?" class="form-control" required>
-                              <div class="invalid-feedback">Por favor ingresar razón social.</div>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div class="row">
-                          <div class="col">
-                            <div class="mb-3">
-                              <label for="codigojurisdiccion" class="form-label">Código de Jurisdicción: (*)</label>
-                              <input type="tel" name="codigojurisdiccion" id="codigojurisdiccion" placeholder="10987654325" class="form-control" required>
-                              <div class="invalid-feedback">Por favor ingresar código de jurisdicción.</div>
-                            </div>
-                          </div>
-                          <div class="col">
-                            <div class="mb-3">
-                              <label for="direccion" class="form-label">Dirección: (*)</label>
-                              <input type="text" name="direccion" id="direccion" placeholder="Calle Norte 123" pattern="[a-zA-Z0-9#áéíóúÁÉÍÓÚñÑ.]+\s[a-zA-Z0-9#ZáéíóúÁÉÍÓÚñÑ.]+(\s[a-zA-Z0-9#ZáéíóúÁÉÍÓÚñÑ.]+)?+(\s[a-zA-Z0-9#ZáéíóúÁÉÍÓÚñÑ.]+)?" class="form-control" required>
-                              <div class="invalid-feedback">Por favor ingresar dirección.</div>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div class="row">
-                          <div class="col">
-                            <div class="mb-3">
-                              <label for="idzonas" class="form-label">Zona: (*)</label>
-                              <select name="idzonas" id="idzonas" class="form-select" required>
-                                <option value="" disabled selected>Escoja una opción</option>
-                                <option th:each="zonas: ${listaZonas}"
-                                        th:text="${zonas.nombre}" th:value="${zonas.idzonas}">Elegir una zona</option>
-                              </select>
-                              <div class="invalid-feedback">Por favor seleccionar una zona.</div>
-                            </div>
-                          </div>
-                          <div class="col">
-                            <div class="mb-3">
-                              <label for="iddistritos" class="form-label">Distrito: (*)</label>
-                              <select name="iddistritos" id="iddistritos" class="form-select" required>
-                                <option value="" disabled selected>Escoja una opción</option>
-                                <option th:each="distrito: ${listaDistritos}"
-                                        th:text="${distrito.distrito}" th:value="${distrito.iddistritos}">Elegir un distrito</option>
-                              </select>
-                              <div class="invalid-feedback">Por favor selecciona un distrito.</div>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div class="row">
-                          <div class="col">
-                            <div class="mb-3">
-                            </div>
-                          </div>
-                          <div class="col">
-                            <div class="mb-3">
-                              <h6 class="obligatory-fields">(*) Campos obligatorios</h6>
-                            </div>
-                          </div>
-                        </div>
-                        -->
-
                         <!-- Botón para guardar cambios -->
-                          <div style="text-align: center;">
-                            <button type="submit" class="btn btn-primary" style="width: 280px;">
-                              Enviar
-                            </button>
-                          </div>
+                        <div style="text-align: center;">
+                          <button type="submit" class="btn btn-primary" style="width: 280px;">Enviar</button>
+                        </div>
 
                       </div>
                     </form>
@@ -246,36 +144,25 @@
             </div>
           </div>
         </div>
-        <!-- Fin del contenido central -->
-          
-          <!--/ Advanced footer -->
-        </div>
-
-
-
-
-      <!-- Pie de página -->
-      <div th:replace="~{usuario/fragments/piedepagina :: fragment}"></div>
-
-        
+        <!-- Pie de página -->
+        <div th:replace="~{usuario/fragments/piedepagina :: fragment}"></div>
       </div>
 
-      
-      
+
     </div>
     <!--   Core JS Files   -->
-    <script src="../assets/js/core/jquery-3.7.1.min.js"></script>
-    <script src="../assets/js/core/popper.min.js"></script>
-    <script src="../assets/js/core/bootstrap.min.js"></script>
+    <script src="/assets/js/core/jquery-3.7.1.min.js"></script>
+    <script src="/assets/js/core/popper.min.js"></script>
+    <script src="/assets/js/core/bootstrap.min.js"></script>
 
     <!-- jQuery Scrollbar -->
-    <script src="../assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+    <script src="/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
     <!-- Datatables -->
-    <script src="../assets/js/plugin/datatables/datatables.min.js"></script>
+    <script src="/assets/js/plugin/datatables/datatables.min.js"></script>
     <!-- Kaiadmin JS -->
-    <script src="../assets/js/kaiadmin.min.js"></script>
+    <script src="/assets/js/kaiadmin.min.js"></script>
     <!-- Kaiadmin DEMO methods, don't include it in your project! -->
-    <script src="../assets/js/setting-demo2.js"></script>
+    <script src="/assets/js/setting-demo2.js"></script>
     <script>
       $(document).ready(function () {
         var forms = document.querySelectorAll('.needs-validation');
