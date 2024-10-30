@@ -14,6 +14,16 @@
             type="image/x-icon"
     />
     <link th:href="@{/assets/css/style-SuperAdmin.css}" rel="stylesheet">
+    <style>
+      .wrapper {
+        overflow-x: hidden; /* Previene el desbordamiento horizontal */
+      }
+
+      .main-panel {
+        width: 100%; /* Asegúrate de que ocupa el 100% del espacio disponible */
+        margin: 0; /* Elimina márgenes que puedan causar desbordamiento */
+      }
+    </style>
 
 
     <!-- Fonts and icons -->
@@ -48,7 +58,6 @@
     <div th:replace="~{agente/fragments/barralateralagente :: body(activePage='dashboard')}"></div>
     <!-- Fin barra lateral -->
 
-
     <div class="main-panel">
       <!-- Reemplaza navbar con el fragmento de Thymeleaf -->
       <div th:replace="~{agente/fragments/navbarheaderagente :: fragment}"></div>
@@ -60,8 +69,7 @@
           <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
             <div>
               <h3 class="fw-bold mb-3">Dashboard</h3>
-              <h6 class="op-7 mb-2">Aquí verás los estados de las órdenes , cifras de productos más vendidos por mes, etc.</h6>
-
+              <h6 class="op-7 mb-2">Aquí verás los estados de las órdenes, cifras de productos más vendidos por mes, etc.</h6>
             </div>
           </div>
           <div th:if="${mensajeExito}" id="mensajeExito" class="alert alert-success fade-out" role="alert">
@@ -69,78 +77,72 @@
           </div>
 
           <div class="row justify-content-center">
-
-          <div class="col-lg-6 col-md-8">
-            <div class="card">
-              <div class="card-header">
-                <div class="card-title text-center">Cantidad de Órdenes por Estado de Proceso</div>
-              </div>
-                  <div class="card-body">
-                    <div class="chart-container">
-                      <canvas id="doughnutChartOrders"></canvas>
-                    </div>
+            <div class="col-lg-6 col-md-8">
+              <div class="card">
+                <div class="card-header">
+                  <div class="card-title text-center">Cantidad de Órdenes por Estado de Proceso</div>
+                </div>
+                <div class="card-body">
+                  <div class="chart-container">
+                    <canvas id="doughnutChartOrders"></canvas>
                   </div>
                 </div>
               </div>
-
-              <!-- Gráfico pie: Cantidad de Órdenes por Estado de Proceso -->
-              <div class="col-lg-6 col-md-8">
-                <div class="card">
-                  <div class="card-header">
-                    <div class="card-title text-center">Cantidad de Órdenes por Estado de Proceso</div>
-                  </div>
-                  <div class="card-body">
-                    <div class="chart-container">
-                      <canvas id="pieChartOrdersState"></canvas>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              
             </div>
-        
-            <div class="row justify-content-center">
-              
-              <!-- Gráfico de Multiple Line Chart: Órdenes procesadas vs Órdenes canceladas -->
-              <div class="col-lg-6 col-md-8">
-                <div class="card">
-                  <div class="card-header">
-                    <div class="card-title text-center">Órdenes Procesadas vs Órdenes Canceladas por Mes</div>
-                  </div>
-                  <div class="card-body">
-                    <div class="chart-container">
-                      <canvas id="multipleLineChartOrders"></canvas>
-                    </div>
-                  </div>
-                </div>
-              </div>
-        
-              <!-- Gráfico de barras: Productos Más Vendidos -->
-              <div class="col-lg-6 col-md-8">
-                <div class="card">
-                  <div class="card-header">
-                    <div class="card-title text-center">Productos Más Vendidos</div>
-                  </div>
-                  <div class="card-body">
-                    <div class="chart-container">
-                      <canvas id="barChartTopProducts"></canvas>
-                    </div>
-                  </div>
-                </div>
-              </div>
 
+            <!-- Gráfico pie: Cantidad de Órdenes por Estado de Proceso -->
+            <div class="col-lg-6 col-md-8">
+              <div class="card">
+                <div class="card-header">
+                  <div class="card-title text-center">Cantidad de Órdenes por Estado de Proceso</div>
+                </div>
+                <div class="card-body">
+                  <div class="chart-container">
+                    <canvas id="pieChartOrdersState"></canvas>
+                  </div>
+                </div>
+              </div>
             </div>
-        
-        
+          </div>
 
-        <!-- Fin del contenido central -->
+          <div class="row justify-content-center">
+            <!-- Gráfico de Multiple Line Chart: Órdenes procesadas vs Órdenes canceladas -->
+            <div class="col-lg-6 col-md-8">
+              <div class="card">
+                <div class="card-header">
+                  <div class="card-title text-center">Órdenes Procesadas vs Órdenes Canceladas por Mes</div>
+                </div>
+                <div class="card-body">
+                  <div class="chart-container">
+                    <canvas id="multipleLineChartOrders"></canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
 
-        <!-- Pie de página -->
-        <div th:replace="~{agente/fragments/piedepagina :: fragment}"></div>
-      </div>
-    </div>
+            <!-- Gráfico de barras: Productos Más Vendidos -->
+            <div class="col-lg-6 col-md-8">
+              <div class="card">
+                <div class="card-header">
+                  <div class="card-title text-center">Productos Más Vendidos</div>
+                </div>
+                <div class="card-body">
+                  <div class="chart-container">
+                    <canvas id="barChartTopProducts"></canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
 
+          <!-- Fin del contenido central -->
+
+          <!-- Pie de página -->
+          <div th:replace="~{agente/fragments/piedepagina :: fragment}"></div>
+        </div> <!-- Cierre de page-inner -->
+      </div> <!-- Cierre de container -->
+    </div> <!-- Cierre de main-panel -->
+  </div> <!-- Cierre de wrapper -->
 
 
     <!--   Core JS Files   -->
