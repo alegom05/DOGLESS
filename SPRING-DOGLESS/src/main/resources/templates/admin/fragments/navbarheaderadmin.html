@@ -3,6 +3,7 @@
   <head>
   </head>
   <body>
+    <link th:href="@{/assets/css/style-SuperAdmin.css}" rel="stylesheet">
     <div th:fragment="fragment">
     <div class="main-header">
       <div class="main-header-logo">
@@ -36,6 +37,16 @@
           <nav class="navbar navbar-header-left navbar-expand-lg navbar-form nav-search p-0 d-none d-lg-flex"></nav>
 
           <ul class="navbar-nav topbar-nav ms-md-auto align-items-center">
+            <!-- Condicional para mostrar solo si está en modo impersonación -->
+            <li th:if="${session.originalUser != null}">
+              <a href="#" onclick="document.getElementById('revertForm').submit();" class="revert-button">
+                Modo espía activado
+                <i class="fa fa-user-secret"></i> <!-- Ícono de espía -->
+              </a>
+              <form id="revertForm" th:action="@{/admin/revertImpersonation}" method="post" style="display:none;">
+                <input type="submit">
+              </form>
+            </li>
             <li class="nav-item topbar-user dropdown hidden-caret">
               <a class="dropdown-toggle profile-pic" data-bs-toggle="dropdown" href="#" aria-expanded="false">
                 <div class="avatar-sm">
@@ -47,7 +58,7 @@
                 </div>
                 <span class="profile-username">
               <span class="fw-bold" th:text="${session.usuario.nombre}+' '+${session.usuario.apellido}"></span>
-              <div class="fw-bold">Superadmin</div>
+              <div class="fw-bold" th:text="${session.usuario.rol.rol}"></div>
             </span>
               </a>
               <ul class="dropdown-menu dropdown-user animated fadeIn">

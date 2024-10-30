@@ -12,6 +12,7 @@
       href="assets/img/kaiadmin/favicon.ico"
       type="image/x-icon"
     />
+      <link th:href="@{/assets/css/style-SuperAdmin.css}" rel="stylesheet">
 
     <!-- Fonts and icons -->
     <script src="assets/js/plugin/webfont/webfont.min.js"></script>
@@ -62,6 +63,9 @@
                       <h6 class="op-7 mb-2">Como Administrador zonal podrás gestionar de manera eficiente las importaciones, agentes, productos y usuarios de tu zona asignada y analizar cada dato estadístico desde tu panel de control. Si necesitas ayuda, no dudes en contactar a nuestro equipo de soporte técnico. ¡Que tengas un excelente día de trabajo!</h6>
                   </div>
               </div>
+              <div th:if="${mensajeExito}" id="mensajeExito" class="alert alert-success fade-out" role="alert">
+                  <p th:text="${mensajeExito}"></p>
+              </div>
               
               <!-- Imagen centrada inmediatamente después del texto -->
               <div class="text-center mt-3">
@@ -87,6 +91,20 @@
     <script src="assets/js/kaiadmin.min.js"></script>
     <!-- Kaiadmin DEMO methods, don't include it in your project! -->
     <script src="assets/js/setting-demo2.js"></script>
+            <script>
+                // Espera 3 segundos (3000 milisegundos) antes de empezar a ocultar el mensaje
+                setTimeout(function() {
+                    var alert = document.getElementById('mensajeExito');
+                    if (alert) {
+                        alert.classList.add('hidden'); // Añadir la clase que reduce la opacidad gradualmente
+
+                        // Después de 1 segundo (duración de la transición), ocultar completamente
+                        setTimeout(function() {
+                            alert.classList.add('remove'); // Ocultar completamente el mensaje y el espacio
+                        }, 1000); // 1000 ms coincide con la duración de la transición de opacidad
+                    }
+                }, 3000); // Cambia 3000 por el tiempo en milisegundos que desees (3 segundos en este caso)
+            </script>
 
   </body>
 </html>

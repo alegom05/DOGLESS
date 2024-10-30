@@ -492,23 +492,30 @@ public class AdminController {
         if (optUsuario.isPresent()) {
             Usuario usuario = optUsuario.get();
 
-            // Guardar temporalmente el usuario actual (SuperAdmin) en la sesión para revertir
-            session.setAttribute("originalUserId", session.getAttribute("userId"));
+            // Guardar temporalmente el usuario actual (SuperAdmin) completo en la sesión
+            session.setAttribute("originalUser", session.getAttribute("usuario"));
 
             // Cambiar el usuario actual en la sesión por el usuario seleccionado
+            session.setAttribute("usuario", usuario);  // Aquí guardamos el usuario completo
             session.setAttribute("userId", usuario.getId());
             session.setAttribute("userRole", usuario.getRol());
 
             attr.addFlashAttribute("mensajeExito", "Ahora estás logueado como " + usuario.getNombre());
 
-            // Redirigir al usuario a su vista correspondiente
-            return "redirect:/zonal";  // Cambia la ruta según la vista inicial del usuario
+            // Redirigir al usuario a su vista correspondiente según su rol
+            switch(usuario.getRol().getId()) {
+                case 2: return "redirect:/zonal";
+                case 3: return "redirect:/agente";
+                case 4: return "redirect:/usuario";
+                default: return "redirect:/admin";
+            }
         } else {
             attr.addFlashAttribute("error", "Usuario no encontrado");
             return "redirect:/admin/adminzonal";
         }
     }
-    @GetMapping("/admin/stopImpersonation")
+
+    /*@GetMapping("stopImpersonation")
     public String stopImpersonation(HttpSession session, RedirectAttributes attr) {
         Integer originalUserId = (Integer) session.getAttribute("originalUserId");
 
@@ -521,6 +528,14 @@ public class AdminController {
         } else {
             attr.addFlashAttribute("error", "No estás en modo de suplantación.");
         }
+
+        return "redirect:/admin";
+    }*/
+    @PostMapping("/revertImpersonation")
+    public String revertImpersonation(HttpSession session) {
+        // Restaurar al usuario original (SuperAdmin) desde la sesión
+        session.setAttribute("usuario", session.getAttribute("originalUser"));
+        session.removeAttribute("originalUser");
 
         return "redirect:/admin";
     }

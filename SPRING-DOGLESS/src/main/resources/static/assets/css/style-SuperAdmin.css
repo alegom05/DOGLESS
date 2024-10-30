@@ -14,3 +14,21 @@
 .remove {
     display: none; /* Ocultar completamente el elemento */
 }
+.revert-button {
+    display: inline-flex;
+    align-items: center;
+    background-color: white;
+    color: black;
+    padding: 10px 15px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 14px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.revert-button i {
+    margin-left: 8px; /* Espacio entre el texto y el ícono */
+    font-size: 16px;
+}

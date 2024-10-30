@@ -111,7 +111,12 @@
                                   <li><a class="dropdown-item" th:href="@{'/admin/editagente' + '?id=' + ${usuario.id}}">Editar</a></li>
                                   <li><a href="#" class="dropdown-item" data-toggle="modal"  data-target="#confirmDeleteModal" th:data-id="${usuario.id}">Eliminar</a></li>
 
-                                  <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#aceptarModal">Espiar</a></li>
+                                  <li>
+                                    <form th:action="@{/admin/impersonate}" method="post" style="display: inline;">
+                                      <input type="hidden" name="id" th:value="${usuario.id}" />
+                                      <button type="submit" class="dropdown-item">Loguearse como</button>
+                                    </form>
+                                  </li>
                                 </ul>
                               </div>
                             </td>
