@@ -69,26 +69,25 @@
             <!-- Filtros -->
             <div class="row">
               <div class="col-md-12">
-                <div class="d-flex justify-content-between align-items-center flex-wrap">
-                  <div class="form-group me-2">
-                    <label for="filterOrderNumber">N° de Orden:</label> <!-- Descripción -->
-                    <input type="text" id="filterOrderNumber" class="form-control" placeholder="Ejemplo: 0001">
+                <form id="filtroForm" class="form-inline d-flex align-items-center">
+                  <div class="form-group mb-2 me-2">
+                    <label for="filterOrderNumber" class="mr-2">N° de Orden:</label>
+                    <input type="text" id="filterOrderNumber" class="form-control filtro-pequeno" placeholder="Ejemplo: 0001">
                   </div>
 
-                  <div class="form-group me-2">
-                    <label for="filterUserName">Usuario:</label> <!-- Descripción -->
-                    <input type="text" id="filterUserName" class="form-control" placeholder="Ejemplo: Juan Pérez">
+                  <div class="form-group mb-2 me-2">
+                    <label for="filterUserName" class="mr-2">Usuario:</label>
+                    <input type="text" id="filterUserName" class="form-control filtro-pequeno" placeholder="Ejemplo: Juan Pérez">
                   </div>
 
-                  <div class="form-group me-2">
-                    <label for="filterDate">Fecha:</label> <!-- Descripción -->
-                    <input type="date" id="filterDate" class="form-control" placeholder="Selecciona una fecha">
+                  <div class="form-group mb-2 me-2">
+                    <label for="filterDate" class="mr-2">Fecha:</label>
+                    <input type="date" id="filterDate" class="form-control filtro-pequeno">
                   </div>
 
-                  <!-- Filtro de Estado del Pedido -->
-                  <div class="form-group me-2">
-                    <label for="filterOrderStatus">Estado del Pedido:</label> <!-- Descripción -->
-                    <select id="filterOrderStatus" class="form-control">
+                  <div class="form-group mb-2 me-2">
+                    <label for="filterOrderStatus" class="mr-2">Estado del Pedido:</label>
+                    <select id="filterOrderStatus" class="form-control filtro-pequeno">
                       <option value="">Selecciona el estado</option>
                       <option value="creado">Creado</option>
                       <option value="en validación">En Validación</option>
@@ -101,22 +100,19 @@
                     </select>
                   </div>
 
-
-                  <!-- Botones de acciones para filtros -->
-                  <div class="d-flex">
-                    <button id="searchBtn" class="btn btn-primary me-2">Buscar</button>
-                    <button id="clearBtn" class="btn btn-secondary">Limpiar filtros</button>
-                  </div>
-                </div>
+                  <button type="button" class="btn btn-dark mb-2 me-2" onclick="filtrarPorEstado()">Buscar</button>
+                  <button type="button" class="btn btn-outline-secondary mb-2" onclick="limpiarFiltro()">Limpiar Filtro</button>
+                </form>
               </div>
             </div>
+
             <!-- Tabla -->
             <div class="row mt-4">
               <div class="col-md-12">
                 <div class="card">
                   <div class="card-body">
                     <div class="table-responsive">
-                      <table id="multi-filter-select" class="display table table-striped table-hover">
+                      <table id="basic-datatables" class="display table table-striped table-hover">
                         <thead class="text-center">
                           <tr>
                             <th>Número de Orden</th>
@@ -126,32 +122,29 @@
                             <th>Acciones</th>
                           </tr>
                         </thead>
-                        <tbody class="text-center">
+                        <tbody id="tablaOrdenes" class="text-center">
                           <tr th:each="orden : ${listaOrdenes}">
                             <td th:text="${orden.id}"></td>
                             <td th:text="${orden.usuario.nombre + ' ' + orden.usuario.apellido}"></td>
-                            <td th:text="${orden.fecha}"></td>
+                            <td th:text="${#dates.format(orden.fecha, 'dd/MM/yyyy')}"></td>
                             <td>
-                              <span th:text="${orden.estado}"
-                                    th:classappend="${orden.estado == 'Recibido'} ? 'badge badge-success' :
-                                                    (${orden.estado == 'En Ruta'} ? 'badge badge-primary' :
-                                                    (${orden.estado == 'En Aduanas'} ? 'badge badge-warning' :
-                                                    (${orden.estado == 'Arribo al País'} ? 'badge badge-info' :
-                                                    (${orden.estado == 'En Proceso'} ? 'badge badge-black' :
-                                                    (${orden.estado == 'En Validación'} ? 'badge badge-secondary' :
-                                                    (${orden.estado == 'Cancelado'} ? 'badge badge-danger' : 'badge badge-count'))))))">
-                              </span>
+                      <span th:text="${orden.estado}"
+                            th:classappend="${orden.estado == 'Recibido'} ? 'badge badge-success' :
+                                           (${orden.estado == 'En Ruta'} ? 'badge badge-primary' :
+                                           (${orden.estado == 'En Aduanas'} ? 'badge badge-warning' :
+                                           (${orden.estado == 'Arribo al País'} ? 'badge badge-info' :
+                                           (${orden.estado == 'En Proceso'} ? 'badge badge-black' :
+                                           (${orden.estado == 'En Validación'} ? 'badge badge-secondary' :
+                                           (${orden.estado == 'Cancelado'} ? 'badge badge-danger' : 'badge badge-count'))))))">
+                      </span>
                             </td>
-
                             <td>
-                              <!-- Dropdown con ícono -->
                               <div class="dropdown">
                                 <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                   <i class="fas fa-ellipsis-v"></i>
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
                                   <li><a class="dropdown-item" th:href="@{'/agente/detallesorden' + '?id=' + ${orden.id}}">Ver detalles de orden</a></li>
-                                  <!--- <li><a class="dropdown-item" href="#">Contactar usuario</a></li> --->
                                   <li><a class="dropdown-item" th:href="@{'/agente/updaterorden' + '?id=' + ${orden.id}}">Actualizar estado</a></li>
                                 </ul>
                               </div>
@@ -166,14 +159,7 @@
             </div>
           </div>
         </div>
-
-
-
-
-        <!-- Fin del contenido central -->
-
-
-
+        <!--Fin contenido central   -->
         <div th:replace="~{agente/fragments/piedepagina :: fragment}"></div>
       </div>
     </div>
@@ -194,72 +180,76 @@
     <script src="/assets/js/kaiadmin.min.js"></script>
 
     <script>
-      $(document).ready(function() {
-        // Inicializa DataTable
-        var table = $('#multi-filter-select').DataTable({
+      // Función para filtrar la tabla por los campos de orden, usuario, fecha y estado
+      function filtrarPorEstado() {
+        // Obtener los valores de los filtros
+        const orderNumber = document.getElementById("filterOrderNumber").value.toLowerCase();
+        const userName = document.getElementById("filterUserName").value.toLowerCase();
+        const selectedDate = document.getElementById("filterDate").value;
+        const orderStatus = document.getElementById("filterOrderStatus").value.toLowerCase();
+
+        // Obtener todas las filas de la tabla
+        const filas = document.querySelectorAll("#tablaOrdenes tr");
+
+        // Filtrar las filas
+        filas.forEach(function(fila) {
+          const orderCell = fila.querySelector("td:nth-child(1)").textContent.toLowerCase();
+          const userCell = fila.querySelector("td:nth-child(2)").textContent.toLowerCase();
+          const dateCell = fila.querySelector("td:nth-child(3)").textContent;  // Fecha en el formato de la tabla
+          const statusCell = fila.querySelector("td:nth-child(4)").textContent.toLowerCase();
+
+          // Convertir las fechas al mismo formato (dd/MM/yyyy)
+          const dateMatch = selectedDate === "" || formatDate(dateCell) === selectedDate;
+
+          // Condiciones de filtro para mostrar u ocultar la fila
+          const matchesOrderNumber = orderCell.includes(orderNumber);
+          const matchesUserName = userCell.includes(userName);
+          const matchesStatus = orderStatus === "" || statusCell.includes(orderStatus);
+
+          // Mostrar u ocultar la fila según las coincidencias
+          fila.style.display = matchesOrderNumber && matchesUserName && dateMatch && matchesStatus ? "" : "none";
+        });
+      }
+
+      // Función para dar formato a la fecha en formato dd/MM/yyyy
+      function formatDate(dateString) {
+        const [day, month, year] = dateString.split("/");
+        return `${year}-${month}-${day}`;  // Convertir para que coincida con el formato de input date
+      }
+
+      // Función para limpiar los filtros
+      function limpiarFiltro() {
+        document.getElementById("filterOrderNumber").value = "";
+        document.getElementById("filterUserName").value = "";
+        document.getElementById("filterDate").value = "";
+        document.getElementById("filterOrderStatus").value = "";
+
+        const filas = document.querySelectorAll("#tablaOrdenes tr");
+        filas.forEach(function(fila) {
+          fila.style.display = "";
+        });
+      }
+
+      // Inicializar DataTable con paginación y límite de 5 órdenes por página
+      $(document).ready(function () {
+        $('#basic-datatables').DataTable({
           paging: true,
           pageLength: 5,
           lengthChange: false,
           info: true,
-          dom: 'tip'
-        });
-
-        // Función para filtrar la tabla
-        function filterTable() {
-          // Obtener los valores de los filtros
-          const orderNumber = document.getElementById("filterOrderNumber").value.toLowerCase();
-          const userName = document.getElementById("filterUserName").value.toLowerCase();
-          const filterValue = document.getElementById('filterOrderStatus').value.toLowerCase();
-          const filterDateValue = document.getElementById('filterDate').value;
-
-          table.rows().every(function(rowIdx, tableLoop, rowLoop) {
-            const row = this.node();
-            const orderCell = $(row).find('td:eq(0)').text().toLowerCase();
-            const userCell = $(row).find('td:eq(2)').text().toLowerCase();
-            const statusCell = $(row).find('td:eq(4)').text().toLowerCase();
-            const dateCell = $(row).find('td:eq(3)').text();
-
-            // Verificar si la fila coincide con los filtros
-            const matchesOrderNumber = orderCell.includes(orderNumber);
-            const matchesUserName = userCell.includes(userName);
-            const statusMatch = filterValue === "" || statusCell.includes(filterValue);
-            const dateMatch = filterDateValue === "" || dateCell === filterDateValue;
-
-            // Mostrar u ocultar la fila según las coincidencias
-            if (matchesOrderNumber && matchesUserName && statusMatch && dateMatch) {
-              $(row).show();
-            } else {
-              $(row).hide();
+          language: {
+            search: "Buscar:",
+            lengthMenu: "Mostrar _MENU_ entradas por página",
+            info: "Mostrando _START_ a _END_ de _TOTAL_ entradas",
+            paginate: {
+              previous: "Anterior",
+              next: "Siguiente"
             }
-          });
-
-          // Redibujar la tabla con los filtros aplicados
-          table.draw();
-        }
-
-        // Función para limpiar los filtros
-        function clearFilters() {
-          // Limpiar los campos de entrada
-          document.getElementById("filterOrderNumber").value = "";
-          document.getElementById("filterUserName").value = "";
-          document.getElementById('filterOrderStatus').value = "";
-          document.getElementById('filterDate').value = "";
-
-          // Mostrar todas las filas
-          table.rows().every(function(rowIdx, tableLoop, rowLoop) {
-            const row = this.node();
-            $(row).show(); // Mostrar todas las filas
-          });
-
-          // Redibujar la tabla para que DataTables restaure las filas visibles
-          table.draw();
-        }
-
-        // Asignar eventos a los botones
-        document.getElementById("searchBtn").addEventListener("click", filterTable);
-        document.getElementById("clearBtn").addEventListener("click", clearFilters);
+          }
+        });
       });
     </script>
+
 
   </body>
 </html>
