@@ -108,6 +108,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer>{
             """, nativeQuery = true)
     List<AgenteDTO> findAgentesByJefeId(@Param("idJefe") Integer idJefe);
 
+    /*
     @Query(value = """
                     SELECT 
                         u.nombre,
@@ -122,5 +123,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer>{
                         u.nombre;
                     """, nativeQuery = true)
     List<UsuarioCantidadDTO> obtenerTotalCantidadPorUsuario();
+    */
+
 }
 
