@@ -63,5 +63,15 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer>{
             "GROUP BY p.nombre, u.nombre")
     List<Object[]> obtenerCantidadPorProductoYUsuario();
 
+    @Query("SELECT COUNT(u) FROM usuarios u WHERE u.rol.id = 3")
+    Integer contarAgentes();
+
+    @Query("SELECT COUNT(*) FROM usuarios u WHERE u.estado = 'baneado'")
+    Integer contarBaneados();
+
+    @Query("SELECT COUNT(*) FROM proveedores WHERE estado = 'baneado'")
+    Integer contarProveedoresBaneados();
+
+
 }
 

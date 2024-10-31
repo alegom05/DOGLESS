@@ -1031,7 +1031,15 @@ public class AdminController {
         /*model.addAttribute("listaProveedores", proveedorRepository.findAll());
         return "admin/dashboard";
     }
+
     */
+        Integer agentesTotales = usuarioRepository.contarAgentes(); // Cambia a tu lógica para obtener este valor
+        model.addAttribute("agentesTotales", agentesTotales);
+        Integer usuariosBaneados = usuarioRepository.contarBaneados(); // Cambia a tu lógica para obtener este valor
+        model.addAttribute("usuariosBaneados", usuariosBaneados);
+        Integer proveedoresBaneados = usuarioRepository.contarProveedoresBaneados(); // Cambia a tu lógica para obtener este valor
+        model.addAttribute("proveedoresBaneados", proveedoresBaneados);
+
         /*model.addAttribute("listaProveedores", proveedorRepository.findAll());*/
         return "admin/dashboard";
     }
