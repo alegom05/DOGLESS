@@ -81,6 +81,8 @@
                           <div class="numbers">
                             <p class="card-category">Agentes Totales</p>
                             <h4 class="card-title">[[${agentesTotales}]]</h4>
+
+                            <h4 class="card-title">[[${ordenes6}]]</h4>
                           </div>
                         </div>
                       </div>
@@ -393,42 +395,49 @@
           options: otraChartOptions
         });
   
-        //Ordenes por semestre:
-        /*
-        var ctx5 = document.getElementById('ordenesPorSemestre').getContext('2d');
-        var enero = [[${ordenes1}]];
-        var febrero = [[${ordenes2}]];
-        var marzo = [[${ordenes3}]];
-        var abril = [[${ordenes4}]];
-        var mayo = [[${ordenes5}]];
-        var junio = [[${ordenes6}]];
-        */
-        var datosProductosImportados = {
-          labels: ['Enero','Febrero', 'Marzo', 'Abril', 'Mayo','Junio'],
+        //GRAFICA 5: Ordenes por semestre:
+
+        // Gráfica de órdenes por semestre corregida:
+        var ctxOrdenesPorSemestre = document.getElementById('ordenesPorSemestre').getContext('2d');
+
+        // Definir las variables desde Thymeleaf para cada mes
+
+        var ordenesEnero = parseInt([[${ordenes1}]]);
+        var ordenesFebrero = parseInt([[${ordenes2}]]);
+        var ordenesMarzo = parseInt([[${ordenes3}]]);
+        var ordenesAbril = parseInt([[${ordenes4}]]);
+        var ordenesMayo = parseInt([[${ordenes5}]]);
+        var ordenesJunio = parseInt([[${ordenes6}]]);
+
+        var datosOrdenesPorSemestre = {
+          labels: ['Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre'],
           datasets: [{
-            label: 'Año 2024-1',
-            data: [83, 728, 98, 58, 64],
-            backgroundColor: 'rgba(255, 154, 30, 0.8) ',
+            label: 'Año 2024',
+            data: [ordenesEnero, ordenesFebrero, ordenesMarzo, ordenesAbril, ordenesMayo, ordenesJunio],
+            backgroundColor: 'rgba(255, 154, 30, 0.8)',
             borderColor: 'rgba(255, 125, 30, 0.8)',
             borderWidth: 1
           }]
         };
-        var verticalChartOptions = {
+
+        var chartOptionsOrdenesPorSemestre = {
           scales: {
             y: {
               beginAtZero: true
             }
           }
         };
-        new Chart(ctx5, {
-          type: 'bar', // Tipo 'bar' para gráfico de barras verticales
-          data: datosProductosImportados,
-          options: verticalChartOptions
+
+        new Chart(ctxOrdenesPorSemestre, {
+          type: 'bar',
+          data: datosOrdenesPorSemestre,
+          options: chartOptionsOrdenesPorSemestre
         });
-  
+
+
         //GRAFICA 6:Ordenes por ZONA:
         var ctx5 = document.getElementById('ordenesPorZona').getContext('2d');
-        
+
         var datosProductosImportados = {
           labels: ['Norte','Sur','Este','Oeste'],
           datasets: [{
@@ -451,7 +460,7 @@
           data: datosProductosImportados,
           options: verticalChartOptions
         });
-      
+
 
     </script>
       

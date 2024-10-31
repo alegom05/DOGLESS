@@ -1047,13 +1047,29 @@ public class AdminController {
         model.addAttribute("usuariosActivos", usuariosActivos);
         Integer usuariosInactivos = usuarioRepository.usuariosInactivos();
         model.addAttribute("usuariosInactivos", usuariosInactivos);
-        //5ta gráfica
-        Integer ordenes1 = ordenRepository.findOrdenesByMes(1);
-        Integer ordenes2 = ordenRepository.findOrdenesByMes(2);
-        Integer ordenes3 = ordenRepository.findOrdenesByMes(3);
-        Integer ordenes4 = ordenRepository.findOrdenesByMes(4);
-        Integer ordenes5 = ordenRepository.findOrdenesByMes(5);
-        Integer ordenes6 = ordenRepository.findOrdenesByMes(6);
+        //5ta gráfica -- incompleta, solo muestra el mes de setiembre (9)
+        Integer ordenes1 = ordenRepository.findOrdenesByMes(5);
+        Integer ordenes2 = ordenRepository.findOrdenesByMes(6);
+        Integer ordenes3 = ordenRepository.findOrdenesByMes(7);
+        Integer ordenes4 = ordenRepository.findOrdenesByMes(8);
+        Integer ordenes5 = ordenRepository.findOrdenesByMes(9);
+        Integer ordenes6 = ordenRepository.findOrdenesByMes(10);
+        model.addAttribute("ordenes1", ordenes1);
+        model.addAttribute("ordenes2", ordenes2);
+        model.addAttribute("ordenes3", ordenes3);
+        model.addAttribute("ordenes4", ordenes4);
+        model.addAttribute("ordenes5", ordenes5);
+        model.addAttribute("ordenes6", ordenes6);
+
+        System.out.println("Órdenes mes 5: " + ordenes5);
+        System.out.println("Órdenes mes 6: " + ordenes6);
+        //6ta gráfica
+        //Siguiendo el ejemplo se envían los demas parámetros-->
+        Integer norte = ordenRepository.findOrdenesByZona(1);
+        model.addAttribute("norte", norte);
+        System.out.println("norte: " + norte);
+
+
 
 
         /*model.addAttribute("listaProveedores", proveedorRepository.findAll());*/

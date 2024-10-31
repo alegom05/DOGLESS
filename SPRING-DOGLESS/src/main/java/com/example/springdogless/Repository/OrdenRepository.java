@@ -101,7 +101,11 @@ public interface OrdenRepository extends JpaRepository<Orden, Integer> {
                     "ORDER BY m.mes_numero;", nativeQuery = true)
     List<OrdenEstadoDTO> contarOrdenesProcesadasYCanceladasPorMes();
 
-    @Query("SELECT count(*) FROM ordenes o WHERE MONTH(o.fecha) = :mes")
+    //Dashboard de admin
+    @Query(value = "SELECT count(*) FROM ordenes WHERE MONTH(fecha) = :mes", nativeQuery = true)
     Integer findOrdenesByMes(@Param("mes") Integer mes);
+
+    @Query("SELECT count(*) FROM ordenes o WHERE o.usuario.zona.idzonas = :zonaId")
+    Integer findOrdenesByZona(@Param("zonaId") Integer zonaId);
 
 }
