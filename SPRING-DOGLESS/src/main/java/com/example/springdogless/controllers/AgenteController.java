@@ -64,7 +64,7 @@ public class AgenteController {
         return "agente/perfil_agente"; // Esto renderiza la vista perfil_superadmin.html
     }
 
-    @GetMapping({"dashboard"})
+    @GetMapping({"/dashboard"})
     public String ElDashboard007(Model model){
         List<OrdenEstadoDTO> ordenCategorias = ordenRepository.contarOrdenesPorProceso();
         List<OrdenEstadoDTO> cantidadPorEstado = ordenRepository.contarOrdenesPorEstado();
@@ -145,7 +145,7 @@ public class AgenteController {
         model.addAttribute("Cancelado", Cancelado);
 
 
-        return "/agente/dashboard";
+        return "agente/dashboard";
     }
     @GetMapping("chat")
     public String Chat(Model model) {

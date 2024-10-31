@@ -50,6 +50,8 @@ public class AdminController {
     ReposicionRepository reposicionesRepository;
     @Autowired
     private ProductRepository productRepository;
+    @Autowired
+    OrdenRepository ordenRepository;
     //@Autowired
     //UsuarioDao usuarioDao;
 
@@ -1040,11 +1042,18 @@ public class AdminController {
         model.addAttribute("usuariosBaneados", usuariosBaneados);
         Integer proveedoresBaneados = usuarioRepository.contarProveedoresBaneados(); // Cambia a tu lógica para obtener este valor
         model.addAttribute("proveedoresBaneados", proveedoresBaneados);
-        //1era gráfica
+        //2da gráfica
         Integer usuariosActivos = usuarioRepository.usuariosActivos();
         model.addAttribute("usuariosActivos", usuariosActivos);
         Integer usuariosInactivos = usuarioRepository.usuariosInactivos();
         model.addAttribute("usuariosInactivos", usuariosInactivos);
+        //5ta gráfica
+        Integer ordenes1 = ordenRepository.findOrdenesByMes(1);
+        Integer ordenes2 = ordenRepository.findOrdenesByMes(2);
+        Integer ordenes3 = ordenRepository.findOrdenesByMes(3);
+        Integer ordenes4 = ordenRepository.findOrdenesByMes(4);
+        Integer ordenes5 = ordenRepository.findOrdenesByMes(5);
+        Integer ordenes6 = ordenRepository.findOrdenesByMes(6);
 
 
         /*model.addAttribute("listaProveedores", proveedorRepository.findAll());*/
