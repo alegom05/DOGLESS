@@ -81,7 +81,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer>{
     @Query("SELECT COUNT(*) FROM usuarios WHERE estado = 'inactivo'")
     Integer usuariosInactivos();
 
-    @Query("SELECT o FROM Orden o WHERE MONTH(o.fecha) = :mes")
+    @Query("SELECT o FROM ordenes o WHERE MONTH(o.fecha) = :mes")
     List<Orden> findOrdenesByMes(@Param("mes") int mes);
 
 }
