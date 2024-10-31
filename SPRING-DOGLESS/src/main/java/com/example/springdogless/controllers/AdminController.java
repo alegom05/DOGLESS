@@ -1033,12 +1033,19 @@ public class AdminController {
     }
 
     */
+        //Parte Superior
         Integer agentesTotales = usuarioRepository.contarAgentes(); // Cambia a tu lógica para obtener este valor
         model.addAttribute("agentesTotales", agentesTotales);
         Integer usuariosBaneados = usuarioRepository.contarBaneados(); // Cambia a tu lógica para obtener este valor
         model.addAttribute("usuariosBaneados", usuariosBaneados);
         Integer proveedoresBaneados = usuarioRepository.contarProveedoresBaneados(); // Cambia a tu lógica para obtener este valor
         model.addAttribute("proveedoresBaneados", proveedoresBaneados);
+        //1era gráfica
+        Integer usuariosActivos = usuarioRepository.usuariosActivos();
+        model.addAttribute("usuariosActivos", usuariosActivos);
+        Integer usuariosInactivos = usuarioRepository.usuariosInactivos();
+        model.addAttribute("usuariosInactivos", usuariosInactivos);
+
 
         /*model.addAttribute("listaProveedores", proveedorRepository.findAll());*/
         return "admin/dashboard";

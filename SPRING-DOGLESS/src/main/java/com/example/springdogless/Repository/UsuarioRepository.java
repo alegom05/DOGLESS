@@ -72,6 +72,11 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer>{
     @Query("SELECT COUNT(*) FROM proveedores WHERE estado = 'baneado'")
     Integer contarProveedoresBaneados();
 
+    @Query("SELECT COUNT(*) FROM usuarios WHERE estado = 'activo'")
+    Integer usuariosActivos();
+
+    @Query("SELECT COUNT(*) FROM usuarios WHERE estado = 'inactivo'")
+    Integer usuariosInactivos();
 
 }
 

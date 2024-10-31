@@ -294,37 +294,37 @@
   
   
         //Distribucion de usuarios registrados:
+        // Distribucion de usuarios registrados:
         var pieChart = document.getElementById("pieChart").getContext("2d");
+
+        // Pasar los valores de Thymeleaf para usuarios activos e inactivos
+        var usuariosActivos = [[${usuariosActivos}]];
+        var usuariosInactivos = [[${usuariosInactivos}]];
+
         var myPieChart = new Chart(pieChart, {
           type: "pie",
           data: {
-            datasets: [
-              {
-                data: [50, 35],
-                backgroundColor: ["#1d7af3", "#f3545d", "#fdaf4b"],
-                borderWidth: 0,
-              },
-            ],
+            datasets: [{
+              data: [usuariosActivos, usuariosInactivos],
+              backgroundColor: ["#1d7af3", "#f3545d"],
+              borderWidth: 0,
+            }],
             labels: ["Activos", "Inactivos"],
           },
           options: {
             responsive: true,
             maintainAspectRatio: false,
-            legend: {
-              position: "bottom",
-              labels: {
-                fontColor: "rgb(154, 154, 154)",
-                fontSize: 11,
-                usePointStyle: true,
-                padding: 20,
+            plugins: {
+              legend: {
+                position: "bottom",
+                labels: {
+                  fontColor: "rgb(154, 154, 154)",
+                  fontSize: 11,
+                  usePointStyle: true,
+                  padding: 20,
+                },
               },
             },
-            pieceLabel: {
-              render: "percentage",
-              fontColor: "white",
-              fontSize: 14,
-            },
-            tooltips: false,
             layout: {
               padding: {
                 left: 20,

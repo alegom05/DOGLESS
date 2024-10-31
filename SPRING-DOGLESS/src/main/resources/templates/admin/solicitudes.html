@@ -82,8 +82,8 @@
                     <tr>
                       <th>Nombre</th>
                       <th>Apellido</th>
-                      <th>Codigo despachador</th>
-                      <th>Codigo Jurídico</th>
+                      <th>DNI</th>
+                      <th>Correo</th>
                       <th>Opciones</th>
                     </tr>
                     </thead>
@@ -92,8 +92,8 @@
                     <tr th:each="solicitud, info : ${listaSolicitudes}">
                       <td th:text="${solicitud.usuario.nombre}"></td>
                       <td th:text="${solicitud.usuario.apellido}"></td>
-                      <td th:text="${solicitud.usuario.codigojurisdiccion}"></td>
-                      <td th:text="${solicitud.usuario.codigoaduana}"></td>
+                      <td th:text="${solicitud.usuario.dni}"></td>
+                      <td th:text="${solicitud.usuario.email}"></td>
                       <td>
                         <!-- Dropdown con ícono -->
                         <div class="dropdown">
