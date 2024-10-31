@@ -437,12 +437,15 @@
 
         //GRAFICA 6:Ordenes por ZONA:
         var ctx5 = document.getElementById('ordenesPorZona').getContext('2d');
-
+        var norte = parseInt([[${norte}]]);
+        var sur = parseInt([[${sur}]]);
+        var este = parseInt([[${este}]]);
+        var oeste = parseInt([[${oeste}]]);
         var datosProductosImportados = {
           labels: ['Norte','Sur','Este','Oeste'],
           datasets: [{
             label: 'Zonas de seguimiento',
-            data: [83, 72, 98, 58, 64],
+            data: [norte, sur, este, oeste],
             backgroundColor: 'rgba(255, 219, 30, 0.8)',
             borderColor: 'rgba(255, 182, 30, 0.8)',
             borderWidth: 1

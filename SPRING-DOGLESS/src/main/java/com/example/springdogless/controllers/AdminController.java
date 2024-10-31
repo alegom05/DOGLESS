@@ -1047,6 +1047,8 @@ public class AdminController {
         model.addAttribute("usuariosActivos", usuariosActivos);
         Integer usuariosInactivos = usuarioRepository.usuariosInactivos();
         model.addAttribute("usuariosInactivos", usuariosInactivos);
+        //3ra gráfica
+
         //5ta gráfica -- incompleta, solo muestra el mes de setiembre (9)
         Integer ordenes1 = ordenRepository.findOrdenesByMes(5);
         Integer ordenes2 = ordenRepository.findOrdenesByMes(6);
@@ -1068,8 +1070,12 @@ public class AdminController {
         Integer norte = ordenRepository.findOrdenesByZona(1);
         model.addAttribute("norte", norte);
         System.out.println("norte: " + norte);
-
-
+        Integer sur = ordenRepository.findOrdenesByZona(2);
+        model.addAttribute("sur", sur);
+        Integer este = ordenRepository.findOrdenesByZona(3);
+        model.addAttribute("este", este);
+        Integer oeste = ordenRepository.findOrdenesByZona(4);
+        model.addAttribute("oeste", oeste);
 
 
         /*model.addAttribute("listaProveedores", proveedorRepository.findAll());*/

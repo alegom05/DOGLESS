@@ -25,6 +25,13 @@ public interface ProveedorRepository extends JpaRepository<Proveedor, Integer>{
 
     Optional<Proveedor> findByDni(String dni);
 
+    //Dashboard Admin
+    @Query("SELECT p.id, COUNT(p.id) AS cantidad " +
+            "FROM productos p " +
+            "GROUP BY p.id " +
+            "ORDER BY cantidad DESC")
+    List<Object[]> findTop5Proveedores();
+
 
 }
 

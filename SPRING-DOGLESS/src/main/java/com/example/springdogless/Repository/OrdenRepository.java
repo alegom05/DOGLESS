@@ -108,4 +108,6 @@ public interface OrdenRepository extends JpaRepository<Orden, Integer> {
     @Query("SELECT count(*) FROM ordenes o WHERE o.usuario.zona.idzonas = :zonaId")
     Integer findOrdenesByZona(@Param("zonaId") Integer zonaId);
 
+
+
 }
