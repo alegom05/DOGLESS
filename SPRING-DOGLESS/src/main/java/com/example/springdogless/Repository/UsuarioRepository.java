@@ -1,5 +1,6 @@
 package com.example.springdogless.Repository;
 
+import com.example.springdogless.DTO.*;
 
 import com.example.springdogless.entity.Orden;
 import com.example.springdogless.entity.Rol;
@@ -81,7 +82,24 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer>{
     @Query("SELECT COUNT(*) FROM usuarios WHERE estado = 'inactivo'")
     Integer usuariosInactivos();
 
+    //dashboard admi zonal
+    @Query(value="SELECT COUNT(*) FROM usuarios WHERE idzonas=:idzonas",nativeQuery = true)
+    Integer usuariosRegistradosPorZona(@Param("idzonas") Integer idzonas);
 
-
+    @Query(value="SELECT COUNT(*) FROM usuarios WHERE estado = 'activo' and idzonas=:idzonas",nativeQuery = true)
+    Integer usuariosActivosPorZona(@Param("idzonas") Integer idzonas);
+    @Query(value = """
+            SELECT agente.idusuarios AS idAgente,
+                   agente.nombre AS nombreAgente,
+                   agente.dni AS dniAgente,
+                   agente.email AS emailAgente,
+                   COUNT(empleado.idusuarios) AS cantidadUsuariosAsignados
+            FROM usuarios AS jefe
+            JOIN usuarios AS agente ON agente.usuarios_idusuarios = jefe.idusuarios
+            JOIN usuarios AS empleado ON empleado.usuarios_idusuarios = agente.idusuarios
+            WHERE jefe.idusuarios = :idJefe
+            GROUP BY agente.idusuarios, agente.nombre
+            """, nativeQuery = true)
+    List<AgenteDTO> findAgentesByJefeId(@Param("idJefe") Integer idJefe);
 }
 

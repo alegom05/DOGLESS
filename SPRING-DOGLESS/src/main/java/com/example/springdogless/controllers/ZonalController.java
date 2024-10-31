@@ -1,7 +1,10 @@
 package com.example.springdogless.controllers;
 
+import com.example.springdogless.DTO.*;
 import com.example.springdogless.Repository.*;
 import com.example.springdogless.entity.*;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,6 +18,7 @@ import java.sql.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping({"zonal", "zonal/"})
@@ -37,6 +41,8 @@ public class ZonalController {
     private ProveedorRepository proveedorRepository;
     @Autowired
     ImportacionRepository importacionRepository;
+    @Autowired
+    StockProductoRepository stockProductoRepository;
 
     @GetMapping({""})
     public String PaginaPrincipal(Model model) {
@@ -49,20 +55,39 @@ public class ZonalController {
     }
 
     @GetMapping("/dashboard")
-    public String elDashboardEstaTristeYAzul(Model model, @RequestParam(required = false) String zona) {
-        /*model.addAttribute("listaProveedores", proveedorRepository.findAll());*/
-        model.addAttribute("listaProductos", productRepository.findByBorrado(1));
-        /*
-        List<Map<String, Object>> productosTop10 = productRepository.obtenerTop10Productos();
+    public String elDashboardEstaTristeYAzul(HttpSession session,Model model) {
+        Usuario usuarioLogueado = (Usuario) session.getAttribute("usuario");
+        Integer idzona=usuarioLogueado.getZona().getIdzonas();
+        //Top 10 productos más importados en su zona.
+        List<ProductoImportadoDTO> productosTop10 = importacionRepository.topProductosImportados(idzona);
         model.addAttribute("productosTop10", productosTop10);
-        */
 
-        // Contar usuarios por estado
-        Integer activos = productRepository.contarPorEstado("activo");
-        Integer inactivos = productRepository.contarPorEstado("inactivo");
 
-        model.addAttribute("activos", activos);
-        model.addAttribute("inactivos", inactivos);
+        /*Top 10 de usuarios finales con más importaciones.
+        -
+
+        -
+        Productos con poco stock para un reposición.
+        -
+        Tabla o vista de los 3 agentes a su cargo.*/
+
+        //Cantidad de usuarios registrados vs activos en la zona.
+        Integer usuariosRegistrados=usuarioRepository.usuariosRegistradosPorZona(idzona);
+        model.addAttribute("usuariosRegistrados", usuariosRegistrados);
+        Integer usuariosActivos=usuarioRepository.usuariosActivosPorZona(idzona);
+        model.addAttribute("usuariosActivos", usuariosActivos);
+
+        //Cantidad de usuarios asignados por cada agente, tambien hallaremos sus datos aqui
+        List<AgenteDTO> agentes = usuarioRepository.findAgentesByJefeId(usuarioLogueado.getId());
+        model.addAttribute("agentes", agentes);
+
+        // Obtener la lista completa de productos ordenados por menor stock
+        List<ProductoStockDTO> productosConMenorStock = stockProductoRepository.findProductosConMenorStock();
+        List<ProductoStockDTO> productosLimitados = productosConMenorStock.stream()
+                .limit(5)
+                .collect(Collectors.toList());
+        model.addAttribute("productosConMenorStock", productosLimitados);
+
         return "zonal/dashboard";
     }
 

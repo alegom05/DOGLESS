@@ -95,6 +95,11 @@
             <groupId>org.springframework.session</groupId>
             <artifactId>spring-session-jdbc</artifactId>
         </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.32</version> <!-- Asegúrate de usar la última versión -->
+        </dependency>
     </dependencies>
 
     <build>

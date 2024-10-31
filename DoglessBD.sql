@@ -282,14 +282,14 @@ VALUES
 (22, 'Pablo', 'Cruz', '55006677', 'pcruz@sur.com', 'agenteSpass678', '987654334', 'Av. Sur 678', 3, 14, 4, 'activo', '10987654330', 'ADU012', 'Agente Sur', 'JUR012', 2, '2003-10-21');
 
 -- Agentes zonas Este (Admin zonas 5 y 6)
-INSERT INTO `dogless`.`usuarios` (`idusuarios`, `nombre`, `apellido`, `dni`, `email`, `pwd`, `telefono`, `direccion`, `idroles`, `iddistritos`, `idadminzonales`, `estado`, `ruc`, `codigoaduana`, `razonsocial`, `codigojurisdiccion`, `idzonas`, `fechanacimiento`)
+INSERT INTO `dogless`.`usuarios` (`idusuarios`, `nombre`, `apellido`, `dni`, `email`, `pwd`, `telefono`, `direccion`, `idroles`, `iddistritos`, `idadminzonales`, `estado`, `ruc`, `codigoaduana`, `razonsocial`, `codigojurisdiccion`, `idzonas`, `fechanacimiento`,`usuarios_idusuarios`)
 VALUES
-(23, 'James', 'Bond', '66007788', 'jbond@gmail.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654335', 'Calle Este 123', 3, 19, 5, 'activo', '12345678903', 'ADU013', 'Agente Este', 'JUR013', 3, '2002-06-15'),
-(24, 'Verónica', 'Díaz', '77008899', 'vdiaz@gmail.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654336', 'Av. Este 456', 3, 20, 5, 'activo', '10987654331', 'ADU014', 'Agente Este', 'JUR014', 3, '2003-09-22'),
-(25, 'Alberto', 'Cabrera', '88009900', 'acabrera@gmail.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654337', 'Calle Este 789', 3, 21, 5, 'activo', '10987654332', 'ADU015', 'Agente Este', 'JUR015', 3, '2004-03-10'),
-(26, 'Lucía', 'Ortiz', '99001122', 'lortiz@gmail.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654338', 'Av. Este 012', 3, 22, 6, 'activo', '10987654333', 'ADU016', 'Agente Este', 'JUR016', 3, '2002-11-30'),
-(27, 'Tomás', 'Fernández', '11002233', 'tfernandez@gmail.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654339', 'Calle Este 345', 3, 23, 6, 'activo', '10987654334', 'ADU017', 'Agente Este', 'JUR017', 3, '2005-04-25'),
-(28, 'Raquel', 'Paredes', '12003344', 'rparedes@gmail.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654340', 'Av. Este 678', 3, 24, 6, 'activo', '10987654335', 'ADU018', 'Agente Este', 'JUR018', 3, '2003-08-18');
+(23, 'James', 'Bond', '66007788', 'jbond@gmail.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654335', 'Calle Este 123', 3, 19, 5, 'activo', '12345678903', 'ADU013', 'Agente Este', 'JUR013', 3, '2002-06-15',7),
+(24, 'Verónica', 'Díaz', '77008899', 'vdiaz@gmail.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654336', 'Av. Este 456', 3, 20, 5, 'activo', '10987654331', 'ADU014', 'Agente Este', 'JUR014', 3, '2003-09-22',7),
+(25, 'Alberto', 'Cabrera', '88009900', 'acabrera@gmail.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654337', 'Calle Este 789', 3, 21, 5, 'activo', '10987654332', 'ADU015', 'Agente Este', 'JUR015', 3, '2004-03-10',7),
+(26, 'Lucía', 'Ortiz', '99001122', 'lortiz@gmail.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654338', 'Av. Este 012', 3, 22, 6, 'activo', '10987654333', 'ADU016', 'Agente Este', 'JUR016', 3, '2002-11-30',8),
+(27, 'Tomás', 'Fernández', '11002233', 'tfernandez@gmail.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654339', 'Calle Este 345', 3, 23, 6, 'activo', '10987654334', 'ADU017', 'Agente Este', 'JUR017', 3, '2005-04-25',8),
+(28, 'Raquel', 'Paredes', '12003344', 'rparedes@gmail.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654340', 'Av. Este 678', 3, 24, 6, 'activo', '10987654335', 'ADU018', 'Agente Este', 'JUR018', 3, '2003-08-18',8);
 
 -- Agentes zonas Oeste (Admin zonas 7  y 8)
 INSERT INTO `dogless`.`usuarios` (`idusuarios`, `nombre`, `apellido`, `dni`, `email`, `pwd`, `telefono`, `direccion`, `idroles`, `iddistritos`, `idadminzonales`, `estado`, `ruc`, `codigoaduana`, `razonsocial`, `codigojurisdiccion`, `idzonas`, `fechanacimiento`)
