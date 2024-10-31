@@ -1,12 +1,14 @@
 package com.example.springdogless.Repository;
 
 
+import com.example.springdogless.entity.Orden;
 import com.example.springdogless.entity.Rol;
 import com.example.springdogless.entity.Usuario;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -63,6 +65,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer>{
             "GROUP BY p.nombre, u.nombre")
     List<Object[]> obtenerCantidadPorProductoYUsuario();
 
+    //Métodos del Dashboard
     @Query("SELECT COUNT(u) FROM usuarios u WHERE u.rol.id = 3")
     Integer contarAgentes();
 
@@ -77,6 +80,9 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer>{
 
     @Query("SELECT COUNT(*) FROM usuarios WHERE estado = 'inactivo'")
     Integer usuariosInactivos();
+
+    @Query("SELECT o FROM Orden o WHERE MONTH(o.fecha) = :mes")
+    List<Orden> findOrdenesByMes(@Param("mes") int mes);
 
 }
 
