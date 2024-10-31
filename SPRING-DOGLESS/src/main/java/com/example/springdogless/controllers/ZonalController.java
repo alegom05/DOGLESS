@@ -79,7 +79,14 @@ public class ZonalController {
 
         //Cantidad de usuarios asignados por cada agente, tambien hallaremos sus datos aqui
         List<AgenteDTO> agentes = usuarioRepository.findAgentesByJefeId(usuarioLogueado.getId());
+        System.out.print("ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"+"   "+usuarioLogueado.getId());
         model.addAttribute("agentes", agentes);
+        System.out.print("ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"+"   "+agentes);
+
+        //top 10 usuarios con mas importaciones
+        List<UsuarioCantidadDTO> topcompradores=usuarioRepository.obtenerTotalCantidadPorUsuario();
+        List<UsuarioCantidadDTO> top10compradores =topcompradores.stream().limit(10).collect(Collectors.toList());
+        model.addAttribute("usuariosTop10", top10compradores);
 
         // Obtener la lista completa de productos ordenados por menor stock
         List<ProductoStockDTO> productosConMenorStock = stockProductoRepository.findProductosConMenorStock();

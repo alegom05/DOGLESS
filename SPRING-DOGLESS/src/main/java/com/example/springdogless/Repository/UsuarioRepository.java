@@ -89,17 +89,38 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer>{
     @Query(value="SELECT COUNT(*) FROM usuarios WHERE estado = 'activo' and idzonas=:idzonas",nativeQuery = true)
     Integer usuariosActivosPorZona(@Param("idzonas") Integer idzonas);
     @Query(value = """
-            SELECT agente.idusuarios AS idAgente,
-                   agente.nombre AS nombreAgente,
-                   agente.dni AS dniAgente,
-                   agente.email AS emailAgente,
-                   COUNT(empleado.idusuarios) AS cantidadUsuariosAsignados
-            FROM usuarios AS jefe
-            JOIN usuarios AS agente ON agente.usuarios_idusuarios = jefe.idusuarios
-            JOIN usuarios AS empleado ON empleado.usuarios_idusuarios = agente.idusuarios
-            WHERE jefe.idusuarios = :idJefe
-            GROUP BY agente.idusuarios, agente.nombre
+            SELECT\s
+                agente.idusuarios AS idAgente,
+                agente.nombre AS nombreAgente,
+                agente.dni AS dniAgente,
+                agente.email AS emailAgente,
+                COUNT(empleado.idusuarios) AS cantidadUsuariosAsignados
+            FROM\s
+                usuarios AS jefe
+            JOIN\s
+                usuarios AS agente ON agente.usuarios_idusuarios = jefe.idusuarios
+            LEFT JOIN\s
+                usuarios AS empleado ON empleado.usuarios_idusuarios = agente.idusuarios
+            WHERE\s
+                jefe.idusuarios = :idJefe
+            GROUP BY\s
+                agente.idusuarios, agente.nombre, agente.dni, agente.email;
             """, nativeQuery = true)
     List<AgenteDTO> findAgentesByJefeId(@Param("idJefe") Integer idJefe);
+
+    @Query(value = """
+                    SELECT 
+                        u.nombre,
+                        SUM(d.cantidad) AS totalCantidad
+                    FROM 
+                        ordenes AS o
+                    JOIN 
+                        detallesorden AS d ON o.idordenes = d.idorden
+                    JOIN 
+                        usuarios AS u ON o.idusuarios = u.idusuarios
+                    GROUP BY 
+                        u.nombre;
+                    """, nativeQuery = true)
+    List<UsuarioCantidadDTO> obtenerTotalCantidadPorUsuario();
 }
 
