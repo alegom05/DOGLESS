@@ -1,0 +1,26 @@
+# Ignorar todo en target excepto el JAR final
+target/
+!target/*.jar
+
+# Ignorar archivos pesados en src que no son necesarios para el build
+src/main/resources/static/assets/lib/
+src/main/resources/static/assets/fonts/
+src/main/resources/static/assets/images_index/
+src/main/resources/static/assets/img/
+src/main/resources/static/assets/js/lib/
+src/main/resources/static/assets/css/lib/
+
+# IDE
+.idea/
+*.iml
+.settings/
+.vscode/
+
+# Maven
+.mvn/*
+!.mvn/wrapper/maven-wrapper.properties
+!.mvn/wrapper/maven-wrapper.jar
+
+# Otros
+*.log
+.DS_Store
