@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Superadmin - Dashboard</title>
+    <meta
+            content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
+            name="viewport"
+    />
+    <link
+            rel="icon"
+            href="/assets/img/kaiadmin/favicon.ico"
+            type="image/x-icon"
+    />
+
+    <!-- Fonts and icons -->
+    <script src="/assets/js/plugin/webfont/webfont.min.js"></script>
+    <script>
+      WebFont.load({
+        google: { families: ["Public Sans:300,400,500,600,700"] },
+        custom: {
+          families: [
+            "Font Awesome 5 Solid",
+            "Font Awesome 5 Regular",
+            "Font Awesome 5 Brands",
+            "simple-line-icons",
+          ],
+          urls: ["/assets/css/fonts.min.css"],
+        },
+        active: function () {
+          sessionStorage.fonts = true;
+        },
+      });
+    </script>
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/assets/css/plugins.min.css" />
+    <link rel="stylesheet" href="/assets/css/kaiadmin.min.css" />
+
+
+
+  </head>
+  <body>
+    <div class="wrapper">
+      <!-- Reemplaza barra lateral con el fragmento de Thymeleaf -->
+      <div th:replace="~{admin/fragments/barralateraladmin :: body(activePage='dashboard')}"></div>
+      <!-- Fin barra lateral -->
+      
+      <div class="main-panel">
+        <!-- Reemplaza navbar con el fragmento de Thymeleaf -->
+        <div th:replace="~{admin/fragments/navbarheaderadmin :: fragment}"></div>
+        <!-- Fin Navbar -->
+
+        <!-- Texto o contenido central -->
+        <div class="container">
+            <div class="page-inner">
+              <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
+                <div>
+                  <h3 class="fw-bold mb-3">Dashboard</h3>
+                  <h6 class="op-7 mb-2">Aquí verás la cifra de agentes, baneados, y comparar usuarios,
+                     proveedores, órdenes para evaluar la participación y retención.</h6>
+                </div>
+  
+              </div>
+  
+              <div class="row">
+                <div class="col-sm-6 col-md-4">
+                  <div class="card card-stats card-round">
+                    <div class="card-body">
+                      <div class="row align-items-center">
+                        <div class="col-icon">
+                          <div
+                            class="icon-big text-center icon-primary bubble-shadow-small"
+                          >
+                            <i class="fas fa-users"></i>
+                          </div>
+                        </div>
+                        <div class="col col-stats ms-3 ms-sm-0">
+                          <div class="numbers">
+                            <p class="card-category">Agentes Totales</p>
+                            <!--
+                            <h4 class="card-title">[[${agentesTotales}]]</h4>
+                            -->
+                            <h4 class="card-title">[[${ordenes6}]]</h4>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-6 col-md-4">
+                  <div class="card card-stats card-round">
+                    <div class="card-body">
+                      <div class="row align-items-center">
+                        <div class="col-icon">
+                          <div class="icon-big text-center bg-danger bubble-shadow-small" style="color: white;">
+                            <i class="fas fa-user-times"></i>
+                          </div>
+                        </div>
+                        <div class="col col-stats ms-3 ms-sm-0">
+                          <div class="numbers">
+                            <p class="card-category">Usuarios Baneados</p>
+                            <h4 class="card-title">[[${usuariosBaneados}]]</h4>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-6 col-md-4">
+                  <div class="card card-stats card-round">
+                    <div class="card-body">
+                      <div class="row align-items-center">
+                        <div class="col-icon">
+                          <div class="icon-big text-center" style="background-color: orange; color: white;">
+                            <i class="fas fa-store-alt"></i>
+                          </div>
+                        </div>
+                        <div class="col col-stats ms-3 ms-sm-0">
+                          <div class="numbers">
+                            <p class="card-category">Proveedores baneados</p>
+                            <h4 class="card-title">[[${proveedoresBaneados}]]</h4>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+  
+              <!--Dashboards solicitados-->
+              <div class="row">
+                <div class="col-6">
+                  <div class="card">
+                    <div class="card-header">
+                      <div class="card-title">Top 10 productos mas importados</div>
+                    </div>
+                    <div class="card-body">
+                      <div class="chart-container">
+                        <canvas id="productosMasImportados"></canvas>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="card">
+                    <div class="card-header">
+                      <div class="card-title">Distribucion de usuarios registrados</div>
+                    </div>
+                    <div class="card-body">
+                      <div class="chart-container">
+                        <canvas id="pieChart"></canvas>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+  
+              <div class="row">
+                <div class="col-6">
+                  <div class="card">
+                    <div class="card-header">
+                      <div class="card-title">Top 5 proveedores mas solicitados</div>
+                    </div>
+                    <div class="card-body">
+                      <div class="chart-container">
+                        <canvas id="graficaTopSolicitados"></canvas>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="card">
+                    <div class="card-header">
+                      <div class="card-title">Top 5 proveedores mas criticados</div>
+                    </div>
+                    <div class="card-body">
+                      <div class="chart-container">
+                        <canvas id="graficaTopCriticados"></canvas>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+  
+              <div class="row">
+                <div class="col-6">
+                  <div class="card">
+                    <div class="card-header">
+                      <div class="card-title">Distribución de órdenes del semestre</div>
+                    </div>
+                    <div class="card-body">
+                      <div class="chart-container">
+                        <canvas id="ordenesPorSemestre"></canvas>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+  
+                <div class="col-6">
+                  <div class="card">
+                    <div class="card-header">
+                      <div class="card-title">Distribución de órdenes por zona</div>
+                    </div>
+                    <div class="card-body">
+                      <div class="chart-container">
+                        <canvas id="ordenesPorZona"></canvas>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+  
+            </div>
+          </div>
+          <!-- Fin del contenido central -->
+
+        <!-- Pie de página -->
+        <div th:replace="~{admin/fragments/piedepagina :: fragment}"></div>
+  
+      </div>
+        
+
+    </div>
+
+
+
+        <!-- Core JS Files -->
+        <script src="/assets/js/core/jquery-3.7.1.min.js"></script>
+        <script src="/assets/js/core/popper.min.js"></script>
+        <script src="/assets/js/core/bootstrap.min.js"></script>
+
+        <!-- jQuery Scrollbar -->
+        <script src="/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+
+        <!-- Chart JS -->
+        <script src="/assets/js/plugin/chart.js/chart.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+        <!-- jQuery Sparkline -->
+        <script src="/assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js"></script>
+
+        <!-- Chart Circle -->
+        <script src="/assets/js/plugin/chart-circle/circles.min.js"></script>
+
+        <!-- Datatables -->
+        <script src="/assets/js/plugin/datatables/datatables.min.js"></script>
+
+        <!-- jQuery Vector Maps -->
+        <script src="/assets/js/plugin/jsvectormap/jsvectormap.min.js"></script>
+        <script src="/assets/js/plugin/jsvectormap/world.js"></script>
+
+        <!-- Kaiadmin JS -->
+        <script src="/assets/js/kaiadmin.min.js"></script>
+
+        <!-- Kaiadmin DEMO methods, don't include it in your project! -->
+        <script src="/assets/js/setting-demo.js"></script>
+        <script src="/assets/js/demo.js"></script>
+
+    <script>
+        //Seccion de dashboards:
+        /*1.Top 10 producto mas importados
+          2.Distribucion de usuarios registrados
+          3.top 5 proveedosres mas solicitados
+          4.Top 5 proveedores peor calificados
+          5.Distribucionde ordenes del semestre
+          6.Distribucion de ordenes por zona*/
+  
+        //Top 10 producto mas importados:
+        var ctx1 = document.getElementById('productosMasImportados').getContext('2d');
+        
+        var datosProductosImportados = {
+          labels: ['Hogar','Tecnologia', 'Joyeria', 'Juguetes', 'Mascotas'],
+          datasets: [{
+            label: 'Productos vendidos por categoria',
+            data: [83, 178, 98, 58, 64],
+            backgroundColor: 'rgba(30, 197, 255, 0.8)',
+            borderColor: 'rgba(30, 140, 255, 0.8)',
+            borderWidth: 1
+          }]
+        };
+        var verticalChartOptions = {
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        };
+        new Chart(ctx1, {
+          type: 'bar', // Tipo 'bar' para gráfico de barras verticales
+          data: datosProductosImportados,
+          options: verticalChartOptions
+        });
+  
+  
+        //Distribucion de usuarios registrados:
+        // Distribucion de usuarios registrados:
+        var pieChart = document.getElementById("pieChart").getContext("2d");
+
+        // Pasar los valores de Thymeleaf para usuarios activos e inactivos
+        var usuariosActivos = [[${usuariosActivos}]];
+        var usuariosInactivos = [[${usuariosInactivos}]];
+
+        var myPieChart = new Chart(pieChart, {
+          type: "pie",
+          data: {
+            datasets: [{
+              data: [usuariosActivos, usuariosInactivos],
+              backgroundColor: ["#1d7af3", "#f3545d"],
+              borderWidth: 0,
+            }],
+            labels: ["Activos", "Inactivos"],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: {
+                position: "bottom",
+                labels: {
+                  fontColor: "rgb(154, 154, 154)",
+                  fontSize: 11,
+                  usePointStyle: true,
+                  padding: 20,
+                },
+              },
+            },
+            layout: {
+              padding: {
+                left: 20,
+                right: 20,
+                top: 20,
+                bottom: 20,
+              },
+            },
+          },
+        });
+  
+  
+        //GRAFICA 3:
+        var ctxOtraGrafica = document.getElementById('graficaTopSolicitados').getContext('2d');
+        var otraChartData = {
+          labels: ['Carlos', 'Daniel', 'Laura', 'Fernanda', 'Jorge'],
+          datasets: [{
+            label: 'Numero de solicitudes',
+            data: [20, 35, 40, 60, 75],
+            backgroundColor: 'rgba(75, 192, 192, 0.5)',
+            borderColor: 'rgba(75, 192, 192, 1)',
+            borderWidth: 1
+          }]
+        };
+  
+        var otraChartOptions = {
+          indexAxis: 'y', // Gráfico horizontal
+          scales: {
+            x: {
+              beginAtZero: true
+            }
+          }
+        };
+  
+        // Crear la nueva gráfica
+        new Chart(ctxOtraGrafica, {
+          type: 'bar', // Tipo de gráfico: barras
+          data: otraChartData,
+          options: otraChartOptions
+        });
+  
+        // GRAFICA 4
+        var ctxOtraGrafica2 = document.getElementById('graficaTopCriticados').getContext('2d');
+        var otraChartData2 = {
+          labels: ['Domingo', 'Carlos', 'Vladimir', 'Sigrid', 'Pedro'],
+          datasets: [{
+            label: 'Numero de peores comentarios',
+            data: [50, 75, 60, 90, 110],
+            backgroundColor: 'rgba(240, 11, 14, 0.8)',
+            borderColor: 'rgba(255, 99, 132, 1)',
+            borderWidth: 1
+          }]
+        };
+  
+        var otraChartOptions2 = {
+          indexAxis: 'y', // Gráfico de barras horizontal
+          scales: {
+            x: {
+              beginAtZero: true
+            }
+          }
+        };
+        new Chart(ctxOtraGrafica2, {
+          type: 'bar', // Gráfico de barras
+          data: otraChartData2,
+          options: otraChartOptions
+        });
+  
+        //GRAFICA 5: Ordenes por semestre:
+
+        // Gráfica de órdenes por semestre corregida:
+        var ctxOrdenesPorSemestre = document.getElementById('ordenesPorSemestre').getContext('2d');
+
+        // Definir las variables desde Thymeleaf para cada mes
+
+        var ordenesEnero = parseInt([[${ordenes1}]]);
+        var ordenesFebrero = parseInt([[${ordenes2}]]);
+        var ordenesMarzo = parseInt([[${ordenes3}]]);
+        var ordenesAbril = parseInt([[${ordenes4}]]);
+        var ordenesMayo = parseInt([[${ordenes5}]]);
+        var ordenesJunio = parseInt([[${ordenes6}]]);
+
+        var datosOrdenesPorSemestre = {
+          labels: ['Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre'],
+          datasets: [{
+            label: 'Año 2024',
+            data: [ordenesEnero, ordenesFebrero, ordenesMarzo, ordenesAbril, ordenesMayo, ordenesJunio],
+            backgroundColor: 'rgba(255, 154, 30, 0.8)',
+            borderColor: 'rgba(255, 125, 30, 0.8)',
+            borderWidth: 1
+          }]
+        };
+
+        var chartOptionsOrdenesPorSemestre = {
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        };
+
+        new Chart(ctxOrdenesPorSemestre, {
+          type: 'bar',
+          data: datosOrdenesPorSemestre,
+          options: chartOptionsOrdenesPorSemestre
+        });
+
+
+        //GRAFICA 6:Ordenes por ZONA:
+        var ctx5 = document.getElementById('ordenesPorZona').getContext('2d');
+        var norte = parseInt([[${norte}]]);
+        var sur = parseInt([[${sur}]]);
+        var este = parseInt([[${este}]]);
+        var oeste = parseInt([[${oeste}]]);
+        var datosProductosImportados = {
+          labels: ['Norte','Sur','Este','Oeste'],
+          datasets: [{
+            label: 'Zonas de seguimiento',
+            data: [norte, sur, este, oeste],
+            backgroundColor: 'rgba(255, 219, 30, 0.8)',
+            borderColor: 'rgba(255, 182, 30, 0.8)',
+            borderWidth: 1
+          }]
+        };
+        var verticalChartOptions = {
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        };
+        new Chart(ctx5, {
+          type: 'bar', // Tipo 'bar' para gráfico de barras verticales
+          data: datosProductosImportados,
+          options: verticalChartOptions
+        });
+
+
+    </script>
+      
+  </body>
+</html>

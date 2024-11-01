@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Agente - Dashboard</title>
+    <meta
+      content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
+      name="viewport"
+    />
+    <link
+            rel="icon"
+            href="/assets/img/kaiadmin/favicon.ico"
+            type="image/x-icon"
+    />
+    <link th:href="@{/assets/css/style-SuperAdmin.css}" rel="stylesheet">
+    <style>
+      .wrapper {
+        overflow-x: hidden; /* Previene el desbordamiento horizontal */
+      }
+
+      .main-panel {
+        width: 100%; /* Asegúrate de que ocupa el 100% del espacio disponible */
+        margin: 0; /* Elimina márgenes que puedan causar desbordamiento */
+      }
+    </style>
+
+
+    <!-- Fonts and icons -->
+    <script src="/assets/js/plugin/webfont/webfont.min.js"></script>
+    <script>
+      WebFont.load({
+        google: { families: ["Public Sans:300,400,500,600,700"] },
+        custom: {
+          families: [
+            "Font Awesome 5 Solid",
+            "Font Awesome 5 Regular",
+            "Font Awesome 5 Brands",
+            "simple-line-icons",
+          ],
+          urls: ["/assets/css/fonts.min.css"],
+        },
+        active: function () {
+          sessionStorage.fonts = true;
+        },
+      });
+    </script>
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/assets/css/plugins.min.css" />
+    <link rel="stylesheet" href="/assets/css/kaiadmin.min.css" />
+
+  </head>
+  <body>
+  <div class="wrapper">
+    <!-- Reemplaza barra lateral con el fragmento de Thymeleaf -->
+    <div th:replace="~{agente/fragments/barralateralagente :: body(activePage='dashboard')}"></div>
+    <!-- Fin barra lateral -->
+
+    <div class="main-panel">
+      <!-- Reemplaza navbar con el fragmento de Thymeleaf -->
+      <div th:replace="~{agente/fragments/navbarheaderagente :: fragment}"></div>
+      <!-- Fin Navbar -->
+
+      <!-- Texto o contenido central -->
+      <div class="container">
+        <div class="page-inner">
+          <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
+            <div>
+              <h3 class="fw-bold mb-3">Dashboard</h3>
+              <h6 class="op-7 mb-2">Aquí verás los estados de las órdenes, cifras de productos más vendidos por mes, etc.</h6>
+            </div>
+          </div>
+          <div th:if="${mensajeExito}" id="mensajeExito" class="alert alert-success fade-out" role="alert">
+            <p th:text="${mensajeExito}"></p>
+          </div>
+
+          <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-8">
+              <div class="card">
+                <div class="card-header">
+                  <div class="card-title text-center">Cantidad de Órdenes por Estado de Proceso</div>
+                </div>
+                <div class="card-body">
+                  <div class="chart-container">
+                    <canvas id="doughnutChartOrders"></canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Gráfico pie: Cantidad de Órdenes por Estado de Proceso -->
+            <div class="col-lg-6 col-md-8">
+              <div class="card">
+                <div class="card-header">
+                  <div class="card-title text-center">Cantidad de Órdenes por Estado de Proceso</div>
+                </div>
+                <div class="card-body">
+                  <div class="chart-container">
+                    <canvas id="pieChartOrdersState"></canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row justify-content-center">
+            <!-- Gráfico de Multiple Line Chart: Órdenes procesadas vs Órdenes canceladas -->
+            <div class="col-lg-6 col-md-8">
+              <div class="card">
+                <div class="card-header">
+                  <div class="card-title text-center">Órdenes Procesadas vs Órdenes Canceladas por Mes</div>
+                </div>
+                <div class="card-body">
+                  <div class="chart-container">
+                    <canvas id="multipleLineChartOrders"></canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Gráfico de barras: Productos Más Vendidos -->
+            <div class="col-lg-6 col-md-8">
+              <div class="card">
+                <div class="card-header">
+                  <div class="card-title text-center">Productos Más Vendidos</div>
+                </div>
+                <div class="card-body">
+                  <div class="chart-container">
+                    <canvas id="barChartTopProducts"></canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Fin del contenido central -->
+
+          <!-- Pie de página -->
+          <div th:replace="~{agente/fragments/piedepagina :: fragment}"></div>
+        </div> <!-- Cierre de page-inner -->
+      </div> <!-- Cierre de container -->
+    </div> <!-- Cierre de main-panel -->
+  </div> <!-- Cierre de wrapper -->
+
+
+    <!--   Core JS Files   -->
+    <script src="/assets/js/core/jquery-3.7.1.min.js"></script>
+    <script src="/assets/js/core/popper.min.js"></script>
+    <script src="/assets/js/core/bootstrap.min.js"></script>
+
+    <!-- jQuery Scrollbar -->
+    <script src="/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+
+    <!-- Chart JS -->
+    <script src="/assets/js/plugin/chart.js/chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+
+    <!-- jQuery Sparkline -->
+    <script src="/assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js"></script>
+
+    <!-- Chart Circle -->
+    <script src="/assets/js/plugin/chart-circle/circles.min.js"></script>
+
+    <!-- Datatables -->
+    <script src="/assets/js/plugin/datatables/datatables.min.js"></script>
+
+    <!-- Bootstrap Notify -->
+
+    <!-- jQuery Vector Maps -->
+    <script src="/assets/js/plugin/jsvectormap/jsvectormap.min.js"></script>
+    <script src="/assets/js/plugin/jsvectormap/world.js"></script>
+
+    <!-- Sweet Alert -->
+
+    <!-- Kaiadmin JS -->
+    <script src="/assets/js/kaiadmin.min.js"></script>
+
+    <!-- Kaiadmin DEMO methods, don't include it in your project! -->
+    <script src="/assets/js/setting-demo.js"></script>
+    <script src="/assets/js/demo.js"></script>
+    
+
+    <script th:inline="javascript">
+      // Suponiendo que 'ordenesProcesadasYCancelada' es una lista de OrdenEstadoDTO
+      var ordersData = /*[[${ordenesProcesadasYCancelada}]]*/ [];
+      var labels = [];
+      var processedOrdersData = [];
+      var canceledOrdersData = [];
+
+      // Procesar los datos para el gráfico
+      ordersData.forEach(function(order) {
+        labels.push(order.mes); // Agrega el mes a las etiquetas
+
+        // Aquí asumimos que cada order tiene cantidad_procesadas y cantidad_canceladas
+        processedOrdersData.push(order.cantidad_procesadas || 0); // Agregar cantidad procesadas
+        canceledOrdersData.push(order.cantidad_canceladas || 0); // Agregar cantidad canceladas
+      });
+
+      console.log("Labels: ", labels);
+      console.log("Órdenes Procesadas: ", processedOrdersData);
+      console.log("Órdenes Canceladas: ", canceledOrdersData);
+
+      // Crear el gráfico
+      var multipleLineChartOrders = document.getElementById("multipleLineChartOrders").getContext("2d");
+      var myMultipleLineChartOrders = new Chart(multipleLineChartOrders, {
+        type: "line",
+        data: {
+          labels: labels,
+          datasets: [
+            {
+              label: "Órdenes Procesadas",
+              borderColor: "#1d7af3",
+              pointBackgroundColor: "#1d7af3",
+              data: processedOrdersData,
+              fill: false,
+              borderWidth: 2
+            },
+            {
+              label: "Órdenes Canceladas",
+              borderColor: "#f3545d",
+              pointBackgroundColor: "#f3545d",
+              data: canceledOrdersData,
+              fill: false,
+              borderWidth: 2
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          },
+          legend: {
+            position: "bottom"
+          },
+          tooltips: {
+            mode: "index",
+            intersect: false
+          }
+        }
+      });
+
+      // Obtener los datos desde el modelo
+      var enProceso = [[${enProceso}]]; // Recibe el valor desde el modelo
+      var sinProcesar = [[${sinProcesar}]]; // Recibe el valor desde el modelo
+      // Doughnut Chart - Órdenes en Proceso vs Sin Procesar (Naranja y Verde)
+      var doughnutChartOrders = document.getElementById("doughnutChartOrders").getContext("2d");
+      var myDoughnutChartOrders = new Chart(doughnutChartOrders, {
+        type: "doughnut",
+        data: {
+          labels: ["Órdenes En Proceso", "Órdenes Sin Procesar"],
+          datasets: [{
+            data: [enProceso, sinProcesar], // Datos desde el modelo
+            backgroundColor: ["#FFA500", "#32CD32"], // Naranja y Verde
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          legend: {
+            position: "bottom"
+          }
+        }
+      });
+
+      // Llenar las listas desde el modelo
+      var Creado = [[${Creado}]]; // Recibe el valor desde el modelo}
+      var enValidacion = [[${enValidacion}]]; // Recibe el valor desde el modelo
+      var enProcesoEstado = [[${enProcesoEstado}]]; // Recibe el valor desde el modelo}
+      var enRuta = [[${enRuta}]]; // Recibe el valor desde el modelo}
+      var enAduanas = [[${enAduanas}]]; // Recibe el valor desde el modelo}
+      var ArriboAlPais = [[${ArriboAlPais}]]; // Recibe el valor desde el modelo}
+      var Recibido = [[${Recibido}]]; // Recibe el valor desde el modelo}
+      var Cancelado = [[${Cancelado}]]; // Recibe el valor desde el modelo}
+
+      // Pie Chart - Cantidad de Órdenes por Estado de Proceso (leyenda a la izquierda)
+      var pieChartOrdersState = document.getElementById("pieChartOrdersState").getContext("2d");
+      var myPieChartOrdersState = new Chart(pieChartOrdersState, {
+        type: "pie",
+        data: {
+          labels: ["Creado", "En Validación", "En Proceso", "En Ruta", "En Aduanas", "Arribo al País", "Recibido", "Cancelado"],
+          datasets: [{
+            data: [Creado, enValidacion, enProcesoEstado, enRuta, enAduanas, ArriboAlPais, Recibido, Cancelado],
+            backgroundColor: ["#1d7af3", "#f3545d", "#fdaf4b", "#59d05d", "#716aca", "#ff6384", "#36a2eb"]
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          layout: {
+            padding: {
+              left: 25,  // Añadimos espacio a la izquierda para los labels
+              right: 15,
+              top: 15,
+              bottom: 15
+            }
+          },
+          legend: {
+            position: "left", // Posición de la leyenda a la izquierda
+            align: "start",   // Alineación de la leyenda al inicio (izquierda)
+            labels: {
+              fontColor: "rgb(154, 154, 154)",
+              fontSize: 12,
+              boxWidth: 20,    // Tamaño del recuadro de color de la leyenda
+              padding: 20
+            }
+          },
+          plugins: {
+            legend: {
+              display: true,
+              position: "left",  // Posición izquierda de la leyenda
+            }
+          }
+        }
+      });
+
+
+      // Bar Chart - Productos Más Vendidos (Colores Diferentes por Barra)
+      var productosMasVendidos = /*[[${productosMasVendidos}]]*/ [];
+      var labels = productosMasVendidos.map(function(producto) {
+        return producto.nombre; // Obtener el nombre del producto
+      });
+      var data = productosMasVendidos.map(function(producto) {
+        return producto.total_vendido; // Obtener la cantidad vendida
+      });
+
+      var barChartTopProducts = document.getElementById("barChartTopProducts").getContext("2d");
+      var myBarChartTopProducts = new Chart(barChartTopProducts, {
+        type: "bar",
+        data: {
+          labels: labels, // Usar las etiquetas obtenidas
+          datasets: [{
+            label: "Cantidad de Órdenes",
+            backgroundColor: [
+              "#FF6384", "#36A2EB", "#FFCE56", "#4BC0C0", "#9966FF",
+              "#FF9F40", "#FFCD56", "#4D5360", "#C9CBCF", "#76D7C4"
+            ], // Colores diferentes para cada barra
+            data: data // Usar los datos obtenidos
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      });
+
+    
+    </script>
+  </body>
+</html>

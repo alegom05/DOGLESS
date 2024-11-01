@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta
+                content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
+                name="viewport"
+        />
+        <link
+                rel="icon"
+                href="/assets/img/kaiadmin/favicon.ico"
+                type="image/x-icon"
+        />
+        <link th:href="@{/assets/css/style-SuperAdmin.css}" rel="stylesheet">
+
+        <!-- Fonts and icons -->
+        <script src="/assets/js/plugin/webfont/webfont.min.js"></script>
+        <script>
+            WebFont.load({
+                google: { families: ["Public Sans:300,400,500,600,700"] },
+                custom: {
+                    families: [
+                        "Font Awesome 5 Solid",
+                        "Font Awesome 5 Regular",
+                        "Font Awesome 5 Brands",
+                        "simple-line-icons",
+                    ],
+                    urls: ["/assets/css/fonts.min.css"],
+                },
+                active: function () {
+                    sessionStorage.fonts = true;
+                },
+            });
+        </script>
+
+        <!-- CSS Files -->
+        <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="/assets/css/plugins.min.css" />
+        <link rel="stylesheet" href="/assets/css/kaiadmin.min.css" />
+
+
+    </head>
+    <body>
+        <div class="wrapper">
+            <!-- Reemplaza barra lateral con el fragmento de Thymeleaf -->
+            <div th:replace="~{agente/fragments/barralateralagente :: body(activePage='reportes', activeSubPage='guardados')}"></div>
+            <!-- Fin barra lateral -->
+
+
+            <div class="main-panel">
+
+                <!-- Reemplaza navbar con el fragmento de Thymeleaf -->
+                <div th:replace="~{agente/fragments/navbarheaderagente :: fragment}"></div>
+                <!-- Fin Navbar -->
+
+                <!--  contenido central -->
+
+                <div class="container">
+                    <div class="page-inner">
+                        <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
+                            <div>
+                                <h3 class="fw-bold mb-3">Reportes Guardados</h3>
+                                <h6 class="op-7 mb-2">
+                                    Utiliza los filtros para buscar y gestionar los reportes guardados.
+                                </h6>
+                            </div>
+                        </div>
+
+                        <!-- Filtros -->
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="d-flex justify-content-between align-items-center flex-wrap">
+                                    <!-- Filtro por número de reporte -->
+                                    <div class="form-group me-2">
+                                        <label for="filterReportNumber">Buscar por Número de Reporte:</label> <!-- Descripción -->
+                                        <input type="text" id="filterReportNumber" class="form-control" placeholder="Ejemplo: 1">
+                                    </div>
+
+                                    <!-- Filtro por tipo de reporte -->
+                                    <div class="form-group me-2">
+                                        <label for="filterReportType">Filtrar por Tipo de Reporte:</label> <!-- Descripción -->
+                                        <select id="filterReportType" class="form-control">
+                                            <option value="">Selecciona el tipo de reporte</option>
+                                            <option value="ordenes_totales">Órdenes Totales</option>
+                                            <option value="ordenes_sistema">Total de Órdenes en el Sistema</option>
+                                            <option value="ordenes_agente">Órdenes por Agente</option>
+                                            <option value="ordenes_fecha">Órdenes Totales por Fecha</option>
+                                        </select>
+                                    </div>
+
+                                    <!-- Filtro de fecha -->
+                                    <div class="form-group me-2">
+                                        <label for="filterDate">Filtrar por Fecha de Generación:</label> <!-- Descripción -->
+                                        <input type="date" id="filterDate" class="form-control" placeholder="Selecciona una fecha">
+                                    </div>
+
+                                    <!-- Botones de acciones para filtros -->
+                                    <div class="d-flex">
+                                        <button id="searchBtn" class="btn btn-primary me-2">Buscar</button>
+                                        <button id="clearBtn" class="btn btn-secondary">Limpiar filtros</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <!-- Tabla -->
+                        <!-- Tabla -->
+                        <div class="row mt-4">
+                            <div class="col-md-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table id="multi-filter-select" class="display table table-striped table-hover">
+                                                <thead>
+                                                    <tr class="text-center">
+                                                        <th>#</th>
+                                                        <th>Tipo de Reporte</th>
+                                                        <th>Fecha de Generación</th>
+                                                        <th>Ver Reporte</th> <!-- Nueva columna -->
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="text-center">
+                                                    <tr th:each="rep : ${listaReportes}">
+                                                        <td th:text="${rep.id}"></td>
+                                                        <td>
+                                    <span th:text="${rep.tipo}"
+                                          th:classappend="${rep.tipo == 'Reporte Ordenes Totales'} ? 'badge badge-success' :
+                                                          (${rep.tipo == 'Reporte por Agente'} ? 'badge badge-primary' :
+                                                          (${rep.tipo == 'Reporte por Fecha'} ? 'badge badge-warning' :
+                                                          (${rep.tipo == 'Reporte por Usuario'} ? 'badge badge-info')))">
+                                    </span>
+                                                        </td>
+                                                        <td th:text="${rep.fecha}"></td>
+                                                        <td>
+                                                            <button class="btn btn-info">
+                                                                <i class="fas fa-file-alt"></i> <!-- Icono de documento -->
+                                                            </button>
+                                                        </td> <!-- Nueva celda con botón -->
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+
+
+
+                <!-- Pie de página -->
+                <div th:replace="~{agente/fragments/piedepagina :: fragment}"></div>
+
+            </div>
+        </div>
+
+
+        <!--Core JS Files   -->
+        <script src="/assets/js/core/jquery-3.7.1.min.js"></script>
+        <script src="/assets/js/core/popper.min.js"></script>
+        <script src="/assets/js/core/bootstrap.min.js"></script>
+
+        <!-- jQuery Scrollbar -->
+        <script src="/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+        <!-- Datatables -->
+        <script src="/assets/js/plugin/datatables/datatables.min.js"></script>
+
+        <!-- jQuery Vector Maps -->
+        <script src="/assets/js/plugin/jsvectormap/jsvectormap.min.js"></script>
+        <script src="/assets/js/plugin/jsvectormap/world.js"></script>
+
+        <!-- Kaiadmin JS -->
+        <script src="/assets/js/kaiadmin.min.js"></script>
+        <script>
+            $(document).ready(function() {
+                // Inicializar DataTable
+                var table = $('#multi-filter-select').DataTable({
+                    paging: true,
+                    pageLength: 5,
+                    lengthChange: false,
+                    info: true,
+                    dom: 'tip',
+                });
+
+                // Filtro por Número de Reporte
+                $('#filterReportNumber').on('keyup', function() {
+                    table.columns(0).search(this.value).draw(); // Filtra en la primera columna (Número de Reporte)
+                });
+
+                // Filtro por Tipo de Reporte
+                $('#filterReportType').on('change', function() {
+                    table.columns(1).search(this.value).draw(); // Filtra en la segunda columna (Tipo de Reporte)
+                });
+
+                // Filtro por Fecha de Generación
+                $('#filterDate').on('change', function() {
+                    table.columns(2).search(this.value).draw(); // Filtra en la tercera columna (Fecha de Generación)
+                });
+
+                // Botón de Búsqueda (opcional)
+                $('#searchBtn').on('click', function() {
+                    // Aplica los filtros nuevamente por si el usuario usa este botón
+                    table.draw();
+                });
+
+                // Botón para limpiar filtros
+                $('#clearBtn').on('click', function() {
+                    $('#filterReportNumber').val('');
+                    $('#filterReportType').val('');
+                    $('#filterDate').val('');
+
+                    // Limpiar los filtros en DataTable
+                    table.search('').columns().search('').draw();
+                });
+            });
+        </script>
+
+    </body>
+</html>

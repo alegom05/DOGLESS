@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <title>Reporte - Ordenes por Usuario</title>
+    <meta
+            content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
+            name="viewport"
+    />
+    <link
+            rel="icon"
+            href="/assets/img/kaiadmin/favicon.ico"
+            type="image/x-icon"
+    />
+    <link th:href="@{/assets/css/style-SuperAdmin.css}" rel="stylesheet">
+
+    <!-- Fonts and icons -->
+    <script src="/assets/js/plugin/webfont/webfont.min.js"></script>
+    <script>
+        WebFont.load({
+            google: { families: ["Public Sans:300,400,500,600,700"] },
+            custom: {
+                families: [
+                    "Font Awesome 5 Solid",
+                    "Font Awesome 5 Regular",
+                    "Font Awesome 5 Brands",
+                    "simple-line-icons",
+                ],
+                urls: ["/assets/css/fonts.min.css"],
+            },
+            active: function () {
+                sessionStorage.fonts = true;
+            },
+        });
+    </script>
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/assets/css/plugins.min.css" />
+    <link rel="stylesheet" href="/assets/css/kaiadmin.min.css" />
+
+
+</head>
+<body>
+<div class="wrapper">
+    <!-- Reemplaza barra lateral con el fragmento de Thymeleaf -->
+    <div th:replace="~{agente/fragments/barralateralagente :: body(activePage='ordenes',  activeSubPage='todas')}"></div>
+    <!-- Fin barra lateral -->
+
+
+    <div class="main-panel">
+
+        <!-- Reemplaza navbar con el fragmento de Thymeleaf -->
+        <div th:replace="~{agente/fragments/navbarheaderagente :: fragment}"></div>
+        <!-- Fin Navbar -->
+                <!--  contenido central -->
+                <div class="container">
+                    <div class="page-inner">
+                        <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
+                            <div>
+                                <h3 class="fw-bold mb-3">Reporte de Órdenes por Usuario</h3>
+                                <h6 class="op-7 mb-2">
+                                    Busca por DNI o nombre de usuario para visualizar las órdenes asociadas.
+                                </h6>
+                            </div>
+                        </div>
+
+                        <!-- DNI and Name Filter and Buttons -->
+                        <div class="d-flex justify-content-between mb-3">
+                            <!-- DNI and Name Inputs -->
+                            <div class="d-flex align-items-center">
+                                <div class="form-group me-2">
+                                    <label for="dniFilter">DNI:</label>
+                                    <input type="text" id="dniFilter" class="form-control-sm" placeholder="Ingresa DNI">
+                                </div>
+                                <div class="form-group me-2">
+                                    <label for="nameFilter">Nombre de usuario:</label>
+                                    <input type="text" id="nameFilter" class="form-control-sm" placeholder="Ingresa nombre">
+                                </div>
+                            </div>
+                            <!-- Generate report and back buttons -->
+                            <div class="d-flex">
+                                <div class="d-flex align-items-center justify-content-center">
+                                    <button id="generateReportBtn" class="btn btn-secondary me-2">Generar reporte</button>
+                                    <a href="/agente/reportesOrdenes" class="btn btn-primary">Regresar</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Preview Section -->
+                        <div>
+                            <h4 class="fw-bold mb-3">Previsualización:</h4>
+                        </div>
+                        <div class="card mt-4" style="width: 90%; margin: 0 auto;">
+                            <div class="card-header bg-dark text-white">
+                                <h4 class="card-title text-center text-white">Reporte de Órdenes por Usuario</h4>
+                                <h6 id="filterSubtitle" class="text-center">(DNI: -, Usuario: -)</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+
+                                        <table class="table table-bordered text-center">
+                                            <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Usuario</th>
+                                                <th>ID Orden</th>
+                                                <th>Fecha de Generación</th>
+                                                <th>Estado de Orden</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr th:each="usuario : ${listaUsuarios}">
+                                                <td th:text="${usuario.id}" th:rowspan="${#lists.size(usuario.orden) > 0 ? #lists.size(usuario.orden) : 1}"></td>
+                                                <td th:text="${usuario.nombre}" th:rowspan="${#lists.size(usuario.orden) > 0 ? #lists.size(usuario.orden) : 1}"></td>
+                                                <td th:if="${#lists.isEmpty(usuario.orden)}" colspan="3">Sin órdenes</td>
+                                                <th:block th:if="${not #lists.isEmpty(usuario.orden)}">
+                                                    <td th:text="${usuario.orden[0].id}"></td>
+                                                    <td th:text="${#dates.format(usuario.orden[0].fecha, 'dd-MM-yyyy')}"></td>
+                                                    <td th:text="${usuario.orden[0].estado}"></td>
+                                                </th:block>
+                                            </tr>
+                                            <tr th:each="usuario : ${listaUsuarios}" th:each-status="status">
+                                                <th:block th:each="orden, ordenStatus : ${usuario.orden}" th:if="${ordenStatus.index > 0}">
+                                                    <td th:text="${orden.id}"></td>
+                                                    <td th:text="${#dates.format(orden.fecha, 'dd-MM-yyyy')}"></td>
+                                                    <td th:text="${orden.estado}"></td>
+                                                </th:block>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+
+
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Save options -->
+                        <div class="d-flex justify-content-center mt-4">
+                            <button class="btn btn-danger me-2">Guardar como PDF</button>
+                            <button class="btn btn-success">Guardar como Excel</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pie de página -->
+        <div th:replace="~{agente/fragments/piedepagina :: fragment}"></div>
+    </div>
+</div>
+
+
+
+<!--Core JS Files   -->
+        <script src="/assets/js/core/jquery-3.7.1.min.js"></script>
+        <script src="/assets/js/core/popper.min.js"></script>
+        <script src="/assets/js/core/bootstrap.min.js"></script>
+
+        <!-- jQuery Scrollbar -->
+        <script src="/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+        <!-- Datatables -->
+        <script src="/assets/js/plugin/datatables/datatables.min.js"></script>
+
+        <!-- jQuery Vector Maps -->
+        <script src="/assets/js/plugin/jsvectormap/jsvectormap.min.js"></script>
+        <script src="/assets/js/plugin/jsvectormap/world.js"></script>
+
+        <!-- Kaiadmin JS -->
+        <script src="/assets/js/kaiadmin.min.js"></script>
+        <!-- JavaScript for refreshing the preview and updating the filters -->
+        <script>
+            // Function to update the filters in the subtitle and refresh the preview
+            function refreshPreview() {
+                const dni = document.getElementById("dniFilter").value || '-';
+                const name = document.getElementById("nameFilter").value || '-';
+
+                // Update the subtitle with the selected filters
+                document.getElementById("filterSubtitle").textContent = `(DNI: ${dni}, Usuario: ${name})`;
+
+                // Logic to refresh the preview goes here, for now, it just simulates a refresh
+                console.log("Preview refreshed with filters: DNI:", dni, "Usuario:", name);
+            }
+
+            // Event listener for the 'Generar reporte' button to refresh the preview
+            document.getElementById("generateReportBtn").addEventListener("click", refreshPreview);
+
+
+        </script>
+    </body>
+</html>

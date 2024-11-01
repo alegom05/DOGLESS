@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Agregar producto para reposición</title>
+    <meta
+            content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
+            name="viewport"
+    />
+    <link
+            rel="icon"
+            href="/assets/img/kaiadmin/favicon.ico"
+            type="image/x-icon"
+    />
+
+    <!-- Fonts and icons -->
+    <script src="/assets/js/plugin/webfont/webfont.min.js"></script>
+    <script>
+      WebFont.load({
+        google: { families: ["Public Sans:300,400,500,600,700"] },
+        custom: {
+          families: [
+            "Font Awesome 5 Solid",
+            "Font Awesome 5 Regular",
+            "Font Awesome 5 Brands",
+            "simple-line-icons",
+          ],
+          urls: ["/assets/css/fonts.min.css"],
+        },
+        active: function () {
+          sessionStorage.fonts = true;
+        },
+      });
+    </script>
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/assets/css/plugins.min.css" />
+    <link rel="stylesheet" href="/assets/css/kaiadmin.min.css" />
+
+
+
+  </head>
+  <body>
+    <div class="wrapper">
+      <!-- Reemplaza barra lateral con el fragmento de Thymeleaf -->
+      <div th:replace="~{zonal/fragments/barralateralzonal :: body(activePage='usuarios', activeSubPage='adminzonal')}"></div>
+      <!-- Fin barra lateral -->
+      
+      <div class="main-panel">
+        <!-- Reemplaza navbar con el fragmento de Thymeleaf -->
+        <div th:replace="~{zonal/fragments/navbarheaderzonal :: fragment}"></div>
+        <!-- Fin Navbar -->
+
+
+        <!-- Texto o contenido central -->
+        <div class="container">
+          <div class="page-inner">
+            <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
+              <div>
+                <h3 class="fw-bold mb-3" th:text="${reposicion.id==null? 'Nueva Reposición':'Editar Reposición'}">Editar Reposición</h3>
+
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="card">
+                  <div class="card-body">
+                    <form class="needs-validation" th:object="${reposicion}" th:action="@{/zonal/guardarReposicion}" method="POST">
+                    <input th:field="*{id}" type="hidden"/>
+                      <div class="container">
+                        <div class="row">
+                          <!-- Columna izquierda -->
+                          <div class="col-md-6">
+                            <!--
+                            <div class="mb-3">
+                              <label for="idproveedor" class="form-label">Proveedor: (*)</label>
+                              <select name="idproveedor" id="idproveedor" class="form-select" required>
+                                <option value="" disabled selected>Escoja una opción</option>
+                                <option th:each="proveedor : ${listaProveedores}" th:text="${proveedor.tienda}" th:value="${proveedor.id}"></option>
+                              </select>
+                              <div class="invalid-feedback">Por favor seleccionar una zona.</div>
+                            </div>
+                             -->
+                            <div class="mb-3">
+                              <label class="form-label">Nombre del producto</label>
+                              <input th:field="*{producto.nombre}" type="text" class="form-control" disabled/>
+                              <div class="invalid-feedback" th:if="${#fields.hasErrors('producto.nombre')}" th:errors="*{producto.nombre}"></div>
+                            </div>
+
+                            <div class="mb-3">
+                              <label class="form-label">Cantidad</label>
+                              <input th:field="*{cantidad}" type="number" class="form-control"/>
+                              <div class="invalid-feedback" th:if="${#fields.hasErrors('cantidad')}" th:errors="*{cantidad}"></div>
+                            </div>
+
+                            <div class="mb-3">
+                              <label class="form-label">Fecha de pedido</label>
+                              <input type="date" th:field="*{fecha_pedido}" class="form-control"/>
+                              <div class="invalid-feedback" th:if="${#fields.hasErrors('fecha_pedido')}" th:errors="*{fecha_pedido}"></div>
+                            </div>
+
+                            <div class="mb-3">
+                              <label class="form-label">Proveedor</label>
+                              <input th:field="*{producto.proveedor.tienda}" type="text" class="form-control"/>
+                              <div class="invalid-feedback" th:if="${#fields.hasErrors('producto.proveedor.tienda')}" th:errors="*{producto.proveedor.tienda}"></div>
+                            </div>
+
+
+                          </div>
+
+                          <!-- Columna derecha -->
+                          <div class="col-md-6">
+
+
+                            <div class="mb-3">
+                              <label class="form-label">Estado</label>
+                              <select name="aprobar" id="aprobar" class="form-control">
+                                <option value="">Elegir un estado</option>
+                                <option value="Aprobado">Aprobado</option>
+                                <option value="Pendiente">Pendiente</option>
+                              </select>
+                              <div class="invalid-feedback" th:if="${#fields.hasErrors('aprobar')}" th:errors="*{aprobar}"></div>
+                            </div>
+
+                            <div class="mb-3">
+                              <label class="form-label">Descripción:</label>
+                              <textarea name="descripcion" id="descripcion" class="form-control" rows="9" placeholder="Ej: El iPhone 14 Pro es el último modelo de la serie de teléfonos móviles premium..."
+                                        th:field="*{producto.descripcion}" required></textarea>
+                              <div class="invalid-feedback" th:if="${#fields.hasErrors('producto.descripcion')}" th:errors="*{producto.descripcion}"></div>
+                            </div>
+                        </div>
+
+                        <div class="btn-container" style="text-align: center; margin-top: 20px;">
+                          <button type="submit" class="btn btn-primary" style="width: 280px"
+                                  th:text="${reposicion.id==null? 'Crear':'Actualizar'}">Actualizar
+                          </button>
+                          <a th:href="@{/zonal/reposiciones}" class="btn btn-secondary" style="width: 280px;">Cancelar</a>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+      <!--Core JS Files   -->
+      <script src="/assets/js/core/jquery-3.7.1.min.js"></script>
+      <script src="/assets/js/core/popper.min.js"></script>
+      <script src="/assets/js/core/bootstrap.min.js"></script>
+
+      <!-- jQuery Scrollbar -->
+      <script src="/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+      <!-- Datatables -->
+      <script src="/assets/js/plugin/datatables/datatables.min.js"></script>
+
+      <!-- jQuery Vector Maps -->
+      <script src="/assets/js/plugin/jsvectormap/jsvectormap.min.js"></script>
+      <script src="/assets/js/plugin/jsvectormap/world.js"></script>
+
+      <!-- Kaiadmin JS -->
+      <script src="/assets/js/kaiadmin.min.js"></script>
+      <script>
+        $(document).ready(function () {
+          var forms = document.querySelectorAll('.needs-validation');
+  
+          Array.prototype.slice.call(forms).forEach(function (form) {
+            form.addEventListener('submit', function (event) {
+              if (!form.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+              }
+  
+              form.classList.add('was-validated');
+            }, false);
+          });
+          // Validar que solo se ingresen letras en los campos de nombre y apellidos
+          document.addEventListener("input", function(event) {
+            if (event.target && event.target.id === "nombre") {
+              event.target.value = event.target.value.replace(/[^a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ\s]/g, "");
+            } else if (event.target && event.target.id === "apellidos") {
+              event.target.value = event.target.value.replace(/[^a-zA-ZñÑáéíóúÁÉÍÓÚ\s]/g, "");
+            }
+          });
+          // Validar que solo se ingresen letras en los campos de color
+          document.addEventListener("input", function(event) {
+            if (event.target && event.target.id === "color") {
+              event.target.value = event.target.value.replace(/[^a-zA-ZñÑáéíóúÁÉÍÓÚ\s]/g, "");
+            }
+          });
+  
+          //Validar que se ingresen letras y números
+          document.addEventListener("input", function(event) {
+            if (event.target && event.target.id === "modelo") {
+              // Permitir letras, números, espacios y caracteres especiales de acentuación
+              event.target.value = event.target.value.replace(/[^a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ\s]/g, "");
+            }
+          });
+  
+  
+  
+  
+          // Validar que solo se ingresen números en el campo de DNI
+          document.addEventListener("input", function(event) {
+            if (event.target && event.target.id === "dni") {
+              let value = event.target.value.replace(/\D/g, ""); // Eliminar caracteres no numéricos
+              if (value.length > 8) {
+                value = value.slice(0, 8); // Limitar a 8 dígitos
+              }
+              event.target.value = value;
+            }
+          });
+  
+          // Validar que solo se ingresen números en el campo de RUC
+          document.addEventListener("input", function(event) {
+            if (event.target && event.target.id === "ruc") {
+              let value = event.target.value.replace(/\D/g, ""); // Eliminar caracteres no numéricos
+              if (value.length > 11) {
+                value = value.slice(0, 11); // Limitar a 11 dígitos
+              }
+              event.target.value = value;
+            }
+          });
+          // Validar que solo se ingresen números en el campo de teléfono
+          document.addEventListener("input", function(event) {
+            if (event.target && event.target.id === "telefono") {
+              let value = event.target.value.replace(/\D/g, ""); // Eliminar caracteres no numéricos
+              if (value.length > 9) {
+                value = value.slice(0, 9); // Limitar a 9 dígitos
+              }
+              event.target.value = value;
+            }
+          });
+          document.addEventListener("input", function(event) {
+            if (event.target && event.target.id === "direccion") {
+              let pattern = /^[a-zA-Z0-9#áéíóúÁÉÍÓÚñÑ.]+\s[a-zA-Z0-9#áéíóúÁÉÍÓÚñÑ.]+(\s[a-zA-Z0-9#áéíóúÁÉÍÓÚñÑ.]+)?(\s[a-zA-Z0-9#áéíóúÁÉÍÓÚñÑ.]+)?$/;
+              let value = event.target.value;
+              if (!pattern.test(value)) {
+                event.target.setCustomValidity("La dirección no cumple con el formato requerido.");
+              } else {
+                event.target.setCustomValidity("");
+              }
+            }
+          });
+          document.addEventListener("input", function(event) {
+            if (event.target && event.target.id === "correo") {
+              let pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Patrón de correo
+              if (!pattern.test(event.target.value)) {
+                event.target.setCustomValidity("Por favor, ingrese un correo válido.");
+              } else {
+                event.target.setCustomValidity("");
+              }
+            }
+          });
+  
+          document.addEventListener("input", function(event) {
+            if (event.target && event.target.id === "cantidad") {
+              // Permitir letras, números y caracteres especiales específicos
+              event.target.value = event.target.value.replace(/[^a-zA-Z0-9!@#$%^&*]/g, "");
+            }
+          });
+        });
+      </script>
+      <!-- Script para vista previa de imagen -->
+      <script>
+        function previewImage(event) {
+          var input = event.target;
+          var reader = new FileReader();
+          reader.onload = function() {
+            var preview = document.getElementById('imagePreview');
+            preview.src = reader.result;  // Reemplazar imagen por defecto con la seleccionada
+            preview.style.display = 'block';
+          }
+          reader.readAsDataURL(input.files[0]);
+        }
+      </script>
+  </body>
+</html>

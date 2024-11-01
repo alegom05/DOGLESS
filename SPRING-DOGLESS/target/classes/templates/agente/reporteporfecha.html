@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="es " xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <title>Reporte - Ordenes por fecha</title>
+        <meta
+                content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
+                name="viewport"
+        />
+        <link
+                rel="icon"
+                href="/assets/img/kaiadmin/favicon.ico"
+                type="image/x-icon"
+        />
+
+        <!-- Fonts and icons -->
+        <script src="/assets/js/plugin/webfont/webfont.min.js"></script>
+        <script>
+            WebFont.load({
+                google: { families: ["Public Sans:300,400,500,600,700"] },
+                custom: {
+                    families: [
+                        "Font Awesome 5 Solid",
+                        "Font Awesome 5 Regular",
+                        "Font Awesome 5 Brands",
+                        "simple-line-icons",
+                    ],
+                    urls: ["/assets/css/fonts.min.css"],
+                },
+                active: function () {
+                    sessionStorage.fonts = true;
+                },
+            });
+        </script>
+
+        <!-- CSS Files -->
+        <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="/assets/css/plugins.min.css" />
+        <link rel="stylesheet" href="/assets/css/kaiadmin.min.css" />
+
+
+    </head>
+    <body>
+        <div class="wrapper">
+            <!-- Reemplaza barra lateral con el fragmento de Thymeleaf -->
+            <div th:replace="~{agente/fragments/barralateralagente :: body(activePage='reportes', activeSubPage='ordenes')}"></div>
+            <!-- Fin barra lateral -->
+
+            <div class="main-panel">
+                <!-- Reemplaza navbar con el fragmento de Thymeleaf -->
+                <div th:replace="~{agente/fragments/navbarheaderagente :: fragment}"></div>
+                <!-- Fin Navbar -->
+                <!--  contenido central -->
+                <div class="container">
+                    <div class="page-inner">
+                        <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
+                            <div>
+                                <h3 class="fw-bold mb-3">Reporte de Órdenes Gestionadas por Fecha</h3>
+                                <h6 class="op-7 mb-2">
+                                    Selecciona un rango de fechas para visualizar las órdenes gestionadas dentro de ese periodo.
+                                </h6>
+                            </div>
+                        </div>
+
+                        <!-- Date Range Filter and Buttons -->
+                        <div class="d-flex justify-content-between mb-3">
+                            <!-- Date Range Inputs -->
+                            <div class="d-flex align-items-center">
+                                <div class="form-group me-2">
+                                    <label for="startDate">Desde:</label>
+                                    <input type="date" id="startDate" class="form-control-sm">
+                                </div>
+                                <div class="form-group me-2">
+                                    <label for="endDate">Hasta:</label>
+                                    <input type="date" id="endDate" class="form-control-sm">
+                                </div>
+                            </div>
+                            <!-- Generate report and back buttons -->
+                            <div class="d-flex align-items-center justify-content-center">
+                                <button id="generateReportBtn" class="btn btn-secondary me-2">Generar reporte</button>
+                                <a href="/agente/reportesOrdenes" class="btn btn-primary">Regresar</a>
+                            </div>
+                        </div>
+
+                        <!-- Preview Section -->
+                        <div>
+                            <h4 class="fw-bold mb-3">Previsualización:</h4>
+                        </div>
+                        <div class="card mt-4" style="width: 90%; margin: 0 auto;">
+                            <div class="card-header bg-dark text-white">
+                                <h4 class="card-title text-center text-white">Reporte de Órdenes Gestionadas por Fecha</h4>
+                                <h6 id="dateRangeSubtitle" class="text-center">(Selecciona un rango de fechas)</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered text-center">
+                                        <thead class="table-info">
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Número de items</th>
+                                                <th>Usuario</th>
+                                                <th>Fecha de generación</th>
+                                                <th>Estado de orden</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr th:each="orden : ${listaOrdenes}">
+                                            <td th:text="${orden.id}"></td>
+                                                <td>3</td>
+                                                <td>Javier Perez</td>
+                                            <td th:text="${#dates.format(orden.fecha, 'dd-MM-yyyy')}"></td>
+                                                <td class="text-warning">EN VALIDACIÓN</td>
+                                            </tr>
+                                            <tr>
+                                                <td>1236</td>
+                                                <td>1</td>
+                                                <td>Red Richards</td>
+                                                <td>14/11/2024</td>
+                                                <td class="text-warning">EN VALIDACIÓN</td>
+                                            </tr>
+                                            <tr>
+                                                <td>545</td>
+                                                <td>8</td>
+                                                <td>Peter Pan</td>
+                                                <td>14/11/2024</td>
+                                                <td class="text-success">EN PROCESO</td>
+                                            </tr>
+                                            <tr>
+                                                <td>569</td>
+                                                <td>9</td>
+                                                <td>Peter Parker</td>
+                                                <td>14/11/2024</td>
+                                                <td class="text-info">ARRIBO AL PAÍS</td>
+                                            </tr>
+                                            <tr>
+                                                <td>1456</td>
+                                                <td>2</td>
+                                                <td>Misterio Rey</td>
+                                                <td>14/11/2024</td>
+                                                <td class="text-primary">EN ADUANAS</td>
+                                            </tr>
+                                            <tr>
+                                                <td>1499</td>
+                                                <td>1</td>
+                                                <td>Melania Reyes</td>
+                                                <td>14/11/2024</td>
+                                                <td class="text-success">RECIBIDO</td>
+                                            </tr>
+                                            <tr>
+                                                <td>478</td>
+                                                <td>6</td>
+                                                <td>Jairo Rocop</td>
+                                                <td>14/11/2024</td>
+                                                <td class="text-danger">CANCELADO</td>
+                                            </tr>
+                                            <tr>
+                                                <td>459</td>
+                                                <td>2</td>
+                                                <td>Yani Yoru</td>
+                                                <td>14/11/2024</td>
+                                                <td class="text-success">RECIBIDO</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Save options -->
+                        <div class="d-flex justify-content-center mt-4">
+                            <button class="btn btn-danger me-2">Guardar como PDF</button>
+                            <button class="btn btn-success">Guardar como Excel</button>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+                <!-- Pie de página -->
+                <div th:replace="~{agente/fragments/piedepagina :: fragment}"></div>
+            </div>
+        </div>
+
+
+
+        <!--Core JS Files   -->
+        <script src="/assets/js/core/jquery-3.7.1.min.js"></script>
+        <script src="/ssets/js/core/popper.min.js"></script>
+        <script src="/assets/js/core/bootstrap.min.js"></script>
+
+        <!-- jQuery Scrollbar -->
+        <script src="/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+        <!-- Datatables -->
+        <script src="/assets/js/plugin/datatables/datatables.min.js"></script>
+
+        <!-- jQuery Vector Maps -->
+        <script src="/assets/js/plugin/jsvectormap/jsvectormap.min.js"></script>
+        <script src="/assets/js/plugin/jsvectormap/world.js"></script>
+
+        <!-- Kaiadmin JS -->
+        <script src="/assets/js/kaiadmin.min.js"></script>
+        <script>
+            // Function to update the date range in the subtitle and refresh the preview
+            function refreshPreview() {
+                const startDate = document.getElementById("startDate").value;
+                const endDate = document.getElementById("endDate").value;
+
+                // Update the subtitle with the selected date range
+                if (startDate && endDate) {
+                    document.getElementById("dateRangeSubtitle").textContent = `(${startDate} - ${endDate})`;
+                } else {
+                    document.getElementById("dateRangeSubtitle").textContent = "(Selecciona un rango de fechas)";
+                }
+
+                // Logic to refresh the preview goes here, for now, it just simulates a refresh
+                console.log("Preview refreshed with date range:", startDate, endDate);
+            }
+
+            // Event listener for the 'Generar reporte' button to refresh the preview
+            document.getElementById("generateReportBtn").addEventListener("click", refreshPreview);
+
+
+        </script>
+    </body>
+</html>

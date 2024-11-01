@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+  </head>
+  <body>
+
+      <!-- Barra lateral -->
+      <div class="sidebar sidebar-style-2" data-background-color="dark">
+        <div class="sidebar-logo">
+          <div class="logo-header" data-background-color="dark">
+            <a href="/admin/" class="logo">
+              <img src="/assets/img/kaiadmin/slogan_white_v3.png" alt="navbar brand" class="navbar-brand" height="50" />
+            </a>
+            <div class="nav-toggle">
+              <button class="btn btn-toggle toggle-sidebar"><i class="gg-menu-right"></i></button>
+              <button class="btn btn-toggle sidenav-toggler"><i class="gg-menu-left"></i></button>
+            </div>
+            <button class="topbar-toggler more"><i class="gg-more-vertical-alt"></i></button>
+          </div>
+        </div>
+        <div class="sidebar-wrapper scrollbar scrollbar-inner">
+          <div class="sidebar-content">
+            <ul class="nav nav-secondary">
+              <!-- Barra de navegación lateral-->
+              <li class="nav-item" th:classappend="${activePage == 'home' ? 'active submenu' : ''}">
+                <a href="/admin">
+                  <i class="fas fa-home"></i>
+                  <p>Página principal</p>
+                </a>
+              </li>
+              <li class="nav-item" th:classappend="${activePage == 'solicitudes' ? 'active submenu' : ''}">
+                <a href="/admin/solicitudes">
+                  <i class="fas fa-user-plus"></i>
+                  <p>Solicitudes</p>
+                </a>
+              </li>
+              <li class="nav-item" th:classappend="${activePage == 'dashboard' ? 'active submenu' : ''}">
+                <a href="/admin/dashboard">
+                  <i class="fas fa-chart-bar"></i>
+                  <p>Dashboard</p>
+                </a>
+              </li>
+
+              <!-- Sección Usuarios -->
+              <li class="nav-item" th:classappend="${activePage == 'usuarios' ? 'active submenu' : ''}">
+                <a data-bs-toggle="collapse" href="#tables1" th:aria-expanded="${activePage == 'usuarios' ? 'true' : 'false'}">
+                  <i class="fas fa-users"></i>
+                  <p>Usuarios</p>
+                  <span class="caret"></span>
+                </a>
+                <div class="collapse" id="tables1" th:classappend="${activePage == 'usuarios' ? 'show' : ''}">
+                  <ul class="nav nav-collapse">
+                    <li th:classappend="${activeSubPage == 'adminzonal' ? 'active' : ''}">
+                      <a href="/admin/adminzonal">
+                        <span class="sub-item">Administradores zonales</span>
+                      </a>
+                    </li>
+                    <li th:classappend="${activeSubPage == 'agentes' ? 'active' : ''}">
+                      <a href="/admin/agentes">
+                        <span class="sub-item">Agentes zonales</span>
+                      </a>
+                    </li>
+                    <li th:classappend="${activeSubPage == 'usuariosfinales' ? 'active' : ''}">
+                      <a href="/admin/usuarios">
+                        <span class="sub-item">Usuarios finales</span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+
+              <!-- Sección Personal -->
+              <li class="nav-item" th:classappend="${activePage == 'personal' ? 'active submenu' : ''}">
+                <a data-bs-toggle="collapse" href="#tables2" th:aria-expanded="${activePage == 'personal' ? 'true' : 'false'}">
+                  <i class="far fa-handshake"></i>
+                  <p>Personal</p>
+                  <span class="caret"></span>
+                </a>
+                <div class="collapse" id="tables2" th:classappend="${activePage == 'personal' ? 'show' : ''}">
+                  <ul class="nav nav-collapse">
+                    <li th:classappend="${activeSubPage == 'proveedores' ? 'active' : ''}">
+                      <a href="/admin/proveedores">
+                        <span class="sub-item">Proveedores</span>
+                      </a>
+                    </li>
+                    <li th:classappend="${activeSubPage == 'productos' ? 'active' : ''}">
+                      <a href="/admin/productos">
+                        <span class="sub-item">Productos</span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+
+              <!-- Sección Órdenes de reposición -->
+              <li class="nav-item" th:classappend="${activePage == 'ordenes' ? 'active submenu' : ''}">
+                <a data-bs-toggle="collapse" href="#tables3" th:aria-expanded="${activePage == 'ordenes' ? 'true' : 'false'}">
+                  <i class="fas fa-boxes"></i>
+                  <p>Órdenes de reposición</p>
+                  <span class="caret"></span>
+                </a>
+                <div class="collapse" id="tables3" th:classappend="${activePage == 'ordenes' ? 'show' : ''}">
+                  <ul class="nav nav-collapse">
+                    <li th:classappend="${activeSubPage == 'pendientes' ? 'active' : ''}">
+                      <a href="/admin/productosPendientes">
+                        <span class="sub-item">Productos pendientes</span>
+                      </a>
+                    </li>
+                    <li th:classappend="${activeSubPage == 'aprobados' ? 'active' : ''}">
+                      <a href="/admin/productosAprobados">
+                        <span class="sub-item">Productos aprobados</span>
+                      </a>
+                    </li>
+                    <li th:classappend="${activeSubPage == 'rechazados' ? 'active' : ''}">
+                      <a href="/admin/productosRechazados">
+                        <span class="sub-item">Productos rechazados</span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!-- Fin barra lateral -->
+  </body>
+</html>
