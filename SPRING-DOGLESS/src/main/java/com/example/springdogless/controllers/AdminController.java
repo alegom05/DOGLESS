@@ -1,5 +1,7 @@
 package com.example.springdogless.controllers;
 
+import com.example.springdogless.DTO.ProductoDTO;
+import com.example.springdogless.DTO.ProveedorDTO;
 import com.example.springdogless.Repository.*;
 
 //import com.example.springdogless.dao.UsuarioDao;
@@ -1048,8 +1050,14 @@ public class AdminController {
         Integer usuariosInactivos = usuarioRepository.usuariosInactivos();
         model.addAttribute("usuariosInactivos", usuariosInactivos);
         //3ra gráfica
+        List<ProveedorDTO> proveedoresMasSolicitados = proveedorRepository.findTop10TiendasMasSolicitadas();
+        model.addAttribute("proveedoresMasSolicitados", proveedoresMasSolicitados);
+        System.out.println("*****");
 
-        //5ta gráfica -- incompleta, solo muestra el mes de setiembre (9)
+        for (ProveedorDTO proveedor : proveedoresMasSolicitados) {
+            System.out.println("Tienda: " + proveedor.getTienda() + ", Total Pedidos: " + proveedor.getTotalPedidos());
+        }
+        //5ta gráfica
         Integer ordenes1 = ordenRepository.findOrdenesByMes(5);
         Integer ordenes2 = ordenRepository.findOrdenesByMes(6);
         Integer ordenes3 = ordenRepository.findOrdenesByMes(7);
@@ -1062,9 +1070,6 @@ public class AdminController {
         model.addAttribute("ordenes4", ordenes4);
         model.addAttribute("ordenes5", ordenes5);
         model.addAttribute("ordenes6", ordenes6);
-
-        System.out.println("Órdenes mes 5: " + ordenes5);
-        System.out.println("Órdenes mes 6: " + ordenes6);
         //6ta gráfica
         //Siguiendo el ejemplo se envían los demas parámetros-->
         Integer norte = ordenRepository.findOrdenesByZona(1);

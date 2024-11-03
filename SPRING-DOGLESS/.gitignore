@@ -1,0 +1,51 @@
+# Directorios de construcción
+/target/
+/build/
+
+# Configuración de IntelliJ IDEA
+*.iml
+.idea/
+*.ipr
+*.iws
+
+# Configuración de Eclipse y STS
+.classpath
+.project
+.settings/
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db
+
+# Configuración de Maven
+log/
+!src/main/resources/log/
+mvnw
+mvnw.cmd
+/.mvn/wrapper/maven-wrapper.jar
+/.mvn/wrapper/maven-wrapper.properties
+
+# Configuración de Gradle
+.gradle/
+/build/
+!gradle/wrapper/gradle-wrapper.jar
+.gradle/
+!gradle-wrapper.jar
+.gradle/
+/build/
+/out/
+/bin/
+/.gradle/
+/gradlew
+gradlew.bat
+/gradle/
+/build/
+
+# Configuración de archivos de sistema operativo
+.idea/
+/.vscode/
+/out/
+/bin/
+/.gitignore
+*.iml
+.directory

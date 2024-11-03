@@ -1,6 +1,7 @@
 package com.example.springdogless.Repository;
 
 
+import com.example.springdogless.DTO.ProveedorDTO;
 import com.example.springdogless.entity.Proveedor;
 import com.example.springdogless.entity.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -33,5 +34,10 @@ public interface ProveedorRepository extends JpaRepository<Proveedor, Integer>{
     List<Object[]> findTop5Proveedores();
 
 
+    @Query("SELECT p.tienda AS tienda, COUNT(p) AS totalPedidos " +
+            "FROM proveedores p " +
+            "GROUP BY p.tienda " +
+            "ORDER BY totalPedidos DESC")
+    List<ProveedorDTO> findTop10TiendasMasSolicitadas();
 }
 
