@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- Iconos externos -->
+        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+        <!-- Referencia correcta al archivo de estilos utilizando Thymeleaf -->
+        <link rel="stylesheet" th:href="@{assets/css/style_index.css}">
+
+        <title>Iniciar Sesión</title>
+    </head>
+    <body>
+        <!-- Contenido del login -->
+        <form th:action="@{/processLogin}" method="post">
+            <!-- Contenedor del logo -->
+            <div class="logo-container">
+                <img th:src="@{assets/images_index/slogan_white_v3.png}" alt="Icono Empresa" class="logo-icon" loading="lazy">
+            </div>
+
+            <!-- Formulario de inicio de sesión -->
+            <div class="form-box">
+                <div class="login-container" id="login">
+                    <div class="top">
+                        <span>¿No tienes una cuenta? <a th:href="@{/register}">Regístrate</a></span>
+                        <header>Iniciar Sesión</header>
+                    </div>
+                    <div class="input-box">
+                        <input type="text" class="input-field" placeholder="Correo electrónico" id="username" name="username"
+                        required autofocus>
+
+                        <i class="bx bx-user"></i>
+                    </div>
+                    <div class="input-box">
+                        <input type="password" class="input-field" placeholder="Contraseña" id="password" name="password">
+                        <i class="bx bx-lock-alt"></i>
+                    </div>
+                    <div class="input-box">
+                        <input type="submit" class="submit" value="Iniciar Sesión" id="loginButton">
+                    </div>
+                    <div class="two-col">
+                        <div class="one">
+                            <input type="checkbox" id="remember-check">
+                            <label for="remember-check"> Recuérdame</label>
+                        </div>
+                        <div class="two">
+                            <label><a th:href="@{/olvidastecontasenha}">¿Olvidaste tu contraseña?</a></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </body>
+
+        <!-- JavaScript para validaciones -->
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            var usernameField = document.getElementById('username');
+            var passwordField = document.getElementById('password');
+            var username = usernameField.value;
+            var password = passwordField.value;
+
+            // Validación básica
+            if (!username || !password) {
+                event.preventDefault();
+                alert("Por favor, complete todos los campos.");
+                return;
+            }
+
+            // Validación de formato de correo electrónico
+            if (!validarCorreo(username)) {
+                event.preventDefault();
+                alert("Por favor, ingrese un correo electrónico válido.");
+                return;
+            }
+        });
+
+        function validarCorreo(email) {
+            var expReg = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            return expReg.test(email);
+        }
+    </script>
+    </body>
+</html>

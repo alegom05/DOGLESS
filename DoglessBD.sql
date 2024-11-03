@@ -328,6 +328,7 @@ VALUES
 (56, 'Jorge', 'Vega', '24006666', 'jorge.vega@oeste.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654368', 'Av. Oeste 4', 4, 29, NULL, 'inactivo', NULL, NULL, NULL, NULL, 4, '2004-10-03', NULL),
 (57, 'Lucía', 'Carrillo', '25007777', 'lucia.carrillo@oeste.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654369', 'Calle Oeste 5', 4, 30, NULL, 'activo', NULL, NULL, NULL, NULL, 4, '2002-01-19', NULL),
 (58, 'Emilio', 'Vargas', '26008888', 'emilio.vargas@oeste.com', '$2a$12$SroLYpp9Is6usCmU4EUIOe693IPZnGunKoQ68G1qmq9knxHpPHBGu', '987654370', 'Av. Oeste 6', 4, 31, NULL, 'activo', NULL, NULL, NULL, NULL, 4, '2005-05-27', NULL);
+
 -- -----------------------------------------------------
 -- Table `dogless`.`ordenes`
 -- -----------------------------------------------------
@@ -360,20 +361,23 @@ VALUES
 -- Orden 3 para el usuario 41
 ('En Ruta', '2024-09-03', 'Calle Sur 3, Lima', 489.97, 'tarjeta', 41),
 -- Orden 4 para el usuario 42
-('Recibido', '2024-09-04', 'Av. Sur 4, Lima', 1199.99, 'tarjeta', 42),
+('Recibido', '2024-06-04', 'Av. Sur 4, Lima', 1199.99, 'tarjeta', 42),
 -- Orden 5 para el usuario 47
 ('En Aduanas', '2024-09-05', 'Calle Este 1, Lima', 750.99, 'tarjeta', 47),
 -- Orden 6 para el usuario 48
 ('Arribo al País', '2024-09-06', 'Av. Este 2, Lima', 799.99, 'tarjeta', 48),
 -- Orden 7 para el usuario 53
-('En Ruta', '2024-09-07', 'Calle Oeste 1, Lima', 599.98, 'tarjeta', 53),
+('En Ruta', '2024-07-31', 'Calle Oeste 1, Lima', 599.98, 'tarjeta', 53),
 -- Orden 8 para el usuario 54
-('Creado', '2024-09-08', 'Av. Oeste 2, Lima', 999.98, 'tarjeta', 54),
+('Creado', '2024-08-08', 'Av. Oeste 2, Lima', 999.98, 'tarjeta', 54),
 -- Orden 9 para el usuario 49
 ('En Validación', '2024-09-09', 'Calle Este 3, Lima', 129.98, 'tarjeta', 49),
 -- Orden 10 para el usuario 55
-('En Aduanas', '2024-09-10', 'Calle Norte 5, Lima', 1350.50, 'tarjeta', 55);
-
+('En Aduanas', '2024-09-10', 'Calle Norte 5, Lima', 1350.50, 'tarjeta', 55),
+-- Orden 11 para el usuario 32
+('En Aduanas', '2024-09-10', 'Calle Oeste 10, Lima', 1350.50, 'tarjeta', 32),
+-- Orden 11 para el usuario 32
+('Recibido', '2024-06-09', 'Av. Sur 9, Lima', 1199.99, 'tarjeta', 11);
 
 -- -----------------------------------------------------
 -- Table `dogless`.`proveedores`
@@ -416,8 +420,21 @@ VALUES
 -- Proveedor 9
 ('Miguel', 'Reyes', '987654329', '66778899001', '90123456', 'TecnoZone', 'activo'),
 -- Proveedor 10
-('Carla', 'Vega', '987654330', '77889900112', '01234567', 'PCMaster', 'activo');
-
+('Carla', 'Vega', '987654330', '77889900112', '01234567', 'PCMaster', 'activo'),
+-- Proveedor 11
+('Luis', 'Pérez', '987654331', '77889900113', '01234568', 'ElectroShop', 'activo'),
+-- Proveedor 12
+('Ana', 'González', '987654332', '77889900114', '01234569', 'ElectroShop', 'activo'),
+-- Proveedor 13
+('Mario', 'Ramos', '987654333', '77889900115', '01234570', 'GameHouse', 'activo'),
+-- Proveedor 14
+('Laura', 'Martínez', '987654334', '77889900116', '01234571', 'TechWorld', 'activo'),
+-- Proveedor 15
+('Carlos', 'Sánchez', '987654335', '77889900117', '01234572', 'TechWorld', 'activo'),
+-- Proveedor 16
+('Sofía', 'Jiménez', '987654336', '77889900118', '01234573', 'TechWorld', 'activo'),
+-- Proveedor 17
+('Ricardo', 'López', '987654337', '77889900119', '01234574', 'TechWorld', 'activo');
 
 
 -- -----------------------------------------------------

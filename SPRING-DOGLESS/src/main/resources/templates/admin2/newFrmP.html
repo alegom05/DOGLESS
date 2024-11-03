@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/navbar.html :: header( title = 'Producto')}"></head>
+    <body>
+        <div class="container">
+            <nav th:replace="~{fragments/navbar.html :: navbar( active = 'Provider')}"></nav>
+            <div class="row mb-4">
+                <div class="col-md-6 offset-md-3">
+                    <h2>Nuevo Producto</h2>
+                    <hr/>
+                    <form method="post" th:action="@{/admin/guardarProducto}" th:object="${producto}">
+                    <div th:if="${msg != null}" th:text="${msg}" class="alert alert-success" role="alert"></div>
+
+                        <div class="mb-3">
+                            <label for="nombre" class="form-label">Nombre del producto</label>
+                            <input type="text" class="form-control" id="nombre" th:field="*{nombre}"
+                                   th:classappend="${#fields.hasErrors('nombre')?'is-invalid':''}">
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('nombre')}"
+                                 th:errors="*{nombre}" ></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="categoria" class="form-label">Categoría</label>
+                            <input type="text" class="form-control" id="categoria" th:field="*{categoria}"
+                                   th:classappend="${#fields.hasErrors('categoria')?'is-invalid':''}">
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('categoria')}"
+                                 th:errors="*{categoria}" ></div>
+                        </div>
+
+
+                        <div class="col">
+                            <div class="mb-3">
+                                <label for="idproveedor" class="form-label">Proveedor: (*)</label>
+                                <select name="idproveedor" id="idproveedor" class="form-select" required>
+                                    <option value="" disabled selected>Escoja una opción</option>
+                                    <option th:each="proveedor : ${listaProveedores}"
+                                            th:text="${proveedor.nombre}"
+                                            th:value="${proveedor.id}">
+                                    </option>
+                                </select>
+                                <div class="invalid-feedback">Por favor seleccionar una zona.</div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="precio" class="form-label">Precio</label>
+                            <input type="number" class="form-control" id="precio" th:field="*{precio}"
+                                   th:classappend="${#fields.hasErrors('precio')?'is-invalid':''}">
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('precio')}"
+                                 th:errors="*{precio}" ></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="modelos" class="form-label">Modelo</label>
+                            <input type="text" class="form-control" id="modelos" th:field="*{modelos}"
+                                   th:classappend="${#fields.hasErrors('modelos')?'is-invalid':''}">
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('modelos')}"
+                                 th:errors="*{modelos}" ></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="costoenvio" class="form-label">Costo de envío</label>
+                            <input type="number" class="form-control" id="costoenvio" th:field="*{costoenvio}"
+                                   th:classappend="${#fields.hasErrors('costoenvio')?'is-invalid':''}">
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('costoenvio')}"
+                                 th:errors="*{costoenvio}" ></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="colores" class="form-label">Color</label>
+                            <input type="text" class="form-control" id="color" th:field="*{colores}"
+                                   th:classappend="${#fields.hasErrors('colores')?'is-invalid':''}">
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('colores')}"
+                                 th:errors="*{colores}" ></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="descripcion" class="form-label">Descripción</label>
+                            <input type="text" class="form-control" id="descripcion" th:field="*{descripcion}"
+                                   th:classappend="${#fields.hasErrors('descripcion')?'is-invalid':''}">
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('descripcion')}"
+                                 th:errors="*{descripcion}" ></div>
+                        </div>
+
+                        <!--
+                        <div class="mb-3">
+                            <label for="ruc" class="form-label">Ruc</label>
+                            <input type="text" class="form-control" id="ruc" th:field="*{ruc}"
+                                   th:classappend="${#fields.hasErrors('ruc')?'is-invalid':''}">
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('ruc')}"
+                                 th:errors="*{ruc}" ></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="ruc" class="form-label">Teléfono</label>
+                            <input type="text" class="form-control" id="telefono" th:field="*{telefono}"
+                                   th:classappend="${#fields.hasErrors('telefono')?'is-invalid':''}">
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('telefono')}"
+                                 th:errors="*{telefono}" ></div>
+                        </div>
+                        Aquí termina
+                        -->
+
+
+                        <!--
+                        <div class="mb-3">
+                            <label class="form-label">Proveedor</label>
+                            <select class="form-select" th:field="*{supplier}">
+                                <option th:each="supplier : ${listaProveedores}" th:value="${supplier.id}"
+                                        th:text="${supplier.companyname}"></option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="category" class="form-label">Categoría</label>
+                            <select class="form-select" th:field="*{category}">
+                                <option th:each="categoria : ${listaProveedores}" th:value="${categoria.id}"
+                                        th:text="${categoria.categoryname}"></option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Cantidad por unidad</label>
+                            <input type="text" class="form-control" th:field="*{quantityperunit}" >
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Precio unitario</label>
+                            <input th:field="*{unitprice}" type="text" class="form-control"
+                                   th:classappend="${#fields.hasErrors('unitprice')?'is-invalid':''}"/>
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('unitprice')}"
+                                 th:errors="*{unitprice}" ></div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Unidades en stock</label>
+                            <input th:field="*{unitsinstock}" type="number" class="form-control"
+                                   th:classappend="${#fields.hasErrors('unitsinstock')?'is-invalid':''}"/>
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('unitsinstock')}"
+                                 th:errors="*{unitsinstock}" ></div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Unidades ordenadas</label>
+                            <input th:field="*{unitsonorder}" type="number" class="form-control"
+                                   th:classappend="${#fields.hasErrors('unitsonorder')?'is-invalid':''}"/>
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('unitsonorder')}"
+                                 th:errors="*{unitsonorder}" ></div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Nivel de reorden</label>
+                            <input type="number" class="form-control" th:field="*{reorderlevel}">
+                        </div>
+                        <div class="form-check pb-2">
+                            <input class="form-check-input" type="checkbox"th:field="*{discontinued}">
+                            <label class="form-check-label">¿Descontinuado?</label>
+                        </div>
+                        -->
+                        <a th:href="@{'/admin/productos'}" class="btn btn-danger">Cancelar</a>
+                        <button type="submit" class="btn btn-primary">Registrar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <script th:replace="~{fragments/navbar.html :: footer-bootstrap}"></script>
+    </body>
+</html>

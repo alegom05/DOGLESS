@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- Iconos externos -->
+        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+        <!-- Estilos de la página utilizando Thymeleaf -->
+        <link rel="stylesheet" th:href="@{assets/css/style_index.css}">
+
+        <title>Registro</title>
+    </head>
+    <body>
+        <div class="wrapper">
+
+
+            <!------------------- registration form --------------------------->
+            <div class="form-box">
+                <div class="register-container" id="register">
+                    <div class="top">
+                        <span>¿Tienes una cuenta? <a th:href="@{/login}">Acceso</a></span>
+                        <header>REGISTRO</header>
+                    </div>
+                    <div class="input-box">
+                        <input type="text" id="nombre" class="input-field" placeholder="Nombre">
+                        <i class="bx bx-user"></i>
+                    </div>
+                    <div class="input-box">
+                        <input type="text" id="apellido" class="input-field" placeholder="Apellido">
+                        <i class="bx bx-user"></i>
+                    </div>
+                    <div class="input-box">
+                        <input type="text" id="dni" class="input-field" placeholder="DNI">
+                        <i class="bx bx-id-card"></i>
+                    </div>
+                    <div class="input-box">
+                        <input type="text" id="email" class="input-field" placeholder="Correo electrónico">
+                        <i class="bx bx-envelope"></i>
+                    </div>
+                    <div class="input-box">
+                        <input type="text" id="direccion" class="input-field" placeholder="Dirección">
+                        <i class="bx bx-home"></i>
+                    </div>
+
+                    <!-- Campo desplegable de Distrito -->
+                    <div class="input-box">
+                        <select class="input-field" id="distrito" name="distrito">
+                            <option value="" disabled selected>Selecciona tu distrito</option>
+                            <option value="Lima">Lima</option>
+                            <option value="Miraflores">Miraflores</option>
+                            <option value="San Isidro">San Isidro</option>
+                            <option value="Barranco">Barranco</option>
+                            <option value="Surco">Surco</option>
+                        </select>
+                        <i class="bx bx-map"></i>
+                    </div>
+
+                    <div class="input-box">
+                        <input type="password" id="contrasena" class="input-field" placeholder="Contraseña">
+                        <i class="bx bx-lock-alt"></i>
+                    </div>
+                    <div class="input-box">
+                        <input type="password" id="confirmar-contrasena" class="input-field" placeholder="Confirmar Contraseña">
+                        <i class="bx bx-lock-alt"></i>
+                    </div>
+
+                    <div class="input-box">
+                        <input type="submit" id="registerButton" class="submit" value="Registrarse">
+                    </div>
+                    <div class="two-col">
+                        <div class="one">
+                            <input type="checkbox" id="register-check">
+                            <label for="register-check"> Recuérdame</label>
+                        </div>
+                        <div class="two">
+                            <label><a href="#">Términos y condiciones</a></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- JavaScript para validaciones -->
+        <script>
+            function validarCorreo(email) {
+                var expReg = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
+                return expReg.test(email);
+            }
+
+            function validarDNI(dni) {
+                return /^\d{8}$/.test(dni); // Verifica que tenga exactamente 8 dígitos
+            }
+
+            function validarContrasena(contrasena) {
+                // Mínimo 8 caracteres, al menos una letra mayúscula, una letra minúscula y un número
+                var expReg = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+                return expReg.test(contrasena);
+            }
+
+            function validarCoincidenciaContrasenas(contrasena, confirmarContrasena) {
+                return contrasena === confirmarContrasena;
+            }
+
+            function validarNombreApellido(nombre) {
+                // Permite solo letras y espacios
+                return /^[a-zA-Z\s]+$/.test(nombre);
+            }
+
+            window.onload = function() {
+                var nombreField = document.getElementById('nombre');
+                var apellidoField = document.getElementById('apellido');
+                var dniField = document.getElementById('dni');
+                var emailField = document.getElementById('email');
+                var direccionField = document.getElementById('direccion');
+                var distritoField = document.getElementById('distrito');
+                var contrasenaField = document.getElementById('contrasena');
+                var confirmarContrasenaField = document.getElementById('confirmar-contrasena');
+                var registerButton = document.getElementById('registerButton');
+
+                // Validar campos vacíos
+                function validarCamposVacios() {
+                    return nombreField.value !== '' &&
+                        apellidoField.value !== '' &&
+                        dniField.value !== '' &&
+                        emailField.value !== '' &&
+                        direccionField.value !== '' &&
+                        distritoField.value !== '' &&
+                        contrasenaField.value !== '' &&
+                        confirmarContrasenaField.value !== '';
+                }
+
+                // Actualizar estado del botón de registro
+                function updateRegisterButtonState() {
+                    registerButton.disabled = !validarCamposVacios();
+                }
+
+                var fields = [nombreField, apellidoField, dniField, emailField, direccionField, distritoField, contrasenaField, confirmarContrasenaField];
+                fields.forEach(function(field) {
+                    field.addEventListener('input', updateRegisterButtonState);
+                });
+
+                // Inicializar estado del botón
+                updateRegisterButtonState();
+
+                // Manejo del registro
+                registerButton.addEventListener('click', function(event) {
+                    event.preventDefault();
+
+                    if (!validarCamposVacios()) {
+                        alert('Todos los campos deben estar llenos.');
+                        return;
+                    }
+
+                    if (!validarCorreo(emailField.value)) {
+                        alert("El correo electrónico no es válido");
+                        return;
+                    }
+
+                    if (!validarDNI(dniField.value)) {
+                        alert("El DNI debe tener 8 dígitos numéricos");
+                        return;
+                    }
+
+                    if (!validarContrasena(contrasenaField.value)) {
+                        alert("La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula y un número.");
+                        return;
+                    }
+
+                    if (!validarCoincidenciaContrasenas(contrasenaField.value, confirmarContrasenaField.value)) {
+                        alert("Las contraseñas no coinciden.");
+                        return;
+                    }
+
+                    if (!validarNombreApellido(nombreField.value)) {
+                        alert("El nombre solo puede contener letras y espacios.");
+                        return;
+                    }
+
+                    if (!validarNombreApellido(apellidoField.value)) {
+                        alert("El apellido solo puede contener letras y espacios.");
+                        return;
+                    }
+
+                    alert('¡Registro exitoso!');
+                });
+            };
+        </script>
+
+    </body>
+</html>
