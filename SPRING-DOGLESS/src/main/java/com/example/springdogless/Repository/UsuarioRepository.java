@@ -58,13 +58,20 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer>{
 
 
     List<Usuario> findByBorradoAndRol_Rol(Integer borrado, String rol);
-    @Query("SELECT p.nombre AS productos, u.nombre AS usuarios, SUM(d.cantidad) AS cantidadTotal " +
-            "FROM detallesorden d " +
-            "JOIN d.producto p " +
-            "JOIN d.orden o " +
-            "JOIN o.usuario u " +
-            "GROUP BY p.nombre, u.nombre")
-    List<Object[]> obtenerCantidadPorProductoYUsuario();
+    @Query(value = """
+                    SELECT 
+                        u.nombre,
+                        SUM(d.cantidad) AS totalCantidad
+                    FROM 
+                        ordenes AS o
+                    JOIN 
+                        detallesorden AS d ON o.idordenes = d.idorden
+                    JOIN 
+                        usuarios AS u ON o.idusuarios = u.idusuarios
+                    GROUP BY 
+                        u.nombre;
+                    """, nativeQuery = true)
+    List<UsuarioCantidadDTO> obtenerTotalCantidadPorUsuario();
 
     //Métodos del Dashboard
     @Query("SELECT COUNT(u) FROM usuarios u WHERE u.rol.id = 3")
