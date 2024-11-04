@@ -5,6 +5,7 @@ import com.example.springdogless.DTO.ProveedorDTO;
 import com.example.springdogless.Repository.*;
 
 //import com.example.springdogless.dao.UsuarioDao;
+import com.example.springdogless.dao.UsuarioDao;
 import com.example.springdogless.entity.*;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,8 +55,8 @@ public class AdminController {
     private ProductRepository productRepository;
     @Autowired
     OrdenRepository ordenRepository;
-    //@Autowired
-    //UsuarioDao usuarioDao;
+    @Autowired
+    UsuarioDao usuarioDao;
 
 
     @GetMapping("/perfil_superadmin")
@@ -86,12 +87,23 @@ public class AdminController {
         return "admin/agentes";
 
     }
+    @GetMapping({"/usuarios"})
+    public String listarProductos(Model model) {
+        /*
+        model.addAttribute("listaUsuarios", usuarioDao.listarUsuarios());
+
+         */
+        return "admin/usuarios";
+    }
+
+    /*
     @GetMapping("/usuarios")
     public String listaUsuarios(Model model, @RequestParam(required = false) String zona) {
         model.addAttribute("listaUsuarios", usuarioRepository.findByRol(4));
 
         return "admin/usuarios";
     }
+    */
 
     @GetMapping("/editadminzonal")
     public String editarAdminZonal(Model model, @RequestParam("id") int id) {
