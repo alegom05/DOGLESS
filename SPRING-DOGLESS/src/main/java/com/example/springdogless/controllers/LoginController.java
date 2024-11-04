@@ -1,6 +1,7 @@
 package com.example.springdogless.controllers;
 
 import com.example.springdogless.Repository.UsuarioRepository;
+import com.example.springdogless.dao.UsuarioDao;
 import com.example.springdogless.entity.Usuario;
 import com.example.springdogless.services.EmailService;
 import jakarta.mail.internet.MimeMessage;
@@ -15,10 +16,13 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -34,6 +38,8 @@ public class LoginController {
     private JavaMailSender emailSender;
     @Autowired
     EmailService emailService;
+    @Autowired
+    UsuarioDao usuarioDao;
 
 
     // Mapea la vista del login
@@ -43,10 +49,29 @@ public class LoginController {
     }
 
     // Mapea la vista de registro
-    @GetMapping("/register")
-    public String register() {
-        return "register"; // Esto renderiza la vista register.html
+    @GetMapping("/api/getUserByDni")
+    @ResponseBody
+    public Map<String, String> getUserByDni(@RequestParam String dni) {
+        String token = "YOUR_API_TOKEN";
+        RestTemplate restTemplate = new RestTemplate();
+        String url = "https://dniruc.apisperu.com/api/v1/dni/" + dni + "?token=" + token;
+
+        ResponseEntity<Map> response = restTemplate.getForEntity(url, Map.class);
+        Map<String, Object> userData = response.getBody();
+
+        // Assuming the JSON response has "nombres", "apellidoPaterno", and "apellidoMaterno"
+        Map<String, String> result = new HashMap<>();
+        result.put("nombre", (String) userData.get("nombres"));
+        result.put("apellido", (String) userData.get("apellidoPaterno") + " " + userData.get("apellidoMaterno"));
+        System.out.println("******"+userData.get("nombres"));
+        return result;
     }
+
+    @GetMapping("/register")
+    public String registro(Model model, @RequestParam(required = false) String zona) {
+        return "register";
+    }
+
 
     // Add this method to handle GET requests
     @GetMapping("/olvidastecontasenha")

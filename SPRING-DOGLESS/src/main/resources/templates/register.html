@@ -25,16 +25,18 @@
                         <header>REGISTRO</header>
                     </div>
                     <div class="input-box">
-                        <input type="text" id="nombre" class="input-field" placeholder="Nombre">
-                        <i class="bx bx-user"></i>
-                    </div>
-                    <div class="input-box">
-                        <input type="text" id="apellido" class="input-field" placeholder="Apellido">
-                        <i class="bx bx-user"></i>
-                    </div>
-                    <div class="input-box">
-                        <input type="text" id="dni" class="input-field" placeholder="DNI">
+                        <input type="text" id="dni" class="input-field" placeholder="DNI" onkeyup="fetchUserInfo(event)">
                         <i class="bx bx-id-card"></i>
+                    </div>
+
+                    <div class="input-box">
+                        <input type="text" id="nombre" name="nombre" class="input-field" placeholder="Nombre">
+                        <i class="bx bx-user"></i>
+                    </div>
+
+                    <div class="input-box">
+                        <input type="text" id="apellido" name="apellido" class="input-field" placeholder="Apellido">
+                        <i class="bx bx-user"></i>
                     </div>
                     <div class="input-box">
                         <input type="text" id="email" class="input-field" placeholder="Correo electrónico">
@@ -130,7 +132,38 @@
                         distritoField.value !== '' &&
                         contrasenaField.value !== '' &&
                         confirmarContrasenaField.value !== '';
-                }
+
+                //Script del Service
+                    function fetchUserInfo(event) {
+                        if (event.key === "Enter") {
+                            const dni = document.getElementById("dni").value;
+
+                            // Obtén el token CSRF de los meta tags o del campo oculto de CSRF si estás usando Thymeleaf
+                            const csrfToken = document.querySelector("meta[name='_csrf']").getAttribute("content");
+                            const csrfHeader = document.querySelector("meta[name='_csrf_header']").getAttribute("content");
+
+                            fetch(`/api/getUserByDni?dni=${dni}`, {
+                                method: 'GET',
+                                headers: {
+                                    [csrfHeader]: csrfToken // Agrega el token CSRF en la solicitud
+                                }
+                            })
+                                .then(response => response.json())
+                                .then(data => {
+                                    if (data.nombre && data.apellido) {
+                                        document.getElementById("nombre").value = data.nombre;
+                                        document.getElementById("apellido").value = data.apellido;
+                                    } else {
+                                        alert("No se encontraron datos para el DNI ingresado.");
+                                    }
+                                })
+                                .catch(error => {
+                                    console.error("Error al obtener los datos:", error);
+                                    alert("Hubo un error al obtener los datos.");
+                                });
+                        }
+                    }
+
 
                 // Actualizar estado del botón de registro
                 function updateRegisterButtonState() {
@@ -186,7 +219,7 @@
 
                     alert('¡Registro exitoso!');
                 });
-            };
+            }
         </script>
 
     </body>
