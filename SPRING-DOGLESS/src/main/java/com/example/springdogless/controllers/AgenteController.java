@@ -65,7 +65,7 @@ public class AgenteController {
     }
 
     @GetMapping({"/dashboard"})
-    public String ElDashboard007(Model model){
+    public String ElDashboard007(Model model) {
         List<OrdenEstadoDTO> ordenCategorias = ordenRepository.contarOrdenesPorProceso();
         List<OrdenEstadoDTO> cantidadPorEstado = ordenRepository.contarOrdenesPorEstado();
         List<OrdenEstadoDTO> ordenesProcesadasYCancelada = ordenRepository.contarOrdenesProcesadasYCanceladasPorMes();
@@ -147,17 +147,29 @@ public class AgenteController {
 
         return "agente/dashboard";
     }
+
     @GetMapping("chat")
     public String Chat(Model model) {
         return "/agente/chat";
     }
 //-------------------secion ordenes--------------------------------------------------------------
+
     @GetMapping(value = "ordenes")
     public String listadeOrdenes(Model model) {
         model.addAttribute("listaOrdenes", ordenRepository.findByBorrado(1));
         return "agente/ordenes";
     }
 
+// Con Query
+    /*
+    @GetMapping(value = "ordenes")
+    public String listadeOrdenes(Model model,@RequestParam(defaultValue = "0") int page) {
+        int limit = 5;
+        int offset = page * limit;
+        model.addAttribute("listaOrdenes", ordenRepository.findPaginatedOrders(limit, offset));
+        return "agente/ordenesConQuery";
+    }
+    */
     @GetMapping(value = "ordenes/sinAsignar")
     public String listadeOrdenesSinAsignar(Model model) {
 

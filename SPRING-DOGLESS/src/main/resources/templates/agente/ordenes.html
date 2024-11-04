@@ -14,7 +14,11 @@
             type="image/x-icon"
     />
     <link th:href="@{/assets/css/style-SuperAdmin.css}" rel="stylesheet">
-
+    <style>
+      .dataTables_filter {
+        display: none; /* Oculta el campo de búsqueda */
+      }
+    </style>
     <!-- Fonts and icons -->
     <script src="/assets/js/plugin/webfont/webfont.min.js"></script>
     <script>
@@ -181,41 +185,89 @@
 
     <script>
       // Función para filtrar la tabla por los campos de orden, usuario, fecha y estado
+      /*
       function filtrarPorEstado() {
-        // Obtener los valores de los filtros
         const orderNumber = document.getElementById("filterOrderNumber").value.toLowerCase();
         const userName = document.getElementById("filterUserName").value.toLowerCase();
         const selectedDate = document.getElementById("filterDate").value;
         const orderStatus = document.getElementById("filterOrderStatus").value.toLowerCase();
 
-        // Obtener todas las filas de la tabla
-        const filas = document.querySelectorAll("#tablaOrdenes tr");
+        // Obtener el DataTable
+        const table = $('#basic-datatables').DataTable();
 
-        // Filtrar las filas
-        filas.forEach(function(fila) {
-          const orderCell = fila.querySelector("td:nth-child(1)").textContent.toLowerCase();
-          const userCell = fila.querySelector("td:nth-child(2)").textContent.toLowerCase();
-          const dateCell = fila.querySelector("td:nth-child(3)").textContent;  // Fecha en el formato de la tabla
-          const statusCell = fila.querySelector("td:nth-child(4)").textContent.toLowerCase();
+        // Limpiar filtros previos
+        $.fn.dataTable.ext.search = []; // Limpiar filtros previos
 
-          // Convertir las fechas al mismo formato (dd/MM/yyyy)
-          const dateMatch = selectedDate === "" || formatDate(dateCell) === selectedDate;
+        // Realizar búsqueda en cada columna
+        table.column(0).search(orderNumber, true, false); // Filtrar por Número de Orden exactamente
+        // Filtrar por Usuario: solo coincidencias que comienzan con el texto ingresado
+        table.column(1).search('^' + userName, true, false); // Filtrar por Usuario que empieza con el texto
 
-          // Condiciones de filtro para mostrar u ocultar la fila
-          const matchesOrderNumber = orderCell.includes(orderNumber);
-          const matchesUserName = userCell.includes(userName);
-          const matchesStatus = orderStatus === "" || statusCell.includes(orderStatus);
+        // Filtrar por Fecha y Estado de forma personalizada
+        $.fn.dataTable.ext.search.push(
+                function(settings, data, dataIndex) {
+                  const dateCell = data[2]; // Fecha de Última Actualización
+                  const statusCell = data[3]; // Estado del Pedido
 
-          // Mostrar u ocultar la fila según las coincidencias
-          fila.style.display = matchesOrderNumber && matchesUserName && dateMatch && matchesStatus ? "" : "none";
-        });
+                  // Convertir las fechas al mismo formato (dd/MM/yyyy)
+                  const formattedDate = formatDate(dateCell);
+
+                  const dateMatch = selectedDate === "" || formattedDate === selectedDate;
+                  const matchesStatus = orderStatus === "" || statusCell.toLowerCase().includes(orderStatus);
+
+                  return dateMatch && matchesStatus;
+                }
+        );
+
+        // Volver a dibujar la tabla
+        table.draw();
+      }*/
+
+      function filtrarPorEstado() {
+        const orderNumber = document.getElementById("filterOrderNumber").value; // Sin paréntesis
+        const userName = document.getElementById("filterUserName").value.toLowerCase();
+        const selectedDate = document.getElementById("filterDate").value;
+        const orderStatus = document.getElementById("filterOrderStatus").value.toLowerCase();
+
+        // Obtener el DataTable
+        const table = $('#basic-datatables').DataTable();
+
+        // Limpiar filtros previos
+        $.fn.dataTable.ext.search = []; // Limpiar filtros previos
+
+        // Realizar búsqueda en cada columna
+        table.column(0).search(''); // Limpia la búsqueda de Número de Orden
+
+        // Filtrar por Usuario: solo coincidencias que comienzan con el texto ingresado
+        table.column(1).search('^' + userName, true, false); // Filtrar por Usuario que empieza con el texto
+
+        // Filtrar por Fecha y Estado de forma personalizada
+        $.fn.dataTable.ext.search.push(
+                function(settings, data, dataIndex) {
+                  const orderNumberCell = data[0]; // Número de Orden
+                  const orderNumberToSearch = parseInt(orderNumber, 10); // Convierte a número
+
+                  // Condición para el Número de Orden
+                  const matchesOrderNumber = isNaN(orderNumberToSearch) || parseInt(orderNumberCell, 10) === orderNumberToSearch;
+
+                  const dateCell = data[2]; // Fecha de Última Actualización
+                  const statusCell = data[3]; // Estado del Pedido
+
+                  // Convertir las fechas al mismo formato (dd/MM/yyyy)
+                  const formattedDate = formatDate(dateCell);
+
+                  const dateMatch = selectedDate === "" || formattedDate === selectedDate;
+                  const matchesStatus = orderStatus === "" || statusCell.toLowerCase().includes(orderStatus);
+
+                  // Asegurarse de que se coincida con el número de orden
+                  return matchesOrderNumber && dateMatch && matchesStatus; // Ahora incluye matchesOrderNumber
+                }
+        );
+
+        // Volver a dibujar la tabla
+        table.draw();
       }
 
-      // Función para dar formato a la fecha en formato dd/MM/yyyy
-      function formatDate(dateString) {
-        const [day, month, year] = dateString.split("/");
-        return `${year}-${month}-${day}`;  // Convertir para que coincida con el formato de input date
-      }
 
       // Función para limpiar los filtros
       function limpiarFiltro() {
@@ -224,19 +276,39 @@
         document.getElementById("filterDate").value = "";
         document.getElementById("filterOrderStatus").value = "";
 
-        const filas = document.querySelectorAll("#tablaOrdenes tr");
-        filas.forEach(function(fila) {
-          fila.style.display = "";
-        });
+        const table = $('#basic-datatables').DataTable();
+        table.search('').columns().search('').draw(); // Restablecer búsqueda y filtros
+
+        // Limpiar filtros previos
+        $.fn.dataTable.ext.search = []; // Limpiar filtros personalizados
       }
+
+      // Función para dar formato a la fecha en formato dd/MM/yyyy
+      function formatDate(dateString) {
+        const parts = dateString.split("/");
+        if (parts.length === 3) {
+          const day = parts[0];
+          const month = parts[1];
+          const year = parts[2];
+          return `${year}-${month}-${day}`;  // Convertir para que coincida con el formato de input date
+        }
+        return ""; // Devuelve vacío si el formato no es válido
+      }
+
+      $.fn.dataTable.ext.type.order['numeric'] = function(data) {
+        return parseInt(data, 10); // Convierte la cadena a un número entero
+      };
 
       // Inicializar DataTable con paginación y límite de 5 órdenes por página
       $(document).ready(function () {
         $('#basic-datatables').DataTable({
+          columnDefs: [
+            { type: 'num', targets: 0 } // Cambia '0' por el índice correcto de la columna de número de orden
+          ],
           paging: true,
           pageLength: 5,
           lengthChange: false,
-          info: true,
+          info: false,
           language: {
             search: "Buscar:",
             lengthMenu: "Mostrar _MENU_ entradas por página",
@@ -246,9 +318,11 @@
               next: "Siguiente"
             }
           }
+
         });
       });
     </script>
+
 
 
   </body>
