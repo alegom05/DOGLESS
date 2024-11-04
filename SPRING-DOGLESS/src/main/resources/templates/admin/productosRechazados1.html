@@ -13,7 +13,11 @@
             href="/assets/img/kaiadmin/favicon.ico"
             type="image/x-icon"
     />
-
+    <style>
+        .dataTables_filter {
+            display: none; /* Oculta el campo de búsqueda */
+        }
+    </style>
     <!-- Fonts and icons -->
     <script src="/assets/js/plugin/webfont/webfont.min.js"></script>
     <script>
@@ -69,7 +73,9 @@
                                 <!-- Filtros -->
                                 <form id="filtroForm" class="form-inline d-flex align-items-center">
                                     <div class="form-group mb-2 me-2">
-                                        <label for="zonaFiltro" class="mr-2">Filtrar por zona:</label>
+                                        <div class="mb-2">
+                                            <label for="zonaFiltro" class="mr-2">Filtrar por zona:</label>
+                                        </div>
                                         <select id="zonaFiltro" class="form-control filtro-pequeno">
                                             <option value="">Todas las zonas</option>
                                             <option value="Norte">Norte</option>
@@ -78,8 +84,8 @@
                                             <option value="Oeste">Oeste</option>
                                         </select>
                                     </div>
-                                    <button type="button" class="btn btn-dark mb-2 me-2" onclick="filtrarPorZona()">Filtrar</button>
-                                    <button type="button" class="btn btn-outline-secondary mb-2" onclick="limpiarFiltro()">Limpiar Filtro</button>
+                                    <button type="button" class="btn btn-dark mt-3 me-2" onclick="filtrarPorZona()">Filtrar</button>
+                                    <button type="button" class="btn btn-outline-secondary mt-3" onclick="limpiarFiltro()">Limpiar Filtro</button>
                                 </form>
 
                                 <br>
@@ -207,6 +213,13 @@
 <script>
     $(document).ready(function () {
         $("#basic-datatables").DataTable({
+            columnDefs: [
+                { type: 'num', targets: 0 } // Cambia '0' por el índice correcto de la columna de número de orden
+            ],
+            paging: true,
+            pageLength: 5,
+            lengthChange: false,
+            info: false,
             language: {
                 search: "Buscar:",
                 lengthMenu: "Mostrar _MENU_ entradas por página",

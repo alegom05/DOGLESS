@@ -1016,7 +1016,7 @@ public class AdminController {
                 reposicion.setAprobar("aprobado");
                 reposicionesRepository.save(reposicion); // Guarda los cambios en la base de datos
 
-                return "redirect:/admin/productosAprobados";
+                return "redirect:/admin/productosAprobados1";
 
             }
         }
