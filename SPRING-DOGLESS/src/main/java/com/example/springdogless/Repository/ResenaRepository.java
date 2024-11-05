@@ -20,11 +20,12 @@ public interface ResenaRepository extends JpaRepository<Resena, Integer> {
             "u.nombre AS usuarioNombre, " +
             "u.apellido AS usuarioApellido, " +
             "p.idproductos, " +
-            "p.nombre AS productoNombre " +
+            "p.nombre AS productoNombre, " +
+            "r.tipo " +
             "FROM dogless.resenas r " +
             "JOIN dogless.usuarios u ON r.usuarioid = u.idusuarios " +
             "JOIN dogless.productos p ON r.idproductos = p.idproductos " +
-            "WHERE r.idproductos = ?1",  // El ID del producto es el primer parámetro
+            "WHERE r.idproductos = ?1 and r.tipo= ?2",  // El ID del producto es el primer parámetro
             nativeQuery = true)
-    List<ResenaDTO> findResenasByProductoId(Integer idProducto);
+    List<ResenaDTO> findResenasByProductoId(Integer idProducto, Integer tipo);
 }

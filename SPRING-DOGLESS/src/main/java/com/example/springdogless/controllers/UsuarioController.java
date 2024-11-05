@@ -20,6 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Controller
@@ -388,13 +389,15 @@ public class UsuarioController {
 
 
 
-    @GetMapping(value = "/detalles_producto")
-    public String DetallesProducto(HttpSession session, Model model, @RequestParam("id") Integer idProducto) {
+    @GetMapping(value = "/detalles_producto/{idProducto}")
+    public String DetallesProducto(HttpSession session, Model model, @PathVariable("idProducto") Integer idProducto) {
         Integer idzona = (Integer) session.getAttribute("idzona");
         ProductoDTO productoDTO = productRepository.findProductoByIdByZonaCompleto(idProducto,idzona);
-        List<ResenaDTO> resenas = resenaRepository.findResenasByProductoId(idProducto);
+        List<ResenaDTO> resenas = resenaRepository.findResenasByProductoId(idProducto,1);
+        List<ResenaDTO> preguntasFrec = resenaRepository.findResenasByProductoId(idProducto,2);
         model.addAttribute("producto", productoDTO);
         model.addAttribute("resenas", resenas);
+        model.addAttribute("preguntasFrec", preguntasFrec);
 
         // Obtener la cantidad de productos por categoría
         Map<String, Integer> conteoPorCategoria = new HashMap<>();
@@ -417,6 +420,65 @@ public class UsuarioController {
         model.addAttribute("TresProductosRankeados", tres_productos_rankeados);
 
         return "usuario/detalles_producto";
+    }
+
+    @PostMapping("/enviarPregunta")
+    public String enviarPregunta(@RequestParam("pregunta") String pregunta,
+                                 @RequestParam("idProducto") Integer idProducto,
+                                 RedirectAttributes redirectAttributes, HttpSession session) {
+
+        // Obtener solo la fecha actual
+        Date fecha = new Date(System.currentTimeMillis());
+        Optional<Producto> optionalProducto = productRepository.findById(idProducto);
+        Usuario usuarioSession = (Usuario) session.getAttribute("usuario");
+        Optional<Usuario> optionalUsuario = usuarioRepository.findById(usuarioSession.getId());
+
+        // Verificar si el producto existe
+        if (!optionalProducto.isPresent()) {
+            redirectAttributes.addFlashAttribute("mensaje", "El producto no fue encontrado.");
+            redirectAttributes.addFlashAttribute("tipoAlerta", "danger"); // Tipo de alerta
+            return "redirect:/usuario/detalles_producto/" + idProducto; // Redirigir a la misma página o a una página de error
+        }
+        if (!optionalUsuario.isPresent()) {
+            redirectAttributes.addFlashAttribute("mensaje", "El usuario no fue encontrado.");
+            redirectAttributes.addFlashAttribute("tipoAlerta", "danger"); // Tipo de alerta
+            return "redirect:/usuario/detalles_producto/" + idProducto; // Redirigir a la misma página o a una página de error
+        }
+
+        // Verificar la longitud de la pregunta
+        if (pregunta.length() > 300) {
+            redirectAttributes.addFlashAttribute("mensaje", "Tu pregunta no puede exceder los 300 caracteres.");
+            redirectAttributes.addFlashAttribute("tipoAlerta", "danger");
+            return "redirect:/usuario/detalles_producto/" + idProducto;
+        }
+
+        // Obtener el producto del Optional
+        Producto producto = optionalProducto.get();
+        Usuario usuario = optionalUsuario.get();
+
+        try {
+            // Lógica para guardar la pregunta en la base de datos
+            Resena preguntaFrec = new Resena();
+            preguntaFrec.setUsuario(usuario);
+            preguntaFrec.setComentario(pregunta);
+            preguntaFrec.setFecha(fecha);
+            preguntaFrec.setProducto(producto);
+            preguntaFrec.setTipo(2);
+
+            // Llama al repositorio o servicio para guardar la pregunta
+            resenaRepository.save(preguntaFrec);
+
+            // Agregar un mensaje al redirigir, si se guarda correctamente
+            redirectAttributes.addFlashAttribute("mensaje", "Tu pregunta ha sido enviada correctamente.");
+            redirectAttributes.addFlashAttribute("tipoAlerta", "success"); // Tipo de alerta
+        } catch (Exception e) {
+            // Manejar el error y no guardar nada
+            redirectAttributes.addFlashAttribute("mensaje", "Hubo un error al enviar tu pregunta. Inténtalo de nuevo.");
+            redirectAttributes.addFlashAttribute("tipoAlerta", "danger"); // Tipo de alerta
+        }
+
+        // Redirigir a la misma página del producto
+        return "redirect:/usuario/detalles_producto/" + idProducto;
     }
 
 

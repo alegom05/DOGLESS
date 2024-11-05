@@ -20,6 +20,7 @@ public class Resena {
     private Integer satisfaccion;
     private Integer atencion;
     private Integer calidad;
+    private Integer tipo;
     private Integer serecibiorapido;
     private String aprobar;
 

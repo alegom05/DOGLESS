@@ -643,50 +643,93 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
 -- Insertar datos en la tabla `resenas`
 INSERT INTO `dogless`.`resenas` 
-(`idproductos`, `comentario`, `satisfaccion`, `fecha`, `atencion`, `calidad`, `serecibiorapido`, `usuarioid`)
+(`idproductos`, `comentario`, `satisfaccion`, `fecha`, `atencion`, `calidad`, `serecibiorapido`, `usuarioid`, `tipo`)
 VALUES
 -- Reseñas para el producto 1: Smartphone X
-(1, 'Gran producto, funciona perfectamente y llegó a tiempo.', 5, '2024-09-01', 5, 5, 1, 35),
-(1, 'Buen teléfono, pero la entrega fue más lenta de lo esperado.', 4, '2024-09-05', 4, 4, 0, 36),
-(1, 'Calidad aceptable, aunque esperaba algo más.', 3, '2024-09-10', 3, 3, 1, 37),
+(1, 'Gran producto, funciona perfectamente y llegó a tiempo.', 5, '2024-09-01', 5, 5, 1, 35,1),
+(1, 'Buen teléfono, pero la entrega fue más lenta de lo esperado.', 4, '2024-09-05', 4, 4, 0, 36,1),
+(1, 'Calidad aceptable, aunque esperaba algo más.', 3, '2024-09-10', 3, 3, 1, 37,1),
 
 -- Reseñas para el producto 2: Laptop Y
-(2, 'Excelente laptop, ideal para trabajar y estudiar.', 5, '2024-09-02', 5, 5, 1, 41),
-(2, 'El rendimiento es bueno, pero el envío fue muy lento.', 3, '2024-09-07', 3, 4, 0, 42),
-(2, 'Producto de calidad, aunque la atención podría mejorar.', 4, '2024-09-12', 4, 5, 1, 43),
+(2, 'Excelente laptop, ideal para trabajar y estudiar.', 5, '2024-09-02', 5, 5, 1, 41,1),
+(2, 'El rendimiento es bueno, pero el envío fue muy lento.', 3, '2024-09-07', 3, 4, 0, 42,1),
+(2, 'Producto de calidad, aunque la atención podría mejorar.', 4, '2024-09-12', 4, 5, 1, 43,1),
 
 -- Reseñas para el producto 3: Auriculares Z
-(3, 'Auriculares cómodos y con buena calidad de sonido.', 5, '2024-09-03', 5, 5, 1, 47),
-(3, 'Buena relación calidad-precio, aunque podrían mejorar la calidad.', 4, '2024-09-08', 4, 3, 1, 48),
-(3, 'La entrega fue rápida, pero la calidad del producto no es la mejor.', 2, '2024-09-14', 2, 2, 1, 49),
+(3, 'Auriculares cómodos y con buena calidad de sonido.', 5, '2024-09-03', 5, 5, 1, 47,1),
+(3, 'Buena relación calidad-precio, aunque podrían mejorar la calidad.', 4, '2024-09-08', 4, 3, 1, 48,1),
+(3, 'La entrega fue rápida, pero la calidad del producto no es la mejor.', 2, '2024-09-14', 2, 2, 1, 49,1),
 
 -- Reseñas para el producto 4: Cámara Fotográfica
-(4, 'Impresionante calidad de imagen, lo recomiendo para fotógrafos.', 5, '2024-09-04', 5, 5, 1, 53),
-(4, 'Buena cámara, pero la atención al cliente fue regular.', 4, '2024-09-09', 3, 4, 0, 54),
+(4, 'Impresionante calidad de imagen, lo recomiendo para fotógrafos.', 5, '2024-09-04', 5, 5, 1, 53,1),
+(4, 'Buena cámara, pero la atención al cliente fue regular.', 4, '2024-09-09', 3, 4, 0, 54,1),
 
 -- Reseñas para el producto 5: Tablet W
-(5, 'Buena tableta para diseñadores, llegó rápido.', 5, '2024-09-05', 5, 5, 1, 50),
-(5, 'Funcional, pero el envío fue más lento de lo esperado.', 3, '2024-09-10', 3, 4, 0, 51),
+(5, 'Buena tableta para diseñadores, llegó rápido.', 5, '2024-09-05', 5, 5, 1, 50,1),
+(5, 'Funcional, pero el envío fue más lento de lo esperado.', 3, '2024-09-10', 3, 4, 0, 51,1),
 
 -- Reseñas para el producto 6: Impresora 3D
-(6, 'La impresora funciona muy bien, aunque tardó en llegar.', 4, '2024-09-06', 4, 5, 0, 55),
-(6, 'Producto de calidad, pero la atención fue deficiente.', 3, '2024-09-11', 2, 4, 0, 56),
+(6, 'La impresora funciona muy bien, aunque tardó en llegar.', 4, '2024-09-06', 4, 5, 0, 55,1),
+(6, 'Producto de calidad, pero la atención fue deficiente.', 3, '2024-09-11', 2, 4, 0, 56,1),
 
 -- Reseñas para el producto 7: Drone Pro
-(7, 'El drone es excelente, todo perfecto y llegó rápido.', 5, '2024-09-07', 5, 5, 1, 57),
-(7, 'Buen producto, pero la calidad de construcción podría mejorar.', 4, '2024-09-12', 3, 4, 1, 58),
+(7, 'El drone es excelente, todo perfecto y llegó rápido.', 5, '2024-09-07', 5, 5, 1, 57,1),
+(7, 'Buen producto, pero la calidad de construcción podría mejorar.', 4, '2024-09-12', 3, 4, 1, 58,1),
 
 -- Reseñas para el producto 8: Consola de Videojuegos
-(8, 'Espectacular consola, la entrega fue rápida y sin problemas.', 5, '2024-09-08', 5, 5, 1, 53),
-(8, 'La consola es buena, pero me tardó demasiado en llegar.', 3, '2024-09-13', 2, 4, 0, 54),
+(8, 'Espectacular consola, la entrega fue rápida y sin problemas.', 5, '2024-09-08', 5, 5, 1, 53,1),
+(8, 'La consola es buena, pero me tardó demasiado en llegar.', 3, '2024-09-13', 2, 4, 0, 54,1),
 
 -- Reseñas para el producto 9: Reloj Inteligente
-(9, 'Excelente reloj, el monitoreo de salud es preciso.', 5, '2024-09-09', 5, 5, 1, 40),
-(9, 'Buen producto, pero la batería dura poco.', 3, '2024-09-14', 3, 3, 1, 39),
+(9, 'Excelente reloj, el monitoreo de salud es preciso.', 5, '2024-09-09', 5, 5, 1, 40,1),
+(9, 'Buen producto, pero la batería dura poco.', 3, '2024-09-14', 3, 3, 1, 39,1),
 
 -- Reseñas para el producto 10: Teclado Mecánico
-(10, 'El teclado es increíble para jugar, lo recomiendo.', 5, '2024-09-10', 5, 5, 1, 41),
-(10, 'Buen teclado, pero esperaba algo mejor en la calidad de los materiales.', 4, '2024-09-15', 3, 4, 1, 49);
+(10, 'El teclado es increíble para jugar, lo recomiendo.', 5, '2024-09-10', 5, 5, 1, 41,1),
+(10, 'Buen teclado, pero esperaba algo mejor en la calidad de los materiales.', 4, '2024-09-15', 3, 4, 1, 49,1);
+
+INSERT INTO `dogless`.`resenas` 
+(`idproductos`, `comentario`, `fecha`, `usuarioid`, `tipo`)
+VALUES
+-- Preguntas frecuentes para el producto 1: Smartphone X
+(1, '¿Este smartphone tiene garantía internacional?', '2024-09-20', 35, 2),
+(1, '¿Incluye cargador y auriculares en la caja?', '2024-09-21', 36, 2),
+
+-- Preguntas frecuentes para el producto 2: Laptop Y
+(2, '¿Puedo expandir la memoria RAM de esta laptop?', '2024-09-22', 41, 2),
+(2, '¿Es compatible con programas de edición de video pesados?', '2024-09-23', 42, 2),
+
+-- Preguntas frecuentes para el producto 3: Auriculares Z
+(3, '¿Tienen cancelación de ruido activa?', '2024-09-24', 47, 2),
+(3, '¿Son compatibles con dispositivos Android y iOS?', '2024-09-25', 48, 2),
+
+-- Preguntas frecuentes para el producto 4: Cámara Fotográfica
+(4, '¿Viene con accesorios como lentes adicionales?', '2024-09-26', 53, 2),
+(4, '¿Se puede conectar vía WiFi para transferir fotos?', '2024-09-27', 54, 2),
+
+-- Preguntas frecuentes para el producto 5: Tablet W
+(5, '¿Es compatible con un lápiz digital?', '2024-09-28', 50, 2),
+(5, '¿Se le puede añadir una tarjeta de memoria?', '2024-09-29', 51, 2),
+
+-- Preguntas frecuentes para el producto 6: Impresora 3D
+(6, '¿Qué tipo de filamento usa esta impresora?', '2024-09-30', 55, 2),
+(6, '¿Necesita algún tipo de software específico para funcionar?', '2024-10-01', 56, 2),
+
+-- Preguntas frecuentes para el producto 7: Drone Pro
+(7, '¿Cuál es la duración de la batería en vuelo?', '2024-10-02', 57, 2),
+(7, '¿Incluye control remoto o solo se maneja con la app?', '2024-10-03', 58, 2),
+
+-- Preguntas frecuentes para el producto 8: Consola de Videojuegos
+(8, '¿Es compatible con juegos de generaciones anteriores?', '2024-10-04', 53, 2),
+(8, '¿Incluye algún juego o debo comprarlos aparte?', '2024-10-05', 54, 2),
+
+-- Preguntas frecuentes para el producto 9: Reloj Inteligente
+(9, '¿Es resistente al agua?', '2024-10-06', 40, 2),
+(9, '¿Tiene GPS integrado?', '2024-10-07', 39, 2),
+
+-- Preguntas frecuentes para el producto 10: Teclado Mecánico
+(10, '¿Tiene retroiluminación en las teclas?', '2024-10-08', 41, 2),
+(10, '¿Es compatible con sistemas Mac?', '2024-10-09', 49, 2);
 
 
 -- -----------------------------------------------------
