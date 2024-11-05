@@ -25,17 +25,17 @@
                         <header>REGISTRO</header>
                     </div>
                     <div class="input-box">
-                        <input type="text" id="dni" class="input-field" placeholder="DNI" onkeyup="fetchUserInfo(event)">
+                        <input type="text" id="dni" class="input-field" placeholder="DNI" required>
                         <i class="bx bx-id-card"></i>
                     </div>
 
                     <div class="input-box">
-                        <input type="text" id="nombre" name="nombre" class="input-field" placeholder="Nombre">
+                        <input type="text" id="nombres" name="nombre" class="input-field" placeholder="Nombre" readonly>
                         <i class="bx bx-user"></i>
                     </div>
 
                     <div class="input-box">
-                        <input type="text" id="apellido" name="apellido" class="input-field" placeholder="Apellido">
+                        <input type="text" id="apellidos" name="apellido" class="input-field" placeholder="Apellido" readonly>
                         <i class="bx bx-user"></i>
                     </div>
                     <div class="input-box">
@@ -220,6 +220,33 @@
                     alert('¡Registro exitoso!');
                 });
             }
+        </script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+        <script>
+            $(document).ready(function() {
+                $("#dni").on("blur", function() {
+                    var dni = $(this).val();
+                    if (dni) {
+                        $.ajax({
+                            url: "/api/registro/consultar-dni",
+                            type: "GET",
+                            data: { dni: dni },
+                            success: function(response) {
+                                $("#nombres").val(response.nombres);
+                                $("#apellidos").val(response.apellidosCompletos);
+                            },
+                            error: function(xhr) {
+                                if (xhr.status === 422) {
+                                    alert("Error: " + xhr.responseText);
+                                } else {
+                                    alert("Error al consultar el DNI.");
+                                }
+                            }
+                        });
+                    }
+                });
+            });
         </script>
 
     </body>
