@@ -89,7 +89,7 @@ public class ZonalController {
         List<UsuarioCantidadDTO> top10compradores =topcompradores.stream().limit(10).collect(Collectors.toList());
 
         model.addAttribute("usuariosTop10", top10compradores);
-         
+
 
         // Obtener la lista completa de productos ordenados por menor stock
         List<ProductoStockDTO> productosConMenorStock = stockProductoRepository.findProductosConMenorStock();
