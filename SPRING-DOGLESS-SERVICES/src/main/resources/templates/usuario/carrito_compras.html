@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Carrito de compras</title>
+    <meta
+      content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
+      name="viewport"
+    />
+    <link
+      rel="icon"
+      href="/assets/img/kaiadmin/favicon.ico"
+      type="image/x-icon"
+    />
+
+    <!-- Fonts and icons -->
+    <script src="/assets/js/plugin/webfont/webfont.min.js"></script>
+    <script>
+      WebFont.load({
+        google: { families: ["Public Sans:300,400,500,600,700"] },
+        custom: {
+          families: [
+            "Font Awesome 5 Solid",
+            "Font Awesome 5 Regular",
+            "Font Awesome 5 Brands",
+            "simple-line-icons",
+          ],
+          urls: ["/assets/css/fonts.min.css"],
+        },
+        active: function () {
+          sessionStorage.fonts = true;
+        },
+      });
+    </script>
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/assets/css/plugins.min.css" />
+    <link rel="stylesheet" href="/assets/css/kaiadmin.min.css" />
+
+    <!-- CSS Just for demo purpose, don't include it in your project -->
+    <link rel="stylesheet" href="/assets/css/demo.css" />
+    <!-- Tu archivo CSS personalizado -->
+    <link rel="stylesheet" href="/assets/css/style-SuperAdmin.css" />
+    <style>
+        .summary-card {
+            background-color: #ffffff; /* Fondo blanco */
+            border-radius: 8px; /* Bordes redondeados */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para efecto de profundidad */
+            padding: 20px; /* Espaciado interno */
+            margin: 20px 0; /* Margen alrededor de la tarjeta */
+        }
+        .summary-card .total-row {
+            border-top: 1px solid #dee2e6; /* Borde superior para separar las filas */
+            padding: 10px 0; /* Espaciado interno en las filas */
+        }
+        .summary-card .btn-checkout {
+            background-color: #007bff; /* Color de fondo del botón */
+            color: #ffffff; /* Color del texto del botón */
+            border: none; /* Sin borde */
+            border-radius: 50px; /* Bordes redondeados en el botón */
+            padding: 10px 20px; /* Espaciado interno del botón */
+            font-size: 1rem; /* Tamaño de fuente del botón */
+            text-transform: uppercase; /* Texto en mayúsculas */
+            display: block; /* Mostrar el botón en una nueva línea */
+            margin: 20px auto 0; /* Centrar el botón horizontalmente */
+        }
+        .summary-card .total-row:last-child {
+            border-bottom: none; /* Eliminar el borde inferior en la última fila */
+        }
+        .btn-checkout {
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .btn-checkout:hover {
+            background-color: #0056b3; /* Cambia el color de fondo al pasar el mouse */
+            transform: scale(1.05); /* Aumenta ligeramente el tamaño del botón */
+        }
+        .btn-remove {
+            transition: background-color 0.3s, color 0.3s;
+            color: rgb(245, 45, 45);
+        }
+
+        .btn-remove:hover {
+            background-color: #dc3546be; /* Cambia el color de fondo al pasar el mouse */
+            color: #fff; /* Cambia el color del texto al pasar el mouse */
+            transform: scale(1.1); /* Aumenta el tamaño del botón */
+        }
+
+        .btn-plus, .btn-minus {
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .btn-plus:hover, .btn-minus:hover {
+            background-color: #007bffd5; /* Cambia el color de fondo al pasar el mouse */
+            transform: scale(1.1); /* Aumenta el tamaño del botón */
+            color: white;
+        }
+
+    </style>
+
+
+  </head>
+  <body>
+    <div class="wrapper">
+      <!-- Sidebar -->
+      <div th:replace="~{usuario/fragments/barralateralusuario :: body(activePage='compras')}"></div>
+      <!-- End Sidebar -->
+
+      <div class="main-panel">
+        <div th:replace="~{usuario/fragments/navbarheaderusuario :: fragment}"></div>
+        <!-- Cart Page Start -->
+        <div class="container-fluid py-5">
+            <div class="container py-5 d-flex flex-column min-vh-100">
+                <div class="page-header">
+                    <h3 class="fw-bold mb-2">Mis compras</h3>
+                    <ul class="breadcrumbs mb-1">
+                        <li class="nav-home">
+                            <a href="/usuario/">
+                                <i class="icon-home"></i>
+                            </a>
+                        </li>
+                        <li class="separator">
+                            <i class="icon-arrow-right"></i>
+                        </li>
+                        <li class="nav-item">
+                            <a th:href="@{'/usuario/compras' + '?id=' + ${session.usuario.id}}">Carrito de Compra</a>
+                        </li>
+                    </ul>
+                </div>
+                <form method="post" th:action="@{/usuario/actualizarCantidad}">
+                    <div th:if="${mensaje}" th:text="${mensaje}" class="alert alert-success"></div>
+                    <div class="row">
+                        <div class="col-lg-9">
+                            <h1 class="mb-3 mt-4 "></h1>
+                            <div class="table-responsive d-flex justify-content-center align-items-center flex-grow-1">
+                                <input name="id" th:value="${session.usuario.id}" type="hidden"/>
+                                <table class="table text-center table-card">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col" style="width: 120px;">Productos</th>
+                                            <th scope="col">Nombre</th>
+                                            <th scope="col">Precio</th>
+                                            <th scope="col">Cantidad</th>
+                                            <th scope="col">Sub Total</th>
+                                            <th scope="col">Eliminar</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="detallesorden : ${listadetalles}">
+                                            <input type="hidden" name="idDetallesOrden" th:value="${detallesorden.id}"/>
+                                            <input type="hidden" name="idOrdenes" th:value="${detallesorden.orden.id}"/>
+                                            <input type="hidden" name="idProductos" th:value="${detallesorden.producto.id}"/>
+                                            <td>
+                                                <img th:src="@{'http://20.81.145.27:8080/producto/imagen/' + ${detallesorden.producto.id}}" class="img-fluid w-75" alt="Imagen del producto">
+                                            </td>
+                                            <td th:text="${detallesorden.producto.nombre}"></td>
+                                            <td class="price" th:text="'S/' + ${detallesorden.producto.precio}"></td>
+                                            <td>
+                                                <div class="d-flex justify-content-center align-items-center">
+                                                    <div class="input-group quantity" style="width: 120px;">
+                                                        <div class="input-group-btn">
+                                                            <button type="button" class="btn btn-sm btn-minus rounded-circle border" onclick="decrementQuantity(this)">
+                                                                <i class="fa fa-minus"></i>
+                                                            </button>
+                                                        </div>
+                                                        <input type="text" class="form-control form-control-sm text-center border-0 qty-input" name="cantidades" th:value="${detallesorden.cantidad}" style="max-width: 40px;" readonly>
+                                                        <div class="input-group-btn">
+                                                            <button type="button" class="btn btn-sm btn-plus rounded-circle border" onclick="incrementQuantity(this)">
+                                                                <i class="fa fa-plus"></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="total-price">
+                                                <input type="hidden" name="subtotales"/> <!-- Solo el name está presente -->
+                                                <p class="mb-0">S/ <span class="subtotal">0.00</span></p>
+                                            </td>
+                                            <td>
+                                                <a th:href="@{'/usuario/borrarproducto' + '?id=' + ${detallesorden.id}}">
+                                                    <i class="fa fa-times"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Resumen de compra -->
+                        <div class="col-lg-3">
+                            <h1 class="mb-3 mt-4"></h1>
+                            <div class="card p-3">
+                                <h5>Resumen de compra</h5>
+                                <p id="totalProductos">Productos (0)</p>
+                                <p>Total: <strong id="totalPrice" name="total">S/0</strong></p>
+                                <input type="hidden" name="totalHidden" id="totalHidden" /> <!-- Campo oculto para el total -->
+                                <!-- Botón de continuar compra -->
+                                <div th:if="${not #lists.isEmpty(listadetalles)}">
+                                    <button type="submit" class="btn btn-primary">Continuar Compra</button>
+                                </div>
+                            </div>
+                        </div>
+
+                </div>
+                </form>
+            </div>
+
+            <!-- Pie de página -->
+            <div th:replace="~{usuario/fragments/piedepagina :: fragment}"></div>
+            <!-- Cart Page End -->
+        </div>
+      </div>
+    </div>
+
+
+    <!--   Core JS Files   -->
+    <script src="/assets/js/core/jquery-3.7.1.min.js"></script>
+    <script src="/assets/js/core/popper.min.js"></script>
+    <script src="/assets/js/core/bootstrap.min.js"></script>
+
+    <!-- jQuery Scrollbar -->
+    <script src="/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+    <!-- Datatables -->
+    <script src="/assets/js/plugin/datatables/datatables.min.js"></script>
+    <!-- Kaiadmin JS -->
+    <script src="/assets/js/kaiadmin.min.js"></script>
+    <!-- Kaiadmin DEMO methods, don't include it in your project! -->
+    <script src="/assets/js/setting-demo2.js"></script>
+
+      <script>
+          document.addEventListener('DOMContentLoaded', function() {
+              // Función para actualizar el total por producto
+              function updateTotal(row) {
+                  const price = parseFloat(row.querySelector('.price').innerText.replace('S/', ''));
+                  const quantity = parseInt(row.querySelector('.qty-input').value);
+                  const total = price * quantity;
+
+                  // Actualiza el subtotal mostrado
+                  row.querySelector('.subtotal').innerText = total.toFixed(2);
+
+                  // Actualiza el valor del campo oculto
+                  row.querySelector('input[name="subtotales"]').value = total.toFixed(2);
+
+                  updateCartTotal();
+              }
+
+              // Función para actualizar el total del carrito
+              function updateCartTotal() {
+                  let total = 0; // Costo de envío
+                  let totalProductos = 0;
+
+                  document.querySelectorAll('tbody tr').forEach(function(row) {
+                      const quantity = parseInt(row.querySelector('.qty-input').value);
+                      total += parseFloat(row.querySelector('.total-price').innerText.replace('S/', ''));
+                      totalProductos += quantity;
+                  });
+
+                  // Actualiza el total mostrado
+                  document.getElementById('totalPrice').innerText = 'S/ ' + total.toFixed(2);
+                  document.getElementById('totalProductos').innerText = 'Productos (' + totalProductos + ')';
+
+                  // Actualiza el valor del campo oculto para el total
+                  document.getElementById('totalHidden').value = total.toFixed(2);
+              }
+
+              // Manejador de los botones de incremento y decremento
+              document.querySelectorAll('.btn-minus').forEach(function(button) {
+                  button.addEventListener('click', function() {
+                      const row = this.closest('tr');
+                      const input = row.querySelector('.qty-input');
+                      let quantity = parseInt(input.value);
+                      if (quantity > 1) {
+                          input.value = quantity - 1;
+                          updateTotal(row);
+                      }
+                  });
+              });
+
+              document.querySelectorAll('.btn-plus').forEach(function(button) {
+                  button.addEventListener('click', function() {
+                      const row = this.closest('tr');
+                      const input = row.querySelector('.qty-input');
+                      let quantity = parseInt(input.value);
+                      if(quantity<10){
+                          input.value = quantity + 1;
+                          updateTotal(row);
+                      }
+                  });
+              });
+
+              // Inicializa el total al cargar la página
+              document.querySelectorAll('tbody tr').forEach(function(row) {
+                  updateTotal(row);
+              });
+          });
+      </script>
+
+
+  </body>
+</html>
+            

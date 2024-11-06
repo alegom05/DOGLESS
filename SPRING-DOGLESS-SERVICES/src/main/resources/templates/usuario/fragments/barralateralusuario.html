@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+  <head>
+  </head>
+  <body>
+
+      <!-- Barra lateral -->
+      <div class="sidebar sidebar-style-2" data-background-color="dark">
+        <div class="sidebar-logo">
+          <div class="logo-header" data-background-color="dark">
+            <a href="/usuario/" class="logo">
+              <img src="/assets/img/kaiadmin/slogan_white_v3.png" alt="navbar brand" class="navbar-brand" height="50" />
+            </a>
+            <div class="nav-toggle">
+              <button class="btn btn-toggle toggle-sidebar"><i class="gg-menu-right"></i></button>
+              <button class="btn btn-toggle sidenav-toggler"><i class="gg-menu-left"></i></button>
+            </div>
+            <button class="topbar-toggler more"><i class="gg-more-vertical-alt"></i></button>
+          </div>
+        </div>
+        <div class="sidebar-wrapper scrollbar scrollbar-inner">
+          <div class="sidebar-content">
+            <ul class="nav nav-secondary">
+              <!-- Barra de navegación lateral-->
+              <li class="nav-item" th:classappend="${activePage == 'home' ? 'active submenu' : ''}">
+                <a href="/usuario">
+                  <i class="fas fa-home"></i>
+                  <p>Página principal</p>
+                </a>
+              </li>
+              <li class="nav-item" th:classappend="${activePage == 'tienda' ? 'active submenu' : ''}">
+                <a href="/usuario/tienda">
+                  <i class="fas fa-store"></i>
+                  <p>Tienda</p>
+                </a>
+              </li>
+              <li class="nav-item" th:classappend="${activePage == 'compras' ? 'active submenu' : ''}">
+                <a th:href="@{'/usuario/compras' + '?id=' + ${session.usuario.id}}">
+                  <i class="fas fa-shopping-cart"></i>
+                  <p>Mis compras</p>
+                </a>
+              </li>
+			  <li class="nav-item" th:classappend="${activePage == 'guia' ? 'active submenu' : ''}">
+                <a href="/usuario/guia">
+                  <i class="fas fa-question-circle"></i>
+                  <p>Guía de usuario</p>
+                </a>
+              </li>
+			  <li class="nav-item" th:classappend="${activePage == 'libro' ? 'active submenu' : ''}">
+                <a href="/usuario/libro">
+                  <i class="fas fa-book"></i>
+                  <p>Libro de reclamaciones</p>
+                </a>
+              </li>
+
+
+
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!-- Fin barra lateral -->
+  </body>
+</html>

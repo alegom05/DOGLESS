@@ -1,15 +1,16 @@
 package com.example.springdogless.controllers;
 
 
-
 import com.example.springdogless.Repository.TarjetaRepository;
-import com.example.springdogless.entity.*;
+import com.example.springdogless.entity.Tarjeta;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin

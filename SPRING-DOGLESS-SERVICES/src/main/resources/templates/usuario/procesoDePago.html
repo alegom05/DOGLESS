@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Proceso de pago</title>
+    <meta
+      content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
+      name="viewport"
+    />
+    <link
+      rel="icon"
+      href="/assets/img/kaiadmin/favicon.ico"
+      type="image/x-icon"
+    />
+
+    <!-- Fonts and icons -->
+    <script src="/assets/js/plugin/webfont/webfont.min.js"></script>
+    <script>
+      WebFont.load({
+        google: { families: ["Public Sans:300,400,500,600,700"] },
+        custom: {
+          families: [
+            "Font Awesome 5 Solid",
+            "Font Awesome 5 Regular",
+            "Font Awesome 5 Brands",
+            "simple-line-icons",
+          ],
+          urls: ["/assets/css/fonts.min.css"],
+        },
+        active: function () {
+          sessionStorage.fonts = true;
+        },
+      });
+    </script>
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/assets/css/plugins.min.css" />
+    <link rel="stylesheet" href="/assets/css/kaiadmin.min.css" />
+
+    <!-- CSS Just for demo purpose, don't include it in your project -->
+    <link rel="stylesheet" href="/assets/css/demo.css" />
+  </head>
+  <body>
+    <div class="wrapper">
+     <!-- Sidebar -->
+      <div th:replace="~{usuario/fragments/barralateralusuario :: body(activePage='compras')}"></div>
+      <!-- End Sidebar -->
+
+      <div class="main-panel">
+        <div th:replace="~{usuario/fragments/navbarheaderusuario :: fragment}"></div>
+
+        <div class="container">
+          <div class="page-inner">
+            <div class="page-header">
+              <h3 class="fw-bold mb-3">Procesos de pago</h3>
+              <ul class="breadcrumbs mb-3">
+                <li class="nav-home">
+                  <a href=/usuario/>
+                    <i class="icon-home"></i>
+                  </a>
+                </li>
+                <li class="separator">
+                    <i class="icon-arrow-right"></i>
+                </li>
+                <li class="nav-item">
+                    <a th:href="@{'/usuario/compras' + '?id=' + ${session.usuario.id}}">Carrito de compras</a>
+                </li>
+                <li class="separator">
+                    <i class="icon-arrow-right"></i>
+                  </li>
+                  <li class="nav-item">
+                    <a th:href="@{'/usuario/checkout' + '?id=' + ${session.usuario.id}}">Checkout</a>
+                  </li>
+                <li class="separator">
+                  <i class="icon-arrow-right"></i>
+                </li>
+                <li class="nav-item">
+                  <a th:href="@{'/usuario/procesopago' + '?id=' + ${session.usuario.id}}">Proceso de pago</a>
+                </li>
+              </ul>
+            </div>
+            <div class="row">
+                <!-- Multi Column with Form Separator -->
+                <div class="card mb-4">
+                    <div class="container">
+                        <!-- Checkout Wizard -->
+                        <div id="wizard-checkout" class="bs-stepper wizard-icons wizard-icons-example mb-5">
+                            <div class="bs-stepper-content border-top">
+                                <form id="wizard-checkout-form" style="width: 100%; margin-left: 0%; margin-top: 3%;" method="POST" th:action="@{/usuario/confirmarPedido}" novalidate>
+                                    <input name="id" th:value="${session.usuario.id}" type="hidden"/>
+                                    <!-- Cart -->
+                                    <div class="container">
+                                        <div class="row">
+                                            <!-- Cart left -->
+                                            <div class="col-md-5">
+                                              <div class="row py-2">
+                                                  <div class="col">
+                                                    <label class="form-label w-100" for="paymentCard">Número de tarjeta</label>
+                                                    <div class="input-group input-group-merge">
+                                                      <input id="paymentCard" name="paymentCard" class="form-control credit-card-mask" type="text" placeholder="1234123412341234" aria-describedby="paymentCard2" />
+                                                    </div>
+                                                  </div>
+                                              </div>
+                                                <div class="row py-2">
+                                                    <!-- Nombre del titular -->
+                                                    <div class="col-12 col-md-6">
+                                                        <label class="form-label" for="paymentCardName">Nombre del titular</label>
+                                                        <input type="text" id="paymentCardName" class="form-control"
+                                                               placeholder="Ej: Adrian Bala"
+                                                               pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+"
+                                                               title="Solo se permiten letras y espacios"
+                                                               required />
+                                                    </div>
+
+                                                    <!-- Fecha de vencimiento (MM/AA) -->
+                                                    <div class="col-6 col-md-3">
+                                                        <label class="form-label" for="paymentCardExpiryDate">Vencimiento</label>
+                                                        <input type="text" id="paymentCardExpiryDate" class="form-control expiry-date-mask"
+                                                               placeholder="MM/AA"
+                                                               pattern="^(0[1-9]|1[0-2])\/\d{2}$"
+                                                               title="Formato de fecha MM/AA, por ejemplo: 12/25"
+                                                               maxlength="5"
+                                                               required />
+                                                    </div>
+
+                                                    <!-- CVV -->
+                                                    <div class="col-6 col-md-3">
+                                                        <label class="form-label" for="paymentCardCvv">CVV</label>
+                                                        <div class="input-group input-group-merge">
+                                                            <input type="text" id="paymentCardCvv" class="form-control cvv-code-mask"
+                                                                   maxlength="3"
+                                                                   pattern="\d{3}"
+                                                                   title="Debe tener exactamente 3 dígitos"
+                                                                   placeholder="123"
+                                                                   required />
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                              <div class="row py-2">
+                                                  <div class="col">
+                                                      <button class="btn btn-primary btn-next me-sm-3 me-1" style="width: 100px;" type="submit">Pagar</button>
+                                                    <a th:href="@{'/usuario/checkout' + '?id=' + ${session.usuario.id}}" style="width: 100px;" class="btn btn-secondary">Volver</a>
+                                                  </div>
+                                              </div>
+
+                                            </div>
+                                            <div class="col-md-2"></div>
+                                            <!-- Cart right -->
+                                            <div class="col-md-4">
+                                                <!-- Price Details -->
+                                                <h4>Detalles del pago</h4>
+                                                <div th:each="detalle : ${detallesOrden}">
+                                                    <dl class="row mb-0">
+                                                        <dt class="col-6 fw-normal" th:text="${detalle.producto.nombre} + ' x' + ${detalle.cantidad}"></dt>
+                                                        <dd class="col-6 text-end" th:text="'S/. ' + ${detalle.subtotal}"></dd>
+
+                                                    </dl>
+                                                </div>
+                                                <hr class="mx-n4">
+                                                <dl class="row mb-0">
+                                                    <dt class="col-6">Subtotal</dt>
+                                                    <dd class="col-6 fw-medium text-end mb-0" id="subtotal" th:text="'S/. ' +${detallesOrden.get(0).orden.total}">S/.1000.50</dd>
+                                                </dl>
+                                                <dl class="row mb-0">
+                                                    <dt class="col-6">Costo de envio</dt>
+                                                    <dd class="col-6 fw-medium text-end mb-0" id="costoEnvio">S/.12.00</dd>
+                                                </dl>
+                                                <hr class="mx-n4">
+                                                <dl class="row mb-0">
+                                                    <dt class="col-6">Total</dt>
+                                                    <dd class="col-6 fw-medium text-end mb-0" id="total">S/.1009.50</dd>
+                                                </dl>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>                      
+                    </div>
+                </div>
+
+            </div>
+          </div>
+        
+        </div>
+
+        <div th:replace="~{usuario/fragments/piedepagina :: fragment}"></div>
+
+
+
+      </div>
+
+      <!-- Custom template | don't include it in your project! -->
+      <!-- End Custom template -->
+    </div>
+    <!--   Core JS Files   -->
+    <script src="../assets/js/core/jquery-3.7.1.min.js"></script>
+    <script src="../assets/js/core/popper.min.js"></script>
+    <script src="../assets/js/core/bootstrap.min.js"></script>
+
+    <!-- jQuery Scrollbar -->
+    <script src="../assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+    <!-- Datatables -->
+    <script src="../assets/js/plugin/datatables/datatables.min.js"></script>
+    <!-- Kaiadmin JS -->
+    <script src="../assets/js/kaiadmin.min.js"></script>
+    <!-- Kaiadmin DEMO methods, don't include it in your project! -->
+    <script src="../assets/js/setting-demo2.js"></script>
+
+      <script>
+          // Convertir el subtotal y costo de envío a números
+          let subtotal = parseFloat(document.getElementById("subtotal").innerText.replace('S/.', ''));
+          let costoEnvio = parseFloat(document.getElementById("costoEnvio").innerText.replace('S/.', ''));
+
+          // Calcular el total
+          let total = subtotal + costoEnvio;
+
+          // Mostrar el total
+          document.getElementById("total").innerText = "S/." + total.toFixed(2);
+      </script>
+
+
+
+  </body>
+</html>
