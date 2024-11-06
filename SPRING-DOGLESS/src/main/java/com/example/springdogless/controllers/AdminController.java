@@ -463,7 +463,7 @@ public class AdminController {
             Usuario usuario = optUsuario.get();
             usuario.setBorrado(0);
             usuarioRepository.save(usuario);
-            attr.addFlashAttribute("msg", "Agente borrado exitosamente");
+            attr.addFlashAttribute("mensajeExito", "Agente borrado exitosamente");
         } else {
             attr.addFlashAttribute("error", "Agente no encontrado");
         }
@@ -478,7 +478,7 @@ public class AdminController {
             Usuario usuario = optUsuario.get();
             usuario.setBorrado(0);
             usuarioRepository.save(usuario);
-            attr.addFlashAttribute("msg", "Usuario borrado exitosamente");
+            attr.addFlashAttribute("mensajeExito", "Usuario borrado exitosamente");
         } else {
             attr.addFlashAttribute("error", "Usuario no encontrado");
         }
@@ -743,6 +743,7 @@ public class AdminController {
             model.addAttribute("id", id);
             model.addAttribute("proveedor", proveedor);
 
+
             return "admin/editarProveedor";
         } else {
             return "redirect:/admin/proveedores";
@@ -770,7 +771,7 @@ public class AdminController {
         } else {
             proveedor.setBorrado(1); // Inicialización en caso de ser un nuevo proveedor
             proveedorRepository.save(proveedor);
-            attr.addFlashAttribute("msg", "Proveedor creado exitosamente");
+            attr.addFlashAttribute("mensajeExito", "Proveedor creado exitosamente");
         }
         return "redirect:/admin/proveedores";
     }
@@ -905,7 +906,7 @@ public class AdminController {
         producto.setBorrado(1);
         productRepository.save(producto);
 
-        attr.addFlashAttribute("msg", "Producto creado exitosamente");
+        attr.addFlashAttribute("mensajeExito", "Producto creado exitosamente");
         return "redirect:/admin/productos";
     }
     /*@PostMapping("/deleteproducto")
@@ -1016,7 +1017,7 @@ public class AdminController {
                 reposicion.setAprobar("aprobado");
                 reposicionesRepository.save(reposicion); // Guarda los cambios en la base de datos
 
-                return "redirect:/admin/productosAprobados1";
+                return "redirect:/admin/productosAprobados";
 
             }
         }
