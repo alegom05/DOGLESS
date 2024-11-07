@@ -57,128 +57,45 @@
               <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
               </div>
               <div class="card-head-row card-tools-still-right">
-                <div class="card-title">Chats</div>
+                <div class="card-title">Chat(En desarrollo)</div>
                 <div class="card-tools">
                 </div>
               </div>
-              <div class="card-list py-4">
-                <div class="item-list">
-                  <div class="avatar">
-                    <img
-                            src="/assets/img/jm_denis.jpg"
-                            alt="..."
-                            class="avatar-img rounded-circle"
-                    />
+              <div class="container mt-5">
+                <!-- Encabezado -->
+                <div class="card">
+                  <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Chat en vivo</h5>
                   </div>
-                  <div class="info-user ms-3">
-                    <div class="username">Jimmy Denis</div>
-                    <div class="status">Graphic Designer</div>
+                  <div class="card-body">
+                    <!-- Área de mensajes -->
+                    <div id="messages" class="border rounded p-3 mb-3" style="height: 300px; overflow-y: scroll;">
+                      <!-- Los mensajes se mostrarán aquí -->
+                    </div>
+
+                    <!-- Campo de entrada de mensaje -->
+                    <div class="input-group">
+                      <input type="text" id="messageInput" class="form-control" placeholder="Escribe un mensaje">
+                      <div class="input-group-append">
+                        <button class="btn btn-primary" onclick="sendMessage()">Enviar</button>
+                      </div>
+                    </div>
                   </div>
-                  <button class="btn btn-icon btn-link op-8 me-1">
-                    <i class="far fa-envelope"></i>
-                  </button>
-                  <button class="btn btn-icon btn-link btn-danger op-8">
-                    <i class="fas fa-ban"></i>
-                  </button>
-                </div>
-                <div class="item-list">
-                  <div class="avatar">
-                          <span
-                                  class="avatar-title rounded-circle border border-white"
-                          >CF</span
-                          >
-                  </div>
-                  <div class="info-user ms-3">
-                    <div class="username">Chandra Felix</div>
-                    <div class="status">Sales Promotion</div>
-                  </div>
-                  <button class="btn btn-icon btn-link op-8 me-1">
-                    <i class="far fa-envelope"></i>
-                  </button>
-                  <button class="btn btn-icon btn-link btn-danger op-8">
-                    <i class="fas fa-ban"></i>
-                  </button>
-                </div>
-                <div class="item-list">
-                  <div class="avatar">
-                    <img
-                            src="/assets/img/talha.jpg"
-                            alt="..."
-                            class="avatar-img rounded-circle"
-                    />
-                  </div>
-                  <div class="info-user ms-3">
-                    <div class="username">Talha</div>
-                    <div class="status">Front End Designer</div>
-                  </div>
-                  <button class="btn btn-icon btn-link op-8 me-1">
-                    <i class="far fa-envelope"></i>
-                  </button>
-                  <button class="btn btn-icon btn-link btn-danger op-8">
-                    <i class="fas fa-ban"></i>
-                  </button>
-                </div>
-                <div class="item-list">
-                  <div class="avatar">
-                    <img
-                            src="/assets/img/chadengle.jpg"
-                            alt="..."
-                            class="avatar-img rounded-circle"
-                    />
-                  </div>
-                  <div class="info-user ms-3">
-                    <div class="username">Chad</div>
-                    <div class="status">CEO Zeleaf</div>
-                  </div>
-                  <button class="btn btn-icon btn-link op-8 me-1">
-                    <i class="far fa-envelope"></i>
-                  </button>
-                  <button class="btn btn-icon btn-link btn-danger op-8">
-                    <i class="fas fa-ban"></i>
-                  </button>
-                </div>
-                <div class="item-list">
-                  <div class="avatar">
-                          <span
-                                  class="avatar-title rounded-circle border border-white bg-primary"
-                          >H</span
-                          >
-                  </div>
-                  <div class="info-user ms-3">
-                    <div class="username">Manuel Yarleque</div>
-                    <div class="status">Web Designer</div>
-                  </div>
-                  <button class="btn btn-icon btn-link op-8 me-1">
-                    <i class="far fa-envelope"></i>
-                  </button>
-                  <button class="btn btn-icon btn-link btn-danger op-8">
-                    <i class="fas fa-ban"></i>
-                  </button>
-                </div>
-                <div class="item-list">
-                  <div class="avatar">
-                          <span
-                                  class="avatar-title rounded-circle border border-white bg-secondary"
-                          >F</span
-                          >
-                  </div>
-                  <div class="info-user ms-3">
-                    <div class="username">Farrah</div>
-                    <div class="status">Marketing</div>
-                  </div>
-                  <button class="btn btn-icon btn-link op-8 me-1">
-                    <i class="far fa-envelope"></i>
-                  </button>
-                  <button class="btn btn-icon btn-link btn-danger op-8">
-                    <i class="fas fa-ban"></i>
-                  </button>
                 </div>
               </div>
 
+              <!-- Campos ocultos para el nombre y ID del usuario -->
+              <input type="hidden" id="userName" th:value="${session.usuario.nombre}" />
+              <input type="hidden" id="userId" th:value="${session.usuario.id}" />
+              <input type="hidden" id="userRole" th:value="${session.usuario.rol.rol}" />
 
-        <!-- Pie de página -->
-              <div th:replace="~{agente/fragments/piedepagina :: fragment}"></div>
+
+            </div>
+          </div>
+          <!-- Pie de página -->
+          <div th:replace="~{agente/fragments/piedepagina :: fragment}"></div>
       </div>
+
     </div>
 
 
@@ -199,5 +116,66 @@
 
     <!-- Kaiadmin JS -->
     <script src="/assets/js/kaiadmin.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.4.0/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+    <script th:inline="javascript">
+      let stompClient = null;
+
+      function connect() {
+        const socket = new SockJS('/chat');
+        stompClient = Stomp.over(socket);
+        stompClient.connect({}, function (frame) {
+          console.log('Conectado: ' + frame);
+          stompClient.subscribe('/topic/messages', function (messageOutput) {
+            showMessage(JSON.parse(messageOutput.body));
+          });
+        });
+      }
+
+      function sendMessage() {
+        const messageInput = document.getElementById('messageInput');
+        const userName = document.getElementById('userName').value;
+        const userRole = document.getElementById('userRole').value;
+        const userId = document.getElementById('userId').value;
+
+        const message = {
+          from: `${userName}(${userRole})`, // Nombre y rol del usuario
+          content: messageInput.value,
+          userId: userId // ID del usuario
+        };
+
+        stompClient.send("/app/sendMessage", {}, JSON.stringify(message));
+        messageInput.value = ''; // Limpiar el campo de entrada
+      }
+
+      function showMessage(message) {
+        const messagesDiv = document.getElementById('messages');
+        const messageElement = document.createElement('div');
+
+        const currentUserId = document.getElementById('userId').value;
+
+        if (message.userId === currentUserId) {
+          // Si el mensaje es del usuario actual, alinéalo a la derecha
+          messageElement.className = "alert alert-primary text-right"; // Estilo de Bootstrap
+          messageElement.textContent = `Tú: ${message.content}`;
+        } else {
+          // Si el mensaje es de otro usuario, alinéalo a la izquierda
+          messageElement.className = "alert alert-secondary text-left";
+          messageElement.textContent = `${message.from}: ${message.content}`;
+        }
+
+        messagesDiv.appendChild(messageElement);
+
+        // Desplaza hacia abajo para mostrar el último mensaje
+        messagesDiv.scrollTop = messagesDiv.scrollHeight;
+      }
+
+      connect();
+    </script>
+
+    <!-- Bootstrap JS y dependencias -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   </body>
 </html>

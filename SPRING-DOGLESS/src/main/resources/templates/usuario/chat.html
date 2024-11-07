@@ -90,6 +90,8 @@
                         <!-- Campos ocultos para el nombre y ID del usuario -->
                         <input type="hidden" id="userName" th:value="${session.usuario.nombre}" />
                         <input type="hidden" id="userId" th:value="${session.usuario.id}" />
+                        <input type="hidden" id="userRole" th:value="${session.usuario.rol.rol}" />
+
 
                     </div>
 
@@ -135,10 +137,11 @@
             function sendMessage() {
                 const messageInput = document.getElementById('messageInput');
                 const userName = document.getElementById('userName').value;
+                const userRole = document.getElementById('userRole').value;
                 const userId = document.getElementById('userId').value;
 
                 const message = {
-                    from: userName, // Nombre del usuario
+                    from: `${userName}(${userRole})`, // Nombre y rol del usuario
                     content: messageInput.value,
                     userId: userId // ID del usuario
                 };
