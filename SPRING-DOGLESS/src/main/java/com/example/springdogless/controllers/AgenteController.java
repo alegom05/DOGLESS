@@ -5,8 +5,11 @@ import com.example.springdogless.DTO.ProductoDTO;
 import com.example.springdogless.Repository.*;
 
 import com.example.springdogless.entity.*;
+import com.example.springdogless.services.OrdenService;
 import com.example.springdogless.services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -399,17 +402,16 @@ public class AgenteController {
 
     //----------------------seccion generación de reportes-----------------------------------------------------------------------------
     //reporte órdenes por usuario
-    @GetMapping(value = "/reportesOrdenes/reportePorUsuario")
+    @GetMapping(value = "/reportePorUsuario")
     public String reporteOrdenesPorUsuario(Model model) {
         model.addAttribute("listaOrdenes", ordenRepository.findAll());
-
         model.addAttribute("listaUsuarios", usuarioRepository.findByRol_RolAndBorrado("Usuario",1));
 
 
         return "agente/reportePorUsuario";
     }
     //reporte órdenes totales
-    @GetMapping(value = "/reportesOrdenes/reporteOrdenesTotales")
+    @GetMapping(value = "/reporteOrdenesTotales")
     public String reporteOrdenesTotales(Model model) {
         model.addAttribute("listaUsuarios", usuarioRepository.findByRol_RolAndBorrado("Usuario",1));
         model.addAttribute("listaOrdenes", ordenRepository.findByBorrado(1));
@@ -420,18 +422,31 @@ public class AgenteController {
 
 
     //reporte órdenes de agentes por zona
-    @GetMapping(value = "/reportesOrdenes/reportePorAgente")
+    @GetMapping(value = "/reportePorAgente")
     public String reporteOrdenesAgentesZona(Model model) {
         model.addAttribute("listaUsuarios", usuarioRepository.findByRol_RolAndBorrado("Agente",1));
         return "agente/reporteporagente";
     }
     //reporte órdenes de agentes con filtro
-    @GetMapping(value = "/reportesOrdenes/reportePorFecha")
+    @GetMapping(value = "/reportePorFecha")
     public String reporteOrdenesTotalesporFiltrofecha(Model model) {
         model.addAttribute("listaUsuarios", usuarioRepository.findByRol_RolAndBorrado("Usuario",1));
         model.addAttribute("listaOrdenes", ordenRepository.findByBorrado(1));
         return "agente/reporteporfecha";
     }
+    @Autowired
+    private OrdenService ordenService;
+
+    @GetMapping("/exportarOrdenesPorUsuario")
+    public ResponseEntity<Resource> exportUserOrders(
+            @RequestParam(required = false) String nombre,
+            @RequestParam(required = false) String dni,
+            @RequestParam String formato) {
+
+        return this.ordenService.exportUserOrders(nombre, dni, formato);
+    }
+
+//----------------------fin seccion generación de reportes-----------------------------------------------------------------------------
 
 
 

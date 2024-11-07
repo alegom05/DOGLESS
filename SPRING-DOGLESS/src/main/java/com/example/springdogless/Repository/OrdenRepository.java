@@ -116,5 +116,9 @@ public interface OrdenRepository extends JpaRepository<Orden, Integer> {
             "LIMIT :limit OFFSET :offset", nativeQuery = true)
     List<Orden> findPaginatedOrders(@Param("limit") int limit, @Param("offset") int offset);
 
+    @Query("SELECT o FROM ordenes o WHERE o.usuario.nombre = :nombre OR o.usuario.dni = :dni")
+    List<Orden> findByNombreOrDni(@Param("nombre") String nombre, @Param("dni") String dni);
+
+
 
 }
