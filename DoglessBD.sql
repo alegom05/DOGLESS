@@ -897,3 +897,42 @@ CREATE TABLE IF NOT EXISTS `dogless`.`mensajes` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
+
+-- -----------------------------------------------------
+-- Table `dogless`.`conversaciones`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `dogless`.`conversaciones` (
+  `idconversaciones` BIGINT NOT NULL AUTO_INCREMENT,
+  `titulo` VARCHAR(255) NOT NULL,
+  `fecha_inicio` DATETIME NOT NULL,
+  `fecha_fin` DATETIME NULL,
+  `estado` VARCHAR(50) DEFAULT 'activa',
+  PRIMARY KEY (`idconversaciones`)
+)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `dogless`.`messages`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `dogless`.`messages` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `content` VARCHAR(1000) NOT NULL,
+  `sender` VARCHAR(50) NOT NULL,
+  `timestamp` DATETIME NOT NULL,
+  `idusuarios` INT NULL,
+  `idconversaciones` BIGINT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_messages_usuarios_idx` (`idusuarios` ASC) VISIBLE,
+  INDEX `fk_messages_conversaciones_idx` (`idconversaciones` ASC) VISIBLE,
+  CONSTRAINT `fk_messages_usuarios`
+    FOREIGN KEY (`idusuarios`)
+    REFERENCES `dogless`.`usuarios` (`idusuarios`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_messages_conversaciones`
+    FOREIGN KEY (`idconversaciones`)
+    REFERENCES `dogless`.`conversaciones` (`idconversaciones`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;

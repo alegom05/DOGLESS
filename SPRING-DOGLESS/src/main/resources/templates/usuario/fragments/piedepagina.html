@@ -72,6 +72,29 @@
 
       </footer>
     </div>
+    <script src="/js/chat.js"></script>
 
+
+    <!-- Chat Widget -->
+    <div class="chat-widget-container">
+      <button class="chat-button" id="chatButton">
+        <i class="fas fa-comments"></i>
+      </button>
+
+      <div class="chat-modal" id="chatModal">
+        <div class="chat-header">
+          <h4>Chat de Ayuda</h4>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+          <!-- Los mensajes se agregarán aquí dinámicamente -->
+        </div>
+        <div class="chat-input">
+          <input type="text" id="messageInput" placeholder="Escribe un mensaje...">
+          <button id="sendMessage">
+            <i class="fas fa-paper-plane"></i>
+          </button>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
