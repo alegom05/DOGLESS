@@ -110,14 +110,25 @@
               </a>
               <div class="collapse" id="tables2" th:classappend="${activePage == 'reportes' ? 'show' : ''}">
                 <ul class="nav nav-collapse">
-                  <li th:classappend="${activeSubPage == 'guardados' ? 'active' : ''}">
-                    <a href="/agente/reportesGuardados">
-                      <span class="sub-item">Reportes guardados</span>
+
+                  <li th:classappend="${activeSubPage == 'porusuario' ? 'active' : ''}">
+                    <a href="/agente/reportePorUsuario">
+                      <span class="sub-item">Por Usuario</span>
                     </a>
                   </li>
-                  <li th:classappend="${activeSubPage == 'ordenes' ? 'active' : ''}">
-                    <a href="/agente/reportesOrdenes">
-                      <span class="sub-item">Reportes de órdenes</span>
+                  <li th:classappend="${activeSubPage == 'totalenelsistema' ? 'active' : ''}">
+                    <a href="/agente/reporteOrdenesTotales">
+                      <span class="sub-item">Todas las órdenes</span>
+                    </a>
+                  </li>
+                  <li th:classappend="${activeSubPage == 'poragente' ? 'active' : ''}">
+                    <a href="/agente/reportePorAgente">
+                      <span class="sub-item">Por agente</span>
+                    </a>
+                  </li>
+                  <li th:classappend="${activeSubPage == 'porfecha' ? 'active' : ''}">
+                    <a href="/agente/reportePorFecha">
+                      <span class="sub-item">Órdenes por fecha</span>
                     </a>
                   </li>
                 </ul>
