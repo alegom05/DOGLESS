@@ -90,12 +90,15 @@ public class WebSecurityConfig {
                         }
                     });
 
+        http.csrf(csrf -> csrf.disable());
+
         //Dogless: usuario:agomez@gmail.com, Pass=1111 y los demás de manera análoga
         http.authorizeHttpRequests()
                 .requestMatchers("/usuario", "/usuario/**").hasAnyAuthority("Superadmin", "Usuario")
                 .requestMatchers("/agente", "/agente/**").hasAnyAuthority("Superadmin", "Agente")
                 .requestMatchers("/zonal", "/zonal/**").hasAnyAuthority("Superadmin", "Adminzonal")
                 .requestMatchers("/admin", "/admin/**").hasAuthority("Superadmin")
+                .requestMatchers("/api/chat/**").permitAll()
                 //Ejemplos
                 //.requestMatchers("/zonal", "/zonal/**").hasAuthority("admin")//El admin
                 //.requestMatchers("/product", "/product/**").hasAuthority("hr")//El hr
