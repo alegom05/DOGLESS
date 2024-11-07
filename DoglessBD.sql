@@ -881,3 +881,19 @@ INSERT INTO `dogless`.`tarjetas` (`numero`, `tipo`, `cvv`, `fecha`) VALUES
 ('5632147896325874', 'Scotiabank', '852', '2026-04-17'),
 ('4785236987451236', 'BCP', '369', '2024-06-23'),
 ('5478963215478963', 'BBVA', '159', '2025-05-09');
+
+-- -----------------------------------------------------
+-- Table `dogless`.`mensajes`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `dogless`.`mensajes` (
+  `idmensajes` INT NOT NULL AUTO_INCREMENT,
+  `texto` VARCHAR(200) NULL,
+  `idusuarios` INT NOT NULL,
+  PRIMARY KEY (`idmensajes`),
+  INDEX `fk_mensajes_usuarios1_idx` (`idusuarios` ASC) VISIBLE,
+  CONSTRAINT `fk_mensajes_usuarios1`
+    FOREIGN KEY (`idusuarios`)
+    REFERENCES `dogless`.`usuarios` (`idusuarios`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
