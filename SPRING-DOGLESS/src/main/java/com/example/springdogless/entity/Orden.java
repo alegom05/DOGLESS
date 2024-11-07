@@ -48,4 +48,24 @@ public class Orden {
     @OneToMany(mappedBy = "orden", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<DetallesOrden> detallesOrden;
     */
+
+    /*
+    @OneToMany(mappedBy = "orden", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<DetallesOrden> detallesOrden;
+    */
+    // Metodo para obtener el nombre completo del usuario
+    public String getNombreCompletoUsuario() {
+        if (usuario != null) {
+            return usuario.getNombre() + " " + usuario.getApellido();
+        }
+        return "Usuario no asignado";
+    }
+
+    // Metodo para obtener el DNI del usuario
+    public String getDni() {
+        if (usuario != null) {
+            return usuario.getDni();
+        }
+        return "DNI no asignado";
+    }
 }
