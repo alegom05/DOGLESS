@@ -13,6 +13,7 @@
             href="/assets/img/kaiadmin/favicon.ico"
             type="image/x-icon"
     />
+      <link th:href="@{/assets/css/style-SuperAdmin.css}" rel="stylesheet">
       <style>
           .dataTables_filter {
               display: none; /* Oculta el campo de búsqueda */
@@ -67,7 +68,9 @@
                 <h3 class="fw-bold mb-3">Lista de Productos Pendientes</h3>
               </div>
             </div>
-        
+              <div th:if="${mensajeExito}" id="mensajeExito" class="alert alert-success fade-out" role="alert">
+                  <p th:text="${mensajeExito}"></p>
+              </div>
             <div class="row">
               <div class="col-md-12">
                 <div class="card">
@@ -144,9 +147,8 @@
                                 </button>
                                    <!-- Dropdown oscuro -->
                                    <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
-                                    <li>    <a class="dropdown-item" th:href="@{/admin/aprobar/{id}(id=${reposicion.getId()})}">Aprobar</a>
-                                    </li>
-                                    <li><a class="dropdown-item" th:href="@{/admin/rechazar/{id}(id=${reposicion.getId()})}" >Rechazar</a></li>
+                                       <li><a class="dropdown-item"  data-bs-toggle="modal" data-bs-target="#aceptarModal" th:data-id="${reposicion.id}">Aprobar</a></li>
+                                       <li><a class="dropdown-item"  data-bs-toggle="modal" data-bs-target="#denegarModal" th:data-id="${reposicion.id}">Rechazar</a></li>
                                    </ul>
                               </div>
                           </td>
@@ -155,45 +157,56 @@
 
                         </tbody>
                       </table>
+                        <!-- Modal para Aceptar -->
+                        <div class="modal fade" id="aceptarModal" tabindex="-1" role="dialog" aria-labelledby="aceptarModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="aceptarModalLabel">Confirmar Aceptación</h5>
+                                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        ¿Estás seguro de que desea aprobar el pedido?
 
-                      <!-- Modal para Denegar -->
-                       <!-- Modal para Aprobar -->
-<div class="modal fade" id="aceptarModal" tabindex="-1" aria-labelledby="aceptarModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="aceptarModalLabel">Aprobar Producto</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        ¿Estás seguro de que deseas aprobar esta reposición?
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-dark">Aprobar</button>
-      </div>
-    </div>
-  </div>
-</div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <form id="deleteForm" method="post" th:action="@{'/admin/aprobarprod'}" novalidate>
+                                            <input type="hidden" name="id" id="userId">
+                                            <button type="submit" class="btn btn-dark">Aceptar</button>
+                                        </form>
+                                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-<!-- Modal para Rechazar -->
-<div class="modal fade" id="denegarModal" tabindex="-1" aria-labelledby="denegarModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="denegarModalLabel">Rechazar Producto</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        ¿Estás seguro de que deseas rechazar esta reposición?
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-dark">Rechazar</button>
-      </div>
-    </div>
-  </div>
-</div>
+                        <!-- Modal para Denegar -->
+                        <div class="modal fade" id="denegarModal" tabindex="-1" role="dialog" aria-labelledby="denegarModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="denegarModalLabel">Confirmar Rechazo</h5>
+                                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>¿Estás seguro de que deseas rechazar el pedido?</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <form id="denegarForm" method="post" th:action="@{'/admin/rechazarprod'}" novalidate>
+                                            <input type="hidden" name="id" id="soliId">
+                                            <button type="submit" class="btn btn-dark">Rechazar</button>
+                                        </form>
+                                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
 
                       <!-- Código de modales existente... -->
         
@@ -268,6 +281,24 @@
       <!-- Kaiadmin JS -->
       <script src="/assets/js/kaiadmin.min.js"></script>
       <script>
+
+          $('#aceptarModal').on('show.bs.modal', function (event) {
+              var button = $(event.relatedTarget); // Botón que abrió el modal
+              var userId = button.data('id'); // Extraer la información de atributos de datos
+              var modal = $(this);
+              modal.find('#userId').val(userId); // Asigna el ID al campo oculto
+          });
+      </script>
+      <script>
+
+          $('#denegarModal').on('show.bs.modal', function (event) {
+              var button = $(event.relatedTarget); // Botón que abrió el modal
+              var soliId = button.data('id'); // Extraer la información de atributos de datos
+              var modal = $(this);
+              modal.find('#soliId').val(soliId); // Asigna el ID al campo oculto
+          });
+      </script>
+      <script>
         $(document).ready(function () {
           $("#basic-datatables").DataTable({
               columnDefs: [
@@ -341,6 +372,20 @@
             $("#addRowModal").modal("hide");
           });
         });
+      </script>
+      <script>
+          // Espera 3 segundos (3000 milisegundos) antes de empezar a ocultar el mensaje
+          setTimeout(function() {
+              var alert = document.getElementById('mensajeExito');
+              if (alert) {
+                  alert.classList.add('hidden'); // Añadir la clase que reduce la opacidad gradualmente
+
+                  // Después de 1 segundo (duración de la transición), ocultar completamente
+                  setTimeout(function() {
+                      alert.classList.add('remove'); // Ocultar completamente el mensaje y el espacio
+                  }, 1000); // 1000 ms coincide con la duración de la transición de opacidad
+              }
+          }, 3000); // Cambia 3000 por el tiempo en milisegundos que desees (3 segundos en este caso)
       </script>
 
   </body>

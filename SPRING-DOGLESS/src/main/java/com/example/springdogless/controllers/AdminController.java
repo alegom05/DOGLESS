@@ -986,9 +986,8 @@ public class AdminController {
         model.addAttribute("listaReposiciones", reposicionesRepository.findByAprobarIsNull());
         return "admin/productosPendientes";
     }
-
-    @GetMapping("/aprobar/{id}")
-    public String aprobar(@PathVariable Integer id) {
+    @PostMapping("/aprobarprod")
+    public String aprobar(@RequestParam("id") Integer id, RedirectAttributes redirectAttributes) {
         // Busca la reposición por ID
         Reposicion reposicion = reposicionesRepository.findById(id).orElse(null);
 
@@ -1016,8 +1015,9 @@ public class AdminController {
                 // Actualiza el atributo 'aprobado' de la reposición
                 reposicion.setAprobar("aprobado");
                 reposicionesRepository.save(reposicion); // Guarda los cambios en la base de datos
+                redirectAttributes.addFlashAttribute("mensajeExito", "La solicitud ha sido aprobada.");
 
-                return "redirect:/admin/productosAprobados";
+                return "redirect:/admin/productosPendientes";
 
             }
         }
@@ -1025,8 +1025,8 @@ public class AdminController {
         return "redirect:/admin";
     }
 
-    @GetMapping("/rechazar/{id}")
-    public String rechazar(@PathVariable Integer id) {
+    @PostMapping("/rechazarprod")
+    public String rechazar(@RequestParam("id") Integer id, RedirectAttributes redirectAttributes) {
         // Busca la reposición por ID
         Reposicion reposicion = reposicionesRepository.findById(id).orElse(null);
 
@@ -1036,7 +1036,8 @@ public class AdminController {
                 // Actualiza el atributo 'rechazado' de la reposición
                 reposicion.setAprobar("rechazado");
                 reposicionesRepository.save(reposicion); // Guarda los cambios en la base de datos
-                return "redirect:/admin/productosRechazados";
+                redirectAttributes.addFlashAttribute("mensajeExito", "La solicitud ha sido rechazada.");
+                return "redirect:/admin/productosPendientes";
             }
         }
         // Redirige si la reposición no se encuentra o el producto no está presente
