@@ -415,8 +415,6 @@ public class AgenteController {
     public String reporteOrdenesTotales(Model model) {
         model.addAttribute("listaUsuarios", usuarioRepository.findByRol_RolAndBorrado("Usuario",1));
         model.addAttribute("listaOrdenes", ordenRepository.findByBorrado(1));
-        model.addAttribute("listaDetallesordenes", detallesordenRepository.findAll());
-
         return "agente/reporteordenestotales";
     }
 
