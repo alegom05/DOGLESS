@@ -213,6 +213,7 @@
 <script>
     $(document).ready(function () {
         $("#basic-datatables").DataTable({
+            dom: '<"top"i>rt<"bottom d-flex justify-content-center"p><"clear">',
             columnDefs: [
                 { type: 'num', targets: 0 } // Cambia '0' por el índice correcto de la columna de número de orden
             ],
