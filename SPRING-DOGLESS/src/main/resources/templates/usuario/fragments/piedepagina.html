@@ -72,9 +72,6 @@
 
       </footer>
     </div>
-    <script src="/js/chat.js"></script>
-
-
     <!-- Chat Widget -->
     <div class="chat-widget-container">
       <button class="chat-button" id="chatButton">
@@ -96,5 +93,82 @@
         </div>
       </div>
     </div>
+    <div th:fragment="scripts">
+      <!-- Core JS Files -->
+      <script th:src="@{/assets/js/core/jquery-3.7.1.min.js}"></script>
+      <script th:src="@{/assets/js/core/bootstrap.min.js}"></script>
+      <!-- DataTables -->
+      <script th:src="@{/assets/js/plugin/datatables/datatables.min.js}"></script>
+      <!-- Custom JS -->
+      <script th:src="@{/js/chat.js}"></script>
+    </div>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        // Configuración del chat
+        const chatButton = document.getElementById('chatButton');
+        const chatModal = document.getElementById('chatModal');
+        const messageInput = document.getElementById('messageInput');
+        const sendButton = document.getElementById('sendMessage');
+        const chatMessages = document.getElementById('chatMessages');
+
+        if (chatButton) {  // Verificar que el elemento existe
+          chatButton.addEventListener('click', function() {
+            chatModal.classList.toggle('active');
+          });
+        }
+
+        function sendMessage() {
+          const message = messageInput?.value?.trim();
+          if (message) {
+            // Añadir mensaje del usuario
+            addMessage(message, 'user');
+
+            // Enviar al backend
+            fetch('/api/chat/send', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({ content: message })
+            })
+                    .then(response => response.json())
+                    .then(data => {
+                      addMessage(data.content, 'bot');
+                    })
+                    .catch(error => {
+                      console.error('Error:', error);
+                      addMessage('Lo siento, hubo un error al procesar tu mensaje.', 'bot');
+                    });
+
+            messageInput.value = '';
+          }
+        }
+
+        function addMessage(message, type) {
+          if (chatMessages) {  // Verificar que el elemento existe
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('message', `${type}-message`);
+            messageElement.textContent = message;
+            chatMessages.appendChild(messageElement);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+          }
+        }
+
+        // Event listeners
+        if (sendButton) {  // Verificar que el elemento existe
+          sendButton.addEventListener('click', sendMessage);
+        }
+
+        if (messageInput) {  // Verificar que el elemento existe
+          messageInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+              sendMessage();
+            }
+          });
+        }
+      });
+    </script>
+
+
   </body>
 </html>

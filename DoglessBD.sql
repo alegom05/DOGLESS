@@ -919,7 +919,7 @@ CREATE TABLE IF NOT EXISTS `dogless`.`messages` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `content` VARCHAR(1000) NOT NULL,
   `sender` VARCHAR(50) NOT NULL,
-  `timestamp` DATETIME NOT NULL,
+  `timestamp` DATETIME NULL,
   `idusuarios` INT NULL,
   `idconversaciones` INT NULL,
   PRIMARY KEY (`id`),
