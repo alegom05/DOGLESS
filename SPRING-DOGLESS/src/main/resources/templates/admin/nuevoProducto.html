@@ -62,6 +62,9 @@
                      <h3 class="fw-bold mb-3">Nuevo Producto</h3>
                    </div>
                  </div>
+              <div th:if="${error}" id="error" class="alert alert-danger fade-out" role="alert">
+                <p th:text="${error}"></p>
+              </div>
                  <div class="row">
                      <div class="col-md-12">
                        <div class="card">
@@ -75,16 +78,21 @@
                                    <div class="mb-3">
                                      <label for="nombre" class="form-label">Nombre del producto</label>
                                      <input type="text" class="form-control" id="nombre" th:field="*{nombre}"
-                                            th:classappend="${#fields.hasErrors('nombre')?'is-invalid':''}">
-                                     <div class="invalid-feedback" th:if="${#fields.hasErrors('nombre')}"
-                                          th:errors="*{nombre}" ></div>
+                                            th:classappend="${#fields.hasErrors('nombre') ? 'is-invalid' : ''}" required>
+                                     <div class="invalid-feedback">Por favor ingresar nombre(s).</div>
                                    </div>
+
                                    <div class="mb-3">
                                      <label for="categoria" class="form-label">Categoría</label>
-                                     <input type="text" class="form-control" id="categoria" th:field="*{categoria}"
-                                            th:classappend="${#fields.hasErrors('categoria')?'is-invalid':''}">
-                                     <div class="invalid-feedback" th:if="${#fields.hasErrors('categoria')}"
-                                          th:errors="*{categoria}" ></div>
+                                     <select class="form-select" id="categoria" name="categoria" required>
+                                     <option value="" disabled selected>Seleccione una categoría</option>
+                                       <option th:value="Laptop">Laptop</option>
+                                       <option th:value="Celular">Celular</option>
+                                       <option th:value="Periferico">Periférico</option>
+                                       <option th:value="Almacenamiento">Almacenamiento</option>
+                                       <option th:value="Electrodoméstico">Electrodoméstico</option>
+                                     </select>
+                                     <div class="invalid-feedback">Por favor seleccionar una categoria.</div>
                                    </div>
 
                                    <div class="col">

@@ -1,13 +1,18 @@
 package com.example.springdogless.entity;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.PositiveOrZero;
 import org.springframework.web.multipart.MultipartFile;
 
 public class ProductoForm {
 
     // Otros campos del formulario que quieras manejar
+    @NotBlank(message = "El nombre es obligatorio")
     private String nombre;
     private String descripcion;
+    @PositiveOrZero(message = "El precio no puede ser negativo")
     private double precio;
     private String categoria;
+    @PositiveOrZero(message = "El costo de envío no puede ser negativo")
     private Double costoenvio;
     private String modelos;
     private String colores;

@@ -8,12 +8,14 @@ import com.example.springdogless.Repository.*;
 import com.example.springdogless.dao.UsuarioDao;
 import com.example.springdogless.entity.*;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -805,6 +807,7 @@ public class AdminController {
     }
     @GetMapping(value = "/nuevoProducto")
     public String nuevoProductoFrm(Model model, @ModelAttribute("product") Producto producto) {
+        producto.setCategoria(null);
         model.addAttribute("listaProductos", productRepository.findAll());
         model.addAttribute("listaProveedores", proveedorRepository.findAll());
         model.addAttribute("producto", producto);
@@ -876,9 +879,20 @@ public class AdminController {
     }
 
     @PostMapping("/guardarProducto")
-    public String guardarProducto(@ModelAttribute ProductoForm productoForm, RedirectAttributes attr) {
+    public String guardarProducto(@ModelAttribute @Valid ProductoForm productoForm, BindingResult result, RedirectAttributes attr) {
+        if (result.hasErrors()) {
+            attr.addFlashAttribute("error", "Hay errores en el formulario");
+            return "redirect:/admin/nuevoProducto";
+        }
+
+        // Validación adicional para valores no permitidos
+        if (productoForm.getPrecio() < 0 || productoForm.getCostoenvio() < 0) {
+            attr.addFlashAttribute("error", "El precio o costo de envío no pueden ser negativos");
+            return "redirect:/admin/nuevoProducto";
+        }
         Producto producto = new Producto();
         producto.setNombre(productoForm.getNombre());
+        System.out.println("Valor de categoría recibido: " + productoForm.getCategoria());
         producto.setCategoria(productoForm.getCategoria());
         Optional<Proveedor> optProducto = proveedorRepository.findById(productoForm.getIdproveedor());
         if (optProducto.isPresent()) {
