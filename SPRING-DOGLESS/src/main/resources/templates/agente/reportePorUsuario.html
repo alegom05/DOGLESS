@@ -1,193 +1,249 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <title>Reporte - Ordenes por Usuario</title>
-    <meta
-            content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
-            name="viewport"
-    />
-    <link
-            rel="icon"
-            href="/assets/img/kaiadmin/favicon.ico"
-            type="image/x-icon"
-    />
-    <link th:href="@{/assets/css/style-SuperAdmin.css}" rel="stylesheet">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <title>Agente - Tabla órdenes</title>
+        <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport" />
+        <link rel="icon" href="/assets/img/kaiadmin/favicon.ico" type="image/x-icon" />
+        <link th:href="@{/assets/css/style-SuperAdmin.css}" rel="stylesheet">
+        <style>
+            .dataTables_filter {
+                display: none;
+            }
+            table tr td:nth-child(2), table tr th:nth-child(2){
+                display: none;
+            }
+            table tr td:nth-child(5), table tr th:nth-child(5){
+                display: none;
+            }
+            #tablaOrdenesWrapper {
+                display: none;
+                width: 100%;
+            }
+        </style>
+        <!-- Fonts and icons -->
+        <script src="/assets/js/plugin/webfont/webfont.min.js"></script>
+        <script>
+            WebFont.load({
+                google: { families: ["Public Sans:300,400,500,600,700"] },
+                custom: {
+                    families: [
+                        "Font Awesome 5 Solid",
+                        "Font Awesome 5 Regular",
+                        "Font Awesome 5 Brands",
+                        "simple-line-icons",
+                    ],
+                    urls: ["/assets/css/fonts.min.css"],
+                },
+                active: function () {
+                    sessionStorage.fonts = true;
+                },
+            });
+        </script>
+        <!-- CSS Files -->
+        <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="/assets/css/plugins.min.css" />
+        <link rel="stylesheet" href="/assets/css/kaiadmin.min.css" />
+    </head>
+    <body>
+        <div class="wrapper">
+            <div th:replace="~{agente/fragments/barralateralagente :: body(activePage='reportes', activeSubPage='porusuario')}"></div>
+            <div class="main-panel">
+                <div th:replace="~{agente/fragments/navbarheaderagente :: fragment}"></div>
 
-    <!-- Fonts and icons -->
-    <script src="/assets/js/plugin/webfont/webfont.min.js"></script>
-    <script>
-        WebFont.load({
-            google: { families: ["Public Sans:300,400,500,600,700"] },
-            custom: {
-                families: [
-                    "Font Awesome 5 Solid",
-                    "Font Awesome 5 Regular",
-                    "Font Awesome 5 Brands",
-                    "simple-line-icons",
-                ],
-                urls: ["/assets/css/fonts.min.css"],
-            },
-            active: function () {
-                sessionStorage.fonts = true;
-            },
-        });
-    </script>
-
-    <!-- CSS Files -->
-    <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="/assets/css/plugins.min.css" />
-    <link rel="stylesheet" href="/assets/css/kaiadmin.min.css" />
-
-
-</head>
-<body>
-<div class="wrapper">
-    <!-- Reemplaza barra lateral con el fragmento de Thymeleaf -->
-    <div th:replace="~{agente/fragments/barralateralagente :: body(activePage='ordenes',  activeSubPage='todas')}"></div>
-    <!-- Fin barra lateral -->
-
-
-    <div class="main-panel">
-
-        <!-- Reemplaza navbar con el fragmento de Thymeleaf -->
-        <div th:replace="~{agente/fragments/navbarheaderagente :: fragment}"></div>
-        <!-- Fin Navbar -->
-                <!--  contenido central -->
                 <div class="container">
                     <div class="page-inner">
                         <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
                             <div>
-                                <h3 class="fw-bold mb-3">Reporte de Órdenes por Usuario</h3>
+                                <h3 class="fw-bold mb-3">Órdenes generadas por usuario</h3>
                                 <h6 class="op-7 mb-2">
-                                    Busca por DNI o nombre de usuario para visualizar las órdenes asociadas.
+                                    Este reporte proporciona un listado completo de las órdenes generadas por un usuario específico, permitiendo filtrar y gestionar eficientemente las órdenes de cada usuario.
                                 </h6>
                             </div>
                         </div>
 
-                        <!-- DNI and Name Filter and Buttons -->
-                        <div class="d-flex justify-content-between mb-3">
-                            <!-- DNI and Name Inputs -->
-                            <div class="d-flex align-items-center">
-                                <div class="form-group me-2">
-                                    <label for="dniFilter">DNI:</label>
-                                    <input type="text" id="dniFilter" class="form-control-sm" placeholder="Ingresa DNI">
-                                </div>
-                                <div class="form-group me-2">
-                                    <label for="nameFilter">Nombre de usuario:</label>
-                                    <input type="text" id="nameFilter" class="form-control-sm" placeholder="Ingresa nombre">
-                                </div>
-                            </div>
-                            <!-- Generate report and back buttons -->
-                            <div class="d-flex">
-                                <div class="d-flex align-items-center justify-content-center">
-                                    <button id="generateReportBtn" class="btn btn-secondary me-2">Generar reporte</button>
-                                    <a href="/agente/reportesOrdenes" class="btn btn-primary">Regresar</a>
-                                </div>
+                        <!-- Filtro por Nombre de Usuario y DNI -->
+                        <div class="row">
+                            <div class="col-md-12">
+                                <form id="filtroForm" class="form-inline d-flex align-items-center">
+                                    <div class="form-group mb-2 me-2">
+                                        <label for="filterUserName" class="mr-2">Usuario:</label>
+                                        <input type="text" id="filterUserName" name="nombre" class="form-control filtro-pequeno" placeholder="Ejemplo: Juan Pérez" oninput="autocompletarDNI()">
+                                    </div>
+                                    <div class="form-group mb-2 me-2">
+                                        <label for="filterDNI" class="mr-2">DNI:</label>
+                                        <input type="text" id="filterDNI" name="dni" class="form-control filtro-pequeno" placeholder="Ejemplo: 12345678" oninput="autocompletarUsuario()">
+                                    </div>
+                                    <button type="button" class="btn btn-dark mb-2 me-2" onclick="filtrar()">Generar</button>
+                                    <button type="button" class="btn btn-outline-secondary mb-2" onclick="limpiarFiltro()">Limpiar Filtro</button>
+                                </form>
                             </div>
                         </div>
-
-                        <!-- Preview Section -->
-                        <div>
-                            <h4 class="fw-bold mb-3">Previsualización:</h4>
-                        </div>
-                        <div class="card mt-4" style="width: 90%; margin: 0 auto;">
-                            <div class="card-header bg-dark text-white">
-                                <h4 class="card-title text-center text-white">Reporte de Órdenes por Usuario</h4>
-                                <h6 id="filterSubtitle" class="text-center">(DNI: -, Usuario: -)</h6>
-                            </div>
-                            <div class="card-body">
-                                <div class="table-responsive">
-
-                                        <table class="table table-bordered text-center">
-                                            <thead>
-                                            <tr>
-                                                <th>#</th>
-                                                <th>Usuario</th>
-                                                <th>ID Orden</th>
-                                                <th>Fecha de Generación</th>
-                                                <th>Estado de Orden</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            <tr th:each="usuario : ${listaUsuarios}">
-                                                <td th:text="${usuario.id}" th:rowspan="${#lists.size(usuario.orden) > 0 ? #lists.size(usuario.orden) : 1}"></td>
-                                                <td th:text="${usuario.nombre}" th:rowspan="${#lists.size(usuario.orden) > 0 ? #lists.size(usuario.orden) : 1}"></td>
-                                                <td th:if="${#lists.isEmpty(usuario.orden)}" colspan="3">Sin órdenes</td>
-                                                <th:block th:if="${not #lists.isEmpty(usuario.orden)}">
-                                                    <td th:text="${usuario.orden[0].id}"></td>
-                                                    <td th:text="${#dates.format(usuario.orden[0].fecha, 'dd-MM-yyyy')}"></td>
-                                                    <td th:text="${usuario.orden[0].estado}"></td>
-                                                </th:block>
-                                            </tr>
-                                            <tr th:each="usuario : ${listaUsuarios}" th:each-status="status">
-                                                <th:block th:each="orden, ordenStatus : ${usuario.orden}" th:if="${ordenStatus.index > 0}">
-                                                    <td th:text="${orden.id}"></td>
-                                                    <td th:text="${#dates.format(orden.fecha, 'dd-MM-yyyy')}"></td>
-                                                    <td th:text="${orden.estado}"></td>
-                                                </th:block>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-
-
-
-                                        </tbody>
-                                    </table>
+                        <!-- Tabla -->
+                        <div id="tablaOrdenesWrapper" class="row mt-4">
+                            <div class="col-md-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="table-responsive" style="width: 100%;">
+                                            <table id="basic-datatables" class="display table table-striped table-hover w-100">
+                                                <thead class="text-center">
+                                                    <tr>
+                                                        <th>Número de Orden</th>
+                                                        <th>Nombre del Usuario</th>
+                                                        <th>Estado de la orden</th>
+                                                        <th>Fecha de Actualización</th>
+                                                        <th>DNI</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="tablaOrdenes" class="text-center">
+                                                    <tr th:each="orden : ${listaOrdenes}">
+                                                        <td th:text="${orden.id}"></td>
+                                                        <td th:text="${orden.usuario.nombre + ' ' + orden.usuario.apellido}"></td>
+                                                        <td>
+                                                              <span th:text="${orden.estado}"
+                                                                    th:classappend="${orden.estado == 'Recibido'} ? 'badge badge-success' :
+                                                                                   (${orden.estado == 'En Ruta'} ? 'badge badge-primary' :
+                                                                                   (${orden.estado == 'En Aduanas'} ? 'badge badge-warning' :
+                                                                                   (${orden.estado == 'Arribo al País'} ? 'badge badge-info' :
+                                                                                   (${orden.estado == 'En Proceso'} ? 'badge badge-black' :
+                                                                                   (${orden.estado == 'En Validación'} ? 'badge badge-secondary' :
+                                                                                   (${orden.estado == 'Cancelado'} ? 'badge badge-danger' : 'badge badge-count'))))))">
+                                                              </span>
+                                                        </td>
+                                                        <td th:text="${#dates.format(orden.fecha, 'dd/MM/yy, hh:mma')}"></td>
+                                                        <td th:text="${orden.usuario.dni}"></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <!-- Botones de descarga -->
+                                        <div class="mt-3 text-center">
+                                            <button type="button" class="btn btn-danger me-2" onclick="descargarReporte('pdf')">Descargar en PDF</button>
+                                            <button type="button" class="btn btn-success" onclick="descargarReporte('xlsx')">Descargar en Excel</button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Save options -->
-                        <div class="d-flex justify-content-center mt-4">
-                            <button class="btn btn-danger me-2">Guardar como PDF</button>
-                            <button class="btn btn-success">Guardar como Excel</button>
-                        </div>
                     </div>
                 </div>
+                <div th:replace="~{agente/fragments/piedepagina :: fragment}"></div>
+            </div>
+        </div>
 
-                <!-- Pie de página -->
-        <div th:replace="~{agente/fragments/piedepagina :: fragment}"></div>
-    </div>
-</div>
-
-
-
-<!--Core JS Files   -->
+        <!-- Core JS Files -->
         <script src="/assets/js/core/jquery-3.7.1.min.js"></script>
         <script src="/assets/js/core/popper.min.js"></script>
         <script src="/assets/js/core/bootstrap.min.js"></script>
-
-        <!-- jQuery Scrollbar -->
         <script src="/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
-        <!-- Datatables -->
         <script src="/assets/js/plugin/datatables/datatables.min.js"></script>
-
-        <!-- jQuery Vector Maps -->
-        <script src="/assets/js/plugin/jsvectormap/jsvectormap.min.js"></script>
-        <script src="/assets/js/plugin/jsvectormap/world.js"></script>
-
-        <!-- Kaiadmin JS -->
         <script src="/assets/js/kaiadmin.min.js"></script>
-        <!-- JavaScript for refreshing the preview and updating the filters -->
+
         <script>
-            // Function to update the filters in the subtitle and refresh the preview
-            function refreshPreview() {
-                const dni = document.getElementById("dniFilter").value || '-';
-                const name = document.getElementById("nameFilter").value || '-';
+            function filtrar() {
+                const userNameInput = document.getElementById("filterUserName");
+                const dniInput = document.getElementById("filterDNI");
+                const userName = userNameInput.value.toLowerCase();
+                const dni = dniInput.value;
+                const table = $('#basic-datatables').DataTable();
 
-                // Update the subtitle with the selected filters
-                document.getElementById("filterSubtitle").textContent = `(DNI: ${dni}, Usuario: ${name})`;
+                // Limpiar filtros previos
+                $.fn.dataTable.ext.search = [];
 
-                // Logic to refresh the preview goes here, for now, it just simulates a refresh
-                console.log("Preview refreshed with filters: DNI:", dni, "Usuario:", name);
+                // Autocompletar campos antes de filtrar
+                if (userName && !dni) {
+                    autocompletarDNI();
+                } else if (dni && !userName) {
+                    autocompletarUsuario();
+                }
+
+                // Filtrar por Usuario y DNI
+                if (userName) {
+                    table.column(1).search('^' + userName, true, false); // Aplica filtro al nombre de usuario
+                }
+                if (dni) {
+                    table.column(4).search('^' + dni, true, false); // Aplica filtro al DNI
+                }
+                table.draw();
+
+                // Actualizar campos de entrada con los valores completos
+                $('#basic-datatables tbody tr').each(function () {
+                    const nombre = $(this).find('td:nth-child(2)').text();
+                    const dniTabla = $(this).find('td:nth-child(5)').text();
+                    if (nombre.toLowerCase().includes(userName) || dniTabla === dni) {
+                        userNameInput.value = nombre;
+                        dniInput.value = dniTabla;
+                        return false; // Detener la iteración después de encontrar coincidencia
+                    }
+                });
+
+                // Mostrar la tabla después de buscar
+                document.getElementById("tablaOrdenesWrapper").style.display = "block";
             }
 
-            // Event listener for the 'Generar reporte' button to refresh the preview
-            document.getElementById("generateReportBtn").addEventListener("click", refreshPreview);
+            function limpiarFiltro() {
+                document.getElementById("filterUserName").value = "";
+                document.getElementById("filterDNI").value = "";
+                const table = $('#basic-datatables').DataTable();
+                table.search('').columns().search('').draw();
+                $.fn.dataTable.ext.search = [];
 
+                // Ocultar la tabla cuando se limpia el filtro
+                document.getElementById("tablaOrdenesWrapper").style.display = "none";
+            }
 
+            function autocompletarDNI() {
+                const userName = document.getElementById("filterUserName").value.toLowerCase();
+                if (userName) {
+                    $('#basic-datatables tbody tr').each(function () {
+                        const nombre = $(this).find('td:nth-child(2)').text().toLowerCase();
+                        if (nombre.includes(userName)) {
+                            const dni = $(this).find('td:nth-child(5)').text();
+                            document.getElementById("filterDNI").value = dni;
+                            return false; // Detener la iteración después de encontrar coincidencia
+                        }
+                    });
+                }
+            }
+
+            function autocompletarUsuario() {
+                const dni = document.getElementById("filterDNI").value;
+                if (dni) {
+                    $('#basic-datatables tbody tr').each(function () {
+                        const dniTabla = $(this).find('td:nth-child(5)').text();
+                        if (dniTabla === dni) {
+                            const nombre = $(this).find('td:nth-child(2)').text();
+                            document.getElementById("filterUserName").value = nombre;
+                            return false; // Detener la iteración después de encontrar coincidencia
+                        }
+                    });
+                }
+            }
+
+            function descargarReporte(formato) {
+                const nombre = document.getElementById("filterUserName").value;
+                const dni = document.getElementById("filterDNI").value;
+                window.location.href = `/agente/exportarOrdenesPorUsuario?nombre=${nombre}&dni=${dni}&formato=${formato}`;
+            }
+
+            $(document).ready(function () {
+                $('#basic-datatables').DataTable({
+                    paging: false,
+                    lengthChange: false,
+                    info: false,
+                    language: {
+                        search: "Buscar:",
+                        lengthMenu: "Mostrar _MENU_ entradas por página",
+                        info: "Mostrando _START_ a _END_ de _TOTAL_ entradas",
+                        paginate: {
+                            previous: "Anterior",
+                            next: "Siguiente"
+                        }
+                    }
+                });
+            });
         </script>
     </body>
 </html>
