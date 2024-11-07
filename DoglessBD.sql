@@ -902,7 +902,7 @@ ENGINE = InnoDB;
 -- Table `dogless`.`conversaciones`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `dogless`.`conversaciones` (
-  `idconversaciones` BIGINT NOT NULL AUTO_INCREMENT,
+  `idconversaciones` INT NOT NULL AUTO_INCREMENT,
   `titulo` VARCHAR(255) NOT NULL,
   `fecha_inicio` DATETIME NOT NULL,
   `fecha_fin` DATETIME NULL,
@@ -921,7 +921,7 @@ CREATE TABLE IF NOT EXISTS `dogless`.`messages` (
   `sender` VARCHAR(50) NOT NULL,
   `timestamp` DATETIME NOT NULL,
   `idusuarios` INT NULL,
-  `idconversaciones` BIGINT NULL,
+  `idconversaciones` INT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_messages_usuarios_idx` (`idusuarios` ASC) VISIBLE,
   INDEX `fk_messages_conversaciones_idx` (`idconversaciones` ASC) VISIBLE,
