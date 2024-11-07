@@ -890,6 +890,11 @@ public class AdminController {
             attr.addFlashAttribute("error", "El precio o costo de envío no pueden ser negativos");
             return "redirect:/admin/nuevoProducto";
         }
+        List<String> categoriasValidas = Arrays.asList("Laptop", "Celular", "Periferico", "Almacenamiento", "Electrodoméstico");
+        if (!categoriasValidas.contains(productoForm.getCategoria())) {
+            attr.addFlashAttribute("error", "La categoría seleccionada no es válida");
+            return "redirect:/admin/nuevoProducto";
+        }
         Producto producto = new Producto();
         producto.setNombre(productoForm.getNombre());
         System.out.println("Valor de categoría recibido: " + productoForm.getCategoria());

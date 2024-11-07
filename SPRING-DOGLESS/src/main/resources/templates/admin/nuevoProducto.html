@@ -13,6 +13,7 @@
             href="/assets/img/kaiadmin/favicon.ico"
             type="image/x-icon"
     />
+    <link th:href="@{/assets/css/style-SuperAdmin.css}" rel="stylesheet">
 
     <!-- Fonts and icons -->
     <script src="/assets/js/plugin/webfont/webfont.min.js"></script>
@@ -169,10 +170,11 @@
                                    </div>
                                  </div>
                                </div>
-                               <div class="btn-container" style="text-align: center; margin-top: 20px;">
+                               <div style="display: flex; justify-content: center; gap: 20px; margin-top: 20px;">
                                  <button type="submit" class="btn btn-primary" style="width: 280px;">Crear</button>
                                  <a th:href="@{/admin/productos}" class="btn btn-secondary" style="width: 280px;">Cancelar</a>
                                </div>
+
                              </div>
                            </form>
                          </div>
