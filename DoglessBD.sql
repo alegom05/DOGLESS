@@ -881,3 +881,58 @@ INSERT INTO `dogless`.`tarjetas` (`numero`, `tipo`, `cvv`, `fecha`) VALUES
 ('5632147896325874', 'Scotiabank', '852', '2026-04-17'),
 ('4785236987451236', 'BCP', '369', '2024-06-23'),
 ('5478963215478963', 'BBVA', '159', '2025-05-09');
+
+-- -----------------------------------------------------
+-- Table `dogless`.`mensajes`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `dogless`.`mensajes` (
+  `idmensajes` INT NOT NULL AUTO_INCREMENT,
+  `texto` VARCHAR(200) NULL,
+  `idusuarios` INT NOT NULL,
+  PRIMARY KEY (`idmensajes`),
+  INDEX `fk_mensajes_usuarios1_idx` (`idusuarios` ASC) VISIBLE,
+  CONSTRAINT `fk_mensajes_usuarios1`
+    FOREIGN KEY (`idusuarios`)
+    REFERENCES `dogless`.`usuarios` (`idusuarios`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+-- -----------------------------------------------------
+-- Table `dogless`.`conversaciones`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `dogless`.`conversaciones` (
+  `idconversaciones` INT NOT NULL AUTO_INCREMENT,
+  `titulo` VARCHAR(255) NOT NULL,
+  `fecha_inicio` DATETIME NOT NULL,
+  `fecha_fin` DATETIME NULL,
+  `estado` VARCHAR(50) DEFAULT 'activa',
+  PRIMARY KEY (`idconversaciones`)
+)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `dogless`.`messages`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `dogless`.`messages` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `content` VARCHAR(1000) NOT NULL,
+  `sender` VARCHAR(50) NOT NULL,
+  `timestamp` DATETIME NULL,
+  `idusuarios` INT NULL,
+  `idconversaciones` INT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_messages_usuarios_idx` (`idusuarios` ASC) VISIBLE,
+  INDEX `fk_messages_conversaciones_idx` (`idconversaciones` ASC) VISIBLE,
+  CONSTRAINT `fk_messages_usuarios`
+    FOREIGN KEY (`idusuarios`)
+    REFERENCES `dogless`.`usuarios` (`idusuarios`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_messages_conversaciones`
+    FOREIGN KEY (`idconversaciones`)
+    REFERENCES `dogless`.`conversaciones` (`idconversaciones`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;

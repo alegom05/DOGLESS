@@ -171,6 +171,11 @@ public class UsuarioController {
         return "usuario/guia";
     }
 
+    @GetMapping({"/chat"})
+    public String ChatDeUsuario(Model model) {
+        return "usuario/chat";
+    }
+
     @GetMapping("/new")
     public String nuevoAgenteFrm(Model model) {
         model.addAttribute("listaZonas", zonaRepository.findAll());

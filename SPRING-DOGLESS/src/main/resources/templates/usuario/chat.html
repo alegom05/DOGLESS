@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <title>Guía de Usuarios</title>
+        <meta
+                content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
+                name="viewport"
+        />
+        <link
+                rel="icon"
+                href="/assets/img/kaiadmin/favicon.ico"
+                type="image/x-icon"
+        />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.0/sockjs.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@stomp/stompjs@5.0.0/bundles/stomp.udm.js"></script>
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+
+        <!-- Fonts and icons -->
+        <script src="/assets/js/plugin/webfont/webfont.min.js"></script>
+        <script>
+            WebFont.load({
+                google: { families: ["Public Sans:300,400,500,600,700"] },
+                custom: {
+                    families: [
+                        "Font Awesome 5 Solid",
+                        "Font Awesome 5 Regular",
+                        "Font Awesome 5 Brands",
+                        "simple-line-icons",
+                    ],
+                    urls: ["../assets/css/fonts.min.css"],
+                },
+                active: function () {
+                    sessionStorage.fonts = true;
+                },
+            });
+        </script>
+
+        <!-- CSS Files -->
+        <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="/assets/css/plugins.min.css" />
+        <link rel="stylesheet" href="/assets/css/kaiadmin.min.css" />
+        <link rel="stylesheet" href="/assets/js/index.js" />
+
+
+        <!-- CSS Just for demo purpose, don't include it in your project -->
+        <link rel="stylesheet" href="/assets/css/demo.css" />
+    </head>
+    <body>
+        <div class="wrapper">
+            <!-- Sidebar -->
+            <div th:replace="~{usuario/fragments/barralateralusuario :: body(activePage='chat')}"></div>
+            <!-- End Sidebar -->
+
+            <div class="main-panel">
+                <div th:replace="~{usuario/fragments/navbarheaderusuario :: fragment}"></div>
+                <div class="container">
+                    <div class="page-inner">
+                        <div class="page-header">
+                            <h3 class="fw-bold mb-3">Chat pronto</h3>
+                            <!-- Campo oculto para el ID del usuario -->
+                            <input name="idusuario" id="idusuario" th:value="${session.usuario.id}" type="hidden"/>
+                        </div>
+                        <div class="container mt-5">
+                            <!-- Encabezado -->
+                            <div class="card">
+                                <div class="card-header bg-primary text-white">
+                                    <h5 class="mb-0">Chat en vivo</h5>
+                                </div>
+                                <div class="card-body">
+                                    <!-- Área de mensajes -->
+                                    <div id="messages" class="border rounded p-3 mb-3" style="height: 300px; overflow-y: scroll;">
+                                        <!-- Los mensajes se mostrarán aquí -->
+                                    </div>
+
+                                    <!-- Campo de entrada de mensaje -->
+                                    <div class="input-group">
+                                        <input type="text" id="messageInput" class="form-control" placeholder="Escribe un mensaje">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary" onclick="sendMessage()">Enviar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Campos ocultos para el nombre y ID del usuario -->
+                        <input type="hidden" id="userName" th:value="${session.usuario.nombre}" />
+                        <input type="hidden" id="userId" th:value="${session.usuario.id}" />
+
+                    </div>
+
+
+                </div>
+                <!-- Pie de página -->
+                <div th:replace="~{usuario/fragments/piedepagina :: fragment}"></div>
+            </div>
+
+            <!-- Custom template | don't include it in your project! -->
+            <!-- End Custom template -->
+        </div>
+        <!--   Core JS Files   -->
+        <script src="/assets/js/core/jquery-3.7.1.min.js"></script>
+        <script src="/assets/js/core/popper.min.js"></script>
+        <script src="/assets/js/core/bootstrap.min.js"></script>
+
+        <!-- jQuery Scrollbar -->
+        <script src="/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+        <!-- Datatables -->
+        <script src="/assets/js/plugin/datatables/datatables.min.js"></script>
+        <!-- Kaiadmin JS -->
+        <script src="/assets/js/kaiadmin.min.js"></script>
+        <!-- Kaiadmin DEMO methods, don't include it in your project! -->
+        <!-- SockJS y STOMP -->
+        <!-- SockJS y STOMP -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.4.0/sockjs.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+        <script th:inline="javascript">
+            let stompClient = null;
+
+            function connect() {
+                const socket = new SockJS('/chat');
+                stompClient = Stomp.over(socket);
+                stompClient.connect({}, function (frame) {
+                    console.log('Conectado: ' + frame);
+                    stompClient.subscribe('/topic/messages', function (messageOutput) {
+                        showMessage(JSON.parse(messageOutput.body));
+                    });
+                });
+            }
+
+            function sendMessage() {
+                const messageInput = document.getElementById('messageInput');
+                const userName = document.getElementById('userName').value;
+                const userId = document.getElementById('userId').value;
+
+                const message = {
+                    from: userName, // Nombre del usuario
+                    content: messageInput.value,
+                    userId: userId // ID del usuario
+                };
+
+                stompClient.send("/app/sendMessage", {}, JSON.stringify(message));
+                messageInput.value = ''; // Limpiar el campo de entrada
+            }
+
+            function showMessage(message) {
+                const messagesDiv = document.getElementById('messages');
+                const messageElement = document.createElement('div');
+
+                const currentUserId = document.getElementById('userId').value;
+
+                if (message.userId === currentUserId) {
+                    // Si el mensaje es del usuario actual, alinéalo a la derecha
+                    messageElement.className = "alert alert-primary text-right"; // Estilo de Bootstrap
+                    messageElement.textContent = `Tú: ${message.content}`;
+                } else {
+                    // Si el mensaje es de otro usuario, alinéalo a la izquierda
+                    messageElement.className = "alert alert-secondary text-left";
+                    messageElement.textContent = `${message.from}: ${message.content}`;
+                }
+
+                messagesDiv.appendChild(messageElement);
+
+                // Desplaza hacia abajo para mostrar el último mensaje
+                messagesDiv.scrollTop = messagesDiv.scrollHeight;
+            }
+
+            connect();
+        </script>
+
+        <!-- Bootstrap JS y dependencias -->
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    </body>
+</html>
