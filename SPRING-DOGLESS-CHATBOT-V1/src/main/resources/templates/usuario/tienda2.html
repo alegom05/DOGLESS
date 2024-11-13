@@ -1,0 +1,1117 @@
+<!DOCTYPE html>
+<html lang="es"> 
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Tienda</title>
+    <meta
+      content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
+      name="viewport"
+    />
+    <link
+      rel="icon"
+      href="/assets/img/kaiadmin/favicon.ico"
+      type="image/x-icon"
+    />
+
+    <!-- Fonts and icons -->
+    <script src="/assets/js/plugin/webfont/webfont.min.js"></script>
+    <script>
+      WebFont.load({
+        google: { families: ["Public Sans:300,400,500,600,700"] },
+        custom: {
+          families: [
+            "Font Awesome 5 Solid",
+            "Font Awesome 5 Regular",
+            "Font Awesome 5 Brands",
+            "simple-line-icons",
+          ],
+          urls: ["assets/css/fonts.min.css"],
+        },
+        active: function () {
+          sessionStorage.fonts = true;
+        },
+      });
+    </script>
+
+      <!-- CSS Files -->
+      <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
+      <link rel="stylesheet" href="/assets/css/plugins.min.css" />
+      <link rel="stylesheet" href="/assets/css/kaiadmin.min.css" />
+
+
+    <!-- CSS Just for demo purpose, don't include it in your project -->
+    <link rel="stylesheet" href="/assets/css/demo.css" />
+      <!-- Google Web Fonts -->
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Raleway:wght@600;800&display=swap" rel="stylesheet"> 
+
+      <!-- Icon Font Stylesheet -->
+      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"/>
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+      <!-- Libraries Stylesheet -->
+      <link href="/assets/lib/lightbox/css/lightbox.min.css" rel="stylesheet">
+      <link href="/assets/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+    <!-- Tu archivo CSS personalizado -->
+    <link rel="stylesheet" href="/../assets/css/style.css" />
+    
+    <style>
+      .table-card {
+          background-color: #ffffff; /* Fondo blanco */
+          border-radius: 8px; /* Bordes redondeados */
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para efecto de profundidad */
+          overflow: hidden; /* Para que el borde redondeado se aplique a todo el contenido */
+          margin: 20px 0; /* Margen alrededor de la tabla */
+          padding: 20px; /* Espaciado interno */
+      }
+      .summary-card {
+          background-color: #ffffff; /* Fondo blanco */
+          border-radius: 8px; /* Bordes redondeados */
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para efecto de profundidad */
+          padding: 20px; /* Espaciado interno */
+          margin: 20px 0; /* Margen alrededor de la tarjeta */
+      }
+      .summary-card .total-row {
+          border-top: 1px solid #dee2e6; /* Borde superior para separar las filas */
+          padding: 10px 0; /* Espaciado interno en las filas */
+      }
+      .summary-card .btn-checkout {
+          background-color: #007bff; /* Color de fondo del botón */
+          color: #ffffff; /* Color del texto del botón */
+          border: none; /* Sin borde */
+          border-radius: 50px; /* Bordes redondeados en el botón */
+          padding: 10px 20px; /* Espaciado interno del botón */
+          font-size: 1rem; /* Tamaño de fuente del botón */
+          text-transform: uppercase; /* Texto en mayúsculas */
+          display: block; /* Mostrar el botón en una nueva línea */
+          margin: 20px auto 0; /* Centrar el botón horizontalmente */
+      }
+      .summary-card .total-row:last-child {
+          border-bottom: none; /* Eliminar el borde inferior en la última fila */
+      }
+      .btn-checkout {
+          border: 2px solid rgba(129, 133, 138, 0.267); /* Agrega un borde negro al botón */
+          color: #007bff;
+          transition: background-color 0.3s, transform 0.3s;
+      }
+          
+      .btn-checkout:hover {
+          background-color: #328ae7; /* Cambia el color de fondo al pasar el mouse */
+          transform: scale(1.1); /* Aumenta ligeramente el tamaño del botón */
+          color: white; /* Cambia el color del texto al pasar el mouse */
+      }
+
+      .btn-normal{
+        border: 2px solid rgba(129, 133, 138, 0.267); /* Agrega un borde negro al botón */
+        color: #007bff;
+        transition: background-color 0.3s, transform 0.3s;
+      }
+
+      .btn-normal-2{
+        border: 2px solid rgba(129, 133, 138, 0.267); /* Agrega un borde negro al botón */
+        color: #007bff;
+      }
+
+      .btn-normal-2:hover{
+        background-color: #328ae7; /* Cambia el color de fondo al pasar el mouse */
+        color: #ffffff;
+      }
+
+      .btn-normal:hover{
+        background-color: #328ae7; /* Cambia el color de fondo al pasar el mouse */
+        transform: scale(1.02); /* Aumenta ligeramente el tamaño del botón */
+        color: #ffffff;
+      }
+
+      .btn-remove {
+          transition: background-color 0.3s, color 0.3s;
+          color: rgb(245, 45, 45);
+      }
+      
+      .btn-remove:hover {
+          background-color: #dc3546be; /* Cambia el color de fondo al pasar el mouse */
+          color: #fff; /* Cambia el color del texto al pasar el mouse */
+          transform: scale(1.1); /* Aumenta el tamaño del botón */
+      }
+
+      .btn-plus, .btn-minus {
+          transition: background-color 0.3s, transform 0.3s;
+      }
+      
+      .btn-plus:hover, .btn-minus:hover {
+          background-color: #007bffd5; /* Cambia el color de fondo al pasar el mouse */
+          transform: scale(1.1); /* Aumenta el tamaño del botón */
+          color: white;
+      }
+      
+      .form-control-transparent {
+            background-color: transparent; /* Hace el fondo del campo de texto transparente */
+            border: none; /* Opcional: quita el borde del campo de texto */
+      }
+
+      /* Efecto de sombra en la carta */
+      .fruite-item {
+          transition: box-shadow 0.3s ease-in-out;
+      }
+
+      /* Sombra cuando pasas el mouse sobre la tarjeta */
+      .fruite-item:hover {
+          box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.5); /* Aplica una sombra más oscura */
+      }
+
+      /* Imagen dentro de la fruite-item */
+      .fruite-img img {
+          transition: transform 0.3s ease-in-out; /* Transición suave para el zoom */
+          width: 100%; /* Mantiene el ancho de la imagen al 100% de su contenedor */
+          height: auto; /* Mantiene las proporciones de la imagen */
+      }
+
+      /* Efecto zoom en la imagen cuando pasas el mouse */
+      .fruite-item:hover .fruite-img img {
+          transform: scale(1.3); /* Aplica un zoom del 110% */
+      }
+
+      /* Evita que la imagen se salga del contenedor al hacer zoom */
+      .fruite-img {
+          overflow: hidden; /* Oculta cualquier parte de la imagen que se salga del contenedor */
+          border-radius: 0.5rem; /* Redondea las esquinas */
+      }
+
+      .form-filter {
+        padding-left: 37px; /* Relleno a la izquierda */
+        padding-right: 37px; /* Relleno a la derecha */
+      }
+
+      #priceFilterForm {
+        font-family: 'Public Sans', sans-serif; /* Aplicar la fuente al formulario */
+      }
+
+      #priceFilterForm div {
+        margin-bottom: 10px;
+      }
+
+      /* Asegurando que el texto tenga el color azul */
+      #priceFilterForm label {
+        display: block;
+        color: #2b77b6 !important; /* Sobrescribe el color con más prioridad */
+        font-size: 16px !important; /* Sobrescribe el tamaño con más prioridad */
+        cursor: pointer;
+        margin: 5px 0; /* Espaciado entre las opciones */
+      }
+
+      #priceFilterForm input[type="radio"] {
+        margin-right: 8px;
+        accent-color: #007bff; /* Cambia el color del radio button */
+      }
+
+      #priceFilterForm button {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 14px;
+        transition: background-color 0.3s ease;
+      }
+
+      #priceFilterForm button:hover {
+        background-color: #0056b3;
+      }
+      /* Estilo del contenedor de Categorías */
+      .categorias-container {
+        background-color: #f9f9f9; /* Fondo suave */
+        padding: 15px; /* Espaciado interno */
+        border-radius: 8px; /* Bordes redondeados */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+        margin-bottom: 20px; /* Separación de otros elementos */
+      }
+
+      .fruite-name {
+        display: flex;
+        line-height: 1.8; /* Interlineado más amplio */
+      }
+
+      .fruite-categorie a{
+        color: #2b77b6;
+        font-size: 16px;
+        margin: 3px;
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+    </style>
+
+  </head>
+  <body>
+    <div class="wrapper">
+      <!-- Sidebar -->
+      <div class="sidebar" data-background-color="light-blue2">
+        <div class="sidebar-logo">
+          <!-- Logo Header -->
+          <div class="logo-header d-flex align-items-center justify-content-between" data-background-color="light-blue2">
+            <a href=/admin class="logo d-flex align-items-center">
+              <img
+                src="/assets/img/kaiadmin/logo_dogless.png"
+                alt="navbar brand"
+                class="navbar-brand"
+                height="50"
+              />
+              <span class="ms-2 text-white fw-bold text-truncate">DOGLESS</span> <!-- Texto blanco y limitado -->
+            </a>
+            <div class="nav-toggle">
+              <button class="btn btn-toggle toggle-sidebar">
+                <i class="gg-menu-right"></i>
+              </button>
+              <button class="btn btn-toggle sidenav-toggler">
+                <i class="gg-menu-left"></i>
+              </button>
+            </div>
+            <button class="topbar-toggler more">
+              <i class="gg-more-vertical-alt"></i>
+            </button>
+          </div>
+          <!-- End Logo Header -->
+        </div>
+        <div class="sidebar-wrapper scrollbar scrollbar-inner">
+          <div class="sidebar-content">
+            <ul class="nav nav-secondary">
+              <!-- Barra de navegacion -->
+
+              <li class="nav-item">
+                <a href=/admin>
+                  <i class="fas fa-home"></i>
+                  <p>Pagina Principal</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="tienda.html">
+                  <i class="fas fa-shopping-cart"></i>
+                  <p>Tienda</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="carrito_compras.html">
+                  <i class="fas fa-shopping-bag"></i>
+                  <p>Mis compras</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="tables/guia.html">
+                  <i class="fas fa-question-circle"></i>
+                  <p>Guía de usuario</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="tables/libro.html">
+                  <i class="fas fa-book"></i>
+                  <p>Libro de reclamaciones</p>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!-- End Sidebar -->
+
+      <div class="main-panel">
+        <div class="main-header">
+          <div class="main-header-logo">
+            <!-- Logo Header -->
+            <div class="logo-header" data-background-color="dark">
+              <a href=/admin class="logo">
+                <img
+                  src="/assets/img/kaiadmin/logo_light.svg"
+                  alt="navbar brand"
+                  class="navbar-brand"
+                  height="20"
+                />
+              </a>
+              <div class="nav-toggle">
+                <button class="btn btn-toggle toggle-sidebar">
+                  <i class="gg-menu-right"></i>
+                </button>
+                <button class="btn btn-toggle sidenav-toggler">
+                  <i class="gg-menu-left"></i>
+                </button>
+              </div>
+              <button class="topbar-toggler more">
+                <i class="gg-more-vertical-alt"></i>
+              </button>
+            </div>
+            <!-- End Logo Header -->
+          </div>
+          <!-- Navbar Header -->
+          <nav class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom" data-background-color="light-blue2">
+            <div class="container-fluid">
+              <nav
+                class="navbar navbar-header-left navbar-expand-lg navbar-form nav-search p-0 d-none d-lg-flex"
+              >
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <button type="submit" class="btn btn-search pe-1">
+                      <i class="fa fa-search search-icon"></i>
+                    </button>
+                  </div>
+                  <input
+                    type="text"
+                    placeholder="Search ..."
+                    class="form-control"
+                  />
+                </div>
+              </nav>
+
+              <ul class="navbar-nav topbar-nav ms-md-auto align-items-center">
+                <li
+                  class="nav-item topbar-icon dropdown hidden-caret d-flex d-lg-none"
+                >
+                  <a
+                    class="nav-link dropdown-toggle"
+                    data-bs-toggle="dropdown"
+                    href="#"
+                    role="button"
+                    aria-expanded="false"
+                    aria-haspopup="true"
+                  >
+                    <i class="fa fa-search"></i>
+                  </a>
+                  <ul class="dropdown-menu dropdown-search animated fadeIn">
+                    <form class="navbar-left navbar-form nav-search">
+                      <div class="input-group">
+                        <input
+                          type="text"
+                          placeholder="Search ..."
+                          class="form-control"
+                        />
+                      </div>
+                    </form>
+                  </ul>
+                </li>
+                <li class="nav-item topbar-icon dropdown hidden-caret">
+                  <a
+                    class="nav-link dropdown-toggle"
+                    href="#"
+                    id="messageDropdown"
+                    role="button"
+                    data-bs-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                  >
+                    <i class="fa fa-envelope"></i>
+                  </a>
+                  <ul
+                    class="dropdown-menu messages-notif-box animated fadeIn"
+                    aria-labelledby="messageDropdown"
+                  >
+                    <li>
+                      <div
+                        class="dropdown-title d-flex justify-content-between align-items-center"
+                      >
+                        Messages
+                        <a href="#" class="small">Mark all as read</a>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="message-notif-scroll scrollbar-outer">
+                        <div class="notif-center">
+                          <a href="#">
+                            <div class="notif-img">
+                              <img
+                                src="/assets/img/jm_denis.jpg"
+                                alt="Img Profile"
+                              />
+                            </div>
+                            <div class="notif-content">
+                              <span class="subject">Jimmy Denis</span>
+                              <span class="block"> How are you ? </span>
+                              <span class="time">5 minutes ago</span>
+                            </div>
+                          </a>
+                          <a href="#">
+                            <div class="notif-img">
+                              <img
+                                src="/assets/img/chadengle.jpg"
+                                alt="Img Profile"
+                              />
+                            </div>
+                            <div class="notif-content">
+                              <span class="subject">Chad</span>
+                              <span class="block"> Ok, Thanks ! </span>
+                              <span class="time">12 minutes ago</span>
+                            </div>
+                          </a>
+                          <a href="#">
+                            <div class="notif-img">
+                              <img
+                                src="/assets/img/mlane.jpg"
+                                alt="Img Profile"
+                              />
+                            </div>
+                            <div class="notif-content">
+                              <span class="subject">Jhon Doe</span>
+                              <span class="block">
+                                Ready for the meeting today...
+                              </span>
+                              <span class="time">12 minutes ago</span>
+                            </div>
+                          </a>
+                          <a href="#">
+                            <div class="notif-img">
+                              <img
+                                src="/assets/img/talha.jpg"
+                                alt="Img Profile"
+                              />
+                            </div>
+                            <div class="notif-content">
+                              <span class="subject">Talha</span>
+                              <span class="block"> Hola,Apa Kabar ? </span>
+                              <span class="time">17 minutes ago</span>
+                            </div>
+                          </a>
+                        </div>
+                      </div>
+                    </li>
+                    <li>
+                      <a class="see-all" href="javascript:void(0);"
+                        >See all messages<i class="fa fa-angle-right"></i>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+                <li class="nav-item topbar-icon dropdown hidden-caret">
+                  <a
+                    class="nav-link dropdown-toggle"
+                    href="#"
+                    id="notifDropdown"
+                    role="button"
+                    data-bs-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                  >
+                    <i class="fa fa-bell"></i>
+                    <span class="notification">4</span>
+                  </a>
+                  <ul
+                    class="dropdown-menu notif-box animated fadeIn"
+                    aria-labelledby="notifDropdown"
+                  >
+                    <li>
+                      <div class="dropdown-title">
+                        You have 4 new notification
+                      </div>
+                    </li>
+                    <li>
+                      <div class="notif-scroll scrollbar-outer">
+                        <div class="notif-center">
+                          <a href="#">
+                            <div class="notif-icon notif-primary">
+                              <i class="fa fa-user-plus"></i>
+                            </div>
+                            <div class="notif-content">
+                              <span class="block"> New user registered </span>
+                              <span class="time">5 minutes ago</span>
+                            </div>
+                          </a>
+                          <a href="#">
+                            <div class="notif-icon notif-success">
+                              <i class="fa fa-comment"></i>
+                            </div>
+                            <div class="notif-content">
+                              <span class="block">
+                                Rahmad commented on Admin
+                              </span>
+                              <span class="time">12 minutes ago</span>
+                            </div>
+                          </a>
+                          <a href="#">
+                            <div class="notif-img">
+                              <img
+                                src="../assets/img/profile2.jpg"
+                                alt="Img Profile"
+                              />
+                            </div>
+                            <div class="notif-content">
+                              <span class="block">
+                                Reza send messages to you
+                              </span>
+                              <span class="time">12 minutes ago</span>
+                            </div>
+                          </a>
+                          <a href="#">
+                            <div class="notif-icon notif-danger">
+                              <i class="fa fa-heart"></i>
+                            </div>
+                            <div class="notif-content">
+                              <span class="block"> Farrah liked Admin </span>
+                              <span class="time">17 minutes ago</span>
+                            </div>
+                          </a>
+                        </div>
+                      </div>
+                    </li>
+                    <li>
+                      <a class="see-all" href="javascript:void(0);"
+                        >See all notifications<i class="fa fa-angle-right"></i>
+                      </a>
+                    </li>
+                  </ul>
+
+                <li class="nav-item topbar-user dropdown hidden-caret">
+                  <a
+                    class="dropdown-toggle profile-pic"
+                    data-bs-toggle="dropdown"
+                    href="#"
+                    aria-expanded="false"
+                  >
+                    <div class="avatar-sm">
+                      <img
+                        src="/assets/img/profile.jpg"
+                        alt="..."
+                        class="avatar-img rounded-circle"
+                      />
+                    </div>
+                    <span class="profile-username">
+                      <span class="op-7">Hola,</span>
+                      <span class="fw-bold">Alonso Guevara</span>
+                    </span>
+                  </a>
+                  <ul class="dropdown-menu dropdown-user animated fadeIn">
+                    <div class="dropdown-user-scroll scrollbar-outer">
+                      <li>
+                        <div class="user-box">
+                          <div class="avatar-lg">
+                            <img
+                              src="/assets/img/profile.jpg"
+                              alt="image profile"
+                              class="avatar-img rounded"
+                            />
+                          </div>
+                          <div class="u-text">
+                            <h4>Alonso</h4>
+                            <p class="text-muted">alonso.guevara@gmail.com</p>
+                            <a
+                              href="profile.html"
+                              class="btn btn-xs btn-secondary btn-sm"
+                              >Ver perfil</a
+                            >
+                          </div>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Mi perfil</a>
+                        <a class="dropdown-item" href="#">My Balance</a>
+                        <a class="dropdown-item" href="#">Inbox</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Ajustes</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Cerrar Sesion</a>
+                      </li>
+                    </div>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </nav>
+          <!-- End Navbar -->
+        </div>
+
+
+        <!-- Fruits Shop Start-->
+        <div class="container">
+          <div class="container py-5">
+              <h1 class="">Tienda de Dogless</h1>
+              <div class="row g-4">
+                  <div class="col-lg-12">
+                      <div class="row g-4">
+                        <form id="fruitform" method="GET" action="/tienda" class="form-filter">
+                          <div class="d-flex justify-content-end"> <!-- Usar d-flex para alinear a la derecha -->
+                            <div class="bg-light ps-3 py-3 rounded d-flex justify-content-between mb-4">
+                              <label for="fruits">Filtrar:</label>
+                              <select id="fruits" name="filter" class="border-0 form-select-sm bg-light me-3" onchange="applyFilter()">
+                                <option value="">Nada</option>
+                                <option value="ranked">Más rankeados</option>
+                                <option value="price_desc">Precio de mayor a menor</option>
+                                <option value="price_asc">Precio de menor a mayor</option>
+                              </select>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                      <div class="row g-4">
+                          <div class="col-lg-3">
+                              <div class="row g-4">
+
+
+                                  <div class="col-lg-12">
+                                      <div class="mb-3 categorias-container">
+                                          <h4>Categorías</h4>
+                                          <ul class="list-unstyled fruite-categorie mb-0">
+
+                                              <!-- Enlace para ver todos los productos -->
+                                              <li>
+                                                <div class="d-flex justify-content-between fruite-name">
+                                                  <a th:href="@{/usuario/tienda(page=1)}">
+                                                    <i class="fas fa-circle small-dot me-2"></i>
+                                                    <span>Todas los productos</span>
+                                                  </a>
+                                                  <span th:text="'(' + ${totalProductos} + ')'"></span>
+                                                </div>
+                                              </li>
+
+                                              <th:block th:each="categoria : ${categorias}">
+                                                  <li>
+                                                      <div class="d-flex justify-content-between fruite-name">
+                                                          <a th:href="@{/usuario/tienda(categoria=${categoria})}"><i class="fas fa-circle small-dot me-2"></i>
+                                                              <span th:text="${categoria}"></span>
+                                                          </a>
+                                                          <span th:text="'(' + ${conteoPorCategoria.get(categoria)} + ')'"></span>
+                                                      </div>
+                                                  </li>
+                                              </th:block>
+                                          </ul>
+                                      </div>
+                                  </div>
+
+
+                                <div class="col-lg-12">
+                                  <div class="mb-3 categorias-container">
+
+                                    <form id="priceFilterForm" method="GET" onsubmit="event.preventDefault(); applyPriceFilter();">
+                                      <h4>Precio</h4>
+                                      <div>
+                                        <label>
+                                          <input type="radio" name="priceRanges" value="cualquier"> Cualquier Precio
+                                        </label>
+                                      </div>
+                                      <div>
+                                        <label>
+                                          <input type="radio" name="priceRanges" value="0-250"> S/ 0 - S/ 250
+                                        </label>
+                                      </div>
+                                      <div>
+                                        <label>
+                                          <input type="radio" name="priceRanges" value="250-500"> S/ 250 - S/ 500
+                                        </label>
+                                      </div>
+                                      <div>
+                                        <label>
+                                          <input type="radio" name="priceRanges" value="500-1000"> S/ 500 - S/ 1.000
+                                        </label>
+                                      </div>
+                                      <div>
+                                        <label>
+                                          <input type="radio" name="priceRanges" value="1000-2000"> S/ 1.000 - S/ 2.000
+                                        </label>
+                                      </div>
+                                      <div>
+                                        <label>
+                                          <input type="radio" name="priceRanges" value="2000-5000"> S/ 2.000 - S/ 5.000
+                                        </label>
+                                      </div>
+                                      <div>
+                                        <label>
+                                          <input type="radio" name="priceRanges" value="5000-999999"> Desde S/ 5.000
+                                        </label>
+                                      </div>
+                                      <div class="text-center"> <!-- Añadido -->
+                                        <button type="submit" class="btn btn-primary mt-3">Aplicar Filtro</button>
+                                      </div> <!-- Añadido -->
+                                    </form>
+
+                                  </div>
+                                </div>
+
+
+                                 
+                                  <div class="col-lg-12">
+                                      <h4 class="mb-3">Productos más rankeados</h4>
+                                      <div class="mb-2 d-flex align-items-center justify-content-start">
+                                          <div class="rounded me-4" style="width: 100px; height: 100px;">
+                                              <img src="/assets/img/productos/Laptop_ACER_Nitro_5.jpg" class="img-fluid rounded" alt="">
+                                          </div>
+                                          <div>
+                                            <h6 class="mb-2" style="display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">Laptop Acer Nitro 5</h6>
+                                              <div class="d-flex mb-2">
+                                                  <i class="fa fa-star star-colored"></i>
+                                                  <i class="fa fa-star star-colored"></i>
+                                                  <i class="fa fa-star star-colored"></i>
+                                                  <i class="fa fa-star star-colored"></i>
+                                                  <i class="fa fa-star star-uncolored"></i>
+                                              </div>
+                                              <div class="d-flex mb-2">
+                                                  <h5 class="fw-bold me-2">S/.3600.00</h5>
+                                                  <!--<h5 class="text-danger text-decoration-line-through">4.11 $</h5>-->
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div class="mb-2 d-flex align-items-center justify-content-start">
+                                          <div class="rounded me-4" style="width: 100px; height: 100px;">
+                                              <img src="img/laptop_asus_vivobook.jpg" class="img-fluid rounded" alt="">
+                                          </div>
+                                          <div>
+                                            <h6 class="mb-2" style="display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">Laptop Asus Vivobook 15</h6>
+                                              <div class="d-flex mb-2">
+                                                <i class="fa fa-star star-colored"></i>
+                                                <i class="fa fa-star star-colored"></i>
+                                                <i class="fa fa-star star-colored"></i>
+                                                <i class="fa fa-star star-colored"></i>
+                                                <i class="fa fa-star star-uncolored"></i>
+                                              </div>
+                                              <div class="d-flex mb-2">
+                                                  <h5 class="fw-bold me-2">S/.1999.99</h5>
+                                                  <!--<h5 class="text-danger text-decoration-line-through">4.11 $</h5>-->
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div class="mb-2 d-flex align-items-center justify-content-start">
+                                          <div class="rounded me-4" style="width: 100px; height: 100px;">
+                                              <img src="img/MacBook-Pro-A2780-6922-1.jpg" class="img-fluid rounded" alt="">
+                                          </div>
+                                          <div>
+                                            <h6 class="mb-2" style="display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">MacBook Pro A2780 Chip M2</h6>
+                                            <div class="d-flex mb-2">
+                                                <i class="fa fa-star star-colored"></i>
+                                                <i class="fa fa-star star-colored"></i>
+                                                <i class="fa fa-star star-colored"></i>
+                                                <i class="fa fa-star star-colored"></i>
+                                                <i class="fa fa-star star-uncolored"></i>
+                                              </div>
+                                              <div class="d-flex mb-2">
+                                                  <h5 class="fw-bold me-2">S/.3500.00</h5>
+                                                  <!--<h5 class="text-danger text-decoration-line-through">4.11 $</h5>-->
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div class="d-flex justify-content-center my-2">
+                                        <a href="#" class="btn btn-normal px-4 py-3 rounded-pill w-100">Vew More</a>
+                                      </div>
+                                  </div>
+                                 
+                              </div>
+                          </div>
+
+
+
+
+
+
+
+                          <div class="col-lg-9">
+                              <div class="row g-4 justify-content-center">
+                                  <!-- Itera sobre la lista de productos -->
+                                  <th:block th:each="producto : ${listaProductos}">
+                                      <div class="col-md-6 col-lg-6 col-xl-4">
+                                          <div class="rounded position-relative fruite-item" style="width: 278px; height: 500px; box-sizing: border-box; border: 1px solid #000;">
+                                              <div class="fruite-img">
+                                                  <a th:href="@{/Plantilla_Usuario/detalles_producto.html(id=${producto.idproductos})}" class="rounded me-4">
+                                                      <img th:src="@{'http://localhost:8080/usuario/producto/imagen/' + ${producto.idproductos}}" class="img-fluid w-100 rounded-top" alt="Imagen del producto">
+                                                  </a>
+                                              </div>
+                                              <div class="text-white custom-bg px-3 py-1 rounded position-absolute"
+                                                   style="top: 10px; left: 10px;">
+                                                  <span th:text="${producto.categoria}"></span>
+                                              </div>
+                                              <div class="p-4 border-top-0 rounded-bottom" style="height: auto; box-sizing: border-box;">
+                                                  <!-- Nombre del producto -->
+                                                  <h4 style="display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical;
+                                                      overflow: hidden; text-overflow: ellipsis;"
+                                                      th:text="${producto.nombre}">
+                                                  </h4>
+                                                  <!-- Descripción del producto -->
+                                                  <p style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+                                                     overflow: hidden; text-overflow: ellipsis;"
+                                                     th:text="${producto.descripcion}">
+                                                  </p>
+
+                                                <div class="d-flex mb-2">
+                                                  <!-- Aquí se usa el valor promedioSatisfaccion desde el modelo -->
+                                                  <span th:if="${producto.getPromedioSatisfaccion() >= 1}">
+                                                          <i class="fa fa-star star-colored"></i>
+                                                      </span>
+                                                  <span th:if="${producto.getPromedioSatisfaccion() >= 2}">
+                                                          <i class="fa fa-star star-colored"></i>
+                                                      </span>
+                                                  <span th:if="${producto.getPromedioSatisfaccion() >= 3}">
+                                                          <i class="fa fa-star star-colored"></i>
+                                                      </span>
+                                                  <span th:if="${producto.getPromedioSatisfaccion() >= 4}">
+                                                          <i class="fa fa-star star-colored"></i>
+                                                      </span>
+                                                  <span th:if="${producto.getPromedioSatisfaccion() >= 5}">
+                                                          <i class="fa fa-star star-colored"></i>
+                                                      </span>
+
+                                                  <!-- Aquí se rellenan las estrellas no coloreadas -->
+                                                  <span th:if="${producto.getPromedioSatisfaccion() < 5}">
+                                                          <i class="fa fa-star star-uncolored"></i>
+                                                      </span>
+                                                  <span th:if="${producto.getPromedioSatisfaccion() < 4}">
+                                                          <i class="fa fa-star star-uncolored"></i>
+                                                      </span>
+                                                  <span th:if="${producto.getPromedioSatisfaccion() < 3}">
+                                                          <i class="fa fa-star star-uncolored"></i>
+                                                      </span>
+                                                  <span th:if="${producto.getPromedioSatisfaccion() < 2}">
+                                                          <i class="fa fa-star star-uncolored"></i>
+                                                      </span>
+                                                  <span th:if="${producto.getPromedioSatisfaccion() < 1}">
+                                                          <i class="fa fa-star star-uncolored"></i>
+                                                      </span>
+                                                </div>
+
+                                                  <div class="d-flex justify-content-between flex-lg-wrap">
+                                                      <!-- Precio del producto -->
+                                                      <p class="text-dark fs-5 fw-bold mb-0">S/.<span th:text="${producto.precio}"></span></p>
+                                                    <!-- Botón de añadir al carrito -->
+                                                      <a href="/Plantilla_Usuario/carrito_compras.html"
+                                                         class="btn btn-normal-2 rounded-pill mt-2 px-3">
+                                                          <i class="fa fa-shopping-bag me-2"></i> Añade al carrito
+                                                      </a>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </th:block>
+                              </div>
+                          </div>
+
+
+
+
+                          <!-- Paginación (si es necesario) -->
+                          <!--
+                          <div class="col-12">
+                              <div class="pagination d-flex justify-content-center mt-5">
+                                  <a href="#" class="rounded">&laquo;</a>
+                                  <a href="#" class="active rounded">1</a>
+                                  <a href="#" class="rounded">2</a>
+                                  <a href="#" class="rounded">3</a>
+                                  <a href="#" class="rounded">4</a>
+                                  <a href="#" class="rounded">5</a>
+                                  <a href="#" class="rounded">6</a>
+                                  <a href="#" class="rounded">&raquo;</a>
+                              </div>
+                          </div>
+                          -->
+
+
+
+                        <div class="pagination d-flex justify-content-center mt-5">
+                          <!-- Flecha para ir a la página anterior -->
+                          <a th:if="${(currentPage + 1) > 1}"
+                             th:href="@{/usuario/tienda(page=${currentPage}, filter=${param.filter}, price=${param.price})}"
+                             class="rounded">&laquo;</a>
+                          <a th:unless="${(currentPage + 1) > 1}" class="rounded disabled">&laquo;</a>
+
+                          <!-- Generar enlaces de paginación -->
+                          <th:block th:each="i : ${#numbers.sequence(1, totalPages)}">
+                            <a th:href="@{/usuario/tienda(page=${i}, filter=${param.filter}, price=${param.price})}"
+                               th:classappend="${i == (currentPage + 1)} ? 'active'"
+                               class="rounded"
+                               th:text="${i}"></a>
+                          </th:block>
+
+                          <!-- Flecha para ir a la página siguiente -->
+                          <a th:if="${(currentPage + 1) < totalPages}"
+                             th:href="@{/usuario/tienda(page=${currentPage + 2}, filter=${param.filter}, price=${param.price})}"
+                             class="rounded">&raquo;</a>
+                          <a th:unless="${(currentPage + 1) < totalPages}" class="rounded disabled">&raquo;</a>
+                        </div>
+
+
+
+
+                      </div>
+                  </div>
+              </div>
+          </div>
+        </div>
+        <!-- Fruits Shop End-->
+        <footer class="footer">
+         
+          <div class="row align-items-center">
+            <div class="col-md-4">
+              <h2>DOGLESS</h2>
+            </div>
+            <div class="col-md-4 offset-md-4 d-flex justify-content-center">
+              <button type="button" class="btn btn-icon btn-round btn-primary mx-1">
+                <i class="fab fa-facebook-f"></i>
+              </button>
+              <button type="button" class="btn btn-icon btn-round btn-info mx-1">
+                <i class="fab fa-twitter"></i>
+              </button>
+              <button type="button" class="btn btn-icon btn-round btn-secondary mx-1">
+                <i class="fab fa-linkedin-in"></i>
+              </button>
+              <button type="button" class="btn btn-icon btn-round btn-danger mx-1">
+                <i class="fab fa-youtube"></i>
+              </button>
+                  
+            </div>
+          </div>
+        
+          <hr class="my-2">
+            
+              <div class="row">
+                <div class="col-md-3">
+                  <h5>Sobre nosotros</h5>
+                  <ul class="list-unstyled">
+                    <li><a href="javascript:void(0)" class="footer-link d-block pb-2">Acerca de dogless</a></li>
+                    <li><a href="javascript:void(0)" class="footer-link d-block pb-2">TyC</a></li>
+                    <li><a href="javascript:void(0)" class="footer-link d-block pb-2">Numero de RUC</a></li>
+                    <li><a href="javascript:void(0)" class="footer-link d-block pb-2">licenciamiento</a></li>
+                  </ul>
+                </div>
+                <div class="col-md-3">
+                  <h5>Cuenta</h5>
+                  <ul class="list-unstyled">
+                    <li><a href="javascript:void(0)" class="footer-link d-block pb-2">Crear cuenta</a></li>
+                    <li><a href="javascript:void(0)" class="footer-link d-block pb-2">Pago</a></li>
+                    <li><a href="javascript:void(0)" class="footer-link d-block pb-2">Envio</a></li>
+                    <li><a href="javascript:void(0)" class="footer-link d-block pb-2">Soporte</a></li>
+                  </ul>
+                </div>
+                <div class="col-md-3">
+                  <h5>Guia de compra</h5>
+                  <ul class="list-unstyled">
+                    <li><a href="javascript:void(0)" class="footer-link d-block pb-2">Mi cuenta</a></li>
+                    <li><a href="javascript:void(0)" class="footer-link d-block pb-2">Mis pedidos</a></li>
+                    <li><a href="javascript:void(0)" class="footer-link d-block pb-2">Favoritos</a></li>
+                    <li><a href="javascript:void(0)" class="footer-link d-block pb-2">Devoluciones</a></li>
+                  </ul>
+                </div>
+                <div class="col-md-3">
+                  <h5>Métodos de pago</h5>
+                  <div class="payment-methods">
+                    <img src="/assets/img/productos/logo-visa.png" alt="Visa" class="img-fluid w-25 mx-2">
+                    <img src="/assets/img/productos/logo-mastercard.png" alt="Mastercard" class="img-fluid w-25 mx-2">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <h7>@2024-2090 Dogless.com, todos los derechos reservados</h7>
+              </div>
+            
+        </footer>
+      </div>
+    </div>
+    <!-- JavaScript Libraries -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="/assets/lib/easing/easing.min.js"></script>
+    <script src="/assets/lib/waypoints/waypoints.min.js"></script>
+    <script src="/assets/lib/lightbox/js/lightbox.min.js"></script>
+    <script src="/assets/lib/owlcarousel/owl.carousel.min.js"></script>
+
+
+    <!-- Template Javascript -->
+    <script src="/assets/js/main.js"></script>
+    <!--   Core JS Files   -->
+    <script src="/assets/js/core/jquery-3.7.1.min.js"></script>
+    <script src="/assets/js/core/popper.min.js"></script>
+    <script src="/assets/js/core/bootstrap.min.js"></script>
+
+    <!-- jQuery Scrollbar -->
+    <script src="/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+    <!-- Datatables -->
+    <script src="/assets/js/plugin/datatables/datatables.min.js"></script>
+    <!-- Kaiadmin JS -->
+    <script src="/assets/js/kaiadmin.min.js"></script>
+    <!-- Kaiadmin DEMO methods, don't include it in your project! -->
+    <script src="/assets/js/setting-demo2.js"></script>
+
+    <!-- Bootstrap 5 JavaScript con Popper.js (CDN) -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-qDy9w4C5Xy7+IbIY+NTb1PGFopovA8RZgtUoOsCXj1fuc8xE0MDd4ym7WxaJwbR8" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-c54CjZRtDQl/LSJj2EWsJ3Wrxx9/HWgdG1M4HQBJcyRc+tbxOkhOFiF8m3hM8bQV" crossorigin="anonymous"></script>
+
+    <script>
+
+      /*
+      function getUrlParams() {
+        const params = new URLSearchParams(window.location.search);
+        return {
+          filter: params.get('filter') || '', // Obtiene el parámetro filter
+          price: params.get('price') || ''   // Obtiene el parámetro price
+        };
+      }
+
+      function updatePage(page) {
+        const currentUrl = new URL(window.location.href);
+        const params = getUrlParams(); // Obtiene los parámetros de la URL
+
+        currentUrl.searchParams.set('page', page);
+        if (params.filter) {
+          currentUrl.searchParams.set('filter', params.filter); // Añade el filtro si existe
+        }
+        if (params.price) {
+          currentUrl.searchParams.set('price', params.price); // Añade el precio si existe
+        }
+        window.location.href = currentUrl.toString();
+      }
+      */
+
+
+
+      // Función para aplicar el filtro y redirigir a la página 1
+      function applyFilter() {
+        const selectedFilter = document.getElementById("fruits").value;
+        let currentUrl = new URL(window.location.href);
+
+        // Set or delete the filter parameter
+        if (selectedFilter) {
+          currentUrl.searchParams.set('filter', selectedFilter);
+        } else {
+          currentUrl.searchParams.delete('filter');
+        }
+
+        // Redirigir siempre a la página 1
+        currentUrl.searchParams.set('page', 1);
+
+        window.location.href = currentUrl.toString();
+      }
+
+      // Mantener la opción seleccionada cuando se recargue la página
+      window.onload = function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const currentFilter = urlParams.get('filter');
+
+        if (currentFilter) {
+          document.getElementById("fruits").value = currentFilter;
+        } else {
+          document.getElementById("fruits").value = ""; // Nada seleccionado
+        }
+      };
+      function applyPriceFilter() {
+        // Obtener la URL actual
+        let currentUrl = new URL(window.location.href);
+
+        // Obtener el parámetro de categoría
+        let categoria = currentUrl.searchParams.get('categoria');
+
+        // Limpiar la URL de otros parámetros excepto 'categoria'
+        currentUrl.search = ''; // Elimina todos los parámetros
+
+        // Solo agregar el parámetro 'categoria' si no es null
+        if (categoria) {
+          currentUrl.searchParams.append('categoria', categoria);
+        }
+
+        // Obtener el radio button seleccionado
+        let selectedPriceRange = document.querySelector('input[name="priceRanges"]:checked');
+
+        // Verificar si se seleccionó un rango de precios
+        if (selectedPriceRange && selectedPriceRange.value !== 'cualquier') {
+          // Agregar el rango de precios como parámetro
+          currentUrl.searchParams.append('priceRanges', selectedPriceRange.value);
+        }
+
+        // Redirigir a la nueva URL
+        window.location.href = currentUrl.toString();
+      }
+
+    </script>
+  </body>
+</html>
+            

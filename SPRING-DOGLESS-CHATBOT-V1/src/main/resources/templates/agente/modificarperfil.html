@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Modificar perfil</title>
+    <meta
+      content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
+      name="viewport"
+    />
+    <link
+      rel="icon"
+      href="/assets/img/kaiadmin/favicon.ico"
+      type="image/x-icon"
+    />
+
+    <!-- Fonts and icons -->
+    <script src="/assets/js/plugin/webfont/webfont.min.js"></script>
+    <script>
+      WebFont.load({
+        google: { families: ["Public Sans:300,400,500,600,700"] },
+        custom: {
+          families: [
+            "Font Awesome 5 Solid",
+            "Font Awesome 5 Regular",
+            "Font Awesome 5 Brands",
+            "simple-line-icons",
+          ],
+          urls: ["assets/css/fonts.min.css"],
+        },
+        active: function () {
+          sessionStorage.fonts = true;
+        },
+      });
+    </script>
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/assets/css/plugins.min.css" />
+    <link rel="stylesheet" href="/assets/css/kaiadmin.min.css" />
+
+    
+  </head>
+  <body>
+    <div class="wrapper">
+
+      <!-- Reemplaza barra lateral con el fragmento de Thymeleaf -->
+      <div th:replace="~{agente/fragments/barralateralagente :: body(activePage='')}"></div>
+      <!-- Fin barra lateral -->
+      <div class="main-panel">
+        <!-- Reemplaza navbar con el fragmento de Thymeleaf -->
+        <div th:replace="~{agente/fragments/navbarheaderagente :: fragment}"></div>
+        <!-- Fin Navbar -->
+        
+        <div class="container">
+            <div class="page-inner">
+              <div class="row justify-content-center">
+                <div class="col-md-8 col-lg-6">
+                  <div class="card card-profile text-center">
+                    <div class="card-header" style="background-image: url('assets/img/blogpost.jpg')">
+                      <div class="profile-picture">
+                        <div class="avatar avatar-xl">
+                          <img src="/assets/img/perfil_nilo.JPG" alt="..." class="avatar-img rounded-circle" />
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card-body">
+                      <div class="user-profile">
+                        <div class="name">Nilo Rikel Cori Ramos</div>
+                        <div class="job">Agente Zona Norte</div>
+                      </div>
+                    </div>
+          
+                    <!-- Formulario para campos editables -->
+                    <div class="card-body" style="padding-top: 0;">
+                      <div class="user-details text-center">
+                        <p><b>Código de despachador:</b> 202348</p>
+                        <p><b>DNI:</b> 12345678</p>
+                        <form>
+                          <div class="form-group">
+                            <label for="direccion"><b>Dirección:</b></label>
+                            <input type="text" class="form-control text-center" id="direccion" value="Calle los geranios 123, San Miguel" />
+                          </div>
+                          <div class="form-group">
+                            <label for="telefono"><b>Teléfono:</b></label>
+                            <input type="text" class="form-control text-center" id="telefono" value="+51 987654321" />
+                          </div>
+                          <div class="form-group">
+                            <label for="correo"><b>Correo de contacto:</b></label>
+                            <input type="email" class="form-control text-center" id="correo" value="nilo.cori@correo.com" />
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+          
+                    <div class="card-action text-center">
+                      <a href="detallesperfil.html" class="btn btn-primary me-2">Cancelar</a>
+                      <a href="detallesperfil.html" class="btn btn-success ms-2">Guardar cambios</a>
+                      
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+
+
+        <!-- Pie de página -->
+        <!-- Pie de página -->
+        <div th:replace="~{agente/fragments/piedepagina :: fragment}"></div>
+
+      </div>
+    </div>
+
+
+
+    <!--Core JS Files   -->
+    <script src="/assets/js/core/jquery-3.7.1.min.js"></script>
+    <script src="/assets/js/core/popper.min.js"></script>
+    <script src="/assets/js/core/bootstrap.min.js"></script>
+
+    <!-- jQuery Scrollbar -->
+    <script src="/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+    <!-- Datatables -->
+    <script src="/assets/js/plugin/datatables/datatables.min.js"></script>
+
+    <!-- jQuery Vector Maps -->
+    <script src="/assets/js/plugin/jsvectormap/jsvectormap.min.js"></script>
+    <script src="/assets/js/plugin/jsvectormap/world.js"></script>
+
+    <!-- Kaiadmin JS -->
+    <script src="/assets/js/kaiadmin.min.js"></script>
+    
+  </body>
+</html>

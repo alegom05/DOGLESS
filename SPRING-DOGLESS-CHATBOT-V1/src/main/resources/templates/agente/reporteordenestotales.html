@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <title>Agente - Reporte de Órdenes Totales</title>
+        <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport" />
+        <link rel="icon" href="/assets/img/kaiadmin/favicon.ico" type="image/x-icon" />
+        <link th:href="@{/assets/css/style-SuperAdmin.css}" rel="stylesheet">
+        <style>
+            #tablaOrdenesWrapper {
+                display: none;
+                width: 100%;
+            }
+            #totalOrdenes {
+                background-color: #d1ecf1;
+                color: #0c5460;
+                padding: 10px;
+                border-radius: 5px;
+                display: inline-block;
+                margin-left: 20px;
+            }
+        </style>
+        <!-- Fonts and icons -->
+        <script src="/assets/js/plugin/webfont/webfont.min.js"></script>
+        <script>
+            WebFont.load({
+                google: { families: ["Public Sans:300,400,500,600,700"] },
+                custom: {
+                    families: [
+                        "Font Awesome 5 Solid",
+                        "Font Awesome 5 Regular",
+                        "Font Awesome 5 Brands",
+                        "simple-line-icons",
+                    ],
+                    urls: ["/assets/css/fonts.min.css"],
+                },
+                active: function () {
+                    sessionStorage.fonts = true;
+                },
+            });
+        </script>
+        <!-- CSS Files -->
+        <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="/assets/css/plugins.min.css" />
+        <link rel="stylesheet" href="/assets/css/kaiadmin.min.css" />
+    </head>
+    <body>
+        <div class="wrapper">
+            <div th:replace="~{agente/fragments/barralateralagente :: body(activePage='reportes', activeSubPage='totalenelsistema')}"></div>
+            <div class="main-panel">
+                <div th:replace="~{agente/fragments/navbarheaderagente :: fragment}"></div>
+
+                <div class="container">
+                    <div class="page-inner">
+                        <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
+                            <div>
+                                <h3 class="fw-bold mb-3">Reporte de órdenes totales en el sistema</h3>
+                                <h6 class="op-7 mb-2">
+                                    Este reporte proporciona un listado completo de las órdenes existentes en el sistema, ordenadas por fecha de actualización de forma descendente.
+                                </h6>
+                            </div>
+                        </div>
+
+                        <!-- Generar Reporte -->
+                        <div class="row">
+                            <div class="col-md-12">
+                                <form id="generarForm" class="form-inline d-flex align-items-center">
+                                    <button type="button" class="btn btn-dark mb-2 me-2" onclick="generar()">Generar</button>
+                                    <div id="totalOrdenes" class="mb-2">
+                                        <strong>Total de Órdenes: </strong><span id="cantidadOrdenes">0</span>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <!-- Tabla -->
+                        <div id="tablaOrdenesWrapper" class="row mt-4">
+                            <div class="col-md-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="table-responsive" style="width: 100%;">
+                                            <table id="basic-datatables" class="display table table-striped table-hover w-100">
+                                                <thead class="text-center">
+                                                    <tr>
+                                                        <th>Número de Orden</th>
+                                                        <th>Nombre del Usuario</th>
+                                                        <th>Estado de la orden</th>
+                                                        <th>Fecha de Actualización</th>
+                                                        <th>DNI</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="tablaOrdenes" class="text-center">
+                                                    <tr th:each="orden : ${listaOrdenes}">
+                                                        <td th:text="${orden.id}"></td>
+                                                        <td th:text="${orden.usuario.nombre + ' ' + orden.usuario.apellido}"></td>
+                                                        <td>
+                                                              <span th:text="${orden.estado}"
+                                                                    th:classappend="${orden.estado == 'Recibido'} ? 'badge badge-success' :
+                                                                                   (${orden.estado == 'En Ruta'} ? 'badge badge-primary' :
+                                                                                   (${orden.estado == 'En Aduanas'} ? 'badge badge-warning' :
+                                                                                   (${orden.estado == 'Arribo al País'} ? 'badge badge-info' :
+                                                                                   (${orden.estado == 'En Proceso'} ? 'badge badge-black' :
+                                                                                   (${orden.estado == 'En Validación'} ? 'badge badge-secondary' :
+                                                                                   (${orden.estado == 'Cancelado'} ? 'badge badge-danger' : 'badge badge-count'))))))">
+                                                              </span>
+                                                        </td>
+                                                        <td th:text="${#dates.format(orden.fecha, 'dd/MM/yy, hh:mma')}"></td>
+                                                        <td th:text="${orden.usuario.dni}"></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <!-- Botones de descarga -->
+                                        <div class="mt-3 text-center">
+                                            <button type="button" class="btn btn-danger me-2" onclick="descargarReporte('pdf')">Descargar en PDF</button>
+                                            <button type="button" class="btn btn-success" onclick="descargarReporte('xlsx')">Descargar en Excel</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div th:replace="~{agente/fragments/piedepagina :: fragment}"></div>
+            </div>
+        </div>
+
+        <!-- Core JS Files -->
+        <script src="/assets/js/core/jquery-3.7.1.min.js"></script>
+        <script src="/assets/js/core/popper.min.js"></script>
+        <script src="/assets/js/core/bootstrap.min.js"></script>
+        <script src="/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+        <script src="/assets/js/plugin/datatables/datatables.min.js"></script>
+        <script src="/assets/js/kaiadmin.min.js"></script>
+
+        <script>
+            function generar() {
+                const table = $('#basic-datatables').DataTable();
+                table.order([3, 'desc']).draw(); // Ordenar por fecha de actualización de forma descendente
+
+                // Mostrar la tabla
+                document.getElementById("tablaOrdenesWrapper").style.display = "block";
+
+                // Actualizar el total de órdenes
+                document.getElementById("cantidadOrdenes").innerText = table.rows({ order: 'applied' }).count();
+            }
+
+            function descargarReporte(formato) {
+                const total = document.getElementById("cantidadOrdenes").innerText;
+                window.location.href = `/agente/exportarOrdenesTotales?total=${total}&formato=${formato}`;
+            }
+
+            $(document).ready(function () {
+                $('#basic-datatables').DataTable({
+                    paging: true,
+                    pageLength: 5,
+                    lengthChange: false,
+                    info: false,
+                    language: {
+                        search: "Buscar:",
+                        lengthMenu: "Mostrar _MENU_ entradas por página",
+                        info: "Mostrando _START_ a _END_ de _TOTAL_ entradas",
+                        paginate: {
+                            previous: "Anterior",
+                            next: "Siguiente"
+                        }
+                    }
+                });
+            });
+        </script>
+    </body>
+</html>

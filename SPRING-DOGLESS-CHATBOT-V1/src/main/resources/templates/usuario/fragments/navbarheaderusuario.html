@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+              xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+  <head>
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" type="text/css" href="assets/js/plugin/datatables/datatables.min.css"/>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  </head>
+  <body>
+    <link th:href="@{/assets/css/style-SuperAdmin.css}" rel="stylesheet">
+    <div th:fragment="fragment">
+    <div class="main-header">
+      <div class="main-header-logo">
+        <!-- Logo Header -->
+        <div class="logo-header" data-background-color="dark">
+          <a href="/usuario/" class="logo">
+            <img
+                    src="/assets/img/kaiadmin/logodogless.svg"
+                    alt="navbar brand"
+                    class="navbar-brand"
+                    height="20"
+            />
+          </a>
+          <div class="nav-toggle">
+            <button class="btn btn-toggle toggle-sidebar">
+              <i class="gg-menu-right"></i>
+            </button>
+            <button class="btn btn-toggle sidenav-toggler">
+              <i class="gg-menu-left"></i>
+            </button>
+          </div>
+          <button class="topbar-toggler more">
+            <i class="gg-more-vertical-alt"></i>
+          </button>
+        </div>
+        <!-- End Logo Header -->
+      </div>
+      <!-- Navbar superior -->
+      <nav class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom" data-background-color="dark">
+        <div class="container-fluid">
+          <nav class="navbar navbar-header-left navbar-expand-lg navbar-form nav-search p-0 d-none d-lg-flex"></nav>
+
+          <ul class="navbar-nav topbar-nav ms-md-auto align-items-center">
+            <!-- Condicional para mostrar solo si está en modo impersonación -->
+            <li th:if="${session.originalUser != null}">
+              <a href="#" onclick="document.getElementById('revertForm').submit();" class="revert-button">
+                Volver a Superadmin
+                <i class="fa fa-user-secret"></i> <!-- Ícono de espía -->
+              </a>
+              <form id="revertForm" th:action="@{/admin/revertImpersonation}" method="post" style="display:none;">
+                <input type="submit">
+              </form>
+            </li>
+            <li class="nav-item topbar-user dropdown hidden-caret">
+              <a class="dropdown-toggle profile-pic" data-bs-toggle="dropdown" href="#" aria-expanded="false">
+                <div class="avatar-sm">
+                  <img
+                          th:src="@{'http://20.81.145.27:8080/imagen/' + ${session.usuario.id}}"
+                          alt="..."
+                          class="avatar-img rounded-circle"
+                  />
+                </div>
+                <span class="profile-username">
+              <span class="fw-bold" th:text="${session.usuario.nombre}+' '+${session.usuario.apellido}"></span>
+              <div class="fw-bold" th:text="${session.usuario.rol.rol}"></div>
+            </span>
+              </a>
+              <ul class="dropdown-menu dropdown-user animated fadeIn">
+                <div class="dropdown-user-scroll scrollbar-outer">
+                  <li>
+                    <div class="user-box">
+                      <div class="avatar-lg">
+                        <img
+                                th:src="@{'http://20.81.145.27:8080/imagen/' + ${session.usuario.id}}"
+                                alt="image profile"
+                                class="avatar-img rounded"
+                        />
+                      </div>
+                      <div class="u-text" style="color: white;">
+                        <h4 th:text="${session.usuario.nombre}+' '+${session.usuario.apellido}"></h4>
+                        <p class="text-info" style="color: white;" th:text="${session.usuario.email}"></p>
+                        <a th:href="@{'/usuario/perfil' + '?id=' + ${session.usuario.id}}" class="btn btn-xs btn-secondary btn-sm">Ver perfil</a>
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">Cambiar contraseña</a>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" onclick="document.getElementById('logoutForm').submit();" class="dropdown-item">Cerrar Sesión</a>
+
+                    <form id="logoutForm" th:action="@{/logout}" method="post" style="display:none;">
+                      <input type="submit">
+                    </form>
+                  </li>
+                </div>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+    </div>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/chat.css}">
+    <!-- Chat Widget -->
+    <div class="chat-widget-container">
+      <button class="chat-button" id="chatButton">
+        <i class="fas fa-comments"></i>
+      </button>
+
+      <div class="chat-modal" id="chatModal">
+        <div class="chat-header">
+          <h4>Chat de Ayuda</h4>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+          <!-- Los mensajes se agregarán aquí dinámicamente -->
+        </div>
+        <div class="chat-input">
+          <input type="text" id="messageInput" placeholder="Escribe un mensaje...">
+          <button id="sendMessage">
+            <i class="fas fa-paper-plane"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </body>
+</html>
