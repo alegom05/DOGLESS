@@ -59,6 +59,13 @@
     <link rel="stylesheet" href="/../assets/css/style.css" />
     
     <style>
+        .nombre-categoria {
+            display: inline-block;
+            max-width: 178px; /* Ajusta según el espacio disponible */
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
       .table-card {
           background-color: #ffffff; /* Fondo blanco */
           border-radius: 8px; /* Bordes redondeados */
@@ -77,6 +84,10 @@
       .summary-card .total-row {
           border-top: 1px solid #dee2e6; /* Borde superior para separar las filas */
           padding: 10px 0; /* Espaciado interno en las filas */
+      }
+      .scrollable-category-list {
+          max-height: 250px; /* Ajusta la altura máxima según tu diseño */
+          overflow-y: auto;
       }
       .summary-card .btn-checkout {
           background-color: #007bff; /* Color de fondo del botón */
@@ -104,6 +115,13 @@
           color: white; /* Cambia el color del texto al pasar el mouse */
       }
 
+        .esconder_prod_rank{
+            display: inline-block;
+            max-width: 130px; /* Ajusta según el espacio disponible */
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
       .btn-normal{
         border: 2px solid rgba(129, 133, 138, 0.267); /* Agrega un borde negro al botón */
         color: #007bff;
@@ -285,26 +303,29 @@
                                   <div class="col-lg-12">
                                       <div class="mb-3 categorias-container">
                                           <h4>Categorías</h4>
-                                          <ul class="list-unstyled fruite-categorie mb-0">
+                                          <ul class="list-unstyled fruite-categorie mb-0 scrollable-category-list">
 
                                               <!-- Enlace para ver todos los productos -->
                                               <li>
-                                                <div class="d-flex justify-content-between fruite-name">
-                                                  <a th:href="@{/usuario/tienda(page=1)}">
-                                                    <i class="fas fa-circle small-dot me-2"></i>
-                                                    <span>Todas los productos</span>
-                                                  </a>
-                                                  <span th:text="'(' + ${totalProductos} + ')'"></span>
-                                                </div>
+                                                  <div class="d-flex justify-content-between fruite-name">
+                                                      <a th:href="@{/usuario/tienda(page=1)}" class="d-flex align-items-center">
+                                                          <i class="fas fa-circle small-dot me-3"></i>
+                                                          <span class="nombre-categoria">Todos los productos</span>
+                                                      </a>
+                                                      <span th:text="'(' + ${totalProductos} + ')'" class="me-3"></span>
+                                                  </div>
                                               </li>
+
+
 
                                               <th:block th:each="categoria : ${categorias}">
                                                   <li>
                                                       <div class="d-flex justify-content-between fruite-name">
-                                                          <a th:href="@{/usuario/tienda(categoria=${categoria})}"><i class="fas fa-circle small-dot me-2"></i>
-                                                              <span th:text="${categoria}"></span>
+                                                          <a th:href="@{/usuario/tienda(categoria=${categoria})}" class="d-flex align-items-center">
+                                                              <i class="fas fa-circle small-dot me-3"></i>
+                                                              <span th:text="${categoria}" class="nombre-categoria"></span>
                                                           </a>
-                                                          <span th:text="'(' + ${conteoPorCategoria.get(categoria)} + ')'"></span>
+                                                          <span th:text="'(' + ${conteoPorCategoria.get(categoria)} + ')'" class="me-3"></span>
                                                       </div>
                                                   </li>
                                               </th:block>
@@ -380,7 +401,7 @@
                                                   </div>
                                                   <div>
                                                       <!-- Nombre del producto -->
-                                                      <h6 class="mb-2" style="display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;"
+                                                      <h6 class="mb-2 esconder_prod_rank"
                                                           th:text="${producto.nombre}"></h6>
 
                                                       <div class="d-flex mb-2">
@@ -421,7 +442,7 @@
 
                                                       <!-- Precio del producto -->
                                                       <div class="d-flex mb-2">
-                                                          <h5 class="fw-bold me-2" th:text="'S/.' + ${producto.precio}"></h5>
+                                                          <h5 class="fw-bold me-2 esconder_prod_rank" th:text="'S/.' + ${producto.precio}"></h5>
                                                       </div>
                                                   </div>
                                               </div>

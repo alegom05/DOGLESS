@@ -1115,6 +1115,25 @@ public class AdminController {
         Integer oeste = ordenRepository.findOrdenesByZona(4);
         model.addAttribute("oeste", oeste);
 
+        List<ProductoDTO> lista_proveedorestop5 = productRepository.obtenerTop5ProveedoresConReposicionesYCalificaciones();
+
+        // Crear listas para etiquetas y datos
+        List<String> etiquetasProveedores = new ArrayList<>();
+        List<Integer> reposicionesAprobadas = new ArrayList<>();
+        List<Double> valoracionProveedores = new ArrayList<>();
+
+        // Llenar las listas con los datos de cada proveedor
+        for (ProductoDTO proveedor : lista_proveedorestop5) {
+            String nombreCompleto = proveedor.getProveedorNombre() + " " + proveedor.getProveedorApellido();
+            etiquetasProveedores.add(nombreCompleto);
+            reposicionesAprobadas.add(proveedor.getReposicionesAprobadas());
+            valoracionProveedores.add(proveedor.getPromedioCalificacionProveedor());
+        }
+
+        // Añadir los datos al modelo para pasarlos a la vista
+        model.addAttribute("etiquetasProveedores", etiquetasProveedores);
+        model.addAttribute("reposicionesAprobadas", reposicionesAprobadas);
+        model.addAttribute("valoracionProveedores", valoracionProveedores);
 
         /*model.addAttribute("listaProveedores", proveedorRepository.findAll());*/
         return "admin/dashboard";

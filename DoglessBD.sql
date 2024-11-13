@@ -477,7 +477,10 @@ VALUES
 ('Monitor Curvo', 'Monitor curvo de 34 pulgadas', 'Periféricos', 449.99, 19.99, 3, 'CurveMax, CurvePro', 'Negro, Plata', 'Pendiente'),
 ('Altavoces Bluetooth', 'Altavoces portátiles con conexión Bluetooth', 'Accesorios', 79.99, 6.99, 4, 'SoundMax, SoundPro', 'Negro, Azul, Rojo', 'Pendiente'),
 ('Disco Duro Externo', 'Disco duro externo de 2TB', 'Almacenamiento', 89.99, 4.99, 1, 'StorageX, StoragePro', 'Negro, Plata', 'Pendiente'),
-('Ratón Gamer', 'Ratón ergonómico para gaming', 'Periféricos', 59.99, 3.99, 2, 'GamerX, GamerPro', 'Negro, Rojo, Verde', 'Pendiente');
+('Ratón Gamer', 'Ratón ergonómico para gaming', 'Periféricos', 59.99, 3.99, 2, 'GamerX, GamerPro', 'Negro, Rojo, Verde', 'Pendiente'),
+('Smartwatch X1', 'Reloj inteligente con GPS y monitor de frecuencia cardíaca', 'Accesorios', 159.99, 8.99, 15, 'X1, X2', 'Negro, Plata', 'Aprobado'),
+('Laptop Z Pro', 'Laptop ultradelgada con pantalla 4K y procesador Intel i7', 'Informática', 1299.99, 15.99, 16, 'ZPro, ZMax', 'Gris Oscuro, Negro', 'Aprobado'),
+('Proyector LED 1080p', 'Proyector LED portátil 1080p con conectividad HDMI', 'Electrónica', 199.99, 12.99, 17, 'LED1080p, LED4K', 'Negro, Blanco', 'Aprobado');
 
 
 
@@ -587,6 +590,40 @@ INSERT INTO `dogless`.`reposicion` (`idreposicion`, `cantidad`, `fecha_pedido`, 
 INSERT INTO `dogless`.`reposicion` (`idreposicion`, `cantidad`, `fecha_pedido`, `aprobar`, `idproductos`, `idzonas`) VALUES ('16', '55', '2024-09-15', 'aprobado', '13', '3');
 INSERT INTO `dogless`.`reposicion` (`idreposicion`, `cantidad`, `fecha_pedido`, `aprobar`, `idproductos`, `idzonas`) VALUES ('17', '30', '2024-09-16', NULL, '14', '4');
 
+-- Datos adicionales aprobados para `reposicion`
+INSERT INTO `dogless`.`reposicion` (`idreposicion`, `cantidad`, `fecha_pedido`, `aprobar`, `idproductos`, `idzonas`) VALUES ('18', '25', '2024-09-17', 'aprobado', '2', '1');
+INSERT INTO `dogless`.`reposicion` (`idreposicion`, `cantidad`, `fecha_pedido`, `aprobar`, `idproductos`, `idzonas`) VALUES ('19', '35', '2024-09-18', 'aprobado', '1', '2');
+INSERT INTO `dogless`.`reposicion` (`idreposicion`, `cantidad`, `fecha_pedido`, `aprobar`, `idproductos`, `idzonas`) VALUES ('20', '45', '2024-09-19', 'aprobado', '4', '3');
+INSERT INTO `dogless`.`reposicion` (`idreposicion`, `cantidad`, `fecha_pedido`, `aprobar`, `idproductos`, `idzonas`) VALUES ('21', '60', '2024-09-20', 'aprobado', '2', '4');
+INSERT INTO `dogless`.`reposicion` (`idreposicion`, `cantidad`, `fecha_pedido`, `aprobar`, `idproductos`, `idzonas`) VALUES ('22', '50', '2024-09-21', 'aprobado', '3', '1');
+INSERT INTO `dogless`.`reposicion` (`idreposicion`, `cantidad`, `fecha_pedido`, `aprobar`, `idproductos`, `idzonas`) VALUES ('23', '70', '2024-09-22', 'aprobado', '14', '2');
+INSERT INTO `dogless`.`reposicion` (`idreposicion`, `cantidad`, `fecha_pedido`, `aprobar`, `idproductos`, `idzonas`) VALUES ('24', '80', '2024-09-23', 'aprobado', '12', '3');
+INSERT INTO `dogless`.`reposicion` (`idreposicion`, `cantidad`, `fecha_pedido`, `aprobar`, `idproductos`, `idzonas`) VALUES ('25', '20', '2024-09-24', 'aprobado', '12', '4');
+INSERT INTO `dogless`.`reposicion` (`idreposicion`, `cantidad`, `fecha_pedido`, `aprobar`, `idproductos`, `idzonas`) VALUES ('26', '30', '2024-09-25', 'aprobado', '13', '1');
+INSERT INTO `dogless`.`reposicion` (`idreposicion`, `cantidad`, `fecha_pedido`, `aprobar`, `idproductos`, `idzonas`) VALUES ('27', '65', '2024-09-26', 'aprobado', '13', '2');
+INSERT INTO `dogless`.`reposicion` (`idreposicion`, `cantidad`, `fecha_pedido`, `aprobar`, `idproductos`, `idzonas`) VALUES ('28', '40', '2024-09-27', 'aprobado', '12', '3');
+INSERT INTO `dogless`.`reposicion` (`idreposicion`, `cantidad`, `fecha_pedido`, `aprobar`, `idproductos`, `idzonas`) VALUES ('29', '35', '2024-09-28', 'aprobado', '1', '4');
+INSERT INTO `dogless`.`reposicion` (`idreposicion`, `cantidad`, `fecha_pedido`, `aprobar`, `idproductos`, `idzonas`) VALUES ('30', '55', '2024-09-29', 'aprobado', '2', '1');
+INSERT INTO `dogless`.`reposicion` (`idreposicion`, `cantidad`, `fecha_pedido`, `aprobar`, `idproductos`, `idzonas`) VALUES ('31', '45', '2024-09-30', 'aprobado', '7', '2');
+INSERT INTO `dogless`.`reposicion` (`idreposicion`, `cantidad`, `fecha_pedido`, `aprobar`, `idproductos`, `idzonas`) VALUES ('32', '65', '2024-10-01', 'aprobado', '2', '3');
+INSERT INTO `dogless`.`reposicion` (`idreposicion`, `cantidad`, `fecha_pedido`, `aprobar`, `idproductos`, `idzonas`) VALUES ('33', '50', '2024-10-02', 'aprobado', '1', '4');
+INSERT INTO `dogless`.`reposicion` (`idreposicion`, `cantidad`, `fecha_pedido`, `aprobar`, `idproductos`, `idzonas`) VALUES ('34', '70', '2024-10-03', 'aprobado', '8', '1');
+INSERT INTO `dogless`.`reposicion` (`idreposicion`, `cantidad`, `fecha_pedido`, `aprobar`, `idproductos`, `idzonas`) VALUES ('35', '55', '2024-10-04', 'aprobado', '12', '2');
+INSERT INTO `dogless`.`reposicion` (`idreposicion`, `cantidad`, `fecha_pedido`, `aprobar`, `idproductos`, `idzonas`) VALUES ('36', '75', '2024-10-05', 'aprobado', '4', '3');
+INSERT INTO `dogless`.`reposicion` (`idreposicion`, `cantidad`, `fecha_pedido`, `aprobar`, `idproductos`, `idzonas`) VALUES ('37', '90', '2024-10-06', 'aprobado', '14', '4');
+INSERT INTO `dogless`.`reposicion` (`idreposicion`, `cantidad`, `fecha_pedido`, `aprobar`, `idproductos`, `idzonas`) VALUES ('38', '85', '2024-10-07', 'aprobado', '14', '1');
+INSERT INTO `dogless`.`reposicion` (`idreposicion`, `cantidad`, `fecha_pedido`, `aprobar`, `idproductos`, `idzonas`) VALUES ('39', '75', '2024-10-08', 'aprobado', '13', '2');
+INSERT INTO `dogless`.`reposicion` (`idreposicion`, `cantidad`, `fecha_pedido`, `aprobar`, `idproductos`, `idzonas`) VALUES ('40', '95', '2024-10-09', 'aprobado', '12', '3');
+INSERT INTO `dogless`.`reposicion` (`idreposicion`, `cantidad`, `fecha_pedido`, `aprobar`, `idproductos`, `idzonas`) VALUES ('41', '105', '2024-10-10', 'aprobado', '13', '4');
+INSERT INTO `dogless`.`reposicion` (`idreposicion`, `cantidad`, `fecha_pedido`, `aprobar`, `idproductos`, `idzonas`) VALUES ('42', '80', '2024-10-11', 'aprobado', '13', '1');
+INSERT INTO `dogless`.`reposicion` (`idreposicion`, `cantidad`, `fecha_pedido`, `aprobar`, `idproductos`, `idzonas`) VALUES ('43', '100', '2024-10-12', 'aprobado', '13', '2');
+INSERT INTO `dogless`.`reposicion` (`idreposicion`, `cantidad`, `fecha_pedido`, `aprobar`, `idproductos`, `idzonas`) VALUES ('44', '90', '2024-10-13', 'aprobado', '13', '3');
+INSERT INTO `dogless`.`reposicion` (`idreposicion`, `cantidad`, `fecha_pedido`, `aprobar`, `idproductos`, `idzonas`) VALUES ('45', '120', '2024-10-14', 'aprobado', '13', '4');
+INSERT INTO `dogless`.`reposicion` (`idreposicion`, `cantidad`, `fecha_pedido`, `aprobar`, `idproductos`, `idzonas`) VALUES ('46', '95', '2024-10-15', 'aprobado', '8', '1');
+INSERT INTO `dogless`.`reposicion` (`idreposicion`, `cantidad`, `fecha_pedido`, `aprobar`, `idproductos`, `idzonas`) VALUES ('47', '85', '2024-10-16', 'aprobado', '8', '2');
+INSERT INTO `dogless`.`reposicion` (`idreposicion`, `cantidad`, `fecha_pedido`, `aprobar`, `idproductos`, `idzonas`) VALUES ('48', '110', '2024-10-17', 'aprobado', '8', '3');
+INSERT INTO `dogless`.`reposicion` (`idreposicion`, `cantidad`, `fecha_pedido`, `aprobar`, `idproductos`, `idzonas`) VALUES ('49', '75', '2024-10-18', 'aprobado', '8', '4');
+
 
 -- Insertar datos en la tabla `detallesorden`
 INSERT INTO `dogless`.`detallesorden` 
@@ -686,7 +723,27 @@ VALUES
 
 -- Reseñas para el producto 10: Teclado Mecánico
 (10, 'El teclado es increíble para jugar, lo recomiendo.', 5, '2024-09-10', 5, 5, 1, 41,1),
-(10, 'Buen teclado, pero esperaba algo mejor en la calidad de los materiales.', 4, '2024-09-15', 3, 4, 1, 49,1);
+(10, 'Buen teclado, pero esperaba algo mejor en la calidad de los materiales.', 4, '2024-09-15', 3, 4, 1, 49,1),
+
+-- Reseñas negativas para el producto 11: Smartwatch X1
+(15, 'El reloj no tiene la batería que prometen, se descarga muy rápido.', 2, '2024-09-15', 2, 2, 0, 51, 1),
+(15, 'El diseño es bonito, pero el rendimiento no es lo que esperaba.', 1, '2024-09-18', 1, 2, 0, 52, 1),
+(15, 'El Smartwatch no se sincroniza bien con mi teléfono, no lo recomendaría.', 2, '2024-09-20', 1, 3, 0, 53, 1),
+(15, 'Muy lento y no funciona bien en mi sistema operativo, una decepción.', 2, '2024-09-22', 2, 1, 0, 54, 1),
+(15, 'El sensor de ritmo cardíaco es impreciso, no lo volveré a comprar.', 1, '2024-09-23', 1, 1, 0, 55, 1),
+(15, 'No cumplió mis expectativas, se congela constantemente.', 2, '2024-09-25', 2, 2, 0, 56, 1),
+(15, 'El producto es muy frágil, se rompió al primer uso.', 1, '2024-09-28', 1, 1, 0, 57, 1),
+
+-- Reseñas negativas para el producto 12: Laptop Z Pro
+(16, 'El teclado tiene fallas, no lo recomiendo para trabajar.', 2, '2024-09-16', 2, 3, 0, 58, 1),
+(16, 'La pantalla tiene problemas de colores, la calidad es mala.', 1, '2024-09-19', 1, 1, 0, 49, 1),
+(16, 'No cumple con las especificaciones que publican, no es tan potente.', 2, '2024-09-21', 2, 2, 0, 40, 1),
+
+-- Reseñas negativas para el producto 13: Proyector LED 1080p
+(17, 'La calidad de la imagen no es buena, decepcionante.', 2, '2024-09-24', 2, 2, 0, 41, 1),
+(17, 'El proyector no tiene suficiente brillo, no sirve en ambientes iluminados.', 1, '2024-09-26', 1, 1, 0, 42, 1);
+
+
 
 INSERT INTO `dogless`.`resenas` 
 (`idproductos`, `comentario`, `fecha`, `usuarioid`, `tipo`)
@@ -787,7 +844,29 @@ VALUES
 (3, 120, 4), -- 120 unidades de Auriculares Z en la zona Oeste
 (7, 15, 4), -- 15 unidades de Drone Pro en la zona Oeste
 (9, 50, 4), -- 50 unidades de Reloj Inteligente en la zona Oeste
-(10, 65, 4); -- 65 unidades de Teclado Mecánico en la zona Oeste
+(10, 65, 4), -- 65 unidades de Teclado Mecánico en la zona Oeste
+
+
+-- Stock para la zona Norte (ID zonas 1)
+(15, 10, 1), -- 10 unidades de Smartwatch X1 en la zona Norte
+(16, 10, 1), -- 10 unidades de Laptop Z Pro en la zona Norte
+(17, 10, 1), -- 10 unidades de Proyector LED 1080p en la zona Norte
+
+-- Stock para la zona Sur (ID zonas 2)
+(15, 10, 2), -- 10 unidades de Smartwatch X1 en la zona Sur
+(16, 10, 2), -- 10 unidades de Laptop Z Pro en la zona Sur
+(17, 10, 2), -- 10 unidades de Proyector LED 1080p en la zona Sur
+
+-- Stock para la zona Este (ID zonas 3)
+(15, 10, 3), -- 10 unidades de Smartwatch X1 en la zona Este
+(16, 10, 3), -- 10 unidades de Laptop Z Pro en la zona Este
+(17, 10, 3), -- 10 unidades de Proyector LED 1080p en la zona Este
+
+-- Stock para la zona Oeste (ID zonas 4)
+(15, 10, 4), -- 10 unidades de Smartwatch X1 en la zona Oeste
+(16, 10, 4), -- 10 unidades de Laptop Z Pro en la zona Oeste
+(17, 10, 4); -- 10 unidades de Proyector LED 1080p en la zona Oeste
+
 
 -- Solicitudes
 INSERT INTO `dogless`.`solicitudes` (`idsolicitudes`, `veredicto`, `idusuarios`, `comentario`) 

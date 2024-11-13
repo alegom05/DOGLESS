@@ -506,6 +506,38 @@ public interface ProductRepository extends JpaRepository<Producto, Integer>{
             Pageable pageable);
 
 
+    @Query(value =
+            "SELECT " +
+                    "   prov.idproveedores, " +
+                    "   prov.nombre AS proveedorNombre, " +
+                    "   prov.apellido AS proveedorApellido, " +
+                    "   SUM(CASE WHEN r.aprobar = 'aprobado' THEN r.cantidad ELSE 0 END) AS reposicionesAprobadas, " +
+                    "   AVG(avgSatisfaccion.promedio_satisfaccion) AS promedioCalificacionProveedor " +
+                    "FROM " +
+                    "   dogless.proveedores prov " +
+                    "JOIN " +
+                    "   dogless.productos p ON p.idproveedores = prov.idproveedores " +
+                    "LEFT JOIN " +
+                    "   dogless.reposicion r ON r.idproductos = p.idproductos " +
+                    "LEFT JOIN ( " +
+                    "   SELECT " +
+                    "       r.idproductos, " +
+                    "       ROUND(COALESCE(AVG(r.satisfaccion), 0)) AS promedio_satisfaccion " +
+                    "   FROM " +
+                    "       dogless.resenas r " +
+                    "   GROUP BY " +
+                    "       r.idproductos " +
+                    ") avgSatisfaccion ON p.idproductos = avgSatisfaccion.idproductos " +
+                    "GROUP BY " +
+                    "   prov.idproveedores, prov.nombre, prov.apellido " +
+                    "ORDER BY " +
+                    "   reposicionesAprobadas DESC " +
+                    "LIMIT 3",
+            nativeQuery = true)
+    List<ProductoDTO> obtenerTop5ProveedoresConReposicionesYCalificaciones();
+
+
+
     //Solo 1 producto
     @Query(value = "SELECT " +
             "p.idproductos, p.nombre, p.descripcion, p.categoria, p.precio, p.costoenvio, " +

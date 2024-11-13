@@ -22,6 +22,9 @@ public interface ProductoDTO {
     String getProveedorApellido();
 
     Integer getPromedioSatisfaccion();
+    Double getPromedioCalificacionProveedor();
+    Integer getReposicionesAprobadas();
+    Integer getIdProveedores();
 
     Integer getTotal_vendido();
 }
