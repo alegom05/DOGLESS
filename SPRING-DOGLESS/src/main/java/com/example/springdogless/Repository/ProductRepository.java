@@ -512,7 +512,7 @@ public interface ProductRepository extends JpaRepository<Producto, Integer>{
                     "   prov.nombre AS proveedorNombre, " +
                     "   prov.apellido AS proveedorApellido, " +
                     "   SUM(CASE WHEN r.aprobar = 'aprobado' THEN r.cantidad ELSE 0 END) AS reposicionesAprobadas, " +
-                    "   AVG(avgSatisfaccion.promedio_satisfaccion) AS promedioCalificacionProveedor " +
+                    "   ROUND(AVG(avgSatisfaccion.promedio_satisfaccion), 4) AS promedioCalificacionProveedor " +
                     "FROM " +
                     "   dogless.proveedores prov " +
                     "JOIN " +
@@ -522,7 +522,7 @@ public interface ProductRepository extends JpaRepository<Producto, Integer>{
                     "LEFT JOIN ( " +
                     "   SELECT " +
                     "       r.idproductos, " +
-                    "       ROUND(COALESCE(AVG(r.satisfaccion), 0)) AS promedio_satisfaccion " +
+                    "       COALESCE(AVG(r.satisfaccion), 0) AS promedio_satisfaccion " +
                     "   FROM " +
                     "       dogless.resenas r " +
                     "   GROUP BY " +
@@ -535,6 +535,39 @@ public interface ProductRepository extends JpaRepository<Producto, Integer>{
                     "LIMIT 3",
             nativeQuery = true)
     List<ProductoDTO> obtenerTop5ProveedoresConReposicionesYCalificaciones();
+
+
+
+    @Query(value =
+            "SELECT " +
+                    "   prov.idproveedores, " +
+                    "   prov.nombre AS proveedorNombre, " +
+                    "   prov.apellido AS proveedorApellido, " +
+                    "   ROUND(AVG(avgSatisfaccion.promedio_satisfaccion), 4) AS promedioCalificacionProveedor, " +
+                    "   COUNT(CASE WHEN r.satisfaccion <= 3 THEN 1 END) AS comentariosNegativosProveedor " +
+                    "FROM " +
+                    "   dogless.proveedores prov " +
+                    "JOIN " +
+                    "   dogless.productos p ON p.idproveedores = prov.idproveedores " +
+                    "LEFT JOIN " +
+                    "   dogless.resenas r ON r.idproductos = p.idproductos " +
+                    "LEFT JOIN ( " +
+                    "   SELECT " +
+                    "       r.idproductos, " +
+                    "       COALESCE(AVG(r.satisfaccion), 0) AS promedio_satisfaccion " +
+                    "   FROM " +
+                    "       dogless.resenas r " +
+                    "   GROUP BY " +
+                    "       r.idproductos " +
+                    ") avgSatisfaccion ON p.idproductos = avgSatisfaccion.idproductos " +
+                    "GROUP BY " +
+                    "   prov.idproveedores, prov.nombre, prov.apellido " +
+                    "ORDER BY " +
+                    "   promedioCalificacionProveedor ASC " +
+                    "LIMIT 3",
+            nativeQuery = true)
+    List<ProductoDTO> obtenerTop3ProveedoresConPeoresValoraciones();
+
 
 
 

@@ -1135,6 +1135,32 @@ public class AdminController {
         model.addAttribute("reposicionesAprobadas", reposicionesAprobadas);
         model.addAttribute("valoracionProveedores", valoracionProveedores);
 
+
+
+
+        List<ProductoDTO> lista_proveedorespeorestop3 = productRepository.obtenerTop3ProveedoresConPeoresValoraciones();
+
+        // Crear listas para etiquetas y datos
+        List<String> etiquetasProveedoresPeoresValorados = new ArrayList<>();
+        List<Double> valoracionProveedoresPeores = new ArrayList<>();
+        List<Integer> cantidadMalosComentarios = new ArrayList<>();
+
+        // Llenar las listas con los datos de cada proveedor con peores valoraciones
+        for (ProductoDTO proveedor : lista_proveedorespeorestop3) {
+            String nombreCompleto = proveedor.getProveedorNombre() + " " + proveedor.getProveedorApellido();
+            etiquetasProveedoresPeoresValorados.add(nombreCompleto);
+            valoracionProveedoresPeores.add(proveedor.getPromedioCalificacionProveedor());
+            cantidadMalosComentarios.add(proveedor.getComentariosNegativosProveedor());
+        }
+
+        // Añadir los datos al modelo para pasarlos a la vista
+        model.addAttribute("etiquetasProveedoresPeoresValorados", etiquetasProveedoresPeoresValorados);
+        model.addAttribute("valoracionProveedoresPeores", valoracionProveedoresPeores);
+        model.addAttribute("cantidadMalosComentarios", cantidadMalosComentarios);
+
+
+
+
         /*model.addAttribute("listaProveedores", proveedorRepository.findAll());*/
         return "admin/dashboard";
     }

@@ -735,13 +735,13 @@ VALUES
 (15, 'El producto es muy frágil, se rompió al primer uso.', 1, '2024-09-28', 1, 1, 0, 57, 1),
 
 -- Reseñas negativas para el producto 12: Laptop Z Pro
-(16, 'El teclado tiene fallas, no lo recomiendo para trabajar.', 2, '2024-09-16', 2, 3, 0, 58, 1),
+(16, 'El teclado tiene algunas fallas, deben mejorar eso.', 2, '2024-09-16', 2, 3, 0, 58, 1),
 (16, 'La pantalla tiene problemas de colores, la calidad es mala.', 1, '2024-09-19', 1, 1, 0, 49, 1),
 (16, 'No cumple con las especificaciones que publican, no es tan potente.', 2, '2024-09-21', 2, 2, 0, 40, 1),
 
 -- Reseñas negativas para el producto 13: Proyector LED 1080p
-(17, 'La calidad de la imagen no es buena, decepcionante.', 2, '2024-09-24', 2, 2, 0, 41, 1),
-(17, 'El proyector no tiene suficiente brillo, no sirve en ambientes iluminados.', 1, '2024-09-26', 1, 1, 0, 42, 1);
+(17, 'La calidad de la imagen no es tan buena.', 3, '2024-09-24', 2, 2, 0, 41, 1),
+(17, 'El proyector no tiene suficiente brillo, no sirve en ambientes iluminados.', 2, '2024-09-26', 1, 1, 0, 42, 1);
 
 
 

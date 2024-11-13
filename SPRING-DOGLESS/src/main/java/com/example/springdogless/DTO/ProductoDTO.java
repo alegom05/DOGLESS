@@ -25,6 +25,7 @@ public interface ProductoDTO {
     Double getPromedioCalificacionProveedor();
     Integer getReposicionesAprobadas();
     Integer getIdProveedores();
+    Integer getComentariosNegativosProveedor();
 
     Integer getTotal_vendido();
 }
