@@ -18,6 +18,12 @@
             .dataTables_filter {
                 display: none; /* Oculta el campo de búsqueda */
             }
+            /* Centrar la paginación de DataTables */
+            .dataTables_wrapper .dataTables_paginate {
+                display: flex;
+
+            }
+
         </style>
         <!-- Fonts and icons -->
         <script src="/assets/js/plugin/webfont/webfont.min.js"></script>
@@ -201,7 +207,6 @@
                 $.fn.dataTable.ext.search = [];
                 table.search('').columns().search('').draw();
             }
-
             function formatDate(dateString) {
                 const parts = dateString.split("/");
                 if (parts.length === 3) {
@@ -212,11 +217,11 @@
                 }
                 return "";
             }
-
             $(document).ready(function () {
                 $('#basic-datatables').DataTable({
                     columnDefs: [
-                        { type: 'num', targets: 0 }
+                        { type: 'num', targets: 0, className: 'dataTables_center' },
+                        { targets: '_all', className: 'dataTables_center' }
                     ],
                     paging: true,
                     pageLength: 5,
