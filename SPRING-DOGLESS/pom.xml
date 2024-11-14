@@ -128,6 +128,16 @@
             <artifactId>jasperreports-fonts</artifactId>
             <version>7.0.1</version>
         </dependency>
+
+        <!-- Dependencias para el Chatbot V2-->
+        <dependency>
+            <groupId>com.github.ben-manes.caffeine</groupId>
+            <artifactId>caffeine</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+        </dependency>
         <!-- dependencias para reportes -->
     </dependencies>
 

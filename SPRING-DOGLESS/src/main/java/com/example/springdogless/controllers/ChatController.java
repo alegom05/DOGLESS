@@ -1,36 +1,34 @@
 package com.example.springdogless.controllers;
 
-
-import com.example.springdogless.Repository.MessageRepository;
-import com.example.springdogless.entity.Message;
+import com.example.springdogless.entity.ChatMessage;
 import com.example.springdogless.services.ChatbotService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.stereotype.Controller;
+import org.springframework.http.ResponseEntity;
 
-@RestController
-@RequestMapping("/api/chat")
-@CrossOrigin(origins = "*")
+
+@Controller
 public class ChatController {
+    private final ChatbotService chatbotService;
 
-    @Autowired
-    private ChatbotService chatbotService;
+    public ChatController(ChatbotService chatbotService) {
+        this.chatbotService = chatbotService;
+    }
 
-    @Autowired
-    private MessageRepository messageRepository;
+    // Endpoint para mostrar la página que contiene el chat
+    @GetMapping("/chat")
+    public String chatPage() {
+        return "chat"; // Esto buscará chat.html en templates
+    }
 
-    @PostMapping("/send")
-    public ResponseEntity<Message> sendMessage(@RequestBody Message userMessage) {
-        // Guardamos el mensaje del usuario
-        userMessage.setSender("USER");
-        messageRepository.save(userMessage);
-
-        // Generamos y guardamos la respuesta del bot
-        Message botResponse = new Message();
-        botResponse.setSender("BOT");
-        botResponse.setContent(chatbotService.generateResponse(userMessage.getContent()));
-        messageRepository.save(botResponse);
-
-        return ResponseEntity.ok(botResponse);
+    // Endpoint REST para procesar mensajes
+    @PostMapping("/api/chat/message")
+    @ResponseBody
+    public ResponseEntity<ChatMessage> processMessage(@RequestBody ChatMessage message) {
+        ChatMessage response = chatbotService.processMessage(
+                message.getUserId(),
+                message.getMessage()
+        );
+        return ResponseEntity.ok(response);
     }
 }
