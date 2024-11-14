@@ -14,7 +14,16 @@
             type="image/x-icon"
     />
     <link th:href="@{/assets/css/style-SuperAdmin.css}" rel="stylesheet">
+    <style>
+      .dataTables_filter {
+        display: none; /* Oculta el campo de búsqueda */
+      }
+      /* Centrar la paginación de DataTables */
+      .dataTables_wrapper .dataTables_paginate {
+        display: flex;
 
+      }
+    </style>
     <!-- Fonts and icons -->
     <script src="/assets/js/plugin/webfont/webfont.min.js"></script>
     <script>
@@ -222,21 +231,23 @@
     <script>
       $(document).ready(function () {
 
-        $("#basic-datatables").DataTable({
-          "language": {
-            "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json",
-            "info": false,
-            "infoEmpty": "Mostrando 0 a 0 de 0 registros",
-            "infoFiltered": "(filtrado de _MAX_ registros en total)",
-            "lengthMenu": "Mostrar _MENU_ registros por página",
-            "zeroRecords": "No se encontraron registros coincidentes",
-            "paginate": {
-              "first": "Primero",
-              "last": "Último",
-              "next": "Siguiente",
-              "previous": "Anterior"
-            },
-            "search": "Buscar:"
+        $('#basic-datatables').DataTable({
+          columnDefs: [
+            { type: 'num', targets: 0, className: 'dataTables_center' },
+            { targets: '_all', className: 'dataTables_center' }
+          ],
+          paging: true,
+          pageLength: 15,
+          lengthChange: false,
+          info: false,
+          language: {
+            search: "Buscar:",
+            lengthMenu: "Mostrar _MENU_ entradas por página",
+            info: "Mostrando _START_ a _END_ de _TOTAL_ entradas",
+            paginate: {
+              previous: "Anterior",
+              next: "Siguiente"
+            }
           }
         });
 

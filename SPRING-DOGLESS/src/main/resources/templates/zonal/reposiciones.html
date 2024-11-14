@@ -131,7 +131,7 @@
                                 <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
                                   <li><a class="dropdown-item" th:href="@{'/zonal/verReposicion' + '?id=' + ${reposicion.id}}">Ver</a></li>
                                   <li><a class="dropdown-item" th:href="@{'/zonal/editarReposicion' + '?id=' + ${reposicion.id}}">Editar</a></li>
-                                    <li><a class="dropdown-item" href="#" data-toggle="modal" data-target="#confirmDeleteModal" th:data-id="${reposicion.id}">Eliminar</a></li>
+                                  <li><a class="dropdown-item" href="#" data-toggle="modal" data-target="#confirmDeleteModal" th:data-id="${reposicion.id}">Eliminar</a></li>
 
                                   <!--
                                    <li><a class="dropdown-item" th:href="@{'/zonal/verReposicion' + '?id=' + ${reposicion.id}}">Ver</a></li>
@@ -173,193 +173,194 @@
                        </div>
 
                        Modal para Aceptar -->
-                      <div class="modal fade" id="aceptarModal" tabindex="-1" role="dialog" aria-labelledby="acceptModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <h5 class="modal-title" id="acceptModalLabel">Advertencia</h5>
-                              <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                              </button>
-                            </div>
-                            <div class="modal-body">
-                              <p>¿Estás seguro de que deseas espiar esta cuenta?</p>
-                            </div>
-                            <div class="modal-footer">
-                              <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
-                              <button type="button" class="btn btn-dark"  onclick="window.location.href='espiar.html'">Aceptar</button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+                                  <div class="modal fade" id="aceptarModal" tabindex="-1" role="dialog" aria-labelledby="acceptModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                      <div class="modal-content">
+                                        <div class="modal-header">
+                                          <h5 class="modal-title" id="acceptModalLabel">Advertencia</h5>
+                                          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                          </button>
+                                        </div>
+                                        <div class="modal-body">
+                                          <p>¿Estás seguro de que deseas espiar esta cuenta?</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                          <button type="button" class="btn btn-dark"  onclick="window.location.href='espiar.html'">Aceptar</button>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+
+                              </div>
+
+                    </div>
 
                   </div>
-
+                </div>
               </div>
+              <!-- Fin del contenido central -->
+              <!-- Pie de página -->
+              <div th:replace="~{zonal/fragments/piedepagina :: fragment}"></div>
 
             </div>
-          </div>
-        </div>
-        <!-- Fin del contenido central -->
-        <!-- Pie de página -->
-        <div th:replace="~{zonal/fragments/piedepagina :: fragment}"></div>
-
-      </div>
-
-    </div>
-
-
-    <!-- Core JS Files -->
-    <script src="/assets/js/core/jquery-3.7.1.min.js"></script>
-    <script src="/assets/js/core/popper.min.js"></script>
-    <script src="/assets/js/core/bootstrap.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
-    <!-- jQuery Scrollbar -->
-    <script src="/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
-
-
-    <!-- Datatables -->
-    <script src="/assets/js/plugin/datatables/datatables.min.js"></script>
-
-    <!-- jQuery Vector Maps -->
-    <script src="/assets/js/plugin/jsvectormap/jsvectormap.min.js"></script>
-    <script src="/assets/js/plugin/jsvectormap/world.js"></script>
-
-    <!-- Kaiadmin JS -->
-    <script src="/assets/js/kaiadmin.min.js"></script>
-    <script>
-      // Este script asigna el ID del usuario al modal antes de abrirlo
-      $('#confirmDeleteModal').on('show.bs.modal', function (event) {
-        var button = $(event.relatedTarget); // Botón que abrió el modal
-        var userId = button.data('id'); // Extraer la información de atributos de datos
-        var modal = $(this);
-        modal.find('#userId').val(userId); // Asigna el ID al campo oculto
-      });
-    </script>
-
-    <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmar Eliminación</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            ¿Estás seguro de que deseas eliminar esta reposición?
 
           </div>
-          <div class="modal-footer">
-            <form id="reposicion.getProducto().getProveedor().getId()" method="post" th:action="@{'/zonal/borrarReposicion'}" novalidate>
-              <input type="hidden" name="id" id="id">
-              <button type="submit" class="btn btn-dark">Eliminar</button>
-            </form>
-            <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancelar</button>
+
+
+          <!-- Core JS Files -->
+          <script src="/assets/js/core/jquery-3.7.1.min.js"></script>
+          <script src="/assets/js/core/popper.min.js"></script>
+          <script src="/assets/js/core/bootstrap.min.js"></script>
+          <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+          <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+          <!-- jQuery Scrollbar -->
+          <script src="/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+
+
+          <!-- Datatables -->
+          <script src="/assets/js/plugin/datatables/datatables.min.js"></script>
+
+          <!-- jQuery Vector Maps -->
+          <script src="/assets/js/plugin/jsvectormap/jsvectormap.min.js"></script>
+          <script src="/assets/js/plugin/jsvectormap/world.js"></script>
+
+          <!-- Kaiadmin JS -->
+          <script src="/assets/js/kaiadmin.min.js"></script>
+          <script>
+            // Este script asigna el ID del usuario al modal antes de abrirlo
+            $('#confirmDeleteModal').on('show.bs.modal', function (event) {
+              var button = $(event.relatedTarget); // Botón que abrió el modal
+              var userId = button.data('id'); // Extraer la información de atributos de datos
+              var modal = $(this);
+              modal.find('#userId').val(userId); // Asigna el ID al campo oculto
+            });
+          </script>
+
+          <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmar Eliminación</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  ¿Estás seguro de que deseas eliminar esta reposición?
+
+                </div>
+                <div class="modal-footer">
+                  <form id="reposicion.getProducto().getProveedor().getId()" method="post" th:action="@{'/zonal/borrarReposicion'}" novalidate>
+                    <input type="hidden" name="id" id="id">
+                    <button type="submit" class="btn btn-dark">Eliminar</button>
+                  </form>
+                  <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancelar</button>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-    </div>
 
-      <script>
-        $(document).ready(function () {
+          <script>
+            $(document).ready(function () {
 
-          $("#basic-datatables").DataTable({
-            "language": {
-              "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json",
-              "info": false,
-              "infoEmpty": "Mostrando 0 a 0 de 0 registros",
-              "infoFiltered": "(filtrado de _MAX_ registros en total)",
-              "lengthMenu": "Mostrar _MENU_ registros por página",
-              "zeroRecords": "No se encontraron registros coincidentes",
-              "paginate": {
-                "first": "Primero",
-                "last": "Último",
-                "next": "Siguiente",
-                "previous": "Anterior"
-              },
-              "search": "Buscar:"
-            }
-          });
+              $("#basic-datatables").DataTable({
+                "language": {
+                  "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json",
+                  "info": false,
+                  "infoEmpty": "Mostrando 0 a 0 de 0 registros",
+                  "infoFiltered": "(filtrado de _MAX_ registros en total)",
+                  "lengthMenu": "Mostrar _MENU_ registros por página",
+                  "zeroRecords": "No se encontraron registros coincidentes",
+                  "paginate": {
+                    "first": "Primero",
+                    "last": "Último",
+                    "next": "Siguiente",
+                    "previous": "Anterior"
+                  },
+                  "search": "Buscar:"
+                }
+              });
 
-          $("#multi-filter-select").DataTable({
-            pageLength: 5,
-            initComplete: function () {
-              this.api()
-                      .columns()
-                      .every(function () {
-                        var column = this;
-                        var select = $(
-                                '<select class="form-select"><option value=""></option></select>'
-                        )
-                                .appendTo($(column.footer()).empty())
-                                .on("change", function () {
-                                  var val = $.fn.dataTable.util.escapeRegex($(this).val());
+              $("#multi-filter-select").DataTable({
+                pageLength: 5,
+                initComplete: function () {
+                  this.api()
+                          .columns()
+                          .every(function () {
+                            var column = this;
+                            var select = $(
+                                    '<select class="form-select"><option value=""></option></select>'
+                            )
+                                    .appendTo($(column.footer()).empty())
+                                    .on("change", function () {
+                                      var val = $.fn.dataTable.util.escapeRegex($(this).val());
 
-                                  column
-                                          .search(val ? "^" + val + "$" : "", true, false)
-                                          .draw();
-                                });
+                                      column
+                                              .search(val ? "^" + val + "$" : "", true, false)
+                                              .draw();
+                                    });
 
-                        column
-                                .data()
-                                .unique()
-                                .sort()
-                                .each(function (d, j) {
-                                  select.append(
-                                          '<option value="' + d + '">' + d + "</option>"
-                                  );
-                                });
-                      });
-            },
-          });
+                            column
+                                    .data()
+                                    .unique()
+                                    .sort()
+                                    .each(function (d, j) {
+                                      select.append(
+                                              '<option value="' + d + '">' + d + "</option>"
+                                      );
+                                    });
+                          });
+                },
+              });
 
-        //Asignación del id
-      $('#confirmDeleteModal').on('show.bs.modal', function (event) {
-          var button = $(event.relatedTarget); // Botón que abrió el modal
-          var reposicionId = button.data('id'); // Extraer el ID de reposición desde el atributo data-id
-          var modal = $(this);
-          modal.find('#id').val(reposicionId); // Asigna el ID al campo oculto en el formulario
-      });
+              //Asignación del id
+              $('#confirmDeleteModal').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget); // Botón que abrió el modal
+                var reposicionId = button.data('id'); // Extraer el ID de reposición desde el atributo data-id
+                var modal = $(this);
+                modal.find('#id').val(reposicionId); // Asigna el ID al campo oculto en el formulario
+              });
 
 
-          // Add Row
-        $("#add-row").DataTable({
-          pageLength: 5,
-        });
+              // Add Row
+              $("#add-row").DataTable({
+                pageLength: 5,
+              });
 
-        var action =
-                '<td> <div class="form-button-action"> <button type="button" data-bs-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task"> <i class="fa fa-edit"></i> </button> <button type="button" data-bs-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove"> <i class="fa fa-times"></i> </button> </div> </td>';
+              var action =
+                      '<td> <div class="form-button-action"> <button type="button" data-bs-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task"> <i class="fa fa-edit"></i> </button> <button type="button" data-bs-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove"> <i class="fa fa-times"></i> </button> </div> </td>';
 
-        $("#addRowButton").click(function () {
-          $("#add-row")
-                  .dataTable()
-                  .fnAddData([
-                    $("#addName").val(),
-                    $("#addPosition").val(),
-                    $("#addOffice").val(),
-                    action,
-                  ]);
-          $("#addRowModal").modal("hide");
-        });
-      });
-    </script>
-    <script>
-      // Espera 3 segundos (3000 milisegundos) antes de empezar a ocultar el mensaje
-      setTimeout(function() {
-        var alert = document.getElementById('mensajeExito');
-        if (alert) {
-          alert.classList.add('hidden'); // Añadir la clase que reduce la opacidad gradualmente
+              $("#addRowButton").click(function () {
+                $("#add-row")
+                        .dataTable()
+                        .fnAddData([
+                          $("#addName").val(),
+                          $("#addPosition").val(),
+                          $("#addOffice").val(),
+                          action,
+                        ]);
+                $("#addRowModal").modal("hide");
+              });
+            });
+          </script>
+          <script>
+            // Espera 3 segundos (3000 milisegundos) antes de empezar a ocultar el mensaje
+            setTimeout(function() {
+              var alert = document.getElementById('mensajeExito');
+              if (alert) {
+                alert.classList.add('hidden'); // Añadir la clase que reduce la opacidad gradualmente
 
-          // Después de 1 segundo (duración de la transición), ocultar completamente
-          setTimeout(function() {
-            alert.classList.add('remove'); // Ocultar completamente el mensaje y el espacio
-          }, 1000); // 1000 ms coincide con la duración de la transición de opacidad
-        }
-      }, 3000); // Cambia 3000 por el tiempo en milisegundos que desees (3 segundos en este caso)
-    </script>
+                // Después de 1 segundo (duración de la transición), ocultar completamente
+                setTimeout(function() {
+                  alert.classList.add('remove'); // Ocultar completamente el mensaje y el espacio
+                }, 1000); // 1000 ms coincide con la duración de la transición de opacidad
+              }
+            }, 3000); // Cambia 3000 por el tiempo en milisegundos que desees (3 segundos en este caso)
+          </script>
   </body>
 </html>
+
 
