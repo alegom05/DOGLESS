@@ -56,6 +56,8 @@ public class UsuarioController {
     PreguntasProductoRepository preguntasProductoRepository;
     @Autowired
     ReclamoRepository reclamoRepository;
+    @Autowired
+    SolicitudRepository solicitudRepository;
 
     @GetMapping("")
     public String listarOrdenesUsuario(HttpSession session, Model model) {
@@ -1203,6 +1205,57 @@ public class UsuarioController {
         return "redirect:/admin/adminzonal";
     }
     */
+    @GetMapping("/formularioPostulacion")
+    public String mostrarFormularioPostulacion(HttpSession session, Model model) {
+        Usuario usuarioLogueado = (Usuario) session.getAttribute("usuario");
+
+        if (usuarioLogueado == null) {
+            return "redirect:/login"; // Redirigir al login si no está autenticado
+        }
+        if (usuarioLogueado.getCodigoaduana() != null) {
+            return "usuario/formularioCompleto";
+        }
+        // Agregar datos al modelo si necesitas
+        model.addAttribute("usuario", usuarioLogueado);
+
+        return "usuario/formularioPostulacion"; // Nombre de la vista HTML
+    }
+
+    @PostMapping("/postular")
+    public String postularseAgente(HttpSession session, RedirectAttributes redirectAttributes) {
+        // Obtener usuario de la sesión
+        Usuario usuarioLogueado = (Usuario) session.getAttribute("usuario");
+
+        if (usuarioLogueado == null) {
+            return "redirect:/login"; // Redirigir al login si no está autenticado
+        }
+
+        // Verificar si el usuario ya tiene un código de aduana asignado
+        if (usuarioLogueado.getCodigoaduana() != null) {
+            redirectAttributes.addFlashAttribute("error", "Ya ha realizado su postulación anteriormente.");
+            return "redirect:/usuario"; // Redirigir a la página principal
+        }
+
+        // Asignar el valor de "codigoaduana" en formato ADU{id}
+        String codigoAduana = "ADU" + String.format("%03d", usuarioLogueado.getId());
+        usuarioLogueado.setCodigoaduana(codigoAduana);
+
+        // Guardar el usuario con el código de aduana actualizado
+        usuarioRepository.save(usuarioLogueado);
+        session.setAttribute("usuario", usuarioLogueado);
+
+        Solicitud nuevaSolicitud = new Solicitud();
+        nuevaSolicitud.setUsuario(usuarioLogueado);
+        nuevaSolicitud.setVeredicto(null); // El veredicto será NULL hasta que sea evaluado
+        nuevaSolicitud.setComentario(null); // El comentario será opcional
+        solicitudRepository.save(nuevaSolicitud); // Guardar la solicitud
+
+        // Agregar mensaje de éxito
+        redirectAttributes.addFlashAttribute("msg", "Su postulación ha sido enviada exitosamente");
+        return "redirect:/usuario";
+    }
+
+
 
     @GetMapping("/informacion-de-contacto")
     public String informaciondecontacto() {
