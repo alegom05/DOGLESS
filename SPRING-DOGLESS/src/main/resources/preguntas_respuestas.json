@@ -1,0 +1,16 @@
+{
+  "preguntas_respuestas": [
+    {
+      "clave": "productos",
+      "respuesta": "Ofrecemos una variedad de productos como celulares, laptops, y accesorios."
+    },
+    {
+      "clave": "horarios",
+      "respuesta": "Nuestro horario es de lunes a viernes, de 9:00 AM a 6:00 PM."
+    },
+    {
+      "clave": "contacto",
+      "respuesta": "Puedes contactarnos al correo dogless@gmail.com o llamarnos al +51 123 456 789."
+    }
+  ]
+}
