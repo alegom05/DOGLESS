@@ -1,8 +1,10 @@
 package com.example.springdogless.services;
 
 import jakarta.mail.internet.MimeMessage;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 
@@ -30,6 +32,19 @@ public class EmailService {
             javaMailSender.send(message);
         } catch (Exception e) {
             throw new RuntimeException("Error al enviar el correo", e);
+        }
+    }
+    @Async
+    public void enviarCorreo(String destinatario, String asunto, String mensaje) {
+        try {
+            SimpleMailMessage email = new SimpleMailMessage();
+            email.setTo(destinatario);
+            email.setSubject(asunto);
+            email.setText(mensaje);
+            javaMailSender.send(email);
+        } catch (Exception e) {
+            e.printStackTrace();
+            // Loguear errores si es necesario
         }
     }
 }

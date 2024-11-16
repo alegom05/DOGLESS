@@ -8,11 +8,15 @@ import com.example.springdogless.Repository.*;
 //import com.example.springdogless.dao.UsuarioDao;
 import com.example.springdogless.dao.UsuarioDao;
 import com.example.springdogless.entity.*;
+import com.example.springdogless.services.EmailService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -60,6 +64,8 @@ public class AdminController {
     OrdenRepository ordenRepository;
     @Autowired
     UsuarioDao usuarioDao;
+    @Autowired
+    private EmailService emailService;
 
 
     @GetMapping("/perfil_superadmin")
@@ -649,7 +655,12 @@ public class AdminController {
             // Guardar los cambios en la base de datos
             solicitudRepository.save(solicitud);
             usuarioRepository.save(usuario);
-
+            emailService.enviarCorreo(
+                    usuario.getEmail(),
+                    "Solicitud Aprobada",
+                    "Estimado/a " + usuario.getNombre() +
+                            ",\n\nTu solicitud para convertirte en agente ha sido aprobada. Ahora puedes acceder a las funciones asignadas como Agente.\n\nSaludos,\nEquipo de Dogless"
+            );
             // Redirigir con un mensaje de éxito
             redirectAttributes.addFlashAttribute("mensajeExito", "La solicitud ha sido aprobada.");
         } else {
@@ -683,7 +694,14 @@ public class AdminController {
 
             // Guardar los cambios en la base de datos
             solicitudRepository.save(solicitud);
-
+            Usuario usuario = solicitud.getUsuario();
+            emailService.enviarCorreo(
+                    usuario.getEmail(),
+                    "Solicitud Denegada",
+                    "Estimado/a " + usuario.getNombre() +
+                            ",\n\nTu solicitud para convertirte en agente ha sido rechazada por el siguiente motivo:\n\n" +
+                            comentario + "\n\nSi tienes alguna duda, por favor contáctanos.\n\nSaludos,\nEquipo de Dogless"
+            );
             // Redirigir con un mensaje de éxito
             redirectAttributes.addFlashAttribute("mensajeExito", "La solicitud ha sido denegada.");
         } else {
