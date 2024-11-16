@@ -1,7 +1,9 @@
 package com.example.springdogless.controllers;
 
+import com.example.springdogless.Repository.DistritoRepository;
 import com.example.springdogless.Repository.UsuarioRepository;
 import com.example.springdogless.dao.UsuarioDao;
+import com.example.springdogless.entity.Distrito;
 import com.example.springdogless.entity.Usuario;
 import com.example.springdogless.services.EmailService;
 import jakarta.mail.internet.MimeMessage;
@@ -40,6 +42,8 @@ public class LoginController {
     EmailService emailService;
     @Autowired
     UsuarioDao usuarioDao;
+    @Autowired
+    DistritoRepository distritoRepository;
 
 
     // Mapea la vista del login
@@ -69,9 +73,21 @@ public class LoginController {
 
     @GetMapping("/register")
     public String registro(Model model, @RequestParam(required = false) String zona) {
+        model.addAttribute("usuario", new Usuario()); // Añade un nuevo objeto Usuario al modelo
         return "register";
     }
+    @PostMapping("/register")
+    public String registerUser(@ModelAttribute Usuario usuario, Model model) {
+        // Assuming you have a UsuarioService to handle saving the user
 
+        Distrito distrito = distritoRepository.findById(usuario.getDistrito().getIddistritos())
+                .orElseThrow(() -> new RuntimeException("Distrito not found"));
+
+        usuario.setDistrito(distrito);
+        usuarioRepository.save(usuario);
+        model.addAttribute("message", "Registration successful!");
+        return "redirect:/login"; // Redirect to login or another page after registration
+    }
 
     // Add this method to handle GET requests
     @GetMapping("/olvidastecontasenha")

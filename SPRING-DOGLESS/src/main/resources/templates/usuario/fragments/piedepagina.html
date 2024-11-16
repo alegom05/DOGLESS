@@ -16,11 +16,9 @@
 
     <div th:fragment="fragment">
 
-      <div class="custom-toggle">
-        <i class="icon-settings">
-          ::before
-        </i>
-      </div>
+      <a href="#" class="float">
+        <i class="fa fa-plus my-float"></i>
+      </a>
 
 
       <!--      &lt;!&ndash; Botón de Chat &ndash;&gt;
@@ -125,6 +123,16 @@
       <script th:src="@{/js/chat.js}"></script>
     </div>
     <script>
+      function onDefaulFloatingActionButtonActiontInit(s, e) {
+        $("#default-fab > .card").mCustomScrollbar({
+          theme: "minimal-dark",
+          scrollInertia: 300
+        });
+      }
+      function onDefaultFloatingActionButtonActionItemClick(s, e) {
+        dxbsDemo.showToast("The button has been clicked.");
+      }
+
       document.addEventListener('DOMContentLoaded', function() {
         const chatButton = document.getElementById('chatButton');
         const chatModal = document.getElementById('chatModal');
