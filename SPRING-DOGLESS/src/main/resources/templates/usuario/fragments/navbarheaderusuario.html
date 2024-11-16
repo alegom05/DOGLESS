@@ -8,6 +8,13 @@
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+      .hidden {
+        display: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+    </style>
   </head>
   <body>
     <link th:href="@{/assets/css/style-SuperAdmin.css}" rel="stylesheet">
@@ -90,12 +97,18 @@
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="#">Cambiar contraseña</a>
                     <div class="dropdown-divider"></div>
+
+                    <form th:action="@{/usuario/formularioPostulacion}" method="get" style="display:inline;">
+                      <button type="submit" class="dropdown-item">Postularse a Agente</button>
+                    </form>
+                    <div class="dropdown-divider"></div>
                     <a href="#" onclick="document.getElementById('logoutForm').submit();" class="dropdown-item">Cerrar Sesión</a>
 
                     <form id="logoutForm" th:action="@{/logout}" method="post" style="display:none;">
                       <input type="submit">
                     </form>
                   </li>
+
                 </div>
               </ul>
             </li>
