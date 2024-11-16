@@ -226,7 +226,7 @@ DEFAULT CHARACTER SET = utf8;
 -- Table `dogless`.`solicitudes`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `dogless`.`solicitudes` (
-  `idsolicitudes` INT NOT NULL,
+  `idsolicitudes` INT NOT NULL AUTO_INCREMENT,
   `veredicto` TINYINT NULL,
   `comentario` VARCHAR(300) NULL,
   `borrado` TINYINT DEFAULT 1,
