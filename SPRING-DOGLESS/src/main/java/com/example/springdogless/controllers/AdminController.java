@@ -1,5 +1,6 @@
 package com.example.springdogless.controllers;
 
+import com.example.springdogless.DTO.OrdenDTO;
 import com.example.springdogless.DTO.ProductoDTO;
 import com.example.springdogless.DTO.ProveedorDTO;
 import com.example.springdogless.Repository.*;
@@ -1090,19 +1091,37 @@ public class AdminController {
         for (ProveedorDTO proveedor : proveedoresMasSolicitados) {
             System.out.println("Tienda: " + proveedor.getTienda() + ", Total Pedidos: " + proveedor.getTotalPedidos());
         }
-        //5ta gráfica
-        Integer ordenes1 = ordenRepository.findOrdenesByMes(5);
-        Integer ordenes2 = ordenRepository.findOrdenesByMes(6);
-        Integer ordenes3 = ordenRepository.findOrdenesByMes(7);
-        Integer ordenes4 = ordenRepository.findOrdenesByMes(8);
-        Integer ordenes5 = ordenRepository.findOrdenesByMes(9);
-        Integer ordenes6 = ordenRepository.findOrdenesByMes(10);
-        model.addAttribute("ordenes1", ordenes1);
-        model.addAttribute("ordenes2", ordenes2);
-        model.addAttribute("ordenes3", ordenes3);
-        model.addAttribute("ordenes4", ordenes4);
-        model.addAttribute("ordenes5", ordenes5);
-        model.addAttribute("ordenes6", ordenes6);
+
+
+
+        // Supongamos que Lista_Ordenes_Por_Mes es la lista de todas las órdenes por mes.
+        List<OrdenDTO> Lista_Ordenes_Por_Mes = ordenRepository.findCantidadOrdenesPorMes();
+
+        // Listas para almacenar las cantidades por semestre
+        List<Integer> ListaCantidadPrimerSemestre = new ArrayList<>();
+        List<Integer> ListaCantidadSegundoSemestre = new ArrayList<>();
+
+        // Recorrer las órdenes y asignarlas a los semestres correspondientes
+        for (OrdenDTO orden : Lista_Ordenes_Por_Mes) {
+            Integer mes = orden.getmes();  // Obtener el mes de la orden
+            Integer cantidad = orden.getCantidad();  // Obtener la cantidad de la orden
+
+            // Verificar si el mes corresponde al primer semestre (enero a junio)
+            if (mes >= 1 && mes <= 6) {
+                ListaCantidadPrimerSemestre.add(cantidad);
+            }
+            // Si es del segundo semestre (julio a diciembre)
+            else if (mes >= 7 && mes <= 12) {
+                ListaCantidadSegundoSemestre.add(cantidad);
+            }
+        }
+
+        // Pasar las listas al modelo
+        model.addAttribute("ListaCantidadPrimerSemestre", ListaCantidadPrimerSemestre);
+        model.addAttribute("ListaCantidadSegundoSemestre", ListaCantidadSegundoSemestre);
+
+
+
         //6ta gráfica
         //Siguiendo el ejemplo se envían los demas parámetros-->
         Integer norte = ordenRepository.findOrdenesByZona(1);
@@ -1158,8 +1177,17 @@ public class AdminController {
         model.addAttribute("valoracionProveedoresPeores", valoracionProveedoresPeores);
         model.addAttribute("cantidadMalosComentarios", cantidadMalosComentarios);
 
+        List<ProductoDTO> lista_producto_mas_importados = productRepository.obtenerTop10ProductosMasImportados();
+        List<String> etiquetasProductosMasImportado = new ArrayList<>();
+        List<Integer> cantidadProductosMasImportado = new ArrayList<>();
 
+        for (ProductoDTO producto : lista_producto_mas_importados) {
+            etiquetasProductosMasImportado.add(producto.getNombre());
+            cantidadProductosMasImportado.add(producto.getCantidadAprobada());
+        }
 
+        model.addAttribute("etiquetasProductosMasImportado", etiquetasProductosMasImportado);
+        model.addAttribute("cantidadProductosMasImportado", cantidadProductosMasImportado);
 
         /*model.addAttribute("listaProveedores", proveedorRepository.findAll());*/
         return "admin/dashboard";
