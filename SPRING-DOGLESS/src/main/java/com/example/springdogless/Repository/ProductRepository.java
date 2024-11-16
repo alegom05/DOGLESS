@@ -532,11 +532,27 @@ public interface ProductRepository extends JpaRepository<Producto, Integer>{
                     "   prov.idproveedores, prov.nombre, prov.apellido " +
                     "ORDER BY " +
                     "   reposicionesAprobadas DESC " +
-                    "LIMIT 3",
+                    "LIMIT 5",
             nativeQuery = true)
     List<ProductoDTO> obtenerTop5ProveedoresConReposicionesYCalificaciones();
 
 
+    @Query(value =
+            "SELECT " +
+                    "   p.idproductos, " +
+                    "   p.nombre AS nombre, " +
+                    "   SUM(CASE WHEN r.aprobar = 'aprobado' THEN r.cantidad ELSE 0 END) AS cantidadAprobada " +
+                    "FROM " +
+                    "   dogless.productos p " +
+                    "JOIN " +
+                    "   dogless.reposicion r ON r.idproductos = p.idproductos " +
+                    "GROUP BY " +
+                    "   p.idproductos, p.nombre " +
+                    "ORDER BY " +
+                    "   cantidadAprobada DESC " +
+                    "LIMIT 10",
+            nativeQuery = true)
+    List<ProductoDTO> obtenerTop10ProductosMasImportados();
 
     @Query(value =
             "SELECT " +
@@ -564,7 +580,7 @@ public interface ProductRepository extends JpaRepository<Producto, Integer>{
                     "   prov.idproveedores, prov.nombre, prov.apellido " +
                     "ORDER BY " +
                     "   promedioCalificacionProveedor ASC " +
-                    "LIMIT 3",
+                    "LIMIT 5",
             nativeQuery = true)
     List<ProductoDTO> obtenerTop3ProveedoresConPeoresValoraciones();
 

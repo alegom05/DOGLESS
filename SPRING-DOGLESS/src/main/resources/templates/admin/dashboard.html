@@ -14,6 +14,44 @@
             type="image/x-icon"
     />
     <style>
+
+      .semestre-buttons {
+        background-color: #ffffff; /* Fondo blanco similar a los botones del canvas */
+        border: 1px solid #ced4da; /* Borde suave y delgado */
+        border-radius: 0.375rem; /* Bordes ligeramente redondeados */
+        padding: 8px 20px; /* Espaciado interno */
+        font-size: 14px; /* Tamaño de fuente acorde al diseño */
+        color: #8f8d8d; /* Color del texto similar */
+        cursor: pointer;
+        text-align: center;
+        display: inline-block; /* Para mantener tamaño adecuado */
+        box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05); /* Sombra sutil */
+        transition: all 0.3s ease; /* Transición suave */
+      }
+
+      .semestre-buttons:hover {
+        background-color: #f8f9fa; /* Color más claro al pasar el mouse */
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Sombra más notoria */
+      }
+
+      /* Estilo para el canvas */
+      .canvas-container {
+        position: relative;
+        width: 100%;
+        height: 263px; /* Ajusta según el tamaño que necesites */
+        opacity: 1;
+        transition: opacity 0.5s ease-in-out; /* Agregamos el efecto de desvanecimiento */
+      }
+
+      /* Clase para ocultar el canvas durante el cambio */
+      .fade-out {
+        opacity: 0;
+      }
+
+      .fade-in {
+        opacity: 1;
+      }
+
       /* Estilo para la nota debajo de la gráfica */
       .nota {
         font-size: 12px; /* Tamaño pequeño */
@@ -89,10 +127,7 @@
                         <div class="col col-stats ms-3 ms-sm-0">
                           <div class="numbers">
                             <p class="card-category">Agentes Totales</p>
-                            <!--
                             <h4 class="card-title">[[${agentesTotales}]]</h4>
-                            -->
-                            <h4 class="card-title">[[${ordenes6}]]</h4>
                           </div>
                         </div>
                       </div>
@@ -207,7 +242,14 @@
                       <div class="card-title">Distribución de órdenes del semestre</div>
                     </div>
                     <div class="card-body">
-                      <div class="chart-container">
+                      <!-- Botones para cambiar entre los semestres -->
+                      <div>
+                        <button class="semestre-buttons" onclick="cargarPrimerSemestre()">Primer Semestre (Enero - Junio)</button>
+                        <button class="semestre-buttons" onclick="cargarSegundoSemestre()">Segundo Semestre (Julio - Diciembre)</button>
+                      </div>
+
+                      <!-- Gráfico de órdenes por semestre -->
+                      <div class="canvas-container" style="text-align: center;">
                         <canvas id="ordenesPorSemestre"></canvas>
                       </div>
                     </div>
@@ -284,19 +326,23 @@
           5.Distribucionde ordenes del semestre
           6.Distribucion de ordenes por zona*/
 
-        //Top 10 producto mas importados:
-        var ctx1 = document.getElementById('productosMasImportados').getContext('2d');
+        // Variables provenientes del backend (se utilizan variables Thymeleaf para obtener los datos)
+        var etiquetasProductos = /*[[${etiquetasProductosMasImportado}]]*/ [];
+        var cantidadesAprobadas = /*[[${cantidadProductosMasImportado}]]*/ [];
 
-        //falta
-        var datosProductosImportados = {
-          labels: ['Hogar','Tecnologia', 'Joyeria', 'Juguetes', 'Mascotas'],
-          datasets: [{
-            label: 'Productos vendidos por categoria',
-            data: [83, 178, 98, 58, 64],
-            backgroundColor: 'rgba(30, 197, 255, 0.8)',
-            borderColor: 'rgba(30, 140, 255, 0.8)',
-            borderWidth: 1
-          }]
+        // Configuración de la gráfica
+        var ctx = document.getElementById('productosMasImportados').getContext('2d');
+        var chartData = {
+          labels: etiquetasProductos, // Etiquetas de los productos
+          datasets: [
+            {
+              label: 'Cantidad aprobada',
+              data: cantidadesAprobadas, // Datos de cantidades aprobadas
+              backgroundColor: 'rgba(30, 197, 255, 0.8)',
+              borderColor: 'rgba(30, 140, 255, 0.8)',
+              borderWidth: 1
+            }
+          ]
         };
         var verticalChartOptions = {
           scales: {
@@ -305,11 +351,24 @@
             }
           }
         };
-        new Chart(ctx1, {
+        new Chart(ctx, {
           type: 'bar', // Tipo 'bar' para gráfico de barras verticales
-          data: datosProductosImportados,
+          data: chartData,
           options: verticalChartOptions
         });
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
         //Distribucion de usuarios registrados:
@@ -483,32 +542,40 @@
 
 
 
-        //GRAFICA 5: Ordenes por semestre:
+        // Variables con los datos de los semestres (estos datos los pasas desde Thymeleaf)
+        var OrdenesPrimerSemestre = /*[[${ListaCantidadPrimerSemestre}]]*/ [];
+        var OrdenesSegundoSemestre = /*[[${ListaCantidadSegundoSemestre}]]*/ [];
 
-        // Gráfica de órdenes por semestre corregida:
+        // Configuración básica de la gráfica
         var ctxOrdenesPorSemestre = document.getElementById('ordenesPorSemestre').getContext('2d');
+        var chart; // Variable global para el gráfico
 
-        // Definir las variables desde Thymeleaf para cada mes
-
-        var ordenesEnero = parseInt([[${ordenes1}]]);
-        var ordenesFebrero = parseInt([[${ordenes2}]]);
-        var ordenesMarzo = parseInt([[${ordenes3}]]);
-        var ordenesAbril = parseInt([[${ordenes4}]]);
-        var ordenesMayo = parseInt([[${ordenes5}]]);
-        var ordenesJunio = parseInt([[${ordenes6}]]);
-
-        var datosOrdenesPorSemestre = {
-          labels: ['Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre'],
+        // Datos iniciales del gráfico (primer semestre)
+        var datosPrimerSemestre = {
+          labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio'],
           datasets: [{
-            label: 'Año 2024',
-            data: [ordenesEnero, ordenesFebrero, ordenesMarzo, ordenesAbril, ordenesMayo, ordenesJunio],
+            label: 'Primer Semestre (Enero - Junio)',
+            data: OrdenesPrimerSemestre,
             backgroundColor: 'rgba(255, 154, 30, 0.8)',
             borderColor: 'rgba(255, 125, 30, 0.8)',
             borderWidth: 1
           }]
         };
 
-        var chartOptionsOrdenesPorSemestre = {
+        // Datos del segundo semestre
+        var datosSegundoSemestre = {
+          labels: ['Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+          datasets: [{
+            label: 'Segundo Semestre (Julio - Diciembre)',
+            data: OrdenesSegundoSemestre,
+            backgroundColor: 'rgba(30, 197, 255, 0.8)',
+            borderColor: 'rgba(30, 140, 255, 0.8)',
+            borderWidth: 1
+          }]
+        };
+
+        // Opciones del gráfico
+        var chartOptions = {
           scales: {
             y: {
               beginAtZero: true
@@ -516,11 +583,62 @@
           }
         };
 
-        new Chart(ctxOrdenesPorSemestre, {
-          type: 'bar',
-          data: datosOrdenesPorSemestre,
-          options: chartOptionsOrdenesPorSemestre
-        });
+        // Crear el gráfico por primera vez con el primer semestre
+        window.onload = function() {
+          chart = new Chart(ctxOrdenesPorSemestre, {
+            type: 'bar',
+            data: datosPrimerSemestre, // Cargar el primer semestre al principio
+            options: chartOptions
+          });
+        };
+
+        // Función para cargar el primer semestre
+        function cargarPrimerSemestre() {
+          // Primero, asegurarnos de que la animación de desvanecimiento se aplique de nuevo
+          var canvasContainer = document.querySelector('.canvas-container');
+
+          // Eliminar clases de animación anteriores
+          canvasContainer.classList.remove('fade-in', 'fade-out');
+
+          // Aplica el desvanecimiento (fade-out)
+          canvasContainer.classList.add('fade-out');
+
+          // Espera un tiempo para actualizar el gráfico después de que la animación de desvanecimiento termine
+          setTimeout(function() {
+            // Cambiar los datos del gráfico a primer semestre
+            chart.data = datosPrimerSemestre;
+            chart.update(); // Actualizar el gráfico
+
+            // Aplica la animación de desvanecimiento (fade-in)
+            canvasContainer.classList.remove('fade-out');
+            canvasContainer.classList.add('fade-in');
+          }, 500); // Espera el tiempo del desvanecimiento (500ms)
+        }
+
+        // Función para cargar el segundo semestre
+        function cargarSegundoSemestre() {
+          // Primero, asegurarnos de que la animación de desvanecimiento se aplique de nuevo
+          var canvasContainer = document.querySelector('.canvas-container');
+
+          // Eliminar clases de animación anteriores
+          canvasContainer.classList.remove('fade-in', 'fade-out');
+
+          // Aplica el desvanecimiento (fade-out)
+          canvasContainer.classList.add('fade-out');
+
+          // Espera un tiempo para actualizar el gráfico después de que la animación de desvanecimiento termine
+          setTimeout(function() {
+            // Cambiar los datos del gráfico a segundo semestre
+            chart.data = datosSegundoSemestre;
+            chart.update(); // Actualizar el gráfico
+
+            // Aplica la animación de desvanecimiento (fade-in)
+            canvasContainer.classList.remove('fade-out');
+            canvasContainer.classList.add('fade-in');
+          }, 500); // Espera el tiempo del desvanecimiento (500ms)
+        }
+
+
 
 
         //GRAFICA 6:Ordenes por ZONA:

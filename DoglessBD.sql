@@ -376,9 +376,10 @@ VALUES
 ('En Aduanas', '2024-09-10', 'Calle Norte 5, Lima', 1350.50, 'tarjeta', 55),
 -- Orden 11 para el usuario 32
 ('En Aduanas', '2024-09-10', 'Calle Oeste 10, Lima', 1350.50, 'tarjeta', 32),
--- Orden 11 para el usuario 32
-('Recibido', '2024-06-09', 'Av. Sur 9, Lima', 1199.99, 'tarjeta', 11);
-
+-- Orden 11 para el usuario 11
+('Recibido', '2024-06-09', 'Av. Sur 9, Lima', 1199.99, 'tarjeta', 11),
+-- Orden 12 para el usuario 11
+('Recibido', '2024-01-09', 'Av. Sur 9, Lima', 50.0, 'tarjeta', 11);
 -- -----------------------------------------------------
 -- Table `dogless`.`proveedores`
 -- -----------------------------------------------------
@@ -623,6 +624,7 @@ INSERT INTO `dogless`.`reposicion` (`idreposicion`, `cantidad`, `fecha_pedido`, 
 INSERT INTO `dogless`.`reposicion` (`idreposicion`, `cantidad`, `fecha_pedido`, `aprobar`, `idproductos`, `idzonas`) VALUES ('47', '85', '2024-10-16', 'aprobado', '8', '2');
 INSERT INTO `dogless`.`reposicion` (`idreposicion`, `cantidad`, `fecha_pedido`, `aprobar`, `idproductos`, `idzonas`) VALUES ('48', '110', '2024-10-17', 'aprobado', '8', '3');
 INSERT INTO `dogless`.`reposicion` (`idreposicion`, `cantidad`, `fecha_pedido`, `aprobar`, `idproductos`, `idzonas`) VALUES ('49', '75', '2024-10-18', 'aprobado', '8', '4');
+INSERT INTO `dogless`.`reposicion` (`idreposicion`, `cantidad`, `fecha_pedido`, `aprobar`, `idproductos`, `idzonas`) VALUES ('50', '10', '2024-1-18', 'aprobado', '15', '4');
 
 
 -- Insertar datos en la tabla `detallesorden`

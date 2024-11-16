@@ -27,5 +27,7 @@ public interface ProductoDTO {
     Integer getIdProveedores();
     Integer getComentariosNegativosProveedor();
 
+    Integer getCantidadAprobada();
+
     Integer getTotal_vendido();
 }
