@@ -1,130 +1,107 @@
 package com.example.springdogless.services;
 
-import com.example.springdogless.config.HuggingFaceConfig;
-import com.example.springdogless.entity.ChatMessage;
 import com.fasterxml.jackson.databind.JsonNode;
-import org.springframework.stereotype.Service;
-import org.springframework.http.*;
-import org.springframework.web.client.RestTemplate;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
-import java.time.LocalDateTime;
-import java.util.Collections;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class ChatbotService {
-    private final RestTemplate restTemplate;
-    private final HuggingFaceConfig huggingFaceConfig;
+
     private final ObjectMapper objectMapper;
-    private final OrderService orderService;
-    private final ComplaintBookService complaintBookService;
+    private final RestTemplate restTemplate;
+    private List<JsonNode> preguntasRespuestas;
 
-    // URL base de la API de Hugging Face
-    private static final String HF_API_URL = "https://api-inference.huggingface.co/models/";
+    // Inyectar propiedades desde application.properties
+    @Value("${huggingface.apiKey}")
+    private String apiKey;
 
-    public ChatbotService(RestTemplate restTemplate,
-                          HuggingFaceConfig huggingFaceConfig,
-                          ObjectMapper objectMapper,
-                          OrderService orderService,
-                          ComplaintBookService complaintBookService) {
-        this.restTemplate = restTemplate;
-        this.huggingFaceConfig = huggingFaceConfig;
+    @Value("${huggingface.model}")
+    private String model;
+
+    public ChatbotService(ObjectMapper objectMapper, RestTemplate restTemplate) {
         this.objectMapper = objectMapper;
-        this.orderService = orderService;
-        this.complaintBookService = complaintBookService;
+        this.restTemplate = restTemplate;
+        cargarPreguntasDesdeJson();
     }
 
-    public ChatMessage processMessage(String userId, String message) {
-        ChatMessage chatMessage = new ChatMessage();
-        chatMessage.setUserId(userId);
-        chatMessage.setMessage(message);
-        chatMessage.setTimestamp(LocalDateTime.now());
+    // Método para cargar preguntas desde el archivo JSON
+    private void cargarPreguntasDesdeJson() {
+        try (InputStream inputStream = getClass().getResourceAsStream("/preguntas_respuestas.json")) {
+            JsonNode root = objectMapper.readTree(inputStream);
+            preguntasRespuestas = new ArrayList<>();
+            root.get("preguntas_respuestas").forEach(preguntasRespuestas::add);
+        } catch (IOException e) {
+            e.printStackTrace();
+            preguntasRespuestas = new ArrayList<>(); // Lista vacía en caso de error
+        }
+    }
 
-        String response = callHuggingFaceAPI(message);
-        chatMessage.setResponse(response);
+    // Método para buscar respuesta adaptada (JSON o IA)
+    public String buscarRespuestaAdaptada(String mensaje) {
+        // Primero busca una respuesta predefinida en el JSON
+        String respuesta = buscarRespuesta(mensaje);
 
-        if (isOrderRequest(message)) {
-            return handleOrderGeneration(chatMessage);
-        } else if (isComplaintRequest(message)) {
-            return handleComplaintBook(chatMessage);
+        // Si no encuentra una respuesta, llama a la IA
+        if (respuesta == null) {
+            respuesta = callHuggingFaceAPI(mensaje);
         }
 
-        return chatMessage;
+        return respuesta;
     }
 
-    private String callHuggingFaceAPI(String message) {
-        String url = HF_API_URL + huggingFaceConfig.getModel();
+    // Método para buscar una respuesta en el JSON
+    public String buscarRespuesta(String mensaje) {
+        String mensajeNormalizado = mensaje.toLowerCase();
+
+        // Busca coincidencias con las claves del JSON
+        for (JsonNode entry : preguntasRespuestas) {
+            String clave = entry.get("clave").asText();
+            if (mensajeNormalizado.contains(clave)) {
+                return entry.get("respuesta").asText();
+            }
+        }
+        return null; // Si no hay coincidencias, devuelve null
+    }
+
+    // Método para llamar al modelo de Hugging Face
+    private String callHuggingFaceAPI(String mensaje) {
+        String url = String.format("https://api-inference.huggingface.co/models/%s", model);
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.setBearerAuth(huggingFaceConfig.getApiKey());
+        headers.setBearerAuth(apiKey); // Usar la API Key configurada en application.properties
 
-        // Formato del prompt para Mistral
-        String prompt = String.format("""
-        <s>[INST] Eres un asistente virtual de comercio electrónico. 
-        Ayudas con consultas generales, órdenes de compra y libro de reclamaciones.
-        
-        Consulta del usuario: %s [/INST]</s>
-        """, message);
+        String prompt = String.format("Pregunta del usuario: %s", mensaje);
 
         ObjectNode requestBody = objectMapper.createObjectNode();
         requestBody.put("inputs", prompt);
-        requestBody.put("temperature", 0.7);
-        requestBody.put("max_length", 500);
-        requestBody.put("top_p", 0.95);
 
         HttpEntity<String> requestEntity = new HttpEntity<>(requestBody.toString(), headers);
 
         try {
-            ResponseEntity<String> response = restTemplate.exchange(
-                    url,
-                    HttpMethod.POST,
-                    requestEntity,
-                    String.class
-            );
+            ResponseEntity<String> response = restTemplate.postForEntity(url, requestEntity, String.class);
 
-            // Cambiar la deserialización para leer un array en lugar de un solo objeto
             JsonNode responseBody = objectMapper.readTree(response.getBody());
             if (responseBody.isArray() && responseBody.size() > 0) {
-                // Acceder al primer elemento del array
-                return responseBody.get(0).path("generated_text").asText()
-                        .replace(prompt, "")  // Remover el prompt de la respuesta
-                        .trim();
+                return responseBody.get(0).path("generated_text").asText().trim();
             } else {
-                return "Lo siento, no se pudo procesar la respuesta del chatbot.";
+                return "Lo siento, no puedo procesar tu mensaje en este momento.";
             }
         } catch (Exception e) {
             e.printStackTrace();
-            return "Lo siento, ha ocurrido un error al procesar tu mensaje. Por favor, intenta nuevamente.";
+            return "Ocurrió un error al procesar tu solicitud.";
         }
-    }
-
-
-    private boolean isOrderRequest(String message) {
-        String lowercaseMessage = message.toLowerCase();
-        return lowercaseMessage.contains("comprar") ||
-                lowercaseMessage.contains("orden") ||
-                lowercaseMessage.contains("pedido");
-    }
-
-    private boolean isComplaintRequest(String message) {
-        String lowercaseMessage = message.toLowerCase();
-        return lowercaseMessage.contains("reclamo") ||
-                lowercaseMessage.contains("queja") ||
-                lowercaseMessage.contains("libro de reclamaciones");
-    }
-
-    private ChatMessage handleOrderGeneration(ChatMessage chatMessage) {
-        chatMessage.setType(ChatMessage.MessageType.ORDER_GENERATION);
-        // Implementar lógica específica para generar órdenes
-        return chatMessage;
-    }
-
-    private ChatMessage handleComplaintBook(ChatMessage chatMessage) {
-        chatMessage.setType(ChatMessage.MessageType.COMPLAINT_BOOK);
-        // Implementar lógica específica para el libro de reclamaciones
-        return chatMessage;
     }
 }
