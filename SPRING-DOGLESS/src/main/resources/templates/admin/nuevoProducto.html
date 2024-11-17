@@ -113,13 +113,10 @@
 
                                    <div class="mb-3">
                                      <label for="precio" class="form-label">Precio</label>
-                                     <input type="number" class="form-control" id="precio" th:field="*{precio}"
-                                            min="0" step="0.01" placeholder=""
-                                            th:classappend="${#fields.hasErrors('precio') ? 'is-invalid' : ''}">
-                                     <div class="invalid-feedback" id="precioError" th:if="${#fields.hasErrors('precio')}">
-                                       <span th:errors="*{precio}">El precio no puede ser negativo.</span>
-                                     </div>
+                                     <input type="number" class="form-control" id="precio" th:field="*{precio}" min="0" step="0.01">
+                                     <div class="invalid-feedback" id="precioError">El precio debe ser positivo.</div>
                                    </div>
+
 
                                    <div class="mb-3">
                                      <label for="modelos" class="form-label">Modelo</label>
@@ -298,14 +295,24 @@
         });
 
         // Validar que solo se ingresen valores positivos en el campo de precio
-        document.addEventListener("input", function(event) {
+        document.addEventListener("input", function (event) {
           if (event.target && event.target.id === "precio") {
-            // Asegurar que solo se ingresen valores numéricos positivos
-            if (event.target.value < 0) {
-              event.target.value = ''; // Borra el valor si es negativo
+            const precioInput = event.target;
+            const precioError = document.getElementById("precioError");
+
+            if (precioInput.value < 0) {
+              precioInput.classList.add("is-invalid"); // Agrega la clase de error al input
+              precioInput.classList.remove("is-valid"); // Quita la clase de éxito
+              precioError.style.display = "block"; // Muestra el mensaje de error
+            } else {
+              precioInput.classList.remove("is-invalid"); // Quita la clase de error
+              precioInput.classList.add("is-valid"); // Agrega la clase de éxito
+              precioError.style.display = "none"; // Oculta el mensaje de error
             }
           }
         });
+
+
 
         document.addEventListener("input", function(event) {
           if (event.target && event.target.id === "costoenvio") {

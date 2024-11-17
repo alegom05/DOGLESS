@@ -899,11 +899,10 @@ public class AdminController {
 
     @PostMapping("/guardarProducto")
     public String guardarProducto(@ModelAttribute @Valid ProductoForm productoForm, BindingResult result, RedirectAttributes attr) {
-        if (result.hasErrors()) {
-            attr.addFlashAttribute("error", "Hay errores en el formulario");
+        if (productoForm.getCostoenvio() == null) {
+            attr.addFlashAttribute("error", "El costo de envío no puede estar vacío");
             return "redirect:/admin/nuevoProducto";
         }
-
         // Validación adicional para valores no permitidos
         if (productoForm.getPrecio() < 0 || productoForm.getCostoenvio() < 0) {
             attr.addFlashAttribute("error", "El precio o costo de envío no pueden ser negativos");
@@ -912,6 +911,10 @@ public class AdminController {
         List<String> categoriasValidas = Arrays.asList("Laptop", "Celular", "Periferico", "Almacenamiento", "Electrodoméstico");
         if (!categoriasValidas.contains(productoForm.getCategoria())) {
             attr.addFlashAttribute("error", "La categoría seleccionada no es válida");
+            return "redirect:/admin/nuevoProducto";
+        }
+        if (result.hasErrors()) {
+            attr.addFlashAttribute("error", "Hay errores en el formulario");
             return "redirect:/admin/nuevoProducto";
         }
         Producto producto = new Producto();
