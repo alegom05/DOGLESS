@@ -57,9 +57,14 @@
     cursor: pointer;
     color: #ffffff;
     box-shadow: -5px 5px 20px rgba(69, 65, 78, 0.21); }
+    .custom-toggle .custom-icon {
+      width: 80%; /* Ajusta el tamaño según sea necesario */
+      height:80%;
+      object-fit: cover; /* Asegura que la imagen se ajuste correctamente */
+    }
     .custom-template .custom-toggle i {
       font-size: 20px;
-      animation: 1.3s spin linear infinite; }
+       }
   .custom-template .title {
     padding: 15px;
     text-align: left;

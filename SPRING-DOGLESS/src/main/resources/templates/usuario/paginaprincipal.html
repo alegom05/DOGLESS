@@ -40,6 +40,7 @@
   <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
   <link rel="stylesheet" href="/assets/css/plugins.min.css" />
   <link rel="stylesheet" href="/assets/css/kaiadmin.min.css" />
+  <link rel="stylesheet" href="/assets/css/demo.css" />
 
 </head>
   <body>
@@ -199,6 +200,7 @@
 
         
       </div>
+      <div th:replace="~{usuario/fragments/buttonChatbot :: fragment}"></div>
     </div>
     <!--   Core JS Files   -->
     <script src="/assets/js/core/jquery-3.7.1.min.js"></script>
@@ -211,8 +213,10 @@
     <script src="/assets/js/plugin/datatables/datatables.min.js"></script>
     <!-- Kaiadmin JS -->
     <script src="/assets/js/kaiadmin.min.js"></script>
-    <!-- Kaiadmin DEMO methods, don't include it in your project! -->
-    <script src="/assets/js/setting-demo2.js"></script>
+
+    <!-- Kaiadmin DEMO methods, para el chatbot! -->
+    <script src="/assets/js/setting-demo.js"></script>
+    <script src="/assets/js/demo.js"></script>
     <script>
       $(document).ready(function () {
         $("#basic-datatables").DataTable({
