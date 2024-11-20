@@ -18,14 +18,16 @@ public class ChatController {
         this.chatbotService = chatbotService;
     }
 
+    @GetMapping("/inicio")
+    public ResponseEntity<String> obtenerMensajeInicial() {
+        String mensajeInicial = chatbotService.getMensajeInicial();
+        return ResponseEntity.ok(mensajeInicial);
+    }
+
     @PostMapping("/message")
     public ResponseEntity<String> processMessage(@RequestBody Map<String, String> request) {
-        // Obtén el mensaje enviado en el cuerpo del JSON
         String message = request.get("message");
-
-        // Pasa el mensaje al servicio para obtener la respuesta
         String response = chatbotService.procesarMensaje(message);
-
         return ResponseEntity.ok(response);
     }
 }
