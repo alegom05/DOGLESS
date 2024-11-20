@@ -13,7 +13,6 @@ import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,9 +21,8 @@ public class ChatbotService {
 
     private final ObjectMapper objectMapper;
     private final RestTemplate restTemplate;
-    private List<JsonNode> preguntasRespuestas;
+    private List<JsonNode> menuOpciones;
 
-    // Inyectar propiedades desde application.properties
     @Value("${huggingface.apiKey}")
     private String apiKey;
 
@@ -37,86 +35,133 @@ public class ChatbotService {
     @Value("${chatbot.horario.fin}")
     private String horarioFin;
 
+    private String estadoActual = "MENU"; // Estado inicial
+
     public ChatbotService(ObjectMapper objectMapper, RestTemplate restTemplate) {
         this.objectMapper = objectMapper;
         this.restTemplate = restTemplate;
-        cargarPreguntasDesdeJson();
+        cargarMenuDesdeJson();
     }
 
-    // Método para cargar preguntas desde el archivo JSON
-    private void cargarPreguntasDesdeJson() {
+    private void cargarMenuDesdeJson() {
         try (InputStream inputStream = getClass().getResourceAsStream("/preguntas_respuestas.json")) {
             JsonNode root = objectMapper.readTree(inputStream);
-            preguntasRespuestas = new ArrayList<>();
-            root.get("preguntas_respuestas").forEach(preguntasRespuestas::add);
+            menuOpciones = new ArrayList<>();
+            root.get("menu_opciones").forEach(menuOpciones::add);
         } catch (IOException e) {
             e.printStackTrace();
-            preguntasRespuestas = new ArrayList<>(); // Lista vacía en caso de error
+            menuOpciones = new ArrayList<>();
         }
     }
 
-    // Método para manejar la respuesta adaptada
+
     public String procesarMensaje(String mensaje) {
-        if (dentroHorarioLaboral()) {
-            // Responder con la IA o las respuestas predefinidas
-            return buscarRespuestaAdaptada(mensaje);
-        } else {
-            return "El agente de compras no está disponible en este momento. Continuemos con el autoservicio.";
+        // Siempre inicia con el menú principal
+        if (estadoActual.equals("MENU") || mensaje.equalsIgnoreCase("regresar")) {
+            return manejarMenuPrincipal(mensaje);
         }
-    }
 
-    // Verificar si está dentro del horario laboral
-    private boolean dentroHorarioLaboral() {
-        LocalTime inicio = LocalTime.parse(horarioInicio);
-        LocalTime fin = LocalTime.parse(horarioFin);
-        LocalTime ahora = LocalTime.now();
-
-        return ahora.isAfter(inicio) && ahora.isBefore(fin);
-    }
-
-    // Método para buscar respuesta adaptada (JSON o IA)
-    public String buscarRespuestaAdaptada(String mensaje) {
-        String respuesta = buscarRespuesta(mensaje);
-
-        if (respuesta == null) {
-            if (mensaje.toLowerCase().contains("orden de compra")) {
+        // Según el estado actual, maneja la interacción
+        switch (estadoActual) {
+            case "CONSULTA":
+                return manejarConsulta(mensaje);
+            case "ORDEN":
                 return generarOrdenDeCompra();
-            } else if (mensaje.toLowerCase().contains("libro de reclamaciones")) {
+            case "RECLAMO":
                 return manejarReclamaciones();
-            } else {
-                respuesta = callHuggingFaceAPI(mensaje);
+            default:
+                return "Ocurrió un error. Por favor, reinicia la conversación.";
+        }
+    }
+
+    private String manejarMenuPrincipal(String mensaje) {
+        // Respuesta siempre comienza con el mensaje de introducción
+        String introduccion = "Hola, soy Paola. ¿En qué puedo ayudarte? Elige una de las siguientes opciones:\n"
+                + "1. Quiero hacer una consulta\n"
+                + "2. Quiero generar una orden de compra\n"
+                + "3. Quiero generar un reclamo";
+
+        // Procesar la selección del usuario
+        if (mensaje.equals("1")) {
+            estadoActual = "CONSULTA";
+            return introduccion + "\n\nHaz tu consulta a continuación:";
+        } else if (mensaje.equals("2")) {
+            estadoActual = "ORDEN";
+            return introduccion + "\n\nA continuación se hará tu orden de compra:\n" + generarOrdenDeCompra();
+        } else if (mensaje.equals("3")) {
+            estadoActual = "RECLAMO";
+            return introduccion + "\n\nA continuación escribe tu reclamo:\n" + manejarReclamaciones();
+        } else {
+            // Si el mensaje no corresponde a una opción válida, mantén el menú inicial
+            estadoActual = "MENU";
+            return introduccion;
+        }
+    }
+
+    private String manejarConsulta(String mensaje) {
+        if (mensaje.equalsIgnoreCase("regresar")) {
+            estadoActual = "MENU";
+            return manejarMenuPrincipal(mensaje);
+        }
+
+        // Consultar a la IA para interpretar el mensaje
+        String consultaInterpretada = callHuggingFaceAPI(mensaje);
+
+        // Buscar coincidencia en el archivo JSON usando la interpretación de la IA
+        String respuestaPredefinida = buscarRespuestaEnJson(consultaInterpretada);
+        if (respuestaPredefinida != null) {
+            return respuestaPredefinida + "\n\nEscribe 'regresar' para volver al menú principal.";
+        }
+
+        // Si no encuentra coincidencia, devuelve un mensaje indicando ambigüedad
+        return "Lo siento, no entiendo tu pregunta. Por favor, intenta reformularla o escribe 'regresar' para volver al menú principal.";
+    }
+
+
+
+    private String buscarRespuestaEnJson(String mensaje) {
+        if (menuOpciones == null || menuOpciones.isEmpty()) {
+            return null; // No hay datos en el archivo JSON
+        }
+
+        for (JsonNode opcion : menuOpciones) {
+            if (opcion.has("respuestas")) {
+                for (JsonNode respuesta : opcion.get("respuestas")) {
+                    String clave = respuesta.get("clave").asText().toLowerCase();
+                    if (mensaje.toLowerCase().contains(clave)) {
+                        return respuesta.get("respuesta").asText(); // Retornar la respuesta predefinida
+                    }
+                }
             }
         }
 
-        return respuesta;
+        return null; // No se encontró coincidencia
     }
 
-    // Método para buscar una respuesta en el JSON
-    public String buscarRespuesta(String mensaje) {
-        String mensajeNormalizado = mensaje.toLowerCase();
 
-        for (JsonNode entry : preguntasRespuestas) {
-            String clave = entry.get("clave").asText();
-            if (mensajeNormalizado.contains(clave)) {
-                return entry.get("respuesta").asText();
-            }
+
+
+    private String getIntroduccion() {
+        return "Hola, soy Paola. ¿En qué puedo ayudarte? Elige una de las siguientes opciones:";
+    }
+
+    private String getMenuOpciones() {
+        StringBuilder menu = new StringBuilder();
+        for (JsonNode opcion : menuOpciones) {
+            menu.append("\n").append(opcion.get("opcion").asText()).append(". ").append(opcion.get("descripcion").asText());
         }
-        return null;
+        return menu.toString();
     }
 
-    // Método para manejar reclamaciones
     private String manejarReclamaciones() {
         return "Puedes acceder a nuestro libro de reclamaciones virtual en este enlace: [Libro de Reclamaciones Virtual].";
     }
 
-    // Método para generar una orden de compra
     private String generarOrdenDeCompra() {
-        // Lógica simulada para generar una orden
         String numeroOrden = "ORD-" + System.currentTimeMillis();
         return String.format("Tu orden de compra ha sido generada exitosamente. Número de orden: %s.", numeroOrden);
     }
 
-    // Método para llamar al modelo de Hugging Face
     private String callHuggingFaceAPI(String mensaje) {
         String url = String.format("https://api-inference.huggingface.co/models/%s", model);
 
@@ -124,7 +169,7 @@ public class ChatbotService {
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.setBearerAuth(apiKey);
 
-        String prompt = String.format("Pregunta del usuario: %s", mensaje);
+        String prompt = String.format("Interpreta la pregunta del usuario: %s", mensaje);
 
         ObjectNode requestBody = objectMapper.createObjectNode();
         requestBody.put("inputs", prompt);
@@ -138,11 +183,13 @@ public class ChatbotService {
             if (responseBody.isArray() && responseBody.size() > 0) {
                 return responseBody.get(0).path("generated_text").asText().trim();
             } else {
-                return "Lo siento, no puedo procesar tu mensaje en este momento.";
+                return mensaje; // Si la IA no genera una respuesta, usar el mensaje original
             }
         } catch (Exception e) {
             e.printStackTrace();
-            return "Ocurrió un error al procesar tu solicitud.";
+            return mensaje; // En caso de error, usar el mensaje original
         }
     }
+
+
 }

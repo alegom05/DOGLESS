@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("/api/chat")
 public class ChatController {
@@ -17,13 +19,13 @@ public class ChatController {
     }
 
     @PostMapping("/message")
-    public ResponseEntity<String> processMessage(@RequestBody String message) {
-        String respuesta = chatbotService.buscarRespuestaAdaptada(message);
+    public ResponseEntity<String> processMessage(@RequestBody Map<String, String> request) {
+        // Obtén el mensaje enviado en el cuerpo del JSON
+        String message = request.get("message");
 
-        if (respuesta == null) {
-            respuesta = "Lo siento, no entiendo tu pregunta. ¿Puedes reformularla?";
-        }
+        // Pasa el mensaje al servicio para obtener la respuesta
+        String response = chatbotService.procesarMensaje(message);
 
-        return ResponseEntity.ok(respuesta);
+        return ResponseEntity.ok(response);
     }
 }
