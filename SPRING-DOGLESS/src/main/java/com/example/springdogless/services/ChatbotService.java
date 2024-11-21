@@ -43,6 +43,12 @@ public class ChatbotService {
         cargarMenuDesdeJson();
     }
 
+    //Ojo con esto
+    public String getMensajeInicial() {
+        return manejarMenuPrincipal(""); // Devuelve el menú inicial
+    }
+
+
     private void cargarMenuDesdeJson() {
         try (InputStream inputStream = getClass().getResourceAsStream("/preguntas_respuestas.json")) {
             JsonNode root = objectMapper.readTree(inputStream);
@@ -76,7 +82,7 @@ public class ChatbotService {
 
     private String manejarMenuPrincipal(String mensaje) {
         // Respuesta siempre comienza con el mensaje de introducción
-        String introduccion = "Hola, soy Paola. ¿En qué puedo ayudarte? Elige una de las siguientes opciones:\n"
+        String introduccion = "Hola, soy Dogbot. ¿En qué puedo ayudarte? Elige una de las siguientes opciones:\n"
                 + "1. Quiero hacer una consulta\n"
                 + "2. Quiero generar una orden de compra\n"
                 + "3. Quiero generar un reclamo";
@@ -139,10 +145,8 @@ public class ChatbotService {
     }
 
 
-
-
     private String getIntroduccion() {
-        return "Hola, soy Paola. ¿En qué puedo ayudarte? Elige una de las siguientes opciones:";
+        return "Hola, soy Dogbot. ¿En qué puedo ayudarte? Elige una de las siguientes opciones:";
     }
 
     private String getMenuOpciones() {

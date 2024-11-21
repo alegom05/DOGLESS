@@ -1,26 +1,135 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
     <head>
+
+
     </head>
     <body>
         <div th:fragment="fragment">
-            <!-- floating boton chatbot -->
             <div class="custom-template">
                 <div class="title">DogBot</div>
                 <div class="custom-content">
-
-                    <!--
-
-                   aquí agrega contenido para el chat bot o en el interior de los div de abajo
-                    <div class="switcher">
-
-                    </div> -->
+                    <!-- Chat display -->
+                    <div class="chat-box" id="chat-box">
+                        <!-- Mensajes serán inyectados aquí -->
+                    </div>
+                    <!-- Input area -->
+                    <div class="chat-input">
+                        <input type="text" id="user-message" placeholder="Escribe tu mensaje aquí..." />
+                        <button id="send-button">Enviar</button>
+                    </div>
                 </div>
+                <!-- Toggle button to show/hide chatbot -->
                 <div class="custom-toggle">
                     <img src="/assets/img/favicon.ico" alt="Custom Icon" class="custom-icon">
                 </div>
             </div>
+
+
+
+            <script>
+                console.log("Archivo chatbot.js cargado correctamente.");
+
+                document.addEventListener("DOMContentLoaded", function () {
+                    console.log("DOM completamente cargado y procesado."); // Log inicial
+
+                    const chatBox = document.getElementById("chat-box");
+                    const userMessageInput = document.getElementById("user-message");
+                    const sendButton = document.getElementById("send-button");
+
+                    if (!chatBox || !userMessageInput || !sendButton) {
+                        console.error("No se encontraron todos los elementos necesarios. Verifica el HTML.");
+                        return; // Salir si no se encuentran los elementos
+                    }
+
+                    console.log("Elementos necesarios encontrados.");
+
+                    // Cargar el mensaje inicial
+                    fetch("/api/chat/inicio")
+                        .then(response => {
+                            console.log("Respuesta recibida del servidor. Status:", response.status);
+
+                            if (!response.ok) {
+                                console.error(`Error HTTP al llamar a /api/chat/inicio. Status: ${response.status}`);
+                                throw new Error(`HTTP error! status: ${response.status}`);
+                            }
+
+                            return response.text(); // Obtener el texto de la respuesta
+                        })
+                        .then(message => {
+                            console.log("Mensaje inicial recibido desde el servidor:", message);
+
+                            const botMessage = document.createElement("div");
+                            botMessage.innerHTML = `<strong>DogBot:</strong> ${message}`;
+                            chatBox.appendChild(botMessage);
+                            console.log("Mensaje inicial agregado al chat-box.");
+                        })
+                        .catch(error => {
+                            console.error("Error al cargar el mensaje inicial:", error);
+
+                            const errorMessage = document.createElement("div");
+                            errorMessage.innerHTML = `<strong>DogBot:</strong> Lo siento, ocurrió un error al cargar el mensaje inicial.`;
+                            chatBox.appendChild(errorMessage);
+                        });
+
+                    // Manejar el envío del mensaje
+                    sendButton.addEventListener("click", function () {
+                        const userMessage = userMessageInput.value.trim();
+
+                        if (!userMessage) {
+                            console.warn("No se puede enviar un mensaje vacío.");
+                            return;
+                        }
+
+                        console.log("Mensaje del usuario enviado:", userMessage);
+
+                        // Mostrar el mensaje del usuario en el chat
+                        const userMessageDiv = document.createElement("div");
+                        userMessageDiv.innerHTML = `<strong>Tú:</strong> ${userMessage}`;
+                        chatBox.appendChild(userMessageDiv);
+
+                        // Enviar el mensaje al backend
+                        fetch("/api/chat/message", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json"
+                            },
+                            body: JSON.stringify({ message: userMessage })
+                        })
+                            .then(response => {
+                                console.log("Respuesta del servidor recibida. Status:", response.status);
+
+                                if (!response.ok) {
+                                    console.error(`Error HTTP al llamar a /api/chat/message. Status: ${response.status}`);
+                                    throw new Error(`HTTP error! status: ${response.status}`);
+                                }
+
+                                return response.text();
+                            })
+                            .then(responseMessage => {
+                                console.log("Respuesta del bot recibida:", responseMessage);
+
+                                // Mostrar la respuesta del bot en el chat
+                                const botMessageDiv = document.createElement("div");
+                                botMessageDiv.innerHTML = `<strong>DogBot:</strong> ${responseMessage}`;
+                                chatBox.appendChild(botMessageDiv);
+                            })
+                            .catch(error => {
+                                console.error("Error al enviar el mensaje:", error);
+
+                                const errorMessage = document.createElement("div");
+                                errorMessage.innerHTML = `<strong>DogBot:</strong> Lo siento, ocurrió un error al enviar tu mensaje.`;
+                                chatBox.appendChild(errorMessage);
+                            });
+
+                        // Limpiar el campo de entrada del usuario
+                        userMessageInput.value = "";
+                    });
+                });
+            </script>
+
         </div>
 
     </body>
+
 </html>

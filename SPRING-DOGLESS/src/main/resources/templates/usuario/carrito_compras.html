@@ -111,10 +111,15 @@
 
       <div class="main-panel">
         <div th:replace="~{usuario/fragments/navbarheaderusuario :: fragment}"></div>
-        <!-- Cart Page Start -->
+
+          <!-- Cart Page Start -->
         <div class="container-fluid py-5">
+
             <div class="container py-5 d-flex flex-column min-vh-100">
+
                 <div class="page-header">
+                    <div th:replace="~{usuario/fragments/buttonChatbot :: fragment}"></div>
+
                     <h3 class="fw-bold mb-2">Mis compras</h3>
                     <ul class="breadcrumbs mb-1">
                         <li class="nav-home">
