@@ -39,19 +39,20 @@ public class ImageController {
             if (imagenBytes != null) {
                 return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(imagenBytes);
             } else {
-                // Carga la imagen por defecto desde el classpath
-                try {
-                    ClassPathResource imgFile = new ClassPathResource("static/assets/img/default.jpg");
-                    byte[] defaultImage = Files.readAllBytes(imgFile.getFile().toPath());
-                    return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(defaultImage);
-                } catch (IOException e) {
-                    // Manejo de errores al cargar la imagen
-                    return ResponseEntity.internalServerError().build();
+                // Si no tiene imagen, buscar la imagen del usuario con ID 59
+                Optional<Usuario> defaultUsuarioOptional = usuarioRepository.findById(59);
+                if (defaultUsuarioOptional.isPresent()) {
+                    byte[] defaultImage = defaultUsuarioOptional.get().getFotoperfil();
+                    if (defaultImage != null) {
+                        return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(defaultImage);
+                    }
                 }
+                // Si el usuario con ID 59 tampoco tiene imagen o no existe, devuelve un error
+                return ResponseEntity.noContent().build();
             }
         }
 
-        System.out.println("No se encontró producto con ID: " + id); // Agrega este log
+        System.out.println("No se encontró usuario con ID: " + id); // Agrega este log
         return ResponseEntity.notFound().build();
     }
 
