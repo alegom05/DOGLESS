@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <title>Guía de Usuarios</title>
+        <title>Chat</title>
         <meta
                 content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
                 name="viewport"
@@ -13,8 +13,7 @@
                 href="/assets/img/kaiadmin/favicon.ico"
                 type="image/x-icon"
         />
-        <link rel="icon" href="/assets/img/kaiadmin/favicon.ico" type="image/x-icon" />
-        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="/assets/css/style-SuperAdmin.css" rel="stylesheet">
         <script src="/assets/js/plugin/webfont/webfont.min.js"></script>
         <script>
             WebFont.load({
@@ -26,7 +25,7 @@
                         "Font Awesome 5 Brands",
                         "simple-line-icons",
                     ],
-                    urls: ["../assets/css/fonts.min.css"],
+                    urls: ["/assets/css/fonts.min.css"],
                 },
                 active: function () {
                     sessionStorage.fonts = true;
@@ -36,30 +35,36 @@
         <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
         <link rel="stylesheet" href="/assets/css/plugins.min.css" />
         <link rel="stylesheet" href="/assets/css/kaiadmin.min.css" />
-        <link rel="stylesheet" href="/assets/js/index.js" />
         <link rel="stylesheet" href="/assets/css/demo.css" />
+
     </head>
 
     <body>
         <div class="wrapper">
             <div th:replace="~{usuario/fragments/barralateralusuario :: body(activePage='chat')}"></div>
+
+
             <div class="main-panel">
                 <div th:replace="~{usuario/fragments/navbarheaderusuario :: fragment}"></div>
                 <div th:replace="~{usuario/fragments/buttonChatbot :: fragment}"></div>
+
+
                 <div class="container">
                     <div class="page-inner">
-                        <div class="page-header">
-                            <h3 class="fw-bold mb-3">Chat Pronto</h3>
-                            <input name="idusuario" id="idusuario" th:value="${session.usuario.id}" type="hidden" />
+                        <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
                         </div>
-
+                        <div class="card-head-row card-tools-still-right">
+                            <div class="card-title">Chat(En desarrollo)</div>
+                            <div class="card-tools">
+                            </div>
+                        </div>
                         <div class="container mt-5">
                             <div class="card">
                                 <div class="card-header bg-primary text-white">
                                     <h5>Chat Privado</h5>
                                 </div>
 
-                                <div class="card-body" id="chat-box" style="height: 400px; overflow-y: scroll; background-color: #f8f9fa;">
+                                <div class="card-body" id="live-chat-box" style="height: 400px; overflow-y: scroll; background-color: #f8f9fa;">
                                     <!-- Los mensajes se irán mostrando aquí -->
                                 </div>
 
@@ -88,7 +93,12 @@
         <script src="/assets/js/core/bootstrap.min.js"></script>
         <!-- jQuery Scrollbar -->
         <script src="/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
-        <!-- SockJS y STOMP -->
+        <!-- Datatables -->
+        <script src="/assets/js/plugin/datatables/datatables.min.js"></script>
+        <!-- Kaiadmin JS -->
+        <script src="/assets/js/kaiadmin.min.js"></script>
+        <!-- Kaiadmin DEMO methods, don't include it in your project! -->
+        <script src="/assets/js/setting-demo2.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.0/sockjs.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
         <script type="text/javascript">
@@ -106,7 +116,7 @@
             }
 
             function showMessage(message, isSentMessage) {
-                const chatBox = document.getElementById('chat-box');
+                const chatBox = document.getElementById('live-chat-box');
                 const messageElement = document.createElement('div'); // Usamos un div para más flexibilidad
 
                 // Aplicar las clases de Bootstrap dependiendo de si el mensaje fue enviado o recibido

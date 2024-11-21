@@ -51,6 +51,8 @@
       <div class="main-panel">
         <div th:replace="~{agente/fragments/navbarheaderagente :: fragment}"></div>
 
+
+
          <!-- contenido central -->
           <div class="container">
             <div class="page-inner">
@@ -67,7 +69,7 @@
                     <h5>Chat Privado</h5>
                   </div>
 
-                  <div class="card-body" id="chat-box" style="height: 400px; overflow-y: scroll; background-color: #f8f9fa;">
+                  <div class="card-body" id="live-chat-box" style="height: 400px; overflow-y: scroll; background-color: #f8f9fa;">
                     <!-- Los mensajes se irán mostrando aquí -->
                   </div>
 
@@ -84,7 +86,6 @@
                   </div>
                 </div>
               </div>
-
             </div>
           </div>
           <!-- Pie de página -->
@@ -92,9 +93,6 @@
       </div>
 
     </div>
-
-
-
     <!--   Core JS Files   -->
     <script src="/assets/js/core/jquery-3.7.1.min.js"></script>
     <script src="/assets/js/core/popper.min.js"></script>
@@ -119,7 +117,7 @@
       }
 
       function showMessage(message, isSentMessage) {
-        const chatBox = document.getElementById('chat-box');
+        const chatBox = document.getElementById('live-chat-box');
         const messageElement = document.createElement('div'); // Usamos un div para más flexibilidad
 
         // Aplicar las clases de Bootstrap dependiendo de si el mensaje fue enviado o recibido

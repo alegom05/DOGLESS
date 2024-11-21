@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.*;
 import java.time.LocalDate;
@@ -155,6 +156,19 @@ public class AgenteController {
     public String Chat(Model model) {
         return "/agente/chat";
     }
+
+
+    @PostMapping(value = "/buscaragente")
+    public String listaAgentes(Model model,@RequestParam("idzona") Integer idzona, RedirectAttributes redirectAttributes) {
+        model.addAttribute("listaAgentes", usuarioRepository.listarAgentesPorZona(idzona));
+
+        return "redirect:agente/chat";
+    }
+
+
+
+
+
 //-------------------secion ordenes--------------------------------------------------------------
 
     @GetMapping(value = "ordenes")

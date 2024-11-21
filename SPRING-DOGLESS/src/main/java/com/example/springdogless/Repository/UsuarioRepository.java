@@ -131,6 +131,8 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer>{
                     """, nativeQuery = true)
     List<UsuarioCantidadDTO> obtenerTotalCantidadPorUsuario();
     */
+    @Query(nativeQuery = true, value = "select * from usuarios where idroles=3 and idzonas=:idzonas and estado='activo'")
+    List<Usuario> listarAgentesPorZona(@Param("idzonas") Integer idzonas);
 
 }
 
