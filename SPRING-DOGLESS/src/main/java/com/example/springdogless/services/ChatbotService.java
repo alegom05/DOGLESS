@@ -81,26 +81,27 @@ public class ChatbotService {
     }
 
     private String manejarMenuPrincipal(String mensaje) {
-        // Respuesta siempre comienza con el mensaje de introducción
-        String introduccion = "Hola, soy Dogbot. ¿En qué puedo ayudarte? Elige una de las siguientes opciones:\n"
-                + "1. Quiero hacer una consulta\n"
-                + "2. Quiero generar una orden de compra\n"
-                + "3. Quiero generar un reclamo";
+        // Mensaje introductorio
+        String introduccion = "Hola, soy Dogbot. ¿En qué puedo ayudarte? Elige una de las siguientes opciones:<br>"
+                + "1. Quiero hacer una consulta<br>"
+                + "2. Quiero generar una orden de compra<br>"
+                + "3. Quiero generar un reclamo<br>";
 
         // Procesar la selección del usuario
-        if (mensaje.equals("1")) {
-            estadoActual = "CONSULTA";
-            return introduccion + "\n\nHaz tu consulta a continuación:";
-        } else if (mensaje.equals("2")) {
-            estadoActual = "ORDEN";
-            return introduccion + "\n\nA continuación se hará tu orden de compra:\n" + generarOrdenDeCompra();
-        } else if (mensaje.equals("3")) {
-            estadoActual = "RECLAMO";
-            return introduccion + "\n\nA continuación escribe tu reclamo:\n" + manejarReclamaciones();
-        } else {
-            // Si el mensaje no corresponde a una opción válida, mantén el menú inicial
-            estadoActual = "MENU";
-            return introduccion;
+        switch (mensaje) {
+            case "1":
+                estadoActual = "CONSULTA";
+                return "Haz tu consulta a continuación:";
+            case "2":
+                estadoActual = "ORDEN";
+                return generarOrdenDeCompra();
+            case "3":
+                estadoActual = "RECLAMO";
+                return "A continuación escribe tu reclamo:\n" + manejarReclamaciones();
+            default:
+                // Si el mensaje no corresponde a una opción válida, mantén el menú inicial
+                estadoActual = "MENU";
+                return introduccion;
         }
     }
 

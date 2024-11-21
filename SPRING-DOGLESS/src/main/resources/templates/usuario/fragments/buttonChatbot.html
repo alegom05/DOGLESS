@@ -81,11 +81,10 @@
                             return;
                         }
 
-                        console.log("Mensaje del usuario enviado:", userMessage);
-
                         // Mostrar el mensaje del usuario en el chat
                         const userMessageDiv = document.createElement("div");
-                        userMessageDiv.innerHTML = `<strong>Tú:</strong> ${userMessage}`;
+                        userMessageDiv.className = "user-message"; // Clase específica para el usuario
+                        userMessageDiv.textContent = userMessage;
                         chatBox.appendChild(userMessageDiv);
 
                         // Enviar el mensaje al backend
@@ -97,29 +96,23 @@
                             body: JSON.stringify({ message: userMessage })
                         })
                             .then(response => {
-                                console.log("Respuesta del servidor recibida. Status:", response.status);
-
                                 if (!response.ok) {
-                                    console.error(`Error HTTP al llamar a /api/chat/message. Status: ${response.status}`);
                                     throw new Error(`HTTP error! status: ${response.status}`);
                                 }
-
                                 return response.text();
                             })
                             .then(responseMessage => {
-                                console.log("Respuesta del bot recibida:", responseMessage);
-
                                 // Mostrar la respuesta del bot en el chat
                                 const botMessageDiv = document.createElement("div");
-                                botMessageDiv.innerHTML = `<strong>DogBot:</strong> ${responseMessage}`;
+                                botMessageDiv.className = "bot-message"; // Clase específica para el bot
+                                botMessageDiv.textContent = responseMessage;
                                 chatBox.appendChild(botMessageDiv);
+
+                                // Hacer scroll al final del chat
+                                chatBox.scrollTop = chatBox.scrollHeight;
                             })
                             .catch(error => {
                                 console.error("Error al enviar el mensaje:", error);
-
-                                const errorMessage = document.createElement("div");
-                                errorMessage.innerHTML = `<strong>DogBot:</strong> Lo siento, ocurrió un error al enviar tu mensaje.`;
-                                chatBox.appendChild(errorMessage);
                             });
 
                         // Limpiar el campo de entrada del usuario
