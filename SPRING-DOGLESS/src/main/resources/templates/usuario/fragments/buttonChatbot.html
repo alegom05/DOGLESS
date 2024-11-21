@@ -6,6 +6,11 @@
     </head>
     <body>
         <div th:fragment="fragment">
+
+
+            <link rel="stylesheet" th:href="@{/assets/css/chat.css}">
+
+
             <div class="custom-template">
                 <div class="title">DogBot</div>
                 <div class="custom-content">
@@ -36,6 +41,8 @@
                     const chatBox = document.getElementById("chat-box");
                     const userMessageInput = document.getElementById("user-message");
                     const sendButton = document.getElementById("send-button");
+                    let estadoActual = "MENU"; // Estado inicial
+                    let userId = "1"; // Reemplaza con el ID del usuario autenticado
 
                     if (!chatBox || !userMessageInput || !sendButton) {
                         console.error("No se encontraron todos los elementos necesarios. Verifica el HTML.");
@@ -72,8 +79,8 @@
                             chatBox.appendChild(errorMessage);
                         });
 
-                    // Manejar el envío del mensaje
-                    sendButton.addEventListener("click", function () {
+                    // Función para enviar mensajes
+                    function sendMessage() {
                         const userMessage = userMessageInput.value.trim();
 
                         if (!userMessage) {
@@ -81,19 +88,55 @@
                             return;
                         }
 
-                        // Mostrar el mensaje del usuario en el chat
                         const userMessageDiv = document.createElement("div");
-                        userMessageDiv.className = "user-message"; // Clase específica para el usuario
+                        userMessageDiv.className = "user-message";
                         userMessageDiv.textContent = userMessage;
                         chatBox.appendChild(userMessageDiv);
 
-                        // Enviar el mensaje al backend
+                        if (estadoActual === "RECLAMO") {
+                            manejarReclamo(userMessage, userId); // Enviar el reclamo
+                            estadoActual = "MENU"; // Regresar al menú después de enviar el reclamo
+                            return;
+                        }
+
                         fetch("/api/chat/message", {
                             method: "POST",
                             headers: {
                                 "Content-Type": "application/json"
                             },
                             body: JSON.stringify({ message: userMessage })
+                        })
+                            .then(response => response.text())
+                            .then(responseMessage => {
+                                const botMessageDiv = document.createElement("div");
+                                botMessageDiv.className = "bot-message";
+                                botMessageDiv.textContent = responseMessage;
+                                chatBox.appendChild(botMessageDiv);
+
+                                if (responseMessage.includes("escribe tu reclamo")) {
+                                    estadoActual = "RECLAMO"; // Cambiar el estado a RECLAMO
+                                }
+
+                                // Hacer scroll al final del chat
+                                chatBox.scrollTop = chatBox.scrollHeight;
+                            })
+                            .catch(error => console.error("Error al enviar el mensaje:", error));
+
+                        // Limpiar el campo de entrada
+                        userMessageInput.value = "";
+                    }
+
+                    // Manejar el flujo de creación de reclamos
+                    function manejarReclamo(userMessage, userId) {
+                        fetch("/api/chat/reclamo", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json"
+                            },
+                            body: JSON.stringify({
+                                idusuario: userId, // El ID del usuario asociado al reclamo
+                                descripcion: userMessage // La descripción del reclamo
+                            })
                         })
                             .then(response => {
                                 if (!response.ok) {
@@ -102,9 +145,9 @@
                                 return response.text();
                             })
                             .then(responseMessage => {
-                                // Mostrar la respuesta del bot en el chat
+                                // Mostrar la respuesta del servidor en el chat
                                 const botMessageDiv = document.createElement("div");
-                                botMessageDiv.className = "bot-message"; // Clase específica para el bot
+                                botMessageDiv.className = "bot-message";
                                 botMessageDiv.textContent = responseMessage;
                                 chatBox.appendChild(botMessageDiv);
 
@@ -112,14 +155,28 @@
                                 chatBox.scrollTop = chatBox.scrollHeight;
                             })
                             .catch(error => {
-                                console.error("Error al enviar el mensaje:", error);
-                            });
+                                console.error("Error al crear el reclamo:", error);
 
-                        // Limpiar el campo de entrada del usuario
-                        userMessageInput.value = "";
+                                const errorMessageDiv = document.createElement("div");
+                                errorMessageDiv.className = "bot-message";
+                                errorMessageDiv.textContent = "Lo siento, ocurrió un error al procesar tu reclamo.";
+                                chatBox.appendChild(errorMessageDiv);
+                            });
+                    }
+
+                    // Vincular la función sendMessage al botón de enviar
+                    sendButton.addEventListener("click", sendMessage);
+
+                    // Vincular la función sendMessage a la tecla Enter
+                    userMessageInput.addEventListener("keydown", function (event) {
+                        if (event.key === "Enter") {
+                            event.preventDefault(); // Evitar salto de línea
+                            sendMessage(); // Llamar a la función de envío
+                        }
                     });
                 });
             </script>
+
 
         </div>
 

@@ -1,16 +1,25 @@
 package com.example.springdogless.controllers;
 
+import com.example.springdogless.Repository.ReclamoRepository;
+import com.example.springdogless.Repository.UsuarioRepository;
+import com.example.springdogless.entity.Reclamo;
+import com.example.springdogless.entity.Usuario;
 import com.example.springdogless.services.ChatbotService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/chat")
 public class ChatController {
 
+    @Autowired
+    UsuarioRepository usuarioRepository;
+    @Autowired
+    ReclamoRepository reclamoRepository;
     private final ChatbotService chatbotService;
 
     @Autowired
@@ -30,4 +39,31 @@ public class ChatController {
         String response = chatbotService.procesarMensaje(message);
         return ResponseEntity.ok(response);
     }
+
+    @PostMapping("/reclamo")
+    public ResponseEntity<String> crearReclamoDesdeChat(@RequestBody Map<String, String> request) {
+        String idUsuario = request.get("idusuario");
+        String descripcion = request.get("descripcion");
+
+        if (idUsuario == null || descripcion == null || descripcion.trim().isEmpty()) {
+            return ResponseEntity.badRequest().body("Error: Se requiere un usuario y una descripción para el reclamo.");
+        }
+
+        // Verificar si el usuario existe
+        Optional<Usuario> optionalUsuario = usuarioRepository.findById(Integer.parseInt(idUsuario));
+        if (optionalUsuario.isEmpty()) {
+            return ResponseEntity.badRequest().body("Error: Usuario no encontrado.");
+        }
+
+        // Crear y guardar el reclamo
+        Usuario usuario = optionalUsuario.get();
+        Reclamo reclamo = new Reclamo();
+        reclamo.setUsuario(usuario);
+        reclamo.setDescripcion(descripcion);
+
+        reclamoRepository.save(reclamo);
+
+        return ResponseEntity.ok("Reclamo creado exitosamente.");
+    }
+
 }
