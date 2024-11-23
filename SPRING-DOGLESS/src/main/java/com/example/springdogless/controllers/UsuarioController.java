@@ -452,6 +452,16 @@ public class UsuarioController {
             return "redirect:/usuario/detalles_producto/" + idProducto; // Redirigir a la misma página o a una página de error
         }
 
+        Long count = resenaRepository.countPreguntasByUsuarioAndProducto(optionalUsuario.get().getId(), idProducto);
+        boolean preguntaExistente = count > 0;
+
+        // Verificar si el usuario ya hizo una pregunta
+        if (preguntaExistente) {
+            redirectAttributes.addFlashAttribute("mensaje", "Ya has enviado una pregunta para este producto.");
+            redirectAttributes.addFlashAttribute("tipoAlerta", "warning");
+            return "redirect:/usuario/detalles_producto/" + idProducto;
+        }
+
         // Verificar la longitud de la pregunta
         if (pregunta.length() > 300) {
             redirectAttributes.addFlashAttribute("mensaje", "Tu pregunta no puede exceder los 300 caracteres.");

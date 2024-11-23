@@ -28,4 +28,10 @@ public interface ResenaRepository extends JpaRepository<Resena, Integer> {
             "WHERE r.idproductos = ?1 and r.tipo= ?2",  // El ID del producto es el primer parámetro
             nativeQuery = true)
     List<ResenaDTO> findResenasByProductoId(Integer idProducto, Integer tipo);
+
+    @Query(value = "SELECT COUNT(*) FROM dogless.resenas r " +
+            "WHERE r.usuarioid = ?1 AND r.idproductos = ?2 AND r.tipo = 2",
+            nativeQuery = true)
+    Long countPreguntasByUsuarioAndProducto(Integer idUsuario, Integer idProducto);
+
 }
