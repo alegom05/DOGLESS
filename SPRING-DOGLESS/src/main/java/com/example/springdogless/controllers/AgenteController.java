@@ -7,12 +7,14 @@ import com.example.springdogless.Repository.*;
 import com.example.springdogless.entity.*;
 import com.example.springdogless.services.OrdenService;
 import com.example.springdogless.services.UsuarioService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.*;
@@ -56,6 +58,8 @@ public class AgenteController {
     private UsuarioService usuarioService;
     @Autowired
     ReporteRepository reporteRepository;
+    @Autowired
+    LiveMessagesRepository liveMessagesRepository;
 
     @GetMapping({""})
     public String PaginaPrincipal(Model model) {
@@ -153,8 +157,32 @@ public class AgenteController {
     }
 
     @GetMapping("chat")
-    public String Chat(Model model) {
-        return "/agente/chat";
+    public ModelAndView chatAgente(HttpSession session) {
+        Usuario usuarioLogueado = (Usuario) session.getAttribute("usuario");
+        if (usuarioLogueado == null) {
+            return new ModelAndView("redirect:/login");
+        }
+
+        // Obtener información del agente
+        List<Usuario> usuariosAsignados = usuarioRepository.findUsuariosAsignadosAlAgente(usuarioLogueado.getZona().getIdzonas());
+        ArrayList<Integer> idUsuariosAsignados = new ArrayList<>();
+        for (Usuario u : usuariosAsignados) {
+            idUsuariosAsignados.add(u.getId());
+        }
+
+        // Obtener los mensajes por sala y unir en una sola lista
+        ArrayList<List<LiveMessages>> mensajesPorSala = new ArrayList<>();
+        for (Integer ids : idUsuariosAsignados) {
+            String room = "room_" + ids;
+            List<LiveMessages> mensajesSala = liveMessagesRepository.findBySalaOrderByFechaenvioAsc(room);
+            mensajesPorSala.add(mensajesSala);  // Agrega los mensajes de cada sala a la lista
+        }
+
+        // Preparar el ModelAndView
+        ModelAndView modelAndView = new ModelAndView("/agente/chat");
+        modelAndView.addObject("listaIdUsuarios", idUsuariosAsignados);
+        modelAndView.addObject("mensajesPorSala", mensajesPorSala); // Pasa los mensajes por sala
+        return modelAndView;
     }
 
 

@@ -15,11 +15,10 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.condition.ProducesRequestCondition;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -27,7 +26,6 @@ import java.util.*;
 @RequestMapping({"usuario", "usuario/"})
 
 public class UsuarioController {
-
     @Autowired
     UsuarioRepository usuarioRepository;
     @Autowired
@@ -58,6 +56,10 @@ public class UsuarioController {
     ReclamoRepository reclamoRepository;
     @Autowired
     SolicitudRepository solicitudRepository;
+
+    @Autowired
+    LiveMessagesRepository liveMessagesRepository;
+
 
     @GetMapping("")
     public String listarOrdenesUsuario(HttpSession session, Model model) {
@@ -173,10 +175,48 @@ public class UsuarioController {
         return "usuario/guia";
     }
 
-    @GetMapping({"/chat"})
-    public String ChatDeUsuario(Model model) {
+    @GetMapping("/chat")
+    public String getChatPage(HttpSession session, Model model) {
+        // Obtener el usuario logueado
+        Usuario usuarioLogueado = (Usuario) session.getAttribute("usuario");
+
+        if (usuarioLogueado == null) {
+            // Si el usuario no está logueado, redirigir al login
+            return "redirect:/login";
+        }
+
+        // Crear el nombre de la sala (room_{idusuario})
+        String room = "room_" + usuarioLogueado.getId();
+
+        // Verificar si ya existen mensajes en la sala
+        List<LiveMessages> listaMensajesSala = liveMessagesRepository.findBySalaOrderByFechaenvioAsc(room);
+
+        // Si no hay mensajes, puedes decidir si crear un mensaje inicial o simplemente mostrar un mensaje indicativo
+        if (listaMensajesSala.isEmpty()) {
+            // Puedes agregar un mensaje predeterminado si lo deseas
+            LiveMessages mensajeInicial = new LiveMessages();
+            mensajeInicial.setIdusuarios(usuarioLogueado);
+            mensajeInicial.setContenido("¡Bienvenido al chat!");
+            mensajeInicial.setSala(room);
+            mensajeInicial.setFechaenvio(LocalDateTime.now());
+            liveMessagesRepository.save(mensajeInicial);
+            listaMensajesSala.add(mensajeInicial); // Agregar el mensaje a la lista para mostrarlo
+        }
+
+        // Pasar los datos al modelo
+        model.addAttribute("room", room);
+        model.addAttribute("listaMensajesSala", listaMensajesSala);
+        model.addAttribute("idAgenteAsignado", 11); // Reemplazar con el ID del agente asignado
+        model.addAttribute("noMessages", listaMensajesSala.isEmpty());
+
+        // Retornar la vista del chat
         return "usuario/chat";
     }
+
+
+
+
+
 
     @GetMapping("/new")
     public String nuevoAgenteFrm(Model model) {

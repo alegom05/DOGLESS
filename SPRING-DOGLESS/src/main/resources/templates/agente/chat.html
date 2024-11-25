@@ -54,41 +54,72 @@
 
 
          <!-- contenido central -->
-          <div class="container">
-            <div class="page-inner">
-              <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
+        <div class="container">
+          <div class="page-inner">
+            <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
+              <h1 class="display-6">Panel de Chat</h1>
+            </div>
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Chat con Usuarios (En desarrollo)</h3>
               </div>
-              <div class="card-head-row card-tools-still-right">
-                <div class="card-title">Chat(En desarrollo)</div>
-                <div class="card-tools">
-                </div>
-              </div>
-              <div class="container mt-5">
-                <div class="card">
-                  <div class="card-header bg-primary text-white">
-                    <h5>Chat Privado</h5>
-                  </div>
+              <div class="card-body">
+                <!-- Navegación de tabs -->
+                <ul class="nav nav-tabs" id="chatTabs" role="tablist">
+                  <li th:each="userId, iterStat : ${listaIdUsuarios}" class="nav-item" role="presentation">
+                    <button
+                            class="nav-link"
+                            th:classappend="${iterStat.index == 0} ? 'active'"
+                            id="tab-[[${userId}]]"
+                            data-bs-toggle="tab"
+                            th:data-bs-target="'#chat-' + ${userId}"
+                            type="button"
+                            role="tab"
+                            th:aria-controls="'chat-' + ${userId}"
+                            th:aria-selected="${iterStat.index == 0}">
+                      Usuario [[${userId}]]
+                    </button>
+                  </li>
+                </ul>
 
-                  <div class="card-body" id="live-chat-box" style="height: 400px; overflow-y: scroll; background-color: #f8f9fa;">
-                    <!-- Los mensajes se irán mostrando aquí -->
-                  </div>
+                <!-- Contenido de tabs -->
+                <div class="tab-content" id="chatTabContent">
+                  <div th:each="userId, iterStat : ${listaIdUsuarios}"
+                       th:classappend="${iterStat.index == 0} ? 'show active'"
+                       th:id="'chat-' + ${userId}"
+                       class="tab-pane fade"
+                       role="tabpanel"
+                       th:aria-labelledby="'tab-' + ${userId}">
 
-                  <div class="card-footer">
-                    <form id="messageForm" class="form-inline">
-                      <div class="form-group mb-2 mr-2 w-100">
-                        <input type="text" class="form-control w-50" id="receiverId" placeholder="ID del destinatario" required />
+                    <div class="p-3 border rounded mt-3">
+                      <div th:id="'chatArea-' + ${userId}"
+                           class="border rounded p-3"
+                           style="height: 300px; overflow-y: scroll; background-color: #f8f9fa;">
+                        <!-- Aquí aparecerán los mensajes -->
+                        <div th:each="mensaje : ${mensajesPorSala[iterStat.index]}" class="message">
+                          <strong th:text="${mensaje.idusuarios.nombre}">Usuario</strong>:
+                          <span th:text="${mensaje.contenido}">Contenido del mensaje</span>
+                        </div>
                       </div>
-                      <div class="form-group mb-2 mr-2 w-100">
-                        <input type="text" class="form-control w-50" id="message" placeholder="Escribe un mensaje" required />
+                      <div class="input-group mt-3">
+                        <input type="text"
+                               th:id="'messageInput-' + ${userId}"
+                               class="form-control"
+                               placeholder="Escribe tu mensaje" />
+                        <button class="btn btn-primary sendButton"
+                                th:data-user-id="${userId}">
+                          Enviar
+                        </button>
                       </div>
-                      <button type="submit" class="btn btn-primary mb-2">Enviar</button>
-                    </form>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <!-- Pie de página -->
+        </div>
+
+        <!-- Pie de página -->
           <div th:replace="~{agente/fragments/piedepagina :: fragment}"></div>
       </div>
 
@@ -100,67 +131,53 @@
     <!-- jQuery Scrollbar -->
     <script src="/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
     <!-- SockJS y STOMP -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.0/sockjs.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
-    <script type="text/javascript">
-      let stompClient = null;
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client/dist/sockjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/stompjs/lib/stomp.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const agentId = [[${session.usuario.id}]]; // ID del agente
+        const userIds = [[${listaIdUsuarios}]]; // Lista de usuarios asignados
 
-      function connect() {
-        const socket = new SockJS('/chat-websocket');
-        stompClient = Stomp.over(socket);
+        const socket = new SockJS('/ws-chat'); // Conexión con el WebSocket
+        const stompClient = Stomp.over(socket);
 
-        stompClient.connect({}, function () {
-          stompClient.subscribe('/topic/messages/' + [[${session.usuario.id}]], function (message) {
-            showMessage(JSON.parse(message.body), false); // Para los mensajes recibidos
+        stompClient.connect({}, () => {
+          // Suscribirse a cada sala de usuario
+          userIds.forEach(userId => {
+            const roomId = `${userId}-${agentId}`; // Generar ID de sala único
+
+            stompClient.subscribe(`/topic/chat/${roomId}`, (message) => {
+              const chatMessage = JSON.parse(message.body);
+              const chatArea = document.getElementById(`chatArea-${userId}`);
+              if (chatArea) {
+                chatArea.innerHTML += `<p><b>${chatMessage.remitente}:</b> ${chatMessage.mensaje}</p>`;
+              }
+            });
           });
         });
-      }
 
-      function showMessage(message, isSentMessage) {
-        const chatBox = document.getElementById('live-chat-box');
-        const messageElement = document.createElement('div'); // Usamos un div para más flexibilidad
+        // Enviar mensajes a la sala específica
+        document.querySelectorAll('.sendButton').forEach(button => {
+          button.addEventListener('click', (event) => {
+            const userId = event.target.getAttribute('data-user-id'); // ID del usuario relacionado con el botón
+            const roomId = `${userId}-${agentId}`; // Generar ID de sala único
+            const input = document.getElementById(`messageInput-${userId}`); // Campo de entrada del usuario específico
 
-        // Aplicar las clases de Bootstrap dependiendo de si el mensaje fue enviado o recibido
-        if (isSentMessage) {
-          messageElement.classList.add('alert', 'alert-info', 'text-end', 'mb-2'); // Estilo para mensajes enviados
-        } else {
-          messageElement.classList.add('alert', 'alert-light', 'text-start', 'mb-2'); // Estilo para mensajes recibidos
-        }
+            if (input.value.trim() === '') return; // Validar que el mensaje no esté vacío
 
-        // Mostrar el mensaje con un prefijo de quién lo envió
-        messageElement.innerHTML = `<strong>${message.senderId}:</strong> ${message.content}`;
+            const message = {
+              remitente: `AGENTE-${agentId}`,
+              mensaje: input.value,
+              roomId: roomId // Incluir la sala en el mensaje
+            };
 
-        // Añadir el mensaje al chat
-        chatBox.appendChild(messageElement);
-
-        // Asegurar que el chat se desplace hacia abajo automáticamente cuando se recibe un nuevo mensaje
-        chatBox.scrollTop = chatBox.scrollHeight;
-      }
-
-      document.getElementById('messageForm').onsubmit = function (e) {
-        e.preventDefault();
-        const receiverId = document.getElementById('receiverId').value;
-        const content = document.getElementById('message').value;
-
-        // Crear el objeto mensaje para enviarlo
-        const chatMessage = {
-          senderId: [[${session.usuario.id}]],  // Usar el ID del usuario actual
-          receiverId: receiverId,
-          content: content,
-          timestamp: new Date().toISOString()
-        };
-
-        // Mostrar el mensaje enviado por el usuario
-        showMessage(chatMessage, true);
-
-        // Enviar el mensaje al servidor
-        stompClient.send("/app/sendMessage", {}, JSON.stringify(chatMessage));
-
-        // Limpiar el campo de entrada de mensaje
-        document.getElementById('message').value = '';
-      };
-
-      connect();
+            // Enviar mensaje al servidor
+            stompClient.send(`/app/chat/${roomId}/sendMessage`, {}, JSON.stringify(message));
+            input.value = ''; // Limpiar campo de entrada
+          });
+        });
+      });
     </script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
