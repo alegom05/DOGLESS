@@ -132,6 +132,7 @@
                           </tr>
                         </thead>
                         <tbody id="tablaOrdenes" class="text-center">
+
                           <tr th:each="orden : ${listaOrdenes}">
                             <td th:text="${orden.id}"></td>
                             <td th:text="${orden.usuario.nombre + ' ' + orden.usuario.apellido}"></td>

@@ -174,6 +174,18 @@ public class AgenteController {
     @GetMapping(value = "ordenes")
     public String listadeOrdenes(Model model) {
         model.addAttribute("listaOrdenes", ordenRepository.findByBorrado(1));
+        //por sesion obtener el objeto idzona del usuario agente mediante en una funcion
+        //crear un query  en repositorio que filtre las ordenes por id zona
+        //algo como esto:
+
+        // SELECT o.*
+        //FROM ordenes o
+        //JOIN usuarios u ON o.idusuarios = u.idusuarios
+        //WHERE u.idzonas = ?;
+
+        //cambiar el model atribute actual
+        //la lista de ordenes que se debe visualizar debe ser las ordenes donde el idzonas del usuario debe ser igual al id zonas del agente
+
         return "agente/ordenes";
     }
 
