@@ -200,8 +200,13 @@ public class AgenteController {
 //-------------------secion ordenes--------------------------------------------------------------
 
     @GetMapping(value = "ordenes")
-    public String listadeOrdenes(Model model) {
-        model.addAttribute("listaOrdenes", ordenRepository.findByBorrado(1));
+    public String listadeOrdenes(Model model,HttpSession session) {
+        Usuario usuarioLogueado = (Usuario) session.getAttribute("usuario");
+        if (usuarioLogueado == null) {
+            return "redirect:/login";
+        }
+
+        model.addAttribute("listaOrdenes", ordenRepository.findOrdenesPorZona(usuarioLogueado.getZona().getIdzonas()));
         //por sesion obtener el objeto idzona del usuario agente mediante en una funcion
         //crear un query  en repositorio que filtre las ordenes por id zona
         //algo como esto:

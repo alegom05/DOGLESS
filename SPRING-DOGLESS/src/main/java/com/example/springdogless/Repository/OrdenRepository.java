@@ -116,6 +116,10 @@ public interface OrdenRepository extends JpaRepository<Orden, Integer> {
     Integer findOrdenesByZona(@Param("zonaId") Integer zonaId);
 
 
+    @Query(value="SELECT o.* FROM ordenes o JOIN usuarios u ON o.idusuarios = u.idusuarios WHERE u.idzonas = :zonaId", nativeQuery = true)
+    List<Orden> findOrdenesPorZona(@Param("zonaId") Integer zonaId);
+
+
 
     @Query(value = "SELECT idordenes, estado, fecha, direccionenvio, total, metodopago, idusuarios, borrado " +
             "FROM ordenes " +
