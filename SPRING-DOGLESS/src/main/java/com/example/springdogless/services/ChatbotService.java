@@ -4,6 +4,10 @@ import com.example.springdogless.Repository.Detallesorden2;
 import com.example.springdogless.Repository.OrdenRepository;
 import com.example.springdogless.Repository.ProductRepository;
 import com.example.springdogless.Repository.UsuarioRepository;
+import com.example.springdogless.entity.Detalleorden;
+import com.example.springdogless.entity.Orden;
+import com.example.springdogless.entity.Producto;
+import com.example.springdogless.entity.Usuario;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -18,8 +22,8 @@ import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
+import java.math.BigDecimal;
+import java.util.*;
 
 @Service
 public class ChatbotService {
@@ -39,6 +43,8 @@ public class ChatbotService {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
+
+    private Map<String, String> estadosUsuario = new HashMap<>();
 
     @Value("${huggingface.apiKey}")
     private String apiKey;
@@ -98,11 +104,13 @@ public class ChatbotService {
     }
 
     private String manejarMenuPrincipal(String mensaje) {
-        // Mensaje introductorio
-        String introduccion = "Hola, soy Dogbot. ¿En qué puedo ayudarte? Elige una de las siguientes opciones:<br>"
-                + "1. Quiero hacer una consulta<br>"
-                + "2. Quiero generar una orden de compra<br>"
-                + "3. Quiero generar un reclamo<br>";
+        // Mensaje introductorio en formato HTML
+        String introduccion = """
+            Hola, soy Dogbot. ¿En qué puedo ayudarte? Elige una de las siguientes opciones:<br>
+            1. Quiero hacer una consulta<br>
+            2. Quiero generar una orden de compra<br>
+            3. Quiero generar un reclamo<br>
+            """;
 
         // Procesar la selección del usuario
         switch (mensaje) {
@@ -114,13 +122,14 @@ public class ChatbotService {
                 return generarOrdenDeCompra();
             case "3":
                 estadoActual = "RECLAMO";
-                return "A continuación escribe tu reclamo:\n" + manejarReclamaciones();
+                return "A continuación escribe tu reclamo:<br>" + manejarReclamaciones();
             default:
                 // Si el mensaje no corresponde a una opción válida, mantén el menú inicial
                 estadoActual = "MENU";
-                return introduccion;
+                return introduccion; // Devuelve el menú en HTML
         }
     }
+
 
     private String manejarConsulta(String mensaje) {
         if (mensaje.equalsIgnoreCase("regresar")) {
@@ -285,6 +294,111 @@ public class ChatbotService {
         } catch (Exception e) {
             e.printStackTrace();
             return mensaje; // En caso de error, usar el mensaje original
+        }
+    }
+
+    public String procesarFlujoCompra(String userId, String mensaje) {
+        String estadoActual = estadosUsuario.getOrDefault(userId, "inicio");
+
+        switch (estadoActual) {
+            case "inicio":
+                estadosUsuario.put(userId, "esperandoProducto");
+                return "Por favor, ingrese el nombre del producto que desea comprar.";
+
+            case "esperandoProducto":
+                Producto producto = productRepository.findByNombre(mensaje);
+                if (producto == null) {
+                    return "No encontramos el producto. Por favor, inténtelo de nuevo.";
+                }
+                estadosUsuario.put(userId, "esperandoCantidad");
+                estadosUsuario.put(userId + "_productoId", String.valueOf(producto.getId()));
+                return "Producto encontrado: " + producto.getNombre() +
+                        "\nPrecio: S/. " + producto.getPrecio() +
+                        "\n¿Desea continuar? Responda 'sí' o 'no'.";
+
+            case "esperandoCantidad":
+                if (mensaje.equalsIgnoreCase("sí")) {
+                    estadosUsuario.put(userId, "esperandoCantidadNumero");
+                    return "¿Cuántas unidades desea comprar?";
+                } else {
+                    estadosUsuario.put(userId, "inicio");
+                    return "Flujo cancelado. Volviendo al inicio.";
+                }
+
+            case "esperandoCantidadNumero":
+                try {
+                    int cantidad = Integer.parseInt(mensaje);
+                    Integer productoId = Integer.parseInt(estadosUsuario.get(userId + "_productoId"));
+                    agregarProductoACarrito(Integer.parseInt(userId), productoId, cantidad);
+                    estadosUsuario.put(userId, "continuarCompra");
+                    return "Producto añadido al carrito. ¿Desea proceder a la compra? Responda 'sí' o 'no'.";
+                } catch (NumberFormatException e) {
+                    return "Ingrese un número válido.";
+                }
+
+            case "continuarCompra":
+                if (mensaje.equalsIgnoreCase("sí")) {
+                    estadosUsuario.put(userId, "checkout");
+                    return "Por favor, confirme sus datos: nombre, apellido, número de teléfono, y correo.";
+                } else {
+                    estadosUsuario.put(userId, "inicio");
+                    return "Flujo cancelado. Volviendo al inicio.";
+                }
+
+            case "checkout":
+                // Validar los datos ingresados
+                if (mensaje.split(",").length < 4) {
+                    return "Ingrese todos los datos en el formato: nombre, apellido, teléfono, correo.";
+                }
+                estadosUsuario.put(userId, "esperandoPago");
+                return "Ingrese los datos de su tarjeta: número, nombre, vencimiento y CVV.";
+
+            case "esperandoPago":
+                if (mensaje.split(",").length < 4) {
+                    return "Ingrese todos los datos de su tarjeta en el formato: número, nombre, vencimiento, CVV.";
+                }
+                confirmarCompra(Integer.parseInt(userId));
+                estadosUsuario.put(userId, "inicio");
+                return "Gracias por su compra. Su pedido está confirmado. Recibirá un correo electrónico con su número de pedido.";
+
+            default:
+                estadosUsuario.put(userId, "inicio");
+                return "No entendí su mensaje. Por favor, inténtelo de nuevo.";
+        }
+    }
+
+    private void agregarProductoACarrito(int userId, int productoId, int cantidad) {
+        // Lógica para añadir producto al carrito
+        Orden orden = ordenRepository.findOrdenEstadoCreado(userId);
+        if (orden == null) {
+            orden = new Orden();
+            orden.setUsuario(new Usuario());
+            orden.setEstado("Creado");
+            ordenRepository.save(orden);
+        }
+
+        Optional<Detalleorden> detalleExistente = detallesRepository.findByIdordenAndIdproducto(orden.getId(), productoId);
+        if (detalleExistente.isPresent()) {
+            Detalleorden detalle = detalleExistente.get();
+            detalle.setCantidad(detalle.getCantidad() + cantidad);
+            detalle.setSubtotal(detalle.getPreciounitario().multiply(BigDecimal.valueOf(detalle.getCantidad())));
+            detallesRepository.save(detalle);
+        } else {
+            Detalleorden nuevoDetalle = new Detalleorden();
+            nuevoDetalle.setProducto(productRepository.findById(productoId).get());
+            nuevoDetalle.setCantidad(cantidad);
+            nuevoDetalle.setPreciounitario(BigDecimal.valueOf(productoId));
+            nuevoDetalle.setSubtotal(BigDecimal.valueOf(productoId * cantidad));
+            detallesRepository.save(nuevoDetalle);
+        }
+    }
+
+    private void confirmarCompra(int userId) {
+        Orden orden = ordenRepository.findOrdenEstadoCreado(userId);
+        if (orden != null) {
+            orden.setEstado("Confirmada");
+            orden.setFecha(new java.sql.Date(System.currentTimeMillis()));
+            ordenRepository.save(orden);
         }
     }
 
