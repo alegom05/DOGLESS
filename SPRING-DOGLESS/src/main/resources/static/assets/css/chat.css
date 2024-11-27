@@ -1,107 +1,95 @@
-/* Contenedor del chatbot */
-.custom-content {
-  display: none; /* Oculto por defecto */
-  width: 350px;
-  height: 500px;
-  background: linear-gradient(to bottom, #ffffff, #f3f3f3);
-  border-radius: 15px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-}
-
-/* Título del chat */
-.title {
-  background-color: #4a90e2;
-  color: white;
-  text-align: center;
-  padding: 15px;
-  font-size: 18px;
-  font-weight: bold;
-  cursor: pointer;
-  border-top-left-radius: 15px;
-  border-top-right-radius: 15px;
-  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
-}
-
-/* Zona de conversación */
+/* Chatbox area */
 .chat-box {
-  flex: 1;
-  padding: 15px;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  background-color: #f7f8fa;
-  border-top: 1px solid #ddd;
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    background-color: #f5f5f5;
+    border-radius: 0 0 15px 15px;
 }
 
-/* Mensaje del bot */
+/* Bot message */
 .bot-message {
-  align-self: flex-start;
-  background-color: #e6e6e6;
-  color: #333333;
-  padding: 10px 15px;
-  border-radius: 15px 15px 15px 0;
-  max-width: 80%;
-  font-size: 14px;
-  white-space: pre-wrap;
-  word-wrap: break-word;
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    align-self: flex-start;
+    background-color: #ffffff;
+    color: #333333;
+    padding: 12px 18px;
+    border-radius: 18px 18px 18px 0;
+    max-width: 75%;
+    font-size: 15px;
+    line-height: 1.4;
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.08);
 }
 
-/* Mensaje del usuario */
+/* User message */
 .user-message {
-  align-self: flex-end;
-  background-color: #4a90e2;
-  color: white;
-  padding: 10px 15px;
-  border-radius: 15px 15px 0 15px;
-  max-width: 80%;
-  font-size: 14px;
-  white-space: pre-wrap;
-  word-wrap: break-word;
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    align-self: flex-end;
+    background-color: #4a90e2;
+    color: #ffffff;
+    padding: 12px 18px;
+    border-radius: 18px 18px 0 18px;
+    max-width: 75%;
+    font-size: 15px;
+    line-height: 1.4;
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.08);
 }
 
-/* Zona de entrada de texto */
+/* Chat input */
 .chat-input {
-  display: flex;
-  align-items: center;
-  padding: 10px;
-  background-color: #ffffff;
-  border-top: 1px solid #ddd;
-  gap: 10px;
-  box-shadow: 0px -2px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    background-color: #ffffff;
+    border-top: 1px solid #e0e0e0;
+    gap: 12px;
 }
 
 .chat-input input {
-  flex: 1;
-  padding: 12px;
-  border-radius: 20px;
-  border: 1px solid #ddd;
-  font-size: 14px;
-  outline: none;
-  background-color: #f9f9f9;
-  transition: border 0.2s;
+    flex: 1;
+    padding: 12px 4px;
+    border-radius: 20px;
+    border: 1px solid #e0e0e0;
+    font-size: 15px;
+    outline: none;
+    background-color: #f9f9f9;
+    transition: border 0.2s;
+    box-sizing: border-box;
+    max-width: 75%;
 }
 
 .chat-input input:focus {
-  border: 1px solid #4a90e2;
+    border: 1px solid #4a90e2;
 }
 
 .chat-input button {
-  padding: 10px 20px;
-  border-radius: 20px;
-  border: none;
-  background-color: #4a90e2;
-  color: white;
-  font-size: 14px;
-  cursor: pointer;
-  transition: background-color 0.3s;
+    padding: 10px 15px; /**/
+    border-radius: 20px;
+    border: none;
+    background-color: #4a90e2;
+    color: #ffffff;
+    font-size: 15px;
+    cursor: pointer;
+    transition: background-color 0.3s;
 }
 
 .chat-input button:hover {
-  background-color: #357ab8;
+    background-color: #357ab8;
+}
+
+/* Custom content container */
+.custom-content {
+    display: flex;
+    flex-direction: column;
+    height: 500px;
+    background: linear-gradient(to bottom, #ffffff, #f3f3f3);
+    border-radius: 15px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+}
+
+/* Estado oculto del contenido del chatbot */
+.custom-content.hidden {
+    display: none; /* Oculta el contenido */
 }

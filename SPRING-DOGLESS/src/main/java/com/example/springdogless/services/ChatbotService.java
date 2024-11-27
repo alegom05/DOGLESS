@@ -1,8 +1,13 @@
 package com.example.springdogless.services;
 
+import com.example.springdogless.Repository.Detallesorden2;
+import com.example.springdogless.Repository.OrdenRepository;
+import com.example.springdogless.Repository.ProductRepository;
+import com.example.springdogless.Repository.UsuarioRepository;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -22,6 +27,18 @@ public class ChatbotService {
     private final ObjectMapper objectMapper;
     private final RestTemplate restTemplate;
     private List<JsonNode> menuOpciones;
+
+    @Autowired
+    private ProductRepository productRepository;
+
+    @Autowired
+    private OrdenRepository ordenRepository;
+
+    @Autowired
+    private Detallesorden2 detallesRepository;
+
+    @Autowired
+    private UsuarioRepository usuarioRepository;
 
     @Value("${huggingface.apiKey}")
     private String apiKey;
@@ -128,21 +145,96 @@ public class ChatbotService {
 
     private String buscarRespuestaEnJson(String mensaje) {
         if (menuOpciones == null || menuOpciones.isEmpty()) {
-            return null; // No hay datos en el archivo JSON
+            return null;
         }
+
+        // Normalizar el mensaje del usuario
+        String mensajeNormalizado = mensaje.toLowerCase()
+                .replaceAll("[áäà]", "a")
+                .replaceAll("[éëè]", "e")
+                .replaceAll("[íïì]", "i")
+                .replaceAll("[óöò]", "o")
+                .replaceAll("[úüù]", "u")
+                .replaceAll("[^a-z0-9\\s]", "")
+                .trim();
+
+        // Dividir el mensaje en palabras
+        String[] palabrasUsuario = mensajeNormalizado.split("\\s+");
 
         for (JsonNode opcion : menuOpciones) {
             if (opcion.has("respuestas")) {
                 for (JsonNode respuesta : opcion.get("respuestas")) {
-                    String clave = respuesta.get("clave").asText().toLowerCase();
-                    if (mensaje.toLowerCase().contains(clave)) {
-                        return respuesta.get("respuesta").asText(); // Retornar la respuesta predefinida
+                    String clave = respuesta.get("clave").asText().toLowerCase()
+                            .replaceAll("[áäà]", "a")
+                            .replaceAll("[éëè]", "e")
+                            .replaceAll("[íïì]", "i")
+                            .replaceAll("[óöò]", "o")
+                            .replaceAll("[úüù]", "u")
+                            .replaceAll("[^a-z0-9\\s]", "")
+                            .trim();
+
+                    // Dividir la clave en palabras
+                    String[] palabrasClave = clave.split("\\s+");
+
+                    // Verificar similitud entre palabras
+                    boolean coincidenciaEncontrada = false;
+                    for (String palabraUsuario : palabrasUsuario) {
+                        for (String palabraClave : palabrasClave) {
+                            // Verificar coincidencia exacta
+                            if (palabraUsuario.equals(palabraClave)) {
+                                coincidenciaEncontrada = true;
+                                break;
+                            }
+
+                            // Verificar palabras en singular/plural
+                            if (palabraUsuario.endsWith("s") && palabraClave.equals(palabraUsuario.substring(0, palabraUsuario.length() - 1)) ||
+                                    palabraClave.endsWith("s") && palabraUsuario.equals(palabraClave.substring(0, palabraClave.length() - 1))) {
+                                coincidenciaEncontrada = true;
+                                break;
+                            }
+
+                            // Calcular distancia de Levenshtein para palabras similares
+                            if (calcularDistanciaLevenshtein(palabraUsuario, palabraClave) <= 2) {
+                                coincidenciaEncontrada = true;
+                                break;
+                            }
+                        }
+                        if (coincidenciaEncontrada) break;
+                    }
+
+                    if (coincidenciaEncontrada) {
+                        return respuesta.get("respuesta").asText();
                     }
                 }
             }
         }
 
-        return null; // No se encontró coincidencia
+        return null;
+    }
+
+    // Método auxiliar para calcular la distancia de Levenshtein
+    private int calcularDistanciaLevenshtein(String str1, String str2) {
+        int[][] dp = new int[str1.length() + 1][str2.length() + 1];
+
+        for (int i = 0; i <= str1.length(); i++) {
+            dp[i][0] = i;
+        }
+        for (int j = 0; j <= str2.length(); j++) {
+            dp[0][j] = j;
+        }
+
+        for (int i = 1; i <= str1.length(); i++) {
+            for (int j = 1; j <= str2.length(); j++) {
+                if (str1.charAt(i - 1) == str2.charAt(j - 1)) {
+                    dp[i][j] = dp[i - 1][j - 1];
+                } else {
+                    dp[i][j] = 1 + Math.min(dp[i - 1][j - 1],
+                            Math.min(dp[i - 1][j], dp[i][j - 1]));
+                }
+            }
+        }
+
+        return dp[str1.length()][str2.length()];
     }
 
 
