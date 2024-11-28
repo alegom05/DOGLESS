@@ -72,7 +72,7 @@ public class UsuarioController {
         }
 
         // Ejecutar la consulta SQL nativa para obtener las órdenes del usuario
-        List<Object[]> ordenes = detallesRepository.findOrdersByUserId(usuarioLogueado.getId());
+        List<Orden> ordenes = ordenRepository.findOrdenesPorId(usuarioLogueado.getId());
 
         // Pasar la lista de órdenes a la vista
         model.addAttribute("ordenes", ordenes);
@@ -155,12 +155,22 @@ public class UsuarioController {
             return "redirect:/login";
         }
 
+        Optional<Orden> optionalOrden=ordenRepository.findById(id);
+        if (optionalOrden.isPresent()) {
+            Orden orden = optionalOrden.get();
+        }
+
+
+
+
         Detalleorden orden = detallesRepository.findById(id).orElse(null);
 
         if (orden == null || !orden.getOrden().getUsuario().getId().equals(usuarioLogueado.getId())) {
             redirectAttributes.addFlashAttribute("error", "Orden no encontrada o no tiene permiso para descargarla.");
             return "redirect:/usuario";
         }
+
+
 
         // Lógica para generar y descargar la boleta (PDF o cualquier formato deseado)
         // Ejemplo: retorno de archivo PDF

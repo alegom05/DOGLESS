@@ -41,7 +41,27 @@
   <link rel="stylesheet" href="/assets/css/plugins.min.css" />
   <link rel="stylesheet" href="/assets/css/kaiadmin.min.css" />
   <link rel="stylesheet" href="/assets/css/demo.css" />
+  <style>
+    /* Estilo para alinear los botones horizontalmente */
+    .acciones-container {
+      display: flex;
+      flex-direction: row; /* Alinea los botones en una fila horizontal */
+      gap: 10px; /* Espacio entre los botones */
+    }
+    .table-responsive {
+      overflow: visible; /* Permite que el contenido sobresalga */
+    }
 
+    .dropdown {
+      position: relative; /* Asegura el comportamiento correcto */
+    }
+
+    .dropdown-menu {
+      position: absolute;
+      z-index: 1050; /* Asegúrate de que se muestre sobre otros elementos */
+    }
+
+  </style>
 </head>
   <body>
     <div class="wrapper">
@@ -64,7 +84,7 @@
             <div th:if="${msg}" id="msg" class="alert alert-success fade-out" role="alert">
               <p th:text="${msg}"></p>
             </div>
-            
+
             <div class="row">
               <div class="col-md-12">
                 <div class="card">
@@ -72,25 +92,16 @@
                   <div class="card-body">
 
                     <div class="table-responsive">
-                      <style>
-                        /* Estilo para alinear los botones horizontalmente */
-                        .acciones-container {
-                          display: flex;
-                          flex-direction: row; /* Alinea los botones en una fila horizontal */
-                          gap: 8px; /* Espacio entre los botones */
-                        }
 
-                      </style>
 
                       <table id="basic-datatables" class="display table table-striped table-hover">
                         <thead>
                           <tr>
                             <th>N° orden</th>
-                            <th>Producto</th>
+                            <th>Metodo Pago</th>
                             <th>Fecha de orden</th>
                             <th>Dirección Envío</th>
                             <th>Precio (S/.)</th>
-                            <th>Cantidad</th>
                             <th>Estado</th>
                             <th>Acciones</th>
                           </tr>
@@ -98,13 +109,12 @@
                         <tbody>
                           <tr th:each="orden : ${ordenes}">
                             <!-- Asignar los valores de cada columna de la consulta SQL -->
-                            <td th:text="${orden[0]}"></td> <!-- idordenes -->
-                            <td th:text="${orden[6]}"></td> <!-- nombre_producto -->
-                            <td th:text="${orden[2]}"></td> <!-- fecha -->
-                            <td th:text="${orden[3]}"></td> <!-- direccionenvio -->
-                            <td th:text="${orden[8]}"></td> <!-- subtotal -->
-                            <td th:text="${orden[7]}"></td> <!-- cantidad -->
-                            <td th:text="${orden[1]}"></td> <!-- estado -->
+                            <td th:text="${orden.id}"></td> <!-- idordenes -->
+                            <td th:text="${orden.metodopago}"></td>
+                            <td th:text="${orden.fecha}"></td> <!-- nombre_producto -->
+                            <td th:text="${orden.direccionenvio}"></td> <!-- fecha -->
+                            <td th:text="${orden.total}"></td> <!-- direccionenvio -->
+                            <td th:text="${orden.estado}"></td> <!-- subtotal -->
                             <td>
                               <!-- Dropdown con ícono -->
                               <div class="dropdown">
@@ -114,17 +124,18 @@
                                 <!-- Dropdown oscuro -->
                                 <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
                                   <!-- Opción de Editar -->
-                                  <li><a class="dropdown-item" th:href="@{'/usuario/editorden' + '?id=' + ${orden[0]}}">Editar</a></li>
-
-                                  <li th:if="${orden[1] != 'En Proceso'}">
+                                  <li>
+                                    <a class="dropdown-item" th:href="@{'/usuario/editorden?id=' + ${orden.id}}">Editar</a>
+                                  </li>
+                                  <li th:if="${orden.estado != 'En Proceso'}">
                                     <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal"
-                                            th:data-id="${orden[0]}" >Eliminar</button>
+                                            th:data-id="${orden.id}" >Eliminar</button>
                                   </li>
 
                                   <!-- Descargar boleta -->
-                                  <li><button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#descargarBoletaModal"
-                                              th:data-id="${orden[0]}" onclick="setDescargarBoleta(${orden[0]})">Descargar boleta</button></li>
-
+                                  <li>
+                                    <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#descargarBoletaModal" onclick="setDescargarBoleta(${orden.id})">Descargar boleta</button>
+                                  </li>
                                 </ul>
                               </div>
                             </td>
@@ -176,8 +187,8 @@
                             </div>
                             <div class="modal-footer">
                               <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
-                              <!-- Aquí se llama al método que descarga la boleta con el ID correspondiente -->
-                              <button type="button" class="btn btn-dark" id="confirmDescargarBtn">Aceptar</button>
+                              <!-- Botón dinámico para redirigir -->
+                              <a class="btn btn-dark" id="confirmDescargarBtn" href="#">Aceptar</a>
                             </div>
                           </div>
                         </div>
@@ -342,6 +353,12 @@
           }, 1000); // 1000 ms coincide con la duración de la transición de opacidad
         }
       }, 3000); // Cambia 3000 por el tiempo en milisegundos que desees (3 segundos en este caso)
+    </script>
+    <script>
+      function setDescargarBoleta(id) {
+        const confirmDescargarBtn = document.getElementById('confirmDescargarBtn');
+        confirmDescargarBtn.setAttribute('href', `/usuario/descargarboleta?id=${id}`);
+      }
     </script>
   </body>
 </html>
