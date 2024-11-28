@@ -21,6 +21,15 @@ import org.springframework.web.servlet.ModelAndView;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.*;
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import jakarta.servlet.ServletOutputStream;
+import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping({"usuario", "usuario/"})
@@ -147,35 +156,59 @@ public class UsuarioController {
 
         mailSender.send(message);
     }
-    @PostMapping("/descargarboleta")
-    public String descargarBoleta(@RequestParam("id") Integer id, HttpSession session, RedirectAttributes redirectAttributes) {
-        Usuario usuarioLogueado = (Usuario) session.getAttribute("usuario");
+    @GetMapping("/descargarboleta")
+    public void descargarBoleta(@RequestParam("id") Integer id, HttpServletResponse response, RedirectAttributes redirectAttributes) throws DocumentException, IOException {
+        Optional<Orden> optionalOrden = ordenRepository.findById(id);
 
-        if (usuarioLogueado == null) {
-            return "redirect:/login";
-        }
-
-        Optional<Orden> optionalOrden=ordenRepository.findById(id);
         if (optionalOrden.isPresent()) {
             Orden orden = optionalOrden.get();
+            List<Detalleorden> detallesOrden = detallesRepository.findListaDetallesOrdenes(orden.getId());
+
+            // Crear el documento PDF
+            Document document = new Document();
+            response.setContentType("application/pdf");
+            response.setHeader("Content-Disposition", "attachment; filename=boleta_" + orden.getId() + ".pdf");
+
+            // Flujo de salida
+            ServletOutputStream out = response.getOutputStream();
+            PdfWriter.getInstance(document, out);
+
+            document.open();
+
+            // Añadir título
+            Paragraph title = new Paragraph("Boleta de Orden # " + orden.getId());
+            title.setAlignment(Element.ALIGN_CENTER);
+            document.add(title);
+            document.add(Chunk.NEWLINE);
+
+            // Información de la orden
+            document.add(new Paragraph("Estado: " + orden.getEstado()));
+            document.add(new Paragraph("Fecha: " + orden.getFecha()));
+            document.add(new Paragraph("Dirección de Envío: " + orden.getDireccionenvio()));
+            document.add(new Paragraph("Método de Pago: " + orden.getMetodopago()));
+            document.add(new Paragraph("Total: " + orden.getTotal()));
+            document.add(Chunk.NEWLINE);
+
+            // Tabla de productos
+            PdfPTable table = new PdfPTable(4);
+            table.addCell("Producto");
+            table.addCell("Cantidad");
+            table.addCell("Precio Unitario");
+            table.addCell("Subtotal");
+
+            for (Detalleorden detalle : detallesOrden) {
+                table.addCell(detalle.getProducto().getNombre());  // Asumiendo que 'Producto' tiene un campo 'nombre'
+                table.addCell(String.valueOf(detalle.getCantidad()));
+                table.addCell(String.valueOf(detalle.getPreciounitario()));
+                table.addCell(String.valueOf(detalle.getSubtotal()));
+            }
+
+            document.add(table);
+
+            document.close();
+        } else {
+            redirectAttributes.addFlashAttribute("error", "Orden no encontrada.");
         }
-
-
-
-
-        Detalleorden orden = detallesRepository.findById(id).orElse(null);
-
-        if (orden == null || !orden.getOrden().getUsuario().getId().equals(usuarioLogueado.getId())) {
-            redirectAttributes.addFlashAttribute("error", "Orden no encontrada o no tiene permiso para descargarla.");
-            return "redirect:/usuario";
-        }
-
-
-
-        // Lógica para generar y descargar la boleta (PDF o cualquier formato deseado)
-        // Ejemplo: retorno de archivo PDF
-
-        return "redirect:/usuario";  // O donde quieras redirigir después de la descarga
     }
 
 

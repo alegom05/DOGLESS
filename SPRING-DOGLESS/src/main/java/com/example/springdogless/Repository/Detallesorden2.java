@@ -53,4 +53,8 @@ public interface Detallesorden2 extends JpaRepository<Detalleorden, Integer> {
 
     @Query(value="SELECT * FROM detallesorden WHERE iddetallesorden = :idDetallesOrden", nativeQuery = true)
     Optional<Detalleorden> findByIdDetalle(Integer idDetallesOrden);
+
+
+    @Query(value="SELECT * FROM detallesorden WHERE idorden=:id", nativeQuery = true)
+    List<Detalleorden> findListaDetallesOrdenes(@Param("id") Integer id);
 }

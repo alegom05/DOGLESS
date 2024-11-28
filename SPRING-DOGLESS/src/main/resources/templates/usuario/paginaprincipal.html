@@ -134,7 +134,7 @@
 
                                   <!-- Descargar boleta -->
                                   <li>
-                                    <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#descargarBoletaModal" onclick="setDescargarBoleta(${orden.id})">Descargar boleta</button>
+                                    <a class="dropdown-item" th:href="@{'/usuario/descargarboleta?id=' + ${orden.id}}">Descargar boleta</a>
                                   </li>
                                 </ul>
                               </div>
