@@ -57,6 +57,11 @@ public class LoginController {
         return "login/loginForm"; // Esto renderiza la vista login.html
     }
 
+    // Ruta para agentes
+    @GetMapping("/loginAgente")
+    public String loginAgente() {
+        return "login/loginFormAgente";
+    }
     // Mapea la vista de registro
     @GetMapping("/api/getUserByDni")
     @ResponseBody
