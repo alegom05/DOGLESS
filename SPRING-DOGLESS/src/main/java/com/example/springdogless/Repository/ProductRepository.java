@@ -642,5 +642,6 @@ public interface ProductRepository extends JpaRepository<Producto, Integer>{
             "LIMIT 10", nativeQuery = true)
     List<ProductoDTO> contarTotalVendidosPorProducto();
 
+    Producto findByNombre(String mensaje);
 }
 

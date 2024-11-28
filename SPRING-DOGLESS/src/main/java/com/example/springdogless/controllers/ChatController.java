@@ -37,8 +37,11 @@ public class ChatController {
     public ResponseEntity<String> processMessage(@RequestBody Map<String, String> request) {
         String message = request.get("message");
         String response = chatbotService.procesarMensaje(message);
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok()
+                .header("Content-Type", "text/html; charset=UTF-8")
+                .body(response);
     }
+
 
     @PostMapping("/reclamo")
     public ResponseEntity<String> crearReclamoDesdeChat(@RequestBody Map<String, String> request) {
@@ -65,5 +68,7 @@ public class ChatController {
 
         return ResponseEntity.ok("Reclamo creado exitosamente.");
     }
+
+
 
 }

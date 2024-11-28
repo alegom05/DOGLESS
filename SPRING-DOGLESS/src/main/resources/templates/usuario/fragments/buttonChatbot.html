@@ -110,7 +110,7 @@
                             .then(responseMessage => {
                                 const botMessageDiv = document.createElement("div");
                                 botMessageDiv.className = "bot-message";
-                                botMessageDiv.textContent = responseMessage;
+                                botMessageDiv.innerHTML = responseMessage;
                                 chatBox.appendChild(botMessageDiv);
 
                                 if (responseMessage.includes("escribe tu reclamo")) {
@@ -148,7 +148,7 @@
                                 // Mostrar la respuesta del servidor en el chat
                                 const botMessageDiv = document.createElement("div");
                                 botMessageDiv.className = "bot-message";
-                                botMessageDiv.textContent = responseMessage;
+                                botMessageDiv.innerHTML = responseMessage;
                                 chatBox.appendChild(botMessageDiv);
 
                                 // Hacer scroll al final del chat
