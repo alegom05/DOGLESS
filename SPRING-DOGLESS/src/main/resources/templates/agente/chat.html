@@ -63,38 +63,38 @@
             <div class="card">
               <div class="card-header">
                 <h3 class="card-title">Chat con Usuarios (En desarrollo)</h3>
-                <span id="userName" th:text="${session.usuario.nombre}"></span>
+                <input id="userName" th:value="${session.usuario.nombre}" type="hidden"/>
               </div>
               <div class="card-body">
                 <!-- Navegación de tabs -->
                 <ul class="nav nav-tabs" id="chatTabs" role="tablist">
-                  <li th:each="userId, iterStat : ${listaIdUsuarios}" class="nav-item" role="presentation">
+                  <li th:each="usuario, iterStat : ${listaUsuarios}" class="nav-item" role="presentation">
                     <button
                             class="nav-link"
                             th:classappend="${iterStat.index == 0} ? 'active'"
-                            id="tab-[[${userId}]]"
+                            id="tab-[[${usuario.id}]]"
                             data-bs-toggle="tab"
-                            th:data-bs-target="'#chat-' + ${userId}"
+                            th:data-bs-target="'#chat-' + ${usuario.id}"
                             type="button"
                             role="tab"
-                            th:aria-controls="'chat-' + ${userId}"
+                            th:aria-controls="'chat-' + ${usuario.id}"
                             th:aria-selected="${iterStat.index == 0}">
-                      Usuario [[${userId}]]
+                      [[${usuario.nombre}]] <!-- Mostrar el nombre del usuario -->
                     </button>
                   </li>
                 </ul>
 
                 <!-- Contenido de tabs -->
                 <div class="tab-content" id="chatTabContent">
-                  <div th:each="userId, iterStat : ${listaIdUsuarios}"
+                  <div th:each="usuario, iterStat : ${listaUsuarios}"
                        th:classappend="${iterStat.index == 0} ? 'show active'"
-                       th:id="'chat-' + ${userId}"
+                       th:id="'chat-' + ${usuario.id}"
                        class="tab-pane fade"
                        role="tabpanel"
-                       th:aria-labelledby="'tab-' + ${userId}">
+                       th:aria-labelledby="'tab-' + ${usuario.id}">
 
                     <div class="p-3 border rounded mt-3">
-                      <div th:id="'chatArea-' + ${userId}"
+                      <div th:id="'chatArea-' + ${usuario.id}"
                            class="border rounded p-3"
                            style="height: 300px; overflow-y: scroll; background-color: #f8f9fa;">
                         <!-- Aquí aparecerán los mensajes -->
@@ -105,11 +105,11 @@
                       </div>
                       <div class="input-group mt-3">
                         <input type="text"
-                               th:id="'messageInput-' + ${userId}"
+                               th:id="'messageInput-' + ${usuario.id}"
                                class="form-control"
                                placeholder="Escribe tu mensaje" />
                         <button class="btn btn-primary sendButton"
-                                th:data-user-id="${userId}">
+                                th:data-user-id="${usuario.id}">
                           Enviar
                         </button>
                       </div>
@@ -148,6 +148,9 @@
         // Aquí puedes usar el nombre sin problemas de tildes
         console.log(name);
 
+        const escapedUserName = JSON.stringify(name).replace(/"/g, '');
+
+
         stompClient.connect({}, () => {
           // Suscribirse a cada sala de usuario
           userIds.forEach(userId => {
@@ -173,9 +176,10 @@
             if (input.value.trim() === '') return; // Validar que el mensaje no esté vacío
 
             const message = {
-              remitente: `${escapedUserName}-${agentId}`,
+              remitente: escapedUserName,
               mensaje: input.value,
-              roomId: roomId // Incluir la sala en el mensaje
+              roomId: roomId, // Incluir la sala en el mensaje
+              userId: agentId,
             };
 
             // Enviar mensaje al servidor

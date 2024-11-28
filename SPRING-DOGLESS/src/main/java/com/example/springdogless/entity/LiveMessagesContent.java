@@ -11,6 +11,8 @@ public class LiveMessagesContent {
     private String mensaje;
     private String roomId; // Sala única (ej: usuarioId-agenteId)
     private LocalDateTime timestamp;
+
+    private String userId;
     /*
     // Contenido del mensaje
     private String content;

@@ -30,19 +30,16 @@ public class LiveChatController {
     public LiveMessagesContent handleMessage(@DestinationVariable String roomId, LiveMessagesContent message, SimpMessageHeaderAccessor headerAccessor) {
         /*roomId=35-11*/
         String[] partsRoom = roomId.split("-");
-        Integer userId= Integer.parseInt(partsRoom[0]);
-
-        String[] partsRemitente= message.getRemitente().split("-");
-        Integer idEmisor=Integer.parseInt(partsRemitente[1]);
+        int userId3= Integer.parseInt(partsRoom[0]);
 
         /*USUARIO-35 o AGENTE-11*/
-        Optional<Usuario> optionalUsuario=usuarioRepository.findById(idEmisor);
+        Optional<Usuario> optionalUsuario=usuarioRepository.findById(Integer.valueOf(message.getUserId()));
 
         if (optionalUsuario.isPresent()) {
             Usuario sender = optionalUsuario.get();
             LiveMessages messagedb  = new LiveMessages();
 
-            String roomId2 = "room_" + userId;
+            String roomId2 = "room_" + userId3;
             messagedb.setIdusuarios(sender);
             messagedb.setContenido(message.getMensaje());
             messagedb.setSala(roomId2);

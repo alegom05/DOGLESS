@@ -29,7 +29,7 @@
                         <div class="card">
                             <div class="card-header bg-primary text-white text-center">
                                 <h3 class="mb-0">Chat con tu Agente</h3>
-                                <span id="userName" th:text="${session.usuario.nombre}"></span>
+                                <input id="userName" th:value="${session.usuario.nombre}" type="hidden"/>
                             </div>
                             <div class="card-body">
                                 <!-- Área de chat -->
@@ -114,9 +114,10 @@
                     if (input.value.trim() === '') return; // Validar que no esté vacío
 
                     const message = {
-                        remitente: `${escapedUserName}-${userId}`,
+                        remitente: escapedUserName,
                         mensaje: input.value,
-                        roomId: roomId // Incluir el ID de la sala en el mensaje
+                        roomId: roomId, // Incluir el ID de la sala en el mensaje
+                        userId: userId
                     };
 
                     // Enviar mensaje al servidor

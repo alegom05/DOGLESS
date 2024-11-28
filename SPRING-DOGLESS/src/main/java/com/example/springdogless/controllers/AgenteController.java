@@ -185,6 +185,7 @@ public class AgenteController {
         // Preparar el ModelAndView
         ModelAndView modelAndView = new ModelAndView("/agente/chat");
         modelAndView.addObject("listaIdUsuarios", idUsuariosAsignados);
+        modelAndView.addObject("listaUsuarios", usuariosAsignados);
         modelAndView.addObject("mensajesPorSala", mensajesPorSala); // Pasa los mensajes por sala
         return modelAndView;
     }
