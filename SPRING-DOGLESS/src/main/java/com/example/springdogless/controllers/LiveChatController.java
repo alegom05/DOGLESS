@@ -55,21 +55,4 @@ public class LiveChatController {
         message.setRoomId(roomId); // Opcional
         return message;
     }
-
-    /*
-    @MessageMapping("/chat/{room}")
-    @SendTo("/topic/room/{room}")
-
-    public LiveMessagesContent sendMessage(@DestinationVariable String room, LiveMessagesContent message, SimpMessageHeaderAccessor headerAccessor) {
-        liveChatRoomService.markRoomAsActive(room);
-        LiveMessages messagedb  = new LiveMessages();
-        Usuario sender = usuarioRepository.getReferenceById(message.getSenderId());
-        messagedb.setIdusuarios(sender);
-        messagedb.setContenido(message.getContent());
-        messagedb.setSala(message.getRoom());
-        messagedb.setFechaenvio(LocalDateTime.now());
-        liveMessagesRepository.save(messagedb);
-        // Devolver el mensaje
-        return message;
-    }*/
 }

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>Chat</title>
     <meta
@@ -62,6 +63,7 @@
             <div class="card">
               <div class="card-header">
                 <h3 class="card-title">Chat con Usuarios (En desarrollo)</h3>
+                <span id="userName" th:text="${session.usuario.nombre}"></span>
               </div>
               <div class="card-body">
                 <!-- Navegación de tabs -->
@@ -138,9 +140,13 @@
       document.addEventListener("DOMContentLoaded", () => {
         const agentId = [[${session.usuario.id}]]; // ID del agente
         const userIds = [[${listaIdUsuarios}]]; // Lista de usuarios asignados
-
         const socket = new SockJS('/ws-chat'); // Conexión con el WebSocket
         const stompClient = Stomp.over(socket);
+        // Obtener el nombre del usuario desde el span que lo contiene
+        const name = document.getElementById('userName').textContent;
+
+        // Aquí puedes usar el nombre sin problemas de tildes
+        console.log(name);
 
         stompClient.connect({}, () => {
           // Suscribirse a cada sala de usuario
@@ -167,7 +173,7 @@
             if (input.value.trim() === '') return; // Validar que el mensaje no esté vacío
 
             const message = {
-              remitente: `AGENTE-${agentId}`,
+              remitente: `${escapedUserName}-${agentId}`,
               mensaje: input.value,
               roomId: roomId // Incluir la sala en el mensaje
             };

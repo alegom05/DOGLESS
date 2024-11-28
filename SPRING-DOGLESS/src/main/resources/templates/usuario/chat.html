@@ -29,6 +29,7 @@
                         <div class="card">
                             <div class="card-header bg-primary text-white text-center">
                                 <h3 class="mb-0">Chat con tu Agente</h3>
+                                <span id="userName" th:text="${session.usuario.nombre}"></span>
                             </div>
                             <div class="card-body">
                                 <!-- Área de chat -->
@@ -87,6 +88,13 @@
                 const userId = [[${session.usuario.id}]];
                 const agentId = [[${idAgenteAsignado}]];
                 const roomId = `${userId}-${agentId}`; // Generar dinámicamente la sala
+                // Obtener el nombre del usuario desde el span que lo contiene
+                const name = document.getElementById('userName').textContent;
+
+                // Aquí puedes usar el nombre sin problemas de tildes
+                console.log(name);
+
+                const escapedUserName = JSON.stringify(name).replace(/"/g, '');
 
                 const socket = new SockJS('/ws-chat'); // Conexión con el WebSocket
                 const stompClient = Stomp.over(socket);
@@ -106,7 +114,7 @@
                     if (input.value.trim() === '') return; // Validar que no esté vacío
 
                     const message = {
-                        remitente: `USUARIO-${userId}`,
+                        remitente: `${escapedUserName}-${userId}`,
                         mensaje: input.value,
                         roomId: roomId // Incluir el ID de la sala en el mensaje
                     };
