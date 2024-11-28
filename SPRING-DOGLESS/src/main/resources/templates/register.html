@@ -10,6 +10,13 @@
 
         <!-- Estilos de la página utilizando Thymeleaf -->
         <link rel="stylesheet" th:href="@{assets/css/style_index.css}">
+        <style>
+            .error-message {
+                color: red;
+                font-weight: bold;
+                margin-bottom: 10px;
+            }
+        </style>
 
         <title>Registro</title>
     </head>
@@ -23,6 +30,9 @@
                     <div class="top">
                         <span>¿Tienes una cuenta? <a th:href="@{/login}">Acceso</a></span>
                         <header>REGISTRO</header>
+                    </div>
+                    <div th:if="${error}" class="error-message">
+                        <p th:text="${error}"></p>
                     </div>
                     <div class="input-box">
                         <input type="text" id="dni" th:field="*{dni}" class="input-field" placeholder="DNI" required>
@@ -51,50 +61,50 @@
                     </div>
 
                     <div class="input-box">
-                        <select class="input-field" id="distrito" th:field="*{distrito.distrito}" required>
+                        <select class="input-field" id="distrito" th:field="*{distrito.iddistritos}" required>
                             <option value="" disabled selected>Selecciona tu distrito</option>
-                            <option value="Ancon">Ancón</option>
-                            <option value="Santa Rosa">Santa Rosa</option>
-                            <option value="Carabayllo">Carabayllo</option>
-                            <option value="Puente Piedra">Puente Piedra</option>
-                            <option value="Comas">Comas</option>
-                            <option value="Los Olivos">Los Olivos</option>
-                            <option value="San Martín de Porres">San Martín de Porres</option>
-                            <option value="Independencia">Independencia</option>
-                            <option value="San Juan de Miraflores">San Juan de Miraflores</option>
-                            <option value="Villa María del Triunfo">Villa María del Triunfo</option>
-                            <option value="Villa el Salvador">Villa el Salvador</option>
-                            <option value="Pachacamac">Pachacamac</option>
-                            <option value="Lurin">Lurín</option>
-                            <option value="Punta Hermosa">Punta Hermosa</option>
-                            <option value="Punta Negra">Punta Negra</option>
-                            <option value="San Bartolo">San Bartolo</option>
-                            <option value="Santa María del Mar">Santa María del Mar</option>
-                            <option value="Pucusana">Pucusana</option>
-                            <option value="San Juan de Lurigancho">San Juan de Lurigancho</option>
-                            <option value="Lurigancho/Chosica">Lurigancho/Chosica</option>
-                            <option value="Ate">Ate</option>
-                            <option value="El Agustino">El Agustino</option>
-                            <option value="Santa Anita">Santa Anita</option>
-                            <option value="La Molina">La Molina</option>
-                            <option value="Cieneguilla">Cieneguilla</option>
-                            <option value="Rimac">Rímac</option>
-                            <option value="Cercado de Lima">Cercado de Lima</option>
-                            <option value="Breña">Breña</option>
-                            <option value="Pueblo Libre">Pueblo Libre</option>
-                            <option value="Magdalena">Magdalena</option>
-                            <option value="Jesus María">Jesús María</option>
-                            <option value="La Victoria">La Victoria</option>
-                            <option value="Lince">Lince</option>
-                            <option value="San Isidro">San Isidro</option>
-                            <option value="San Miguel">San Miguel</option>
-                            <option value="Surquillo">Surquillo</option>
-                            <option value="San Borja">San Borja</option>
-                            <option value="Santiago de Surco">Santiago de Surco</option>
-                            <option value="Barranco">Barranco</option>
-                            <option value="Chorrillos">Chorrillos</option>
-                            <option value="San Luis">San Luis</option>
-                            <option value="Miraflores">Miraflores</option>
+                            <option value="1">Ancón</option>
+                            <option value="2">Santa Rosa</option>
+                            <option value="3">Carabayllo</option>
+                            <option value="4">Puente Piedra</option>
+                            <option value="5">Comas</option>
+                            <option value="6">Los Olivos</option>
+                            <option value="7">San Martín de Porres</option>
+                            <option value="8">Independencia</option>
+                            <option value="9">San Juan de Miraflores</option>
+                            <option value="10">Villa María del Triunfo</option>
+                            <option value="11">Villa el Salvador</option>
+                            <option value="12">Pachacamac</option>
+                            <option value="13">Lurín</option>
+                            <option value="14">Punta Hermosa</option>
+                            <option value="15">Punta Negra</option>
+                            <option value="16">San Bartolo</option>
+                            <option value="17">Santa María del Mar</option>
+                            <option value="18">Pucusana</option>
+                            <option value="19">San Juan de Lurigancho</option>
+                            <option value="20">Lurigancho/Chosica</option>
+                            <option value="21">Ate</option>
+                            <option value="22">El Agustino</option>
+                            <option value="23">Santa Anita</option>
+                            <option value="24">La Molina</option>
+                            <option value="25">Cieneguilla</option>
+                            <option value="26">Rímac</option>
+                            <option value="27">Cercado de Lima</option>
+                            <option value="28">Breña</option>
+                            <option value="29">Pueblo Libre</option>
+                            <option value="30">Magdalena</option>
+                            <option value="31">Jesús María</option>
+                            <option value="32">La Victoria</option>
+                            <option value="33">Lince</option>
+                            <option value="34">San Isidro</option>
+                            <option value="35">San Miguel</option>
+                            <option value="36">Surquillo</option>
+                            <option value="37">San Borja</option>
+                            <option value="38">Santiago de Surco</option>
+                            <option value="39">Barranco</option>
+                            <option value="40">Chorrillos</option>
+                            <option value="41">San Luis</option>
+                            <option value="42">Miraflores</option>
                         </select>
                         <i class="bx bx-map"></i>
                     </div>
@@ -105,7 +115,7 @@
                     </div>
 
                     <div class="input-box">
-                        <input type="password" id="confirmar-contrasena" class="input-field" placeholder="Confirmar Contraseña" required>
+                        <input type="password" id="confirmar-contrasena" name="confirmarContrasena" class="input-field" placeholder="Confirmar Contraseña" required>
                         <i class="bx bx-lock-alt"></i>
                     </div>
 
@@ -173,7 +183,7 @@
                         distritoField.value !== '' &&
                         contrasenaField.value !== '' &&
                         confirmarContrasenaField.value !== '';
-
+                }
                 //Script del Service
                     function fetchUserInfo(event) {
                         if (event.key === "Enter") {
@@ -207,9 +217,15 @@
 
 
                 // Actualizar estado del botón de registro
-                function updateRegisterButtonState() {
-                    registerButton.disabled = !validarCamposVacios();
-                }
+                    function updateRegisterButtonState() {
+                        if (!validarCamposVacios() ||
+                            !validarCoincidenciaContrasenas(contrasenaField.value, confirmarContrasenaField.value)
+                        ) {
+                            registerButton.disabled = true;
+                        } else {
+                            registerButton.disabled = false;
+                        }
+                    }
 
                 var fields = [nombreField, apellidoField, dniField, emailField, direccionField, distritoField, contrasenaField, confirmarContrasenaField];
                 fields.forEach(function(field) {
