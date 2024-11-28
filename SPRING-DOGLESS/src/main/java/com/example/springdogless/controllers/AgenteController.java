@@ -69,7 +69,11 @@ public class AgenteController {
 
     @GetMapping("/perfil_agente")
     public String verperfilzonal(Model model) {
-        return "agente/perfil_agente"; // Esto renderiza la vista perfil_superadmin.html
+        return "agente/perfil_agente"; // Esto renderiza la vista perfil_agente.html
+    }
+    @GetMapping("/ActualizarPerfilAgente")
+    public String ActualizardatosDeAgente(Model model) {
+        return "agente/modificarperfil"; // Esto renderiza la vista modificarperfil_agente.html
     }
 
     @GetMapping({"/dashboard"})
@@ -531,6 +535,7 @@ public class AgenteController {
         }
         return "agente/detallesperfil"; // Retorna el nombre de la vista
     }
+
     @GetMapping("/informacion-de-contacto")
     public String informaciondecontacto() {
         return "informacion-de-contacto"; // Esto renderiza la vista informacion-de-contacto.html
