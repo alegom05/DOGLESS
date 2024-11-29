@@ -98,10 +98,10 @@ public class AdminController {
     }
     @GetMapping({"/usuarios"})
     public String listarProductos(Model model) {
-        /*
-        model.addAttribute("listaUsuarios", usuarioDao.listarUsuarios());
 
-         */
+
+        model.addAttribute("listaUsuarios", usuarioRepository.findByRol(4));
+
         return "admin/usuarios";
     }
 
@@ -943,6 +943,7 @@ public class AdminController {
             }
         }
         producto.setDescripcion(productoForm.getDescripcion());
+        producto.setAprobado("Pendiente");
 
         producto.setBorrado(1);
         productRepository.save(producto);
