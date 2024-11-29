@@ -4,6 +4,7 @@ import com.example.springdogless.DTO.ProductoDTO;
 import com.example.springdogless.DTO.ResenaDTO;
 import com.example.springdogless.Repository.*;
 import com.example.springdogless.entity.*;
+import com.itextpdf.text.pdf.draw.LineSeparator;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import jakarta.servlet.http.HttpSession;
@@ -175,40 +176,72 @@ public class UsuarioController {
 
             document.open();
 
-            // Añadir título
-            Paragraph title = new Paragraph("Boleta de Orden # " + orden.getId());
+            // Encabezado de la empresa
+            Paragraph header = new Paragraph("Dogless", new Font(Font.FontFamily.HELVETICA, 18, Font.BOLD));
+            header.setAlignment(Element.ALIGN_CENTER);
+            document.add(header);
+
+            document.add(new Paragraph("Cuidamos de tus mascotas, cuidamos de ti", new Font(Font.FontFamily.HELVETICA, 12, Font.ITALIC)));
+            document.add(Chunk.NEWLINE);
+
+            // Título de la boleta
+            Paragraph title = new Paragraph("Boleta de Orden # " + orden.getId(), new Font(Font.FontFamily.HELVETICA, 16, Font.BOLD));
             title.setAlignment(Element.ALIGN_CENTER);
             document.add(title);
             document.add(Chunk.NEWLINE);
 
             // Información de la orden
+            document.add(new LineSeparator());
+            document.add(new Paragraph("Información de la Orden", new Font(Font.FontFamily.HELVETICA, 14, Font.BOLD)));
             document.add(new Paragraph("Estado: " + orden.getEstado()));
             document.add(new Paragraph("Fecha: " + orden.getFecha()));
             document.add(new Paragraph("Dirección de Envío: " + orden.getDireccionenvio()));
             document.add(new Paragraph("Método de Pago: " + orden.getMetodopago()));
-            document.add(new Paragraph("Total: " + orden.getTotal()));
+            document.add(new Paragraph("Total: " + orden.getTotal(), new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD)));
+            document.add(Chunk.NEWLINE);
+
+            // Separador
+            document.add(new LineSeparator());
+            document.add(new Paragraph("Detalles de Productos", new Font(Font.FontFamily.HELVETICA, 14, Font.BOLD)));
             document.add(Chunk.NEWLINE);
 
             // Tabla de productos
             PdfPTable table = new PdfPTable(4);
-            table.addCell("Producto");
-            table.addCell("Cantidad");
-            table.addCell("Precio Unitario");
-            table.addCell("Subtotal");
+            table.setWidthPercentage(100); // Ancho de la tabla
+            table.setSpacingBefore(10f);
+            table.setSpacingAfter(10f);
 
+            // Encabezados de la tabla
+            PdfPCell headerCell;
+            Font headerFont = new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD);
+            String[] headers = { "Producto", "Cantidad", "Precio Unitario", "Subtotal" };
+            for (String headerTitle : headers) {
+                headerCell = new PdfPCell(new Phrase(headerTitle, headerFont));
+                headerCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                headerCell.setBackgroundColor(BaseColor.LIGHT_GRAY);
+                table.addCell(headerCell);
+            }
+
+            // Detalles de los productos
             for (Detalleorden detalle : detallesOrden) {
-                table.addCell(detalle.getProducto().getNombre());  // Asumiendo que 'Producto' tiene un campo 'nombre'
-                table.addCell(String.valueOf(detalle.getCantidad()));
-                table.addCell(String.valueOf(detalle.getPreciounitario()));
-                table.addCell(String.valueOf(detalle.getSubtotal()));
+                table.addCell(new PdfPCell(new Phrase(detalle.getProducto().getNombre())));
+                table.addCell(new PdfPCell(new Phrase(String.valueOf(detalle.getCantidad()))));
+                table.addCell(new PdfPCell(new Phrase(String.valueOf(detalle.getPreciounitario()))));
+                table.addCell(new PdfPCell(new Phrase(String.valueOf(detalle.getSubtotal()))));
             }
 
             document.add(table);
+
+            // Separador final
+            document.add(new LineSeparator());
+            document.add(new Paragraph("Gracias por confiar en Dogless", new Font(Font.FontFamily.HELVETICA, 12, Font.ITALIC)));
+            document.add(Chunk.NEWLINE);
 
             document.close();
         } else {
             redirectAttributes.addFlashAttribute("error", "Orden no encontrada.");
         }
+
     }
 
 

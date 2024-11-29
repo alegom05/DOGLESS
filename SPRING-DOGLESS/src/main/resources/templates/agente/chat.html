@@ -143,7 +143,7 @@
         const socket = new SockJS('/ws-chat'); // Conexión con el WebSocket
         const stompClient = Stomp.over(socket);
         // Obtener el nombre del usuario desde el span que lo contiene
-        const name = document.getElementById('userName').textContent;
+        const name = document.getElementById('userName').value;
 
         // Aquí puedes usar el nombre sin problemas de tildes
         console.log(name);
@@ -161,6 +161,8 @@
               const chatArea = document.getElementById(`chatArea-${userId}`);
               if (chatArea) {
                 chatArea.innerHTML += `<p><b>${chatMessage.remitente}:</b> ${chatMessage.mensaje}</p>`;
+                // Desplazar automáticamente hacia el final
+                chatArea.scrollTop = chatArea.scrollHeight;
               }
             });
           });

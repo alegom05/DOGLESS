@@ -1,15 +1,38 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <title>Chat en Vivo</title>
         <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport" />
+
         <link rel="icon" href="/assets/img/kaiadmin/favicon.ico" type="image/x-icon" />
         <link href="/assets/css/style-SuperAdmin.css" rel="stylesheet">
+
+        <script src="/assets/js/plugin/webfont/webfont.min.js"></script>
+        <script>
+            WebFont.load({
+                google: { families: ["Public Sans:300,400,500,600,700"] },
+                custom: {
+                    families: [
+                        "Font Awesome 5 Solid",
+                        "Font Awesome 5 Regular",
+                        "Font Awesome 5 Brands",
+                        "simple-line-icons",
+                    ],
+                    urls: ["/assets/css/fonts.min.css"],
+                },
+                active: function () {
+                    sessionStorage.fonts = true;
+                },
+            });
+        </script>
+
+
         <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
         <link rel="stylesheet" href="/assets/css/plugins.min.css" />
         <link rel="stylesheet" href="/assets/css/kaiadmin.min.css" />
+
         <link rel="stylesheet" href="/assets/css/demo.css" />
     </head>
 
@@ -42,11 +65,9 @@
                                         <p>No hay mensajes en esta sala aún. ¡Sé el primero en enviar un mensaje!</p>
                                     </div>
                                     <div th:unless="${noMessages}">
-                                        <div th:each="mensaje : ${listaMensajesSala}">
-                                            <div class="message">
-                                                <strong th:text="${mensaje.idusuarios.nombre}">Usuario</strong>:
-                                                <span th:text="${mensaje.contenido}">Contenido del mensaje</span>
-                                            </div>
+                                        <div th:each="mensaje : ${listaMensajesSala}" class="message">
+                                            <strong th:text="${mensaje.idusuarios.nombre}">Usuario</strong>:
+                                            <span th:text="${mensaje.contenido}">Contenido del mensaje</span>
                                         </div>
                                     </div>
                                 </div>
@@ -76,10 +97,13 @@
         <script src="/assets/js/core/jquery-3.7.1.min.js"></script>
         <script src="/assets/js/core/popper.min.js"></script>
         <script src="/assets/js/core/bootstrap.min.js"></script>
+
         <script src="/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
         <script src="/assets/js/plugin/datatables/datatables.min.js"></script>
+
         <script src="/assets/js/kaiadmin.min.js"></script>
         <script src="/assets/js/setting-demo2.js"></script>
+
         <script src="https://cdn.jsdelivr.net/npm/sockjs-client/dist/sockjs.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/stompjs/lib/stomp.min.js"></script>
         <script>
@@ -89,12 +113,10 @@
                 const agentId = [[${idAgenteAsignado}]];
                 const roomId = `${userId}-${agentId}`; // Generar dinámicamente la sala
                 // Obtener el nombre del usuario desde el span que lo contiene
-                const name = document.getElementById('userName').textContent;
+                const name = document.getElementById('userName').value;
 
                 // Aquí puedes usar el nombre sin problemas de tildes
-                console.log(name);
 
-                const escapedUserName = JSON.stringify(name).replace(/"/g, '');
 
                 const socket = new SockJS('/ws-chat'); // Conexión con el WebSocket
                 const stompClient = Stomp.over(socket);
@@ -105,6 +127,9 @@
                         const chatMessage = JSON.parse(message.body);
                         const chatArea = document.getElementById('chatArea');
                         chatArea.innerHTML += `<p><b>${chatMessage.remitente}:</b> ${chatMessage.mensaje}</p>`;
+
+                        // Desplazar automáticamente hacia el final
+                        chatArea.scrollTop = chatArea.scrollHeight;
                     });
                 });
 
@@ -114,7 +139,7 @@
                     if (input.value.trim() === '') return; // Validar que no esté vacío
 
                     const message = {
-                        remitente: escapedUserName,
+                        remitente: name,
                         mensaje: input.value,
                         roomId: roomId, // Incluir el ID de la sala en el mensaje
                         userId: userId
