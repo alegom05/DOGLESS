@@ -18,7 +18,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.*;
-import java.time.LocalDate;
 
 @Controller
 @RequestMapping({"agente", "agente/"})
@@ -161,10 +160,10 @@ public class AgenteController {
     }
 
     @GetMapping("chat")
-    public ModelAndView chatAgente(HttpSession session) {
+    public String chatAgente(Model model, HttpSession session) {
         Usuario usuarioLogueado = (Usuario) session.getAttribute("usuario");
         if (usuarioLogueado == null) {
-            return new ModelAndView("redirect:/login");
+            return "redirect:/login";
         }
 
         // Obtener información del agente
@@ -182,12 +181,11 @@ public class AgenteController {
             mensajesPorSala.add(mensajesSala);  // Agrega los mensajes de cada sala a la lista
         }
 
-        // Preparar el ModelAndView
-        ModelAndView modelAndView = new ModelAndView("/agente/chat");
-        modelAndView.addObject("listaIdUsuarios", idUsuariosAsignados);
-        modelAndView.addObject("listaUsuarios", usuariosAsignados);
-        modelAndView.addObject("mensajesPorSala", mensajesPorSala); // Pasa los mensajes por sala
-        return modelAndView;
+
+        model.addAttribute("listaIdUsuarios", idUsuariosAsignados);
+        model.addAttribute("listaUsuarios", usuariosAsignados);
+        model.addAttribute("mensajesPorSala", mensajesPorSala); // Pasa los mensajes por sala
+        return "/agente/chat";
     }
 
 
