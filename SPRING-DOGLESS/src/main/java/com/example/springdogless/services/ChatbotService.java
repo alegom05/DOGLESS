@@ -260,7 +260,7 @@ public class ChatbotService {
     }
 
     private String manejarReclamaciones() {
-        return "Puedes acceder a nuestro libro de reclamaciones virtual en este enlace: [Libro de Reclamaciones Virtual].";
+        return "Recuerda que también puedes acceder a nuestra sección \"Libro de Reclamaciones\" de la barra lateral.";
     }
 
     private String generarOrdenDeCompra() {

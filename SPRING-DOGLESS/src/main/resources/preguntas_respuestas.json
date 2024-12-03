@@ -14,9 +14,19 @@
         },
         {
           "clave": "contacto",
-          "respuesta": "Puedes contactarnos al correo dogless@gmail.com o llamarnos al +51 123 456 789."
+          "respuesta": "Puedes contactarnos al correo doglessonline@gmail.com o llamarnos al +51 123 456 789."
+        },
+        {
+          "clave": "agente",
+          "respuesta": "Haz clic en tu usuario, selecciona 'Postularse a agente' y confirma con el botón 'Postularse'."
+        },
+        {
+          "clave": ["contraseña", "clave"],
+          "respuesta": "Haz clic en tu usuario y selecciona 'Cambiar contraseña'."
         }
+
       ]
+
     }
   ]
 }
