@@ -69,6 +69,20 @@ public class ChatController {
         return ResponseEntity.ok("Reclamo creado exitosamente.");
     }
 
+    @PostMapping("/flujoCompra")
+    public ResponseEntity<String> flujoCompra(@RequestBody Map<String, String> request) {
+        String userId = request.get("userId");
+        String mensaje = request.get("message");
+
+        if (userId == null || mensaje == null) {
+            return ResponseEntity.badRequest().body("Error: userId y message son obligatorios.");
+        }
+
+        String respuesta = chatbotService.procesarFlujoCompra(userId, mensaje);
+        return ResponseEntity.ok()
+                .header("Content-Type", "text/html; charset=UTF-8")
+                .body(respuesta);
+    }
 
 
 }

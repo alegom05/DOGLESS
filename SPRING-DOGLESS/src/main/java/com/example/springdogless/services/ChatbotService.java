@@ -4,6 +4,7 @@ import com.example.springdogless.Repository.Detallesorden2;
 import com.example.springdogless.Repository.OrdenRepository;
 import com.example.springdogless.Repository.ProductRepository;
 import com.example.springdogless.Repository.UsuarioRepository;
+import com.example.springdogless.controllers.UsuarioController;
 import com.example.springdogless.entity.Detalleorden;
 import com.example.springdogless.entity.Orden;
 import com.example.springdogless.entity.Producto;
@@ -58,7 +59,13 @@ public class ChatbotService {
     @Value("${chatbot.horario.fin}")
     private String horarioFin;
 
+    @Autowired
+    private UsuarioController usuarioController;
+
+
     private String estadoActual = "MENU"; // Estado inicial
+    private Map<String, Map<String, String>> datosUsuario = new HashMap<>();
+
 
     public ChatbotService(ObjectMapper objectMapper, RestTemplate restTemplate) {
         this.objectMapper = objectMapper;
@@ -268,6 +275,18 @@ public class ChatbotService {
         return String.format("Tu orden de compra ha sido generada exitosamente. Número de orden: %s.", numeroOrden);
     }
 
+    public String manejarCompraDesdeChatbot(Integer userId, Integer productoId, Integer cantidad) {
+        try {
+            // Llama al método `agregarProducto2` del UsuarioController
+            usuarioController.agregarProducto2(null, null, productoId, userId, cantidad, null);
+            return "Producto añadido exitosamente al carrito.";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "Hubo un error al añadir el producto al carrito. Por favor, inténtelo nuevamente.";
+        }
+    }
+
+
     private String callHuggingFaceAPI(String mensaje) {
         String url = String.format("https://api-inference.huggingface.co/models/%s", model);
 
@@ -299,6 +318,7 @@ public class ChatbotService {
 
     public String procesarFlujoCompra(String userId, String mensaje) {
         String estadoActual = estadosUsuario.getOrDefault(userId, "inicio");
+        Map<String, String> datos = datosUsuario.computeIfAbsent(userId, k -> new HashMap<>());
 
         switch (estadoActual) {
             case "inicio":
@@ -310,62 +330,121 @@ public class ChatbotService {
                 if (producto == null) {
                     return "No encontramos el producto. Por favor, inténtelo de nuevo.";
                 }
+                datos.put("productoId", String.valueOf(producto.getId()));
+                datos.put("productoNombre", producto.getNombre());
+                datos.put("productoPrecio", String.valueOf(producto.getPrecio()));
                 estadosUsuario.put(userId, "esperandoCantidad");
-                estadosUsuario.put(userId + "_productoId", String.valueOf(producto.getId()));
                 return "Producto encontrado: " + producto.getNombre() +
                         "\nPrecio: S/. " + producto.getPrecio() +
-                        "\n¿Desea continuar? Responda 'sí' o 'no'.";
+                        "\nIngrese la cantidad.";
 
             case "esperandoCantidad":
-                if (mensaje.equalsIgnoreCase("sí")) {
-                    estadosUsuario.put(userId, "esperandoCantidadNumero");
-                    return "¿Cuántas unidades desea comprar?";
-                } else {
-                    estadosUsuario.put(userId, "inicio");
-                    return "Flujo cancelado. Volviendo al inicio.";
-                }
-
-            case "esperandoCantidadNumero":
                 try {
                     int cantidad = Integer.parseInt(mensaje);
-                    Integer productoId = Integer.parseInt(estadosUsuario.get(userId + "_productoId"));
-                    agregarProductoACarrito(Integer.parseInt(userId), productoId, cantidad);
-                    estadosUsuario.put(userId, "continuarCompra");
-                    return "Producto añadido al carrito. ¿Desea proceder a la compra? Responda 'sí' o 'no'.";
+                    datos.put("cantidad", String.valueOf(cantidad));
+                    manejarCompraDesdeChatbot(Integer.parseInt(userId), Integer.parseInt(datos.get("productoId")), cantidad);
+                    estadosUsuario.put(userId, "otroProducto");
+                    return "Producto añadido al carrito. ¿Quiere ingresar otro producto? (Escriba 'sí' o 'no')";
                 } catch (NumberFormatException e) {
-                    return "Ingrese un número válido.";
+                    return "Por favor, ingrese un número válido para la cantidad.";
+                }
+
+            case "otroProducto":
+                if (mensaje.equalsIgnoreCase("sí")) {
+                    estadosUsuario.put(userId, "esperandoProducto");
+                    return "Por favor, ingrese el nombre del próximo producto que desea comprar.";
+                } else if (mensaje.equalsIgnoreCase("no")) {
+                    estadosUsuario.put(userId, "continuarCompra");
+                    return "¿Desea continuar con la compra? (Escriba 'sí' o 'no')";
+                } else {
+                    return "Respuesta no válida. ¿Quiere ingresar otro producto? (Escriba 'sí' o 'no')";
                 }
 
             case "continuarCompra":
                 if (mensaje.equalsIgnoreCase("sí")) {
-                    estadosUsuario.put(userId, "checkout");
-                    return "Por favor, confirme sus datos: nombre, apellido, número de teléfono, y correo.";
+                    estadosUsuario.put(userId, "validarDatos");
+                    return "Por favor valide los siguientes datos:\n" +
+                            "Nombre:\nApellido:\nZona:\nDistrito:\nNúmero de teléfono:\nCorreo:";
                 } else {
                     estadosUsuario.put(userId, "inicio");
-                    return "Flujo cancelado. Volviendo al inicio.";
+                    return "Regresando al menú principal. ¿En qué puedo ayudarte?";
                 }
 
-            case "checkout":
-                // Validar los datos ingresados
-                if (mensaje.split(",").length < 4) {
-                    return "Ingrese todos los datos en el formato: nombre, apellido, teléfono, correo.";
+            case "validarDatos":
+                if (mensaje.equalsIgnoreCase("no")) {
+                    estadosUsuario.put(userId, "inicio");
+                    return "Regresando al menú principal.";
+                } else if (mensaje.equalsIgnoreCase("sí")) {
+                    estadosUsuario.put(userId, "direccion");
+                    return "Ingrese su dirección de envío.";
+                } else {
+                    return "Respuesta no válida. ¿Desea continuar con los datos validados? (Escriba 'sí' o 'no')";
                 }
-                estadosUsuario.put(userId, "esperandoPago");
-                return "Ingrese los datos de su tarjeta: número, nombre, vencimiento y CVV.";
 
-            case "esperandoPago":
-                if (mensaje.split(",").length < 4) {
-                    return "Ingrese todos los datos de su tarjeta en el formato: número, nombre, vencimiento, CVV.";
+            case "direccion":
+                datos.put("direccion", mensaje);
+                estadosUsuario.put(userId, "cambiarDireccion");
+                return "¿Quiere cambiar su dirección? (Escriba 'sí' o 'no')";
+
+            case "cambiarDireccion":
+                if (mensaje.equalsIgnoreCase("sí")) {
+                    estadosUsuario.put(userId, "direccion");
+                    return "Ingrese la nueva dirección:";
+                } else if (mensaje.equalsIgnoreCase("no")) {
+                    estadosUsuario.put(userId, "tarjeta");
+                    return "Ingrese su número de tarjeta.";
+                } else {
+                    return "Respuesta no válida. ¿Quiere cambiar su dirección? (Escriba 'sí' o 'no')";
                 }
-                confirmarCompra(Integer.parseInt(userId));
-                estadosUsuario.put(userId, "inicio");
-                return "Gracias por su compra. Su pedido está confirmado. Recibirá un correo electrónico con su número de pedido.";
+
+            case "tarjeta":
+                datos.put("tarjeta", mensaje);
+                estadosUsuario.put(userId, "nombreTitular");
+                return "Ingrese el nombre del titular de la tarjeta.";
+
+            case "nombreTitular":
+                datos.put("nombreTitular", mensaje);
+                estadosUsuario.put(userId, "vencimiento");
+                return "Ingrese la fecha de vencimiento de la tarjeta (MM/AA).";
+
+            case "vencimiento":
+                datos.put("vencimiento", mensaje);
+                estadosUsuario.put(userId, "cvv");
+                return "Ingrese el CVV de la tarjeta.";
+
+            case "cvv":
+                datos.put("cvv", mensaje);
+                estadosUsuario.put(userId, "confirmarPago");
+                return "A continuación se procede a pagar. ¿Está de acuerdo? (Escriba 'sí' o 'no')";
+
+            case "confirmarPago":
+                if (mensaje.equalsIgnoreCase("sí")) {
+                    confirmarCompra(Integer.parseInt(userId));
+                    estadosUsuario.put(userId, "descargarPDF");
+                    return "Gracias, " + datos.get("nombre") + ". Tu pedido ya está confirmado. Recibirás un correo electrónico con tu número de pedido. ¿Quieres descargar el PDF de la boleta? (Escriba 'sí' o 'no')";
+                } else if (mensaje.equalsIgnoreCase("no")) {
+                    estadosUsuario.put(userId, "inicio");
+                    return "Regresando al menú principal.";
+                } else {
+                    return "Respuesta no válida. ¿Está de acuerdo con proceder al pago? (Escriba 'sí' o 'no')";
+                }
+
+            case "descargarPDF":
+                if (mensaje.equalsIgnoreCase("sí")) {
+                    // Lógica para generar y enviar el PDF
+                    estadosUsuario.put(userId, "inicio");
+                    return "PDF descargado. Regresando al menú principal.";
+                } else {
+                    estadosUsuario.put(userId, "inicio");
+                    return "Regresando al menú principal.";
+                }
 
             default:
                 estadosUsuario.put(userId, "inicio");
-                return "No entendí su mensaje. Por favor, inténtelo de nuevo.";
+                return "Ocurrió un error. Regresando al menú principal.";
         }
     }
+
 
     private void agregarProductoACarrito(int userId, int productoId, int cantidad) {
         // Lógica para añadir producto al carrito
