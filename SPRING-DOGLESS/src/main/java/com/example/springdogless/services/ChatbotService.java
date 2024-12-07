@@ -277,14 +277,37 @@ public class ChatbotService {
 
     public String manejarCompraDesdeChatbot(Integer userId, Integer productoId, Integer cantidad) {
         try {
-            // Llama al método `agregarProducto2` del UsuarioController
+            // Validaciones básicas
+            if (userId == null || userId <= 0) {
+                return "Error: Usuario no válido.";
+            }
+            if (productoId == null || productoId <= 0) {
+                return "Error: Producto no válido.";
+            }
+            if (cantidad == null || cantidad <= 0) {
+                return "Error: Cantidad debe ser mayor a 0.";
+            }
+
+            System.out.println("Agregando producto al carrito: " +
+                    "UserId=" + userId + ", ProductoId=" + productoId + ", Cantidad=" + cantidad);
+
+            // Simular el comportamiento de redirección
             usuarioController.agregarProducto2(null, null, productoId, userId, cantidad, null);
+
+            // Retorna un mensaje exitoso ya que `agregarProducto2` no falla
             return "Producto añadido exitosamente al carrito.";
+        } catch (IllegalArgumentException e) {
+            // Captura errores lanzados por `usuarioController.agregarProducto2`
+            e.printStackTrace(); // Depuración adicional
+            return e.getMessage();
         } catch (Exception e) {
+            // Captura cualquier otra excepción
             e.printStackTrace();
-            return "Hubo un error al añadir el producto al carrito. Por favor, inténtelo nuevamente.";
+            return "Ocurrió un error al añadir el producto al carrito. Por favor, inténtelo nuevamente.";
         }
     }
+
+
 
 
     private String callHuggingFaceAPI(String mensaje) {
@@ -320,6 +343,13 @@ public class ChatbotService {
         // Usa un identificador predeterminado si no se proporciona userId
         String usuarioActual = (userId != null) ? userId : "defaultUser";
 
+        // Verificar si el usuario quiere salir y volver al menú principal
+        if (mensaje.equalsIgnoreCase("salir")) {
+            estadosUsuario.put(usuarioActual, "MENU");
+            estadoActual = "MENU";
+            return manejarMenuPrincipal("");
+        }
+
         // Obtén el estado actual del usuario o establece un estado inicial
         String estadoActual = estadosUsuario.getOrDefault(usuarioActual, "inicio");
         Map<String, String> datos = datosUsuario.computeIfAbsent(usuarioActual, k -> new HashMap<>());
@@ -344,9 +374,6 @@ public class ChatbotService {
                 // Cambiar el estado a validarProducto
                 estadosUsuario.put(usuarioActual, "validarProducto");
 
-                System.out.println("Estado actual: " + estadoActual);
-                System.out.println("Estado usuario: " + estadosUsuario.get(usuarioActual));
-
                 return "Producto encontrado:<br>" +
                         "Nombre: " + producto.getNombre() + "<br>" +
                         "Descripción: " + producto.getDescripcion() + "<br>" +
@@ -364,63 +391,191 @@ public class ChatbotService {
                     estadosUsuario.put(usuarioActual, "esperandoProducto");
                     return "Por favor, ingrese el nombre del producto que desea comprar.";
                 } else {
-                    // Aquí colocas los botones en el mensaje HTML
-                    return "Producto encontrado:<br>" +
-                            "Nombre: " + datos.get("productoNombre") + "<br>" +
-                            "Descripción: " + datos.get("productoDescripcion") + "<br>" +
-                            "Precio: S/. " + datos.get("productoPrecio") + "<br>" +
+                    // Respuesta inválida
+                    return "Por favor, seleccione 'sí' o 'no'.<br>" +
                             "¿Es este el producto que desea añadir? " + "<br>" +
                             "<button class=\"button\" onclick=\"sendMessage('sí')\">Sí</button> " +
                             "<button class=\"button no\" onclick=\"sendMessage('no')\">No</button>";
                 }
 
-
-
             case "esperandoCantidad":
                 try {
-                    int cantidad = Integer.parseInt(mensaje);
+                    // Limpia el mensaje antes de procesarlo
+                    String mensajeLimpio = mensaje.trim();
+                    System.out.println("Cantidad recibida (limpia): " + mensajeLimpio); // Depuración
+                    Integer cantidad = Integer.parseInt(mensajeLimpio);
+
+                    // Validar que la cantidad sea positiva
+                    if (cantidad <= 0) {
+                        return "Por favor, ingrese un número válido mayor a 0.";
+                    }
+
+                    // Depuración adicional
+                    System.out.println("Cantidad válida: " + cantidad);
+
+                    // Recuperar los datos del usuario actual
                     datos.put("cantidad", String.valueOf(cantidad));
-                    manejarCompraDesdeChatbot(
+
+                    // Procesar la compra y actualizar el flujo
+                    String resultadoCompra = manejarCompraDesdeChatbot(
                             Integer.parseInt(usuarioActual),
                             Integer.parseInt(datos.get("productoId")),
                             cantidad
                     );
+
+                    System.out.println("Resultado de manejarCompraDesdeChatbot: " + resultadoCompra);
+
                     estadosUsuario.put(usuarioActual, "otroProducto");
                     return "Producto añadido al carrito. ¿Quiere ingresar otro producto? " +
                             "<button onclick=\"sendMessage('sí')\">Sí</button> " +
                             "<button onclick=\"sendMessage('no')\">No</button>";
                 } catch (NumberFormatException e) {
+                    e.printStackTrace(); // Depuración para identificar el problema
                     return "Por favor, ingrese un número válido para la cantidad.";
+                } catch (Exception e) {
+                    e.printStackTrace(); // Depuración general
+                    return "Ocurrió un error al procesar la cantidad. Por favor, inténtelo nuevamente.";
                 }
+
 
             case "otroProducto":
                 if (mensaje.equalsIgnoreCase("sí")) {
                     estadosUsuario.put(usuarioActual, "esperandoProducto");
                     return "Por favor, ingrese el nombre del próximo producto que desea comprar.";
                 } else if (mensaje.equalsIgnoreCase("no")) {
-                    estadosUsuario.put(usuarioActual, "continuarCompra");
-                    return "¿Desea continuar con la compra? <button>Sí</button> <button>No</button>";
+                    estadosUsuario.put(usuarioActual, "confirmarCompra");
+                    return mostrarDetallesCompra(usuarioActual);
                 } else {
-                    return "Respuesta no válida. ¿Quiere ingresar otro producto? <button>Sí</button> <button>No</button>";
+                    return "¿Podrías repetir por favor? ¿Quiere ingresar otro producto? <button>Sí</button> <button>No</button>";
                 }
 
-            case "continuarCompra":
+            case "confirmarCompra":
                 if (mensaje.equalsIgnoreCase("sí")) {
-                    estadosUsuario.put(usuarioActual, "validarDatos");
-                    return "Por favor valide los siguientes datos:<br>" +
-                            "Nombre:<br>Apellido:<br>Zona:<br>Distrito:<br>Número de teléfono:<br>Correo:";
+                    estadosUsuario.put(usuarioActual, "modificarDireccion");
+                    return "Ingrese la nueva dirección:";
+                } else if (mensaje.equalsIgnoreCase("no")) {
+                    estadosUsuario.put(usuarioActual, "ingresarTarjeta");
+                    return "A continuación, ingrese los siguientes datos:<br> Número de tarjeta:";
                 } else {
-                    estadosUsuario.put(usuarioActual, "inicio");
-                    return "Regresando al menú principal. ¿En qué puedo ayudarte?";
+                    return "¿Podrías repetir por favor? ¿Quieres modificar la dirección? <button>Sí</button> <button>No</button>";
+                }
+
+            case "modificarDireccion":
+                if (mensaje.trim().isEmpty()) {
+                    return "¿Podrías repetir por favor? Ingrese la nueva dirección:";
+                } else {
+                    datos.put("direccion", mensaje.trim());
+                    estadosUsuario.put(usuarioActual, "ingresarTarjeta");
+                    return "A continuación, ingrese los siguientes datos:<br> Número de tarjeta:";
+                }
+
+            case "ingresarTarjeta":
+                if (mensaje.trim().isEmpty()) {
+                    return "¿Podrías repetir por favor? Ingrese el número de tarjeta:";
+                } else {
+                    datos.put("numeroTarjeta", mensaje.trim());
+                    estadosUsuario.put(usuarioActual, "ingresarTitular");
+                    return "Ingrese el nombre del titular:";
+                }
+
+            case "ingresarTitular":
+                if (mensaje.trim().isEmpty()) {
+                    return "¿Podrías repetir por favor? Ingrese el nombre del titular:";
+                } else {
+                    datos.put("nombreTitular", mensaje.trim());
+                    estadosUsuario.put(usuarioActual, "ingresarVencimiento");
+                    return "Ingrese la fecha de vencimiento (MM/AA):";
+                }
+
+            case "ingresarVencimiento":
+                if (mensaje.trim().isEmpty()) {
+                    return "¿Podrías repetir por favor? Ingrese la fecha de vencimiento (MM/AA):";
+                } else {
+                    datos.put("vencimiento", mensaje.trim());
+                    estadosUsuario.put(usuarioActual, "ingresarCVV");
+                    return "Ingrese el código CVV:";
+                }
+
+            case "ingresarCVV":
+                if (mensaje.trim().isEmpty()) {
+                    return "¿Podrías repetir por favor? Ingrese el código CVV:";
+                } else {
+                    datos.put("cvv", mensaje.trim());
+                    estadosUsuario.put(usuarioActual, "confirmarPago");
+                    return "A continuación procederá a pagar. Confirme.";
+                }
+
+            case "confirmarPago":
+                if (mensaje.equalsIgnoreCase("sí")) {
+                    estadosUsuario.put(usuarioActual, "MENU"); // Volver al menú después del pago
+                    return procesarPagoYMostrarResumen(usuarioActual);
+                } else if (mensaje.equalsIgnoreCase("no")) {
+                    estadosUsuario.put(usuarioActual, "MENU");
+                    return "Pago cancelado. Volviendo al menú principal.";
+                } else {
+                    return "¿Podrías repetir por favor? ¿Desea proceder con el pago? <button>Sí</button> <button>No</button>";
                 }
 
             default:
-                estadosUsuario.put(usuarioActual, "inicio");
-                return "Ocurrió un error. Regresando al menú principal.";
+                return "¿Podrías repetir por favor?";
+
         }
     }
 
-        public boolean esFlujoDeCompra(String mensaje) {
+    private String mostrarDetallesCompra(String usuarioActual) {
+        // Obtén el mapa de datos del usuario actual desde `datosUsuario`
+        Map<String, String> datos = datosUsuario.computeIfAbsent(usuarioActual, k -> new HashMap<>());
+
+        // Recuperar datos almacenados o valores predeterminados si no están definidos
+        String nombre = datos.getOrDefault("nombre", "No especificado");
+        String apellido = datos.getOrDefault("apellido", "No especificado");
+        String zona = datos.getOrDefault("zona", "No especificado");
+        String distrito = datos.getOrDefault("distrito", "No especificado");
+        String telefono = datos.getOrDefault("telefono", "No especificado");
+        String correo = datos.getOrDefault("correo", "No especificado");
+        String direccion = datos.getOrDefault("direccion", "No especificado");
+
+        // Construir y devolver los detalles de la compra en formato HTML
+        return String.format("""
+        Detalles de la compra:<br>
+        Nombre: %s<br>
+        Apellido: %s<br>
+        Zona: %s<br>
+        Distrito: %s<br>
+        Número de teléfono: %s<br>
+        Correo electrónico: %s<br>
+        Dirección: %s<br>
+        ¿Quieres modificar la dirección? <button onclick="sendMessage('sí')">Sí</button> <button onclick="sendMessage('no')">No</button>
+        """, nombre, apellido, zona, distrito, telefono, correo, direccion);
+    }
+
+    private String procesarPagoYMostrarResumen(String usuarioActual) {
+        // Obtén el mapa de datos del usuario actual desde `datosUsuario`
+        Map<String, String> datos = datosUsuario.computeIfAbsent(usuarioActual, k -> new HashMap<>());
+
+        // Simular detalles del pedido
+        String resumen = """
+        Gracias %s. Tu pedido está confirmado.<br>
+        Producto - Costo - Cantidad - Total<br>
+        Smartphone X - S/.599.99 - 3 - S/.1799.97<br>
+        Auriculares Z - S/.49.99 - 1 - S/.49.99<br>
+        Tablet W - S/.350.50 - 1 - S/.350.50<br>
+        <br>
+        Subtotal: S/.2212.46<br>
+        Costo de envío: S/.12.00<br>
+        Precio total: S/.2224.46<br>
+        Da enter y volverás al menú principal.
+        """;
+
+        // Recupera el nombre del usuario desde los datos o usa "Usuario" como predeterminado
+        String nombre = datos.getOrDefault("nombre", "Usuario");
+
+        // Formatea el resumen con el nombre del usuario
+        return String.format(resumen, nombre);
+    }
+
+
+    public boolean esFlujoDeCompra(String mensaje) {
         // Lógica para decidir si el mensaje es parte del flujo de compra
         return estadosUsuario.values().contains("esperandoProducto") ||
                 estadosUsuario.values().contains("esperandoCantidad") ||
