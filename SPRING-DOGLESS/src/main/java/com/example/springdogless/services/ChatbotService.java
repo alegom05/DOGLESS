@@ -256,9 +256,7 @@ public class ChatbotService {
     }
 
 
-    private String getIntroduccion() {
-        return "Hola, soy Dogbot. ¿En qué puedo ayudarte? Elige una de las siguientes opciones:";
-    }
+
 
     private String getMenuOpciones() {
         StringBuilder menu = new StringBuilder();
@@ -353,9 +351,9 @@ public class ChatbotService {
                         "Nombre: " + producto.getNombre() + "<br>" +
                         "Descripción: " + producto.getDescripcion() + "<br>" +
                         "Precio: S/. " + producto.getPrecio() + "<br>" +
-                        "¿Es este el producto que desea añadir? " +
-                        "<button onclick=\"sendMessage('sí')\">Sí</button> " +
-                        "<button onclick=\"sendMessage('no')\">No</button>";
+                        "¿Es este el producto que desea añadir? " + "<br>" +
+                        "<button class=\"button\" onclick=\"sendMessage('sí')\">Sí</button> " +
+                        "<button class=\"button no\" onclick=\"sendMessage('no')\">No</button>";
 
 
             case "validarProducto":
@@ -371,7 +369,7 @@ public class ChatbotService {
                             "Nombre: " + datos.get("productoNombre") + "<br>" +
                             "Descripción: " + datos.get("productoDescripcion") + "<br>" +
                             "Precio: S/. " + datos.get("productoPrecio") + "<br>" +
-                            "¿Es este el producto que desea añadir? " +
+                            "¿Es este el producto que desea añadir? " + "<br>" +
                             "<button class=\"button\" onclick=\"sendMessage('sí')\">Sí</button> " +
                             "<button class=\"button no\" onclick=\"sendMessage('no')\">No</button>";
                 }

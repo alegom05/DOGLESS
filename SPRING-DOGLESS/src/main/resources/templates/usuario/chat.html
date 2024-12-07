@@ -84,8 +84,10 @@
                                     </button>
                                 </div>
 
-                                <button class="button" onclick="sendMessage('sí')">Sí</button>
-                                <button class="button no" onclick="sendMessage('no')">No</button>
+                                <div id="botonesOpciones" class="button-group" style="display: none;">
+                                    <button class="button" onclick="sendMessage('sí')">Sí</button>
+                                    <button class="button no" onclick="sendMessage('no')">No</button>
+                                </div>
 
 
                             </div>
@@ -125,6 +127,15 @@
 
                 const socket = new SockJS('/ws-chat'); // Conexión con el WebSocket
                 const stompClient = Stomp.over(socket);
+
+                const buttons = document.querySelectorAll(".button");
+                buttons.forEach(button => {
+                    button.style.backgroundColor = "#007BFF";
+                    button.style.color = "white";
+                    button.style.padding = "10px 20px";
+                    button.style.borderRadius = "5px";
+                    button.style.transition = "0.3s";
+                });
 
                 stompClient.connect({}, () => {
                     // Suscribirse a la sala específica del chat
@@ -166,6 +177,10 @@
                 }
                 console.log("Enviando mensaje al backend:", message);
 
+                function mostrarBotones() {
+                    const botonesOpciones = document.getElementById('botonesOpciones');
+                    botonesOpciones.style.display = 'block';
+                }
 
 
 
