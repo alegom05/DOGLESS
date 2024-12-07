@@ -83,6 +83,11 @@
                                         Enviar
                                     </button>
                                 </div>
+
+                                <button class="button" onclick="sendMessage('sí')">Sí</button>
+                                <button class="button no" onclick="sendMessage('no')">No</button>
+
+
                             </div>
                         </div>
                     </div>
@@ -151,23 +156,18 @@
                 });
 
                 function sendMessage(message) {
-                    // Cambia '/api/chat/message' por la URL de tu backend
-                    fetch('/api/chat/message', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({ message: message }),
-                    })
-                        .then(response => response.text())
-                        .then(data => {
-                            // Lógica para mostrar la respuesta del chatbot
-                            document.getElementById('chat-window').innerHTML += `<div>${data}</div>`;
-                        })
-                        .catch(error => {
-                            console.error('Error al enviar el mensaje:', error);
-                        });
+                    // Encuentra el input del chatbot
+                    const inputField = document.querySelector("#messageInput"); // Asegúrate de que este ID coincida
+                    inputField.value = message;
+
+                    // Encuentra el botón de enviar
+                    const sendButton = document.querySelector("#sendButton"); // Asegúrate de que este ID coincida
+                    sendButton.click();
                 }
+                console.log("Enviando mensaje al backend:", message);
+
+
+
 
             });
         </script>

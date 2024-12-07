@@ -328,11 +328,9 @@ public class ChatbotService {
 
         switch (estadoActual) {
             case "inicio":
-                // Solo configurar "esperandoProducto" si es un nuevo flujo
-                if (!estadosUsuario.containsKey(usuarioActual) || estadosUsuario.get(usuarioActual).equals("inicio")) {
+                if (!estadosUsuario.containsKey(usuarioActual) || !"esperandoProducto".equals(estadosUsuario.get(usuarioActual))) {
                     estadosUsuario.put(usuarioActual, "esperandoProducto");
                 }
-                return "Por favor, ingrese el nombre del producto que desea comprar.";
 
             case "esperandoProducto":
                 Producto producto = productRepository.findByNombre(mensaje);
@@ -347,6 +345,9 @@ public class ChatbotService {
 
                 // Cambiar el estado a validarProducto
                 estadosUsuario.put(usuarioActual, "validarProducto");
+
+                System.out.println("Estado actual: " + estadoActual);
+                System.out.println("Estado usuario: " + estadosUsuario.get(usuarioActual));
 
                 return "Producto encontrado:<br>" +
                         "Nombre: " + producto.getNombre() + "<br>" +
@@ -365,8 +366,17 @@ public class ChatbotService {
                     estadosUsuario.put(usuarioActual, "esperandoProducto");
                     return "Por favor, ingrese el nombre del producto que desea comprar.";
                 } else {
-                    return "Respuesta no válida. Por favor seleccione una opción: <button>Sí</button> <button>No</button>";
+                    // Aquí colocas los botones en el mensaje HTML
+                    return "Producto encontrado:<br>" +
+                            "Nombre: " + datos.get("productoNombre") + "<br>" +
+                            "Descripción: " + datos.get("productoDescripcion") + "<br>" +
+                            "Precio: S/. " + datos.get("productoPrecio") + "<br>" +
+                            "¿Es este el producto que desea añadir? " +
+                            "<button class=\"button\" onclick=\"sendMessage('sí')\">Sí</button> " +
+                            "<button class=\"button no\" onclick=\"sendMessage('no')\">No</button>";
                 }
+
+
 
             case "esperandoCantidad":
                 try {
@@ -378,7 +388,9 @@ public class ChatbotService {
                             cantidad
                     );
                     estadosUsuario.put(usuarioActual, "otroProducto");
-                    return "Producto añadido al carrito. ¿Quiere ingresar otro producto? <button>Sí</button> <button>No</button>";
+                    return "Producto añadido al carrito. ¿Quiere ingresar otro producto? " +
+                            "<button onclick=\"sendMessage('sí')\">Sí</button> " +
+                            "<button onclick=\"sendMessage('no')\">No</button>";
                 } catch (NumberFormatException e) {
                     return "Por favor, ingrese un número válido para la cantidad.";
                 }
