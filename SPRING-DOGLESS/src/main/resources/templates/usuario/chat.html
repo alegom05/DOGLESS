@@ -149,6 +149,26 @@
                     stompClient.send(`/app/chat/${roomId}/sendMessage`, {}, JSON.stringify(message));
                     input.value = ''; // Limpiar el campo de entrada
                 });
+
+                function sendMessage(message) {
+                    // Cambia '/api/chat/message' por la URL de tu backend
+                    fetch('/api/chat/message', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ message: message }),
+                    })
+                        .then(response => response.text())
+                        .then(data => {
+                            // Lógica para mostrar la respuesta del chatbot
+                            document.getElementById('chat-window').innerHTML += `<div>${data}</div>`;
+                        })
+                        .catch(error => {
+                            console.error('Error al enviar el mensaje:', error);
+                        });
+                }
+
             });
         </script>
     </body>

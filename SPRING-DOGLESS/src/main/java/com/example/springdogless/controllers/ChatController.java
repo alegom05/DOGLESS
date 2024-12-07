@@ -36,11 +36,20 @@ public class ChatController {
     @PostMapping("/message")
     public ResponseEntity<String> processMessage(@RequestBody Map<String, String> request) {
         String message = request.get("message");
-        String response = chatbotService.procesarMensaje(message);
+        String response;
+
+        // Verifica si el mensaje debe ser procesado en el flujo de compra
+        if (chatbotService.esFlujoDeCompra(message)) {
+            response = chatbotService.procesarFlujoCompra(null, message); // Pasar null para userId
+        } else {
+            response = chatbotService.procesarMensaje(message);
+        }
+
         return ResponseEntity.ok()
                 .header("Content-Type", "text/html; charset=UTF-8")
                 .body(response);
     }
+
 
 
     @PostMapping("/reclamo")

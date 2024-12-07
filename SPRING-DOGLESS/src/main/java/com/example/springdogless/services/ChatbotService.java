@@ -102,7 +102,7 @@ public class ChatbotService {
             case "CONSULTA":
                 return manejarConsulta(mensaje);
             case "ORDEN":
-                return generarOrdenDeCompra();
+                return procesarFlujoCompra("defaultUser", mensaje);
             case "RECLAMO":
                 return manejarReclamaciones();
             default:
@@ -113,11 +113,11 @@ public class ChatbotService {
     private String manejarMenuPrincipal(String mensaje) {
         // Mensaje introductorio en formato HTML
         String introduccion = """
-            Hola, soy Dogbot. ¿En qué puedo ayudarte? Elige una de las siguientes opciones:<br>
-            1. Quiero hacer una consulta<br>
-            2. Quiero generar una orden de compra<br>
-            3. Quiero generar un reclamo<br>
-            """;
+        Hola, soy Dogbot. ¿En qué puedo ayudarte? Elige una de las siguientes opciones:<br>
+        1. Quiero hacer una consulta<br>
+        2. Quiero generar una orden de compra<br>
+        3. Quiero generar un reclamo<br>
+        """;
 
         // Procesar la selección del usuario
         switch (mensaje) {
@@ -125,8 +125,9 @@ public class ChatbotService {
                 estadoActual = "CONSULTA";
                 return "Haz tu consulta a continuación:";
             case "2":
-                estadoActual = "ORDEN";
-                return generarOrdenDeCompra();
+                estadoActual = "ORDEN"; // Cambiar el estado global al flujo de compra
+                estadosUsuario.put("defaultUser", "inicio"); // Inicia el flujo de compra
+                return "Por favor, ingrese el nombre del producto que desea comprar.";
             case "3":
                 estadoActual = "RECLAMO";
                 return "A continuación escribe tu reclamo:<br>" + manejarReclamaciones();
@@ -136,6 +137,7 @@ public class ChatbotService {
                 return introduccion; // Devuelve el menú en HTML
         }
     }
+
 
 
     private String manejarConsulta(String mensaje) {
@@ -317,134 +319,103 @@ public class ChatbotService {
     }
 
     public String procesarFlujoCompra(String userId, String mensaje) {
-        String estadoActual = estadosUsuario.getOrDefault(userId, "inicio");
-        Map<String, String> datos = datosUsuario.computeIfAbsent(userId, k -> new HashMap<>());
+        // Usa un identificador predeterminado si no se proporciona userId
+        String usuarioActual = (userId != null) ? userId : "defaultUser";
+
+        // Obtén el estado actual del usuario o establece un estado inicial
+        String estadoActual = estadosUsuario.getOrDefault(usuarioActual, "inicio");
+        Map<String, String> datos = datosUsuario.computeIfAbsent(usuarioActual, k -> new HashMap<>());
 
         switch (estadoActual) {
             case "inicio":
-                estadosUsuario.put(userId, "esperandoProducto");
+                // Solo configurar "esperandoProducto" si es un nuevo flujo
+                if (!estadosUsuario.containsKey(usuarioActual) || estadosUsuario.get(usuarioActual).equals("inicio")) {
+                    estadosUsuario.put(usuarioActual, "esperandoProducto");
+                }
                 return "Por favor, ingrese el nombre del producto que desea comprar.";
 
             case "esperandoProducto":
                 Producto producto = productRepository.findByNombre(mensaje);
                 if (producto == null) {
-                    return "No encontramos el producto. Por favor, inténtelo de nuevo.";
+                    return "No reconozco el nombre, vuelve a intentar.";
                 }
+                // Guardar detalles del producto en datosUsuario para confirmación
                 datos.put("productoId", String.valueOf(producto.getId()));
                 datos.put("productoNombre", producto.getNombre());
                 datos.put("productoPrecio", String.valueOf(producto.getPrecio()));
-                estadosUsuario.put(userId, "esperandoCantidad");
-                return "Producto encontrado: " + producto.getNombre() +
-                        "\nPrecio: S/. " + producto.getPrecio() +
-                        "\nIngrese la cantidad.";
+                datos.put("productoDescripcion", producto.getDescripcion());
+
+                // Cambiar el estado a validarProducto
+                estadosUsuario.put(usuarioActual, "validarProducto");
+
+                return "Producto encontrado:<br>" +
+                        "Nombre: " + producto.getNombre() + "<br>" +
+                        "Descripción: " + producto.getDescripcion() + "<br>" +
+                        "Precio: S/. " + producto.getPrecio() + "<br>" +
+                        "¿Es este el producto que desea añadir? " +
+                        "<button onclick=\"sendMessage('sí')\">Sí</button> " +
+                        "<button onclick=\"sendMessage('no')\">No</button>";
+
+
+            case "validarProducto":
+                if (mensaje.equalsIgnoreCase("sí")) {
+                    estadosUsuario.put(usuarioActual, "esperandoCantidad");
+                    return "Ingrese la cantidad que desea comprar.";
+                } else if (mensaje.equalsIgnoreCase("no")) {
+                    estadosUsuario.put(usuarioActual, "esperandoProducto");
+                    return "Por favor, ingrese el nombre del producto que desea comprar.";
+                } else {
+                    return "Respuesta no válida. Por favor seleccione una opción: <button>Sí</button> <button>No</button>";
+                }
 
             case "esperandoCantidad":
                 try {
                     int cantidad = Integer.parseInt(mensaje);
                     datos.put("cantidad", String.valueOf(cantidad));
-                    manejarCompraDesdeChatbot(Integer.parseInt(userId), Integer.parseInt(datos.get("productoId")), cantidad);
-                    estadosUsuario.put(userId, "otroProducto");
-                    return "Producto añadido al carrito. ¿Quiere ingresar otro producto? (Escriba 'sí' o 'no')";
+                    manejarCompraDesdeChatbot(
+                            Integer.parseInt(usuarioActual),
+                            Integer.parseInt(datos.get("productoId")),
+                            cantidad
+                    );
+                    estadosUsuario.put(usuarioActual, "otroProducto");
+                    return "Producto añadido al carrito. ¿Quiere ingresar otro producto? <button>Sí</button> <button>No</button>";
                 } catch (NumberFormatException e) {
                     return "Por favor, ingrese un número válido para la cantidad.";
                 }
 
             case "otroProducto":
                 if (mensaje.equalsIgnoreCase("sí")) {
-                    estadosUsuario.put(userId, "esperandoProducto");
+                    estadosUsuario.put(usuarioActual, "esperandoProducto");
                     return "Por favor, ingrese el nombre del próximo producto que desea comprar.";
                 } else if (mensaje.equalsIgnoreCase("no")) {
-                    estadosUsuario.put(userId, "continuarCompra");
-                    return "¿Desea continuar con la compra? (Escriba 'sí' o 'no')";
+                    estadosUsuario.put(usuarioActual, "continuarCompra");
+                    return "¿Desea continuar con la compra? <button>Sí</button> <button>No</button>";
                 } else {
-                    return "Respuesta no válida. ¿Quiere ingresar otro producto? (Escriba 'sí' o 'no')";
+                    return "Respuesta no válida. ¿Quiere ingresar otro producto? <button>Sí</button> <button>No</button>";
                 }
 
             case "continuarCompra":
                 if (mensaje.equalsIgnoreCase("sí")) {
-                    estadosUsuario.put(userId, "validarDatos");
-                    return "Por favor valide los siguientes datos:\n" +
-                            "Nombre:\nApellido:\nZona:\nDistrito:\nNúmero de teléfono:\nCorreo:";
+                    estadosUsuario.put(usuarioActual, "validarDatos");
+                    return "Por favor valide los siguientes datos:<br>" +
+                            "Nombre:<br>Apellido:<br>Zona:<br>Distrito:<br>Número de teléfono:<br>Correo:";
                 } else {
-                    estadosUsuario.put(userId, "inicio");
+                    estadosUsuario.put(usuarioActual, "inicio");
                     return "Regresando al menú principal. ¿En qué puedo ayudarte?";
                 }
 
-            case "validarDatos":
-                if (mensaje.equalsIgnoreCase("no")) {
-                    estadosUsuario.put(userId, "inicio");
-                    return "Regresando al menú principal.";
-                } else if (mensaje.equalsIgnoreCase("sí")) {
-                    estadosUsuario.put(userId, "direccion");
-                    return "Ingrese su dirección de envío.";
-                } else {
-                    return "Respuesta no válida. ¿Desea continuar con los datos validados? (Escriba 'sí' o 'no')";
-                }
-
-            case "direccion":
-                datos.put("direccion", mensaje);
-                estadosUsuario.put(userId, "cambiarDireccion");
-                return "¿Quiere cambiar su dirección? (Escriba 'sí' o 'no')";
-
-            case "cambiarDireccion":
-                if (mensaje.equalsIgnoreCase("sí")) {
-                    estadosUsuario.put(userId, "direccion");
-                    return "Ingrese la nueva dirección:";
-                } else if (mensaje.equalsIgnoreCase("no")) {
-                    estadosUsuario.put(userId, "tarjeta");
-                    return "Ingrese su número de tarjeta.";
-                } else {
-                    return "Respuesta no válida. ¿Quiere cambiar su dirección? (Escriba 'sí' o 'no')";
-                }
-
-            case "tarjeta":
-                datos.put("tarjeta", mensaje);
-                estadosUsuario.put(userId, "nombreTitular");
-                return "Ingrese el nombre del titular de la tarjeta.";
-
-            case "nombreTitular":
-                datos.put("nombreTitular", mensaje);
-                estadosUsuario.put(userId, "vencimiento");
-                return "Ingrese la fecha de vencimiento de la tarjeta (MM/AA).";
-
-            case "vencimiento":
-                datos.put("vencimiento", mensaje);
-                estadosUsuario.put(userId, "cvv");
-                return "Ingrese el CVV de la tarjeta.";
-
-            case "cvv":
-                datos.put("cvv", mensaje);
-                estadosUsuario.put(userId, "confirmarPago");
-                return "A continuación se procede a pagar. ¿Está de acuerdo? (Escriba 'sí' o 'no')";
-
-            case "confirmarPago":
-                if (mensaje.equalsIgnoreCase("sí")) {
-                    confirmarCompra(Integer.parseInt(userId));
-                    estadosUsuario.put(userId, "descargarPDF");
-                    return "Gracias, " + datos.get("nombre") + ". Tu pedido ya está confirmado. Recibirás un correo electrónico con tu número de pedido. ¿Quieres descargar el PDF de la boleta? (Escriba 'sí' o 'no')";
-                } else if (mensaje.equalsIgnoreCase("no")) {
-                    estadosUsuario.put(userId, "inicio");
-                    return "Regresando al menú principal.";
-                } else {
-                    return "Respuesta no válida. ¿Está de acuerdo con proceder al pago? (Escriba 'sí' o 'no')";
-                }
-
-            case "descargarPDF":
-                if (mensaje.equalsIgnoreCase("sí")) {
-                    // Lógica para generar y enviar el PDF
-                    estadosUsuario.put(userId, "inicio");
-                    return "PDF descargado. Regresando al menú principal.";
-                } else {
-                    estadosUsuario.put(userId, "inicio");
-                    return "Regresando al menú principal.";
-                }
-
             default:
-                estadosUsuario.put(userId, "inicio");
+                estadosUsuario.put(usuarioActual, "inicio");
                 return "Ocurrió un error. Regresando al menú principal.";
         }
     }
 
+        public boolean esFlujoDeCompra(String mensaje) {
+        // Lógica para decidir si el mensaje es parte del flujo de compra
+        return estadosUsuario.values().contains("esperandoProducto") ||
+                estadosUsuario.values().contains("esperandoCantidad") ||
+                estadosUsuario.values().contains("continuarCompra");
+    }
 
     private void agregarProductoACarrito(int userId, int productoId, int cantidad) {
         // Lógica para añadir producto al carrito
