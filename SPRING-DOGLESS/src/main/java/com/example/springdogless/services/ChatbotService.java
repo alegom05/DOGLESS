@@ -410,15 +410,21 @@ public class ChatbotService {
                         return "Por favor, ingrese un número válido mayor a 0.";
                     }
 
-                    // Depuración adicional
-                    System.out.println("Cantidad válida: " + cantidad);
-
                     // Recuperar los datos del usuario actual
                     datos.put("cantidad", String.valueOf(cantidad));
 
+                    // Verificar si usuarioActual es un número válido
+                    int userIdNumerico;
+                    if (usuarioActual.matches("\\d+")) { // Comprueba si usuarioActual es numérico
+                        userIdNumerico = Integer.parseInt(usuarioActual);
+                    } else {
+                        System.err.println("El identificador de usuario no es numérico: " + usuarioActual);
+                        userIdNumerico = -1; // Usa un valor especial si no tienes un ID numérico
+                    }
+
                     // Procesar la compra y actualizar el flujo
                     String resultadoCompra = manejarCompraDesdeChatbot(
-                            Integer.parseInt(usuarioActual),
+                            userIdNumerico,
                             Integer.parseInt(datos.get("productoId")),
                             cantidad
                     );
@@ -430,7 +436,7 @@ public class ChatbotService {
                             "<button onclick=\"sendMessage('sí')\">Sí</button> " +
                             "<button onclick=\"sendMessage('no')\">No</button>";
                 } catch (NumberFormatException e) {
-                    e.printStackTrace(); // Depuración para identificar el problema
+                    System.err.println("Número inválido ingresado como cantidad: " + mensaje);
                     return "Por favor, ingrese un número válido para la cantidad.";
                 } catch (Exception e) {
                     e.printStackTrace(); // Depuración general
