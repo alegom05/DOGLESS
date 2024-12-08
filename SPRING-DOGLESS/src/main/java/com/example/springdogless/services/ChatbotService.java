@@ -5,10 +5,7 @@ import com.example.springdogless.Repository.OrdenRepository;
 import com.example.springdogless.Repository.ProductRepository;
 import com.example.springdogless.Repository.UsuarioRepository;
 import com.example.springdogless.controllers.UsuarioController;
-import com.example.springdogless.entity.Detalleorden;
-import com.example.springdogless.entity.Orden;
-import com.example.springdogless.entity.Producto;
-import com.example.springdogless.entity.Usuario;
+import com.example.springdogless.entity.*;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -358,6 +355,41 @@ public class ChatbotService {
             case "inicio":
                 if (!estadosUsuario.containsKey(usuarioActual) || !"esperandoProducto".equals(estadosUsuario.get(usuarioActual))) {
                     estadosUsuario.put(usuarioActual, "esperandoProducto");
+                }
+
+                // Cargar datos del usuario logueado desde la base de datos si el ID es válido
+                if (usuarioActual.matches("\\d+")) { // Verificar si usuarioActual es numérico
+                    int userIdNumerico = Integer.parseInt(usuarioActual);
+                    Optional<Usuario> usuarioOptional = usuarioRepository.findById(userIdNumerico);
+
+                    if (usuarioOptional.isPresent()) {
+                        Usuario usuario = usuarioOptional.get();
+                        datos.put("nombre", usuario.getNombre());
+                        datos.put("apellido", usuario.getApellido());
+                        datos.put("zona", usuario.getZona().getNombre()); // Asegúrate de que exista el campo en la entidad
+                        datos.put("distrito", usuario.getDistrito().getDistrito()); // Asegúrate de que exista el campo en la entidad
+                        datos.put("telefono", usuario.getTelefono());
+                        datos.put("correo", usuario.getEmail());
+                        datos.put("direccion", usuario.getDireccion());
+                    } else {
+                        // Si el usuario no está en la base de datos, inicializar valores por defecto
+                        datos.put("nombre", "No especificado");
+                        datos.put("apellido", "No especificado");
+                        datos.put("zona", "No especificado");
+                        datos.put("distrito", "No especificado");
+                        datos.put("telefono", "No especificado");
+                        datos.put("correo", "No especificado");
+                        datos.put("direccion", "No especificado");
+                    }
+                } else {
+                    // Si no es un usuario logueado, usar valores predeterminados
+                    datos.put("nombre", "No especificado");
+                    datos.put("apellido", "No especificado");
+                    datos.put("zona", "No especificado");
+                    datos.put("distrito", "No especificado");
+                    datos.put("telefono", "No especificado");
+                    datos.put("correo", "No especificado");
+                    datos.put("direccion", "No especificado");
                 }
 
             case "esperandoProducto":
