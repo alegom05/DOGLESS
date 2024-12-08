@@ -138,7 +138,7 @@ public class LoginController {
             String resetToken = UUID.randomUUID().toString();
 
             // Crea el enlace de restablecimiento
-            String resetLink = "http://yourdomain.com/crearnuevacontrasenha?token=" + resetToken;
+            String resetLink = "http://dogless.shop:8080/crearnuevacontrasenha?token=" + resetToken;
 
             // Crear y enviar correo con alias
             MimeMessage mimeMessage = emailSender.createMimeMessage();
