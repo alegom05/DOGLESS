@@ -710,6 +710,53 @@ public class UsuarioController {
         return "redirect:/usuario/compras?id=" + idUsuario;
     }
 
+    public String agregarProductoChatbot(Integer idProducto, Integer idUsuario, Integer cantidad) {
+        // Obtener el usuario por su ID
+        Usuario usuario = usuarioRepository.findById(idUsuario)
+                .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
+
+        // Verificar si existe una orden con estado 'Creado' para el usuario
+        Orden orden = ordenRepository.findOrdenEstadoCreado(idUsuario);
+
+        // Si no existe una orden con estado 'Creado', crear una nueva
+        if (orden == null) {
+            orden = new Orden();
+            orden.setEstado("Creado");
+            orden.setUsuario(usuario);
+            orden.setTotal(BigDecimal.ZERO);
+            Date fechaActualUtil = new Date();
+            java.sql.Date fechaActualSql = new java.sql.Date(fechaActualUtil.getTime());
+            orden.setFecha(fechaActualSql);
+            ordenRepository.save(orden);
+        }
+
+        // Verificar si el producto ya está en los detalles de la orden
+        Optional<Detalleorden> detallesExistente = detallesRepository.findByIdordenAndIdproducto(orden.getId(), idProducto);
+
+        if (detallesExistente.isPresent()) {
+            // Si ya existe el producto en la orden, actualizar la cantidad
+            Detalleorden detalles = detallesExistente.get();
+            detalles.setCantidad(detalles.getCantidad() + cantidad);
+            detalles.setSubtotal(detalles.getPreciounitario().multiply(new BigDecimal(detalles.getCantidad())));
+            detallesRepository.save(detalles);
+        } else {
+            // Si no existe, agregar un nuevo detalle con el producto
+            Producto producto = productRepository.findById(idProducto)
+                    .orElseThrow(() -> new IllegalArgumentException("Producto no encontrado"));
+
+            Detalleorden nuevoDetalle = new Detalleorden();
+            nuevoDetalle.setOrden(orden);
+            nuevoDetalle.setProducto(producto);
+            nuevoDetalle.setCantidad(cantidad);
+            nuevoDetalle.setPreciounitario(BigDecimal.valueOf(producto.getPrecio()));
+            nuevoDetalle.setSubtotal(BigDecimal.valueOf(producto.getPrecio()).multiply(new BigDecimal(cantidad)));
+            detallesRepository.save(nuevoDetalle);
+        }
+
+        // Retornar un mensaje de éxito o cualquier otra información relevante
+        return "Producto añadido al carrito correctamente";
+    }
+
 
     //borrar producto
     @GetMapping("/borrarproducto")

@@ -286,37 +286,53 @@ public class ChatbotService {
         return String.format("Tu orden de compra ha sido generada exitosamente. Número de orden: %s.", numeroOrden);
     }
 
-    public String manejarCompraDesdeChatbot(Integer userId, Integer productoId, Integer cantidad) {
+    public String manejarCompraDesdeChatbot(Integer idProducto, Integer idUsuario, Integer cantidad) {
         try {
             // Validaciones básicas
-            if (userId == null || userId <= 0) {
+            if (idUsuario == null || idUsuario <= 0) {
                 return "Error: Usuario no válido.";
             }
-            if (productoId == null || productoId <= 0) {
+            if (idProducto == null || idProducto <= 0) {
                 return "Error: Producto no válido.";
             }
             if (cantidad == null || cantidad <= 0) {
-                return "Error: Cantidad debe ser mayor a 0.";
+                return "Error: La cantidad debe ser mayor a 0.";
             }
 
-            System.out.println("Agregando producto al carrito: " +
-                    "UserId=" + userId + ", ProductoId=" + productoId + ", Cantidad=" + cantidad);
+            // Registrar información para depuración
+            System.out.println("Validando producto en manejarCompraDesdeChatbot: idProducto=" + idProducto);
 
-            // Simular el comportamiento de redirección
-            usuarioController.agregarProducto2(null, null, productoId, userId, cantidad, null);
+            // Validar existencia del producto antes de continuar
+            Optional<Producto> productoOptional = productRepository.findById(idProducto);
+            if (!productoOptional.isPresent()) {
+                System.out.println("Error: Producto no encontrado en manejarCompraDesdeChatbot.");
+                return "Error: Producto con ID " + idProducto + " no encontrado.";
+            }
 
-            // Retorna un mensaje exitoso ya que `agregarProducto2` no falla
-            return "Producto añadido exitosamente al carrito.";
+            Producto producto = productoOptional.get();
+
+            // Registrar información del producto encontrado
+            System.out.println("Producto encontrado en manejarCompraDesdeChatbot: " +
+                    "Nombre=" + producto.getNombre() + ", Precio=" + producto.getPrecio());
+
+            // Llamar al método agregarProductoChatbot
+            String resultado = usuarioController.agregarProductoChatbot(idProducto, idUsuario, cantidad);
+
+            // Retorna un mensaje exitoso con el resultado
+            return resultado;
+
         } catch (IllegalArgumentException e) {
-            // Captura errores lanzados por `usuarioController.agregarProducto2`
-            e.printStackTrace(); // Depuración adicional
-            return e.getMessage();
-        } catch (Exception e) {
-            // Captura cualquier otra excepción
+            // Captura errores lanzados por agregarProductoChatbot
             e.printStackTrace();
-            return "Ocurrió un error al añadir el producto al carrito. Por favor, inténtelo nuevamente.";
+            return "Error: " + e.getMessage();
+        } catch (Exception e) {
+            // Captura cualquier otra excepción inesperada
+            e.printStackTrace();
+            return "Ocurrió un error inesperado al añadir el producto al carrito. Por favor, inténtelo nuevamente.";
         }
     }
+
+
 
     private String callHuggingFaceAPI(String mensaje) {
         String url = String.format("https://api-inference.huggingface.co/models/%s", model);
@@ -429,12 +445,14 @@ public class ChatbotService {
                     if (cantidad <= 0) {
                         return "Por favor, ingrese una cantidad válida mayor a 0.";
                     }
+                    // Actualiza solo la cantidad actual sin duplicar datos
                     datos.put("cantidad", String.valueOf(cantidad));
 
-                    // Procesar la compra (simulado)
+                    // Procesar la compra con la cantidad actual
+                    Integer idProducto = Integer.parseInt(datos.get("productoId"));
                     String resultadoCompra = manejarCompraDesdeChatbot(
-                            usuario.getId(),
-                            Integer.parseInt(datos.get("productoId")),
+                            idProducto,
+                            Integer.parseInt(userId),
                             cantidad
                     );
 
@@ -443,6 +461,8 @@ public class ChatbotService {
                 } catch (NumberFormatException e) {
                     return "Por favor, ingrese un número válido para la cantidad.";
                 }
+
+
 
             case "otroProducto":
                 if (mensaje.equalsIgnoreCase("sí")) {
@@ -606,29 +626,82 @@ public class ChatbotService {
 
 
     private String procesarPagoYMostrarResumen(String usuarioActual) {
-        // Obtén el mapa de datos del usuario actual desde `datosUsuario`
-        Map<String, String> datos = datosUsuario.computeIfAbsent(usuarioActual, k -> new HashMap<>());
+        // Validar datos del usuario actual
+        Map<String, String> datos = datosUsuario.get(usuarioActual);
+        if (datos == null || datos.isEmpty()) {
+            return "Error: No se pudieron cargar los datos del usuario.";
+        }
 
-        // Simular detalles del pedido
-        String resumen = """
-        Gracias %s. Tu pedido está confirmado.<br>
-        Producto - Costo - Cantidad - Total<br>
-        Smartphone X - S/.599.99 - 3 - S/.1799.97<br>
-        Auriculares Z - S/.49.99 - 1 - S/.49.99<br>
-        Tablet W - S/.350.50 - 1 - S/.350.50<br>
-        <br>
-        Subtotal: S/.2212.46<br>
-        Costo de envío: S/.12.00<br>
-        Precio total: S/.2224.46<br>
-        Da enter y volverás al menú principal.
-        """;
+        // Recuperar el usuario autenticado desde la base de datos
+        Usuario usuario = usuarioRepository.findById(Integer.parseInt(usuarioActual))
+                .orElse(null);
+        if (usuario == null) {
+            return "Error: Usuario no encontrado.";
+        }
 
-        // Recupera el nombre del usuario desde los datos o usa "Usuario" como predeterminado
-        String nombre = datos.getOrDefault("nombre", "Usuario");
+        // Buscar la orden en estado "Creado" para el usuario actual
+        Orden orden = ordenRepository.findOrdenEstadoCreado(usuario.getId());
+        if (orden == null) {
+            return "Error: No se encontró una orden activa para el usuario.";
+        }
 
-        // Formatea el resumen con el nombre del usuario
-        return String.format(resumen, nombre);
+        // Obtener los detalles de la orden
+        List<Detalleorden> detalles = detallesRepository.findAllByOrdenId(orden.getId());
+        if (detalles.isEmpty()) {
+            return "Error: No hay productos asociados con esta orden.";
+        }
+
+        // Construir el resumen
+        StringBuilder resumen = new StringBuilder();
+        BigDecimal subtotal = BigDecimal.ZERO;
+
+        resumen.append("<div style=\"border: 1px solid #ddd; padding: 15px; border-radius: 8px; max-width: 600px; font-family: Arial, sans-serif;\">");
+        resumen.append("<h4 style=\"text-align: center; color: #333; margin-bottom: 10px; font-size: 18px; line-height: 1.4;\">Resumen de tu compra</h4>");
+        resumen.append("<hr style=\"border: 0; border-top: 1px solid #ccc; margin-bottom: 10px;\">");
+        resumen.append("<table style=\"width: 100%; border-collapse: collapse;\">");
+        resumen.append("<thead style=\"background-color: #f4f4f4; text-align: left;\">");
+        resumen.append("<tr>");
+        resumen.append("<th style=\"padding: 8px; border: 1px solid #ddd;\">Producto</th>");
+        resumen.append("<th style=\"padding: 8px; border: 1px solid #ddd;\">Cantidad</th>");
+        resumen.append("<th style=\"padding: 8px; border: 1px solid #ddd;\">Precio Unitario</th>");
+        resumen.append("<th style=\"padding: 8px; border: 1px solid #ddd;\">Total</th>");
+        resumen.append("</tr>");
+        resumen.append("</thead>");
+        resumen.append("<tbody>");
+
+        // Iterar sobre los productos en el carrito
+        for (Detalleorden detalle : detalles) {
+            BigDecimal totalProducto = detalle.getPreciounitario().multiply(BigDecimal.valueOf(detalle.getCantidad()));
+            subtotal = subtotal.add(totalProducto);
+
+            resumen.append("<tr>");
+            resumen.append(String.format("<td style=\"padding: 8px; border: 1px solid #ddd;\">%s</td>", detalle.getProducto().getNombre()));
+            resumen.append(String.format("<td style=\"padding: 8px; border: 1px solid #ddd; text-align: center;\">%d</td>", detalle.getCantidad()));
+            resumen.append(String.format("<td style=\"padding: 8px; border: 1px solid #ddd; text-align: right;\">S/. %.2f</td>", detalle.getPreciounitario()));
+            resumen.append(String.format("<td style=\"padding: 8px; border: 1px solid #ddd; text-align: right;\">S/. %.2f</td>", totalProducto));
+            resumen.append("</tr>");
+        }
+
+        resumen.append("</tbody>");
+        resumen.append("</table>");
+        resumen.append("<hr style=\"border: 0; border-top: 1px solid #ccc; margin-top: 10px; margin-bottom: 10px;\">");
+
+        // Calcular el costo de envío y total
+        BigDecimal costoEnvio = new BigDecimal("12.00"); // Puedes configurar este valor en una propiedad
+        BigDecimal total = subtotal.add(costoEnvio);
+
+        resumen.append(String.format("<p style=\"text-align: right; font-weight: bold;\">Subtotal: S/. %.2f</p>", subtotal));
+        resumen.append(String.format("<p style=\"text-align: right; font-weight: bold;\">Costo de envío: S/. %.2f</p>", costoEnvio));
+        resumen.append(String.format("<p style=\"text-align: right; font-weight: bold; font-size: 16px;\">Total: S/. %.2f</p>", total));
+
+        resumen.append("<hr style=\"border: 0; border-top: 1px solid #ccc; margin-top: 10px; margin-bottom: 10px;\">");
+        resumen.append("<p style=\"text-align: center; margin: 10px 0; line-height: 1.6; font-size: 14px;\">Gracias por tu compra.</p>");
+        resumen.append("</div>");
+
+        return resumen.toString();
     }
+
+
 
 
     public boolean esFlujoDeCompra(String mensaje) {

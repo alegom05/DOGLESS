@@ -643,5 +643,8 @@ public interface ProductRepository extends JpaRepository<Producto, Integer>{
     List<ProductoDTO> contarTotalVendidosPorProducto();
 
     Producto findByNombre(String mensaje);
+
+    Optional<Producto> findById(Integer id);
+
 }
 
