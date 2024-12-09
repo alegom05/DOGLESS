@@ -15,6 +15,8 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -304,9 +306,6 @@ public class ChatbotService {
         }
     }
 
-
-
-
     private String callHuggingFaceAPI(String mensaje) {
         String url = String.format("https://api-inference.huggingface.co/models/%s", model);
 
@@ -337,234 +336,223 @@ public class ChatbotService {
     }
 
     public String procesarFlujoCompra(String userId, String mensaje) {
-        // Usa un identificador predeterminado si no se proporciona userId
-        String usuarioActual = (userId != null) ? userId : "defaultUser";
-
-        // Verificar si el usuario quiere salir y volver al menú principal
-        if (mensaje.equalsIgnoreCase("salir")) {
-            estadosUsuario.put(usuarioActual, "MENU");
-            estadoActual = "MENU";
-            return manejarMenuPrincipal("");
+        // Obtener el usuario autenticado desde el contexto de seguridad
+        String username = getUsuarioActual(); // Este obtiene el email si es tu identificador de autenticación
+        if ("anonymousUser".equals(username)) {
+            return "Error: Debes estar autenticado para realizar una compra.";
         }
 
-        // Obtén el estado actual del usuario o establece un estado inicial
-        String estadoActual = estadosUsuario.getOrDefault(usuarioActual, "inicio");
-        Map<String, String> datos = datosUsuario.computeIfAbsent(usuarioActual, k -> new HashMap<>());
+        // Buscar al usuario en la base de datos usando el método findByEmail
+        Usuario usuario = usuarioRepository.findByEmail(username); // Devuelve directamente Usuario, no Optional
+        if (usuario == null) {
+            return "Error: No se encontró el usuario en el sistema.";
+        }
+
+        // Cargar datos del usuario en el mapa
+        userId = String.valueOf(usuario.getId());
+        Map<String, String> datos = datosUsuario.computeIfAbsent(userId, k -> new HashMap<>());
+        datos.put("nombre", Optional.ofNullable(usuario.getNombre()).orElse("No especificado"));
+        datos.put("apellido", Optional.ofNullable(usuario.getApellido()).orElse("No especificado"));
+        datos.put("zona", Optional.ofNullable(usuario.getZona()).map(Zona::getNombre).orElse("No especificado"));
+        datos.put("distrito", Optional.ofNullable(usuario.getDistrito()).map(Distrito::getDistrito).orElse("No especificado"));
+        datos.put("telefono", Optional.ofNullable(usuario.getTelefono()).orElse("No especificado"));
+        datos.put("correo", Optional.ofNullable(usuario.getEmail()).orElse("No especificado"));
+        datos.put("direccion", Optional.ofNullable(usuario.getDireccion()).orElse("No especificado"));
+
+        // Obtener el estado actual del usuario
+        String estadoActual = estadosUsuario.getOrDefault(userId, "inicio");
+
+        System.out.println("Usuario autenticado: " + usuario.getId());
 
         switch (estadoActual) {
             case "inicio":
-                if (!estadosUsuario.containsKey(usuarioActual) || !"esperandoProducto".equals(estadosUsuario.get(usuarioActual))) {
-                    estadosUsuario.put(usuarioActual, "esperandoProducto");
-                }
-
-                // Cargar datos del usuario logueado desde la base de datos si el ID es válido
-                if (usuarioActual.matches("\\d+")) { // Verificar si usuarioActual es numérico
-                    int userIdNumerico = Integer.parseInt(usuarioActual);
-                    Optional<Usuario> usuarioOptional = usuarioRepository.findById(userIdNumerico);
-
-                    if (usuarioOptional.isPresent()) {
-                        Usuario usuario = usuarioOptional.get();
-                        datos.put("nombre", usuario.getNombre());
-                        datos.put("apellido", usuario.getApellido());
-                        datos.put("zona", usuario.getZona().getNombre()); // Asegúrate de que exista el campo en la entidad
-                        datos.put("distrito", usuario.getDistrito().getDistrito()); // Asegúrate de que exista el campo en la entidad
-                        datos.put("telefono", usuario.getTelefono());
-                        datos.put("correo", usuario.getEmail());
-                        datos.put("direccion", usuario.getDireccion());
-                    } else {
-                        // Si el usuario no está en la base de datos, inicializar valores por defecto
-                        datos.put("nombre", "No especificado");
-                        datos.put("apellido", "No especificado");
-                        datos.put("zona", "No especificado");
-                        datos.put("distrito", "No especificado");
-                        datos.put("telefono", "No especificado");
-                        datos.put("correo", "No especificado");
-                        datos.put("direccion", "No especificado");
-                    }
-                } else {
-                    // Si no es un usuario logueado, usar valores predeterminados
-                    datos.put("nombre", "No especificado");
-                    datos.put("apellido", "No especificado");
-                    datos.put("zona", "No especificado");
-                    datos.put("distrito", "No especificado");
-                    datos.put("telefono", "No especificado");
-                    datos.put("correo", "No especificado");
-                    datos.put("direccion", "No especificado");
-                }
+                estadosUsuario.put(userId, "esperandoProducto");
 
             case "esperandoProducto":
                 Producto producto = productRepository.findByNombre(mensaje);
                 if (producto == null) {
-                    return "No reconozco el nombre, vuelve a intentar.";
+                    return "No reconozco el nombre del producto. Por favor, intenta nuevamente.";
                 }
-                // Guardar detalles del producto en datosUsuario para confirmación
+                // Guardar detalles del producto en los datos del usuario
                 datos.put("productoId", String.valueOf(producto.getId()));
                 datos.put("productoNombre", producto.getNombre());
                 datos.put("productoPrecio", String.valueOf(producto.getPrecio()));
                 datos.put("productoDescripcion", producto.getDescripcion());
 
-                // Cambiar el estado a validarProducto
-                estadosUsuario.put(usuarioActual, "validarProducto");
-
-                return "Producto encontrado:<br>" +
-                        "Nombre: " + producto.getNombre() + "<br>" +
-                        "Descripción: " + producto.getDescripcion() + "<br>" +
-                        "Precio: S/. " + producto.getPrecio() + "<br>" +
-                        "¿Es este el producto que desea añadir? " + "<br>" +
-                        "<button class=\"button\" onclick=\"sendMessage('sí')\">Sí</button> " +
-                        "<button class=\"button no\" onclick=\"sendMessage('no')\">No</button>";
+                estadosUsuario.put(userId, "validarProducto");
+                return String.format("""
+        <div style="border: 1px solid #ddd; padding: 15px; border-radius: 8px; max-width: 400px; font-family: Arial, sans-serif;">
+            <h4 style="text-align: center; color: #333; margin-bottom: 10px; font-size: 16px; line-height: 1.2;">Producto encontrado</h4>
+            <hr style="border: 0; border-top: 1px solid #ccc; margin-bottom: 10px;">
+            <p style="margin: 5px 0; line-height: 1.2;"><strong>Nombre:</strong></p>
+            <p style="margin: 5px 0; line-height: 1.2;">%s</p>
+            <p style="margin: 5px 0; line-height: 1.2;"><strong>Descripción:</strong></p>
+            <p style="margin: 5px 0; line-height: 1.2;">%s</p>
+            <p style="margin: 5px 0; line-height: 1.2;"><strong>Precio:</strong></p>
+            <p style="margin: 5px 0; line-height: 1.2;">S/. %s</p>
+            <hr style="border: 0; border-top: 1px solid #ccc; margin-top: 10px; margin-bottom: 10px;">
+            <p style="text-align: center; margin: 5px 0; line-height: 1.2;">¿Es este el producto que desea añadir?</p>
+            <div style="text-align: center;">
+                <button class="button" style="margin: 5px; padding: 8px 12px; background-color: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer;" onclick="sendMessage('sí')">Sí</button>
+                <button class="button no" style="margin: 5px; padding: 8px 12px; background-color: #f44336; color: white; border: none; border-radius: 4px; cursor: pointer;" onclick="sendMessage('no')">No</button>
+            </div>
+        </div>
+        """, producto.getNombre(), producto.getDescripcion(), producto.getPrecio());
 
 
             case "validarProducto":
                 if (mensaje.equalsIgnoreCase("sí")) {
-                    estadosUsuario.put(usuarioActual, "esperandoCantidad");
+                    estadosUsuario.put(userId, "esperandoCantidad");
                     return "Ingrese la cantidad que desea comprar.";
                 } else if (mensaje.equalsIgnoreCase("no")) {
-                    estadosUsuario.put(usuarioActual, "esperandoProducto");
+                    estadosUsuario.put(userId, "esperandoProducto");
                     return "Por favor, ingrese el nombre del producto que desea comprar.";
                 } else {
-                    // Respuesta inválida
-                    return "Por favor, seleccione 'sí' o 'no'.<br>" +
-                            "¿Es este el producto que desea añadir? " + "<br>" +
-                            "<button class=\"button\" onclick=\"sendMessage('sí')\">Sí</button> " +
-                            "<button class=\"button no\" onclick=\"sendMessage('no')\">No</button>";
+                    return "Por favor, seleccione 'sí' o 'no'.";
                 }
 
             case "esperandoCantidad":
                 try {
-                    // Limpia el mensaje antes de procesarlo
-                    String mensajeLimpio = mensaje.trim();
-                    System.out.println("Cantidad recibida (limpia): " + mensajeLimpio); // Depuración
-                    Integer cantidad = Integer.parseInt(mensajeLimpio);
-
-                    // Validar que la cantidad sea positiva
+                    int cantidad = Integer.parseInt(mensaje.trim());
                     if (cantidad <= 0) {
-                        return "Por favor, ingrese un número válido mayor a 0.";
+                        return "Por favor, ingrese una cantidad válida mayor a 0.";
                     }
-
-                    // Recuperar los datos del usuario actual
                     datos.put("cantidad", String.valueOf(cantidad));
 
-                    // Verificar si usuarioActual es un número válido
-                    int userIdNumerico;
-                    if (usuarioActual.matches("\\d+")) { // Comprueba si usuarioActual es numérico
-                        userIdNumerico = Integer.parseInt(usuarioActual);
-                    } else {
-                        System.err.println("El identificador de usuario no es numérico: " + usuarioActual);
-                        userIdNumerico = -1; // Usa un valor especial si no tienes un ID numérico
-                    }
-
-                    // Procesar la compra y actualizar el flujo
+                    // Procesar la compra (simulado)
                     String resultadoCompra = manejarCompraDesdeChatbot(
-                            userIdNumerico,
+                            usuario.getId(),
                             Integer.parseInt(datos.get("productoId")),
                             cantidad
                     );
 
-                    System.out.println("Resultado de manejarCompraDesdeChatbot: " + resultadoCompra);
-
-                    estadosUsuario.put(usuarioActual, "otroProducto");
-                    return "Producto añadido al carrito. ¿Quiere ingresar otro producto? " +
-                            "<button onclick=\"sendMessage('sí')\">Sí</button> " +
-                            "<button onclick=\"sendMessage('no')\">No</button>";
+                    estadosUsuario.put(userId, "otroProducto");
+                    return resultadoCompra + "<br>¿Quiere ingresar otro producto? <button onclick=\"sendMessage('sí')\">Sí</button> <button onclick=\"sendMessage('no')\">No</button>";
                 } catch (NumberFormatException e) {
-                    System.err.println("Número inválido ingresado como cantidad: " + mensaje);
                     return "Por favor, ingrese un número válido para la cantidad.";
-                } catch (Exception e) {
-                    e.printStackTrace(); // Depuración general
-                    return "Ocurrió un error al procesar la cantidad. Por favor, inténtelo nuevamente.";
                 }
-
 
             case "otroProducto":
                 if (mensaje.equalsIgnoreCase("sí")) {
-                    estadosUsuario.put(usuarioActual, "esperandoProducto");
+                    estadosUsuario.put(userId, "esperandoProducto");
                     return "Por favor, ingrese el nombre del próximo producto que desea comprar.";
                 } else if (mensaje.equalsIgnoreCase("no")) {
-                    estadosUsuario.put(usuarioActual, "confirmarCompra");
-                    return mostrarDetallesCompra(usuarioActual);
+                    estadosUsuario.put(userId, "confirmarCompra");
+                    return mostrarDetallesCompra(userId);
                 } else {
-                    return "¿Podrías repetir por favor? ¿Quiere ingresar otro producto? <button>Sí</button> <button>No</button>";
+                    return "¿Quiere ingresar otro producto? <button>Sí</button> <button>No</button>";
                 }
 
             case "confirmarCompra":
                 if (mensaje.equalsIgnoreCase("sí")) {
-                    estadosUsuario.put(usuarioActual, "modificarDireccion");
+                    estadosUsuario.put(userId, "modificarDireccion");
                     return "Ingrese la nueva dirección:";
                 } else if (mensaje.equalsIgnoreCase("no")) {
-                    estadosUsuario.put(usuarioActual, "ingresarTarjeta");
+                    estadosUsuario.put(userId, "ingresarTarjeta");
                     return "A continuación, ingrese los siguientes datos:<br> Número de tarjeta:";
                 } else {
-                    return "¿Podrías repetir por favor? ¿Quieres modificar la dirección? <button>Sí</button> <button>No</button>";
+                    return "¿Quiere modificar la dirección? <button>Sí</button> <button>No</button>";
                 }
 
             case "modificarDireccion":
                 if (mensaje.trim().isEmpty()) {
-                    return "¿Podrías repetir por favor? Ingrese la nueva dirección:";
+                    return "Por favor, ingrese una dirección válida.";
                 } else {
                     datos.put("direccion", mensaje.trim());
-                    estadosUsuario.put(usuarioActual, "ingresarTarjeta");
+                    estadosUsuario.put(userId, "ingresarTarjeta");
                     return "A continuación, ingrese los siguientes datos:<br> Número de tarjeta:";
                 }
 
             case "ingresarTarjeta":
                 if (mensaje.trim().isEmpty()) {
-                    return "¿Podrías repetir por favor? Ingrese el número de tarjeta:";
+                    return "Por favor, ingrese el número de tarjeta.";
                 } else {
                     datos.put("numeroTarjeta", mensaje.trim());
-                    estadosUsuario.put(usuarioActual, "ingresarTitular");
+                    estadosUsuario.put(userId, "ingresarTitular");
                     return "Ingrese el nombre del titular:";
                 }
 
             case "ingresarTitular":
                 if (mensaje.trim().isEmpty()) {
-                    return "¿Podrías repetir por favor? Ingrese el nombre del titular:";
+                    return "Por favor, ingrese el nombre del titular.";
                 } else {
                     datos.put("nombreTitular", mensaje.trim());
-                    estadosUsuario.put(usuarioActual, "ingresarVencimiento");
+                    estadosUsuario.put(userId, "ingresarVencimiento");
                     return "Ingrese la fecha de vencimiento (MM/AA):";
                 }
 
             case "ingresarVencimiento":
                 if (mensaje.trim().isEmpty()) {
-                    return "¿Podrías repetir por favor? Ingrese la fecha de vencimiento (MM/AA):";
+                    return "Por favor, ingrese la fecha de vencimiento.";
                 } else {
                     datos.put("vencimiento", mensaje.trim());
-                    estadosUsuario.put(usuarioActual, "ingresarCVV");
+                    estadosUsuario.put(userId, "ingresarCVV");
                     return "Ingrese el código CVV:";
                 }
 
             case "ingresarCVV":
                 if (mensaje.trim().isEmpty()) {
-                    return "¿Podrías repetir por favor? Ingrese el código CVV:";
+                    return "Por favor, ingrese el código CVV.";
                 } else {
                     datos.put("cvv", mensaje.trim());
-                    estadosUsuario.put(usuarioActual, "confirmarPago");
-                    return "A continuación procederá a pagar. Confirme.";
+                    estadosUsuario.put(userId, "confirmarPago");
+                    return "¿Desea proceder con el pago? <button onclick=\"sendMessage('sí')\">Sí</button> <button onclick=\"sendMessage('no')\">No</button>";
                 }
 
             case "confirmarPago":
                 if (mensaje.equalsIgnoreCase("sí")) {
-                    estadosUsuario.put(usuarioActual, "MENU"); // Volver al menú después del pago
-                    return procesarPagoYMostrarResumen(usuarioActual);
+                    estadosUsuario.put(userId, "MENU");
+                    return procesarPagoYMostrarResumen(userId);
                 } else if (mensaje.equalsIgnoreCase("no")) {
-                    estadosUsuario.put(usuarioActual, "MENU");
+                    estadosUsuario.put(userId, "MENU");
                     return "Pago cancelado. Volviendo al menú principal.";
                 } else {
-                    return "¿Podrías repetir por favor? ¿Desea proceder con el pago? <button>Sí</button> <button>No</button>";
+                    return "¿Desea proceder con el pago? <button>Sí</button> <button>No</button>";
                 }
 
             default:
-                return "¿Podrías repetir por favor?";
-
+                return "No entiendo tu solicitud. Por favor, intenta nuevamente.";
         }
     }
 
-    private String mostrarDetallesCompra(String usuarioActual) {
-        // Obtén el mapa de datos del usuario actual desde `datosUsuario`
-        Map<String, String> datos = datosUsuario.computeIfAbsent(usuarioActual, k -> new HashMap<>());
 
-        // Recuperar datos almacenados o valores predeterminados si no están definidos
+    private String manejarFlujoProducto(Map<String, String> datos, String mensaje) {
+        Producto producto = productRepository.findByNombre(mensaje);
+        if (producto == null) {
+            return "No se encontró el producto. Por favor, intenta con otro nombre.";
+        }
+
+        datos.put("productoId", String.valueOf(producto.getId()));
+        datos.put("productoNombre", producto.getNombre());
+        datos.put("productoPrecio", producto.getPrecio().toString());
+
+        return String.format("""
+        Producto encontrado:<br>
+        Nombre: %s<br>
+        Precio: S/. %s<br>
+        ¿Deseas continuar con la compra? <button onclick="sendMessage('sí')">Sí</button> <button onclick="sendMessage('no')">No</button>
+        """, producto.getNombre(), producto.getPrecio());
+    }
+
+    // Método para obtener el usuario autenticado
+    public String getUsuarioActual() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof UserDetails) {
+            return ((UserDetails) principal).getUsername(); // Devuelve el email del usuario autenticado
+        } else {
+            return principal.toString(); // Devuelve "anonymousUser" si no está autenticado
+        }
+    }
+
+
+
+
+    private String mostrarDetallesCompra(String username) {
+        Map<String, String> datos = datosUsuario.get(username);
+        if (datos == null || datos.isEmpty()) {
+            return "Error: No se pudieron cargar los datos del usuario.";
+        }
+
         String nombre = datos.getOrDefault("nombre", "No especificado");
         String apellido = datos.getOrDefault("apellido", "No especificado");
         String zona = datos.getOrDefault("zona", "No especificado");
@@ -573,19 +561,37 @@ public class ChatbotService {
         String correo = datos.getOrDefault("correo", "No especificado");
         String direccion = datos.getOrDefault("direccion", "No especificado");
 
-        // Construir y devolver los detalles de la compra en formato HTML
         return String.format("""
-        Detalles de la compra:<br>
-        Nombre: %s<br>
-        Apellido: %s<br>
-        Zona: %s<br>
-        Distrito: %s<br>
-        Número de teléfono: %s<br>
-        Correo electrónico: %s<br>
-        Dirección: %s<br>
-        ¿Quieres modificar la dirección? <button onclick="sendMessage('sí')">Sí</button> <button onclick="sendMessage('no')">No</button>
+        <div style="border: 1px solid #ddd; padding: 15px; border-radius: 8px; max-width: 400px; font-family: Arial, sans-serif;">
+            <h4 style="text-align: center; color: #333; margin-bottom: 10px; font-size: 16px; line-height: 1.2;">Detalles del usuario</h4>
+            <hr style="border: 0; border-top: 1px solid #ccc; margin-bottom: 10px;">
+            <p style="margin: 5px 0; line-height: 1.2;"><strong>Nombre:</strong></p>
+            <p style="margin: 5px 0; line-height: 1.2;">%s</p>
+            <p style="margin: 5px 0; line-height: 1.2;"><strong>Apellido:</strong></p>
+            <p style="margin: 5px 0; line-height: 1.2;">%s</p>
+            <p style="margin: 5px 0; line-height: 1.2;"><strong>Zona:</strong></p>
+            <p style="margin: 5px 0; line-height: 1.2;">%s</p>
+            <p style="margin: 5px 0; line-height: 1.2;"><strong>Distrito:</strong></p>
+            <p style="margin: 5px 0; line-height: 1.2;">%s</p>
+            <p style="margin: 5px 0; line-height: 1.2;"><strong>Número de teléfono:</strong></p>
+            <p style="margin: 5px 0; line-height: 1.2;">%s</p>
+            <p style="margin: 5px 0; line-height: 1.2;"><strong>Correo electrónico:</strong></p>
+            <p style="margin: 5px 0; line-height: 1.2;">%s</p>
+            <p style="margin: 5px 0; line-height: 1.2;"><strong>Dirección:</strong></p>
+            <p style="margin: 5px 0; line-height: 1.2;">%s</p>
+            <hr style="border: 0; border-top: 1px solid #ccc; margin-top: 10px; margin-bottom: 10px;">
+            <p style="text-align: center; margin: 5px 0; line-height: 1.2;">¿Quieres modificar la dirección?</p>
+            <div style="text-align: center;">
+                <button class="button" style="margin: 5px; padding: 8px 12px; background-color: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer;" onclick="sendMessage('sí')">Sí</button>
+                <button class="button no" style="margin: 5px; padding: 8px 12px; background-color: #f44336; color: white; border: none; border-radius: 4px; cursor: pointer;" onclick="sendMessage('no')">No</button>
+            </div>
+        </div>
         """, nombre, apellido, zona, distrito, telefono, correo, direccion);
+
+
+
     }
+
 
     private String procesarPagoYMostrarResumen(String usuarioActual) {
         // Obtén el mapa de datos del usuario actual desde `datosUsuario`

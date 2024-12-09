@@ -137,5 +137,6 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer>{
     @Query(nativeQuery = true, value = "select * from dogless.usuarios where idroles=4 and idzonas=:idzonas and estado='activo'")
     List<Usuario> findUsuariosAsignadosAlAgente(Integer idzonas);
 
+    Optional<Usuario> findByNombre(String username);
 }
 
