@@ -74,6 +74,9 @@ public class ChatbotService {
 
     //Ojo con esto
     public String getMensajeInicial() {
+        estadoActual = "MENU"; // Reinicia el estado actual a "MENU"
+        estadosUsuario.clear(); // Limpia los estados de los usuarios
+        datosUsuario.clear(); // Limpia los datos guardados de los usuarios
         return manejarMenuPrincipal(""); // Devuelve el menú inicial
     }
 
@@ -91,6 +94,14 @@ public class ChatbotService {
 
 
     public String procesarMensaje(String mensaje) {
+
+        if (mensaje.equalsIgnoreCase("reiniciar")) {
+            estadoActual = "MENU";
+            estadosUsuario.clear(); // Limpia los estados de los usuarios
+            datosUsuario.clear(); // Limpia los datos guardados de los usuarios
+            return manejarMenuPrincipal("");
+        }
+
         // Siempre inicia con el menú principal
         if (estadoActual.equals("MENU") || mensaje.equalsIgnoreCase("regresar")) {
             return manejarMenuPrincipal(mensaje);
@@ -108,6 +119,7 @@ public class ChatbotService {
                 return "Ocurrió un error. Por favor, reinicia la conversación.";
         }
     }
+
 
     private String manejarMenuPrincipal(String mensaje) {
         // Mensaje introductorio en formato HTML

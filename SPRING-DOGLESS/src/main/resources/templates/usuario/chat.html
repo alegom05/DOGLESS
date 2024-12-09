@@ -186,7 +186,21 @@
                         .catch((error) => console.error('Error al enviar el mensaje:', error));
                 }
 
+                window.addEventListener('load', () => {
+                    sendMessage('reiniciar'); // Envía un mensaje para reiniciar el estado en el backend
+                });
 
+                window.addEventListener('load', function () {
+                    fetch('/chat/mensaje', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ mensaje: 'reiniciar' })
+                    })
+                        .then(response => response.text())
+                        .then(data => {
+                            document.getElementById('chat').innerHTML = data;
+                        });
+                });
 
 
 
