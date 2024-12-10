@@ -9,6 +9,9 @@ import com.example.springdogless.entity.*;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -20,10 +23,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.*;
+import java.util.List;
 
 @Service
 public class ChatbotService {
@@ -61,10 +65,12 @@ public class ChatbotService {
     @Autowired
     private UsuarioController usuarioController;
 
+    private Map<String, List<Detalleorden>> productosSesion = new HashMap<>();
 
     private String estadoActual = "MENU"; // Estado inicial
     private Map<String, Map<String, String>> datosUsuario = new HashMap<>();
 
+    private Map<String, Timestamp> ultimaActualizacionPorUsuario = new HashMap<>();
 
     public ChatbotService(ObjectMapper objectMapper, RestTemplate restTemplate) {
         this.objectMapper = objectMapper;
@@ -74,11 +80,17 @@ public class ChatbotService {
 
     //Ojo con esto
     public String getMensajeInicial() {
+        String usuarioActual = getUsuarioActual();
         estadoActual = "MENU"; // Reinicia el estado actual a "MENU"
         estadosUsuario.clear(); // Limpia los estados de los usuarios
         datosUsuario.clear(); // Limpia los datos guardados de los usuarios
+
+        // Registrar el inicio de la conversación para el usuario actual
+        ultimaActualizacionPorUsuario.put(usuarioActual, new Timestamp(System.currentTimeMillis()));
+
         return manejarMenuPrincipal(""); // Devuelve el menú inicial
     }
+
 
 
     private void cargarMenuDesdeJson() {
@@ -92,6 +104,10 @@ public class ChatbotService {
         }
     }
 
+    // Método para actualizar el timestamp de la última actualización
+    public void actualizarUltimaActualizacion(String userId) {
+        ultimaActualizacionPorUsuario.put(userId, new Timestamp(System.currentTimeMillis()));
+    }
 
     public String procesarMensaje(String mensaje) {
 
@@ -299,38 +315,33 @@ public class ChatbotService {
                 return "Error: La cantidad debe ser mayor a 0.";
             }
 
-            // Registrar información para depuración
-            System.out.println("Validando producto en manejarCompraDesdeChatbot: idProducto=" + idProducto);
-
-            // Validar existencia del producto antes de continuar
             Optional<Producto> productoOptional = productRepository.findById(idProducto);
             if (!productoOptional.isPresent()) {
-                System.out.println("Error: Producto no encontrado en manejarCompraDesdeChatbot.");
                 return "Error: Producto con ID " + idProducto + " no encontrado.";
             }
 
             Producto producto = productoOptional.get();
 
-            // Registrar información del producto encontrado
-            System.out.println("Producto encontrado en manejarCompraDesdeChatbot: " +
-                    "Nombre=" + producto.getNombre() + ", Precio=" + producto.getPrecio());
+            // Registrar el producto en la sesión
+            Detalleorden detalle = new Detalleorden();
+            detalle.setProducto(producto);
+            detalle.setCantidad(cantidad);
+            detalle.setPreciounitario(BigDecimal.valueOf(producto.getPrecio())); // Convierte a BigDecimal
+            detalle.setSubtotal(BigDecimal.valueOf(producto.getPrecio()).multiply(BigDecimal.valueOf(cantidad))); // Usa BigDecimal para realizar la multiplicación
 
-            // Llamar al método agregarProductoChatbot
-            String resultado = usuarioController.agregarProductoChatbot(idProducto, idUsuario, cantidad);
 
-            // Retorna un mensaje exitoso con el resultado
-            return resultado;
+            // Agregar a los productos comprados en la sesión
+            String userId = String.valueOf(idUsuario);
+            productosSesion.computeIfAbsent(userId, k -> new ArrayList<>()).add(detalle);
 
-        } catch (IllegalArgumentException e) {
-            // Captura errores lanzados por agregarProductoChatbot
-            e.printStackTrace();
-            return "Error: " + e.getMessage();
+            return String.format("Producto %s añadido exitosamente al carrito.", producto.getNombre());
+
         } catch (Exception e) {
-            // Captura cualquier otra excepción inesperada
             e.printStackTrace();
-            return "Ocurrió un error inesperado al añadir el producto al carrito. Por favor, inténtelo nuevamente.";
+            return "Ocurrió un error al añadir el producto al carrito. Por favor, inténtelo nuevamente.";
         }
     }
+
 
 
 
@@ -533,17 +544,91 @@ public class ChatbotService {
 
             case "confirmarPago":
                 if (mensaje.equalsIgnoreCase("sí")) {
-                    estadosUsuario.put(userId, "MENU");
-                    return procesarPagoYMostrarResumen(userId);
+                    estadosUsuario.put(userId, "confirmarPDF");
+                    return procesarPagoYMostrarResumen(userId) +
+                            "<br>¿Desea generar un PDF con el resumen de su compra? <button onclick=\"sendMessage('sí')\">Sí</button> <button onclick=\"sendMessage('no')\">No</button>";
                 } else if (mensaje.equalsIgnoreCase("no")) {
                     estadosUsuario.put(userId, "MENU");
-                    return "Pago cancelado. Volviendo al menú principal.";
+                    return "Pago cancelado. Volviendo al menú principal." + manejarMenuPrincipal("");
                 } else {
                     return "¿Desea proceder con el pago? <button>Sí</button> <button>No</button>";
                 }
 
+            case "confirmarPDF":
+                if (mensaje.equalsIgnoreCase("sí")) {
+                    generarPDFResumenCompra(userId);
+                    estadosUsuario.put(userId, "MENU");
+                    return "PDF generado exitosamente. Volviendo al menú principal." + "<br>" + "<br>" + manejarMenuPrincipal("");
+                } else if (mensaje.equalsIgnoreCase("no")) {
+                    estadosUsuario.put(userId, "MENU");
+                    return "Volviendo al menú principal." + "<br>" + "<br>" + manejarMenuPrincipal("");
+                } else {
+                    return "¿Desea generar un PDF con el resumen de su compra? <button>Sí</button> <button>No</button>";
+                }
+
             default:
                 return "No entiendo tu solicitud. Por favor, intenta nuevamente.";
+        }
+    }
+
+    private void generarPDFResumenCompra(String usuarioActual) {
+        List<Detalleorden> detallesSesion = productosSesion.getOrDefault(usuarioActual, new ArrayList<>());
+
+        if (detallesSesion.isEmpty()) {
+            System.out.println("No hay productos comprados en esta sesión para generar un PDF.");
+            return;
+        }
+
+        String pdfPath = "resumen_compra_" + usuarioActual + ".pdf";
+
+        Document document = new Document();
+        try {
+            PdfWriter.getInstance(document, new FileOutputStream(pdfPath));
+            document.open();
+
+            // Título del documento
+            Font titleFont = new Font(Font.FontFamily.HELVETICA, 18, Font.BOLD);
+            Paragraph title = new Paragraph("Resumen de Compra", titleFont);
+            title.setAlignment(Element.ALIGN_CENTER);
+            document.add(title);
+
+            document.add(new Paragraph("\nUsuario: " + usuarioActual));
+            document.add(new Paragraph("Fecha: " + new java.util.Date() + "\n\n"));
+
+            // Tabla para el resumen de compra
+            PdfPTable table = new PdfPTable(4); // 4 columnas
+            table.setWidthPercentage(100);
+            table.addCell("Producto");
+            table.addCell("Cantidad");
+            table.addCell("Precio Unitario");
+            table.addCell("Total");
+
+            BigDecimal total = BigDecimal.ZERO;
+
+            for (Detalleorden detalle : detallesSesion) {
+                table.addCell(detalle.getProducto().getNombre());
+                table.addCell(String.valueOf(detalle.getCantidad()));
+                table.addCell("S/. " + detalle.getPreciounitario());
+                table.addCell("S/. " + detalle.getSubtotal());
+                total = total.add(detalle.getSubtotal());
+            }
+
+            document.add(table);
+
+            // Agregar costo de envío y total general
+            document.add(new Paragraph("\nCosto de envío: S/. 12.00"));
+            document.add(new Paragraph("Total General: S/. " + total.add(new BigDecimal("12.00"))));
+
+            // Mensaje final
+            document.add(new Paragraph("\nGracias por tu compra.", new Font(Font.FontFamily.HELVETICA, 12, Font.ITALIC)));
+
+            System.out.println("PDF generado exitosamente en: " + pdfPath);
+
+        } catch (DocumentException | IOException e) {
+            e.printStackTrace();
+            System.out.println("Error al generar el PDF.");
+        } finally {
+            document.close();
         }
     }
 
@@ -626,32 +711,14 @@ public class ChatbotService {
 
 
     private String procesarPagoYMostrarResumen(String usuarioActual) {
-        // Validar datos del usuario actual
-        Map<String, String> datos = datosUsuario.get(usuarioActual);
-        if (datos == null || datos.isEmpty()) {
-            return "Error: No se pudieron cargar los datos del usuario.";
+        // Recuperar los productos comprados en la sesión actual
+        List<Detalleorden> detallesSesion = productosSesion.getOrDefault(usuarioActual, new ArrayList<>());
+
+        if (detallesSesion.isEmpty()) {
+            return "No hay productos comprados en esta sesión.";
         }
 
-        // Recuperar el usuario autenticado desde la base de datos
-        Usuario usuario = usuarioRepository.findById(Integer.parseInt(usuarioActual))
-                .orElse(null);
-        if (usuario == null) {
-            return "Error: Usuario no encontrado.";
-        }
-
-        // Buscar la orden en estado "Creado" para el usuario actual
-        Orden orden = ordenRepository.findOrdenEstadoCreado(usuario.getId());
-        if (orden == null) {
-            return "Error: No se encontró una orden activa para el usuario.";
-        }
-
-        // Obtener los detalles de la orden
-        List<Detalleorden> detalles = detallesRepository.findAllByOrdenId(orden.getId());
-        if (detalles.isEmpty()) {
-            return "Error: No hay productos asociados con esta orden.";
-        }
-
-        // Construir el resumen
+        // Construir el resumen de los productos comprados en la sesión actual
         StringBuilder resumen = new StringBuilder();
         BigDecimal subtotal = BigDecimal.ZERO;
 
@@ -669,8 +736,7 @@ public class ChatbotService {
         resumen.append("</thead>");
         resumen.append("<tbody>");
 
-        // Iterar sobre los productos en el carrito
-        for (Detalleorden detalle : detalles) {
+        for (Detalleorden detalle : detallesSesion) {
             BigDecimal totalProducto = detalle.getPreciounitario().multiply(BigDecimal.valueOf(detalle.getCantidad()));
             subtotal = subtotal.add(totalProducto);
 
@@ -687,20 +753,21 @@ public class ChatbotService {
         resumen.append("<hr style=\"border: 0; border-top: 1px solid #ccc; margin-top: 10px; margin-bottom: 10px;\">");
 
         // Calcular el costo de envío y total
-        BigDecimal costoEnvio = new BigDecimal("12.00"); // Puedes configurar este valor en una propiedad
+        BigDecimal costoEnvio = new BigDecimal("12.00");
         BigDecimal total = subtotal.add(costoEnvio);
 
         resumen.append(String.format("<p style=\"text-align: right; font-weight: bold;\">Subtotal: S/. %.2f</p>", subtotal));
         resumen.append(String.format("<p style=\"text-align: right; font-weight: bold;\">Costo de envío: S/. %.2f</p>", costoEnvio));
         resumen.append(String.format("<p style=\"text-align: right; font-weight: bold; font-size: 16px;\">Total: S/. %.2f</p>", total));
-
         resumen.append("<hr style=\"border: 0; border-top: 1px solid #ccc; margin-top: 10px; margin-bottom: 10px;\">");
         resumen.append("<p style=\"text-align: center; margin: 10px 0; line-height: 1.6; font-size: 14px;\">Gracias por tu compra.</p>");
         resumen.append("</div>");
 
+        // Limpiar productos de la sesión actual después de procesar el pago
+        productosSesion.remove(usuarioActual);
+
         return resumen.toString();
     }
-
 
 
 

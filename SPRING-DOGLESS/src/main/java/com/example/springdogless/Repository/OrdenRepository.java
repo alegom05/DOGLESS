@@ -3,6 +3,7 @@ package com.example.springdogless.Repository;
 import com.example.springdogless.DTO.OrdenDTO;
 import com.example.springdogless.DTO.OrdenEstadoDTO;
 import com.example.springdogless.entity.Orden;
+import com.example.springdogless.entity.Usuario;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -134,6 +135,8 @@ public interface OrdenRepository extends JpaRepository<Orden, Integer> {
     @Query("SELECT o FROM ordenes o WHERE o.usuario.nombre = :nombre OR o.usuario.dni = :dni")
     List<Orden> findByNombreOrDni(@Param("nombre") String nombre, @Param("dni") String dni);
 
+    List<Orden> findAllByUsuarioId(Integer usuarioId);
 
 
+    List<Orden> findAllByUsuario(Usuario usuario);
 }
