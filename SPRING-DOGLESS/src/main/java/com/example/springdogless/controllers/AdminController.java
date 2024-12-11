@@ -4,7 +4,7 @@ import com.example.springdogless.DTO.OrdenDTO;
 import com.example.springdogless.DTO.ProductoDTO;
 import com.example.springdogless.DTO.ProveedorDTO;
 import com.example.springdogless.Repository.*;
-
+import jakarta.servlet.http.HttpSession;
 //import com.example.springdogless.dao.UsuarioDao;
 import com.example.springdogless.dao.UsuarioDao;
 import com.example.springdogless.entity.*;
@@ -17,6 +17,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -71,6 +73,14 @@ public class AdminController {
     @GetMapping("/perfil_superadmin")
     public String verperfiladmin(Model model) {
         return "admin/perfil_superadmin"; // Esto renderiza la vista perfil_superadmin.html
+    }
+    @GetMapping("/cambiarcontraseña")
+    public String vercontra(HttpSession session, Model model) {
+        Usuario usuario = (Usuario) session.getAttribute("usuario");
+        if (usuario != null) {
+            model.addAttribute("usuario", usuario); // Pasar el usuario a la vista
+        }
+        return "admin/cambiarcontra";
     }
 
     @GetMapping({"/lista", ""})
@@ -186,6 +196,18 @@ public class AdminController {
             if (!newPassword.equals(confirmNewPassword)) {
                 response.put("status", "error");
                 response.put("message", "La nueva contraseña y su confirmación no coinciden.");
+                return ResponseEntity.ok(response);
+            }
+            // Validar requisitos de la nueva contraseña
+            if (newPassword.length() < 8 || newPassword.length() > 16) {
+                response.put("status", "error");
+                response.put("message", "La contraseña debe tener entre 8 y 16 caracteres.");
+                return ResponseEntity.ok(response);
+            }
+
+            if (!newPassword.matches("^(?=.*\\d)(?=.*[a-zA-Z])(?=(?:.*[!@#$%^&*]){2}).{8,16}$")) {
+                response.put("status", "error");
+                response.put("message", "La contraseña debe incluir al menos 1 letra, 1 número y 2 caracteres especiales.");
                 return ResponseEntity.ok(response);
             }
 

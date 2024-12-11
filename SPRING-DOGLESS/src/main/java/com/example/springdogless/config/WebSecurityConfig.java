@@ -40,55 +40,55 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-            http.formLogin()
-                    .loginPage("/loginForm")
-                    .loginProcessingUrl("/processLogin")
-                    //.usernameParameter("correo")
-                    //.passwordParameter("contrasenia")
-                    .successHandler((request, response, authentication) -> {
+        http.formLogin()
+                .loginPage("/loginForm")
+                .loginProcessingUrl("/processLogin")
+                //.usernameParameter("correo")
+                //.passwordParameter("contrasenia")
+                .successHandler((request, response, authentication) -> {
 
-                        DefaultSavedRequest defaultSavedRequest =
-                                (DefaultSavedRequest) request.getSession().getAttribute("SPRING_SECURITY_SAVED_REQUEST");
+                    DefaultSavedRequest defaultSavedRequest =
+                            (DefaultSavedRequest) request.getSession().getAttribute("SPRING_SECURITY_SAVED_REQUEST");
 
-                        HttpSession session = request.getSession();
+                    HttpSession session = request.getSession();
 
-                        Usuario usuario = usuarioRepository.findByEmail(authentication.getName());
+                    Usuario usuario = usuarioRepository.findByEmail(authentication.getName());
 
-                        session.setAttribute("usuario", usuario);
-                        // Guardar el idzona en la sesión también
-                        session.setAttribute("idzona", usuario.getZona().getIdzonas());
+                    session.setAttribute("usuario", usuario);
+                    // Guardar el idzona en la sesión también
+                    session.setAttribute("idzona", usuario.getZona().getIdzonas());
 
-                        //Para el parcial
-                        //si vengo por url -> defaultSR existe
-                        if (defaultSavedRequest != null) {
-                            String targetURl = defaultSavedRequest.getRequestURL();
-                            new DefaultRedirectStrategy().sendRedirect(request, response, targetURl);
-                        } else { //estoy viniendo del botón de login
-                            String rol = "";
-                            for (GrantedAuthority role : authentication.getAuthorities()) {
-                                rol = role.getAuthority();
-                                break;
-                            }
-
-                            switch (rol) {
-                                case "Superadmin":
-                                    response.sendRedirect("/admin");
-                                    break;
-                                case "Adminzonal":
-                                    response.sendRedirect("/zonal");
-                                    break;
-                                case "Agente":
-                                    response.sendRedirect("/agente");
-                                    break;
-                                case "Usuario":
-                                    response.sendRedirect("/usuario");
-                                    break;
-                                default:
-                                    response.sendRedirect("/default"); // Puedes cambiar esto según lo que necesites
-                                    break;
-                            }
+                    //Para el parcial
+                    //si vengo por url -> defaultSR existe
+                    if (defaultSavedRequest != null) {
+                        String targetURl = defaultSavedRequest.getRequestURL();
+                        new DefaultRedirectStrategy().sendRedirect(request, response, targetURl);
+                    } else { //estoy viniendo del botón de login
+                        String rol = "";
+                        for (GrantedAuthority role : authentication.getAuthorities()) {
+                            rol = role.getAuthority();
+                            break;
                         }
-                    });
+
+                        switch (rol) {
+                            case "Superadmin":
+                                response.sendRedirect("/admin");
+                                break;
+                            case "Adminzonal":
+                                response.sendRedirect("/zonal");
+                                break;
+                            case "Agente":
+                                response.sendRedirect("/agente");
+                                break;
+                            case "Usuario":
+                                response.sendRedirect("/usuario");
+                                break;
+                            default:
+                                response.sendRedirect("/default"); // Puedes cambiar esto según lo que necesites
+                                break;
+                        }
+                    }
+                });
 
         http.csrf(csrf -> csrf.disable());
 
