@@ -1,155 +1,177 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>DOGLESS</title>
-    <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport"/>
-    <link rel="icon" href="/assets/img/kaiadmin/favicon.ico" type="image/x-icon"/>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <title>Admin Zonal - Dashboard</title>
+        <meta
+                content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
+                name="viewport"
+        />
+        <link
+                rel="icon"
+                href="/assets/img/kaiadmin/favicon.ico"
+                type="image/x-icon"
+        />
 
-    <!-- Fonts and icons -->
-    <script src="/assets/js/plugin/webfont/webfont.min.js"></script>
-    <script>
-        WebFont.load({
-            google: { families: ["Public Sans:300,400,500,600,700"] },
-            custom: {
-                families: ["Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands", "simple-line-icons"],
-                urls: ["/assets/css/fonts.min.css"]
-            },
-            active: function () {
-                sessionStorage.fonts = true;
-            }
-        });
-    </script>
+        <!-- Fonts and icons -->
+        <script src="/assets/js/plugin/webfont/webfont.min.js"></script>
+        <script>
+            WebFont.load({
+                google: { families: ["Public Sans:300,400,500,600,700"] },
+                custom: {
+                    families: [
+                        "Font Awesome 5 Solid",
+                        "Font Awesome 5 Regular",
+                        "Font Awesome 5 Brands",
+                        "simple-line-icons",
+                    ],
+                    urls: ["/assets/css/fonts.min.css"],
+                },
+                active: function () {
+                    sessionStorage.fonts = true;
+                },
+            });
+        </script>
 
-    <!-- CSS Files -->
-    <link rel="stylesheet" href="/assets/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="/assets/css/plugins.min.css"/>
-    <link rel="stylesheet" href="/assets/css/kaiadmin.min.css"/>
-</head>
-<body>
-<div class="wrapper">
-    <!-- Sidebar -->
-    <div th:replace="~{zonal/fragments/barralateralzonal :: body(activePage='usuarios', activeSubPage='adminzonal')}"></div>
-    <!-- Main Panel -->
-    <div class="main-panel">
-        <!-- Navbar -->
-        <div th:replace="~{zonal/fragments/navbarheaderzonal :: fragment}"></div>
+        <!-- CSS Files -->
+        <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="/assets/css/plugins.min.css" />
+        <link rel="stylesheet" href="/assets/css/kaiadmin.min.css" />
 
-        <!-- Main Content -->
-        <div class="container">
-            <div class="page-inner">
 
-                <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
-                    <div>
-                        <h3 class="fw-bold mb-3">Dashboard</h3>
-                        <h6 class="op-7 mb-2">Aquí verás la cifras y comparar usuarios, productos proveedores, órdenes para evaluar la participación y retención.</h6>
+
+    </head>
+    <body>
+        <div class="wrapper">
+            <!-- Reemplaza barra lateral con el fragmento de Thymeleaf -->
+            <div th:replace="~{zonal/fragments/barralateralzonal :: body(activePage='dashboard')}"></div>
+            <!-- Fin barra lateral -->
+
+            <div class="main-panel">
+                <!-- Reemplaza navbar con el fragmento de Thymeleaf -->
+                <div th:replace="~{zonal/fragments/navbarheaderzonal :: fragment}"></div>
+                <!-- Fin Navbar -->
+
+                <!-- Texto o contenido central -->
+                <div class="container">
+                    <div class="page-inner">
+                        <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
+                            <div>
+                                <h3 class="fw-bold mb-3">Dashboard</h3>
+                                <h6 class="op-7 mb-2">Aquí verás la cifras y comparar usuarios, productos proveedores, órdenes para evaluar la participación y retención.</h6>
+                            </div>
+                        </div>
+
+                        <!-- Dashboard Charts -->
+                        <div class="row">
+                            <div class="col-md-6 col-12 mb-4"> <!-- Cambiado a col-md-6 col-12 para ser responsive -->
+                                <div class="card">
+                                    <div class="card-header">
+                                        <div class="card-title">Top 10 productos más importados en su zona</div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="chart-container">
+                                            <canvas id="productosMasImportadosZona"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-12 mb-4"> <!-- Cambiado a col-md-6 col-12 para ser responsive -->
+                                <div class="card">
+                                    <div class="card-header">
+                                        <div class="card-title">Distribución de usuarios registrados en su zona</div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="chart-container">
+                                            <canvas id="pieChart"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 col-12 mb-4"> <!-- Cambiado a col-md-6 col-12 para ser responsive -->
+                                <div class="card">
+                                    <div class="card-header">
+                                        <div class="card-title">Top 10 usuarios con más importaciones</div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="chart-container">
+                                            <canvas id="graficaTopImportaciones"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-12 mb-4"> <!-- Cambiado a col-md-6 col-12 para ser responsive -->
+                                <div class="card">
+                                    <div class="card-header">
+                                        <div class="card-title">Cantidad de usuarios por agente</div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="chart-container">
+                                            <canvas id="graficaCantUserPerAgent"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 col-12 mb-4"> <!-- Cambiado a col-md-6 col-12 para ser responsive -->
+                                <div class="card">
+                                    <div class="card-header">
+                                        <div class="card-title">Productos con poco stock para reposición</div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="chart-container">
+                                            <canvas id="productosPocoStock"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 col-12 mb-4"> <!-- Cambiado a col-md-6 col-12 para ser responsive -->
+                                <div class="card">
+                                    <div class="card-header">
+                                        <div class="card-title">Distribución de agentes a cargo</div>
+                                    </div>
+                                    <div class="card-body">
+                                        <!-- Tabla con los datos de agentes -->
+                                        <div class="table-responsive">
+                                            <table class="table table-striped table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Nombre</th>
+                                                        <th>DNI Agente</th>
+                                                        <th>Correo</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr th:each="agente : ${agentes}">
+                                                        <td th:text="${agente.getNombreAgente()}"></td>
+                                                        <td th:text="${agente.getDniAgente()}"></td>
+                                                        <td th:text="${agente.getEmailAgente()}"></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+
+
                 </div>
-
-                <!-- Dashboard Charts -->
-                <div class="row">
-                    <div class="col-md-6 col-12 mb-4"> <!-- Cambiado a col-md-6 col-12 para ser responsive -->
-                        <div class="card">
-                            <div class="card-header">
-                                <div class="card-title">Top 10 productos más importados en su zona</div>
-                            </div>
-                            <div class="card-body">
-                                <div class="chart-container">
-                                    <canvas id="productosMasImportadosZona"></canvas>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-12 mb-4"> <!-- Cambiado a col-md-6 col-12 para ser responsive -->
-                        <div class="card">
-                            <div class="card-header">
-                                <div class="card-title">Distribución de usuarios registrados en su zona</div>
-                            </div>
-                            <div class="card-body">
-                                <div class="chart-container">
-                                    <canvas id="pieChart"></canvas>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
+                <!-- Fin del contenido central -->
 
-                <div class="row">
-                    <div class="col-md-6 col-12 mb-4"> <!-- Cambiado a col-md-6 col-12 para ser responsive -->
-                        <div class="card">
-                            <div class="card-header">
-                                <div class="card-title">Top 10 usuarios con más importaciones</div>
-                            </div>
-                            <div class="card-body">
-                                <div class="chart-container">
-                                    <canvas id="graficaTopImportaciones"></canvas>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-12 mb-4"> <!-- Cambiado a col-md-6 col-12 para ser responsive -->
-                        <div class="card">
-                            <div class="card-header">
-                                <div class="card-title">Cantidad de usuarios por agente</div>
-                            </div>
-                            <div class="card-body">
-                                <div class="chart-container">
-                                    <canvas id="graficaCantUserPerAgent"></canvas>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <!-- Pie de página -->
+                <div th:replace="~{zonal/fragments/piedepagina :: fragment}"></div>
 
-                <div class="row">
-                    <div class="col-md-6 col-12 mb-4"> <!-- Cambiado a col-md-6 col-12 para ser responsive -->
-                        <div class="card">
-                            <div class="card-header">
-                                <div class="card-title">Productos con poco stock para reposición</div>
-                            </div>
-                            <div class="card-body">
-                                <div class="chart-container">
-                                    <canvas id="productosPocoStock"></canvas>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6 col-12 mb-4"> <!-- Cambiado a col-md-6 col-12 para ser responsive -->
-                        <div class="card">
-                            <div class="card-header">
-                                <div class="card-title">Distribución de agentes a cargo</div>
-                            </div>
-                            <div class="card-body">
-                                <!-- Tabla con los datos de agentes -->
-                                <div class="table-responsive">
-                                    <table class="table table-striped table-bordered">
-                                        <thead>
-                                            <tr>
-                                                <th>Nombre</th>
-                                                <th>DNI Agente</th>
-                                                <th>Correo</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr th:each="agente : ${agentes}">
-                                                <td th:text="${agente.getNombreAgente()}"></td>
-                                                <td th:text="${agente.getDniAgente()}"></td>
-                                                <td th:text="${agente.getEmailAgente()}"></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
-
-            <!-- Footer -->
-            <div th:replace="~{zonal/fragments/piedepagina :: fragment}"></div>
-        </div>
 
         <style>
             .chart-container {
@@ -159,242 +181,270 @@
             }
         </style>
 
-    </div>
 
-    <!-- JS Files -->
-    <script src="/assets/js/core/jquery-3.7.1.min.js"></script>
-    <script src="/assets/js/core/popper.min.js"></script>
-    <script src="/assets/js/core/bootstrap.min.js"></script>
-    <script src="/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
-    <script src="/assets/js/plugin/chart.js/chart.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        </div>
 
 
-    <script th:inline="javascript">
-        // Top 10 productos más importados:
-        var ctx1 = document.getElementById('productosMasImportadosZona').getContext('2d');
 
-        // Obtener datos desde el modelo
-        var productosTop10 = /*[[${productosTop10}]]*/ []; // Se espera un JSON aquí
+        <!-- Core JS Files -->
+        <script src="/assets/js/core/jquery-3.7.1.min.js"></script>
+        <script src="/assets/js/core/popper.min.js"></script>
+        <script src="/assets/js/core/bootstrap.min.js"></script>
 
-        // Obtener nombres de productos y cantidades, asegurando valores válidos
-        var labels = productosTop10.map(producto => producto.nombre_producto); // Fallback si el nombre es null
-        var data = productosTop10.map(producto => producto.total_importado); // Fallback a 0 si es null o undefined
+        <!-- jQuery Scrollbar -->
+        <script src="/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
 
-        var datosProductosImportados = {
-            labels: labels,
-            datasets: [{
-                label: 'Productos por zona',
-                data: data,
-                backgroundColor: 'rgba(30, 197, 255, 0.8)',
-                borderColor: 'rgba(30, 140, 255, 0.8)',
-                borderWidth: 1,
-            }]
-        };
+        <!-- Chart JS -->
+        <script src="/assets/js/plugin/chart.js/chart.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-        var verticalChartOptions = {
-            scales: {
-                y: {
-                    beginAtZero: true, // Asegura que el gráfico siempre comience en 0
-                    min: 0 // Forzar el mínimo del eje Y a 0
+        <!-- jQuery Sparkline -->
+        <script src="/assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js"></script>
+
+        <!-- Chart Circle -->
+        <script src="/assets/js/plugin/chart-circle/circles.min.js"></script>
+
+        <!-- Datatables -->
+        <script src="/assets/js/plugin/datatables/datatables.min.js"></script>
+
+        <!-- jQuery Vector Maps -->
+        <script src="/assets/js/plugin/jsvectormap/jsvectormap.min.js"></script>
+        <script src="/assets/js/plugin/jsvectormap/world.js"></script>
+
+        <!-- Kaiadmin JS -->
+        <script src="/assets/js/kaiadmin.min.js"></script>
+
+        <!-- Kaiadmin DEMO methods, don't include it in your project! -->
+        <script src="/assets/js/setting-demo.js"></script>
+        <script src="/assets/js/demo.js"></script>
+
+        <script th:inline="javascript">
+            // Top 10 productos más importados:
+            var ctx1 = document.getElementById('productosMasImportadosZona').getContext('2d');
+
+            // Obtener datos desde el modelo
+            var productosTop10 = /*[[${productosTop10}]]*/ []; // Se espera un JSON aquí
+
+            // Obtener nombres de productos y cantidades, asegurando valores válidos
+            var labels = productosTop10.map(producto => producto.nombre_producto); // Fallback si el nombre es null
+            var data = productosTop10.map(producto => producto.total_importado); // Fallback a 0 si es null o undefined
+
+            var datosProductosImportados = {
+                labels: labels,
+                datasets: [{
+                    label: 'Productos por zona',
+                    data: data,
+                    backgroundColor: 'rgba(30, 197, 255, 0.8)',
+                    borderColor: 'rgba(30, 140, 255, 0.8)',
+                    borderWidth: 1,
+                }]
+            };
+
+            var verticalChartOptions = {
+                scales: {
+                    y: {
+                        beginAtZero: true, // Asegura que el gráfico siempre comience en 0
+                        min: 0 // Forzar el mínimo del eje Y a 0
+                    }
                 }
-            }
-        };
+            };
 
-        new Chart(ctx1, {
-            type: 'bar', // Tipo 'bar' para gráfico de barras verticales
-            data: datosProductosImportados,
-            options: verticalChartOptions
-        });
+            new Chart(ctx1, {
+                type: 'bar', // Tipo 'bar' para gráfico de barras verticales
+                data: datosProductosImportados,
+                options: verticalChartOptions
+            });
 
 
-    </script>
+        </script>
 
-    <script th:inline="javascript">
-        // Distribución de usuarios registrados:
-        var pieChart = document.getElementById("pieChart").getContext("2d");
+        <script th:inline="javascript">
+            // Distribución de usuarios registrados:
+            var pieChart = document.getElementById("pieChart").getContext("2d");
 
-        // Obtener datos desde el modelo
-        var usuariosRegistrados = /*[[${usuariosRegistrados}]]*/ 0; // Valor por defecto en caso de que no esté disponible
-        var usuariosActivos = /*[[${usuariosActivos}]]*/ 0; // Valor por defecto en caso de que no esté disponible
-        var usuariosInactivos = usuariosRegistrados - usuariosActivos; // Calcular usuarios inactivos
+            // Obtener datos desde el modelo
+            var usuariosRegistrados = /*[[${usuariosRegistrados}]]*/ 0; // Valor por defecto en caso de que no esté disponible
+            var usuariosActivos = /*[[${usuariosActivos}]]*/ 0; // Valor por defecto en caso de que no esté disponible
+            var usuariosInactivos = usuariosRegistrados - usuariosActivos; // Calcular usuarios inactivos
 
-        var myPieChart = new Chart(pieChart, {
-            type: "pie",
-            data: {
-                datasets: [
-                    {
-                        data: [usuariosActivos, usuariosInactivos], // Usar los valores calculados
-                        backgroundColor: ["#1d7af3", "#f3545d"],
-                        borderWidth: 0,
+            var myPieChart = new Chart(pieChart, {
+                type: "pie",
+                data: {
+                    datasets: [
+                        {
+                            data: [usuariosActivos, usuariosInactivos], // Usar los valores calculados
+                            backgroundColor: ["#1d7af3", "#f3545d"],
+                            borderWidth: 0,
+                        },
+                    ],
+                    labels: ["Activos", "Inactivos"], // Labels para los segmentos
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    legend: {
+                        position: "bottom",
+                        labels: {
+                            fontColor: "rgb(154, 154, 154)",
+                            fontSize: 11,
+                            usePointStyle: true,
+                            padding: 20,
+                        },
                     },
-                ],
-                labels: ["Activos", "Inactivos"], // Labels para los segmentos
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                legend: {
-                    position: "bottom",
-                    labels: {
-                        fontColor: "rgb(154, 154, 154)",
-                        fontSize: 11,
-                        usePointStyle: true,
-                        padding: 20,
+                    tooltips: {
+                        enabled: true,
+                        mode: 'index',
+                        callbacks: {
+                            label: function(tooltipItem, data) {
+                                var label = data.labels[tooltipItem.index] || '';
+                                var value = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index] || 0;
+                                return label + ': ' + value; // Formato del tooltip: "Activos: X" o "Inactivos: Y"
+                            }
+                        }
+                    },
+                    // Quitar `pieceLabel` para evitar mostrar porcentajes en el gráfico
+                    layout: {
+                        padding: {
+                            left: 20,
+                            right: 20,
+                            top: 20,
+                            bottom: 20,
+                        },
                     },
                 },
-                tooltips: {
-                    enabled: true,
-                    mode: 'index',
-                    callbacks: {
-                        label: function(tooltipItem, data) {
-                            var label = data.labels[tooltipItem.index] || '';
-                            var value = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index] || 0;
-                            return label + ': ' + value; // Formato del tooltip: "Activos: X" o "Inactivos: Y"
-                        }
+            });
+        </script>
+
+
+        <script th:inline="javascript">
+            // Obtener datos de la lista de agentes
+            var agentes = /*[[${agentes}]]*/ []; // Se espera un JSON aquí
+
+            // Extraer nombres y cantidad de usuarios asignados
+            var labels = agentes.map(agente => agente.nombreAgente);
+            var data = agentes.map(agente => agente.cantidadUsuariosAsignados);
+
+            // GRAFICA 4
+            var ctxOtraGrafica2 = document.getElementById('graficaCantUserPerAgent').getContext('2d');
+            var otraChartData2 = {
+                labels: labels, // Nombres de agentes
+                datasets: [{
+                    label: 'Número de usuarios por agentes',
+                    data: data, // Cantidad de usuarios asignados
+                    backgroundColor: 'rgba(11,240,179,0.8)',
+                    borderColor: 'rgb(99,148,255)',
+                    borderWidth: 1
+                }]
+            };
+
+            var otraChartOptions2 = {
+                indexAxis: 'y', // Gráfico de barras horizontal
+                scales: {
+                    x: {
+                        beginAtZero: true
+                    }
+                }
+            };
+
+            new Chart(ctxOtraGrafica2, {
+                type: 'bar', // Gráfico de barras
+                data: otraChartData2,
+                options: otraChartOptions2 // Asegúrate de que el nombre de opciones es correcto
+            });
+        </script>
+
+
+
+        <script th:inline="javascript">
+            // Obtener datos desde el modelo
+            var productosConMenorStock = /*[[${productosConMenorStock}]]*/ [];
+
+            // Extraer nombres de productos y sus cantidades
+            var labels = productosConMenorStock.map(producto => producto.nombre); // Ajusta a tu DTO
+            var data = productosConMenorStock.map(producto => producto.cantidad); // Ajusta a tu DTO
+
+            var ctx5 = document.getElementById('productosPocoStock').getContext('2d');
+
+            var datosProductosImportados = {
+                labels: labels,
+                datasets: [{
+                    label: 'Productos con menos stock',
+                    data: data,
+                    backgroundColor: 'rgba(255,30,30,0.8)',
+                    borderColor: 'rgba(255,98,30,0.8)',
+                    borderWidth: 1
+                }]
+            };
+
+            var verticalChartOptions = {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            };
+
+            new Chart(ctx5, {
+                type: 'bar', // Tipo 'bar' para gráfico de barras verticales
+                data: datosProductosImportados,
+                options: verticalChartOptions
+            });
+        </script>
+
+
+        <script th:inline="javascript">
+            // Obtener datos de la lista de usuarios top 10
+            var usuariosTop10 = /*[[${usuariosTop10}]]*/ []; // Se espera un JSON aquí
+
+            // Extraer nombres y cantidad de importaciones
+            var labels = usuariosTop10.map(usuario => usuario.nombre);
+            var data = usuariosTop10.map(usuario => usuario.totalCantidad);
+
+            // Crear el contexto de la gráfica
+            var ctx = document.getElementById('graficaTopImportaciones').getContext('2d');
+
+            // Configuración de los datos para la gráfica
+            var chartData = {
+                labels: labels, // Nombres de usuarios
+                datasets: [{
+                    label: 'Total de Importaciones',
+                    data: data, // Cantidad de importaciones
+                    backgroundColor: 'rgba(54, 162, 235, 0.5)', // Color de las barras
+                    borderColor: 'rgba(54, 162, 235, 1)', // Color del borde
+                    borderWidth: 1
+                }]
+            };
+
+            // Configuración de las opciones de la gráfica
+            var chartOptions = {
+                indexAxis: 'y', // Gráfico de barras horizontal
+                scales: {
+                    x: {
+                        beginAtZero: true // Iniciar el eje X en cero
                     }
                 },
-                // Quitar `pieceLabel` para evitar mostrar porcentajes en el gráfico
-                layout: {
-                    padding: {
-                        left: 20,
-                        right: 20,
-                        top: 20,
-                        bottom: 20,
-                    },
-                },
-            },
-        });
-    </script>
-
-
-    <script th:inline="javascript">
-        // Obtener datos de la lista de agentes
-        var agentes = /*[[${agentes}]]*/ []; // Se espera un JSON aquí
-
-        // Extraer nombres y cantidad de usuarios asignados
-        var labels = agentes.map(agente => agente.nombreAgente);
-        var data = agentes.map(agente => agente.cantidadUsuariosAsignados);
-
-        // GRAFICA 4
-        var ctxOtraGrafica2 = document.getElementById('graficaCantUserPerAgent').getContext('2d');
-        var otraChartData2 = {
-            labels: labels, // Nombres de agentes
-            datasets: [{
-                label: 'Número de usuarios por agentes',
-                data: data, // Cantidad de usuarios asignados
-                backgroundColor: 'rgba(11,240,179,0.8)',
-                borderColor: 'rgb(99,148,255)',
-                borderWidth: 1
-            }]
-        };
-
-        var otraChartOptions2 = {
-            indexAxis: 'y', // Gráfico de barras horizontal
-            scales: {
-                x: {
-                    beginAtZero: true
+                plugins: {
+                    legend: {
+                        display: true, // Mostrar la leyenda
+                        position: 'top' // Posición de la leyenda
+                    }
                 }
-            }
-        };
+            };
 
-        new Chart(ctxOtraGrafica2, {
-            type: 'bar', // Gráfico de barras
-            data: otraChartData2,
-            options: otraChartOptions2 // Asegúrate de que el nombre de opciones es correcto
-        });
-    </script>
-
-
-
-    <script th:inline="javascript">
-        // Obtener datos desde el modelo
-        var productosConMenorStock = /*[[${productosConMenorStock}]]*/ [];
-
-        // Extraer nombres de productos y sus cantidades
-        var labels = productosConMenorStock.map(producto => producto.nombre); // Ajusta a tu DTO
-        var data = productosConMenorStock.map(producto => producto.cantidad); // Ajusta a tu DTO
-
-        var ctx5 = document.getElementById('productosPocoStock').getContext('2d');
-
-        var datosProductosImportados = {
-            labels: labels,
-            datasets: [{
-                label: 'Productos con menos stock',
-                data: data,
-                backgroundColor: 'rgba(255,30,30,0.8)',
-                borderColor: 'rgba(255,98,30,0.8)',
-                borderWidth: 1
-            }]
-        };
-
-        var verticalChartOptions = {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        };
-
-        new Chart(ctx5, {
-            type: 'bar', // Tipo 'bar' para gráfico de barras verticales
-            data: datosProductosImportados,
-            options: verticalChartOptions
-        });
-    </script>
-
-
-    <script th:inline="javascript">
-        // Obtener datos de la lista de usuarios top 10
-        var usuariosTop10 = /*[[${usuariosTop10}]]*/ []; // Se espera un JSON aquí
-
-        // Extraer nombres y cantidad de importaciones
-        var labels = usuariosTop10.map(usuario => usuario.nombre);
-        var data = usuariosTop10.map(usuario => usuario.totalCantidad);
-
-        // Crear el contexto de la gráfica
-        var ctx = document.getElementById('graficaTopImportaciones').getContext('2d');
-
-        // Configuración de los datos para la gráfica
-        var chartData = {
-            labels: labels, // Nombres de usuarios
-            datasets: [{
-                label: 'Total de Importaciones',
-                data: data, // Cantidad de importaciones
-                backgroundColor: 'rgba(54, 162, 235, 0.5)', // Color de las barras
-                borderColor: 'rgba(54, 162, 235, 1)', // Color del borde
-                borderWidth: 1
-            }]
-        };
-
-        // Configuración de las opciones de la gráfica
-        var chartOptions = {
-            indexAxis: 'y', // Gráfico de barras horizontal
-            scales: {
-                x: {
-                    beginAtZero: true // Iniciar el eje X en cero
-                }
-            },
-            plugins: {
-                legend: {
-                    display: true, // Mostrar la leyenda
-                    position: 'top' // Posición de la leyenda
-                }
-            }
-        };
-
-        // Crear la gráfica
-        new Chart(ctx, {
-            type: 'bar', // Tipo de gráfica
-            data: chartData, // Datos de la gráfica
-            options: chartOptions // Opciones de la gráfica
-        });
-    </script>
+            // Crear la gráfica
+            new Chart(ctx, {
+                type: 'bar', // Tipo de gráfica
+                data: chartData, // Datos de la gráfica
+                options: chartOptions // Opciones de la gráfica
+            });
+        </script>
 
 
 
 
 
-</div>
-</body>
+
+        </div>
+
+    </body>
 </html>
