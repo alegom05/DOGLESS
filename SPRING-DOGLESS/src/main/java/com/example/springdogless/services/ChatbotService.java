@@ -112,20 +112,16 @@ public class ChatbotService {
     public String procesarMensaje(String mensaje) {
 
         if (mensaje.equalsIgnoreCase("reiniciar")) {
-            String usuarioActual = getUsuarioActual();
-            reiniciarSesion(usuarioActual);
-            return manejarMenuPrincipal(""); // Reinicia y vuelve al menú principal
+            estadoActual = "MENU";
+            estadosUsuario.clear(); // Limpia los estados de los usuarios
+            datosUsuario.clear(); // Limpia los datos guardados de los usuarios
+            return manejarMenuPrincipal("");
         }
-
 
         // Siempre inicia con el menú principal
-        if (estadoActual.equals("MENU") || mensaje.equalsIgnoreCase("reiniciar")) {
-            String usuarioActual = getUsuarioActual(); // Obtener el usuario autenticado
-            reiniciarSesion(usuarioActual); // Usar el identificador del usuario para reiniciar la sesión
+        if (estadoActual.equals("MENU") || mensaje.equalsIgnoreCase("regresar")) {
             return manejarMenuPrincipal(mensaje);
         }
-
-
 
         // Según el estado actual, maneja la interacción
         switch (estadoActual) {
@@ -143,9 +139,6 @@ public class ChatbotService {
 
     private String manejarMenuPrincipal(String mensaje) {
         // Mensaje introductorio en formato HTML
-
-        String usuarioActual = getUsuarioActual();
-        reiniciarSesion(usuarioActual); // Limpia el estado antes de mostrar el menú
         String introduccion = """
         Hola, soy Dogbot. ¿En qué puedo ayudarte? Elige una de las siguientes opciones:<br>
         1. Quiero hacer una consulta<br>
@@ -171,6 +164,7 @@ public class ChatbotService {
                 return introduccion; // Devuelve el menú en HTML
         }
     }
+
 
 
     private String manejarConsulta(String mensaje) {
@@ -262,18 +256,6 @@ public class ChatbotService {
 
         return null;
     }
-
-    // Normalizar texto de consulta de compra
-    private String normalizarTexto(String texto) {
-        return texto.trim().toLowerCase()
-                .replaceAll("[áäà]", "a")
-                .replaceAll("[éëè]", "e")
-                .replaceAll("[íïì]", "i")
-                .replaceAll("[óöò]", "o")
-                .replaceAll("[úüù]", "u")
-                .replaceAll("[^a-z0-9\\s]", ""); // Elimina caracteres especiales
-    }
-
 
     // Método auxiliar para calcular la distancia de Levenshtein
     private int calcularDistanciaLevenshtein(String str1, String str2) {
@@ -405,13 +387,6 @@ public class ChatbotService {
             return "Error: No se encontró el usuario en el sistema.";
         }
 
-        if (mensaje.equalsIgnoreCase("reiniciar")) {
-            String usuarioActual = getUsuarioActual();
-            reiniciarSesion(usuarioActual); // Simula una recarga de página
-            return manejarMenuPrincipal(""); //
-            // Devuelve el menú inicial
-        }
-
         // Cargar datos del usuario en el mapa
         userId = String.valueOf(usuario.getId());
         Map<String, String> datos = datosUsuario.computeIfAbsent(userId, k -> new HashMap<>());
@@ -428,15 +403,12 @@ public class ChatbotService {
 
         System.out.println("Usuario autenticado: " + usuario.getId());
 
-        // Normalizar el mensaje
-        String mensajeNormalizado = normalizarTexto(mensaje);
-
         switch (estadoActual) {
             case "inicio":
                 estadosUsuario.put(userId, "esperandoProducto");
 
             case "esperandoProducto":
-                Producto producto = productRepository.findByNombre(mensajeNormalizado);
+                Producto producto = productRepository.findByNombre(mensaje);
                 if (producto == null) {
                     return "No reconozco el nombre del producto. Por favor, intenta nuevamente.";
                 }
@@ -500,6 +472,8 @@ public class ChatbotService {
                 } catch (NumberFormatException e) {
                     return "Por favor, ingrese un número válido para la cantidad.";
                 }
+
+
 
             case "otroProducto":
                 if (mensaje.equalsIgnoreCase("sí")) {
@@ -596,19 +570,6 @@ public class ChatbotService {
                 return "No entiendo tu solicitud. Por favor, intenta nuevamente.";
         }
     }
-
-    private void reiniciarSesion(String usuarioActual) {
-        System.out.println("Reiniciando sesión para usuario: " + usuarioActual);
-
-        estadoActual = "MENU";
-        estadosUsuario.remove(usuarioActual);
-        datosUsuario.remove(usuarioActual);
-        ultimaActualizacionPorUsuario.remove(usuarioActual);
-        productosSesion.remove(usuarioActual);
-
-        System.out.println("Estado y datos reiniciados.");
-    }
-
 
     private void generarPDFResumenCompra(String usuarioActual) {
         List<Detalleorden> detallesSesion = productosSesion.getOrDefault(usuarioActual, new ArrayList<>());
