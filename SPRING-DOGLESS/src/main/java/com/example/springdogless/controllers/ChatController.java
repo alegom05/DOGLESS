@@ -80,18 +80,22 @@ public class ChatController {
 
     @PostMapping("/flujoCompra")
     public ResponseEntity<String> flujoCompra(@RequestBody Map<String, String> request) {
-        String userId = request.get("userId");
+        String userId = request.get("userId"); // Obtén el userId del request body
         String mensaje = request.get("message");
 
         if (userId == null || mensaje == null) {
             return ResponseEntity.badRequest().body("Error: userId y message son obligatorios.");
         }
 
+        // Procesa el flujo de compra dinámico para el usuario
         String respuesta = chatbotService.procesarFlujoCompra(userId, mensaje);
+
         return ResponseEntity.ok()
                 .header("Content-Type", "text/html; charset=UTF-8")
                 .body(respuesta);
     }
+
+
 
 
 }

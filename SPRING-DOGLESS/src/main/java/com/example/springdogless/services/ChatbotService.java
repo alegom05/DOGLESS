@@ -395,6 +395,7 @@ public class ChatbotService {
     }
 
     public String procesarFlujoCompra(String userId, String mensaje) {
+
         // Obtener el usuario autenticado desde el contexto de seguridad
         String username = getUsuarioActual(); // Este obtiene el email si es tu identificador de autenticación
         if ("anonymousUser".equals(username)) {
