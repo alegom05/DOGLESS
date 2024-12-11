@@ -21,6 +21,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.*;
@@ -72,6 +73,10 @@ public class ChatbotService {
 
     private Map<String, Timestamp> ultimaActualizacionPorUsuario = new HashMap<>();
 
+    private final Map<String, List<Detalleorden>> productosPorSesion = new HashMap<>();
+    private final Map<String, String> estadoSesionUsuario = new HashMap<>();
+
+
     public ChatbotService(ObjectMapper objectMapper, RestTemplate restTemplate) {
         this.objectMapper = objectMapper;
         this.restTemplate = restTemplate;
@@ -91,8 +96,6 @@ public class ChatbotService {
         return manejarMenuPrincipal(""); // Devuelve el menú inicial
     }
 
-
-
     private void cargarMenuDesdeJson() {
         try (InputStream inputStream = getClass().getResourceAsStream("/preguntas_respuestas.json")) {
             JsonNode root = objectMapper.readTree(inputStream);
@@ -110,6 +113,13 @@ public class ChatbotService {
     }
 
     public String procesarMensaje(String mensaje) {
+
+        String sessionId = getUsuarioActual();
+        if (!estadoSesionUsuario.containsKey(sessionId)) {
+            estadoSesionUsuario.put(sessionId, "MENU");
+            productosPorSesion.put(sessionId, new ArrayList<>());
+        }
+
 
         if (mensaje.equalsIgnoreCase("reiniciar")) {
             estadoActual = "MENU";
@@ -304,7 +314,6 @@ public class ChatbotService {
 
     public String manejarCompraDesdeChatbot(Integer idProducto, Integer idUsuario, Integer cantidad) {
         try {
-            // Validaciones básicas
             if (idUsuario == null || idUsuario <= 0) {
                 return "Error: Usuario no válido.";
             }
@@ -322,17 +331,28 @@ public class ChatbotService {
 
             Producto producto = productoOptional.get();
 
-            // Registrar el producto en la sesión
-            Detalleorden detalle = new Detalleorden();
-            detalle.setProducto(producto);
-            detalle.setCantidad(cantidad);
-            detalle.setPreciounitario(BigDecimal.valueOf(producto.getPrecio())); // Convierte a BigDecimal
-            detalle.setSubtotal(BigDecimal.valueOf(producto.getPrecio()).multiply(BigDecimal.valueOf(cantidad))); // Usa BigDecimal para realizar la multiplicación
-
-
-            // Agregar a los productos comprados en la sesión
+            // Registrar o actualizar el producto en la sesión
             String userId = String.valueOf(idUsuario);
-            productosSesion.computeIfAbsent(userId, k -> new ArrayList<>()).add(detalle);
+            List<Detalleorden> detalles = productosSesion.computeIfAbsent(userId, k -> new ArrayList<>());
+
+            boolean productoEncontrado = false;
+            for (Detalleorden detalle : detalles) {
+                if (detalle.getProducto().getId().equals(idProducto)) {
+                    detalle.setCantidad(detalle.getCantidad() + cantidad);
+                    detalle.setSubtotal(detalle.getPreciounitario().multiply(BigDecimal.valueOf(detalle.getCantidad())));
+                    productoEncontrado = true;
+                    break;
+                }
+            }
+
+            if (!productoEncontrado) {
+                Detalleorden nuevoDetalle = new Detalleorden();
+                nuevoDetalle.setProducto(producto);
+                nuevoDetalle.setCantidad(cantidad);
+                nuevoDetalle.setPreciounitario(BigDecimal.valueOf(producto.getPrecio()));
+                nuevoDetalle.setSubtotal(BigDecimal.valueOf(producto.getPrecio()).multiply(BigDecimal.valueOf(cantidad)));
+                detalles.add(nuevoDetalle);
+            }
 
             return String.format("Producto %s añadido exitosamente al carrito.", producto.getNombre());
 
@@ -420,23 +440,23 @@ public class ChatbotService {
 
                 estadosUsuario.put(userId, "validarProducto");
                 return String.format("""
-        <div style="border: 1px solid #ddd; padding: 15px; border-radius: 8px; max-width: 400px; font-family: Arial, sans-serif;">
-            <h4 style="text-align: center; color: #333; margin-bottom: 10px; font-size: 16px; line-height: 1.2;">Producto encontrado</h4>
-            <hr style="border: 0; border-top: 1px solid #ccc; margin-bottom: 10px;">
-            <p style="margin: 5px 0; line-height: 1.2;"><strong>Nombre:</strong></p>
-            <p style="margin: 5px 0; line-height: 1.2;">%s</p>
-            <p style="margin: 5px 0; line-height: 1.2;"><strong>Descripción:</strong></p>
-            <p style="margin: 5px 0; line-height: 1.2;">%s</p>
-            <p style="margin: 5px 0; line-height: 1.2;"><strong>Precio:</strong></p>
-            <p style="margin: 5px 0; line-height: 1.2;">S/. %s</p>
-            <hr style="border: 0; border-top: 1px solid #ccc; margin-top: 10px; margin-bottom: 10px;">
-            <p style="text-align: center; margin: 5px 0; line-height: 1.2;">¿Es este el producto que desea añadir?</p>
-            <div style="text-align: center;">
-                <button class="button" style="margin: 5px; padding: 8px 12px; background-color: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer;" onclick="sendMessage('sí')">Sí</button>
-                <button class="button no" style="margin: 5px; padding: 8px 12px; background-color: #f44336; color: white; border: none; border-radius: 4px; cursor: pointer;" onclick="sendMessage('no')">No</button>
-            </div>
-        </div>
-        """, producto.getNombre(), producto.getDescripcion(), producto.getPrecio());
+                <div style="border: 1px solid #ddd; padding: 15px; border-radius: 8px; max-width: 400px; font-family: Arial, sans-serif;">
+                    <h4 style="text-align: center; color: #333; margin-bottom: 10px; font-size: 16px; line-height: 1.2;">Producto encontrado</h4>
+                    <hr style="border: 0; border-top: 1px solid #ccc; margin-bottom: 10px;">
+                    <p style="margin: 5px 0; line-height: 1.2;"><strong>Nombre:</strong></p>
+                    <p style="margin: 5px 0; line-height: 1.2;">%s</p>
+                    <p style="margin: 5px 0; line-height: 1.2;"><strong>Descripción:</strong></p>
+                    <p style="margin: 5px 0; line-height: 1.2;">%s</p>
+                    <p style="margin: 5px 0; line-height: 1.2;"><strong>Precio:</strong></p>
+                    <p style="margin: 5px 0; line-height: 1.2;">S/. %s</p>
+                    <hr style="border: 0; border-top: 1px solid #ccc; margin-top: 10px; margin-bottom: 10px;">
+                    <p style="text-align: center; margin: 5px 0; line-height: 1.2;">¿Es este el producto que desea añadir?</p>
+                    <div style="text-align: center;">
+                        <button class="button" style="margin: 5px; padding: 8px 12px; background-color: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer;" onclick="sendMessage('sí')">Sí</button>
+                        <button class="button no" style="margin: 5px; padding: 8px 12px; background-color: #f44336; color: white; border: none; border-radius: 4px; cursor: pointer;" onclick="sendMessage('no')">No</button>
+                    </div>
+                </div>
+                """, producto.getNombre(), producto.getDescripcion(), producto.getPrecio());
 
 
             case "validarProducto":
@@ -468,10 +488,25 @@ public class ChatbotService {
                     );
 
                     estadosUsuario.put(userId, "otroProducto");
-                    return resultadoCompra + "<br>¿Quiere ingresar otro producto? <button onclick=\"sendMessage('sí')\">Sí</button> <button onclick=\"sendMessage('no')\">No</button>";
+                    return String.format("""
+        <div style="border: 1px solid #ddd; padding: 15px; border-radius: 8px; max-width: 400px; font-family: Arial, sans-serif;">
+            <h4 style="text-align: center; color: #333; margin-bottom: 10px; font-size: 16px; line-height: 1.2;">Cantidad añadida exitosamente</h4>
+            <hr style="border: 0; border-top: 1px solid #ccc; margin-bottom: 10px;">
+            <p style="margin: 5px 0; line-height: 1.2;"><strong>%s</strong></p>
+            <p style="margin: 5px 0; line-height: 1.2;">Cantidad: %d</p>
+            <p style="margin: 5px 0; line-height: 1.2;">Subtotal: S/. %.2f</p>
+            <hr style="border: 0; border-top: 1px solid #ccc; margin-top: 10px; margin-bottom: 10px;">
+            <p style="text-align: center; margin: 5px 0; line-height: 1.2;">¿Quiere ingresar otro producto?</p>
+            <div style="text-align: center;">
+                <button class="button" style="margin: 5px; padding: 8px 12px; background-color: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer;" onclick="sendMessage('sí')">Sí</button>
+                <button class="button no" style="margin: 5px; padding: 8px 12px; background-color: #f44336; color: white; border: none; border-radius: 4px; cursor: pointer;" onclick="sendMessage('no')">No</button>
+            </div>
+        </div>
+        """, datos.get("productoNombre"), cantidad, cantidad * Double.parseDouble(datos.get("productoPrecio")));
                 } catch (NumberFormatException e) {
                     return "Por favor, ingrese un número válido para la cantidad.";
                 }
+
 
 
 
@@ -483,8 +518,17 @@ public class ChatbotService {
                     estadosUsuario.put(userId, "confirmarCompra");
                     return mostrarDetallesCompra(userId);
                 } else {
-                    return "¿Quiere ingresar otro producto? <button>Sí</button> <button>No</button>";
+                    return """
+                <div style="border: 1px solid #ddd; padding: 15px; border-radius: 8px; max-width: 400px; font-family: Arial, sans-serif;">
+                    <h4 style="text-align: center; color: #333; margin-bottom: 10px; font-size: 16px; line-height: 1.2;">¿Quiere ingresar otro producto?</h4>
+                    <div style="text-align: center;">
+                        <button class="button" style="margin: 5px; padding: 8px 12px; background-color: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer;" onclick="sendMessage('sí')">Sí</button>
+                        <button class="button no" style="margin: 5px; padding: 8px 12px; background-color: #f44336; color: white; border: none; border-radius: 4px; cursor: pointer;" onclick="sendMessage('no')">No</button>
+                    </div>
+                </div>
+                """;
                 }
+
 
             case "confirmarCompra":
                 if (mensaje.equalsIgnoreCase("sí")) {
@@ -539,31 +583,66 @@ public class ChatbotService {
                 } else {
                     datos.put("cvv", mensaje.trim());
                     estadosUsuario.put(userId, "confirmarPago");
-                    return "¿Desea proceder con el pago? <button onclick=\"sendMessage('sí')\">Sí</button> <button onclick=\"sendMessage('no')\">No</button>";
+                    return """
+            <div style="border: 1px solid #ddd; padding: 15px; border-radius: 8px; max-width: 400px; font-family: Arial, sans-serif;">
+                <h4 style="text-align: center; color: #333; margin-bottom: 10px; font-size: 16px; line-height: 1.2;">Confirmación de Pago</h4>
+                <hr style="border: 0; border-top: 1px solid #ccc; margin-bottom: 10px;">
+                <p style="text-align: center; margin: 5px 0; line-height: 1.2;">¿Desea proceder con el pago?</p>
+                <div style="text-align: center;">
+                    <button class="button" style="margin: 5px; padding: 8px 12px; background-color: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer;" onclick="sendMessage('sí')">Sí</button>
+                    <button class="button no" style="margin: 5px; padding: 8px 12px; background-color: #f44336; color: white; border: none; border-radius: 4px; cursor: pointer;" onclick="sendMessage('no')">No</button>
+                </div>
+            </div>
+            """;
                 }
+
 
             case "confirmarPago":
                 if (mensaje.equalsIgnoreCase("sí")) {
                     estadosUsuario.put(userId, "confirmarPDF");
-                    return procesarPagoYMostrarResumen(userId) +
-                            "<br>¿Desea generar un PDF con el resumen de su compra? <button onclick=\"sendMessage('sí')\">Sí</button> <button onclick=\"sendMessage('no')\">No</button>";
+                    return procesarPagoYMostrarResumen(userId) + """
+        <br>
+        <div style="border: 1px solid #ddd; padding: 15px; border-radius: 8px; max-width: 400px; font-family: Arial, sans-serif;">
+            <h4 style="text-align: center; color: #333; margin-bottom: 10px; font-size: 16px; line-height: 1.2;">Generar PDF</h4>
+            <hr style="border: 0; border-top: 1px solid #ccc; margin-bottom: 10px;">
+            <p style="text-align: center; margin: 5px 0; line-height: 1.2;">¿Desea generar un PDF con el resumen de su compra?</p>
+            <div style="text-align: center;">
+                <button class="button" style="margin: 5px; padding: 8px 12px; background-color: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer;" onclick="sendMessage('sí')">Sí</button>
+                <button class="button no" style="margin: 5px; padding: 8px 12px; background-color: #f44336; color: white; border: none; border-radius: 4px; cursor: pointer;" onclick="sendMessage('no')">No</button>
+            </div>
+        </div>
+        """;
                 } else if (mensaje.equalsIgnoreCase("no")) {
                     estadosUsuario.put(userId, "MENU");
-                    return "Pago cancelado. Volviendo al menú principal." + manejarMenuPrincipal("");
+                    return """
+        <div style="border: 1px solid #ddd; padding: 15px; border-radius: 8px; max-width: 400px; font-family: Arial, sans-serif;">
+            <h4 style="text-align: center; color: #333; margin-bottom: 10px; font-size: 16px; line-height: 1.2;">Pago Cancelado</h4>
+            <hr style="border: 0; border-top: 1px solid #ccc; margin-bottom: 10px;">
+            <p style="text-align: center; margin: 5px 0; line-height: 1.2;">El pago ha sido cancelado. Volviendo al menú principal.</p>
+        </div>
+        """ + manejarMenuPrincipal("");
                 } else {
-                    return "¿Desea proceder con el pago? <button>Sí</button> <button>No</button>";
+                    return """
+        <div style="border: 1px solid #ddd; padding: 15px; border-radius: 8px; max-width: 400px; font-family: Arial, sans-serif;">
+            <h4 style="text-align: center; color: #333; margin-bottom: 10px; font-size: 16px; line-height: 1.2;">Confirmación de Pago</h4>
+            <hr style="border: 0; border-top: 1px solid #ccc; margin-bottom: 10px;">
+            <p style="text-align: center; margin: 5px 0; line-height: 1.2;">¿Desea proceder con el pago?</p>
+            <div style="text-align: center;">
+                <button class="button" style="margin: 5px; padding: 8px 12px; background-color: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer;" onclick="sendMessage('sí')">Sí</button>
+                <button class="button no" style="margin: 5px; padding: 8px 12px; background-color: #f44336; color: white; border: none; border-radius: 4px; cursor: pointer;" onclick="sendMessage('no')">No</button>
+            </div>
+        </div>
+        """;
                 }
+
+
 
             case "confirmarPDF":
                 if (mensaje.equalsIgnoreCase("sí")) {
-                    generarPDFResumenCompra(userId);
+                    // Generar un enlace de descarga único
+                    String downloadLink = "/descargarPDF?userId=" + userId;
                     estadosUsuario.put(userId, "MENU");
-                    return "PDF generado exitosamente. Volviendo al menú principal." + "<br>" + "<br>" + manejarMenuPrincipal("");
-                } else if (mensaje.equalsIgnoreCase("no")) {
-                    estadosUsuario.put(userId, "MENU");
-                    return "Volviendo al menú principal." + "<br>" + "<br>" + manejarMenuPrincipal("");
-                } else {
-                    return "¿Desea generar un PDF con el resumen de su compra? <button>Sí</button> <button>No</button>";
+                    return "PDF generado. <a href='" + downloadLink + "'>Descargar Resumen de Compra</a><br><br>" + manejarMenuPrincipal("");
                 }
 
             default:
@@ -571,66 +650,68 @@ public class ChatbotService {
         }
     }
 
-    private void generarPDFResumenCompra(String usuarioActual) {
-        List<Detalleorden> detallesSesion = productosSesion.getOrDefault(usuarioActual, new ArrayList<>());
+    @GetMapping("/descargarPDF")
+    public ResponseEntity<byte[]> descargarPDF(String userId) {
+        byte[] pdfContent = generarPDFResumenCompra(userId);
 
-        if (detallesSesion.isEmpty()) {
-            System.out.println("No hay productos comprados en esta sesión para generar un PDF.");
-            return;
-        }
+        return ResponseEntity.ok()
+                .contentType(MediaType.APPLICATION_PDF)
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=Resumen_Compra.pdf")
+                .body(pdfContent);
+    }
 
-        String pdfPath = "resumen_compra_" + usuarioActual + ".pdf";
+    public byte[] generarPDFResumenCompra(String userId) {
+        Map<String, String> datos = datosUsuario.get(userId);
 
-        Document document = new Document();
-        try {
-            PdfWriter.getInstance(document, new FileOutputStream(pdfPath));
+        try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
+            Document document = new Document();
+            PdfWriter.getInstance(document, baos);
+
             document.open();
 
-            // Título del documento
-            Font titleFont = new Font(Font.FontFamily.HELVETICA, 18, Font.BOLD);
+            // Agregar los mismos elementos de contenido que en el ejemplo anterior
+            Font titleFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 18);
             Paragraph title = new Paragraph("Resumen de Compra", titleFont);
             title.setAlignment(Element.ALIGN_CENTER);
             document.add(title);
 
-            document.add(new Paragraph("\nUsuario: " + usuarioActual));
-            document.add(new Paragraph("Fecha: " + new java.util.Date() + "\n\n"));
+            document.add(new Paragraph(" ")); // Espacio
 
-            // Tabla para el resumen de compra
-            PdfPTable table = new PdfPTable(4); // 4 columnas
-            table.setWidthPercentage(100);
-            table.addCell("Producto");
-            table.addCell("Cantidad");
-            table.addCell("Precio Unitario");
-            table.addCell("Total");
+            // Datos del usuario
+            document.add(new Paragraph("Información del Cliente:"));
+            document.add(new Paragraph("Nombre: " + datos.get("nombre") + " " + datos.get("apellido")));
+            document.add(new Paragraph("Correo: " + datos.get("correo")));
+            document.add(new Paragraph("Teléfono: " + datos.get("telefono")));
+            document.add(new Paragraph("Dirección: " + datos.get("direccion")));
 
-            BigDecimal total = BigDecimal.ZERO;
+            document.add(new Paragraph(" ")); // Espacio
 
-            for (Detalleorden detalle : detallesSesion) {
-                table.addCell(detalle.getProducto().getNombre());
-                table.addCell(String.valueOf(detalle.getCantidad()));
-                table.addCell("S/. " + detalle.getPreciounitario());
-                table.addCell("S/. " + detalle.getSubtotal());
-                total = total.add(detalle.getSubtotal());
-            }
+            // Detalles del producto
+            document.add(new Paragraph("Detalles del Producto:"));
+            document.add(new Paragraph("Producto: " + datos.get("productoNombre")));
+            document.add(new Paragraph("Descripción: " + datos.get("productoDescripcion")));
+            document.add(new Paragraph("Cantidad: " + datos.get("cantidad")));
+            document.add(new Paragraph("Precio Unitario: S/. " + datos.get("productoPrecio")));
 
-            document.add(table);
+            // Calcular total
+            int cantidad = Integer.parseInt(datos.get("cantidad"));
+            double precioUnitario = Double.parseDouble(datos.get("productoPrecio"));
+            double total = cantidad * precioUnitario;
 
-            // Agregar costo de envío y total general
-            document.add(new Paragraph("\nCosto de envío: S/. 12.00"));
-            document.add(new Paragraph("Total General: S/. " + total.add(new BigDecimal("12.00"))));
+            document.add(new Paragraph(" ")); // Espacio
 
-            // Mensaje final
-            document.add(new Paragraph("\nGracias por tu compra.", new Font(Font.FontFamily.HELVETICA, 12, Font.ITALIC)));
+            document.add(new Paragraph("Total de la Compra: S/. " + String.format("%.2f", total)));
 
-            System.out.println("PDF generado exitosamente en: " + pdfPath);
+            document.close();
+
+            return baos.toByteArray();
 
         } catch (DocumentException | IOException e) {
             e.printStackTrace();
-            System.out.println("Error al generar el PDF.");
-        } finally {
-            document.close();
+            return null;
         }
     }
+
 
 
     private String manejarFlujoProducto(Map<String, String> datos, String mensaje) {
@@ -805,13 +886,46 @@ public class ChatbotService {
     }
 
     private void confirmarCompra(int userId) {
+        List<Detalleorden> detallesSesion = productosSesion.get(String.valueOf(userId));
+
+        if (detallesSesion == null || detallesSesion.isEmpty()) {
+            System.out.println("No hay productos en el carrito para confirmar la compra.");
+            return;
+        }
+
         Orden orden = ordenRepository.findOrdenEstadoCreado(userId);
-        if (orden != null) {
-            orden.setEstado("Confirmada");
-            orden.setFecha(new java.sql.Date(System.currentTimeMillis()));
+        if (orden == null) {
+            orden = new Orden();
+            Usuario usuario = usuarioRepository.findById(userId).orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+            orden.setUsuario(usuario);
+            orden.setEstado("Creado");
             ordenRepository.save(orden);
         }
+
+        for (Detalleorden detalle : detallesSesion) {
+            Detalleorden detalleExistente = detallesRepository
+                    .findByIdordenAndIdproducto(orden.getId(), detalle.getProducto().getId())
+                    .orElse(null);
+
+            if (detalleExistente != null) {
+                detalleExistente.setCantidad(detalleExistente.getCantidad() + detalle.getCantidad());
+                detalleExistente.setSubtotal(detalleExistente.getPreciounitario().multiply(BigDecimal.valueOf(detalleExistente.getCantidad())));
+                detallesRepository.save(detalleExistente);
+            } else {
+                detalle.setOrden(orden);
+                detallesRepository.save(detalle);
+            }
+        }
+
+        // Actualizar estado de la orden a confirmada
+        orden.setEstado("Confirmada");
+        orden.setFecha(new java.sql.Date(System.currentTimeMillis()));
+        ordenRepository.save(orden);
+
+        // Limpia los productos del carrito después de confirmar la compra
+        productosSesion.remove(String.valueOf(userId));
     }
+
 
 
 }

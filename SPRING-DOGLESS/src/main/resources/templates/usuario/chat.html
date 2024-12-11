@@ -168,6 +168,7 @@
                     input.value = ''; // Limpiar el campo de entrada
                 });
 
+                // Función para enviar mensajes al backend y manejar la respuesta
                 function sendMessage(message) {
                     fetch('/api/chat/message', {
                         method: 'POST',
@@ -185,6 +186,7 @@
                         })
                         .catch((error) => console.error('Error al enviar el mensaje:', error));
                 }
+
 
                 window.addEventListener('load', () => {
                     sendMessage('reiniciar'); // Envía un mensaje para reiniciar el estado en el backend
