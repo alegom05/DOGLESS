@@ -62,13 +62,13 @@
                   <div class="card-header" style="background-image: url('/assets/img/blogpost.jpg')">
                     <div class="profile-picture">
                       <div class="avatar avatar-xl">
-                        <img src="/assets/img/profile2.jpg" alt="..." class="avatar-img rounded-circle" />
+                        <img th:src="@{'http://20.81.145.27:8080/imagen/' + ${agente.id}}" alt="..." class="avatar-img rounded-circle" />
                       </div>
                     </div>
                   </div>
                   <div class="card-body">
                     <div class="user-profile">
-                      <div class="name" th:text="${#strings.toUpperCase(session.usuario.nombre)} + ' ' + ${#strings.toUpperCase(session.usuario.apellido)}"></div>
+                      <div class="name" th:text="${#strings.toUpperCase(agente.getNombre())} + ' ' + ${#strings.toUpperCase(agente.getApellido())}"></div>
                       <div class="job">Agente</div>
                     </div>
                   </div>
@@ -76,10 +76,10 @@
                   <!-- Ajustar márgenes para reducir espacio -->
                   <div class="card-body" style="padding-top: 0;">
                     <div class="user-details text-center">
-                      <p><b>DNI:</b> 12345678</p>
-                      <p><b>Dirección:</b> Av. Arica 1351, San Miguel</p>
-                      <p><b>Teléfono:</b> +51 924795123</p>
-                      <p><b>Correo de contacto:</b> alonso.guevara@correo.com</p>
+                      <p><b>DNI:</b> <span th:text="${agente.dni}"></span></p>
+                      <p><b>Dirección:</b> <span th:text="${agente.direccion}"></span></p>
+                      <p><b>Teléfono:</b> <span th:text="${agente.telefono}"></span></p>
+                      <p><b>Correo de contacto:</b> <span th:text="${agente.email}"></span></p>
                     </div>
                   </div>
 

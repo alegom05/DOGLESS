@@ -1,7 +1,9 @@
 package com.example.springdogless.config;
 
+import com.example.springdogless.Repository.FotosPerfilBlobsRepository;
 import com.example.springdogless.Repository.ProductRepository;
 import com.example.springdogless.Repository.UsuarioRepository;
+import com.example.springdogless.entity.FotosPerfilBlobs;
 import com.example.springdogless.entity.Producto;
 import com.example.springdogless.entity.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,8 @@ public class ImageController {
     private ProductRepository productRepository;
     @Autowired
     private UsuarioRepository usuarioRepository;
+    @Autowired
+    private FotosPerfilBlobsRepository fotosPerfilBlobsRepository;
 
     @GetMapping("/imagen/{id}")
     @ResponseBody
@@ -34,22 +38,34 @@ public class ImageController {
 
         if (usuarioOptional.isPresent()) {
             Usuario usuario = usuarioOptional.get();
-            byte[] imagenBytes = usuario.getFotoperfil();
+            // Buscar la foto de perfil asociada al usuario
+            Optional<FotosPerfilBlobs> fotoPerfilBlob = fotosPerfilBlobsRepository.findByUsuario_Id(usuario.getId());
+
+            byte[] imagenBytes = null;
+
+            if (fotoPerfilBlob.isPresent() && fotoPerfilBlob.get().getFotoPerfil() != null) {
+                // Si el usuario tiene una foto, usa esa foto
+                imagenBytes = fotoPerfilBlob.get().getFotoPerfil();
+            } else {
+                System.out.println("El usuario no tiene una foto de perfil asignada, intentando cargar la imagen por defecto...");
+                // Buscar la foto por defecto del usuario con ID 59
+                Optional<FotosPerfilBlobs> fotoDefault=fotosPerfilBlobsRepository.findByUsuario_Id(0);
+                if (fotoDefault.isPresent() && fotoDefault.get().getFotoPerfil() != null) {
+                    imagenBytes = fotoDefault.get().getFotoPerfil();
+                } else {
+                    System.out.println("No se encontró una foto de perfil por defecto válida.");
+                }
+            }
 
             if (imagenBytes != null) {
-                return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(imagenBytes);
-            } else {
-                // Si no tiene imagen, buscar la imagen del usuario con ID 59
-                Optional<Usuario> defaultUsuarioOptional = usuarioRepository.findById(59);
-                if (defaultUsuarioOptional.isPresent()) {
-                    byte[] defaultImage = defaultUsuarioOptional.get().getFotoperfil();
-                    if (defaultImage != null) {
-                        return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(defaultImage);
-                    }
-                }
-                // Si el usuario con ID 59 tampoco tiene imagen o no existe, devuelve un error
-                return ResponseEntity.noContent().build();
+                return ResponseEntity.ok()
+                        .contentType(MediaType.IMAGE_JPEG)
+                        .body(imagenBytes);
             }
+
+            // Si no se tiene ni la foto del usuario ni una foto por defecto
+            System.out.println("No se encontró imagen para el usuario con ID: " + id);
+            return ResponseEntity.noContent().build();
         }
 
         System.out.println("No se encontró usuario con ID: " + id); // Agrega este log

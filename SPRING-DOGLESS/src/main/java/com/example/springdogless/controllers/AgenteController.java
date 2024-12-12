@@ -67,7 +67,16 @@ public class AgenteController {
     }
 
     @GetMapping("/perfil_agente")
-    public String verperfilzonal(Model model) {
+    public String verperfilzonal(Model model, HttpSession session) {
+        // Obtén el objeto Agente de la sesión
+        Usuario usuarioLogueado = (Usuario) session.getAttribute("usuario");
+        // Verifica que el objeto no sea nulo
+        if (usuarioLogueado != null) {
+            model.addAttribute("agente", usuarioLogueado);
+        } else {
+            // Redirige o muestra un mensaje de error si el usuario no está en la sesión
+            return "redirect:/login"; // Redirige a la página de login si es necesario
+        }
         return "agente/perfil_agente"; // Esto renderiza la vista perfil_agente.html
     }
     @GetMapping("/ActualizarPerfilAgente")
