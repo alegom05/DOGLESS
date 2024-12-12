@@ -59,8 +59,4 @@ public class Usuario implements Serializable {
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Orden> orden;
 
-    @Lob
-    @Column(name = "fotoperfil", columnDefinition = "BLOB")
-    private byte[] fotoperfil;  // Cambiado a byte[] para el campo BLOB
-
 }
