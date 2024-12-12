@@ -2,6 +2,7 @@ package com.example.springdogless.controllers;
 
 import com.example.springdogless.Repository.ReclamoRepository;
 import com.example.springdogless.Repository.UsuarioRepository;
+import com.example.springdogless.entity.Orden;
 import com.example.springdogless.entity.Reclamo;
 import com.example.springdogless.entity.Usuario;
 import com.example.springdogless.services.ChatbotService;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -96,6 +98,10 @@ public class ChatController {
     }
 
 
+    @GetMapping("/historial")
+    public List<Orden> obtenerHistorial(@RequestParam int userId) {
+        return chatbotService.obtenerHistorialDeOrdenes(userId);
+    }
 
 
 }

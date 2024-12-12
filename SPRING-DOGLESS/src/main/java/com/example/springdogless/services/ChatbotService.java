@@ -21,6 +21,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.client.RestTemplate;
 
@@ -314,6 +315,7 @@ public class ChatbotService {
 
     public String manejarCompraDesdeChatbot(Integer idProducto, Integer idUsuario, Integer cantidad) {
         try {
+            // Validaciones
             if (idUsuario == null || idUsuario <= 0) {
                 return "Error: Usuario no válido.";
             }
@@ -324,17 +326,18 @@ public class ChatbotService {
                 return "Error: La cantidad debe ser mayor a 0.";
             }
 
+            // Obtener el producto
             Optional<Producto> productoOptional = productRepository.findById(idProducto);
             if (!productoOptional.isPresent()) {
-                return "Error: Producto con ID " + idProducto + " no encontrado.";
+                return "Error: Producto no encontrado.";
             }
-
             Producto producto = productoOptional.get();
 
-            // Registrar o actualizar el producto en la sesión
+            // Agregar el producto a la sesión
             String userId = String.valueOf(idUsuario);
             List<Detalleorden> detalles = productosSesion.computeIfAbsent(userId, k -> new ArrayList<>());
 
+            // Verificar si el producto ya está en el carrito
             boolean productoEncontrado = false;
             for (Detalleorden detalle : detalles) {
                 if (detalle.getProducto().getId().equals(idProducto)) {
@@ -345,6 +348,7 @@ public class ChatbotService {
                 }
             }
 
+            // Si no está en el carrito, agregarlo
             if (!productoEncontrado) {
                 Detalleorden nuevoDetalle = new Detalleorden();
                 nuevoDetalle.setProducto(producto);
@@ -354,13 +358,36 @@ public class ChatbotService {
                 detalles.add(nuevoDetalle);
             }
 
-            return String.format("Producto %s añadido exitosamente al carrito.", producto.getNombre());
+            // Asociar el producto con la orden activa en la base de datos
+            Orden orden = ordenRepository.findOrdenEstadoCreado(idUsuario);
+            if (orden == null) {
+                throw new RuntimeException("No se encontró una orden activa para el usuario.");
+            }
 
+            Detalleorden detalleEnDB = detallesRepository.findByIdordenAndIdproducto(orden.getId(), idProducto)
+                    .orElse(null);
+            if (detalleEnDB != null) {
+                detalleEnDB.setCantidad(detalleEnDB.getCantidad() + cantidad);
+                detalleEnDB.setSubtotal(detalleEnDB.getPreciounitario().multiply(BigDecimal.valueOf(detalleEnDB.getCantidad())));
+                detallesRepository.save(detalleEnDB);
+            } else {
+                Detalleorden nuevoDetalleDB = new Detalleorden();
+                nuevoDetalleDB.setOrden(orden);
+                nuevoDetalleDB.setProducto(producto);
+                nuevoDetalleDB.setCantidad(cantidad);
+                nuevoDetalleDB.setPreciounitario(BigDecimal.valueOf(producto.getPrecio()));
+                nuevoDetalleDB.setSubtotal(BigDecimal.valueOf(producto.getPrecio()).multiply(BigDecimal.valueOf(cantidad)));
+                detallesRepository.save(nuevoDetalleDB);
+            }
+
+            return String.format("Producto %s añadido exitosamente al carrito.", producto.getNombre());
         } catch (Exception e) {
             e.printStackTrace();
-            return "Ocurrió un error al añadir el producto al carrito. Por favor, inténtelo nuevamente.";
+            return "Ocurrió un error al añadir el producto. Inténtalo nuevamente.";
         }
     }
+
+
 
 
 
@@ -394,6 +421,11 @@ public class ChatbotService {
         }
     }
 
+    public List<Orden> obtenerHistorialDeOrdenes(int userId) {
+        return ordenRepository.findByUsuarioIdAndEstado(userId, "Confirmada");
+    }
+
+
     public String procesarFlujoCompra(String userId, String mensaje) {
 
         // Obtener el usuario autenticado desde el contexto de seguridad
@@ -426,6 +458,8 @@ public class ChatbotService {
 
         switch (estadoActual) {
             case "inicio":
+                crearOrdenEnCurso(Integer.parseInt(userId));
+
                 estadosUsuario.put(userId, "esperandoProducto");
 
             case "esperandoProducto":
@@ -600,6 +634,15 @@ public class ChatbotService {
 
             case "confirmarPago":
                 if (mensaje.equalsIgnoreCase("sí")) {
+                    // Crear la orden en la base de datos
+                    try {
+                        crearOrdenConProductos(userId);
+                    } catch (Exception e) {
+                        e.printStackTrace(); // Imprime el stack trace completo para análisis
+                        System.out.println("Error horror: " + e.getMessage()); // Detalle adicional del error
+                        return "Ocurrió un error al procesar el pago. Por favor, intente nuevamente.";
+                    }
+
                     estadosUsuario.put(userId, "confirmarPDF");
                     return procesarPagoYMostrarResumen(userId) + """
         <br>
@@ -638,6 +681,7 @@ public class ChatbotService {
 
 
 
+
             case "confirmarPDF":
                 if (mensaje.equalsIgnoreCase("sí")) {
                     // Generar un enlace de descarga único
@@ -660,6 +704,85 @@ public class ChatbotService {
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=Resumen_Compra.pdf")
                 .body(pdfContent);
     }
+
+    @Transactional
+    public void crearOrdenConProductos(String userId) {
+        Usuario usuario = usuarioRepository.findById(Integer.parseInt(userId))
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        // Crear la nueva orden y guardarla primero
+        Orden nuevaOrden = new Orden();
+        nuevaOrden.setUsuario(usuario);
+        nuevaOrden.setFecha(new java.sql.Date(System.currentTimeMillis()));
+        nuevaOrden.setDireccionenvio(datosUsuario.get(userId).get("direccion"));
+        nuevaOrden.setMetodopago("Tarjeta"); // Esto puede ajustarse dinámicamente
+        nuevaOrden.setTotal(BigDecimal.ZERO);
+
+        // Persistir la orden para obtener su ID
+        nuevaOrden = ordenRepository.save(nuevaOrden);
+
+        // Calcular el total y añadir los detalles de la orden
+        BigDecimal total = BigDecimal.ZERO;
+        List<Detalleorden> detalles = productosSesion.get(userId);
+        if (detalles != null) {
+            for (Detalleorden detalle : detalles) {
+                detalle.setOrden(nuevaOrden); // Asociar la orden persistida
+                total = total.add(detalle.getSubtotal());
+                detallesRepository.save(detalle); // Guardar cada detalle en la BD
+            }
+        }
+
+        // Actualizar el total de la orden y guardarla nuevamente
+        nuevaOrden.setTotal(total);
+        ordenRepository.save(nuevaOrden);
+    }
+
+
+    @Transactional
+    protected void crearOrdenEnCurso(int userId) {
+        System.out.println("Iniciando creación de orden para usuario ID: " + userId);
+
+        // Verificar si ya existe una orden activa
+        Orden ordenExistente = ordenRepository.findOrdenEstadoCreado(userId);
+        if (ordenExistente != null) {
+            System.out.println("Ya existe una orden activa para el usuario ID: " + userId);
+            return;
+        }
+
+        // Crear una nueva orden si no existe ninguna activa
+        Usuario usuario = usuarioRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        Orden nuevaOrden = new Orden();
+        nuevaOrden.setUsuario(usuario);
+        List<String> estadosValidos = Arrays.asList("Creado", "En Validación", "En Proceso", "Arribo al País", "En Aduanas", "En Ruta", "Recibido", "Cancelado");
+
+        if (!estadosValidos.contains("Creado")) { // Cambia "Creado" al estado que quieras asignar
+            throw new IllegalArgumentException("Estado no válido: Creado");
+        }
+        nuevaOrden.setEstado("Creado");
+
+        System.out.println("Estado de la orden u.U: " + nuevaOrden.getEstado());
+
+
+        nuevaOrden.setFecha(new java.sql.Date(System.currentTimeMillis()));
+
+        ordenRepository.save(nuevaOrden);
+
+        System.out.println("Orden creada y guardada con ID: " + nuevaOrden.getId());
+    }
+
+    @Transactional
+    public void cancelarOrdenesActivas(int userId) {
+        List<Orden> ordenesActivas = ordenRepository.findByUsuarioIdAndEstado(userId, "Creado");
+        for (Orden orden : ordenesActivas) {
+            orden.setEstado("Cancelada"); // Cambia el estado a 'Cancelada'
+            ordenRepository.save(orden);
+        }
+    }
+
+
+
 
     public byte[] generarPDFResumenCompra(String userId) {
         Map<String, String> datos = datosUsuario.get(userId);
@@ -793,14 +916,14 @@ public class ChatbotService {
 
 
     private String procesarPagoYMostrarResumen(String usuarioActual) {
-        // Recuperar los productos comprados en la sesión actual
+        // Obtener los productos comprados en la sesión
         List<Detalleorden> detallesSesion = productosSesion.getOrDefault(usuarioActual, new ArrayList<>());
 
         if (detallesSesion.isEmpty()) {
             return "No hay productos comprados en esta sesión.";
         }
 
-        // Construir el resumen de los productos comprados en la sesión actual
+        // Construir el resumen
         StringBuilder resumen = new StringBuilder();
         BigDecimal subtotal = BigDecimal.ZERO;
 
@@ -834,7 +957,7 @@ public class ChatbotService {
         resumen.append("</table>");
         resumen.append("<hr style=\"border: 0; border-top: 1px solid #ccc; margin-top: 10px; margin-bottom: 10px;\">");
 
-        // Calcular el costo de envío y total
+        // Calcular el costo total
         BigDecimal costoEnvio = new BigDecimal("12.00");
         BigDecimal total = subtotal.add(costoEnvio);
 
@@ -844,9 +967,6 @@ public class ChatbotService {
         resumen.append("<hr style=\"border: 0; border-top: 1px solid #ccc; margin-top: 10px; margin-bottom: 10px;\">");
         resumen.append("<p style=\"text-align: center; margin: 10px 0; line-height: 1.6; font-size: 14px;\">Gracias por tu compra.</p>");
         resumen.append("</div>");
-
-        // Limpiar productos de la sesión actual después de procesar el pago
-        productosSesion.remove(usuarioActual);
 
         return resumen.toString();
     }
@@ -887,43 +1007,19 @@ public class ChatbotService {
     }
 
     private void confirmarCompra(int userId) {
-        List<Detalleorden> detallesSesion = productosSesion.get(String.valueOf(userId));
-
-        if (detallesSesion == null || detallesSesion.isEmpty()) {
-            System.out.println("No hay productos en el carrito para confirmar la compra.");
-            return;
-        }
-
+        // Obtener la orden en estado "Creado"
         Orden orden = ordenRepository.findOrdenEstadoCreado(userId);
+
         if (orden == null) {
-            orden = new Orden();
-            Usuario usuario = usuarioRepository.findById(userId).orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
-            orden.setUsuario(usuario);
-            orden.setEstado("Creado");
-            ordenRepository.save(orden);
+            throw new RuntimeException("No se encontró una orden en curso para confirmar.");
         }
 
-        for (Detalleorden detalle : detallesSesion) {
-            Detalleorden detalleExistente = detallesRepository
-                    .findByIdordenAndIdproducto(orden.getId(), detalle.getProducto().getId())
-                    .orElse(null);
-
-            if (detalleExistente != null) {
-                detalleExistente.setCantidad(detalleExistente.getCantidad() + detalle.getCantidad());
-                detalleExistente.setSubtotal(detalleExistente.getPreciounitario().multiply(BigDecimal.valueOf(detalleExistente.getCantidad())));
-                detallesRepository.save(detalleExistente);
-            } else {
-                detalle.setOrden(orden);
-                detallesRepository.save(detalle);
-            }
-        }
-
-        // Actualizar estado de la orden a confirmada
+        // Actualizar el estado de la orden
         orden.setEstado("Confirmada");
         orden.setFecha(new java.sql.Date(System.currentTimeMillis()));
         ordenRepository.save(orden);
 
-        // Limpia los productos del carrito después de confirmar la compra
+        // Limpiar los productos de la sesión
         productosSesion.remove(String.valueOf(userId));
     }
 

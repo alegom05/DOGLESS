@@ -139,4 +139,6 @@ public interface OrdenRepository extends JpaRepository<Orden, Integer> {
 
 
     List<Orden> findAllByUsuario(Usuario usuario);
+
+    List<Orden> findByUsuarioIdAndEstado(int userId, String confirmada);
 }
