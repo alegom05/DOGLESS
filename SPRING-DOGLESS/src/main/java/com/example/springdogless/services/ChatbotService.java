@@ -28,6 +28,7 @@ import org.springframework.web.client.RestTemplate;
 import java.io.*;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.text.Normalizer;
 import java.util.*;
 import java.util.List;
 
@@ -475,27 +476,28 @@ public class ChatbotService {
 
                 estadosUsuario.put(userId, "validarProducto");
                 return String.format("""
-                <div style="border: 1px solid #ddd; padding: 15px; border-radius: 8px; max-width: 400px; font-family: Arial, sans-serif;">
-                    <h4 style="text-align: center; color: #333; margin-bottom: 10px; font-size: 16px; line-height: 1.2;">Producto encontrado</h4>
-                    <hr style="border: 0; border-top: 1px solid #ccc; margin-bottom: 10px;">
-                    <p style="margin: 5px 0; line-height: 1.2;"><strong>Nombre:</strong></p>
-                    <p style="margin: 5px 0; line-height: 1.2;">%s</p>
-                    <p style="margin: 5px 0; line-height: 1.2;"><strong>Descripción:</strong></p>
-                    <p style="margin: 5px 0; line-height: 1.2;">%s</p>
-                    <p style="margin: 5px 0; line-height: 1.2;"><strong>Precio:</strong></p>
-                    <p style="margin: 5px 0; line-height: 1.2;">S/. %s</p>
-                    <hr style="border: 0; border-top: 1px solid #ccc; margin-top: 10px; margin-bottom: 10px;">
-                    <p style="text-align: center; margin: 5px 0; line-height: 1.2;">¿Es este el producto que desea añadir?</p>
-                    <div style="text-align: center;">
-                        <button class="button" style="margin: 5px; padding: 8px 12px; background-color: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer;" onclick="sendMessage('sí')">Sí</button>
-                        <button class="button no" style="margin: 5px; padding: 8px 12px; background-color: #f44336; color: white; border: none; border-radius: 4px; cursor: pointer;" onclick="sendMessage('no')">No</button>
-                    </div>
-                </div>
+                       <div style="border: 1px solid #ddd; padding: 15px; border-radius: 8px; max-width: 400px; font-family: Arial, sans-serif;">
+                          <h4 style="text-align: center; color: #333; margin-bottom: 10px; font-size: 16px; line-height: 1.2;">Producto encontrado</h4>
+                          <hr style="border: 0; border-top: 1px solid #ccc; margin-bottom: 10px;">
+                          <p style="margin: 5px 0; line-height: 1.2;"><strong>Nombre:</strong></p>
+                          <p style="margin: 5px 0; line-height: 1.2;">%s</p>
+                          <p style="margin: 5px 0; line-height: 1.2;"><strong>Descripción:</strong></p>
+                          <p style="margin: 5px 0; line-height: 1.2;">%s</p>
+                          <p style="margin: 5px 0; line-height: 1.2;"><strong>Precio:</strong></p>
+                          <p style="margin: 5px 0; line-height: 1.2;">S/. %s</p>
+                          <hr style="border: 0; border-top: 1px solid #ccc; margin-top: 10px; margin-bottom: 10px;">
+                          <p style="text-align: center; margin: 5px 0; line-height: 1.2;">¿Es este el producto que desea añadir?</p>
+                          <div style="text-align: center; margin-top: 10px; display: flex; justify-content: center; gap: 20px;">
+                              <p style="margin: 0; line-height: 1.2;"><strong>Sí</strong></p>
+                              <p style="margin: 0; line-height: 1.2;"><strong>No</strong></p>
+                          </div>
+                      </div>
+                              
                 """, producto.getNombre(), producto.getDescripcion(), producto.getPrecio());
 
 
             case "validarProducto":
-                if (mensaje.equalsIgnoreCase("sí")) {
+                if (normalizarTexto(mensaje).equals("si")) {
                     estadosUsuario.put(userId, "esperandoCantidad");
                     return "Ingrese la cantidad que desea comprar.";
                 } else if (mensaje.equalsIgnoreCase("no")) {
@@ -524,19 +526,20 @@ public class ChatbotService {
 
                     estadosUsuario.put(userId, "otroProducto");
                     return String.format("""
-        <div style="border: 1px solid #ddd; padding: 15px; border-radius: 8px; max-width: 400px; font-family: Arial, sans-serif;">
-            <h4 style="text-align: center; color: #333; margin-bottom: 10px; font-size: 16px; line-height: 1.2;">Cantidad añadida exitosamente</h4>
-            <hr style="border: 0; border-top: 1px solid #ccc; margin-bottom: 10px;">
-            <p style="margin: 5px 0; line-height: 1.2;"><strong>%s</strong></p>
-            <p style="margin: 5px 0; line-height: 1.2;">Cantidad: %d</p>
-            <p style="margin: 5px 0; line-height: 1.2;">Subtotal: S/. %.2f</p>
-            <hr style="border: 0; border-top: 1px solid #ccc; margin-top: 10px; margin-bottom: 10px;">
-            <p style="text-align: center; margin: 5px 0; line-height: 1.2;">¿Quiere ingresar otro producto?</p>
-            <div style="text-align: center;">
-                <button class="button" style="margin: 5px; padding: 8px 12px; background-color: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer;" onclick="sendMessage('sí')">Sí</button>
-                <button class="button no" style="margin: 5px; padding: 8px 12px; background-color: #f44336; color: white; border: none; border-radius: 4px; cursor: pointer;" onclick="sendMessage('no')">No</button>
-            </div>
-        </div>
+                        <div style="border: 1px solid #ddd; padding: 15px; border-radius: 8px; max-width: 400px; font-family: Arial, sans-serif;">
+                           <h4 style="text-align: center; color: #333; margin-bottom: 10px; font-size: 16px; line-height: 1.2;">Cantidad añadida exitosamente</h4>
+                           <hr style="border: 0; border-top: 1px solid #ccc; margin-bottom: 10px;">
+                           <p style="margin: 5px 0; line-height: 1.2;"><strong>%s</strong></p>
+                           <p style="margin: 5px 0; line-height: 1.2;">Cantidad: %d</p>
+                           <p style="margin: 5px 0; line-height: 1.2;">Subtotal: S/. %.2f</p>
+                           <hr style="border: 0; border-top: 1px solid #ccc; margin-top: 10px; margin-bottom: 10px;">
+                           <p style="text-align: center; margin: 5px 0; line-height: 1.2;">¿Quiere ingresar otro producto?</p>
+                           <div style="text-align: center; margin-top: 10px; display: flex; justify-content: center; gap: 20px;">
+                               <p style="margin: 0; line-height: 1.2;"><strong>Sí</strong></p>
+                               <p style="margin: 0; line-height: 1.2;"><strong>No</strong></p>
+                           </div>
+                       </div>
+                                   
         """, datos.get("productoNombre"), cantidad, cantidad * Double.parseDouble(datos.get("productoPrecio")));
                 } catch (NumberFormatException e) {
                     return "Por favor, ingrese un número válido para la cantidad.";
@@ -546,7 +549,7 @@ public class ChatbotService {
 
 
             case "otroProducto":
-                if (mensaje.equalsIgnoreCase("sí")) {
+                if (normalizarTexto(mensaje).equals("si")) {
                     estadosUsuario.put(userId, "esperandoProducto");
                     return "Por favor, ingrese el nombre del próximo producto que desea comprar.";
                 } else if (mensaje.equalsIgnoreCase("no")) {
@@ -556,25 +559,34 @@ public class ChatbotService {
                     return """
                 <div style="border: 1px solid #ddd; padding: 15px; border-radius: 8px; max-width: 400px; font-family: Arial, sans-serif;">
                     <h4 style="text-align: center; color: #333; margin-bottom: 10px; font-size: 16px; line-height: 1.2;">¿Quiere ingresar otro producto?</h4>
-                    <div style="text-align: center;">
-                        <button class="button" style="margin: 5px; padding: 8px 12px; background-color: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer;" onclick="sendMessage('sí')">Sí</button>
-                        <button class="button no" style="margin: 5px; padding: 8px 12px; background-color: #f44336; color: white; border: none; border-radius: 4px; cursor: pointer;" onclick="sendMessage('no')">No</button>
-                    </div>
+                        <div style="text-align: center; margin-top: 10px; display: flex; justify-content: center; gap: 20px;">
+                           <p style="margin: 0; line-height: 1.2;"><strong>Sí</strong></p>
+                           <p style="margin: 0; line-height: 1.2;"><strong>No</strong></p>
+                        </div>
                 </div>
                 """;
                 }
 
 
             case "confirmarCompra":
-                if (mensaje.equalsIgnoreCase("sí")) {
+                if (normalizarTexto(mensaje).equals("si")) {
                     estadosUsuario.put(userId, "modificarDireccion");
                     return "Ingrese la nueva dirección:";
                 } else if (mensaje.equalsIgnoreCase("no")) {
                     estadosUsuario.put(userId, "ingresarTarjeta");
                     return "A continuación, ingrese los siguientes datos:<br> Número de tarjeta:";
                 } else {
-                    return "¿Quiere modificar la dirección? <button>Sí</button> <button>No</button>";
+                    return """
+            <div style="border: 1px solid #ddd; padding: 15px; border-radius: 8px; max-width: 400px; font-family: Arial, sans-serif;">
+                <p style="text-align: center; margin: 5px 0; line-height: 1.2;">¿Quiere modificar la dirección?</p>
+                <div style="text-align: center; margin-top: 10px; display: flex; justify-content: center; gap: 20px;">
+                    <p style="margin: 0; line-height: 1.2;"><strong>Sí</strong></p>
+                    <p style="margin: 0; line-height: 1.2;"><strong>No</strong></p>
+                </div>
+            </div>
+            """;
                 }
+
 
             case "modificarDireccion":
                 if (mensaje.trim().isEmpty()) {
@@ -619,21 +631,21 @@ public class ChatbotService {
                     datos.put("cvv", mensaje.trim());
                     estadosUsuario.put(userId, "confirmarPago");
                     return """
-            <div style="border: 1px solid #ddd; padding: 15px; border-radius: 8px; max-width: 400px; font-family: Arial, sans-serif;">
-                <h4 style="text-align: center; color: #333; margin-bottom: 10px; font-size: 16px; line-height: 1.2;">Confirmación de Pago</h4>
-                <hr style="border: 0; border-top: 1px solid #ccc; margin-bottom: 10px;">
-                <p style="text-align: center; margin: 5px 0; line-height: 1.2;">¿Desea proceder con el pago?</p>
-                <div style="text-align: center;">
-                    <button class="button" style="margin: 5px; padding: 8px 12px; background-color: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer;" onclick="sendMessage('sí')">Sí</button>
-                    <button class="button no" style="margin: 5px; padding: 8px 12px; background-color: #f44336; color: white; border: none; border-radius: 4px; cursor: pointer;" onclick="sendMessage('no')">No</button>
-                </div>
-            </div>
-            """;
+                    <div style="border: 1px solid #ddd; padding: 15px; border-radius: 8px; max-width: 400px; font-family: Arial, sans-serif;">
+                        <h4 style="text-align: center; color: #333; margin-bottom: 10px; font-size: 16px; line-height: 1.2;">Confirmación de Pago</h4>
+                        <hr style="border: 0; border-top: 1px solid #ccc; margin-bottom: 10px;">
+                        <p style="text-align: center; margin: 5px 0; line-height: 1.2;">¿Desea proceder con el pago?</p>
+                        <div style="text-align: center; margin-top: 10px; display: flex; justify-content: center; gap: 20px;">
+                            <p style="margin: 0; line-height: 1.2;"><strong>Sí</strong></p>
+                            <p style="margin: 0; line-height: 1.2;"><strong>No</strong></p>
+                        </div>
+                    </div>
+                    """;
                 }
 
 
             case "confirmarPago":
-                if (mensaje.equalsIgnoreCase("sí")) {
+                if (normalizarTexto(mensaje).equals("si")) {
                     try {
                         // Crear la orden en la base de datos
                         crearOrdenConProductos(userId);
@@ -702,7 +714,14 @@ public class ChatbotService {
         }
     }
 
-
+    private String normalizarTexto(String texto) {
+        if (texto == null) {
+            return null;
+        }
+        return Normalizer.normalize(texto, Normalizer.Form.NFD)
+                .replaceAll("\\p{M}", "") // Elimina los diacríticos
+                .toLowerCase(); // Convierte a minúsculas para comparar de manera uniforme
+    }
 
     @Transactional
     public void crearOrdenConProductos(String userId) {
@@ -904,9 +923,9 @@ public class ChatbotService {
             <p style="margin: 5px 0; line-height: 1.2;">%s</p>
             <hr style="border: 0; border-top: 1px solid #ccc; margin-top: 10px; margin-bottom: 10px;">
             <p style="text-align: center; margin: 5px 0; line-height: 1.2;">¿Quieres modificar la dirección?</p>
-            <div style="text-align: center;">
-                <button class="button" style="margin: 5px; padding: 8px 12px; background-color: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer;" onclick="sendMessage('sí')">Sí</button>
-                <button class="button no" style="margin: 5px; padding: 8px 12px; background-color: #f44336; color: white; border: none; border-radius: 4px; cursor: pointer;" onclick="sendMessage('no')">No</button>
+            <div style="text-align: center; margin-top: 10px; display: flex; justify-content: center; gap: 20px;">
+                <p style="margin: 0; line-height: 1.2;"><strong>Sí</strong></p>
+                <p style="margin: 0; line-height: 1.2;"><strong>No</strong></p>
             </div>
         </div>
         """, nombre, apellido, zona, distrito, telefono, correo, direccion);
@@ -931,46 +950,33 @@ public class ChatbotService {
         resumen.append("<div style=\"border: 1px solid #ddd; padding: 15px; border-radius: 8px; max-width: 600px; font-family: Arial, sans-serif;\">");
         resumen.append("<h4 style=\"text-align: center; color: #333; margin-bottom: 10px; font-size: 18px; line-height: 1.4;\">Resumen de tu compra</h4>");
         resumen.append("<hr style=\"border: 0; border-top: 1px solid #ccc; margin-bottom: 10px;\">");
-        resumen.append("<table style=\"width: 100%; border-collapse: collapse;\">");
-        resumen.append("<thead style=\"background-color: #f4f4f4; text-align: left;\">");
-        resumen.append("<tr>");
-        resumen.append("<th style=\"padding: 8px; border: 1px solid #ddd;\">Producto</th>");
-        resumen.append("<th style=\"padding: 8px; border: 1px solid #ddd;\">Cantidad</th>");
-        resumen.append("<th style=\"padding: 8px; border: 1px solid #ddd;\">Precio Unitario</th>");
-        resumen.append("<th style=\"padding: 8px; border: 1px solid #ddd;\">Total</th>");
-        resumen.append("</tr>");
-        resumen.append("</thead>");
-        resumen.append("<tbody>");
 
         for (Detalleorden detalle : detallesSesion) {
             BigDecimal totalProducto = detalle.getPreciounitario().multiply(BigDecimal.valueOf(detalle.getCantidad()));
             subtotal = subtotal.add(totalProducto);
 
-            resumen.append("<tr>");
-            resumen.append(String.format("<td style=\"padding: 8px; border: 1px solid #ddd;\">%s</td>", detalle.getProducto().getNombre()));
-            resumen.append(String.format("<td style=\"padding: 8px; border: 1px solid #ddd; text-align: center;\">%d</td>", detalle.getCantidad()));
-            resumen.append(String.format("<td style=\"padding: 8px; border: 1px solid #ddd; text-align: right;\">S/. %.2f</td>", detalle.getPreciounitario()));
-            resumen.append(String.format("<td style=\"padding: 8px; border: 1px solid #ddd; text-align: right;\">S/. %.2f</td>", totalProducto));
-            resumen.append("</tr>");
+            resumen.append("<p style=\"margin: 5px 0; line-height: 1.4; font-size: 14px;\">");
+            resumen.append(String.format("%s<br>", detalle.getProducto().getNombre())); // Nombre del producto
+            resumen.append(String.format("x %d<br>", detalle.getCantidad())); // Cantidad en la siguiente línea
+            resumen.append(String.format("Costo parcial: S/. %.2f", totalProducto)); // Costo parcial
+            resumen.append("</p>");
+            resumen.append("<hr style=\"border: 0; border-top: 1px solid #ccc; margin: 10px 0;\">");
         }
-
-        resumen.append("</tbody>");
-        resumen.append("</table>");
-        resumen.append("<hr style=\"border: 0; border-top: 1px solid #ccc; margin-top: 10px; margin-bottom: 10px;\">");
 
         // Calcular el costo total
         BigDecimal costoEnvio = new BigDecimal("12.00");
         BigDecimal total = subtotal.add(costoEnvio);
 
-        resumen.append(String.format("<p style=\"text-align: right; font-weight: bold;\">Subtotal: S/. %.2f</p>", subtotal));
-        resumen.append(String.format("<p style=\"text-align: right; font-weight: bold;\">Costo de envío: S/. %.2f</p>", costoEnvio));
-        resumen.append(String.format("<p style=\"text-align: right; font-weight: bold; font-size: 16px;\">Total: S/. %.2f</p>", total));
+        resumen.append(String.format("<p style=\"text-align: right; font-weight: bold;\">Subtotal: <br> S/. %.2f</p>", subtotal));
+        resumen.append(String.format("<p style=\"text-align: right; font-weight: bold;\">Costo de envío: <br> S/. %.2f</p>", costoEnvio));
+        resumen.append(String.format("<p style=\"text-align: right; font-weight: bold; font-size: 16px;\">Total: <br> S/. %.2f</p>", total));
         resumen.append("<hr style=\"border: 0; border-top: 1px solid #ccc; margin-top: 10px; margin-bottom: 10px;\">");
         resumen.append("<p style=\"text-align: center; margin: 10px 0; line-height: 1.6; font-size: 14px;\">Gracias por tu compra.</p>");
         resumen.append("</div>");
 
         return resumen.toString();
     }
+
 
 
 
