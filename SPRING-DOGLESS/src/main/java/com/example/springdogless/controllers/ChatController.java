@@ -7,6 +7,9 @@ import com.example.springdogless.entity.Reclamo;
 import com.example.springdogless.entity.Usuario;
 import com.example.springdogless.services.ChatbotService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,7 +25,8 @@ public class ChatController {
     UsuarioRepository usuarioRepository;
     @Autowired
     ReclamoRepository reclamoRepository;
-    private final ChatbotService chatbotService;
+    @Autowired
+    ChatbotService chatbotService;
 
     @Autowired
     public ChatController(ChatbotService chatbotService) {
@@ -102,6 +106,17 @@ public class ChatController {
     public List<Orden> obtenerHistorial(@RequestParam int userId) {
         return chatbotService.obtenerHistorialDeOrdenes(userId);
     }
+
+    @GetMapping("/descargarPDF")
+    public ResponseEntity<byte[]> descargarPDF(@RequestParam String userId) {
+        byte[] pdfContent = chatbotService.generarPDFResumenCompra(userId);
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.APPLICATION_PDF)
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=Resumen_Compra.pdf")
+                .body(pdfContent);
+    }
+
 
 
 }

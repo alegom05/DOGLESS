@@ -634,36 +634,52 @@ public class ChatbotService {
 
             case "confirmarPago":
                 if (mensaje.equalsIgnoreCase("sí")) {
-                    // Crear la orden en la base de datos
                     try {
+                        // Crear la orden en la base de datos
                         crearOrdenConProductos(userId);
                     } catch (Exception e) {
-                        e.printStackTrace(); // Imprime el stack trace completo para análisis
-                        System.out.println("Error horror: " + e.getMessage()); // Detalle adicional del error
+                        e.printStackTrace(); // Imprimir el stack trace para depuración
+                        System.out.println("Error horror: " + e.getMessage()); // Mensaje de error
                         return "Ocurrió un error al procesar el pago. Por favor, intente nuevamente.";
                     }
 
-                    estadosUsuario.put(userId, "confirmarPDF");
-                    return procesarPagoYMostrarResumen(userId) + """
-        <br>
-        <div style="border: 1px solid #ddd; padding: 15px; border-radius: 8px; max-width: 400px; font-family: Arial, sans-serif;">
-            <h4 style="text-align: center; color: #333; margin-bottom: 10px; font-size: 16px; line-height: 1.2;">Generar PDF</h4>
+                    estadosUsuario.put(userId, "MENU"); // Cambiar al estado inicial para nuevos flujos
+
+                    // Generar el PDF como un archivo descargable
+                    String downloadScript = String.format("""
+            <script>
+                // Crear un enlace temporal para descargar el PDF
+                const downloadLink = document.createElement('a');
+                downloadLink.href = '/api/chat/descargarPDF?userId=%s'; // Ruta para generar y descargar el PDF
+                downloadLink.download = 'Resumen_Compra.pdf';
+                document.body.appendChild(downloadLink);
+                downloadLink.click();
+                document.body.removeChild(downloadLink);
+            </script>
+        """, userId);
+
+                    // Generar los mensajes
+                    String resumenCompra = procesarPagoYMostrarResumen(userId); // Resumen de compra
+                    String mensajeGenerarPDF = """
+        <br><div style="border: 1px solid #ddd; padding: 15px; border-radius: 8px; max-width: 400px; font-family: Arial, sans-serif;">
+            <h4 style="text-align: center; color: #333; margin-bottom: 10px; font-size: 16px; line-height: 1.2;">PDF Generado</h4>
             <hr style="border: 0; border-top: 1px solid #ccc; margin-bottom: 10px;">
-            <p style="text-align: center; margin: 5px 0; line-height: 1.2;">¿Desea generar un PDF con el resumen de su compra?</p>
-            <div style="text-align: center;">
-                <button class="button" style="margin: 5px; padding: 8px 12px; background-color: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer;" onclick="sendMessage('sí')">Sí</button>
-                <button class="button no" style="margin: 5px; padding: 8px 12px; background-color: #f44336; color: white; border: none; border-radius: 4px; cursor: pointer;" onclick="sendMessage('no')">No</button>
-            </div>
-        </div>
+            <p style="text-align: center; margin: 5px 0; line-height: 1.2;">El PDF con el resumen de su compra ha sido descargado automáticamente.</p>
+        </div><br>
         """;
+                    String mensajeIntroductorio = manejarMenuPrincipal(""); // Mensaje del menú principal
+
+                    // Combinar los mensajes y devolverlos junto con el script de descarga
+                    return resumenCompra + mensajeGenerarPDF + mensajeIntroductorio + downloadScript;
+
                 } else if (mensaje.equalsIgnoreCase("no")) {
-                    estadosUsuario.put(userId, "MENU");
+                    estadosUsuario.put(userId, "MENU"); // Volver al estado inicial
                     return """
-        <div style="border: 1px solid #ddd; padding: 15px; border-radius: 8px; max-width: 400px; font-family: Arial, sans-serif;">
+        <br><div style="border: 1px solid #ddd; padding: 15px; border-radius: 8px; max-width: 400px; font-family: Arial, sans-serif;">
             <h4 style="text-align: center; color: #333; margin-bottom: 10px; font-size: 16px; line-height: 1.2;">Pago Cancelado</h4>
             <hr style="border: 0; border-top: 1px solid #ccc; margin-bottom: 10px;">
             <p style="text-align: center; margin: 5px 0; line-height: 1.2;">El pago ha sido cancelado. Volviendo al menú principal.</p>
-        </div>
+        </div><br>
         """ + manejarMenuPrincipal("");
                 } else {
                     return """
@@ -681,29 +697,12 @@ public class ChatbotService {
 
 
 
-
-            case "confirmarPDF":
-                if (mensaje.equalsIgnoreCase("sí")) {
-                    // Generar un enlace de descarga único
-                    String downloadLink = "/descargarPDF?userId=" + userId;
-                    estadosUsuario.put(userId, "MENU");
-                    return "PDF generado. <a href='" + downloadLink + "'>Descargar Resumen de Compra</a><br><br>" + manejarMenuPrincipal("");
-                }
-
             default:
                 return "No entiendo tu solicitud. Por favor, intenta nuevamente.";
         }
     }
 
-    @GetMapping("/descargarPDF")
-    public ResponseEntity<byte[]> descargarPDF(String userId) {
-        byte[] pdfContent = generarPDFResumenCompra(userId);
 
-        return ResponseEntity.ok()
-                .contentType(MediaType.APPLICATION_PDF)
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=Resumen_Compra.pdf")
-                .body(pdfContent);
-    }
 
     @Transactional
     public void crearOrdenConProductos(String userId) {
@@ -828,7 +827,9 @@ public class ChatbotService {
 
             document.close();
 
+
             return baos.toByteArray();
+
 
         } catch (DocumentException | IOException e) {
             e.printStackTrace();
