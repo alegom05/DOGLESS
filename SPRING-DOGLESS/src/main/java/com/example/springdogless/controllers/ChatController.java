@@ -111,11 +111,17 @@ public class ChatController {
     public ResponseEntity<byte[]> descargarPDF(@RequestParam String userId) {
         byte[] pdfContent = chatbotService.generarPDFResumenCompra(userId);
 
+        if (pdfContent == null || pdfContent.length == 0) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(null); // Indicar que ocurrió un error
+        }
+
         return ResponseEntity.ok()
                 .contentType(MediaType.APPLICATION_PDF)
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=Resumen_Compra.pdf")
                 .body(pdfContent);
     }
+
 
 
 
