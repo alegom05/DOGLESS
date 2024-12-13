@@ -651,16 +651,12 @@ public class ChatbotService {
                         crearOrdenConProductos(userId);
                     } catch (Exception e) {
                         e.printStackTrace(); // Imprimir el stack trace para depuración
-                        System.out.println("Error horror: " + e.getMessage()); // Mensaje de error
                         return "Ocurrió un error al procesar el pago. Por favor, intente nuevamente.";
                     }
-
-                    estadosUsuario.put(userId, "MENU"); // Cambiar al estado inicial para nuevos flujos
 
                     // Generar el PDF como un archivo descargable
                     String downloadScript = String.format("""
             <script>
-                // Crear un enlace temporal para descargar el PDF
                 const downloadLink = document.createElement('a');
                 downloadLink.href = '/api/chat/descargarPDF?userId=%s'; // Ruta para generar y descargar el PDF
                 downloadLink.download = 'Resumen_Compra.pdf';
@@ -673,39 +669,40 @@ public class ChatbotService {
                     // Generar los mensajes
                     String resumenCompra = procesarPagoYMostrarResumen(userId); // Resumen de compra
                     String mensajeGenerarPDF = """
-        <br><div style="border: 1px solid #ddd; padding: 15px; border-radius: 8px; max-width: 400px; font-family: Arial, sans-serif;">
-            <h4 style="text-align: center; color: #333; margin-bottom: 10px; font-size: 16px; line-height: 1.2;">PDF Generado</h4>
-            <hr style="border: 0; border-top: 1px solid #ccc; margin-bottom: 10px;">
-            <p style="text-align: center; margin: 5px 0; line-height: 1.2;">El PDF con el resumen de su compra ha sido descargado automáticamente.</p>
-        </div><br>
+            <br><div style="border: 1px solid #ddd; padding: 15px; border-radius: 8px; max-width: 400px; font-family: Arial, sans-serif;">
+                <h4 style="text-align: center; color: #333; margin-bottom: 10px; font-size: 16px; line-height: 1.2;">PDF Generado</h4>
+                <hr style="border: 0; border-top: 1px solid #ccc; margin-bottom: 10px;">
+                <p style="text-align: center; margin: 5px 0; line-height: 1.2;">El PDF con el resumen de su compra ha sido descargado automáticamente.</p>
+            </div><br>
         """;
-                    String mensajeIntroductorio = manejarMenuPrincipal(""); // Mensaje del menú principal
 
-                    // Combinar los mensajes y devolverlos junto con el script de descarga
-                    return resumenCompra + mensajeGenerarPDF + mensajeIntroductorio + downloadScript;
+                    // Reiniciar el flujo
+                    estadosUsuario.put(userId, "inicio"); // Cambiar al estado inicial para nuevos flujos
+                    productosSesion.remove(userId); // Limpiar los productos de la sesión
+
+                    // Retornar el resumen, mensaje del PDF y el menú principal para reiniciar el flujo
+                    return resumenCompra + mensajeGenerarPDF + downloadScript + manejarMenuPrincipal("");
 
                 } else if (mensaje.equalsIgnoreCase("no")) {
-                    estadosUsuario.put(userId, "MENU"); // Volver al estado inicial
-                    return """
-        <br><div style="border: 1px solid #ddd; padding: 15px; border-radius: 8px; max-width: 400px; font-family: Arial, sans-serif;">
-            <h4 style="text-align: center; color: #333; margin-bottom: 10px; font-size: 16px; line-height: 1.2;">Pago Cancelado</h4>
-            <hr style="border: 0; border-top: 1px solid #ccc; margin-bottom: 10px;">
-            <p style="text-align: center; margin: 5px 0; line-height: 1.2;">El pago ha sido cancelado. Volviendo al menú principal.</p>
-        </div><br>
-        """ + manejarMenuPrincipal("");
+                    estadosUsuario.put(userId, "inicio"); // Volver al estado inicial
+                    productosSesion.remove(userId); // Limpiar los productos de la sesión
+
+                    // Reiniciar el flujo y devolver el menú principal
+                    return manejarMenuPrincipal("");
                 } else {
                     return """
-        <div style="border: 1px solid #ddd; padding: 15px; border-radius: 8px; max-width: 400px; font-family: Arial, sans-serif;">
-            <h4 style="text-align: center; color: #333; margin-bottom: 10px; font-size: 16px; line-height: 1.2;">Confirmación de Pago</h4>
-            <hr style="border: 0; border-top: 1px solid #ccc; margin-bottom: 10px;">
-            <p style="text-align: center; margin: 5px 0; line-height: 1.2;">¿Desea proceder con el pago?</p>
-            <div style="text-align: center;">
-                <button class="button" style="margin: 5px; padding: 8px 12px; background-color: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer;" onclick="sendMessage('sí')">Sí</button>
-                <button class="button no" style="margin: 5px; padding: 8px 12px; background-color: #f44336; color: white; border: none; border-radius: 4px; cursor: pointer;" onclick="sendMessage('no')">No</button>
+            <div style="border: 1px solid #ddd; padding: 15px; border-radius: 8px; max-width: 400px; font-family: Arial, sans-serif;">
+                <h4 style="text-align: center; color: #333; margin-bottom: 10px; font-size: 16px; line-height: 1.2;">Confirmación de Pago</h4>
+                <hr style="border: 0; border-top: 1px solid #ccc; margin-bottom: 10px;">
+                <p style="text-align: center; margin: 5px 0; line-height: 1.2;">¿Desea proceder con el pago?</p>
+                <div style="text-align: center; margin-top: 10px; display: flex; justify-content: center; gap: 20px;">
+                    <p style="margin: 0; line-height: 1.2;"><strong>Sí</strong></p>
+                    <p style="margin: 0; line-height: 1.2;"><strong>No</strong></p>
+                </div>
             </div>
-        </div>
         """;
                 }
+
 
 
 
