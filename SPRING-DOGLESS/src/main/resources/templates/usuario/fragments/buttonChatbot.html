@@ -96,6 +96,8 @@
                         if (estadoActual === "RECLAMO") {
                             manejarReclamo(userMessage, userId); // Enviar el reclamo
                             estadoActual = "MENU"; // Regresar al menú después de enviar el reclamo
+                            // Limpiar el mensaje del DOM y del input
+                            userMessageInput.value = ""; // Borra el contenido del input
                             return;
                         }
 
