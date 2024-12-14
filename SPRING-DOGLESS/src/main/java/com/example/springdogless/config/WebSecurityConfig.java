@@ -19,6 +19,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.savedrequest.DefaultSavedRequest;
 
 import javax.sql.DataSource;
+import java.util.Optional;
 
 @Configuration
 public class WebSecurityConfig {
@@ -55,6 +56,9 @@ public class WebSecurityConfig {
                     HttpSession session = request.getSession();
 
                     Usuario usuario = usuarioRepository.findByEmail(authentication.getName());
+                    if (usuario == null) {
+                         usuario = usuarioRepository.findByCodigoaduana(authentication.getName());
+                    }
 
                     session.setAttribute("usuario", usuario);
                     // Guardar el idzona en la sesión también
@@ -118,11 +122,13 @@ public class WebSecurityConfig {
     @Bean
     public UserDetailsManager users(DataSource dataSource) {
         JdbcUserDetailsManager users = new JdbcUserDetailsManager(dataSource);
-        String sql1 = "SELECT email, pwd, borrado FROM usuarios WHERE email = ?";
-        String sql2 = "SELECT u.email, r.nombre FROM usuarios u "
-                + "INNER JOIN roles r ON (u.idroles = r.idroles) "
-                + "WHERE u.email = ? and u.borrado = 1";
+        //String sql1 = "SELECT email, pwd, borrado FROM usuarios WHERE email = ?";
+        //String sql2 = "SELECT u.email, r.nombre FROM usuarios u "
+                //+ "INNER JOIN roles r ON (u.idroles = r.idroles) "
+                //+ "WHERE u.email = ? and u.borrado = 1";
+        String sql1 = "SELECT COALESCE(codigoaduana, email) as email, pwd, borrado FROM usuarios WHERE ? IN (email, codigoaduana)";
 
+        String sql2 = "SELECT COALESCE(u.codigoaduana, u.email) as identificador, r.nombre FROM usuarios u INNER JOIN roles r ON u.idroles = r.idroles WHERE ? IN (u.email, u.codigoaduana) AND u.borrado = 1";
         users.setUsersByUsernameQuery(sql1);
         users.setAuthoritiesByUsernameQuery(sql2);
         return users;

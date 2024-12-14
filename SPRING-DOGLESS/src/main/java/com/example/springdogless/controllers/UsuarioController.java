@@ -88,6 +88,10 @@ public class UsuarioController {
         model.addAttribute("ordenes", ordenes);
         return "usuario/paginaprincipal"; // Retornar la vista con las órdenes
     }
+    @GetMapping("/gg")
+    public String verperdd(Model model) {
+        return "usuario/GGGG"; // Esto renderiza la vista perfil_superadmin.html
+    }
     @PostMapping("/editorden")
     public String editarOrden(@RequestParam("id") Integer id, Model model) {
         // Aquí va la lógica de edición de la orden
