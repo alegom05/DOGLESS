@@ -168,7 +168,7 @@ public class AgenteController {
         return "agente/dashboard";
     }
 
-    @GetMapping("/chat")
+    @GetMapping("chat")
     public String chatAgente(Model model, HttpSession session) {
         Usuario usuarioLogueado = (Usuario) session.getAttribute("usuario");
         if (usuarioLogueado == null) {
@@ -194,7 +194,7 @@ public class AgenteController {
         model.addAttribute("listaIdUsuarios", idUsuariosAsignados);
         model.addAttribute("listaUsuarios", usuariosAsignados);
         model.addAttribute("mensajesPorSala", mensajesPorSala); // Pasa los mensajes por sala
-        return "agente/chat";
+        return "/agente/chat";
     }
 
 

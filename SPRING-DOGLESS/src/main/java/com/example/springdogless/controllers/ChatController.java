@@ -113,7 +113,7 @@ public class ChatController {
 
         if (pdfContent == null || pdfContent.length == 0) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(null);
+                    .body(null); // Indicar que ocurrió un error
         }
 
         return ResponseEntity.ok()
@@ -121,9 +121,6 @@ public class ChatController {
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=Resumen_Compra.pdf")
                 .body(pdfContent);
     }
-
-
-
 
 
 
