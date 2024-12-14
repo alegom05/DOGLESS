@@ -590,6 +590,11 @@ public class AgenteController {
 
     }
 
+    @GetMapping("/exportarOrdenesTotales")
+    public ResponseEntity<Resource> exportAllOrders(@RequestParam String formato) {
+        return this.ordenService.exportAllOrders(formato);
+    }
+
 //----------------------fin seccion generación de reportes-----------------------------------------------------------------------------
 
 
