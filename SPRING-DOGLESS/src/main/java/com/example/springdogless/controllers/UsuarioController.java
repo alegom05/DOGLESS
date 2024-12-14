@@ -293,11 +293,19 @@ public class UsuarioController {
             liveMessagesRepository.save(mensajeInicial);
             listaMensajesSala.add(mensajeInicial); // Agregar el mensaje a la lista para mostrarlo
         }
+        String zona=usuarioLogueado.getZona().getNombre();
+        int idAgenteAsignado = switch (zona) {
+            case "Norte" -> 11;
+            case "Sur" -> 17;
+            case "Este" -> 26;
+            case "Oeste" -> 29;
+            default -> 11;
+        };
 
         // Pasar los datos al modelo
         model.addAttribute("room", room);
         model.addAttribute("listaMensajesSala", listaMensajesSala);
-        model.addAttribute("idAgenteAsignado", 11); // Reemplazar con el ID del agente asignado
+        model.addAttribute("idAgenteAsignado", idAgenteAsignado); // Reemplazar con el ID del agente asignado
         model.addAttribute("noMessages", listaMensajesSala.isEmpty());
 
         // Retornar la vista del chat
@@ -863,7 +871,7 @@ public class UsuarioController {
     }
 
 
-    @GetMapping(value = "checkout")
+    @GetMapping(value = "/checkout")
     public String checkout(Model model, @RequestParam("id") Integer id) {
         // Obtiene la lista de productos
         List<Detalleorden> listaProductos = detallesRepository.findByOrdenCreado(id);
@@ -891,7 +899,7 @@ public class UsuarioController {
         }
         return "redirect:/usuario/procesopago?id=" + id;
     }
-    @GetMapping(value = "procesopago")
+    @GetMapping(value = "/procesopago")
     public String procesoPago(Model model,@RequestParam("id") Integer id) {
         List<Detalleorden> detallesOrden = detallesRepository.findByOrdenCreado(id);
         // Verifica si la lista está vacía
@@ -959,7 +967,7 @@ public class UsuarioController {
         redirectAttributes.addFlashAttribute("error", "Ocurrió un error inesperado en la validación.");
         return "redirect:/usuario/procesopago?id=" + id;
     }
-    @GetMapping(value = "pagoexitoso")
+    @GetMapping(value = "/pagoexitoso")
     public String pagoExitoso(Model model,@RequestParam("id") Integer id) {
         model.addAttribute("listaProductos",detallesRepository.findByOrdenValidada(id));
         return "usuario/pagoExitoso";

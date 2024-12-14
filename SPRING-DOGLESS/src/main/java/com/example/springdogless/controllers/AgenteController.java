@@ -168,7 +168,7 @@ public class AgenteController {
         return "agente/dashboard";
     }
 
-    @GetMapping("chat")
+    @GetMapping("/chat")
     public String chatAgente(Model model, HttpSession session) {
         Usuario usuarioLogueado = (Usuario) session.getAttribute("usuario");
         if (usuarioLogueado == null) {
@@ -194,7 +194,7 @@ public class AgenteController {
         model.addAttribute("listaIdUsuarios", idUsuariosAsignados);
         model.addAttribute("listaUsuarios", usuariosAsignados);
         model.addAttribute("mensajesPorSala", mensajesPorSala); // Pasa los mensajes por sala
-        return "/agente/chat";
+        return "agente/chat";
     }
 
 
@@ -211,7 +211,7 @@ public class AgenteController {
 
 //-------------------secion ordenes--------------------------------------------------------------
 
-    @GetMapping(value = "ordenes")
+    @GetMapping(value = "/ordenes")
     public String listadeOrdenes(Model model,HttpSession session) {
         Usuario usuarioLogueado = (Usuario) session.getAttribute("usuario");
         if (usuarioLogueado == null) {
@@ -273,7 +273,7 @@ public class AgenteController {
         return "agente/ordenesResueltas";
     }*/
 
-    @GetMapping(value = "ordenes/sinAsignar")
+    @GetMapping(value = "/ordenes/sinAsignar")
     public String listaDeOrdenesSinAsignar(Model model, HttpSession session) {
         Usuario usuarioLogueado = (Usuario) session.getAttribute("usuario");
         if (usuarioLogueado == null) {
@@ -285,7 +285,7 @@ public class AgenteController {
         return "agente/ordenesSinAsignar";
     }
 
-    @GetMapping(value = "ordenes/Pendientes")
+    @GetMapping(value = "/ordenes/Pendientes")
     public String listaDeOrdenesPendientes(Model model, HttpSession session) {
         Usuario usuarioLogueado = (Usuario) session.getAttribute("usuario");
         if (usuarioLogueado == null) {
@@ -297,7 +297,7 @@ public class AgenteController {
         return "agente/ordenesPendientes";
     }
 
-    @GetMapping(value = "ordenes/enProgreso")
+    @GetMapping(value = "/ordenes/enProgreso")
     public String listaDeOrdenesEnProgreso(Model model, HttpSession session) {
         Usuario usuarioLogueado = (Usuario) session.getAttribute("usuario");
         if (usuarioLogueado == null) {
@@ -310,7 +310,7 @@ public class AgenteController {
     }
 
 
-    @GetMapping(value = "ordenes/resueltas")
+    @GetMapping(value = "/ordenes/resueltas")
     public String listaDeOrdenesResueltas(Model model, HttpSession session) {
         Usuario usuarioLogueado = (Usuario) session.getAttribute("usuario");
         if (usuarioLogueado == null) {
