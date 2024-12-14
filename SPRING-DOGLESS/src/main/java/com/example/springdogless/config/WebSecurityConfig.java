@@ -40,6 +40,8 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
+
+
         http.formLogin()
                 .loginPage("/loginForm")
                 .loginProcessingUrl("/processLogin")
@@ -104,6 +106,7 @@ public class WebSecurityConfig {
                 //.requestMatchers("/product", "/product/**").hasAuthority("hr")//El hr
 
                 .anyRequest().permitAll();
+
 
 
         http.logout().logoutSuccessUrl("/");

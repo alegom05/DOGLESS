@@ -802,44 +802,85 @@ public class ChatbotService {
 
             document.open();
 
-            // Agregar los mismos elementos de contenido que en el ejemplo anterior
-            Font titleFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 18);
-            Paragraph title = new Paragraph("Resumen de Compra", titleFont);
+            // Encabezado principal
+            Font headerFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 24);
+            Paragraph header = new Paragraph("Dogless", headerFont);
+            header.setAlignment(Element.ALIGN_CENTER);
+            document.add(header);
+
+            Font subHeaderFont = FontFactory.getFont(FontFactory.HELVETICA, 12);
+            Paragraph tagline = new Paragraph("Cuidamos de tus mascotas, cuidamos de ti", subHeaderFont);
+            tagline.setAlignment(Element.ALIGN_CENTER);
+            document.add(tagline);
+
+            document.add(new Paragraph(" ")); // Espacio
+
+            // Título de la boleta
+            Font titleFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 16);
+            Paragraph title = new Paragraph("Boleta de Orden #" + userId, titleFont);
             title.setAlignment(Element.ALIGN_CENTER);
             document.add(title);
 
             document.add(new Paragraph(" ")); // Espacio
 
-            // Datos del usuario
-            document.add(new Paragraph("Información del Cliente:"));
-            document.add(new Paragraph("Nombre: " + datos.get("nombre") + " " + datos.get("apellido")));
-            document.add(new Paragraph("Correo: " + datos.get("correo")));
-            document.add(new Paragraph("Teléfono: " + datos.get("telefono")));
-            document.add(new Paragraph("Dirección: " + datos.get("direccion")));
+            // Información de la orden
+            Font sectionFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 14);
+            document.add(new Paragraph("Información de la Orden", sectionFont));
+            document.add(new Paragraph("Estado: Confirmada"));
+            document.add(new Paragraph("Fecha: " + new java.sql.Date(System.currentTimeMillis()).toString()));
+            document.add(new Paragraph("Dirección de Envío: " + datos.get("direccion")));
+            document.add(new Paragraph("Método de Pago: Tarjeta"));
 
             document.add(new Paragraph(" ")); // Espacio
+
+            // Detalles de los productos
+            document.add(new Paragraph("Detalles de Productos", sectionFont));
+
+            // Crear la tabla para los productos
+            PdfPTable table = new PdfPTable(4); // 4 columnas: Producto, Cantidad, Precio Unitario, Subtotal
+            table.setWidthPercentage(100);
+            table.setSpacingBefore(10f);
+            table.setSpacingAfter(10f);
+
+            // Encabezados de la tabla
+            Font tableHeaderFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12);
+            table.addCell(new Phrase("Producto", tableHeaderFont));
+            table.addCell(new Phrase("Cantidad", tableHeaderFont));
+            table.addCell(new Phrase("Precio Unitario", tableHeaderFont));
+            table.addCell(new Phrase("Subtotal", tableHeaderFont));
 
             // Detalles del producto
-            document.add(new Paragraph("Detalles del Producto:"));
-            document.add(new Paragraph("Producto: " + datos.get("productoNombre")));
-            document.add(new Paragraph("Descripción: " + datos.get("productoDescripcion")));
-            document.add(new Paragraph("Cantidad: " + datos.get("cantidad")));
-            document.add(new Paragraph("Precio Unitario: S/. " + datos.get("productoPrecio")));
-
-            // Calcular total
+            String productoNombre = datos.get("productoNombre");
             int cantidad = Integer.parseInt(datos.get("cantidad"));
             double precioUnitario = Double.parseDouble(datos.get("productoPrecio"));
-            double total = cantidad * precioUnitario;
+            double subtotal = cantidad * precioUnitario;
+
+            table.addCell(productoNombre);
+            table.addCell(String.valueOf(cantidad));
+            table.addCell(String.format("S/. %.2f", precioUnitario));
+            table.addCell(String.format("S/. %.2f", subtotal));
+
+            document.add(table);
 
             document.add(new Paragraph(" ")); // Espacio
 
-            document.add(new Paragraph("Total de la Compra: S/. " + String.format("%.2f", total)));
+            // Total de la compra
+            Font totalFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12);
+            Paragraph total = new Paragraph("Total: S/. " + String.format("%.2f", subtotal), totalFont);
+            total.setAlignment(Element.ALIGN_RIGHT);
+            document.add(total);
+
+            document.add(new Paragraph(" ")); // Espacio
+
+            // Nota final
+            Font noteFont = FontFactory.getFont(FontFactory.HELVETICA, 12);
+            Paragraph note = new Paragraph("Gracias por confiar en Dogless", noteFont);
+            note.setAlignment(Element.ALIGN_CENTER);
+            document.add(note);
 
             document.close();
 
-
             return baos.toByteArray();
-
 
         } catch (DocumentException | IOException e) {
             e.printStackTrace();
