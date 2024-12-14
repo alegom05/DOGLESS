@@ -28,7 +28,7 @@
             <form th:action="@{/register}" method="post" th:object="${usuario}" class="form-box" id="registroForm">
                 <div class="register-container" id="register">
                     <div class="top">
-                        <span>¿Tienes una cuenta? <a th:href="@{/login}">Acceso</a></span>
+                        <span>¿Tienes una cuenta? <a th:href="@{/loginForm}">Vuelve al inicio</a></span>
                         <header>REGISTRO</header>
                     </div>
                     <div th:if="${error}" class="error-message">
@@ -122,12 +122,7 @@
                     <div class="input-box">
                         <input type="submit" id="registerButton" class="submit" value="Registrarse">
                     </div>
-
-                    <div class="two-col">
-                        <div class="two">
-                            <label><a href="#">Términos y condiciones</a></label>
-                        </div>
-                    </div>
+                    
                 </div>
             </form>
         </div>
