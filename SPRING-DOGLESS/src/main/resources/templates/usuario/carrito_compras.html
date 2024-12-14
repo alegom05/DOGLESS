@@ -147,7 +147,7 @@
                                             <input type="hidden" name="idOrdenes" th:value="${detallesorden.orden.id}"/>
                                             <input type="hidden" name="idProductos" th:value="${detallesorden.producto.id}"/>
                                             <td>
-                                                <img th:src="@{'http://20.110.89.34:8080/producto/imagen/' + ${detallesorden.producto.id}}" class="img-fluid w-75" alt="Imagen del producto">
+                                                <img th:src="@{'http://40.79.58.20:8080/producto/imagen/' + ${detallesorden.producto.id}}" class="img-fluid w-75" alt="Imagen del producto">
                                             </td>
                                             <td th:text="${detallesorden.producto.nombre}"></td>
                                             <td class="price" th:text="'S/' + ${detallesorden.producto.precio}"></td>
