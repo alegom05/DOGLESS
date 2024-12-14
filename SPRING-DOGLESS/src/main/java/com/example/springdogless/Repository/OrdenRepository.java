@@ -151,6 +151,9 @@ public interface OrdenRepository extends JpaRepository<Orden, Integer> {
     @Query("SELECT o FROM ordenes o WHERE o.fecha BETWEEN :startDate AND :endDate")
     List<Orden> findByFechaBetween(@Param("startDate") Date startDate, @Param("endDate") Date endDate);
 
+    @Query("SELECT o FROM ordenes o")
+    List<Orden> findAllOrders();
+
 
     List<Orden> findAllByUsuarioId(Integer usuarioId);
 
