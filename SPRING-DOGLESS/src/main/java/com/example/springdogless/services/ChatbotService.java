@@ -656,25 +656,34 @@ public class ChatbotService {
 
                     // Generar los mensajes
                     String resumenCompra = procesarPagoYMostrarResumen(userId); // Resumen de compra
-                    String enlaceDescarga = String.format("""
-            <br><div style="border: 1px solid #ddd; padding: 15px; border-radius: 8px; max-width: 400px; font-family: Arial, sans-serif;">
-                <h4 style="text-align: center; color: #333; margin-bottom: 10px; font-size: 16px; line-height: 1.2;">PDF Generado</h4>
-                <hr style="border: 0; border-top: 1px solid #ccc; margin-bottom: 10px;">
-                <p style="text-align: center; margin: 5px 0; line-height: 1.2;">El PDF con el resumen de su compra ha sido generado.</p>
-                <p style="text-align: center; margin: 10px 0;">
-                    <a href="/api/chat/descargarPDF?userId=%s" download="Resumen_Compra.pdf" style="color: #4CAF50; text-decoration: none; font-weight: bold;">
-                        Descargar Resumen
-                    </a>
-                </p>
-            </div><br>
-        """, userId);
+                    String redireccionAutomatica = String.format("""
+<html>
+<head>
+    <meta http-equiv="refresh" content="0; url=/api/chat/descargarPDF?userId=%s">
+</head>
+<body>
+    <br>
+    <div style="border: 1px solid #ddd; padding: 15px; border-radius: 8px; max-width: 400px; font-family: Arial, sans-serif;">
+        <h4 style="text-align: center; color: #333; margin-bottom: 10px; font-size: 16px; line-height: 1.2;">PDF Generado</h4>
+        <hr style="border: 0; border-top: 1px solid #ccc; margin-bottom: 10px;">
+        <p style="text-align: center; margin: 5px 0; line-height: 1.2;">El PDF con el resumen de su compra se descargará.</p>
+        <p style="text-align: center; margin: 5px 0; line-height: 1.2;">
+            Si no inicia la descarga automáticamente, <a href="/api/chat/descargarPDF?userId=%s" download="Resumen_Compra.pdf" style="color: #4CAF50; text-decoration: none; font-weight: bold;">
+                haga clic aquí
+            </a>.
+        </p>
+    </div>
+    <br>
+</body>
+</html>
+""", userId, userId);
 
                     // Reiniciar el flujo
                     estadosUsuario.put(userId, "inicio"); // Cambiar al estado inicial para nuevos flujos
                     productosSesion.remove(userId); // Limpiar los productos de la sesión
 
                     // Retornar el resumen, mensaje del enlace y el menú principal para reiniciar el flujo
-                    return resumenCompra + enlaceDescarga + manejarMenuPrincipal("");
+                    return resumenCompra + redireccionAutomatica + manejarMenuPrincipal("");
 
                 } else if (mensaje.equalsIgnoreCase("no")) {
                     estadosUsuario.put(userId, "inicio"); // Volver al estado inicial
@@ -693,7 +702,7 @@ public class ChatbotService {
                 <p style="margin: 0; line-height: 1.2;"><strong>No</strong></p>
             </div>
         </div>
-    """;
+        """;
                 }
 
 
