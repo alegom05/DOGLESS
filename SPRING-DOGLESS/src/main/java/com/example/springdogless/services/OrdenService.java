@@ -265,6 +265,80 @@ public class OrdenService {
         }
     }
 
+    //para generar ordenes por agente
+    @NotNull
+    public ResponseEntity<Resource> exportOrdersByAgent(Integer zonaId, String agenteNombre, String zonaNombre, String formato) {
+        // Obtener las órdenes por la zona
+        List<Orden> ordenes = this.ordenRepository.findOrdersByZona(zonaId);
+
+        if (ordenes.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+
+        try {
+            // Cargar el archivo de reporte Jasper y el logo
+            InputStream jasperStream = new ClassPathResource("OrdenesPorAgente.jasper").getInputStream();
+            JasperReport report = (JasperReport) JRLoader.loadObject(jasperStream);
+
+            InputStream logoStream = new ClassPathResource("static/assets/images_index/logodogless.png").getInputStream();
+
+            // Configurar los parámetros del reporte
+            HashMap<String, Object> parameters = new HashMap<>();
+            parameters.put("nombreagente", agenteNombre);
+            parameters.put("zona", zonaNombre);
+            parameters.put("total", ordenes.size());
+            parameters.put("logoempresa", logoStream);
+            parameters.put("ds1", new JRBeanCollectionDataSource(ordenes));
+
+            JasperPrint jasperPrint = JasperFillManager.fillReport(report, parameters, new JREmptyDataSource());
+
+            byte[] reporte;
+            String fileName;
+            MediaType mediaType;
+
+            if ("pdf".equalsIgnoreCase(formato)) {
+                reporte = JasperExportManager.exportReportToPdf(jasperPrint);
+                fileName = "Reporte_de_ordenes_por_agente.pdf";
+                mediaType = MediaType.APPLICATION_PDF;
+            } else if ("xlsx".equalsIgnoreCase(formato)) {
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                JRXlsxExporter exporter = new JRXlsxExporter();
+
+                exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
+                exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(baos));
+
+                SimpleXlsxReportConfiguration config = new SimpleXlsxReportConfiguration();
+                config.setOnePagePerSheet(false);
+                config.setDetectCellType(true);
+                config.setCollapseRowSpan(false);
+                config.setSheetNames(new String[]{"Órdenes Por Agente"});
+                exporter.setConfiguration(config);
+
+                exporter.exportReport();
+                reporte = baos.toByteArray();
+                fileName = "Reporte_de_ordenes_por_agente.xlsx";
+                mediaType = new MediaType("application", "vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+            } else {
+                return ResponseEntity.badRequest().body(null);
+            }
+
+            ContentDisposition contentDisposition = ContentDisposition.builder("attachment").filename(fileName).build();
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentDisposition(contentDisposition);
+
+            return ResponseEntity.ok()
+                    .contentLength(reporte.length)
+                    .contentType(mediaType)
+                    .headers(headers)
+                    .body(new ByteArrayResource(reporte));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(500).build();
+        }
+    }
+
+
 
 
 

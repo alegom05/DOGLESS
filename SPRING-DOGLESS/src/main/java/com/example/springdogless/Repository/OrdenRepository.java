@@ -154,6 +154,10 @@ public interface OrdenRepository extends JpaRepository<Orden, Integer> {
     @Query("SELECT o FROM ordenes o")
     List<Orden> findAllOrders();
 
+    @Query("SELECT o FROM ordenes o WHERE o.usuario.zona.idzonas = :zonaId")
+    List<Orden> findOrdersByZona(@Param("zonaId") Integer zonaId);
+
+
 
     List<Orden> findAllByUsuarioId(Integer usuarioId);
 

@@ -543,12 +543,21 @@ public class AgenteController {
 
 
     //reporte órdenes de agentes por zona
+    /*
     @GetMapping(value = "/reportePorAgente")
     public String reporteOrdenesAgentesZona(Model model) {
         model.addAttribute("listaUsuarios", usuarioRepository.findByRol_RolAndBorrado("Agente",1));
         return "agente/reporteporagente";
     }
-    //reporte órdenes de agentes con filtro
+    */
+    @GetMapping(value = "/reportePorAgente")
+    public String reporteOrdenesAgentesZona(Model model,HttpSession session) {
+        Usuario usuarioLogueado = (Usuario) session.getAttribute("usuario");
+        model.addAttribute("listaOrdenes", ordenRepository.findOrdenesPorZona(usuarioLogueado.getZona().getIdzonas()));
+        return "agente/reporteporagente";
+    }
+
+    //reporte órdenes totales por fecha
     @GetMapping(value = "/reportePorFecha")
     public String reporteOrdenesTotalesporFiltrofecha(Model model) {
         model.addAttribute("listaUsuarios", usuarioRepository.findByRol_RolAndBorrado("Usuario",1));
@@ -594,6 +603,17 @@ public class AgenteController {
     public ResponseEntity<Resource> exportAllOrders(@RequestParam String formato) {
         return this.ordenService.exportAllOrders(formato);
     }
+
+    @GetMapping("/exportarOrdenesPorAgente")
+    public ResponseEntity<Resource> exportOrdersByAgent(HttpSession session, @RequestParam String formato) {
+        Usuario usuarioLogueado = (Usuario) session.getAttribute("usuario");
+        Integer zonaId = usuarioLogueado.getZona().getIdzonas();
+        String agenteNombre = usuarioLogueado.getNombre() + " " + usuarioLogueado.getApellido();
+        String zonaNombre = usuarioLogueado.getZona().getNombre();
+
+        return this.ordenService.exportOrdersByAgent(zonaId, agenteNombre, zonaNombre, formato);
+    }
+
 
 //----------------------fin seccion generación de reportes-----------------------------------------------------------------------------
 
