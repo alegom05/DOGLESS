@@ -24,6 +24,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.sql.Date;
 import java.text.Normalizer;
 import java.util.HashMap;
 import java.util.List;
@@ -109,6 +110,92 @@ public class OrdenService {
             return ResponseEntity.status(500).build();
         }
     }
+
+
+    // NUEVO METODO: Generar reporte de órdenes totales por fecha
+    @NotNull
+    public ResponseEntity<Resource> exportTotalOrdersByDate(Date startDate, Date endDate, String formato) {
+        // Filtrar las órdenes por el rango de fechas
+        List<Orden> ordenes = this.ordenRepository.findByFechaBetween(startDate, endDate);
+
+        // Verificar si no hay órdenes en el rango
+        if (ordenes.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+
+        try {
+            // Cargar el archivo del reporte Jasper y el logo desde el classpath
+            InputStream jasperStream = new ClassPathResource("OrdenesPorFecha.jasper").getInputStream();
+            JasperReport report = (JasperReport) JRLoader.loadObject(jasperStream);
+
+            InputStream logoStream = new ClassPathResource("static/assets/images_index/logodogless.png").getInputStream();
+
+            // Configurar los parámetros del reporte
+            HashMap<String, Object> parameters = new HashMap<>();
+            parameters.put("fechainicio", startDate);
+            parameters.put("fechafin", endDate);
+            parameters.put("total", ordenes.size());
+            parameters.put("logoempresa", logoStream);
+            parameters.put("ds1", new JRBeanCollectionDataSource(ordenes));
+
+            // Llenar el reporte con los datos y parámetros
+            JasperPrint jasperPrint = JasperFillManager.fillReport(report, parameters, new JREmptyDataSource());
+
+            // Variables para el archivo de salida
+            byte[] reporte;
+            String fileName;
+            MediaType mediaType;
+
+            // Exportar a PDF
+            if ("pdf".equalsIgnoreCase(formato)) {
+                reporte = JasperExportManager.exportReportToPdf(jasperPrint);
+                fileName = "Reporte_de_ordenes_totales_" + startDate.toString() + "_a_" + endDate.toString() + ".pdf";
+                mediaType = MediaType.APPLICATION_PDF;
+
+                // Exportar a Excel
+            } else if ("xlsx".equalsIgnoreCase(formato)) {
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                JRXlsxExporter exporter = new JRXlsxExporter();
+
+                exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
+                exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(baos));
+
+                SimpleXlsxReportConfiguration config = new SimpleXlsxReportConfiguration();
+                config.setOnePagePerSheet(false);
+                config.setDetectCellType(true);
+                config.setCollapseRowSpan(false);
+                config.setSheetNames(new String[]{"Ordenes Totales"});
+                exporter.setConfiguration(config);
+
+                exporter.exportReport();
+                reporte = baos.toByteArray();
+
+                fileName = "Reporte_de_ordenes_totales_" + startDate.toString() + "_a_" + endDate.toString() + ".xlsx";
+                mediaType = MediaType.parseMediaType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+
+                // Formato no soportado
+            } else {
+                return ResponseEntity.badRequest().body(null);
+            }
+
+            // Configurar encabezados de la respuesta
+            ContentDisposition contentDisposition = ContentDisposition.builder("attachment").filename(fileName).build();
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentDisposition(contentDisposition);
+
+            return ResponseEntity.ok()
+                    .contentLength(reporte.length)
+                    .contentType(mediaType)
+                    .headers(headers)
+                    .body(new ByteArrayResource(reporte));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(500).build();
+        }
+    }
+
+
 
 
     private String formatNombreArchivo(String nombre) {

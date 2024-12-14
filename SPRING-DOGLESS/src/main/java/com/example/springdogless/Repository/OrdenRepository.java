@@ -11,6 +11,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -146,6 +147,10 @@ public interface OrdenRepository extends JpaRepository<Orden, Integer> {
 
     @Query("SELECT o FROM ordenes o WHERE o.usuario.nombre = :nombre OR o.usuario.dni = :dni")
     List<Orden> findByNombreOrDni(@Param("nombre") String nombre, @Param("dni") String dni);
+
+    @Query("SELECT o FROM ordenes o WHERE o.fecha BETWEEN :startDate AND :endDate")
+    List<Orden> findByFechaBetween(@Param("startDate") Date startDate, @Param("endDate") Date endDate);
+
 
     List<Orden> findAllByUsuarioId(Integer usuarioId);
 

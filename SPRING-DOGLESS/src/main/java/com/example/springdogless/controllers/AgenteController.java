@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Controller
@@ -563,6 +565,29 @@ public class AgenteController {
             @RequestParam String formato) {
 
         return this.ordenService.exportUserOrders(nombre, dni, formato);
+    }
+
+    // Nuevo metodo para exportar órdenes por rango de fechas
+    @GetMapping("/exportarOrdenesPorFecha")
+    public ResponseEntity<Resource> exportOrdersByDateRange(
+            @RequestParam("fechaInicio") String startDate,
+            @RequestParam("fechaFin") String endDate,
+            @RequestParam String formato) throws ParseException {
+
+        // Convertir las fechas de String a java.sql.Date
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+        // Crear fechas de tipo java.util.Date
+        java.util.Date utilStartDate = dateFormat.parse(startDate);
+        java.util.Date utilEndDate = dateFormat.parse(endDate);
+
+        // Convertir las fechas a java.sql.Date
+        java.sql.Date sqlStartDate = new java.sql.Date(utilStartDate.getTime());
+        java.sql.Date sqlEndDate = new java.sql.Date(utilEndDate.getTime());
+
+        // Llamar al servicio con las fechas de tipo java.sql.Date
+        return this.ordenService.exportTotalOrdersByDate(sqlStartDate, sqlEndDate, formato);
+
     }
 
 //----------------------fin seccion generación de reportes-----------------------------------------------------------------------------

@@ -130,6 +130,7 @@
                                             <button type="button" class="btn btn-danger me-2" onclick="descargarReporte('pdf')">Descargar en PDF</button>
                                             <button type="button" class="btn btn-success" onclick="descargarReporte('xlsx')">Descargar en Excel</button>
                                         </div>
+
                                     </div>
                                 </div>
                             </div>
@@ -203,9 +204,24 @@
             function descargarReporte(formato) {
                 const fechaInicio = document.getElementById("filterDateStart").value;
                 const fechaFin = document.getElementById("filterDateEnd").value;
-                const total = document.getElementById("cantidadOrdenes").innerText;
-                window.location.href = `/agente/exportarOrdenesPorFecha?fechaInicio=${fechaInicio}&fechaFin=${fechaFin}&total=${total}&formato=${formato}`;
+
+                // Validar que ambas fechas estén seleccionadas
+                if (!fechaInicio || !fechaFin) {
+                    alert("Por favor, selecciona ambas fechas para generar el reporte.");
+                    return;
+                }
+
+                // Validar que la fecha de inicio no sea posterior a la de fin
+                if (new Date(fechaFin) < new Date(fechaInicio)) {
+                    alert("La fecha fin no puede ser anterior a la fecha inicio.");
+                    return;
+                }
+
+                // Construir la URL para descargar el reporte
+                const url = `/agente/exportarOrdenesPorFecha?fechaInicio=${fechaInicio}&fechaFin=${fechaFin}&formato=${formato}`;
+                window.location.href = url;
             }
+
 
             $(document).ready(function () {
                 $('#basic-datatables').DataTable({
