@@ -4,7 +4,7 @@
   <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Carrito de compras</title>
+    <title>Mis compras</title>
     <meta
       content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
       name="viewport"
@@ -115,25 +115,13 @@
           <!-- Cart Page Start -->
         <div class="container-fluid py-5">
 
-            <div class="container py-5 d-flex flex-column min-vh-100">
+            <div class="container  py-5 d-flex flex-column min-vh-100">
 
                 <div class="page-header">
                     <div th:replace="~{usuario/fragments/buttonChatbot :: fragment}"></div>
 
-                    <h3 class="fw-bold mb-2">Mis compras</h3>
-                    <ul class="breadcrumbs mb-1">
-                        <li class="nav-home">
-                            <a href="/usuario/">
-                                <i class="icon-home"></i>
-                            </a>
-                        </li>
-                        <li class="separator">
-                            <i class="icon-arrow-right"></i>
-                        </li>
-                        <li class="nav-item">
-                            <a th:href="@{'/usuario/compras' + '?id=' + ${session.usuario.id}}">Carrito de Compra</a>
-                        </li>
-                    </ul>
+                    <h3 class="fw-bold mb-3">Mis compras</h3>
+
                 </div>
                 <form method="post" th:action="@{/usuario/actualizarCantidad}">
                     <div th:if="${mensaje}" th:text="${mensaje}" class="alert alert-success"></div>
