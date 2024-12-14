@@ -84,10 +84,7 @@
                                     </button>
                                 </div>
 
-                                <div id="botonesOpciones" class="button-group">
-                                    <button class="button btn btn-primary" onclick="sendMessage('sí')">Sí</button>
-                                    <button class="button btn btn-danger" onclick="sendMessage('no')">No</button>
-                                </div>
+
 
 
 
@@ -169,25 +166,6 @@
                 });
 
                 // Función para enviar mensajes al backend y manejar la respuesta
-                function sendMessage(message) {
-                    fetch('/api/chat/message', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({ message: message }),
-                    })
-                        .then((response) => response.text())
-                        .then((data) => {
-                            // Actualiza el área de chat con la respuesta del backend
-                            const chatArea = document.getElementById('chatArea');
-                            chatArea.innerHTML += `<p><b>Dogbot:</b> ${data}</p>`;
-                            chatArea.scrollTop = chatArea.scrollHeight; // Desplaza el chat al final
-                        })
-                        .catch((error) => console.error('Error al enviar el mensaje:', error));
-                }
-
-
                 window.addEventListener('load', () => {
                     sendMessage('reiniciar'); // Envía un mensaje para reiniciar el estado en el backend
                 });
