@@ -2,6 +2,7 @@ package com.example.springdogless.controllers;
 
 import com.example.springdogless.DTO.ProductoDTO;
 import com.example.springdogless.DTO.ResenaDTO;
+import com.example.springdogless.DTO.TarjetaRequest;
 import com.example.springdogless.Repository.*;
 import com.example.springdogless.entity.*;
 import com.itextpdf.text.pdf.draw.LineSeparator;
@@ -16,8 +17,11 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.http.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -69,6 +73,13 @@ public class UsuarioController {
 
     @Autowired
     LiveMessagesRepository liveMessagesRepository;
+
+    private final RestTemplate restTemplate;
+
+    public UsuarioController(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
+    }
+
 
 
     @GetMapping("")
@@ -893,35 +904,60 @@ public class UsuarioController {
         return "usuario/procesoDePago";
     }
     @PostMapping("/confirmarPedido")
-    public String actualizarPedido(Model model, @RequestParam("id") Integer id) {
-        Optional<Orden> optionalOrden = ordenRepository.findOrdenCreado(id);
+    public String actualizarPedido(@RequestParam("id") Integer id,
+                                   @RequestParam("numero") String numero,
+                                   @RequestParam("cvv") int cvv,
+                                   @RequestParam("fecha") String fecha,
+                                   RedirectAttributes redirectAttributes) {
 
-        BigDecimal costoenvio = BigDecimal.valueOf(12);
+        // Crear la solicitud para el API
+        TarjetaRequest tarjetaRequest = new TarjetaRequest();
+        tarjetaRequest.setNumero(numero);
+        tarjetaRequest.setCvv(cvv);
+        tarjetaRequest.setFecha(fecha);
 
-        if (optionalOrden.isPresent()) {
-            Orden orden = optionalOrden.get();
-            BigDecimal total = orden.getTotal();
-            String estadoActual = orden.getEstado();
+        // Configurar los headers
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<TarjetaRequest> entity = new HttpEntity<>(tarjetaRequest, headers);
 
-            // Actualiza el estado solo si está en "Creado"
-            if (estadoActual.equals("Creado")) {
-                orden.setEstado("En Validación");
+        try {
+            // Llamar al API
+            ResponseEntity<String> response = restTemplate.exchange(
+                    "http://98.83.186.133:8080/api/tarjetas/validar",
+                    HttpMethod.POST,
+                    entity,
+                    String.class
+            );
+
+            // Si la validación fue exitosa
+            if (response.getStatusCode() == HttpStatus.OK) {
+                // Actualizar la orden
+                Optional<Orden> optionalOrden = ordenRepository.findOrdenCreado(id);
+                if (optionalOrden.isPresent()) {
+                    Orden orden = optionalOrden.get();
+                    if ("Creado".equals(orden.getEstado())) {
+                        orden.setEstado("En Validación");
+                        orden.setTotal(orden.getTotal().add(BigDecimal.valueOf(12))); // Costo de envío
+                        orden.setFecha(new java.sql.Date(System.currentTimeMillis()));
+                        ordenRepository.save(orden);
+
+                        redirectAttributes.addFlashAttribute("success", "Pago validado correctamente.");
+                        return "redirect:/usuario/pagoexitoso?id=" + id;
+                    }
+                }
+                redirectAttributes.addFlashAttribute("error", "La orden no está en un estado válido para actualizar.");
+                return "redirect:/usuario/procesopago?id=" + id;
             }
-
-            // Calcula el total sumando el costo de envío
-            BigDecimal nuevoTotal = total.add(costoenvio);
-            orden.setTotal(nuevoTotal);
-
-            // Actualiza la fecha actual
-            Date fechaActualUtil = new Date();
-            java.sql.Date fechaActualSql = new java.sql.Date(fechaActualUtil.getTime());
-            orden.setFecha(fechaActualSql);
-
-            // Guarda los cambios
-            ordenRepository.save(orden);
+        } catch (HttpClientErrorException.BadRequest ex) {
+            // Capturar la excepción específica para Bad Request
+            redirectAttributes.addFlashAttribute("error", ex.getResponseBodyAsString());
+            return "redirect:/usuario/procesopago?id=" + id;
         }
 
-        return "redirect:/usuario/pagoexitoso?id=" + id;
+        // Si la respuesta no es esperada
+        redirectAttributes.addFlashAttribute("error", "Ocurrió un error inesperado en la validación.");
+        return "redirect:/usuario/procesopago?id=" + id;
     }
     @GetMapping(value = "pagoexitoso")
     public String pagoExitoso(Model model,@RequestParam("id") Integer id) {
