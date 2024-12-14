@@ -234,7 +234,7 @@ public class AgenteController {
         return "agente/ordenes";
     }
 
-// Con Query
+    // Con Query
     /*
     @GetMapping(value = "ordenes")
     public String listadeOrdenes(Model model,@RequestParam(defaultValue = "0") int page) {
@@ -244,6 +244,7 @@ public class AgenteController {
         return "agente/ordenesConQuery";
     }
     */
+    /*
     @GetMapping(value = "ordenes/sinAsignar")
     public String listadeOrdenesSinAsignar(Model model) {
 
@@ -257,6 +258,7 @@ public class AgenteController {
         model.addAttribute("listaOrdenes", ordenRepository.findOrdenesEnValidacion());
         return "agente/ordenesPendientes";
     }
+
     @GetMapping(value = "ordenes/enProgreso")
     public String listadeOrdenesEnProgreso(Model model) {
         // Usar el metodo para obtener las órdenes con los estados 'En Proceso', 'Arribo al País', 'En Aduanas', 'En Ruta'
@@ -268,6 +270,55 @@ public class AgenteController {
     public String listaDeOrdenesResueltas(Model model) {
         // Usar el metodo para obtener las órdenes con los estados 'Recibido' y 'Cancelado'
         model.addAttribute("listaOrdenes", ordenRepository.ordenesResueltas());
+        return "agente/ordenesResueltas";
+    }*/
+
+    @GetMapping(value = "ordenes/sinAsignar")
+    public String listaDeOrdenesSinAsignar(Model model, HttpSession session) {
+        Usuario usuarioLogueado = (Usuario) session.getAttribute("usuario");
+        if (usuarioLogueado == null) {
+            return "redirect:/login";
+        }
+
+        // Filtrar por zona y estado "CREADO"
+        model.addAttribute("listaOrdenes", ordenRepository.findOrdenesSinAsignarPorZona(usuarioLogueado.getZona().getIdzonas()));
+        return "agente/ordenesSinAsignar";
+    }
+
+    @GetMapping(value = "ordenes/Pendientes")
+    public String listaDeOrdenesPendientes(Model model, HttpSession session) {
+        Usuario usuarioLogueado = (Usuario) session.getAttribute("usuario");
+        if (usuarioLogueado == null) {
+            return "redirect:/login";
+        }
+
+        // Filtrar por zona y estado "En Validación"
+        model.addAttribute("listaOrdenes", ordenRepository.findOrdenesPendientesPorZona(usuarioLogueado.getZona().getIdzonas()));
+        return "agente/ordenesPendientes";
+    }
+
+    @GetMapping(value = "ordenes/enProgreso")
+    public String listaDeOrdenesEnProgreso(Model model, HttpSession session) {
+        Usuario usuarioLogueado = (Usuario) session.getAttribute("usuario");
+        if (usuarioLogueado == null) {
+            return "redirect:/login";
+        }
+
+        // Filtrar por zona y estados "En Proceso", "Arribo al País", "En Aduanas", "En Ruta"
+        model.addAttribute("listaOrdenes", ordenRepository.findOrdenesEnProgresoPorZona(usuarioLogueado.getZona().getIdzonas()));
+        return "agente/ordenesEnProgreso";
+    }
+
+
+    @GetMapping(value = "ordenes/resueltas")
+    public String listaDeOrdenesResueltas(Model model, HttpSession session) {
+        Usuario usuarioLogueado = (Usuario) session.getAttribute("usuario");
+        if (usuarioLogueado == null) {
+            return "redirect:/login";
+        }
+
+        // Filtrar por zona y estados "Recibido" o "Cancelado"
+        model.addAttribute("listaOrdenes", ordenRepository.findOrdenesResueltasPorZona(usuarioLogueado.getZona().getIdzonas()));
         return "agente/ordenesResueltas";
     }
 
@@ -310,17 +361,16 @@ public class AgenteController {
                     orden.setEstado("En Aduanas");
                     break;
                 case "En Aduanas":
-                    orden.setEstado("En ruta");
+                    orden.setEstado("En Ruta");
                     break;
                 case "En Ruta":
                     orden.setEstado("Recibido");
                     break;
-                case "Recibido":
-                    // En este caso podrías devolver a otra ruta si lo deseas
-                    return "redirect:/agente/ordenes"; // O cualquier otra acción
                 default:
-                    return "redirect:/agente/updaterorden?id=" + id; // Retorna a la misma vista
+                    // Manejo de casos no esperados
+                    return "redirect:/agente/updaterorden?id=" + id;
             }
+
             ordenRepository.save(orden);
         }
         return "redirect:/agente/updaterorden?id=" + id; // Redirige si no se encuentra la orden

@@ -45,6 +45,23 @@ public interface OrdenRepository extends JpaRepository<Orden, Integer> {
     @Query(value = "SELECT * FROM ordenes WHERE estado IN ('Recibido', 'Cancelado')", nativeQuery = true)
     List<Orden> ordenesResueltas();
 
+    @Query(value="SELECT o.* FROM ordenes o JOIN usuarios u ON o.idusuarios = u.idusuarios WHERE u.idzonas = :zonaId", nativeQuery = true)
+    List<Orden> findOrdenesPorZona(@Param("zonaId") Integer zonaId);
+
+    @Query(value="SELECT o.* FROM ordenes o JOIN usuarios u ON o.idusuarios = u.idusuarios WHERE u.idzonas = :zonaId AND o.estado = 'CREADO'", nativeQuery = true)
+    List<Orden> findOrdenesSinAsignarPorZona(@Param("zonaId") Integer zonaId);
+
+    @Query(value="SELECT o.* FROM ordenes o JOIN usuarios u ON o.idusuarios = u.idusuarios WHERE u.idzonas = :zonaId AND o.estado = 'En Validación'", nativeQuery = true)
+    List<Orden> findOrdenesPendientesPorZona(@Param("zonaId") Integer zonaId);
+
+    @Query(value="SELECT o.* FROM ordenes o JOIN usuarios u ON o.idusuarios = u.idusuarios WHERE u.idzonas = :zonaId AND o.estado IN ('En Proceso', 'Arribo al País', 'En Aduanas', 'En Ruta')", nativeQuery = true)
+    List<Orden> findOrdenesEnProgresoPorZona(@Param("zonaId") Integer zonaId);
+
+    @Query(value="SELECT o.* FROM ordenes o JOIN usuarios u ON o.idusuarios = u.idusuarios WHERE u.idzonas = :zonaId AND o.estado IN ('Recibido', 'Cancelado')", nativeQuery = true)
+    List<Orden> findOrdenesResueltasPorZona(@Param("zonaId") Integer zonaId);
+
+
+
     @Query(value="SELECT * FROM ordenes WHERE idusuarios = :id AND estado = 'Creado'",nativeQuery = true)
     Orden findOrdenEstadoCreado(Integer id);
 
@@ -115,11 +132,6 @@ public interface OrdenRepository extends JpaRepository<Orden, Integer> {
 
     @Query("SELECT count(*) FROM ordenes o WHERE o.usuario.zona.idzonas = :zonaId")
     Integer findOrdenesByZona(@Param("zonaId") Integer zonaId);
-
-
-    @Query(value="SELECT o.* FROM ordenes o JOIN usuarios u ON o.idusuarios = u.idusuarios WHERE u.idzonas = :zonaId", nativeQuery = true)
-    List<Orden> findOrdenesPorZona(@Param("zonaId") Integer zonaId);
-
 
     @Query(value="SELECT * FROM ordenes WHERE idusuarios=:id", nativeQuery = true)
     List<Orden> findOrdenesPorId(@Param("id") Integer id);
