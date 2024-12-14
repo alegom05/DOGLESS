@@ -429,6 +429,14 @@ public class ChatbotService {
 
     public String procesarFlujoCompra(String userId, String mensaje) {
 
+
+        // Verificar si el usuario desea salir del flujo
+        if (mensaje.equalsIgnoreCase("salir")) {
+            productosSesion.remove(userId);
+            estadosUsuario.put(userId, "MENU"); // Restablecer el estado al menú principal
+            return "Has salido del flujo actual. Regresando al menú principal...<br><br>" + manejarMenuPrincipal("");
+        }
+
         // Obtener el usuario autenticado desde el contexto de seguridad
         String username = getUsuarioActual(); // Este obtiene el email si es tu identificador de autenticación
         if ("anonymousUser".equals(username)) {
