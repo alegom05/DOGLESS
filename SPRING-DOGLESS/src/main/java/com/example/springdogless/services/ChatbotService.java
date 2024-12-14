@@ -432,8 +432,9 @@ public class ChatbotService {
 
         // Verificar si el usuario desea salir del flujo
         if (mensaje.equalsIgnoreCase("salir")) {
-            productosSesion.remove(userId);
-            estadosUsuario.put(userId, "MENU"); // Restablecer el estado al menú principal
+            estadoActual = "MENU";
+            estadosUsuario.clear(); // Limpia los estados de los usuarios
+            datosUsuario.clear(); // Limpia los datos guardados de los usuarios
             return "Has salido del flujo actual. Regresando al menú principal...<br><br>" + manejarMenuPrincipal("");
         }
 

@@ -81,7 +81,7 @@ public class ChatController {
 
         reclamoRepository.save(reclamo);
 
-        return ResponseEntity.ok("Reclamo creado exitosamente.");
+        return ResponseEntity.ok("Reclamo creado exitosamente. Escribe 'regresar' para volver al menú principal.");
     }
 
     @PostMapping("/flujoCompra")

@@ -105,10 +105,16 @@ public class UsuarioController {
     }
     @PostMapping("/editorden")
     public String editarOrden(@RequestParam("id") Integer id, Model model) {
-        // Aquí va la lógica de edición de la orden
-        // Por ejemplo, cargar la orden actual en un formulario
-        // Implementar si tienes una vista específica para editar órdenes
-        return "usuario/editarOrden";
+        Optional<Orden> optionalOrden = ordenRepository.findById(id);
+
+        if (optionalOrden.isPresent()) {
+            Orden orden = optionalOrden.get();
+            model.addAttribute("orden", orden);
+            model.addAttribute("listaOrdenes", ordenRepository.findAll());
+            return "usuario/editarOrden";
+        } else {
+            return "redirect:usuario";
+        }
     }
 
     /*@PostMapping("/eliminarorden")
