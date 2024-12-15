@@ -61,6 +61,9 @@ public interface OrdenRepository extends JpaRepository<Orden, Integer> {
     @Query(value="SELECT o.* FROM ordenes o JOIN usuarios u ON o.idusuarios = u.idusuarios WHERE u.idzonas = :zonaId AND o.estado IN ('Recibido', 'Cancelado')", nativeQuery = true)
     List<Orden> findOrdenesResueltasPorZona(@Param("zonaId") Integer zonaId);
 
+    @Query(value = "SELECT * FROM ordenes WHERE idusuarios = :id AND estado = 'Creado' ORDER BY fecha DESC LIMIT 1", nativeQuery = true)
+    Orden findLatestOrdenEstadoCreado(Integer id);
+
 
 
     @Query(value="SELECT * FROM ordenes WHERE idusuarios = :id AND estado = 'Creado'",nativeQuery = true)
@@ -165,4 +168,6 @@ public interface OrdenRepository extends JpaRepository<Orden, Integer> {
     List<Orden> findAllByUsuario(Usuario usuario);
 
     List<Orden> findByUsuarioIdAndEstado(int userId, String confirmada);
+
+
 }

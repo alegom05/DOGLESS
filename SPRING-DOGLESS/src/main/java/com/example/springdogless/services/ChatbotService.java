@@ -360,7 +360,7 @@ public class ChatbotService {
             }
 
             // Asociar el producto con la orden activa en la base de datos
-            Orden orden = ordenRepository.findOrdenEstadoCreado(idUsuario);
+            Orden orden = ordenRepository.findLatestOrdenEstadoCreado(idUsuario);
             if (orden == null) {
                 throw new RuntimeException("No se encontró una orden activa para el usuario.");
             }
@@ -770,7 +770,7 @@ public class ChatbotService {
         System.out.println("Iniciando creación de orden para usuario ID: " + userId);
 
         // Verificar si ya existe una orden activa
-        Orden ordenExistente = ordenRepository.findOrdenEstadoCreado(userId);
+        Orden ordenExistente = ordenRepository.findLatestOrdenEstadoCreado(userId);
         if (ordenExistente != null) {
             System.out.println("Ya existe una orden activa para el usuario ID: " + userId);
             return;
@@ -1039,7 +1039,7 @@ public class ChatbotService {
 
     private void agregarProductoACarrito(int userId, int productoId, int cantidad) {
         // Lógica para añadir producto al carrito
-        Orden orden = ordenRepository.findOrdenEstadoCreado(userId);
+        Orden orden = ordenRepository.findLatestOrdenEstadoCreado(userId);
         if (orden == null) {
             orden = new Orden();
             orden.setUsuario(new Usuario());
@@ -1065,7 +1065,7 @@ public class ChatbotService {
 
     private void confirmarCompra(int userId) {
         // Obtener la orden en estado "Creado"
-        Orden orden = ordenRepository.findOrdenEstadoCreado(userId);
+        Orden orden = ordenRepository.findLatestOrdenEstadoCreado(userId);
 
         if (orden == null) {
             throw new RuntimeException("No se encontró una orden en curso para confirmar.");

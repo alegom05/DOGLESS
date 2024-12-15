@@ -342,7 +342,7 @@ public class ZonalController {
 
 
     //Reposiciones
-    @GetMapping(value = "reposiciones")
+    @GetMapping(value = "/reposiciones")
     public String listaReposiciones(Model model) {
         model.addAttribute("listaReposiciones", reposicionRepository.findByBorrado(1));
         return "zonal/reposiciones";
@@ -386,7 +386,7 @@ public class ZonalController {
 
             return "zonal/editarReposicion";
         } else {
-            return "redirect:/zonal/reposiciones";
+            return "redirect:zonal/reposiciones";
         }
     }
 
@@ -416,7 +416,7 @@ public class ZonalController {
                 }
                 reposicion.setBorrado(1);
                 reposicionRepository.save(reposicion);
-                return "redirect:/zonal/reposiciones";
+                return "redirect:zonal/reposiciones";
             }
 
         } else { //hay al menos 1 error
