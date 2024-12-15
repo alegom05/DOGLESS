@@ -76,10 +76,10 @@
                   <!-- Ajustar márgenes para reducir espacio -->
                   <div class="card-body" style="padding-top: 0;">
                     <div class="user-details text-center">
-                      <p><b>DNI:</b> 12345678</p>
-                      <p><b>Dirección:</b> Av. Arica 1351, San Miguel</p>
-                      <p><b>Teléfono:</b> +51 924795123</p>
-                      <p><b>Correo de contacto:</b> alonso.guevara@correo.com</p>
+                      <p><b>DNI:</b> <span th:text="${session.usuario.dni}"></span></p>
+                      <p><b>Dirección:</b> <span th:text="${session.usuario.direccion}"></span></p>
+                      <p><b>Teléfono:</b> <span th:text="${session.usuario.telefono}"></span></p>
+                      <p><b>Correo de contacto:</b> <span th:text="${session.usuario.email}"></span></p>
                     </div>
                   </div>
 
