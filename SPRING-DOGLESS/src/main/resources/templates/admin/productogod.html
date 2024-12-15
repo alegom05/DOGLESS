@@ -93,7 +93,9 @@
                                     <table id="basic-datatables" class="display table table-striped table-hover">
                                         <thead>
                                         <tr>
+<!--
                                             <th>#</th>
+-->
                                             <th>Nombre</th>
                                             <th>Descripcion</th>
                                             <th>Precio (S/.)</th>
@@ -105,7 +107,9 @@
                                         </thead>
                                         <tbody>
                                         <tr th:each="producto, info : ${listaProductosCompleto}">
+<!--
                                             <td th:text="${info.index + 1}"></td>
+-->
                                             <td th:text="${producto.nombre}"></td>
                                             <td th:text="${producto.descripcion}"></td>
                                             <td th:text="${producto.precio}"></td>
