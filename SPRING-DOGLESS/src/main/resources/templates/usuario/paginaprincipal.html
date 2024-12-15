@@ -107,9 +107,9 @@
                           </tr>
                         </thead>
                         <tbody>
-                          <tr th:each="orden : ${ordenes}">
+                          <tr th:each="orden, info : ${ordenes}">
                             <!-- Asignar los valores de cada columna de la consulta SQL -->
-                            <td th:text="${orden.id}"></td> <!-- idordenes -->
+                            <td th:text="${info.index + 1}"></td> <!-- idordenes -->
                             <td th:text="${orden.metodopago}"></td>
                             <td th:text="${orden.fecha}"></td> <!-- nombre_producto -->
                             <td th:text="${orden.direccionenvio}"></td> <!-- fecha -->
