@@ -609,11 +609,14 @@ public class ChatbotService {
             case "ingresarTarjeta":
                 if (mensaje.trim().isEmpty()) {
                     return "Por favor, ingrese el número de tarjeta.";
+                } else if (!mensaje.trim().matches("\\d{16}")) {
+                    return "El número de tarjeta debe contener exactamente 16 dígitos numéricos. Inténtelo nuevamente.";
                 } else {
                     datos.put("numeroTarjeta", mensaje.trim());
                     estadosUsuario.put(userId, "ingresarTitular");
                     return "Ingrese el nombre del titular:";
                 }
+
 
             case "ingresarTitular":
                 if (mensaje.trim().isEmpty()) {
@@ -627,30 +630,36 @@ public class ChatbotService {
             case "ingresarVencimiento":
                 if (mensaje.trim().isEmpty()) {
                     return "Por favor, ingrese la fecha de vencimiento.";
+                } else if (!mensaje.trim().matches("(0[1-9]|1[0-2])/(2[0-9]|3[0-9]|40)")) {
+                    return "La fecha de vencimiento debe estar en el formato MM/YY. Ingrese un formato de fecha válido";
                 } else {
                     datos.put("vencimiento", mensaje.trim());
                     estadosUsuario.put(userId, "ingresarCVV");
                     return "Ingrese el código CVV:";
                 }
 
+
             case "ingresarCVV":
                 if (mensaje.trim().isEmpty()) {
                     return "Por favor, ingrese el código CVV.";
+                } else if (!mensaje.trim().matches("\\d{3}")) {
+                    return "Ingrese un código CVV válido.";
                 } else {
                     datos.put("cvv", mensaje.trim());
                     estadosUsuario.put(userId, "confirmarPago");
                     return """
-                    <div style="border: 1px solid #ddd; padding: 15px; border-radius: 8px; max-width: 400px; font-family: Arial, sans-serif;">
-                        <h4 style="text-align: center; color: #333; margin-bottom: 10px; font-size: 16px; line-height: 1.2;">Confirmación de Pago</h4>
-                        <hr style="border: 0; border-top: 1px solid #ccc; margin-bottom: 10px;">
-                        <p style="text-align: center; margin: 5px 0; line-height: 1.2;">¿Desea proceder con el pago?</p>
-                        <div style="text-align: center; margin-top: 10px; display: flex; justify-content: center; gap: 20px;">
-                            <p style="margin: 0; line-height: 1.2;"><strong>Sí</strong></p>
-                            <p style="margin: 0; line-height: 1.2;"><strong>No</strong></p>
-                        </div>
-                    </div>
-                    """;
+        <div style="border: 1px solid #ddd; padding: 15px; border-radius: 8px; max-width: 400px; font-family: Arial, sans-serif;">
+            <h4 style="text-align: center; color: #333; margin-bottom: 10px; font-size: 16px; line-height: 1.2;">Confirmación de Pago</h4>
+            <hr style="border: 0; border-top: 1px solid #ccc; margin-bottom: 10px;">
+            <p style="text-align: center; margin: 5px 0; line-height: 1.2;">¿Desea proceder con el pago?</p>
+            <div style="text-align: center; margin-top: 10px; display: flex; justify-content: center; gap: 20px;">
+                <p style="margin: 0; line-height: 1.2;"><strong>Sí</strong></p>
+                <p style="margin: 0; line-height: 1.2;"><strong>No</strong></p>
+            </div>
+        </div>
+        """;
                 }
+
 
 
             case "confirmarPago":
