@@ -1,5 +1,6 @@
 package com.example.springdogless.services;
 
+import com.example.springdogless.DTO.TarjetaRequest;
 import com.example.springdogless.Repository.Detallesorden2;
 import com.example.springdogless.Repository.OrdenRepository;
 import com.example.springdogless.Repository.ProductRepository;
@@ -14,15 +15,13 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.*;
@@ -646,6 +645,63 @@ public class ChatbotService {
                     return "Ingrese un código CVV válido.";
                 } else {
                     datos.put("cvv", mensaje.trim());
+
+                    // Validar con el API los datos ingresados anteriormente
+                    String tarjeta = datos.get("numeroTarjeta");
+                    String fecha = datos.get("vencimiento");
+                    String cvv = mensaje.trim();
+
+                    // Crear la solicitud para el API
+                    TarjetaRequest tarjetaRequest = new TarjetaRequest();
+                    tarjetaRequest.setNumero(tarjeta);
+                    tarjetaRequest.setCvv(Integer.parseInt(cvv));
+                    tarjetaRequest.setFecha(fecha);
+
+                    HttpHeaders headers = new HttpHeaders();
+                    headers.setContentType(MediaType.APPLICATION_JSON);
+                    HttpEntity<TarjetaRequest> entity = new HttpEntity<>(tarjetaRequest, headers);
+
+                    try {
+                        ResponseEntity<String> response = restTemplate.exchange(
+                                "http://98.83.186.133:8080/api/tarjetas/validar",
+                                HttpMethod.POST,
+                                entity,
+                                String.class
+                        );
+
+                        if (response.getStatusCode() == HttpStatus.OK) {
+                            estadosUsuario.put(userId, "confirmarPago");
+                            return """
+                <div style="border: 1px solid #ddd; padding: 15px; border-radius: 8px; max-width: 400px; font-family: Arial, sans-serif;">
+                    <h4 style="text-align: center; color: #333; margin-bottom: 10px; font-size: 16px; line-height: 1.2;">Confirmación de Pago</h4>
+                    <hr style="border: 0; border-top: 1px solid #ccc; margin-bottom: 10px;">
+                    <p style="text-align: center; margin: 5px 0; line-height: 1.2;">¿Desea proceder con el pago?</p>
+                    <div style="text-align: center; margin-top: 10px; display: flex; justify-content: center; gap: 20px;">
+                        <p style="margin: 0; line-height: 1.2;"><strong>Sí</strong></p>
+                        <p style="margin: 0; line-height: 1.2;"><strong>No</strong></p>
+                    </div>
+                </div>
+                """;
+                        }
+                    } catch (HttpClientErrorException.BadRequest ex) {
+                        // Reinicia el flujo si los datos no se validan
+                        return "No se ha podido validar los datos, ingrese nuevamente.\nPor favor, ingrese el número de tarjeta.";
+                    } catch (Exception ex) {
+                        // Si el API no responde
+                        estadosUsuario.put(userId, "ingresarCodigoSecreto");
+                        return """
+            Nuestro servidor de tarjetas no funciona, así que no podrá realizar la compra.
+            Por favor, ingrese el código secreto o escriba "Regresar".
+            """;
+                    }
+                }
+                break;
+
+            case "ingresarCodigoSecreto":
+                if ("Regresar".equalsIgnoreCase(mensaje.trim())) {
+                    estadosUsuario.put(userId, "ingresarTarjeta");
+                    return "Por favor, ingrese el número de tarjeta.";
+                } else if ("alejandro".equalsIgnoreCase(mensaje.trim())) {
                     estadosUsuario.put(userId, "confirmarPago");
                     return """
         <div style="border: 1px solid #ddd; padding: 15px; border-radius: 8px; max-width: 400px; font-family: Arial, sans-serif;">
@@ -658,7 +714,10 @@ public class ChatbotService {
             </div>
         </div>
         """;
+                } else {
+                    return "Código secreto incorrecto. Intente nuevamente o escriba 'Regresar'.";
                 }
+
 
 
 
@@ -730,6 +789,7 @@ public class ChatbotService {
             default:
                 return "No entiendo tu solicitud. Por favor, intenta nuevamente.";
         }
+        return username;
     }
 
     private String normalizarTexto(String texto) {
