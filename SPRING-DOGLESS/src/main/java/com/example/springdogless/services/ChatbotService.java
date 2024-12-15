@@ -744,6 +744,7 @@ public class ChatbotService {
         nuevaOrden.setDireccionenvio(datosUsuario.get(userId).get("direccion"));
         nuevaOrden.setMetodopago("Tarjeta"); // Esto puede ajustarse dinámicamente
         nuevaOrden.setTotal(BigDecimal.ZERO);
+        nuevaOrden.setEstado("Creado");
 
         // Persistir la orden para obtener su ID
         nuevaOrden = ordenRepository.save(nuevaOrden);
