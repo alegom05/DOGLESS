@@ -170,4 +170,6 @@ public interface OrdenRepository extends JpaRepository<Orden, Integer> {
     List<Orden> findByUsuarioIdAndEstado(int userId, String confirmada);
 
 
+    @Query(value = "SELECT * FROM ordenes o WHERE o.idordenes = :idOrden AND o.idusuarios = :idUsuario", nativeQuery = true)
+    Optional<Orden> findByIdOrdenYUsuario(@Param("idOrden") Integer idOrden, @Param("idUsuario") Integer idUsuario);
 }

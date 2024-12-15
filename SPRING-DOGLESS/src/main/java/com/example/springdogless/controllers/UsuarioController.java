@@ -1,5 +1,6 @@
 package com.example.springdogless.controllers;
 
+import com.example.springdogless.DTO.DetallesOrdenDTO;
 import com.example.springdogless.DTO.ProductoDTO;
 import com.example.springdogless.DTO.ResenaDTO;
 import com.example.springdogless.DTO.TarjetaRequest;
@@ -8,6 +9,7 @@ import com.example.springdogless.entity.*;
 import com.itextpdf.text.pdf.draw.LineSeparator;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -103,18 +105,33 @@ public class UsuarioController {
     public String verperdd(Model model) {
         return "usuario/GGGG"; // Esto renderiza la vista perfil_superadmin.html
     }
-    @PostMapping("/editorden")
-    public String editarOrden(@RequestParam("id") Integer id, Model model) {
-        Optional<Orden> optionalOrden = ordenRepository.findById(id);
+    @GetMapping("/editorden")
+    public String editarOrden(@RequestParam("id") Integer id, Model model, HttpSession session) {
+        Usuario usuarioLogueado = (Usuario) session.getAttribute("usuario");
+        Optional<Orden> optionalOrden = ordenRepository.findByIdOrdenYUsuario(id,usuarioLogueado.getId());
 
-        if (optionalOrden.isPresent()) {
+        if (optionalOrden.isPresent() && optionalOrden.get() != null) {
             Orden orden = optionalOrden.get();
+            List<DetallesOrdenDTO> listaProductos = detallesRepository.findProductosPorIdOrden(id);
             model.addAttribute("orden", orden);
-            model.addAttribute("listaOrdenes", ordenRepository.findAll());
+            model.addAttribute("listaProductos", listaProductos);
             return "usuario/editarOrden";
         } else {
             return "redirect:usuario";
         }
+    }
+
+    @PostMapping("/guardarOrden")
+    public String guardarOrden(HttpServletRequest request) {
+
+        // Imprime todos los parámetros recibidos
+        System.out.println("Parámetros recibidos:");
+
+        for (String paramName : request.getParameterMap().keySet()) {
+            System.out.println(paramName + ": " + request.getParameter(paramName));
+        }
+
+        return "redirect:/exito"; // Redirige después de procesar los datos
     }
 
     /*@PostMapping("/eliminarorden")

@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Editar Orden</title>
+    <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport" />
+    <link rel="icon" href="/assets/img/kaiadmin/favicon.ico" type="image/x-icon" />
+
+    <!-- Fonts and icons -->
+    <script src="/assets/js/plugin/webfont/webfont.min.js"></script>
+    <script>
+        WebFont.load({
+            google: { families: ["Public Sans:300,400,500,600,700"] },
+            custom: {
+                families: [
+                    "Font Awesome 5 Solid",
+                    "Font Awesome 5 Regular",
+                    "Font Awesome 5 Brands",
+                    "simple-line-icons",
+                ],
+                urls: ["/assets/css/fonts.min.css"],
+            },
+            active: function () {
+                sessionStorage.fonts = true;
+            },
+        });
+    </script>
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/assets/css/plugins.min.css" />
+    <link rel="stylesheet" href="/assets/css/kaiadmin.min.css" />
+    <link rel="stylesheet" href="/assets/css/demo.css" />
+</head>
+<body>
+<div class="wrapper">
+    <div th:replace="~{usuario/fragments/barralateralusuario :: body(activePage='compras')}"></div>
+
+    <div class="main-panel">
+        <div th:replace="~{usuario/fragments/navbarheaderusuario :: fragment}"></div>
+
+        <div class="container">
+            <div class="page-inner">
+                <div class="page-header">
+                    <h3 class="fw-bold mb-3">Editar Orden</h3>
+                    <ul class="breadcrumbs mb-3">
+                        <li class="nav-home">
+                            <a href="/usuario/">
+                                <i class="icon-home"></i>
+                            </a>
+                        </li>
+                        <li class="separator">
+                            <i class="icon-arrow-right"></i>
+                        </li>
+                        <li class="nav-item">
+                            <a th:href="@{'/usuario/compras' + '?id=' + ${session.usuario.id}}">Carrito de Compra</a>
+                        </li>
+                        <li class="separator">
+                            <i class="icon-arrow-right"></i>
+                        </li>
+                        <li class="nav-item">
+                            <a th:href="@{'/usuario/editarOrden' + '?id=' + ${session.usuario.id}}">Editar Orden</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="row">
+                    <div class="card mb-4">
+                        <div class="container-xxl flex-grow-1">
+                            <div id="wizard-checkout" class="bs-stepper wizard-icons wizard-icons-example mb-5">
+                                <div class="bs-stepper-content border-top">
+                                    <form class="needs-validation" style="width: 100%; margin-left: 0%; margin-top: 3%;" method="POST" th:action="@{/usuario/guardarOrden}" novalidate>
+                                        <input name="id" th:value="${session.usuario.id}" type="hidden"/>
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="row py-2">
+                                                        <div class="col">
+                                                            <label for="nombre" class="form-label">Nombre:</label>
+                                                            <input type="text" name="nombre" id="nombre" class="form-control" th:value="${session.usuario.nombre}" readonly>
+                                                        </div>
+                                                        <div class="col">
+                                                            <label for="apellido" class="form-label">Apellido:</label>
+                                                            <input type="text" name="apellido" id="apellido" class="form-control" th:value="${session.usuario.apellido}" readonly>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row py-2">
+                                                        <div class="col">
+                                                            <label for="departamento" class="form-label">Zona:</label>
+                                                            <input type="text" name="departamento" id="departamento" class="form-control" th:value="${session.usuario.zona.nombre}" readonly>
+                                                        </div>
+                                                        <div class="col">
+                                                            <label for="distrito" class="form-label">Distrito:</label>
+                                                            <input type="text" name="distrito" id="distrito" class="form-control" th:value="${session.usuario.distrito.distrito}" readonly>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row py-2">
+                                                        <div class="col">
+                                                            <label for="direccion" class="form-label">Dirección:</label>
+                                                            <input type="text" name="direccion" id="direccion" class="form-control" th:value="${session.usuario.direccion}" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+" placeholder="Ej: Av Universitaria 2049">
+                                                            <div class="invalid-feedback">Ingresar dirección válida.</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row py-2">
+                                                        <div class="col">
+                                                            <label for="numtelefono" class="form-label">Número de teléfono:</label>
+                                                            <input type="text" name="numtelefono" id="numtelefono" class="form-control" th:value="${session.usuario.telefono}" readonly>
+                                                        </div>
+                                                        <div class="col">
+                                                            <label for="correo" class="form-label">Correo Electrónico:</label>
+                                                            <input type="text" name="correo" id="correo" class="form-control" th:value="${session.usuario.email}" readonly>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <h4>Detalles de la orden</h4>
+                                                    <hr>
+                                                    <table class="table">
+                                                        <thead>
+                                                        <tr>
+                                                            <th>Eliminar</th>
+                                                            <th>Producto</th>
+                                                            <th>Cantidad</th>
+                                                            <th>Precio Unitario</th>
+                                                            <th>Subtotal</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        <tr th:each="orden : ${listaProductos}">
+                                                            <td class="text-center">
+                                                                <button class="btn btn-danger btn-sm" onclick="eliminarFila(this)">X</button>
+                                                            </td>
+                                                            <td th:text="${orden.getNombre()}"></td>
+                                                            <td>
+                                                                <input type="number" name="cantidad" class="form-control" th:value="${orden.getCantidad()}" min="1">
+                                                            </td>
+                                                            <td th:text="'S/.' + ${orden.getPrecioUnitario()}"></td>
+                                                            <td>0.00</td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+
+                                                    <div class="text-end py-2 me-4">
+                                                        <strong id="total">Total: S/.0.00</strong>
+                                                    </div>
+                                                    <!-- Contenedor con el botón centrado para la operación -->
+                                                    <div class="text-center py-3">
+                                                        <button class="btn btn-primary" type="button" onclick="calcularTotal()">Previsualizar</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="btn-container py-4" style="text-align: center;">
+                                                <button class="btn btn-primary" type="submit" style="width: 200px;">Guardar Cambios</button>
+                                                <a class="btn btn-secondary" th:href="@{'/usuario/compras' + '?id=' + ${session.usuario.id}}" style="width: 200px;">Cancelar</a>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div th:replace="~{usuario/fragments/piedepagina :: fragment}"></div>
+    </div>
+
+    <script src="/assets/js/core/jquery-3.7.1.min.js"></script>
+    <script src="/assets/js/core/popper.min.js"></script>
+    <script src="/assets/js/core/bootstrap.min.js"></script>
+    <script>
+        // Función para eliminar la fila y actualizar el total
+        function eliminarFila(boton) {
+            const fila = boton.parentElement.parentElement; // Encuentra la fila
+            fila.parentElement.removeChild(fila); // Elimina la fila
+            actualizarTotal(); // Actualiza el total automáticamente
+        }
+
+        // Función para recalcular el total automáticamente
+        function actualizarTotal() {
+            let totalCalculado = 0; // Variable para acumular la suma total
+            const filas = document.querySelectorAll("tbody tr"); // Seleccionar todas las filas de la tabla
+
+            filas.forEach(function(fila) {
+                const cantidadInput = fila.querySelector("input[name='cantidad']"); // Capturar la cantidad ingresada
+                const precioUnitarioTexto = fila.querySelector("td:nth-child(4)").innerText; // Capturar el precio unitario
+                const precioUnitario = parseFloat(precioUnitarioTexto.replace('S/.', '')) || 0; // Convertir el texto a número
+                const cantidad = parseInt(cantidadInput.value) || 0; // Obtener la cantidad de cada producto
+
+                const subtotal = cantidad * precioUnitario; // Calcular el subtotal
+                totalCalculado += subtotal; // Acumular el subtotal
+            });
+
+            // Mostrar el total calculado
+            document.getElementById("total").innerText = "Total: S/." + totalCalculado.toFixed(2);
+        }
+
+        // Función para recalcular subtotales con el botón Previsualizar
+        function calcularTotal() {
+            const filas = document.querySelectorAll("tbody tr"); // Seleccionar todas las filas de la tabla
+
+            filas.forEach(function(fila) {
+                const cantidadInput = fila.querySelector("input[name='cantidad']"); // Capturar la cantidad ingresada
+                const precioUnitarioTexto = fila.querySelector("td:nth-child(4)").innerText; // Capturar el precio unitario
+                const precioUnitario = parseFloat(precioUnitarioTexto.replace('S/.', '')) || 0; // Convertir el texto a número
+
+                const subtotal = cantidadInput ? cantidadInput.value * precioUnitario : 0; // Calcular el subtotal
+                fila.querySelector("td:nth-child(5)").innerText = "S/." + parseFloat(subtotal).toFixed(2); // Mostrar en la tabla
+            });
+
+            actualizarTotal();
+        }
+
+
+    </script>
+
+
+</div>
+</div>
+</body>
+</html>
