@@ -7,6 +7,8 @@ import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
@@ -16,6 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -53,6 +56,14 @@ public class ZonalController {
     @GetMapping("/perfil_zonal")
     public String verperfilzonal(Model model) {
         return "zonal/perfil_zonal"; // Esto renderiza la vista perfil_superadmin.html
+    }
+    @GetMapping("/cambiarcontraseña")
+    public String vercontra(HttpSession session, Model model) {
+        Usuario usuario = (Usuario) session.getAttribute("usuario");
+        if (usuario != null) {
+            model.addAttribute("usuario", usuario); // Pasar el usuario a la vista
+        }
+        return "zonal/cambiarcontra";
     }
 
     @GetMapping("/dashboard")
@@ -641,6 +652,95 @@ public class ZonalController {
         return "redirect:/admin/adminzonal";
     }
     */
+    @PostMapping("/cambiarContrasenia")
+    @ResponseBody
+    public ResponseEntity<Map<String, String>> cambiarContrasenia(
+            @RequestParam("id") int id,
+            @RequestParam("oldPassword") String oldPassword,
+            @RequestParam("newPassword") String newPassword,
+            @RequestParam("confirmNewPassword") String confirmNewPassword) {
+
+        Map<String, String> response = new HashMap<>();
+        Optional<Usuario> optUsuario = usuarioRepository.findById(id);
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+        if (optUsuario.isPresent()) {
+            Usuario usuario = optUsuario.get();
+
+            // Verificar si la contraseña antigua es correcta
+            if (!passwordEncoder.matches(oldPassword, usuario.getPwd())) {
+                response.put("status", "error");
+                response.put("message", "La contraseña antigua es incorrecta.");
+                return ResponseEntity.ok(response);
+            }
+
+            // Verificar si la nueva contraseña y la confirmación coinciden
+            if (!newPassword.equals(confirmNewPassword)) {
+                response.put("status", "error");
+                response.put("message", "La nueva contraseña y su confirmación no coinciden.");
+                return ResponseEntity.ok(response);
+            }
+            // Validar requisitos de la nueva contraseña
+            if (newPassword.length() < 8 || newPassword.length() > 16) {
+                response.put("status", "error");
+                response.put("message", "La contraseña debe tener entre 8 y 16 caracteres.");
+                return ResponseEntity.ok(response);
+            }
+
+            if (!newPassword.matches("^(?=.*\\d)(?=.*[a-zA-Z])(?=(?:.*[!@#$%^&*]){2}).{8,16}$")) {
+                response.put("status", "error");
+                response.put("message", "La contraseña debe incluir al menos 1 letra, 1 número y 2 caracteres especiales.");
+                return ResponseEntity.ok(response);
+            }
+
+            // Cambiar la contraseña si pasa todas las verificaciones
+            String newPasswordEncrypted = passwordEncoder.encode(newPassword);
+            usuario.setPwd(newPasswordEncrypted);
+            usuarioRepository.save(usuario);
+
+            response.put("status", "success");
+            response.put("message", "Contraseña cambiada exitosamente.");
+            return ResponseEntity.ok(response);
+        }
+
+        response.put("status", "error");
+        response.put("message", "Usuario no encontrado.");
+        return ResponseEntity.ok(response);
+    }
+
+    public ResponseEntity<Map<String, String>> cambiarContrasenia(
+            @RequestParam("id") int id,
+            @RequestParam("oldPassword") String oldPassword,
+            @RequestParam("newPassword") String newPassword) {
+
+        Optional<Usuario> optUsuario = usuarioRepository.findById(id);
+        Map<String, String> response = new HashMap<>();
+
+        if (optUsuario.isPresent()) {
+            Usuario usuario = optUsuario.get();
+            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+            // Verificar si la contraseña antigua es correcta
+            if (!passwordEncoder.matches(oldPassword, usuario.getPwd())) {
+                response.put("status", "error");
+                response.put("message", "La contraseña antigua es incorrecta.");
+                return ResponseEntity.ok(response); // Devuelve error
+            }
+
+            // Encriptar la nueva contraseña
+            String newPasswordEncrypted = passwordEncoder.encode(newPassword);
+            usuario.setPwd(newPasswordEncrypted);
+            usuarioRepository.save(usuario);
+
+            response.put("status", "success");
+            response.put("message", "Contraseña cambiada exitosamente.");
+            return ResponseEntity.ok(response); // Devuelve éxito
+        }
+
+        response.put("status", "error");
+        response.put("message", "Usuario no encontrado.");
+        return ResponseEntity.ok(response); // Devuelve error si no encuentra usuario
+    }
     @GetMapping("/informacion-de-contacto")
     public String informaciondecontacto() {
         return "informacion-de-contacto"; // Esto renderiza la vista informacion-de-contacto.html
