@@ -13,8 +13,12 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.engine.util.JRLoader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.*;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -893,7 +897,7 @@ public class ChatbotService {
 
 
 
-
+  /*
     public byte[] generarPDFResumenCompra(String userId) {
         try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
             // Obtener la última orden generada por el usuario
@@ -1001,6 +1005,108 @@ public class ChatbotService {
             return null;
         }
     }
+    */
+      public byte[] generarPDFResumenCompra(String userId) {
+          try {
+              // Obtener la última orden generada por el usuario
+              Usuario usuario = usuarioRepository.findById(Integer.parseInt(userId))
+                      .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+              Orden ultimaOrden = ordenRepository.findLatestOrdenEstadoCreado(usuario.getId());
+              if (ultimaOrden == null) {
+                  throw new RuntimeException("No se encontró una orden activa para este usuario.");
+              }
+
+              List<Detalleorden> detallesOrden = detallesRepository.findByOrdenId(ultimaOrden.getId());
+              if (detallesOrden.isEmpty()) {
+                  throw new RuntimeException("No hay detalles asociados con la orden.");
+              }
+
+              // Preparar la lista de detalles de orden como JRBeanCollectionDataSource
+              List<Map<String, Object>> listaDetalles = new ArrayList<>();
+              for (Detalleorden detalle : detallesOrden) {
+                  Map<String, Object> item = new HashMap<>();
+                  item.put("nombre", detalle.getProducto().getNombre());
+                  item.put("cantidad", detalle.getCantidad());
+                  item.put("precio", detalle.getPreciounitario());
+                  item.put("subTotal", detalle.getSubtotal());
+                  listaDetalles.add(item);
+              }
+              JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(listaDetalles);
+
+              // Parámetros para el reporte
+              Map<String, Object> parameters = new HashMap<>();
+              parameters.put("logoempresa", new ClassPathResource("static/assets/images_index/logodogless.png").getInputStream());
+              parameters.put("numeroorden", ultimaOrden.getId());
+              parameters.put("nombreCliente", ultimaOrden.getNombreCompletoUsuario());
+              parameters.put("fecha", ultimaOrden.getFecha());
+              parameters.put("direccion", ultimaOrden.getDireccionenvio());
+              parameters.put("metododepago", ultimaOrden.getMetodopago());
+              parameters.put("estado", ultimaOrden.getEstado());
+              parameters.put("total", ultimaOrden.getTotal());
+              parameters.put("dsInvoice", dataSource);
+
+              // Convertir el monto total a texto
+              parameters.put("montototalentexto", convertirNumeroATexto(ultimaOrden.getTotal()));
+
+              // Cargar y compilar la plantilla JasperReports
+              InputStream jasperStream = new ClassPathResource("BoletaOrden.jasper").getInputStream();
+              JasperReport report = (JasperReport) JRLoader.loadObject(jasperStream);
+
+              // Generar el reporte
+              JasperPrint jasperPrint = JasperFillManager.fillReport(report, parameters, new JREmptyDataSource());
+
+              // Exportar el reporte a PDF
+              return JasperExportManager.exportReportToPdf(jasperPrint);
+
+          } catch (Exception e) {
+              e.printStackTrace();
+              return null; // Devuelve null si ocurre algún error
+          }
+      }
+
+    // Metodo privado para convertir número a texto
+    private String convertirNumeroATexto(BigDecimal numero) {
+        if (numero == null) {
+            return "";
+        }
+
+        String[] unidades = {"", "uno", "dos", "tres", "cuatro", "cinco", "seis", "siete", "ocho", "nueve"};
+        String[] decenas = {"", "diez", "veinte", "treinta", "cuarenta", "cincuenta", "sesenta", "setenta", "ochenta", "noventa"};
+        String[] centenas = {"", "cien", "doscientos", "trescientos", "cuatrocientos", "quinientos", "seiscientos", "setecientos", "ochocientos", "novecientos"};
+
+        // Redondear el número a 2 decimales
+        BigDecimal redondeado = numero.setScale(2, BigDecimal.ROUND_HALF_UP);
+        int parteEntera = redondeado.intValue();
+        int parteDecimal = redondeado.remainder(BigDecimal.ONE).movePointRight(2).intValue();
+
+        // Convertir la parte entera a texto
+        StringBuilder texto = new StringBuilder();
+
+        if (parteEntera >= 1000) {
+            texto.append(unidades[parteEntera / 1000]).append(" mil ");
+            parteEntera %= 1000;
+        }
+
+        if (parteEntera >= 100) {
+            texto.append(centenas[parteEntera / 100]).append(" ");
+            parteEntera %= 100;
+        }
+
+        if (parteEntera >= 10) {
+            texto.append(decenas[parteEntera / 10]).append(" ");
+            parteEntera %= 10;
+        }
+
+        if (parteEntera > 0) {
+            texto.append(unidades[parteEntera]).append(" ");
+        }
+
+        texto.append("y ").append(String.format("%02d/100", parteDecimal)).append(" nuevos soles");
+
+        return texto.toString().trim();
+    }
+
 
 
 

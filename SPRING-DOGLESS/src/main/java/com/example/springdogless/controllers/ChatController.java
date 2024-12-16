@@ -118,7 +118,7 @@ public class ChatController {
 
         return ResponseEntity.ok()
                 .contentType(MediaType.APPLICATION_PDF)
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=Resumen_Compra.pdf")
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=BoletaOrden.pdf")
                 .body(pdfContent);
     }
 
