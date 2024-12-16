@@ -237,10 +237,15 @@
                   <div class="col-lg-8 col-xl-9">
                       <div class="row g-4">
                           <div th:if="${mensaje}" th:class="'alert alert-' + ${tipoAlerta}" th:text="${mensaje}" id="alertMessage"></div>
+                          <div th:if="${error}" class="alert alert-danger">
+                              <p th:text="${error}"></p>
+                          </div>
                           <!-- Bien -->
                           <div class="col-lg-6">
                               <div class="border rounded">
-                                  <img th:src="@{'http://40.79.58.20:8080/producto/imagen/' + ${producto.idproductos}}" class="img-fluid rounded" style="width: 100%; height: 100%; object-fit: cover;" alt="Image">
+                                  <img th:src="@{/usuario/imagen/{id}(id=${producto.idproductos})}"
+                                       class="img-fluid w-100 rounded-top"
+                                       alt="Imagen del producto">
                               </div>
                           </div>
                           <!-- Bien -->
@@ -302,7 +307,7 @@
                                               <i class="fa fa-minus"></i>
                                           </button>
                                       </div>
-                                      <input type="text" class="form-control form-control-sm text-center border-0 qty-input" name="cantidad" value="1" onfocus="if(this.value == '') { this.value = 1; }" style="max-width: 40px;">
+                                      <input type="text" class="form-control form-control-sm text-center border-0 qty-input" name="cantidad" value="1" onfocus="if(this.value == '') { this.value = 1; }" style="max-width: 40px;" required>
                                       <div class="input-group-btn">
                                           <button class="btn btn-sm btn-plus rounded-circle border" type="button" onclick="incrementQuantity(this)">
                                               <i class="fa fa-plus"></i>
@@ -565,7 +570,7 @@
                                           <!-- Enlace a los detalles del producto -->
                                           <a th:href="@{/usuario/detalles_producto/{id}(id=${producto.idproductos})}">
                                               <!-- Imagen del producto -->
-                                              <img th:src="@{'http://20.110.89.34:8080/producto/imagen/' + ${producto.idproductos}}"
+                                              <img th:src="@{/usuario/imagen/{id}(id=${producto.idproductos})}"
                                                    class="img-fluid w-100 rounded-top"
                                                    alt="Imagen del producto">
                                           </a>

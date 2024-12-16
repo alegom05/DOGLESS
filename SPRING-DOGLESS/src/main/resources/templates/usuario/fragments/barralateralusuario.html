@@ -35,7 +35,7 @@
                 </a>
               </li>
               <li class="nav-item" th:classappend="${activePage == 'compras' ? 'active submenu' : ''}">
-                <a th:href="@{'/usuario/compras' + '?id=' + ${session.usuario.id}}">
+                <a href="/usuario/compras">
                   <i class="fas fa-shopping-cart"></i>
                   <p>Mis compras</p>
                 </a>
