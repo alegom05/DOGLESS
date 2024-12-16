@@ -111,7 +111,7 @@
                                             <div class="row py-2">
                                                 <div class="col">
                                                     <label for="direccion" class="form-label">Dirección: (Modificable)</label>
-                                                    <input type="text" name="direccion" id="direccion" class="form-control" th:value="${session.usuario.direccion}" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+" placeholder="Ej: Av Universitaria 2049">
+                                                    <input type="text" name="direccion" id="direccion" class="form-control" th:value="${listaProductos.get(0).orden.direccionenvio}" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+" placeholder="Ej: Av Universitaria 2049">
                                                     <div class="invalid-feedback">Ingresar direccion.</div>
                                                 </div>
                                             </div>
