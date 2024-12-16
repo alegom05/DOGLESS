@@ -137,7 +137,7 @@ public interface OrdenRepository extends JpaRepository<Orden, Integer> {
     @Query("SELECT count(*) FROM ordenes o WHERE o.usuario.zona.idzonas = :zonaId")
     Integer findOrdenesByZona(@Param("zonaId") Integer zonaId);
 
-    @Query(value="SELECT * FROM ordenes WHERE idusuarios=:id", nativeQuery = true)
+    @Query(value="SELECT * FROM dogless.ordenes WHERE idusuarios=:id ORDER BY fecha DESC", nativeQuery = true)
     List<Orden> findOrdenesPorId(@Param("id") Integer id);
 
 

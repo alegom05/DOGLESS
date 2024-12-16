@@ -548,11 +548,28 @@ public class UsuarioController {
 
 
 
+
+
+
         } else {
             model.addAttribute("error", "No se pudo obtener la zona del usuario.");
         }
 
         return "usuario/tienda";
+    }
+
+
+    @GetMapping("/imagen/{id}")
+    @ResponseBody
+    public ResponseEntity<byte[]> obtenerImagen(@PathVariable("id") Integer id) {
+        Producto producto = productRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
+
+        byte[] imagen = producto.getImagenprod();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.IMAGE_JPEG); // Cambia a IMAGE_PNG o IMAGE_WEBP si corresponde
+
+        return new ResponseEntity<>(imagen, headers, HttpStatus.OK);
     }
 
 
@@ -709,7 +726,19 @@ public class UsuarioController {
         return "redirect:/usuario/compras?id=" + idUsuario;
     }
     @PostMapping("/agregarProducto2")
-    public String agregarProducto2(HttpSession session, Model model,@RequestParam("idProducto") Integer idProducto, @RequestParam("idUsuario") Integer idUsuario,@RequestParam("cantidad") Integer cantidad, RedirectAttributes redirectAttributes) {
+    public String agregarProducto2(HttpSession session, Model model,@RequestParam("idProducto") Integer idProducto, @RequestParam("idUsuario") Integer idUsuario,@RequestParam("cantidad") String cantidadStr, RedirectAttributes redirectAttributes) {
+
+        Integer cantidad;
+        try {
+            cantidad = Integer.parseInt(cantidadStr);
+            if (cantidad < 1) {
+                throw new NumberFormatException();
+            }
+        } catch (NumberFormatException ex) {
+            redirectAttributes.addFlashAttribute("error", "Ha ocurrido un error.");
+            return "redirect:/usuario/detalles_producto/" + idProducto;
+        }
+
         // Obtener el usuario por su ID
         Usuario usuario = usuarioRepository.findById(idUsuario)
                 .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
@@ -753,7 +782,7 @@ public class UsuarioController {
         }
 
         redirectAttributes.addFlashAttribute("mensaje", "Producto añadido al carrito");
-        return "redirect:/usuario/compras?id=" + idUsuario;
+        return "redirect:/usuario/compras";
     }
 
     public String agregarProductoChatbot(Integer idProducto, Integer idUsuario, Integer cantidad) {
@@ -837,8 +866,9 @@ public class UsuarioController {
         return "usuario/carrito_compras";
     }*/
     @GetMapping( "/compras")
-    public String listaProductos(Model model, @RequestParam("id") Integer id) {
-        model.addAttribute("listadetalles", detallesRepository.findByOrdenCreado(id));
+    public String listaProductos(HttpSession session, Model model) {
+        Usuario usuarioLogueado = (Usuario) session.getAttribute("usuario");
+        model.addAttribute("listadetalles", detallesRepository.findByOrdenCreado(usuarioLogueado.getId()));
         return "usuario/carrito_compras";
     }
     // Guardar la compra con las nuevas cantidades
@@ -846,11 +876,11 @@ public class UsuarioController {
     public String actualizarCantidad(@RequestParam("id") Integer id,
                                      @RequestParam("idDetallesOrden") List<Integer> idDetallesOrden,
                                      @RequestParam("idOrdenes") List<Integer> idOrdenes,
-                                     @RequestParam("cantidades") List<Integer> cantidades,
+                                     @RequestParam("cantidades") List<String> cantidadesStr,
                                      @RequestParam("subtotales") List<BigDecimal> subtotales,
                                      RedirectAttributes redirectAttributes) {
         // Verifica si el id es 0 o si no hay detalles de orden
-        if (id == 0 || idDetallesOrden.isEmpty() || cantidades.isEmpty()) {
+        if (id == 0 || idDetallesOrden.isEmpty()) {
             redirectAttributes.addFlashAttribute("mensaje", "No ha hecho compras.");
             return "redirect:/usuario/";
         }
@@ -860,21 +890,34 @@ public class UsuarioController {
         // Itera sobre las listas para actualizar cada cantidad en la tabla detallesorden
         for (int i = 0; i < idDetallesOrden.size(); i++) {
             Integer idDetalle = idDetallesOrden.get(i);
-            Integer nuevaCantidad = cantidades.get(i);
-            BigDecimal subtotal = subtotales.get(i);
+            String nuevaCantidadStr=cantidadesStr.get(i);
+
+
+            Integer cantidad;
+            try {
+                cantidad = Integer.parseInt(nuevaCantidadStr);
+                if (cantidad < 1 || cantidad>10) {
+                    throw new NumberFormatException();
+                }
+            } catch (NumberFormatException ex) {
+                redirectAttributes.addFlashAttribute("error", "Ha ocurrido un error.");
+                return "redirect:/usuario/compras";
+            }
 
             // Busca el detalle de la orden por idDetalle
             Detalleorden detalle = detallesRepository.findById(idDetalle)
                     .orElse(null); // Cambiamos a null para verificar más adelante
-
             // Verifica si se encontró el detalle
             if (detalle == null) {
                 redirectAttributes.addFlashAttribute("mensaje", "Detalle no encontrado para ID: " + idDetalle);
                 return "redirect:/usuario/";
             }
 
+            BigDecimal precioUni = detalle.getPreciounitario();
+            BigDecimal subtotal = precioUni.multiply(BigDecimal.valueOf(cantidad));
+
             // Actualiza la cantidad y el subtotal
-            detalle.setCantidad(nuevaCantidad);
+            detalle.setCantidad(cantidad);
             detalle.setSubtotal(subtotal);
             total = total.add(subtotal);
 
@@ -890,14 +933,16 @@ public class UsuarioController {
             ordenRepository.save(orden);
         }
 
-        return "redirect:/usuario/checkout?id=" + id;
+        return "redirect:/usuario/checkout";
     }
 
 
     @GetMapping(value = "/checkout")
-    public String checkout(Model model, @RequestParam("id") Integer id) {
+    public String checkout(HttpSession session,Model model) {
+        Usuario usuarioLogueado = (Usuario) session.getAttribute("usuario");
+
         // Obtiene la lista de productos
-        List<Detalleorden> listaProductos = detallesRepository.findByOrdenCreado(id);
+        List<Detalleorden> listaProductos = detallesRepository.findByOrdenCreado(usuarioLogueado.getId());
 
         // Verifica si la lista está vacía
         if (listaProductos.isEmpty()) {
@@ -911,20 +956,22 @@ public class UsuarioController {
     }
     //logica para actualizar la direccion
     @PostMapping("/actualizarDireccion")
-    public String actualizarDireccion(Model model, @RequestParam("id") Integer id,
+    public String actualizarDireccion(HttpSession session, Model model,
                                       @RequestParam("direccion") String direccion){
-        Optional<Orden> optionalOrden= ordenRepository.findOrdenCreado(id);
+        Usuario usuarioLogueado = (Usuario) session.getAttribute("usuario");
 
+        Optional<Orden> optionalOrden= ordenRepository.findOrdenCreado(usuarioLogueado.getId());
         if (optionalOrden.isPresent()) {
             Orden orden = optionalOrden.get();
             orden.setDireccionenvio(direccion);
             ordenRepository.save(orden);
         }
-        return "redirect:/usuario/procesopago?id=" + id;
+        return "redirect:/usuario/procesopago";
     }
     @GetMapping(value = "/procesopago")
-    public String procesoPago(Model model,@RequestParam("id") Integer id) {
-        List<Detalleorden> detallesOrden = detallesRepository.findByOrdenCreado(id);
+    public String procesoPago(HttpSession session, Model model) {
+        Usuario usuarioLogueado = (Usuario) session.getAttribute("usuario");
+        List<Detalleorden> detallesOrden = detallesRepository.findByOrdenCreado(usuarioLogueado.getId());
         // Verifica si la lista está vacía
         if (detallesOrden.isEmpty()) {
             // Redirige a la vista de compras si no hay productos
@@ -935,11 +982,12 @@ public class UsuarioController {
         return "usuario/procesoDePago";
     }
     @PostMapping("/confirmarPedido")
-    public String actualizarPedido(@RequestParam("id") Integer id,
+    public String actualizarPedido(HttpSession session,
                                    @RequestParam("numero") String numero,
                                    @RequestParam("cvv") int cvv,
                                    @RequestParam("fecha") String fecha,
                                    RedirectAttributes redirectAttributes) {
+        Usuario usuarioLogueado = (Usuario) session.getAttribute("usuario");
 
         // Crear la solicitud para el API
         TarjetaRequest tarjetaRequest = new TarjetaRequest();
@@ -964,35 +1012,38 @@ public class UsuarioController {
             // Si la validación fue exitosa
             if (response.getStatusCode() == HttpStatus.OK) {
                 // Actualizar la orden
-                Optional<Orden> optionalOrden = ordenRepository.findOrdenCreado(id);
+                Optional<Orden> optionalOrden = ordenRepository.findOrdenCreado(usuarioLogueado.getId());
                 if (optionalOrden.isPresent()) {
                     Orden orden = optionalOrden.get();
                     if ("Creado".equals(orden.getEstado())) {
+                        orden.setMetodopago("tarjeta");
                         orden.setEstado("En Validación");
                         orden.setTotal(orden.getTotal().add(BigDecimal.valueOf(12))); // Costo de envío
                         orden.setFecha(new java.sql.Date(System.currentTimeMillis()));
                         ordenRepository.save(orden);
 
                         redirectAttributes.addFlashAttribute("success", "Pago validado correctamente.");
-                        return "redirect:/usuario/pagoexitoso?id=" + id;
+                        return "redirect:/usuario/pagoexitoso";
                     }
                 }
                 redirectAttributes.addFlashAttribute("error", "La orden no está en un estado válido para actualizar.");
-                return "redirect:/usuario/procesopago?id=" + id;
+                return "redirect:/usuario/procesopago";
             }
         } catch (HttpClientErrorException.BadRequest ex) {
             // Capturar la excepción específica para Bad Request
             redirectAttributes.addFlashAttribute("error", ex.getResponseBodyAsString());
-            return "redirect:/usuario/procesopago?id=" + id;
+            return "redirect:/usuario/procesopago";
         }
 
         // Si la respuesta no es esperada
         redirectAttributes.addFlashAttribute("error", "Ocurrió un error inesperado en la validación.");
-        return "redirect:/usuario/procesopago?id=" + id;
+        return "redirect:/usuario/procesopago";
     }
     @GetMapping(value = "/pagoexitoso")
-    public String pagoExitoso(Model model,@RequestParam("id") Integer id) {
-        model.addAttribute("listaProductos",detallesRepository.findByOrdenValidada(id));
+    public String pagoExitoso(HttpSession session, Model model) {
+        Usuario usuarioLogueado = (Usuario) session.getAttribute("usuario");
+
+        model.addAttribute("listaProductos",detallesRepository.findByOrdenValidada(usuarioLogueado.getId()));
         return "usuario/pagoExitoso";
     }
 

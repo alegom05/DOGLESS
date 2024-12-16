@@ -84,7 +84,6 @@
                         <div id="wizard-checkout" class="bs-stepper wizard-icons wizard-icons-example mb-5">
                             <div class="bs-stepper-content border-top">
                                 <form class="needs-validation" style="width: 100%; margin-left: 0%; margin-top: 3%;" method="POST" th:action="@{/usuario/actualizarDireccion}" novalidate>
-                                    <input name="id" th:value="${session.usuario.id}" type="hidden"/>
                                     <div class="container">
                                         <div class="row">
                                           <!-- Columna izquierda -->
@@ -171,7 +170,7 @@
                                           </div>
                                             <div class="btn-container py-4" style="text-align: center;">
                                                 <button class="btn btn-primary" type="submit" style="width: 200px;">Continuar con la compra</button>
-                                                <a class="btn btn-secondary" th:href="@{'/usuario/compras' + '?id=' + ${session.usuario.id}}" style="width: 200px;">Volver al carrito</a>
+                                                <a class="btn btn-secondary" th:href="@{'/usuario/compras'}" style="width: 200px;">Volver al carrito</a>
                                             </div>
 
 
