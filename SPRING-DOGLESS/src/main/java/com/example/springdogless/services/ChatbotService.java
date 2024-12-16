@@ -520,7 +520,9 @@ public class ChatbotService {
                     int cantidad = Integer.parseInt(mensaje.trim());
                     if (cantidad <= 0) {
                         return "Por favor, ingrese una cantidad válida mayor a 0.";
-                    }
+                    }  else if (cantidad >= 10) {
+                        return "Por favor, ingrese una cantidad no mayor a 10.";
+            }
                     // Actualiza solo la cantidad actual sin duplicar datos
                     datos.put("cantidad", String.valueOf(cantidad));
 
@@ -619,9 +621,15 @@ public class ChatbotService {
 
             case "ingresarTitular":
                 if (mensaje.trim().isEmpty()) {
-                    return "Por favor, ingrese el nombre del titular.";
+                    return "Por favor, ingrese el nombre y apellido del titular, separados por un espacio.";
+                } else if (!mensaje.matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+")) {
+                    return "Por favor, ingrese solo texto sin números ni caracteres especiales.";
                 } else {
-                    datos.put("nombreTitular", mensaje.trim());
+                    String[] partes = mensaje.trim().split(" ", 2);
+                    if (partes.length < 2) {
+                        return "Por favor, asegúrese de ingresar el nombre y el apellido, separados por un espacio.";
+                    }
+                    datos.put("nombreTitular", partes[0] + " " + partes[1]);
                     estadosUsuario.put(userId, "ingresarVencimiento");
                     return "Ingrese la fecha de vencimiento (MM/AA):";
                 }
