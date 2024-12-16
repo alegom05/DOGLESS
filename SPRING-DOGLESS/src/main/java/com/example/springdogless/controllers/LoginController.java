@@ -112,11 +112,20 @@ public class LoginController {
             throw new IllegalArgumentException("El distrito no puede ser nulo.");
         }
 
-        Distrito distrito = distritoRepository.findById(usuario.getDistrito().getIddistritos())
-                .orElseThrow(() -> new RuntimeException("Distrito not found"));
+        Optional<Distrito> optDistrito = Optional.empty(); // Declarar fuera del try
 
-        usuario.setDistrito(distrito);
-        usuario.setZona(distrito.getZona());
+        try {
+            optDistrito = distritoRepository.findById(usuario.getDistrito().getIddistritos());
+            if (!optDistrito.isPresent()) {
+                model.addAttribute("error", "El distrito seleccionado no existe en nuestra base de datos.");
+                return "register";
+            }
+        } catch (NumberFormatException e) {
+            model.addAttribute("error", "Valor inválido en el formulario. Por favor, no modifiques los valores.");
+            return "register";
+        }
+        usuario.setDistrito(optDistrito.get());
+        usuario.setZona(optDistrito.get().getZona());
         usuario.setBorrado(1);  // Usuario no borrado
         usuario.setEstado("activo");// Estado activo
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
