@@ -795,6 +795,11 @@ public class UsuarioController {
         if (detallesExistente.isPresent()) {
             // Si ya existe el producto en la orden, actualizar la cantidad
             Detalleorden detalles = detallesExistente.get();
+            int newcantidad=detalles.getCantidad()+1;
+            if(newcantidad>10){
+                redirectAttributes.addFlashAttribute("error", "Cantidad maxima de 10 productos");
+                return "redirect:/usuario/compras";
+            }
             detalles.setCantidad(detalles.getCantidad() + 1);
             detalles.setSubtotal(detalles.getPreciounitario().multiply(new BigDecimal(detalles.getCantidad())));
             detallesRepository.save(detalles);
@@ -854,6 +859,11 @@ public class UsuarioController {
         if (detallesExistente.isPresent()) {
             // Si ya existe el producto en la orden, actualizar la cantidad
             Detalleorden detalles = detallesExistente.get();
+            int newcantidad=detalles.getCantidad()+cantidad;
+            if(newcantidad>10){
+                redirectAttributes.addFlashAttribute("error", "Cantidad maxima de 10 productos");
+                return "redirect:/usuario/detalles_producto/" + idProducto;
+            }
             detalles.setCantidad(detalles.getCantidad() + cantidad);
             detalles.setSubtotal(detalles.getPreciounitario().multiply(new BigDecimal(detalles.getCantidad())));
             detallesRepository.save(detalles);
@@ -1047,9 +1057,13 @@ public class UsuarioController {
     //logica para actualizar la direccion
     @PostMapping("/actualizarDireccion")
     public String actualizarDireccion(HttpSession session, Model model,
-                                      @RequestParam("direccion") String direccion){
+                                      @RequestParam("direccion") String direccion,RedirectAttributes redirectAttributes){
         Usuario usuarioLogueado = (Usuario) session.getAttribute("usuario");
-
+        // Validar si la dirección es nula o está vacía
+        if (direccion == null || direccion.trim().isEmpty()) {
+            redirectAttributes.addFlashAttribute("error", "Dirección no válida. Por favor, ingrese una dirección válida.");
+            return "redirect:/usuario/checkout";
+        }
         Optional<Orden> optionalOrden= ordenRepository.findOrdenCreado(usuarioLogueado.getId());
         if (optionalOrden.isPresent()) {
             Orden orden = optionalOrden.get();
