@@ -1,6 +1,9 @@
 package com.example.springdogless.services;
 
+import com.example.springdogless.Repository.Detallesorden2;
+import com.example.springdogless.Repository.DetallesordenRepository;
 import com.example.springdogless.Repository.OrdenRepository;
+import com.example.springdogless.entity.Detalleorden;
 import com.example.springdogless.entity.Orden;
 import jakarta.validation.constraints.NotNull;
 import net.sf.jasperreports.engine.*;
@@ -10,13 +13,11 @@ import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.export.SimpleExporterInput;
 import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
 import net.sf.jasperreports.export.SimpleXlsxReportConfiguration;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
-import org.springframework.http.ContentDisposition;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ResourceUtils;
 
@@ -24,10 +25,10 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.text.Normalizer;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class OrdenService {
@@ -336,6 +337,116 @@ public class OrdenService {
             e.printStackTrace();
             return ResponseEntity.status(500).build();
         }
+    }
+
+    //para geberar la boleta de orden
+    @Autowired
+    Detallesorden2 detallesRepository;
+
+    public ResponseEntity<Resource> exportBoleta(Integer ordenId) {
+        Optional<Orden> optionalOrden = ordenRepository.findById(ordenId);
+
+        if (optionalOrden.isPresent()) {
+            Orden orden = optionalOrden.get();
+            List<Detalleorden> detallesOrden = detallesRepository.findListaDetallesOrdenes(orden.getId());
+
+            try {
+                // Cargar la plantilla JasperReports
+                InputStream jasperStream = new ClassPathResource("BoletaOrden.jasper").getInputStream();
+                JasperReport report = (JasperReport) JRLoader.loadObject(jasperStream);
+
+                // Preparar la lista de detalles de orden como JRBeanCollectionDataSource
+                List<Map<String, Object>> listaDetalles = new ArrayList<>();
+                for (Detalleorden detalle : detallesOrden) {
+                    Map<String, Object> item = new HashMap<>();
+                    item.put("nombre", detalle.getProducto().getNombre());
+                    item.put("cantidad", detalle.getCantidad());
+                    item.put("precio", detalle.getPreciounitario());
+                    item.put("subTotal", detalle.getSubtotal());
+                    listaDetalles.add(item);
+                }
+                JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(listaDetalles);
+
+                // Parámetros para el reporte
+                Map<String, Object> parameters = new HashMap<>();
+                parameters.put("logoempresa", new ClassPathResource("static/assets/images_index/logodogless.png").getInputStream());
+                parameters.put("numeroorden", orden.getId());
+                parameters.put("nombreCliente", orden.getNombreCompletoUsuario());
+                parameters.put("fecha", orden.getFecha());
+                parameters.put("direccion", orden.getDireccionenvio());
+                parameters.put("metododepago", orden.getMetodopago());
+                parameters.put("estado", orden.getEstado());
+                parameters.put("total", orden.getTotal());
+                parameters.put("dsInvoice", dataSource);
+                parameters.put("montototalentexto", convertirNumeroATexto(orden.getTotal()));
+
+                // Generar el reporte
+                JasperPrint jasperPrint = JasperFillManager.fillReport(report, parameters, new JREmptyDataSource());
+
+                // Exportar el reporte a PDF
+                byte[] reporte = JasperExportManager.exportReportToPdf(jasperPrint);
+
+                // Configurar la respuesta
+                String fileName = "Boleta_de_orden_" + orden.getId() + ".pdf";
+                HttpHeaders headers = new HttpHeaders();
+                headers.setContentDisposition(ContentDisposition.builder("attachment").filename(fileName).build());
+
+                return ResponseEntity.ok()
+                        .contentLength(reporte.length)
+                        .contentType(MediaType.APPLICATION_PDF)
+                        .headers(headers)
+                        .body(new ByteArrayResource(reporte));
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            }
+
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    // Metodo privado para convertir número a texto
+    private String convertirNumeroATexto(BigDecimal numero) {
+        if (numero == null) {
+            return "";
+        }
+
+        String[] unidades = {"", "uno", "dos", "tres", "cuatro", "cinco", "seis", "siete", "ocho", "nueve"};
+        String[] decenas = {"", "diez", "veinte", "treinta", "cuarenta", "cincuenta", "sesenta", "setenta", "ochenta", "noventa"};
+        String[] centenas = {"", "cien", "doscientos", "trescientos", "cuatrocientos", "quinientos", "seiscientos", "setecientos", "ochocientos", "novecientos"};
+
+        // Redondear el número a 2 decimales
+        BigDecimal redondeado = numero.setScale(2, BigDecimal.ROUND_HALF_UP);
+        int parteEntera = redondeado.intValue();
+        int parteDecimal = redondeado.remainder(BigDecimal.ONE).movePointRight(2).intValue();
+
+        // Convertir la parte entera a texto
+        StringBuilder texto = new StringBuilder();
+
+        if (parteEntera >= 1000) {
+            texto.append(unidades[parteEntera / 1000]).append(" mil ");
+            parteEntera %= 1000;
+        }
+
+        if (parteEntera >= 100) {
+            texto.append(centenas[parteEntera / 100]).append(" ");
+            parteEntera %= 100;
+        }
+
+        if (parteEntera >= 10) {
+            texto.append(decenas[parteEntera / 10]).append(" ");
+            parteEntera %= 10;
+        }
+
+        if (parteEntera > 0) {
+            texto.append(unidades[parteEntera]).append(" ");
+        }
+
+        texto.append("y ").append(String.format("%02d/100", parteDecimal)).append(" nuevos soles");
+
+        return texto.toString().trim();
     }
 
 

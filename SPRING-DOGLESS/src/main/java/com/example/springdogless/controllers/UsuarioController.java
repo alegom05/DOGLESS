@@ -6,12 +6,14 @@ import com.example.springdogless.DTO.ResenaDTO;
 import com.example.springdogless.DTO.TarjetaRequest;
 import com.example.springdogless.Repository.*;
 import com.example.springdogless.entity.*;
+import com.example.springdogless.services.OrdenService;
 import com.itextpdf.text.pdf.draw.LineSeparator;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
@@ -72,6 +74,8 @@ public class UsuarioController {
     ReclamoRepository reclamoRepository;
     @Autowired
     SolicitudRepository solicitudRepository;
+    @Autowired
+    private OrdenService ordenService;
 
     @Autowired
     LiveMessagesRepository liveMessagesRepository;
@@ -195,6 +199,7 @@ public class UsuarioController {
 
         mailSender.send(message);
     }
+    /*
     @GetMapping("/descargarboleta")
     public void descargarBoleta(@RequestParam("id") Integer id, HttpServletResponse response, RedirectAttributes redirectAttributes) throws DocumentException, IOException {
         Optional<Orden> optionalOrden = ordenRepository.findById(id);
@@ -234,7 +239,7 @@ public class UsuarioController {
             document.add(new Paragraph("Estado: " + orden.getEstado()));
             document.add(new Paragraph("Fecha: " + orden.getFecha()));
             document.add(new Paragraph("Dirección de Envío: " + orden.getDireccionenvio()));
-            document.add(new Paragraph("Método de Pago: " + orden.getMetodopago()));
+            document.add(new Paragraph("Metodo de Pago: " + orden.getMetodopago()));
             document.add(new Paragraph("Total: " + orden.getTotal(), new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD)));
             document.add(Chunk.NEWLINE);
 
@@ -282,6 +287,11 @@ public class UsuarioController {
 
     }
 
+     */
+    @GetMapping("/descargarboleta")
+    public ResponseEntity<Resource> descargarBoleta(@RequestParam("id") Integer id) {
+        return ordenService.exportBoleta(id);
+    }
 
 
     @GetMapping({"/guia"})
