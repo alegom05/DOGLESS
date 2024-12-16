@@ -92,6 +92,11 @@ public class LoginController {
             model.addAttribute("error", "Las contraseñas no coinciden. Por favor, verifica.");
             return "register"; // Devuelve la misma vista del formulario
         }
+        // Verifica si el correo ya existe
+        if (usuarioRepository.findByEmail(usuario.getEmail()) != null) {
+            model.addAttribute("error", "El correo ingresado ya está registrado.");
+            return "register"; // Devuelve la misma vista del formulario
+        }
         Rol rol = rolRepository.findById(4)
                 .orElseThrow(() -> new RuntimeException("Rol no encontrado"));
 
