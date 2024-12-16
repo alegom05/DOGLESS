@@ -23,15 +23,15 @@ public class Reposicion {
     @Column(name = "fecha_pedido")
     private Date fecha_pedido;
 
-    @Column(name = "aprobar", length = 45)
+    @Column(name = "aprobar", length = 45, nullable = true)
     private String aprobar;
 
     @ManyToOne
     @JoinColumn(name = "idproductos", nullable = false)
     private Producto producto;
 
-    @ManyToOne (cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "idzonas")
+    @ManyToOne
+    @JoinColumn(name = "idzonas", nullable = false)
     private Zona zona;
 
     private Integer borrado;

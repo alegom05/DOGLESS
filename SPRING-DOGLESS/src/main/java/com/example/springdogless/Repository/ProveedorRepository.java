@@ -33,6 +33,7 @@ public interface ProveedorRepository extends JpaRepository<Proveedor, Integer>{
             "ORDER BY cantidad DESC")
     List<Object[]> findTop5Proveedores();
 
+    List<Proveedor> findByNombreIsNotNullAndApellidoIsNotNull();
 
     @Query("SELECT p.tienda AS tienda, COUNT(p) AS totalPedidos " +
             "FROM proveedores p " +

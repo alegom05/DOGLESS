@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -365,8 +366,12 @@ public class ZonalController {
     @GetMapping("/nuevaReposicion")
     public String nuevaReposicion(Model model, @ModelAttribute("reposicion") Reposicion reposicion) {
         model.addAttribute("listaReposiciones", reposicionRepository.findAll());
-        model.addAttribute("listaProveedores", proveedorRepository.findAll());
+        List<Proveedor> listaProveedores = proveedorRepository.findByNombreIsNotNullAndApellidoIsNotNull();
+        model.addAttribute("listaProveedores", listaProveedores);
         model.addAttribute("listaProductos", productRepository.findAll());
+        // Obtener la lista de zonas
+        List<Zona> listaZonas = zonaRepository.findAll();
+        model.addAttribute("listaZonas", listaZonas);
         return "zonal/editarReposicion";
     }
 
@@ -381,51 +386,190 @@ public class ZonalController {
             reposicion = optReposicion.get();
             model.addAttribute("reposicion", reposicion);
             model.addAttribute("listaReposiciones", reposicionRepository.findAll());
-            model.addAttribute("listaProveedores", proveedorRepository.findAll());
+            model.addAttribute("listaProveedores", proveedorRepository.findByNombreIsNotNullAndApellidoIsNotNull());
             model.addAttribute("listaProductos", productRepository.findAll());
 
-            return "zonal/editarReposicion";
+            return "zonal/editarReposicionDeVerdad";
         } else {
-            return "redirect:zonal/reposiciones";
+            return "redirect:/zonal/reposiciones";
         }
     }
+
 
     @PostMapping("/guardarReposicion")
-    public String guardarReposicion(RedirectAttributes attr, Model model,
-                                  @ModelAttribute("reposicion") @Valid Reposicion reposicion, BindingResult bindingResult) {
-        if (!bindingResult.hasErrors()) { //si no hay errores, se realiza el flujo normal
+    public String guardarReposicion(
+            @RequestParam("productoId") Integer productoId,
+            @RequestParam("zonaId") String zonaId,
+            @RequestParam("fechaPedido") String fechaPedidoStr,
+            @RequestParam("cantidad") Integer cantidad,
+            @RequestParam("aprobar") String aprobar,
+            RedirectAttributes attr,
+            Model model) {
 
-            if (reposicion.getCantidad()==8) {
-                model.addAttribute("msg", "Error al crear producto");
+        try {
+            // Validar cantidad
+            if (cantidad <= 0) {
+                model.addAttribute("msg", "Error: Cantidad debe ser un número positivo.");
                 model.addAttribute("listaProductos", productRepository.findAll());
-                model.addAttribute("listaReposiciones", reposicionRepository.findAll());
-
                 return "zonal/editarReposicion";
-            } else {
-                if (reposicion.getId() == null) {
-                    attr.addFlashAttribute("msg", "Reposición creada exitosamente");
-                } else {
-                    attr.addFlashAttribute("msg", "Reposición actualizada exitosamente");
-                }
-                if (reposicion.getProducto() != null && reposicion.getProducto().getId() == null) {
-                    productRepository.save(reposicion.getProducto());
-                }
-                if (reposicion.getProducto() != null && reposicion.getProducto().getProveedor() != null
-                        && reposicion.getProducto().getProveedor().getId() == null) {
-                    proveedorRepository.save(reposicion.getProducto().getProveedor());
-                }
-                reposicion.setBorrado(1);
-                reposicionRepository.save(reposicion);
-                return "redirect:zonal/reposiciones";
             }
 
-        } else { //hay al menos 1 error
+            if (cantidad > 500) {
+                model.addAttribute("msg", "Error: Cantidad no válida.");
+                model.addAttribute("listaProductos", productRepository.findAll());
+                return "zonal/editarReposicion";
+            }
+
+            // Validar fecha de pedido: no debe ser anterior a hoy
+            LocalDate fechaPedido = LocalDate.parse(fechaPedidoStr);
+            if (fechaPedido.isBefore(LocalDate.now())) {
+                model.addAttribute("msg", "Error: Fecha de pedido no puede ser anterior a hoy.");
+                model.addAttribute("listaProductos", productRepository.findAll());
+                return "zonal/editarReposicion";
+            }
+
+            // Buscar Producto
+            Producto producto = productRepository.findById(productoId)
+                    .orElse(null);
+            if (producto == null) {
+                model.addAttribute("msg", "Error: Producto no encontrado.");
+                model.addAttribute("listaProductos", productRepository.findAll());
+                return "zonal/editarReposicion";
+            }
+
+
+            // Buscar Zona
+            Zona zona = zonaRepository.findById(Integer.parseInt(zonaId))
+                    .orElse(null);
+            if (zona == null) {
+                model.addAttribute("msg", "Error: Zona no encontrada.");
+                model.addAttribute("listaProductos", productRepository.findAll());
+                return "zonal/editarReposicion";
+            }
+
+            // Crear reposición
+            Reposicion reposicion = new Reposicion();
+            reposicion.setZona(zona);
+            reposicion.setProducto(producto);
+            reposicion.setCantidad(cantidad);
+            reposicion.setAprobar(aprobar);
+            reposicion.setBorrado(1);
+            reposicion.setFecha_pedido(Date.valueOf(fechaPedido));
+
+            // Guardar reposición
+            reposicionRepository.save(reposicion);
+
+            // Mensaje de éxito
+            attr.addFlashAttribute("msg", "Reposición creada exitosamente.");
+            return "redirect:/zonal/reposiciones";
+
+        } catch (NumberFormatException e) {
+            model.addAttribute("error", "Error al convertir los datos.");
+        } catch (Exception e) {
+            model.addAttribute("error", "Ocurrió un error al guardar la reposición: " + e.getMessage());
+        }
+
+        // Retornar la página con los datos para la vista
+        model.addAttribute("listaProductos", productRepository.findAll());
+        return "zonal/editarReposicion";
+    }
+
+
+
+    @PostMapping("/actualizarReposicion")
+    public String actualizarReposicion(
+            @RequestParam("reposicionId") Integer reposicionId,
+            @RequestParam("productoId") Integer productoId,
+            @RequestParam("zonaId") String zonaId,
+            @RequestParam("fechaPedido") String fechaPedidoStr,
+            @RequestParam("cantidad") Integer cantidad,
+            RedirectAttributes attr,
+            Model model) {
+
+        try {
+            // Validación de cantidad
+            if (cantidad <= 0) {
+                model.addAttribute("msg", "Error: Cantidad debe ser un número positivo.");
+                model.addAttribute("listaProductos", productRepository.findAll());
+                return "zonal/editarReposicion";
+            }
+
+            if (cantidad > 500) {
+                model.addAttribute("msg", "Error: Cantidad no válida.");
+                model.addAttribute("listaProductos", productRepository.findAll());
+                return "zonal/editarReposicion";
+            }
+
+            // Validar fecha de pedido
+            LocalDate fechaPedido;
+            try {
+                fechaPedido = LocalDate.parse(fechaPedidoStr);
+                if (fechaPedido.isBefore(LocalDate.now())) {
+                    model.addAttribute("msg", "Error: Fecha de pedido no puede ser anterior a hoy.");
+                    model.addAttribute("listaProductos", productRepository.findAll());
+                    return "zonal/editarReposicion";
+                }
+            } catch (Exception e) {
+                model.addAttribute("msg", "Formato de fecha no válido.");
+                model.addAttribute("listaProductos", productRepository.findAll());
+                return "zonal/editarReposicion";
+            }
+
+            // Buscar la reposición por ID
+            Reposicion reposicionExistente = reposicionRepository.findById(reposicionId)
+                    .orElse(null);
+
+            if (reposicionExistente == null) {
+                model.addAttribute("msg", "Error: Reposición no encontrada.");
+                model.addAttribute("listaProductos", productRepository.findAll());
+                return "zonal/editarReposicion";
+            }
+
+            // Buscar el producto
+            Producto producto = productRepository.findById(productoId)
+                    .orElse(null);
+
+            if (producto == null) {
+                model.addAttribute("msg", "Error: Producto no encontrado.");
+                model.addAttribute("listaProductos", productRepository.findAll());
+                return "zonal/editarReposicion";
+            }
+
+            // Validar la zona
+            Zona zona;
+            try {
+                zona = zonaRepository.findById(Integer.parseInt(zonaId)).orElse(null);
+                if (zona == null) {
+                    model.addAttribute("msg", "Error: Zona no encontrada.");
+                    model.addAttribute("listaProductos", productRepository.findAll());
+                    return "zonal/editarReposicion";
+                }
+            } catch (NumberFormatException e) {
+                model.addAttribute("msg", "Error: ID de zona no válido.");
+                model.addAttribute("listaProductos", productRepository.findAll());
+                return "zonal/editarReposicion";
+            }
+
+            // Actualizar los campos
+            reposicionExistente.setProducto(producto);
+            reposicionExistente.setZona(zona);
+            reposicionExistente.setCantidad(cantidad);
+            reposicionExistente.setFecha_pedido(Date.valueOf(fechaPedido));
+
+            reposicionRepository.save(reposicionExistente);
+
+            // Mensaje de éxito
+            attr.addFlashAttribute("msg", "Reposición actualizada exitosamente.");
+            return "redirect:/zonal/reposiciones";
+
+        } catch (Exception e) {
+            model.addAttribute("error", "Ocurrió un error inesperado: " + e.getMessage());
             model.addAttribute("listaProductos", productRepository.findAll());
-            model.addAttribute("listaReposiciones", reposicionRepository.findAll());
             return "zonal/editarReposicion";
         }
     }
-    
+
+
 
     @PostMapping("/borrarReposicion")
     public String borrarAdminZonal(@RequestParam("id") Integer id, RedirectAttributes attr) {

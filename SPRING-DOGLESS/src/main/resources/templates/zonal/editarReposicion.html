@@ -59,83 +59,60 @@
           <div class="page-inner">
             <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
               <div>
-                <h3 class="fw-bold mb-3" th:text="${reposicion.id==null? 'Nueva Reposición':'Editar Reposición'}">Editar Reposición</h3>
-
+                <h3 class="fw-bold mb-3">Editar Reposición</h3>
               </div>
             </div>
+            <!-- Mensaje de éxito -->
+            <div class="alert alert-success" th:if="${msg}" th:text="${msg}"></div>
+
+            <!-- Mensaje de error -->
+            <div class="alert alert-danger" th:if="${error}" th:text="${error}"></div>
+
             <div class="row">
               <div class="col-md-12">
                 <div class="card">
                   <div class="card-body">
-                    <form class="needs-validation" th:object="${reposicion}" th:action="@{/zonal/guardarReposicion}" method="POST">
-                    <input th:field="*{id}" type="hidden"/>
+                    <form class="needs-validation" th:action="@{/zonal/guardarReposicion}" method="POST">
                       <div class="container">
                         <div class="row">
                           <!-- Columna izquierda -->
-                          <div class="col-md-6">
-                            <!--
+                          <div class="col-md-12">
                             <div class="mb-3">
-                              <label for="idproveedor" class="form-label">Proveedor: (*)</label>
-                              <select name="idproveedor" id="idproveedor" class="form-select" required>
-                                <option value="" disabled selected>Escoja una opción</option>
-                                <option th:each="proveedor : ${listaProveedores}" th:text="${proveedor.tienda}" th:value="${proveedor.id}"></option>
+                              <label for="producto">Producto:</label>
+                              <select id="producto" class="form-select" name="productoId" required>
+                                <option value="" disabled selected>Seleccione un producto</option>
+                                <th:block th:each="producto : ${listaProductos}">
+                                  <option th:value="${producto.id}" th:text="${producto.nombre}"></option>
+                                </th:block>
                               </select>
-                              <div class="invalid-feedback">Por favor seleccionar una zona.</div>
-                            </div>
-                             -->
-                            <div class="mb-3">
-                              <label class="form-label">Nombre del producto</label>
-                              <input th:field="*{producto.nombre}" type="text" class="form-control" disabled/>
-                              <div class="invalid-feedback" th:if="${#fields.hasErrors('producto.nombre')}" th:errors="*{producto.nombre}"></div>
                             </div>
 
                             <div class="mb-3">
-                              <label class="form-label">Cantidad</label>
-                              <input th:field="*{cantidad}" type="number" class="form-control"/>
-                              <div class="invalid-feedback" th:if="${#fields.hasErrors('cantidad')}" th:errors="*{cantidad}"></div>
+                              <label class="form-label" for="cantidad">Cantidad</label>
+                              <input type="number" id="cantidad"  class="form-control" name="cantidad" min="1" required/>
                             </div>
 
                             <div class="mb-3">
-                              <label class="form-label">Fecha de pedido</label>
-                              <input type="date" th:field="*{fecha_pedido}" class="form-control"/>
-                              <div class="invalid-feedback" th:if="${#fields.hasErrors('fecha_pedido')}" th:errors="*{fecha_pedido}"></div>
+                              <label class="form-label" for="fechaPedido">Fecha de pedido</label>
+                              <input type="date" id="fechaPedido" class="form-control" name="fechaPedido" required/>
                             </div>
 
-                            <div class="mb-3">
-                              <label class="form-label">Proveedor</label>
-                              <input th:field="*{producto.proveedor.tienda}" type="text" class="form-control"/>
-                              <div class="invalid-feedback" th:if="${#fields.hasErrors('producto.proveedor.tienda')}" th:errors="*{producto.proveedor.tienda}"></div>
+                            <div class="mb-3" style="display: none;">
+                              <input type="hidden" name="aprobar" value="Pendiente" />
                             </div>
 
+                            <div>
+                              <label for="zonaId" style="display:none;">Zona:</label>
+                              <input type="hidden" id="zonaId" name="zonaId" class="form-control"
+                                     th:value="${session.idzona}" />
+                            </div>
 
                           </div>
 
-                          <!-- Columna derecha -->
-                          <div class="col-md-6">
-
-
-                            <div class="mb-3">
-                              <label class="form-label">Estado</label>
-                              <select name="aprobar" id="aprobar" class="form-control">
-                                <option value="">Elegir un estado</option>
-                                <option value="Aprobado">Aprobado</option>
-                                <option value="Pendiente">Pendiente</option>
-                              </select>
-                              <div class="invalid-feedback" th:if="${#fields.hasErrors('aprobar')}" th:errors="*{aprobar}"></div>
-                            </div>
-
-                            <div class="mb-3">
-                              <label class="form-label">Descripción:</label>
-                              <textarea name="descripcion" id="descripcion" class="form-control" rows="9" placeholder="Ej: El iPhone 14 Pro es el último modelo de la serie de teléfonos móviles premium..."
-                                        th:field="*{producto.descripcion}" required></textarea>
-                              <div class="invalid-feedback" th:if="${#fields.hasErrors('producto.descripcion')}" th:errors="*{producto.descripcion}"></div>
-                            </div>
                         </div>
 
                         <div class="btn-container" style="text-align: center; margin-top: 20px;">
-                          <button type="submit" class="btn btn-primary" style="width: 280px"
-                                  th:text="${reposicion.id==null? 'Crear':'Actualizar'}">Actualizar
-                          </button>
+                          <button type="submit" class="btn btn-primary" style="width: 280px">Enviar Pedido</button>
                           <a th:href="@{/zonal/reposiciones}" class="btn btn-secondary" style="width: 280px;">Cancelar</a>
                         </div>
                       </div>
@@ -165,6 +142,10 @@
       <!-- Kaiadmin JS -->
       <script src="/assets/js/kaiadmin.min.js"></script>
       <script>
+        // Obtener la fecha actual en formato ISO (YYYY-MM-DD)
+        const today = new Date().toISOString().split("T")[0];
+        // Establecer el valor mínimo en el campo de fecha
+        document.getElementById("fechaPedido").setAttribute("min", today);
         $(document).ready(function () {
           var forms = document.querySelectorAll('.needs-validation');
   
@@ -266,17 +247,5 @@
         });
       </script>
       <!-- Script para vista previa de imagen -->
-      <script>
-        function previewImage(event) {
-          var input = event.target;
-          var reader = new FileReader();
-          reader.onload = function() {
-            var preview = document.getElementById('imagePreview');
-            preview.src = reader.result;  // Reemplazar imagen por defecto con la seleccionada
-            preview.style.display = 'block';
-          }
-          reader.readAsDataURL(input.files[0]);
-        }
-      </script>
   </body>
 </html>
