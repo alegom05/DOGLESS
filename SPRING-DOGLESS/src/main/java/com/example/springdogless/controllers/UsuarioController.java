@@ -112,9 +112,8 @@ public class UsuarioController {
 
         if (optionalOrden.isPresent() && optionalOrden.get() != null) {
             Orden orden = optionalOrden.get();
-            List<DetallesOrdenDTO> listaProductos = detallesRepository.findProductosPorIdOrden(id);
             model.addAttribute("orden", orden);
-            model.addAttribute("listaProductos", listaProductos);
+            model.addAttribute("listaProductos", detallesRepository.findDetallesByOrden(id));
             return "usuario/editarOrden";
         } else {
             return "redirect:usuario";
@@ -122,19 +121,78 @@ public class UsuarioController {
     }
 
     @PostMapping("/guardarOrden")
-    public String guardarOrden(HttpServletRequest request) {
+    public String guardarOrden(@RequestParam("idDetallesOrden") List<Integer> idDetallesOrden,
+                               @RequestParam(value = "eliminados", required = false) List<Integer> eliminados,
+                               @RequestParam("idOrdenes") List<Integer> idOrdenes,
+                               @RequestParam("cantidades") List<String> cantidadesStr,
+                               RedirectAttributes redirectAttributes) {
 
-        // Imprime todos los parámetros recibidos
-        System.out.println("Parámetros recibidos:");
-
-        for (String paramName : request.getParameterMap().keySet()) {
-            System.out.println(paramName + ": " + request.getParameter(paramName));
+        // Si no hay productos en la orden después de eliminar
+        if (idDetallesOrden.isEmpty() && (eliminados == null || eliminados.isEmpty())) {
+            redirectAttributes.addFlashAttribute("msg", "No se pueden eliminar todos los productos.");
+            return "redirect:/usuario/";
         }
 
-        return "redirect:/exito"; // Redirige después de procesar los datos
+        // Elimina lógicamente los productos marcados como eliminados
+        if (eliminados != null) {
+            for (Integer idEliminado : eliminados) {
+                detallesRepository.deleteById(idEliminado);
+            }
+        }
+
+        BigDecimal total = BigDecimal.valueOf(0);
+
+        // Itera sobre las listas para actualizar cada cantidad en la tabla detallesorden
+        for (int i = 0; i < idDetallesOrden.size(); i++) {
+            Integer idDetalle = Integer.valueOf(idDetallesOrden.get(i));
+            String nuevaCantidadStr=cantidadesStr.get(i);
+
+
+            Integer cantidad;
+            try {
+                cantidad = Integer.parseInt(nuevaCantidadStr);
+                if (cantidad < 1 || cantidad>10) {
+                    throw new NumberFormatException();
+                }
+            } catch (NumberFormatException ex) {
+                redirectAttributes.addFlashAttribute("error", "Error en el tipo de datos.");
+                return "redirect:/usuario/";
+            }
+
+            // Busca el detalle de la orden por idDetalle
+            Detalleorden detalle = detallesRepository.findById(idDetalle)
+                    .orElse(null); // Cambiamos a null para verificar más adelante
+            // Verifica si se encontró el detalle
+            if (detalle == null) {
+                redirectAttributes.addFlashAttribute("mensaje", "Detalle no encontrado para ID: " + idDetalle);
+                return "redirect:/usuario/";
+            }
+
+            BigDecimal precioUni = detalle.getPreciounitario();
+            BigDecimal subtotal = precioUni.multiply(BigDecimal.valueOf(cantidad));
+
+            // Actualiza la cantidad y el subtotal
+            detalle.setCantidad(cantidad);
+            detalle.setSubtotal(subtotal);
+            total = total.add(subtotal);
+
+            // Guarda los cambios
+            detallesRepository.save(detalle);
+        }
+
+        // Recalcular el subtotal (cantidad * precio unitario)
+        Optional<Orden> optOrden = ordenRepository.findById(idOrdenes.get(0));
+        if (optOrden.isPresent()) {
+            Orden orden = optOrden.get();
+            orden.setTotal(total);
+            ordenRepository.save(orden);
+        }
+        redirectAttributes.addFlashAttribute("msg", "Datos actualizados correctamente.");
+        return "redirect:/usuario/";
+// Redirige después de procesar los datos
     }
 
-    /*@PostMapping("/eliminarorden")
+    @PostMapping("/eliminarordenlista")
     public String eliminarOrden(@RequestParam("id") Integer id, HttpSession session, RedirectAttributes redirectAttributes) {
         Usuario usuarioLogueado = (Usuario) session.getAttribute("usuario");
 
@@ -161,20 +219,21 @@ public class UsuarioController {
         detallesRepository.deleteById(id);
 
         // Simulación del reembolso mediante correo
+        /*
         try {
             enviarCorreoReembolso(usuarioLogueado.getEmail(), orden.getOrden().getTotal());
         } catch (MessagingException e) {
             e.printStackTrace();
             redirectAttributes.addFlashAttribute("error", "No se pudo enviar el correo de reembolso.");
             return "redirect:/usuario";
-        }
+        }*/
 
         // Mensaje de éxito
         redirectAttributes.addFlashAttribute("success", "Orden eliminada y reembolso realizado.");
         return "redirect:/usuario";
     }
 
-     */
+
     @PostMapping("/eliminarorden")
     public String borrarOrden(@RequestParam("id") Integer id, RedirectAttributes attr) {
         Optional<Detalleorden> optDetalleorden = detallesRepository.findById(id);

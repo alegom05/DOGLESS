@@ -38,11 +38,14 @@ public interface Detallesorden2 extends JpaRepository<Detalleorden, Integer> {
             "WHERE o.idusuarios = :id AND o.estado = 'CREADO'",nativeQuery = true)
     List<Detalleorden> findByOrdenCreado(@Param("id") Integer id);
 
-    @Query(value = "SELECT do.idproducto, p.nombre, do.cantidad, do.preciounitario, do.subtotal " +
+    @Query(value = "SELECT * FROM detallesorden WHERE idorden = :id",nativeQuery = true)
+    List<Detalleorden> findDetallesByOrden(@Param("id") Integer id);
+
+    /*@Query(value = "SELECT do.idproducto, p.nombre, do.cantidad, do.preciounitario, do.subtotal " +
             "FROM detallesorden do " +
             "JOIN productos p ON do.idproducto = p.idproductos " +
             "WHERE do.idorden = :idorden", nativeQuery = true)
-    List<DetallesOrdenDTO> findProductosPorIdOrden(@Param("idorden") Integer idOrden);
+    List<DetallesOrdenDTO> findProductosPorIdOrden(@Param("idorden") Integer idOrden);*/
 
     @Query(value = "SELECT do.*\n" +
             "FROM detallesorden do\n" +

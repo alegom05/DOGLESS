@@ -158,7 +158,7 @@
 
                             </div>
                             <div class="modal-footer">
-                              <form id="deleteForm" method="post" th:action="@{'/usuario/eliminarorden'}" novalidate>
+                              <form id="deleteForm" method="post" th:action="@{'/usuario/eliminarordenlista'}" novalidate>
                                 <input type="hidden" name="id" id="userId">
                                 <button type="submit" class="btn btn-dark">Eliminar</button>
                               </form>
@@ -318,12 +318,16 @@
       });
     </script>
     <script>
-      // Este script asigna el ID del usuario al modal antes de abrirlo
-      $('#confirmDeleteModal').on('show.bs.modal', function (event) {
-        var button = $(event.relatedTarget); // Botón que abrió el modal
-        var userId = button.data('id'); // Extraer la información de atributos de datos
-        var modal = $(this);
-        modal.find('#userId').val(userId); // Asigna el ID al campo oculto
+      // Captura el evento al abrir el modal
+      const deleteModal = document.getElementById('confirmDeleteModal');
+      deleteModal.addEventListener('show.bs.modal', function (event) {
+        // Botón que disparó el modal
+        const button = event.relatedTarget;
+        // Extraer data-id del botón
+        const orderId = button.getAttribute('data-id');
+        // Actualizar el valor del input oculto en el formulario
+        const inputId = deleteModal.querySelector('#userId');
+        inputId.value = orderId;
       });
     </script>
     <script>
