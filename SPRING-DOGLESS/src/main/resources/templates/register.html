@@ -139,10 +139,10 @@
             }
 
             function validarContrasena(contrasena) {
-                // Mínimo 8 caracteres, al menos una letra mayúscula, una letra minúscula y un número
-                var expReg = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+                var expReg = /^(?=.*\d)(?=.*[a-zA-Z])(?=(?:.*[!@#$%^&*]){2}).{8,16}$/;
                 return expReg.test(contrasena);
             }
+
 
             function validarCoincidenciaContrasenas(contrasena, confirmarContrasena) {
                 return contrasena === confirmarContrasena;

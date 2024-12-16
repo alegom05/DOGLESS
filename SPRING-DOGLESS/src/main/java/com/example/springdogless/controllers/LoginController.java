@@ -97,6 +97,11 @@ public class LoginController {
             model.addAttribute("error", "El correo ingresado ya está registrado.");
             return "register"; // Devuelve la misma vista del formulario
         }
+
+        if (!usuario.getPwd().matches("^(?=.*\\d)(?=.*[a-zA-Z])(?=(?:.*[!@#$%^&*]){2}).{8,16}$")) {
+            model.addAttribute("error", "La contraseña debe tener entre 8 y 16 caracteres, incluir al menos 1 letra, 1 número y 2 caracteres especiales.");
+            return "register";
+        }
         Rol rol = rolRepository.findById(4)
                 .orElseThrow(() -> new RuntimeException("Rol no encontrado"));
 
