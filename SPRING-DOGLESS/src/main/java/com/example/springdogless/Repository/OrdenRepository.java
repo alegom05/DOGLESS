@@ -4,7 +4,6 @@ import com.example.springdogless.DTO.OrdenDTO;
 import com.example.springdogless.DTO.OrdenEstadoDTO;
 import com.example.springdogless.entity.Orden;
 import com.example.springdogless.entity.Usuario;
-import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -13,7 +12,6 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.Date;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @Repository
@@ -137,8 +135,11 @@ public interface OrdenRepository extends JpaRepository<Orden, Integer> {
     @Query("SELECT count(*) FROM ordenes o WHERE o.usuario.zona.idzonas = :zonaId")
     Integer findOrdenesByZona(@Param("zonaId") Integer zonaId);
 
-    @Query(value="SELECT * FROM dogless.ordenes WHERE idusuarios=:id ORDER BY fecha DESC", nativeQuery = true)
+    @Query(value="SELECT * FROM dogless.ordenes WHERE idusuarios=:id and borrado=1 ORDER BY fecha DESC", nativeQuery = true)
     List<Orden> findOrdenesPorId(@Param("id") Integer id);
+
+    @Query(value="select * from ordenes where ordenes.idordenes=:id",nativeQuery = true)
+    Optional<Orden> findOrdenPorId(@Param("id") Integer id);
 
 
 

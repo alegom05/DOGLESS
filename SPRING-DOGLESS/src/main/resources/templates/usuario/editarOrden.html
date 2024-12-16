@@ -71,7 +71,7 @@
                             <div id="wizard-checkout" class="bs-stepper wizard-icons wizard-icons-example mb-5">
                                 <div class="bs-stepper-content border-top">
                                     <form class="needs-validation" style="width: 100%; margin-left: 0%; margin-top: 3%;" method="POST" th:action="@{/usuario/guardarOrden}" novalidate>
-                                        <input name="id" th:value="${session.usuario.id}" type="hidden"/>
+                                        <input name="idOrden" th:value="${orden.id}" type="hidden"/>
                                         <div class="container">
                                             <div class="row">
                                                 <div class="col-md-6">
@@ -98,7 +98,7 @@
                                                     <div class="row py-2">
                                                         <div class="col">
                                                             <label for="direccion" class="form-label">Dirección:</label>
-                                                            <input type="text" name="direccion" id="direccion" class="form-control" th:value="${session.usuario.direccion}" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+" placeholder="Ej: Av Universitaria 2049">
+                                                            <input type="text" name="direccion" id="direccion" class="form-control" th:value="${orden.direccionenvio}" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+" placeholder="Ej: Av Universitaria 2049">
                                                             <div class="invalid-feedback">Ingresar dirección válida.</div>
                                                         </div>
                                                     </div>
@@ -127,7 +127,7 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody id="productos-lista">
-                                                            <tr th:each="detalleorden : ${listaProductos}">
+                                                            <tr th:each="detalleorden : ${orden.detalleOrden}">
                                                                 <input type="hidden" name="idDetallesOrden" th:value="${detalleorden.id}" />
                                                                 <input type="hidden" name="idOrdenes" th:value="${detalleorden.orden.id}" />
                                                                 <td class="text-center">
@@ -136,13 +136,14 @@
                                                                 <td th:text="${detalleorden.producto.nombre}"></td>
                                                                 <td>
                                                                     <input type="number" name="cantidades" class="form-control"
-                                                                           th:value="${detalleorden.cantidad}" min="1"
+                                                                           th:value="${detalleorden.cantidad}" min="1" max="10"
                                                                            onchange="actualizarSubtotal(this)"/>
                                                                 </td>
                                                                 <td class="precio-unitario" th:text="${detalleorden.preciounitario}"></td>
                                                                 <td class="subtotal" th:text="${detalleorden.subtotal}"></td>
                                                             </tr>
                                                         </tbody>
+
                                                     </table>
 
                                                     <div class="text-end py-2 me-4">
@@ -214,6 +215,16 @@
             // Actualiza el valor total en el DOM
             document.getElementById('total').textContent = `Total: S/.${total.toFixed(2)}`;
         }
+    </script>
+    <script>
+        document.getElementById("form-productos").addEventListener("submit", function (e) {
+            const filasVisibles = document.querySelectorAll('#productos-lista tr:not([style*="display: none"])');
+
+            if (filasVisibles.length === 0) {
+                e.preventDefault(); // Detiene el envío del formulario
+                alert("No es posible guardar los cambios porque no hay productos en la lista.");
+            }
+        });
     </script>
 
 
