@@ -103,7 +103,7 @@
                         </thead>
                         <tbody>
                           <tr th:each="reposicion, info : ${listaReposiciones}">
-                            <td th:text="${reposicion.id}"></td>
+                            <td th:text="${info.index + 1}"></td>
                             <td th:text="${reposicion.producto.nombre}"></td>
                             <td th:text="${reposicion.cantidad}"></td>
                             <td th:text="${reposicion.fecha_pedido}"></td>
