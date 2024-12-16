@@ -491,13 +491,13 @@ public class ZonalController {
             if (cantidad <= 0) {
                 model.addAttribute("msg", "Error: Cantidad debe ser un número positivo.");
                 model.addAttribute("listaProductos", productRepository.findAll());
-                return "zonal/editarReposicion";
+                return "zonal/editarReposicionDeVerdad";
             }
 
             if (cantidad > 500) {
                 model.addAttribute("msg", "Error: Cantidad no válida.");
                 model.addAttribute("listaProductos", productRepository.findAll());
-                return "zonal/editarReposicion";
+                return "zonal/editarReposicionDeVerdad";
             }
 
             // Validar fecha de pedido
@@ -507,12 +507,12 @@ public class ZonalController {
                 if (fechaPedido.isBefore(LocalDate.now())) {
                     model.addAttribute("msg", "Error: Fecha de pedido no puede ser anterior a hoy.");
                     model.addAttribute("listaProductos", productRepository.findAll());
-                    return "zonal/editarReposicion";
+                    return "zonal/editarReposicionDeVerdad";
                 }
             } catch (Exception e) {
                 model.addAttribute("msg", "Formato de fecha no válido.");
                 model.addAttribute("listaProductos", productRepository.findAll());
-                return "zonal/editarReposicion";
+                return "zonal/editarReposicionDeVerdad";
             }
 
             // Buscar la reposición por ID
@@ -522,7 +522,7 @@ public class ZonalController {
             if (reposicionExistente == null) {
                 model.addAttribute("msg", "Error: Reposición no encontrada.");
                 model.addAttribute("listaProductos", productRepository.findAll());
-                return "zonal/editarReposicion";
+                return "zonal/editarReposicionDeVerdad";
             }
 
             // Buscar el producto
@@ -532,7 +532,7 @@ public class ZonalController {
             if (producto == null) {
                 model.addAttribute("msg", "Error: Producto no encontrado.");
                 model.addAttribute("listaProductos", productRepository.findAll());
-                return "zonal/editarReposicion";
+                return "zonal/editarReposicionDeVerdad";
             }
 
             // Validar la zona
@@ -542,12 +542,12 @@ public class ZonalController {
                 if (zona == null) {
                     model.addAttribute("msg", "Error: Zona no encontrada.");
                     model.addAttribute("listaProductos", productRepository.findAll());
-                    return "zonal/editarReposicion";
+                    return "zonal/editarReposicionDeVerdad";
                 }
             } catch (NumberFormatException e) {
                 model.addAttribute("msg", "Error: ID de zona no válido.");
                 model.addAttribute("listaProductos", productRepository.findAll());
-                return "zonal/editarReposicion";
+                return "zonal/editarReposicionDeVerdad";
             }
 
             // Actualizar los campos
@@ -565,7 +565,7 @@ public class ZonalController {
         } catch (Exception e) {
             model.addAttribute("error", "Ocurrió un error inesperado: " + e.getMessage());
             model.addAttribute("listaProductos", productRepository.findAll());
-            return "zonal/editarReposicion";
+            return "zonal/editarReposicionDeVerdad";
         }
     }
 

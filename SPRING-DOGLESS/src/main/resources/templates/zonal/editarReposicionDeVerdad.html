@@ -76,14 +76,13 @@
                                 <form th:action="@{/zonal/actualizarReposicion}" method="POST">
                                     <div class="form-group mb-3">
                                         <label for="producto">Producto:</label>
-                                        <select id="producto" class="form-select" name="productoId" required>
-                                            <option value="" disabled>Seleccione un producto</option>
-                                            <th:block th:each="producto : ${listaProductos}">
-                                                <option th:value="${producto.id}" th:text="${producto.nombre}"
-                                                        th:selected="${producto.id == reposicion.producto.id}"></option>
-                                            </th:block>
-                                        </select>
+                                        <input type="text" id="producto" class="form-control"
+                                               th:value="${reposicion.producto.nombre}" disabled />
                                     </div>
+                                    <input type="hidden" name="productoId" th:value="${reposicion.producto.id}" />
+                                    <!-- Campo oculto para enviar zonaId -->
+                                    <input type="hidden" name="zonaId" th:value="${reposicion.zona.idzonas}" />
+
 
                                     <div class="form-group mb-3">
                                         <label for="cantidad">Cantidad:</label>
