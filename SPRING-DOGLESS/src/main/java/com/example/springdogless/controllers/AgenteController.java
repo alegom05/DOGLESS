@@ -416,7 +416,7 @@ public class AgenteController {
             model.addAttribute("ordenDetalles", orden2); // Diferente nombre
             return "agente/detalledeordenagente";
         } else {
-            return "redirect:/admin/ordenes";
+            return "redirect:/agente/ordenes";
         }
     }
 
