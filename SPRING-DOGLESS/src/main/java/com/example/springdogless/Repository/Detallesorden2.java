@@ -66,4 +66,6 @@ public interface Detallesorden2 extends JpaRepository<Detalleorden, Integer> {
     List<Detalleorden> findListaDetallesOrdenes(@Param("id") Integer id);
 
     List<Detalleorden> findAllByOrdenId(Integer id);
+
+    List<Detalleorden> findByOrdenId(Integer id);
 }

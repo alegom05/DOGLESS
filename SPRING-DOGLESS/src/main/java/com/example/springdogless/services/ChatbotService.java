@@ -735,8 +735,6 @@ public class ChatbotService {
                         return "Ocurrió un error al procesar el pago. Por favor, intente nuevamente.";
                     }
 
-                    // Generar el PDF
-                    byte[] pdfBytes = generarPDFResumenCompra(userId);
 
                     // Generar los mensajes
                     String resumenCompra = procesarPagoYMostrarResumen(userId); // Resumen de compra
@@ -889,12 +887,24 @@ public class ChatbotService {
 
 
     public byte[] generarPDFResumenCompra(String userId) {
-        Map<String, String> datos = datosUsuario.get(userId);
-
         try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
+            // Obtener la última orden generada por el usuario
+            Usuario usuario = usuarioRepository.findById(Integer.parseInt(userId))
+                    .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+            Orden ultimaOrden = ordenRepository.findLatestOrdenEstadoCreado(usuario.getId());
+            if (ultimaOrden == null) {
+                throw new RuntimeException("No se encontró una orden activa para este usuario.");
+            }
+
+            List<Detalleorden> detallesOrden = detallesRepository.findByOrdenId(ultimaOrden.getId());
+            if (detallesOrden.isEmpty()) {
+                throw new RuntimeException("No hay detalles asociados con la orden.");
+            }
+
+            // Iniciar la creación del documento PDF
             Document document = new Document();
             PdfWriter.getInstance(document, baos);
-
             document.open();
 
             // Encabezado principal
@@ -912,7 +922,7 @@ public class ChatbotService {
 
             // Título de la boleta
             Font titleFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 16);
-            Paragraph title = new Paragraph("Boleta de Orden #" + userId, titleFont);
+            Paragraph title = new Paragraph("Boleta de Orden #" + ultimaOrden.getId(), titleFont);
             title.setAlignment(Element.ALIGN_CENTER);
             document.add(title);
 
@@ -921,10 +931,10 @@ public class ChatbotService {
             // Información de la orden
             Font sectionFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 14);
             document.add(new Paragraph("Información de la Orden", sectionFont));
-            document.add(new Paragraph("Estado: Confirmada"));
-            document.add(new Paragraph("Fecha: " + new java.sql.Date(System.currentTimeMillis()).toString()));
-            document.add(new Paragraph("Dirección de Envío: " + datos.get("direccion")));
-            document.add(new Paragraph("Método de Pago: Tarjeta"));
+            document.add(new Paragraph("Estado: " + ultimaOrden.getEstado()));
+            document.add(new Paragraph("Fecha: " + ultimaOrden.getFecha()));
+            document.add(new Paragraph("Dirección de Envío: " + ultimaOrden.getDireccionenvio()));
+            document.add(new Paragraph("Método de Pago: " + ultimaOrden.getMetodopago()));
 
             document.add(new Paragraph(" ")); // Espacio
 
@@ -944,16 +954,17 @@ public class ChatbotService {
             table.addCell(new Phrase("Precio Unitario", tableHeaderFont));
             table.addCell(new Phrase("Subtotal", tableHeaderFont));
 
-            // Detalles del producto
-            String productoNombre = datos.get("productoNombre");
-            int cantidad = Integer.parseInt(datos.get("cantidad"));
-            double precioUnitario = Double.parseDouble(datos.get("productoPrecio"));
-            double subtotal = cantidad * precioUnitario;
+            BigDecimal total = BigDecimal.ZERO;
 
-            table.addCell(productoNombre);
-            table.addCell(String.valueOf(cantidad));
-            table.addCell(String.format("S/. %.2f", precioUnitario));
-            table.addCell(String.format("S/. %.2f", subtotal));
+            // Añadir filas con los productos
+            for (Detalleorden detalle : detallesOrden) {
+                table.addCell(detalle.getProducto().getNombre());
+                table.addCell(String.valueOf(detalle.getCantidad()));
+                table.addCell(String.format("S/. %.2f", detalle.getPreciounitario()));
+                table.addCell(String.format("S/. %.2f", detalle.getSubtotal()));
+
+                total = total.add(detalle.getSubtotal());
+            }
 
             document.add(table);
 
@@ -961,9 +972,9 @@ public class ChatbotService {
 
             // Total de la compra
             Font totalFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12);
-            Paragraph total = new Paragraph("Total: S/. " + String.format("%.2f", subtotal), totalFont);
-            total.setAlignment(Element.ALIGN_RIGHT);
-            document.add(total);
+            Paragraph totalParagraph = new Paragraph("Total: S/. " + String.format("%.2f", total), totalFont);
+            totalParagraph.setAlignment(Element.ALIGN_RIGHT);
+            document.add(totalParagraph);
 
             document.add(new Paragraph(" ")); // Espacio
 
@@ -982,6 +993,7 @@ public class ChatbotService {
             return null;
         }
     }
+
 
 
 
