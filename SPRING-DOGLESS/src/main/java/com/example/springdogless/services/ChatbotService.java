@@ -685,7 +685,9 @@ public class ChatbotService {
                         }
                     } catch (HttpClientErrorException.BadRequest ex) {
                         // Reinicia el flujo si los datos no se validan
+                        estadosUsuario.put(userId, "ingresarTarjeta");
                         return "No se ha podido validar los datos, ingrese nuevamente.\nPor favor, ingrese el número de tarjeta.";
+
                     } catch (Exception ex) {
                         // Si el API no responde
                         estadosUsuario.put(userId, "ingresarCodigoSecreto");
@@ -726,10 +728,15 @@ public class ChatbotService {
                     try {
                         // Crear la orden en la base de datos
                         crearOrdenConProductos(userId);
+                        byte[] pdfBytes = generarPDFResumenCompra(userId);
+
                     } catch (Exception e) {
                         e.printStackTrace(); // Imprimir el stack trace para depuración
                         return "Ocurrió un error al procesar el pago. Por favor, intente nuevamente.";
                     }
+
+                    // Generar el PDF
+                    byte[] pdfBytes = generarPDFResumenCompra(userId);
 
                     // Generar los mensajes
                     String resumenCompra = procesarPagoYMostrarResumen(userId); // Resumen de compra
@@ -975,6 +982,8 @@ public class ChatbotService {
             return null;
         }
     }
+
+
 
 
 
