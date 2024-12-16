@@ -890,6 +890,7 @@ public class ChatbotService {
 
     public byte[] generarPDFResumenCompra(String userId) {
         Map<String, String> datos = datosUsuario.get(userId);
+        List<Detalleorden> detallesSesion = productosSesion.getOrDefault(userId, new ArrayList<>());
 
         try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
             Document document = new Document();
@@ -944,16 +945,16 @@ public class ChatbotService {
             table.addCell(new Phrase("Precio Unitario", tableHeaderFont));
             table.addCell(new Phrase("Subtotal", tableHeaderFont));
 
-            // Detalles del producto
-            String productoNombre = datos.get("productoNombre");
-            int cantidad = Integer.parseInt(datos.get("cantidad"));
-            double precioUnitario = Double.parseDouble(datos.get("productoPrecio"));
-            double subtotal = cantidad * precioUnitario;
+            // Añadir los productos comprados a la tabla
+            BigDecimal total = BigDecimal.ZERO;
+            for (Detalleorden detalle : detallesSesion) {
+                table.addCell(detalle.getProducto().getNombre());
+                table.addCell(String.valueOf(detalle.getCantidad()));
+                table.addCell(String.format("S/. %.2f", detalle.getPreciounitario()));
+                table.addCell(String.format("S/. %.2f", detalle.getSubtotal()));
 
-            table.addCell(productoNombre);
-            table.addCell(String.valueOf(cantidad));
-            table.addCell(String.format("S/. %.2f", precioUnitario));
-            table.addCell(String.format("S/. %.2f", subtotal));
+                total = total.add(detalle.getSubtotal());
+            }
 
             document.add(table);
 
@@ -961,9 +962,9 @@ public class ChatbotService {
 
             // Total de la compra
             Font totalFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12);
-            Paragraph total = new Paragraph("Total: S/. " + String.format("%.2f", subtotal), totalFont);
-            total.setAlignment(Element.ALIGN_RIGHT);
-            document.add(total);
+            Paragraph totalParagraph = new Paragraph("Total: S/. " + total.setScale(2, BigDecimal.ROUND_HALF_UP), totalFont);
+            totalParagraph.setAlignment(Element.ALIGN_RIGHT);
+            document.add(totalParagraph);
 
             document.add(new Paragraph(" ")); // Espacio
 
@@ -982,6 +983,7 @@ public class ChatbotService {
             return null;
         }
     }
+
 
 
 
