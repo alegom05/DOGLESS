@@ -120,16 +120,22 @@ public class UsuarioController {
             model.addAttribute("listaProductos", detallesRepository.findDetallesByOrden(id));
             return "usuario/editarOrden";
         } else {
-            return "redirect:usuario";
+            return "redirect:/usuario/";
         }
     }
 
     @PostMapping("/guardarOrden")
     public String guardarOrden(@RequestParam("idDetallesOrden") List<Integer> idDetallesOrden,
                                @RequestParam(value = "eliminados", required = false) List<Integer> eliminados,
-                               @RequestParam("idOrdenes") List<Integer> idOrdenes,
+                               @RequestParam("idOrden") Integer idOrden,
                                @RequestParam("cantidades") List<String> cantidadesStr,
+                               @RequestParam("direccion") String direccion,
                                RedirectAttributes redirectAttributes) {
+
+        if(direccion==null){
+            redirectAttributes.addFlashAttribute("error", "Direccion no válida.");
+            return "redirect:/usuario/";
+        }
 
         // Si no hay productos en la orden después de eliminar
         if (idDetallesOrden.isEmpty() && (eliminados == null || eliminados.isEmpty())) {
@@ -167,31 +173,39 @@ public class UsuarioController {
             Detalleorden detalle = detallesRepository.findById(idDetalle)
                     .orElse(null); // Cambiamos a null para verificar más adelante
             // Verifica si se encontró el detalle
-            if (detalle == null) {
-                redirectAttributes.addFlashAttribute("mensaje", "Detalle no encontrado para ID: " + idDetalle);
-                return "redirect:/usuario/";
+            BigDecimal subtotal= BigDecimal.valueOf(0);
+
+            if (detalle != null) {
+                BigDecimal precioUni = detalle.getPreciounitario();
+                subtotal = precioUni.multiply(BigDecimal.valueOf(cantidad));
+                // Actualiza la cantidad y el subtotal
+                detalle.setCantidad(cantidad);
+                detalle.setSubtotal(subtotal);
+                // Guarda los cambios
+                detallesRepository.save(detalle);
             }
-
-            BigDecimal precioUni = detalle.getPreciounitario();
-            BigDecimal subtotal = precioUni.multiply(BigDecimal.valueOf(cantidad));
-
-            // Actualiza la cantidad y el subtotal
-            detalle.setCantidad(cantidad);
-            detalle.setSubtotal(subtotal);
             total = total.add(subtotal);
-
-            // Guarda los cambios
-            detallesRepository.save(detalle);
         }
 
         // Recalcular el subtotal (cantidad * precio unitario)
-        Optional<Orden> optOrden = ordenRepository.findById(idOrdenes.get(0));
+        Optional<Orden> optOrden = ordenRepository.findById(idOrden);
         if (optOrden.isPresent()) {
             Orden orden = optOrden.get();
-            orden.setTotal(total);
-            ordenRepository.save(orden);
+            orden.setDireccionenvio(direccion);
+            // Verificar si la orden tiene detalles restantes
+            List<Detalleorden> detallesRestantes = detallesRepository.findByOrdenId(idOrden);
+            if (detallesRestantes == null || detallesRestantes.isEmpty()) {
+                // Actualizar el estado de la orden a borrado (0)
+                orden.setBorrado(0);
+                ordenRepository.save(orden);
+                redirectAttributes.addFlashAttribute("msg", "La orden ha sido marcada como eliminada.");
+            } else {
+                orden.setTotal(total);
+                ordenRepository.save(orden);
+                redirectAttributes.addFlashAttribute("msg", "Orden actualizada correctamente.");
+            }
+
         }
-        redirectAttributes.addFlashAttribute("msg", "Datos actualizados correctamente.");
         return "redirect:/usuario/";
 // Redirige después de procesar los datos
     }
@@ -206,21 +220,23 @@ public class UsuarioController {
         }
 
         // Obtener la orden por ID
-        Detalleorden orden = detallesRepository.findById(id).orElse(null);
+        Orden orden = ordenRepository.findById(id).orElse(null);
 
         // Verificar si la orden existe y si el estado permite eliminarla
-        if (orden == null || !orden.getOrden().getUsuario().getId().equals(usuarioLogueado.getId())) {
+        if (orden == null || !orden.getUsuario().getId().equals(usuarioLogueado.getId())) {
             redirectAttributes.addFlashAttribute("error", "Orden no encontrada o no tiene permiso para eliminarla.");
             return "redirect:/usuario";
         }
 
-        if (orden.getOrden().getEstado().equals("En Proceso")) {
+        if (orden.getEstado().equals("En Proceso")) {
             redirectAttributes.addFlashAttribute("error", "No se puede eliminar una orden que está en proceso.");
             return "redirect:/usuario";
         }
 
-        // Eliminar la orden
-        detallesRepository.deleteById(id);
+        orden.setBorrado(0);
+
+        // Eliminar la orden de forma logica
+        ordenRepository.save(orden);
 
         // Simulación del reembolso mediante correo
         /*
@@ -233,7 +249,7 @@ public class UsuarioController {
         }*/
 
         // Mensaje de éxito
-        redirectAttributes.addFlashAttribute("success", "Orden eliminada y reembolso realizado.");
+        redirectAttributes.addFlashAttribute("msg", "Orden eliminada y reembolso realizado.");
         return "redirect:/usuario";
     }
 
@@ -1086,13 +1102,14 @@ public class UsuarioController {
                     Orden orden = optionalOrden.get();
                     if ("Creado".equals(orden.getEstado())) {
                         orden.setMetodopago("tarjeta");
+                        orden.setBorrado(1);
                         orden.setEstado("En Validación");
                         orden.setTotal(orden.getTotal().add(BigDecimal.valueOf(12))); // Costo de envío
                         orden.setFecha(new java.sql.Date(System.currentTimeMillis()));
                         ordenRepository.save(orden);
 
                         redirectAttributes.addFlashAttribute("success", "Pago validado correctamente.");
-                        return "redirect:/usuario/pagoexitoso";
+                        return "redirect:/usuario/pagoexitoso?id="+orden.getId();
                     }
                 }
                 redirectAttributes.addFlashAttribute("error", "La orden no está en un estado válido para actualizar.");
@@ -1109,11 +1126,26 @@ public class UsuarioController {
         return "redirect:/usuario/procesopago";
     }
     @GetMapping(value = "/pagoexitoso")
-    public String pagoExitoso(HttpSession session, Model model) {
+    public String pagoExitoso(HttpSession session, Model model, @RequestParam("id") String idStr) {
         Usuario usuarioLogueado = (Usuario) session.getAttribute("usuario");
+        Integer id;
+        id= Integer.valueOf(idStr);
 
-        model.addAttribute("listaProductos",detallesRepository.findByOrdenValidada(usuarioLogueado.getId()));
-        return "usuario/pagoExitoso";
+        if(id == null || id<1){
+            return "redirect:/usuario/";
+        }
+        Optional<Orden> optionalOrden=ordenRepository.findByIdOrdenYUsuario(id,usuarioLogueado.getId());
+
+        if (optionalOrden.isPresent()) {
+            Orden orden = optionalOrden.get();
+            model.addAttribute("listaProductos",orden);
+            return "usuario/pagoExitoso";
+        }else{
+            return "redirect:/usuario/";
+        }
+
+
+
     }
 
 
