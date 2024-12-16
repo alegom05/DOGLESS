@@ -172,6 +172,19 @@
             function filtrar() {
                 const fechaInicio = document.getElementById("filterDateStart").value;
                 const fechaFin = document.getElementById("filterDateEnd").value;
+
+                // Validar que ambas fechas sean seleccionadas
+                if (!fechaInicio || !fechaFin) {
+                    alert("Por favor, selecciona ambas fechas para generar el reporte.");
+                    return;
+                }
+
+                // Validar que la fecha fin no sea anterior a la de inicio
+                if (new Date(fechaFin) < new Date(fechaInicio)) {
+                    alert("La fecha fin no puede ser anterior a la fecha inicio.");
+                    return;
+                }
+
                 const table = $('#basic-datatables').DataTable();
 
                 // Limpiar filtros previos
@@ -229,7 +242,6 @@
                 const url = `/agente/exportarOrdenesPorFecha?fechaInicio=${fechaInicio}&fechaFin=${fechaFin}&formato=${formato}`;
                 window.location.href = url;
             }
-
 
             $(document).ready(function () {
                 $('#basic-datatables').DataTable({
