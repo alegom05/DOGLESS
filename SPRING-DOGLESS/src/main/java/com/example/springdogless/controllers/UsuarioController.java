@@ -18,6 +18,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -105,9 +106,13 @@ public class UsuarioController {
         model.addAttribute("ordenes", ordenes);
         return "usuario/paginaprincipal"; // Retornar la vista con las órdenes
     }
-    @GetMapping("/gg")
-    public String verperdd(Model model) {
-        return "usuario/GGGG"; // Esto renderiza la vista perfil_superadmin.html
+    @GetMapping("/cambiarcontraseña")
+    public String vercontra(HttpSession session, Model model) {
+        Usuario usuario = (Usuario) session.getAttribute("usuario");
+        if (usuario != null) {
+            model.addAttribute("usuario", usuario); // Pasar el usuario a la vista
+        }
+        return "usuario/cambiarcontra";
     }
     @GetMapping("/editorden")
     public String editarOrden(@RequestParam("id") Integer id, Model model, HttpSession session) {
@@ -1649,6 +1654,95 @@ public class UsuarioController {
         // Agregar mensaje de éxito
         redirectAttributes.addFlashAttribute("msg", "Su postulación ha sido enviada exitosamente");
         return "redirect:/usuario";
+    }
+    @PostMapping("/cambiarContrasenia")
+    @ResponseBody
+    public ResponseEntity<Map<String, String>> cambiarContrasenia(
+            @RequestParam("id") int id,
+            @RequestParam("oldPassword") String oldPassword,
+            @RequestParam("newPassword") String newPassword,
+            @RequestParam("confirmNewPassword") String confirmNewPassword) {
+
+        Map<String, String> response = new HashMap<>();
+        Optional<Usuario> optUsuario = usuarioRepository.findById(id);
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+        if (optUsuario.isPresent()) {
+            Usuario usuario = optUsuario.get();
+
+            // Verificar si la contraseña antigua es correcta
+            if (!passwordEncoder.matches(oldPassword, usuario.getPwd())) {
+                response.put("status", "error");
+                response.put("message", "La contraseña antigua es incorrecta.");
+                return ResponseEntity.ok(response);
+            }
+
+            // Verificar si la nueva contraseña y la confirmación coinciden
+            if (!newPassword.equals(confirmNewPassword)) {
+                response.put("status", "error");
+                response.put("message", "La nueva contraseña y su confirmación no coinciden.");
+                return ResponseEntity.ok(response);
+            }
+            // Validar requisitos de la nueva contraseña
+            if (newPassword.length() < 8 || newPassword.length() > 16) {
+                response.put("status", "error");
+                response.put("message", "La contraseña debe tener entre 8 y 16 caracteres.");
+                return ResponseEntity.ok(response);
+            }
+
+            if (!newPassword.matches("^(?=.*\\d)(?=.*[a-zA-Z])(?=(?:.*[!@#$%^&*]){2}).{8,16}$")) {
+                response.put("status", "error");
+                response.put("message", "La contraseña debe incluir al menos 1 letra, 1 número y 2 caracteres especiales.");
+                return ResponseEntity.ok(response);
+            }
+
+            // Cambiar la contraseña si pasa todas las verificaciones
+            String newPasswordEncrypted = passwordEncoder.encode(newPassword);
+            usuario.setPwd(newPasswordEncrypted);
+            usuarioRepository.save(usuario);
+
+            response.put("status", "success");
+            response.put("message", "Contraseña cambiada exitosamente.");
+            return ResponseEntity.ok(response);
+        }
+
+        response.put("status", "error");
+        response.put("message", "Usuario no encontrado.");
+        return ResponseEntity.ok(response);
+    }
+
+    public ResponseEntity<Map<String, String>> cambiarContrasenia(
+            @RequestParam("id") int id,
+            @RequestParam("oldPassword") String oldPassword,
+            @RequestParam("newPassword") String newPassword) {
+
+        Optional<Usuario> optUsuario = usuarioRepository.findById(id);
+        Map<String, String> response = new HashMap<>();
+
+        if (optUsuario.isPresent()) {
+            Usuario usuario = optUsuario.get();
+            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+            // Verificar si la contraseña antigua es correcta
+            if (!passwordEncoder.matches(oldPassword, usuario.getPwd())) {
+                response.put("status", "error");
+                response.put("message", "La contraseña antigua es incorrecta.");
+                return ResponseEntity.ok(response); // Devuelve error
+            }
+
+            // Encriptar la nueva contraseña
+            String newPasswordEncrypted = passwordEncoder.encode(newPassword);
+            usuario.setPwd(newPasswordEncrypted);
+            usuarioRepository.save(usuario);
+
+            response.put("status", "success");
+            response.put("message", "Contraseña cambiada exitosamente.");
+            return ResponseEntity.ok(response); // Devuelve éxito
+        }
+
+        response.put("status", "error");
+        response.put("message", "Usuario no encontrado.");
+        return ResponseEntity.ok(response); // Devuelve error si no encuentra usuario
     }
 
 
