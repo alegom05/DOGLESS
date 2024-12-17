@@ -886,7 +886,7 @@ public class UsuarioController {
         }
 
         redirectAttributes.addFlashAttribute("mensaje", "Producto añadido al carrito");
-        return "redirect:/usuario/compras";
+        return "redirect:/usuario/tienda";
     }
 
     public String agregarProductoChatbot(Integer idProducto, Integer idUsuario, Integer cantidad) {
