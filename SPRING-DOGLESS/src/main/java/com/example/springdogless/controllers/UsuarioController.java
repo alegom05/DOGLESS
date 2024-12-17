@@ -781,6 +781,8 @@ public class UsuarioController {
         if (orden == null) {
             orden = new Orden();
             orden.setEstado("Creado");
+            orden.setDireccionenvio(usuario.getDireccion());
+            orden.setBorrado(1);
             orden.setUsuario(usuario);
             orden.setTotal(BigDecimal.ZERO);
             Date fechaActualUtil = new Date();
@@ -845,6 +847,8 @@ public class UsuarioController {
         if (orden == null) {
             orden = new Orden();
             orden.setEstado("Creado");
+            orden.setDireccionenvio(usuario.getDireccion());
+            orden.setBorrado(1);
             orden.setUsuario(usuario);
             orden.setTotal(BigDecimal.ZERO);
             Date fechaActualUtil = new Date();
@@ -897,6 +901,8 @@ public class UsuarioController {
         if (orden == null) {
             orden = new Orden();
             orden.setEstado("Creado");
+            orden.setDireccionenvio(usuario.getDireccion());
+            orden.setBorrado(1);
             orden.setUsuario(usuario);
             orden.setTotal(BigDecimal.ZERO);
             Date fechaActualUtil = new Date();
@@ -945,14 +951,14 @@ public class UsuarioController {
         if (detalle.isPresent()) {
             // Eliminar el detalle
             detallesRepository.delete(detalle.get()); // Usa .get() para obtener el objeto
-            redirectAttributes.addFlashAttribute("successMessage", "Producto eliminado con éxito."); // Mensaje de éxito
+            redirectAttributes.addFlashAttribute("msg", "Producto eliminado con éxito."); // Mensaje de éxito
         } else {
-            redirectAttributes.addFlashAttribute("errorMessage", "No se encontró el producto a eliminar."); // Mensaje de error
+            redirectAttributes.addFlashAttribute("error", "No se encontró el producto a eliminar."); // Mensaje de error
         }
 
         Integer se = usuarioLogueado.getId();
         System.out.println("ID del usuario: " + se);
-        return "redirect:/usuario/compras?id="+se; // Redirigir a la página de compras
+        return "redirect:/usuario/compras"; // Redirigir a la página de compras
     }
 
 
@@ -1064,6 +1070,7 @@ public class UsuarioController {
             redirectAttributes.addFlashAttribute("error", "Dirección no válida. Por favor, ingrese una dirección válida.");
             return "redirect:/usuario/checkout";
         }
+        System.out.print(direccion);
         Optional<Orden> optionalOrden= ordenRepository.findOrdenCreado(usuarioLogueado.getId());
         if (optionalOrden.isPresent()) {
             Orden orden = optionalOrden.get();
